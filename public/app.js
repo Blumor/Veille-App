@@ -7,6 +7,7 @@ const STATE = {
   report: null,
   activeItem: null,
   sectionFilter: 'all',
+  static: false,   // true = hébergement statique (sans backend, lecture des JSON)
 };
 
 const DAILY_SECS = [
@@ -80,6 +81,36 @@ async function api(path, opts) {
   const res = await fetch(path, opts);
   if (!res.ok) throw new Error((await res.json().catch(() => ({}))).error || 'HTTP ' + res.status);
   return res.json();
+}
+
+// Lecture d'un fichier statique JSON (mode hébergement sans backend).
+async function staticJSON(path) {
+  const res = await fetch(path);
+  if (!res.ok) throw new Error('HTTP ' + res.status);
+  return res.json();
+}
+
+// Index des rapports : API (serveur local) sinon fichier statique (hébergement).
+async function loadIndex() {
+  try {
+    return await api('/api/reports');
+  } catch {
+    STATE.static = true;
+    const idx = await staticJSON('data/reports/_index.json');
+    // Même tri que le backend (plus récent d'abord).
+    return idx.sort((a, b) => (b.date + b.type).localeCompare(a.date + a.type));
+  }
+}
+
+// Rapport complet : API sinon fichier statique.
+async function loadReport(id) {
+  if (STATE.static) return staticJSON(`data/reports/${id}.json`);
+  try {
+    return await api('/api/reports/' + id);
+  } catch {
+    STATE.static = true;
+    return staticJSON(`data/reports/${id}.json`);
+  }
 }
 
 // ── sidebar ───────────────────────────────────────────────────────────────────
@@ -373,8 +404,7 @@ async function selectReport(id) {
   STATE.sectionFilter = 'all';
   renderSidebar();
   try {
-    const rep = await api('/api/reports/' + id);
-    renderReport(rep);
+    renderReport(await loadReport(id));
   } catch {
     renderEmpty();
   }
@@ -384,11 +414,18 @@ async function selectReport(id) {
 async function init() {
   renderEmpty();
   try { STATE.sections = (await api('/api/config')).sections; } catch { STATE.sections = FALLBACK_SECTIONS; }
-  try { STATE.index = await api('/api/reports'); } catch { STATE.index = []; }
+  try { STATE.index = await loadIndex(); } catch { STATE.index = []; }
   renderSidebar();
   if (STATE.index.length) selectReport(STATE.index[0].id);
-  $('#btnDaily').onclick = () => generate('daily');
-  $('#btnWeekly').onclick = () => generate('weekly');
-  $('#btnMonthly').onclick = () => generate('monthly');
+
+  if (STATE.static) {
+    // Pas de backend : la génération à la demande n'a pas de sens (les rapports
+    // sont publiés automatiquement). On masque les boutons de génération.
+    $('.actions')?.remove();
+  } else {
+    $('#btnDaily').onclick = () => generate('daily');
+    $('#btnWeekly').onclick = () => generate('weekly');
+    $('#btnMonthly').onclick = () => generate('monthly');
+  }
 }
 init();

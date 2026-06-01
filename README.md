@@ -61,10 +61,42 @@ Toutes gratuites, sans inscription ni clé.
 Deux options pour publier sans intervention — **aucun secret ni clé requis** :
 
 - **GitHub Actions (recommandé)** — aucune machine à laisser allumée. Le workflow
-  `.github/workflows/veille.yml` génère le rapport sur l'infra GitHub puis le commit
-  dans le dépôt (quotidien, hebdo le dimanche, mensuel le 1er). Déclenchement manuel
-  possible depuis l'onglet *Actions*. Horaires en UTC, ajustables dans le fichier.
+  `.github/workflows/veille.yml` génère les rapports sur l'infra GitHub puis les commit
+  dans le dépôt. Logique **cumulative**, une exécution par jour à ~6h Paris :
+  - **journalier** tous les jours,
+  - **+ hebdomadaire** le lundi,
+  - **+ mensuel** le 1er du mois.
+
+  Déclenchement manuel possible depuis l'onglet *Actions* (choix du type). Il suffit de
+  pousser le dépôt sur GitHub — aucun secret à configurer. L'horaire (cron en UTC) est
+  ajustable en tête du fichier.
 - **Cron local** — voir `scripts/cron-example.txt`.
+
+## Hébergement gratuit 24/24 (Cloudflare Pages)
+
+L'app étant un **visualiseur de rapports déjà générés** (par GitHub Actions), elle
+se publie comme **site statique** : gratuit, toujours en ligne, sans serveur ni
+démarrage à froid, et compatible **dépôt privé**.
+
+Le front s'adapte tout seul : avec un backend (`npm start`) il utilise l'API ;
+hébergé en statique, il lit directement les JSON de `data/reports/`.
+
+**Build** : `npm run build` assemble le dossier `dist/` (front + rapports).
+
+**Mise en place sur Cloudflare Pages :**
+1. Pousser le dépôt sur GitHub (ou GitLab).
+2. Cloudflare → *Workers & Pages* → *Create* → *Pages* → *Connect to Git*, choisir le dépôt.
+3. Réglages de build :
+   - **Framework preset** : `None`
+   - **Build command** : `npm run build`
+   - **Build output directory** : `dist`
+4. *Save and Deploy*. Le site est en ligne sur `https://<projet>.pages.dev`.
+
+À chaque push (y compris les commits automatiques de rapports par GitHub Actions),
+Cloudflare **rebuild et redéploie tout seul** — la veille reste à jour sans rien faire.
+
+> Astuce : sur dépôt **public**, *GitHub Pages* fonctionne aussi (même build,
+> *Settings → Pages → Build and deployment → GitHub Actions*).
 
 ## Développement dans VS Code
 
@@ -97,7 +129,9 @@ veille-cyber/
 │   └── lib/schema.js        # normalisation + validation du rapport
 ├── public/                  # front statique (console)
 ├── data/reports/            # rapports archivés (JSON)
-├── scripts/                 # exemples cron
+├── scripts/
+│   ├── build-static.mjs     # build du site statique (dist/) pour l'hébergement
+│   └── cron-example.txt     # exemples cron
 └── docs/                    # architecture + roadmap
 ```
 

@@ -1,30 +1,35 @@
 name: Veille automatique
 
 # Génère les rapports sans aucune machine allumée : GitHub exécute le cron,
-# puis le rapport est commité dans le dépôt (data/reports/).
+# puis les rapports sont commités dans le dépôt (data/reports/).
 # Génération 100 % gratuite (RSS + NVD + CISA KEV) : AUCUN secret ni clé API requis.
 #
-# IMPORTANT : les horaires cron sont en UTC. Paris = UTC+2 (été) / UTC+1 (hiver).
-# Ajuste les valeurs ci-dessous selon l'heure souhaitée.
-# Note : GitHub désactive les workflows planifiés après 60 jours sans activité
-# sur le dépôt — un commit de temps en temps suffit à les garder actifs.
+# Logique CUMULATIVE : le rapport journalier est généré CHAQUE jour ; le lundi on
+# ajoute l'hebdomadaire ; le 1er du mois on ajoute le mensuel (jamais à la place).
+#
+# Horaire : un seul cron quotidien à 04h00 UTC ≈ 06h00 Paris l'été / 05h00 l'hiver
+# (GitHub ne planifie qu'en UTC, sans bascule heure d'été). Pour décaler, change
+# l'heure du cron ci-dessous. Note : GitHub suspend les workflows planifiés après
+# 60 jours sans activité sur le dépôt — un commit occasionnel les réactive.
 
 on:
   schedule:
-    - cron: '30 5 * * *'   # quotidien — ~07h30 Paris (été) / 06h30 (hiver)
-    - cron: '0 6 * * 0'    # hebdomadaire le dimanche — ~08h00 Paris (été)
-    - cron: '0 6 1 * *'    # mensuel le 1er du mois — ~08h00 Paris (été)
-  workflow_dispatch:        # déclenchement manuel depuis l'onglet Actions
+    - cron: '0 4 * * *'     # tous les jours — ~06h00 Paris (été) / 05h00 (hiver)
+  workflow_dispatch:         # déclenchement manuel depuis l'onglet Actions
     inputs:
       type:
-        description: 'Type de rapport'
+        description: 'Type de rapport à générer manuellement'
         required: true
         default: daily
         type: choice
         options: [daily, weekly, monthly]
 
 permissions:
-  contents: write           # autorise le push du rapport généré
+  contents: write            # autorise le push des rapports générés
+
+concurrency:
+  group: veille-auto         # évite deux exécutions qui pousseraient en même temps
+  cancel-in-progress: false
 
 jobs:
   generate:
@@ -41,23 +46,27 @@ jobs:
       - name: Installer les dépendances
         run: npm install
 
-      - name: Déterminer le type de rapport
-        id: kind
+      - name: Générer le(s) rapport(s)
         run: |
+          set -e
           if [ "${{ github.event_name }}" = "workflow_dispatch" ]; then
-            echo "type=${{ github.event.inputs.type }}" >> "$GITHUB_OUTPUT"
-          elif [ "${{ github.event.schedule }}" = "0 6 1 * *" ]; then
-            echo "type=monthly" >> "$GITHUB_OUTPUT"
-          elif [ "${{ github.event.schedule }}" = "0 6 * * 0" ]; then
-            echo "type=weekly" >> "$GITHUB_OUTPUT"
+            # Déclenchement manuel : uniquement le type demandé.
+            node src/index.js "${{ github.event.inputs.type }}"
           else
-            echo "type=daily" >> "$GITHUB_OUTPUT"
+            # Déclenchement planifié : journalier chaque jour,
+            # + hebdo le lundi (jour 1), + mensuel le 1er du mois.
+            node src/index.js daily
+            if [ "$(date -u +%u)" = "1" ]; then
+              echo "Lundi → génération du rapport hebdomadaire"
+              node src/index.js weekly
+            fi
+            if [ "$(date -u +%d)" = "01" ]; then
+              echo "1er du mois → génération du rapport mensuel"
+              node src/index.js monthly
+            fi
           fi
 
-      - name: Générer le rapport
-        run: node src/index.js ${{ steps.kind.outputs.type }}
-
-      - name: Commiter le rapport
+      - name: Commiter les rapports
         run: |
           git config user.name "veille-bot"
           git config user.email "veille-bot@users.noreply.github.com"
@@ -65,6 +74,6 @@ jobs:
           if git diff --cached --quiet; then
             echo "Aucun nouveau rapport à committer."
           else
-            git commit -m "Rapport ${{ steps.kind.outputs.type }} du $(date -u +%Y-%m-%d)"
+            git commit -m "Veille auto — $(date -u +%Y-%m-%d)"
             git push
           fi
