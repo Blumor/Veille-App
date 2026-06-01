@@ -60,18 +60,28 @@ export async function generateReport(type, dateISO = todayISO()) {
   // Sections selon le type. La synthèse (hebdo/mensuel) est rédigée.
   const isSynthesis = type === 'weekly' || type === 'monthly';
   const limit = type === 'daily' ? 15 : 25;
+  const FR_EXTRA = type === 'daily' ? 10 : 15; // garantit la couverture France
+
+  // Top par score, MAIS on ne coupe jamais les items « France » (jusqu'à FR_EXTRA en plus) :
+  // l'utilisateur doit pouvoir suivre la cyber FR en continu via le filtre France.
+  const pick = (arr) => {
+    const top = arr.slice(0, limit);
+    const inTop = new Set(top);
+    const frExtra = arr.filter((it) => it.region === 'fr' && !inTop.has(it)).slice(0, FR_EXTRA);
+    return [...top, ...frExtra].sort((a, b) => (b.score || 0) - (a.score || 0));
+  };
 
   const sectionDefs = isSynthesis
     ? [
         { id: 'synthese', items: composeSynthese(all, type, dateISO) },
-        { id: 'vulns',    items: bySection.vulns.slice(0, limit) },
-        { id: 'attacks',  items: bySection.attacks.slice(0, limit) },
-        { id: 'culture',  items: bySection.culture.slice(0, limit) },
+        { id: 'vulns',    items: pick(bySection.vulns) },
+        { id: 'attacks',  items: pick(bySection.attacks) },
+        { id: 'culture',  items: pick(bySection.culture) },
       ]
     : [
-        { id: 'vulns',    items: bySection.vulns.slice(0, limit) },
-        { id: 'attacks',  items: bySection.attacks.slice(0, limit) },
-        { id: 'culture',  items: bySection.culture.slice(0, limit) },
+        { id: 'vulns',    items: pick(bySection.vulns) },
+        { id: 'attacks',  items: pick(bySection.attacks) },
+        { id: 'culture',  items: pick(bySection.culture) },
       ];
 
   const sections = sectionDefs.filter((s) => s.items.length);
@@ -91,6 +101,7 @@ export async function generateReport(type, dateISO = todayISO()) {
         severity: it.severity,
         score: it.score ?? 0,
         corroboration: it.corroboration ?? 1,
+        region: it.region ?? 'intl',
         body: it.body,
         detail: it.detail ?? null,
         action: it.action ?? null,

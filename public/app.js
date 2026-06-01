@@ -7,6 +7,7 @@ const STATE = {
   report: null,
   activeItem: null,
   sectionFilter: 'all',
+  region: 'all',   // 'all' | 'fr' | 'intl'
   static: false,   // true = hébergement statique (sans backend, lecture des JSON)
 };
 
@@ -137,13 +138,34 @@ function renderSidebar() {
   side.querySelectorAll('.item').forEach((el) => (el.onclick = () => selectReport(el.dataset.id)));
 }
 
+// ── filtre région (Tout / France / International) ───────────────────────────────
+const inRegion = (it) => STATE.region === 'all' || (it.region || 'intl') === STATE.region;
+
+function renderRegionFilter(rep) {
+  const all = (rep.sections || []).flatMap((s) => s.items || []);
+  const cFr = all.filter((i) => (i.region || 'intl') === 'fr').length;
+  const opts = [
+    { id: 'all',  label: 'Tout',          count: all.length },
+    { id: 'fr',   label: '🇫🇷 France',     count: cFr },
+    { id: 'intl', label: '🌍 International', count: all.length - cFr },
+  ];
+  return `<div class="region-filter" id="regionFilter">
+    ${opts.map((o) => `
+      <button class="region-btn ${STATE.region === o.id ? 'active' : ''}" data-region="${o.id}">
+        ${esc(o.label)}<span class="region-count">${o.count}</span>
+      </button>`).join('')}
+  </div>`;
+}
+
 // ── tabs ──────────────────────────────────────────────────────────────────────
 function renderTabs(rep) {
-  const secs = (rep.sections || []).filter((s) => s.items?.length);
-  const total = secs.reduce((n, s) => n + s.items.length, 0);
-  const tabs = [{ id: 'all', label: 'Tous', count: total }, ...secs.map((s) => {
+  const secs = (rep.sections || [])
+    .map((s) => ({ s, n: (s.items || []).filter(inRegion).length }))
+    .filter((x) => x.n > 0);
+  const total = secs.reduce((n, x) => n + x.n, 0);
+  const tabs = [{ id: 'all', label: 'Tous', count: total }, ...secs.map(({ s, n }) => {
     const m = sectionMeta(rep.type, s.id);
-    return { id: s.id, label: `${m.icon} ${m.label}`, count: s.items.length };
+    return { id: s.id, label: `${m.icon} ${m.label}`, count: n };
   })];
   return `<div class="tabs" id="tabs">
     ${tabs.map((t) => `
@@ -158,7 +180,10 @@ function getFilteredItems(rep) {
   const items = [];
   for (const sec of rep?.sections || []) {
     if (STATE.sectionFilter !== 'all' && sec.id !== STATE.sectionFilter) continue;
-    for (const it of sec.items || []) items.push({ ...it, _section: sec.id });
+    for (const it of sec.items || []) {
+      if (!inRegion(it)) continue;
+      items.push({ ...it, _section: sec.id });
+    }
   }
   // Vue « Tous » : la synthèse reste en tête, le reste est classé par score décroissant.
   if (STATE.sectionFilter === 'all') {
@@ -334,6 +359,7 @@ function renderReport(rep) {
       <h2 class="rep-title">${esc(rep.title)}</h2>
       ${rep.summary ? `<p class="rep-summary">${esc(rep.summary)}</p>` : ''}
     </div>
+    ${renderRegionFilter(rep)}
     ${renderTabs(rep)}
     <div id="feedContainer">${renderFeed(rep)}</div>
   </div>`;
@@ -341,6 +367,18 @@ function renderReport(rep) {
   main.scrollTop = 0;
   bindCards(rep);
   bindTabs(rep);
+  bindRegion(rep);
+}
+
+function bindRegion(rep) {
+  $('#main').querySelectorAll('.region-btn').forEach((el) => {
+    el.onclick = () => {
+      if (STATE.region === el.dataset.region) return;
+      STATE.region = el.dataset.region;
+      STATE.sectionFilter = 'all';   // repart sur « Tous » dans la nouvelle région
+      renderReport(rep);
+    };
+  });
 }
 
 function renderEmpty() {

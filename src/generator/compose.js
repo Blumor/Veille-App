@@ -76,12 +76,33 @@ const AUTHORITY = {
   'Project Zero': 46, 'Cisco Talos': 42, 'Unit 42': 42, 'ESET WeLiveSec.': 40,
   // Presse spécialisée de référence
   'Krebs on Security': 36, 'The Record': 34, 'BleepingComputer': 32, 'SANS ISC': 34,
-  'The Hacker News': 30, 'SecurityWeek': 30, 'Dark Reading': 28, 'Schneier on Sec.': 30,
-  'Infosecurity Mag': 26, 'Help Net Security': 24,
+  'The Hacker News': 30, 'SecurityWeek': 30, 'CyberScoop': 30, 'Security Affairs': 30,
+  'The Register': 28, 'Dark Reading': 28, 'Schneier on Sec.': 30,
+  'Infosecurity Mag': 26, 'GBHackers': 24, 'Help Net Security': 24,
+  // Presse cyber francophone
+  'Zataz': 30, 'Cyberattaque.org': 26, 'Numerama': 28, 'IT-Connect': 24,
+  'UnderNews': 22, 'Silicon.fr': 22, 'Global Sec Mag': 22,
   // Bases référentielles
   'NVD': 24, 'CVE Details': 16,
 };
 const DEFAULT_AUTH = 18;
+
+// Sources « France-centrées » : autorité nationale ou presse breach FR → toujours région France.
+// (Les médias FR généralistes — Numerama, IT-Connect… — couvrent aussi l'actu mondiale :
+//  ils ne basculent en région France que si le CONTENU parle de la France.)
+const FR_CENTRIC = new Set(['CERT-FR Alertes', 'CERT-FR Avis', 'Zataz', 'Cyberattaque.org']);
+const FRANCE_RE = /\bfrance\b|fran[çc]ais|française|\banssi\b|\bcnil\b|cert-fr|gendarmerie|\bparis\b|hexagone|\boiv\b|secnumcloud/i;
+
+/**
+ * Région d'un item : 'fr' (source France-centrée OU sujet lié à la France) sinon 'intl'.
+ * @param {object} item
+ * @returns {'fr'|'intl'}
+ */
+export function regionOf(item) {
+  if ((item.sources || []).some((s) => FR_CENTRIC.has(s.label))) return 'fr';
+  if (FRANCE_RE.test(`${item.title} ${item.body || ''} ${item.detail || ''}`)) return 'fr';
+  return 'intl';
+}
 
 // Indices d'exploitation active dans le texte (titre + contenu) hors KEV.
 const EXPLOIT_RE = /actively exploit|exploited in (the wild|attacks)|under (active )?exploitation|being exploited|exploitation active|activement exploit|zero.?day|0.?day/i;
@@ -151,6 +172,7 @@ export function composeItem(item) {
 
   const enriched = { ...item, body: preview, detail, action: defaultAction(item) };
   enriched.score = scoreItem(enriched);
+  enriched.region = regionOf(item);
   return enriched;
 }
 
@@ -228,6 +250,7 @@ export function composeSynthese(all, type, dateISO = null) {
       sources: aggregateSources(topVulns),
       pubDate: dateISO,
       score: 95,
+      region: 'intl',
     });
   }
 
@@ -246,6 +269,7 @@ export function composeSynthese(all, type, dateISO = null) {
       sources: aggregateSources(attacks),
       pubDate: dateISO,
       score: 80,
+      region: 'intl',
     });
   }
 
@@ -264,6 +288,7 @@ export function composeSynthese(all, type, dateISO = null) {
       sources: aggregateSources(culture),
       pubDate: dateISO,
       score: 60,
+      region: 'intl',
     });
   }
 

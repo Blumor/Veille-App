@@ -42,6 +42,7 @@ export function normalizeReport(parsed, type, dateISO) {
           severity: SEVERITIES.includes(it.severity) ? it.severity : 'news',
           score:    Number.isFinite(+it.score) ? Math.max(0, Math.min(100, Math.round(+it.score))) : 0,
           corroboration: Number.isFinite(+it.corroboration) ? Math.max(1, Math.round(+it.corroboration)) : 1,
+          region:   it.region === 'fr' ? 'fr' : 'intl',
           body:     clean(it.body),
           detail:   it.detail ? clean(it.detail) : null,
           action:   clean(it.action) || null,

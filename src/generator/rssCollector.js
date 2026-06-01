@@ -18,6 +18,19 @@ const FEEDS = [
   { url: 'https://therecord.media/feed/',                       label: 'The Record'        },
   { url: 'https://www.helpnetsecurity.com/feed/',               label: 'Help Net Security' },
   { url: 'https://www.infosecurity-magazine.com/rss/news/',     label: 'Infosecurity Mag'  },
+  { url: 'https://securityaffairs.com/feed',                    label: 'Security Affairs'  },
+  { url: 'https://gbhackers.com/feed/',                         label: 'GBHackers'         },
+  { url: 'https://www.theregister.com/security/headlines.atom', label: 'The Register'      },
+  { url: 'https://cyberscoop.com/feed/',                        label: 'CyberScoop'        },
+
+  // --- Presse cyber francophone ---
+  { url: 'https://www.zataz.com/feed/',                         label: 'Zataz'             },
+  { url: 'https://cyberattaque.org/feed/',                      label: 'Cyberattaque.org'  },
+  { url: 'https://www.numerama.com/cyberguerre/feed/',          label: 'Numerama'          },
+  { url: 'https://www.it-connect.fr/feed/',                     label: 'IT-Connect'        },
+  { url: 'https://www.undernews.fr/feed',                       label: 'UnderNews'         },
+  { url: 'https://www.silicon.fr/feed',                         label: 'Silicon.fr'        },
+  { url: 'https://www.globalsecuritymag.fr/spip.php?page=backend', label: 'Global Sec Mag' },
 
   // --- Autorités & CERT (avis officiels) ---
   { url: 'https://www.cert.ssi.gouv.fr/alerte/feed/',           label: 'CERT-FR Alertes'   },
@@ -71,18 +84,21 @@ function extractCVE(text) {
   return m ? m[0].toUpperCase() : null;
 }
 
+// Termes (EN + FR) signalant une attaque / un incident / une compromission.
+const ATTACK_RE = /breach|leak|ransomware|attack|malware|phishing|incident|intrusion|botnet|ddos|stealer|infostealer|data theft|exfiltrat|extortion|espionage|spyware|hacked|data sale|attaque|attaqu|fuite|piratage|piraté|rançongiciel|ran[çc]on|compromis|vol de donn|donn[ée]es vol|exfiltrat|extorsion|espionnage|cyberattaque|hame[çc]onnage/;
+
 function guessSeverity(title, body, cve) {
   const t = (title + ' ' + body).toLowerCase();
   if (/critical|critique|actively exploit|exploitation active|zero.?day|0.?day|cvss[:\s]*(9|10)/.test(t)) return 'critical';
   if (cve || /\bhigh\b|élevé|exploit|rce|remote code|injection|bypass|privilege esc/.test(t)) return 'high';
-  if (/breach|leak|ransomware|attack|attaque|malware|phishing|incident|data theft|compromis/.test(t)) return 'news';
+  if (ATTACK_RE.test(t)) return 'news';
   return 'culture';
 }
 
 function guessSection(title, body, cve) {
   const t = (title + ' ' + body).toLowerCase();
-  if (cve || /cve-|vulnerabilit|faille|patch|correctif|exploit|rce|overflow|injection|bypass/.test(t)) return 'vulns';
-  if (/breach|leak|ransomware|attack|attaque|malware|phishing|incident|intrusion|compromis/.test(t)) return 'attacks';
+  if (cve || /cve-|vuln[ée]rabilit|vulnerabilit|faille|patch|correctif|exploit|overflow|injection|\brce\b|bypass|zero.?day|0.?day/.test(t)) return 'vulns';
+  if (ATTACK_RE.test(t)) return 'attacks';
   return 'culture';
 }
 
