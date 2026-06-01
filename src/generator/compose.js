@@ -72,6 +72,7 @@ function defaultAction(item) {
 const AUTHORITY = {
   // Autorités nationales & agences
   'CISA KEV': 50, 'CISA Advisories': 50, 'CERT-FR Alertes': 50, 'CERT-FR Avis': 48,
+  'CERT-FR Actualité': 48,
   // Recherche / threat intelligence éditeurs
   'Project Zero': 46, 'Cisco Talos': 42, 'Unit 42': 42, 'ESET WeLiveSec.': 40,
   // Presse spécialisée de référence
@@ -90,7 +91,25 @@ const DEFAULT_AUTH = 18;
 // Sources « France-centrées » : autorité nationale ou presse breach FR → toujours région France.
 // (Les médias FR généralistes — Numerama, IT-Connect… — couvrent aussi l'actu mondiale :
 //  ils ne basculent en région France que si le CONTENU parle de la France.)
-const FR_CENTRIC = new Set(['CERT-FR Alertes', 'CERT-FR Avis', 'Zataz', 'Cyberattaque.org']);
+const FR_CENTRIC = new Set(['CERT-FR Alertes', 'CERT-FR Avis', 'CERT-FR Actualité', 'Zataz', 'Cyberattaque.org']);
+
+// Logiciels / systèmes à très large déploiement : une faille chez eux a un impact massif.
+const WIDESPREAD = [
+  'microsoft', 'windows', 'exchange', 'outlook', 'azure', 'office', 'sharepoint',
+  'cisco', 'fortinet', 'fortios', 'fortigate', 'palo alto', 'pan-os', 'globalprotect',
+  'vmware', 'vcenter', 'esxi', 'ivanti', 'citrix', 'netscaler', 'juniper', 'sonicwall',
+  'f5', 'big-ip', 'apache', 'linux', 'openssl', 'google', 'chrome', 'android', 'apple',
+  'ios', 'macos', 'safari', 'oracle', 'java', 'adobe', 'atlassian', 'confluence', 'jira',
+  'wordpress', 'drupal', 'gitlab', 'jenkins', 'spring', 'php', 'kubernetes', 'docker',
+  'zoom', 'moveit', 'winrar', 'veeam', 'sap', 'sharepoint', 'nginx',
+];
+
+function isWidespread(item) {
+  const v = (item.vendor || '').toLowerCase();
+  if (v && WIDESPREAD.some((w) => v.includes(w))) return true;
+  const t = (item.title || '').toLowerCase();
+  return WIDESPREAD.some((w) => t.includes(w));
+}
 const FRANCE_RE = /\bfrance\b|fran[çc]ais|française|\banssi\b|\bcnil\b|cert-fr|gendarmerie|\bparis\b|hexagone|\boiv\b|secnumcloud/i;
 
 /**
@@ -117,34 +136,56 @@ export function itemAuthority(item) {
   return weights.length ? Math.max(...weights) : DEFAULT_AUTH;
 }
 
+function recencyBonus(item, big = 6, mid = 3) {
+  if (!item.pubDate) return 0;
+  const ageH = (Date.now() - new Date(item.pubDate).getTime()) / 3_600_000;
+  return ageH <= 24 ? big : ageH <= 72 ? mid : 0;
+}
+
 /**
- * Calcule un score d'importance sur 100 pour prioriser la lecture.
+ * Score d'une VULNÉRABILITÉ : criticité technique + importance des logiciels touchés.
+ * (L'autorité/le recoupement comptent peu : une RCE critique reste critique même si
+ *  une seule base la référence.)
+ * @param {object} item
+ * @returns {number} 0-100
+ */
+function scoreVuln(item) {
+  let s = ({ critical: 35, high: 22, news: 14, culture: 10 })[item.severity] ?? 14;
+  if (item.cvss) s += Math.round((item.cvss / 10) * 20);   // criticité CVSS, jusqu'à +20
+  if (item.exploited) s += 25;                              // activement exploité (CISA KEV)
+  else if (EXPLOIT_RE.test(`${item.title} ${item.detail || item.body || ''}`)) s += 12;
+  if (item.ransomware) s += 8;
+  if (isWidespread(item)) s += 18;                          // logiciel/système très répandu
+  s += Math.round(itemAuthority(item) / 12);               // léger gage de fiabilité (≤ +4)
+  s += recencyBonus(item, 5, 3);
+  return Math.max(0, Math.min(100, Math.round(s)));
+}
+
+/**
+ * Score d'une INFO (attaque, incident, signal) : importance par l'autorité de la
+ * source et le suivi par la communauté cyber (recoupement multi-organismes).
+ * @param {object} item
+ * @returns {number} 0-100
+ */
+function scoreNews(item) {
+  // 1. Organisation de confiance qui publie (18 → 50)
+  let s = itemAuthority(item);
+  // 2. Suivi par de nombreux organismes : +13 par source au-delà du premier (max +42)
+  s += Math.min(42, Math.max(0, (item.corroboration || 1) - 1) * 13);
+  // 3. Gravité de l'évènement
+  s += ({ critical: 14, high: 10, news: 12, culture: 6 })[item.severity] ?? 8;
+  // 4. Fraîcheur
+  s += recencyBonus(item, 6, 3);
+  return Math.max(0, Math.min(100, Math.round(s)));
+}
+
+/**
+ * Score d'importance sur 100 — deux logiques distinctes selon le type de topic.
  * @param {object} item
  * @returns {number} 0-100
  */
 export function scoreItem(item) {
-  // 1. Autorité de l'organisation (18 → 50)
-  let s = itemAuthority(item);
-
-  // 2. Recoupement multi-sources : +11 par média au-delà du premier (max +33)
-  s += Math.min(33, Math.max(0, (item.corroboration || 1) - 1) * 11);
-
-  // 3. Gravité (surtout pour une menace)
-  s += ({ critical: 20, high: 13, news: 8, culture: 5 })[item.severity] ?? 6;
-
-  const isThreat = item.section === 'vulns' || item.section === 'attacks';
-  if (item.exploited) s += 12;          // exploitation confirmée (CISA KEV)
-  else if (isThreat && EXPLOIT_RE.test(`${item.title} ${item.detail || item.body || ''}`)) s += 7;
-  if (item.cvss) s += Math.round((item.cvss / 10) * 6); // jusqu'à +6
-
-  // 4. Fraîcheur (léger)
-  if (item.pubDate) {
-    const ageH = (Date.now() - new Date(item.pubDate).getTime()) / 3_600_000;
-    if (ageH <= 24) s += 6;
-    else if (ageH <= 72) s += 3;
-  }
-
-  return Math.max(0, Math.min(100, Math.round(s)));
+  return item.section === 'vulns' ? scoreVuln(item) : scoreNews(item);
 }
 
 // Premier extrait propre (coupé à la phrase) pour la preview multi-lignes.

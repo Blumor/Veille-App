@@ -35,6 +35,7 @@ const FEEDS = [
   // --- Autorités & CERT (avis officiels) ---
   { url: 'https://www.cert.ssi.gouv.fr/alerte/feed/',           label: 'CERT-FR Alertes'   },
   { url: 'https://www.cert.ssi.gouv.fr/avis/feed/',             label: 'CERT-FR Avis'      },
+  { url: 'https://www.cert.ssi.gouv.fr/actualite/feed/',        label: 'CERT-FR Actualité' },
   { url: 'https://www.cisa.gov/cybersecurity-advisories/all.xml', label: 'CISA Advisories' },
   { url: 'https://isc.sans.edu/rssfeed_full.xml',               label: 'SANS ISC'          },
 
