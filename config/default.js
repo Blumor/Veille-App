@@ -1,5 +1,3 @@
-import 'dotenv/config';
-
 /**
  * Configuration centrale du projet.
  * Source unique de vérité pour les paramètres serveur
@@ -7,6 +5,7 @@ import 'dotenv/config';
  *
  * La génération est 100 % gratuite : agrégation RSS + API NVD + catalogue CISA KEV,
  * rédaction par gabarits déterministes (aucune clé API requise).
+ * Pour changer le port : variable d'environnement PORT (ex. `PORT=8080 npm start`).
  */
 
 const VULNS   = { id: 'vulns',   label: 'Vulnérabilités ultra-critiques', icon: '🔴' };

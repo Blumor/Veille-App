@@ -2,6 +2,7 @@ name: Veille automatique
 
 # Génère les rapports sans aucune machine allumée : GitHub exécute le cron,
 # puis le rapport est commité dans le dépôt (data/reports/).
+# Génération 100 % gratuite (RSS + NVD + CISA KEV) : AUCUN secret ni clé API requis.
 #
 # IMPORTANT : les horaires cron sont en UTC. Paris = UTC+2 (été) / UTC+1 (hiver).
 # Ajuste les valeurs ci-dessous selon l'heure souhaitée.
@@ -12,6 +13,7 @@ on:
   schedule:
     - cron: '30 5 * * *'   # quotidien — ~07h30 Paris (été) / 06h30 (hiver)
     - cron: '0 6 * * 0'    # hebdomadaire le dimanche — ~08h00 Paris (été)
+    - cron: '0 6 1 * *'    # mensuel le 1er du mois — ~08h00 Paris (été)
   workflow_dispatch:        # déclenchement manuel depuis l'onglet Actions
     inputs:
       type:
@@ -19,7 +21,7 @@ on:
         required: true
         default: daily
         type: choice
-        options: [daily, weekly]
+        options: [daily, weekly, monthly]
 
 permissions:
   contents: write           # autorise le push du rapport généré
@@ -44,6 +46,8 @@ jobs:
         run: |
           if [ "${{ github.event_name }}" = "workflow_dispatch" ]; then
             echo "type=${{ github.event.inputs.type }}" >> "$GITHUB_OUTPUT"
+          elif [ "${{ github.event.schedule }}" = "0 6 1 * *" ]; then
+            echo "type=monthly" >> "$GITHUB_OUTPUT"
           elif [ "${{ github.event.schedule }}" = "0 6 * * 0" ]; then
             echo "type=weekly" >> "$GITHUB_OUTPUT"
           else
@@ -51,9 +55,6 @@ jobs:
           fi
 
       - name: Générer le rapport
-        env:
-          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
-          VEILLE_MODEL: claude-sonnet-4-6
         run: node src/index.js ${{ steps.kind.outputs.type }}
 
       - name: Commiter le rapport
