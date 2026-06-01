@@ -1,8 +1,3 @@
-/**
- * Extraction tolérante du JSON renvoyé par le modèle + normalisation.
- * Garantit qu'un rapport stocké respecte toujours la même forme.
- */
-
 const SEVERITIES = ['critical', 'high', 'news', 'culture'];
 
 export function extractJSON(text) {
@@ -12,15 +7,8 @@ export function extractJSON(text) {
   const b = t.lastIndexOf('}');
   if (a < 0 || b < 0) return null;
   const raw = t.slice(a, b + 1);
-  try {
-    return JSON.parse(raw);
-  } catch {
-    // seconde tentative : retire les virgules traînantes
-    try {
-      return JSON.parse(raw.replace(/,\s*([}\]])/g, '$1'));
-    } catch {
-      return null;
-    }
+  try { return JSON.parse(raw); } catch {
+    try { return JSON.parse(raw.replace(/,\s*([}\]])/g, '$1')); } catch { return null; }
   }
 }
 
@@ -28,12 +16,16 @@ function clean(s) {
   return typeof s === 'string' ? s.trim() : '';
 }
 
-/**
- * Normalise un rapport brut en structure stable et stockable.
- * @param {object} parsed - objet issu du modèle
- * @param {'daily'|'weekly'} type
- * @param {string} dateISO
- */
+function normalizeSources(sources, fallbackUrl) {
+  if (Array.isArray(sources) && sources.length) {
+    return sources
+      .filter((s) => s?.url)
+      .map((s) => ({ url: clean(s.url), label: clean(s.label) || 'Source' }));
+  }
+  const url = clean(fallbackUrl);
+  return url ? [{ url, label: 'Source' }] : [];
+}
+
 export function normalizeReport(parsed, type, dateISO) {
   if (!parsed || !Array.isArray(parsed.sections)) {
     throw new Error('Rapport invalide : champ "sections" manquant.');
@@ -45,12 +37,17 @@ export function normalizeReport(parsed, type, dateISO) {
       id: clean(sec.id) || 'autres',
       items: (Array.isArray(sec.items) ? sec.items : [])
         .map((it) => ({
-          title: clean(it.title),
-          cve: it.cve && it.cve !== 'null' ? clean(it.cve) : null,
+          title:    clean(it.title),
+          cve:      it.cve && it.cve !== 'null' ? clean(it.cve) : null,
           severity: SEVERITIES.includes(it.severity) ? it.severity : 'news',
-          body: clean(it.body),
-          action: clean(it.action) || null,
-          url: clean(it.url) || null,
+          score:    Number.isFinite(+it.score) ? Math.max(0, Math.min(100, Math.round(+it.score))) : 0,
+          corroboration: Number.isFinite(+it.corroboration) ? Math.max(1, Math.round(+it.corroboration)) : 1,
+          body:     clean(it.body),
+          detail:   it.detail ? clean(it.detail) : null,
+          action:   clean(it.action) || null,
+          sources:  normalizeSources(it.sources, it.url),
+          url:      clean(it.url) || (it.sources?.[0]?.url ? clean(it.sources[0].url) : null),
+          pubDate:  it.pubDate ? clean(it.pubDate) : null,
         }))
         .filter((it) => it.title && it.body),
     }))
@@ -64,8 +61,8 @@ export function normalizeReport(parsed, type, dateISO) {
     id: `${type}-${date}`,
     type,
     date,
-    title: clean(parsed.title) || `Briefing du ${date}`,
-    summary: clean(parsed.summary) || null,
+    title:       clean(parsed.title) || `Briefing du ${date}`,
+    summary:     clean(parsed.summary) || null,
     generatedAt: new Date().toISOString(),
     sections,
   };

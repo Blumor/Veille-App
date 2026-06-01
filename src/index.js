@@ -3,11 +3,16 @@
  * Utilisé par les tâches planifiées (cron). Exemples :
  *   node src/index.js daily
  *   node src/index.js weekly
+ *   node src/index.js monthly
  */
 import { generateReport } from './generator/generate.js';
 import { saveReport } from './storage/fileStore.js';
 
 const type = process.argv[2] || 'daily';
+if (!['daily', 'weekly', 'monthly'].includes(type)) {
+  console.error(`[veille] Type invalide : "${type}" (attendu daily | weekly | monthly)`);
+  process.exit(1);
+}
 
 try {
   console.log(`[veille] Génération du rapport "${type}"…`);

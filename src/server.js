@@ -23,9 +23,9 @@ app.get('/api/reports/:id', async (req, res) => {
   res.json(report);
 });
 
-// Génération à la demande : POST { "type": "daily" | "weekly" }
+// Génération à la demande : POST { "type": "daily" | "weekly" | "monthly" }
 app.post('/api/reports/generate', async (req, res) => {
-  const type = req.body?.type === 'weekly' ? 'weekly' : 'daily';
+  const type = ['weekly', 'monthly'].includes(req.body?.type) ? req.body.type : 'daily';
   try {
     const report = await generateReport(type);
     await saveReport(report);
@@ -46,5 +46,5 @@ app.use(express.static(path.resolve(__dirname, '../public')));
 
 app.listen(config.port, () => {
   console.log(`\n  ▣  Veille Cyber — http://localhost:${config.port}`);
-  console.log(`     Modèle : ${config.model}\n`);
+  console.log(`     Sources : RSS · NVD · CISA KEV (génération gratuite, sans clé API)\n`);
 });
