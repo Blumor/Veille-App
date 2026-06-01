@@ -1,24 +1,18 @@
 # Veille Cyber
 
-Console de **veille et de threat intelligence cybersécurité**. L'outil agrège
-automatiquement l'actualité cyber (vulnérabilités, attaques, tendances) depuis des
-sources fiables — françaises et internationales —, **rédige une synthèse en français**,
-attribue à chaque information un **score d'importance /100** pour lire l'essentiel en
-premier, et présente le tout dans une console web claire (PC et mobile).
+Console de **veille et de threat intelligence cybersécurité**. L'outil agrège automatiquement l'actualité cyber (vulnérabilités, attaques, tendances) depuis des sources fiables françaises et internationales, rédige une synthèse, attribue à chaque information un **score d'importance /100** pour mettre en avant l'essentiel, et présente le tout dans une page web claire (adaptée PC et mobile).
 
 ## 🔗 Accès en ligne
 
 **👉 [blumor.github.io/Veille-App](https://blumor.github.io/Veille-App/)**
 
-Le site est public et toujours à jour : rapports **quotidiens**, **hebdomadaires** et
-**mensuels** générés et publiés automatiquement. Rien à installer pour le consulter.
+Le site est public et s'auto-alimente : rapports **quotidiens**, **hebdomadaires** et **mensuels** générés et publiés automatiquement.
 
 ---
 
 ## Fonctionnalités
 
-- **Rapports quotidien / hebdomadaire / mensuel**, nommés selon la période couverte
-  (« Briefing du lundi 1 juin », « Semaine du 25 mai au 1 juin », « Veille cyber — Mai 2026 »).
+- **Rapports quotidien / hebdomadaire / mensuel**, nommés selon la période couverte (« Briefing du lundi 1 juin », « Semaine du 25 mai au 1 juin », « Veille cyber — Mai 2026 »).
 - **Score d'importance /100** sur chaque information, pour prioriser la lecture.
 - **Filtre 🇫🇷 France / 🌍 International** — pour suivre spécifiquement l'état de la cyber en France.
 - **Recherche plein texte** (titre **et** contenu : CVE, entreprise, sujet…).
@@ -27,30 +21,22 @@ Le site est public et toujours à jour : rapports **quotidiens**, **hebdomadaire
 
 ## Calcul du score d'importance
 
-Deux logiques distinctes, déterministes et reproductibles (aucune analyse par IA) :
+Deux logiques distinctes, déterministes et reproductibles :
 
-**Vulnérabilités** — scores communautaires standards (approche type *SSVC*) :
-`gravité CVSS` + `EPSS` (probabilité d'exploitation) + `CISA KEV` (exploitation avérée) +
-`ubiquité du logiciel affecté`. Une faille critique reste critique même référencée par une seule base.
+**Vulnérabilités** — scores communautaires standards (approche type _SSVC_) :
+`gravité CVSS` + `EPSS` (probabilité d'exploitation) + `CISA KEV` (exploitation avérée) + `ubiquité du logiciel affecté`. Une faille critique reste critique même référencée par une seule base.
 
 **Autres infos (attaques, signaux)** — deux cadres reconnus combinés :
-- **Admiralty Code (NATO AJP-2.1)** : fiabilité de la source, évaluée *en isolation* → une
-  source de référence (ANSSI, CISA, CERT-FR…) suffit à rendre une info majeure, même seule.
-- **Valeurs d'information de Galtung & Ruge** : impact intrinsèque du contenu (gravité de la
-  menace, ampleur/magnitude, acteurs et cibles majeurs).
 
-Le recoupement multi-sources est **affiché** (« recoupé ×N ») mais n'entre **pas** dans le score :
-une information critique relayée par une seule source n'en est pas moins importante.
+- **Admiralty Code (NATO AJP-2.1)** : fiabilité de la source, évaluée _en isolation_ → une
+  source de référence (ANSSI, CISA, CERT-FR…) suffit à rendre une info majeure, même seule.
+- **Valeurs d'information de Galtung & Ruge** : impact intrinsèque du contenu (gravité de la menace, ampleur/magnitude, acteurs et cibles majeurs).
 
 ## Sources
 
-Toutes gratuites, sans inscription ni clé :
+Toutes les sources utilisées sont gratuites, sans inscription ni clé :
 
-- **30 flux RSS** — presse internationale (The Hacker News, BleepingComputer, Krebs, Dark Reading,
-  The Record, SecurityWeek, Security Affairs, GBHackers, The Register, CyberScoop, Help Net,
-  Infosecurity), **presse francophone** (Zataz, Cyberattaque.org, Numerama, IT-Connect, UnderNews,
-  Silicon.fr, Global Security Mag), **autorités** (CERT-FR alertes/avis/actualité, CISA, SANS ISC),
-  **recherche éditeurs** (Cisco Talos, ESET, Unit 42, Google Project Zero, Schneier).
+- **30 flux RSS** — presse internationale (The Hacker News, BleepingComputer, Krebs, Dark Reading, The Record, SecurityWeek, Security Affairs, GBHackers, The Register, CyberScoop, Help Net, Infosecurity), **presse francophone** (Zataz, Cyberattaque.org, Numerama, IT-Connect, UnderNews, Silicon.fr, Global Security Mag), **autorités** (CERT-FR alertes/avis/actualité, CISA, SANS ISC), **recherche éditeurs** (Cisco Talos, ESET, Unit 42, Google Project Zero, Schneier).
 - **API NVD** (NIST) — CVE critiques, score CVSS.
 - **CISA KEV** — vulnérabilités activement exploitées.
 - **EPSS** (FIRST.org) — probabilité d'exploitation par CVE.
@@ -76,17 +62,16 @@ Aucune configuration ni clé n'est nécessaire.
 
 ## Commandes
 
-| Commande | Rôle |
-|---|---|
-| `npm start` | Lance la console web (port 4317, modifiable via `PORT`) |
-| `npm run dev` | Idem en mode watch |
-| `npm run generate:daily` | Génère et archive le rapport du jour |
-| `npm run generate:weekly` | Génère et archive le rapport de la semaine |
-| `npm run generate:monthly` | Génère et archive le rapport du mois |
-| `npm run build` | Construit le site statique (`dist/`) pour l'hébergement |
+| Commande                   | Rôle                                                    |
+| -------------------------- | ------------------------------------------------------- |
+| `npm start`                | Lance la console web (port 4317, modifiable via `PORT`) |
+| `npm run dev`              | Idem en mode watch                                      |
+| `npm run generate:daily`   | Génère et archive le rapport du jour                    |
+| `npm run generate:weekly`  | Génère et archive le rapport de la semaine              |
+| `npm run generate:monthly` | Génère et archive le rapport du mois                    |
+| `npm run build`            | Construit le site statique (`dist/`) pour l'hébergement |
 
-La génération automatique (GitHub Actions) et le déploiement (GitHub Pages) tournent sans
-intervention : rapports publiés chaque jour, le lundi, et le 1er du mois.
+La génération automatique (GitHub Actions) et le déploiement (GitHub Pages) tournent sans intervention : rapports publiés chaque jour, le lundi, et le 1er du mois.
 
 ## Structure
 
