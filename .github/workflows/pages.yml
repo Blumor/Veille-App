@@ -1,0 +1,56 @@
+name: Déploiement GitHub Pages
+
+# Publie la console en site statique sur GitHub Pages.
+# Build = npm run build (assemble dist/ : front + rapports), puis déploiement Pages.
+
+on:
+  push:
+    branches: [main]                    # à chaque modification du code
+  workflow_run:
+    workflows: ["Veille automatique"]   # ET après chaque génération automatique de rapport
+    types: [completed]
+  workflow_dispatch:                     # déclenchement manuel
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: true
+
+jobs:
+  deploy:
+    # Sur push/manuel : toujours. Sur workflow_run : seulement si la génération a réussi.
+    if: ${{ github.event_name != 'workflow_run' || github.event.workflow_run.conclusion == 'success' }}
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Récupérer le code
+        uses: actions/checkout@v4
+
+      - name: Installer Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Installer les dépendances
+        run: npm install
+
+      - name: Construire le site statique (dist/)
+        run: npm run build
+
+      - name: Configurer Pages
+        uses: actions/configure-pages@v5
+
+      - name: Téléverser l'artefact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: dist
+
+      - name: Déployer sur GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
