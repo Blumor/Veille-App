@@ -72,7 +72,9 @@ function defaultAction(item) {
 const AUTHORITY = {
   // Autorités nationales & agences
   'CISA KEV': 50, 'CISA Advisories': 50, 'CERT-FR Alertes': 50, 'CERT-FR Avis': 48,
-  'CERT-FR Actualité': 48,
+  'CERT-FR Actualité': 48, 'ANSSI': 50,
+  // Connecteurs spécialisés
+  'GitHub Advisory': 32, 'ransomware.live': 28, 'Hacker News': 20, 'Discussion HN': 20,
   // Recherche / threat intelligence éditeurs
   'Project Zero': 46, 'Cisco Talos': 42, 'Unit 42': 42, 'ESET WeLiveSec.': 40,
   // Presse spécialisée de référence
@@ -91,7 +93,7 @@ const DEFAULT_AUTH = 18;
 // Sources « France-centrées » : autorité nationale ou presse breach FR → toujours région France.
 // (Les médias FR généralistes — Numerama, IT-Connect… — couvrent aussi l'actu mondiale :
 //  ils ne basculent en région France que si le CONTENU parle de la France.)
-const FR_CENTRIC = new Set(['CERT-FR Alertes', 'CERT-FR Avis', 'CERT-FR Actualité', 'Zataz', 'Cyberattaque.org']);
+const FR_CENTRIC = new Set(['CERT-FR Alertes', 'CERT-FR Avis', 'CERT-FR Actualité', 'ANSSI', 'Zataz', 'Cyberattaque.org']);
 
 // Logiciels / systèmes à très large déploiement : une faille chez eux a un impact massif.
 const WIDESPREAD = [
@@ -154,6 +156,7 @@ function scoreVuln(item) {
   if (item.cvss) s += Math.round((item.cvss / 10) * 20);   // criticité CVSS, jusqu'à +20
   if (item.exploited) s += 25;                              // activement exploité (CISA KEV)
   else if (EXPLOIT_RE.test(`${item.title} ${item.detail || item.body || ''}`)) s += 12;
+  else if (item.epss) s += Math.round(item.epss * 15);     // probabilité d'exploitation (EPSS), ≤ +15
   if (item.ransomware) s += 8;
   if (isWidespread(item)) s += 18;                          // logiciel/système très répandu
   s += Math.round(itemAuthority(item) / 12);               // léger gage de fiabilité (≤ +4)
@@ -172,9 +175,11 @@ function scoreNews(item) {
   let s = itemAuthority(item);
   // 2. Suivi par de nombreux organismes : +13 par source au-delà du premier (max +42)
   s += Math.min(42, Math.max(0, (item.corroboration || 1) - 1) * 13);
-  // 3. Gravité de l'évènement
+  // 3. Suivi par la communauté (points Hacker News), ≤ +18
+  if (item.hnPoints) s += Math.min(18, Math.round(item.hnPoints / 20));
+  // 4. Gravité de l'évènement
   s += ({ critical: 14, high: 10, news: 12, culture: 6 })[item.severity] ?? 8;
-  // 4. Fraîcheur
+  // 5. Fraîcheur
   s += recencyBonus(item, 6, 3);
   return Math.max(0, Math.min(100, Math.round(s)));
 }

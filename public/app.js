@@ -8,6 +8,7 @@ const STATE = {
   activeItem: null,
   sectionFilter: 'all',
   region: 'all',   // 'all' | 'fr' | 'intl'
+  query: '',       // recherche plein texte (titre + contenu)
   static: false,   // true = hébergement statique (sans backend, lecture des JSON)
 };
 
@@ -72,6 +73,24 @@ const frDateFull = (iso) => {
   return d.toLocaleDateString('fr-FR', { day: 'numeric', month: 'long', year: 'numeric' });
 };
 
+// Libellé d'un rapport dans l'archive, selon la période couverte par son type.
+function reportLabel(type, dateISO) {
+  const base = new Date(dateISO + 'T12:00:00');
+  if (Number.isNaN(base.getTime())) return dateISO;
+  const day = (d) => d.toLocaleDateString('fr-FR', { day: 'numeric', month: 'short' });
+  const dayY = (d) => d.toLocaleDateString('fr-FR', { day: 'numeric', month: 'short', year: 'numeric' });
+  if (type === 'weekly') {
+    const start = new Date(base); start.setDate(base.getDate() - 7);
+    return `${day(start)} – ${dayY(base)}`;
+  }
+  if (type === 'monthly') {
+    const prev = new Date(base); prev.setDate(1); prev.setDate(0);
+    const m = prev.toLocaleDateString('fr-FR', { month: 'long', year: 'numeric' });
+    return m.charAt(0).toUpperCase() + m.slice(1);
+  }
+  return base.toLocaleDateString('fr-FR', { weekday: 'long', day: 'numeric', month: 'long' });
+}
+
 // Palette du score d'importance (0-100).
 const scoreClass = (n) => (n >= 80 ? 'sc-crit' : n >= 60 ? 'sc-high' : n >= 40 ? 'sc-mid' : 'sc-low');
 
@@ -124,10 +143,10 @@ function renderSidebar() {
   const itemHTML = (x) => `
     <div class="item ${STATE.selected === x.id ? 'active' : ''}" data-id="${x.id}">
       <div class="item-row">
-        <span class="it-date">${frDate(x.date)}</span>
+        <span class="it-date">${esc(reportLabel(x.type, x.date))}</span>
         <span class="tag ${x.type}">${typeMeta(x.type).tag}</span>
       </div>
-      <div class="it-meta">${x.date}</div>
+      <div class="it-meta">généré le ${x.date}</div>
     </div>`;
   let html = '';
   for (const t of ['daily', 'weekly', 'monthly']) {
@@ -136,6 +155,31 @@ function renderSidebar() {
   }
   side.innerHTML = html;
   side.querySelectorAll('.item').forEach((el) => (el.onclick = () => selectReport(el.dataset.id)));
+}
+
+// ── recherche (barre + binding) ─────────────────────────────────────────────────
+function renderSearch() {
+  return `<div class="search-row">
+    <span class="search-ic">⌕</span>
+    <input id="searchInput" class="search-input" type="search" autocomplete="off"
+      placeholder="Rechercher un sujet, une CVE, une entreprise…" value="${esc(STATE.query)}">
+    <span class="search-count" id="searchCount"></span>
+  </div>`;
+}
+
+function bindSearch(rep) {
+  const input = $('#searchInput');
+  if (!input) return;
+  const apply = () => {
+    STATE.query = input.value;
+    const gc = $('#feedContainer');
+    gc.innerHTML = renderFeed(rep);
+    bindCards(rep);
+    const c = $('#searchCount');
+    if (c) c.textContent = STATE.query.trim() ? `${getFilteredItems(rep).length} résultat(s)` : '';
+  };
+  input.oninput = apply;
+  apply();
 }
 
 // ── filtre région (Tout / France / International) ───────────────────────────────
@@ -175,16 +219,30 @@ function renderTabs(rep) {
   </div>`;
 }
 
+// ── recherche plein texte (titre + contenu + CVE + sources) ─────────────────────
+function matchesQuery(it) {
+  const q = STATE.query.trim().toLowerCase();
+  if (!q) return true;
+  const hay = [it.title, it.body, it.detail, it.cve, ...(it.sources || []).map((s) => s.label)]
+    .filter(Boolean).join(' ').toLowerCase();
+  return q.split(/\s+/).every((w) => hay.includes(w));   // tous les mots (ET)
+}
+
 // ── feed (replaces grid) ──────────────────────────────────────────────────────
 function getFilteredItems(rep) {
+  const searching = STATE.query.trim().length > 0;
   const items = [];
   for (const sec of rep?.sections || []) {
-    if (STATE.sectionFilter !== 'all' && sec.id !== STATE.sectionFilter) continue;
+    // En recherche, on balaie TOUTES les sections (le filtre d'onglet est ignoré).
+    if (!searching && STATE.sectionFilter !== 'all' && sec.id !== STATE.sectionFilter) continue;
     for (const it of sec.items || []) {
       if (!inRegion(it)) continue;
+      if (!matchesQuery(it)) continue;
       items.push({ ...it, _section: sec.id });
     }
   }
+  // En recherche : tout classé par score (la synthèse n'est plus épinglée).
+  if (searching) return items.sort((a, b) => (b.score || 0) - (a.score || 0));
   // Vue « Tous » : la synthèse reste en tête, le reste est classé par score décroissant.
   if (STATE.sectionFilter === 'all') {
     const synth = items.filter((i) => i._section === 'synthese');
@@ -359,6 +417,7 @@ function renderReport(rep) {
       <h2 class="rep-title">${esc(rep.title)}</h2>
       ${rep.summary ? `<p class="rep-summary">${esc(rep.summary)}</p>` : ''}
     </div>
+    ${renderSearch()}
     ${renderRegionFilter(rep)}
     ${renderTabs(rep)}
     <div id="feedContainer">${renderFeed(rep)}</div>
@@ -368,6 +427,7 @@ function renderReport(rep) {
   bindCards(rep);
   bindTabs(rep);
   bindRegion(rep);
+  bindSearch(rep);
 }
 
 function bindRegion(rep) {
@@ -440,6 +500,7 @@ async function generate(type) {
 async function selectReport(id) {
   STATE.selected = id;
   STATE.sectionFilter = 'all';
+  STATE.query = '';   // nouvelle recherche par rapport
   renderSidebar();
   try {
     renderReport(await loadReport(id));

@@ -1,6 +1,11 @@
 import { collectRSSItems } from './rssCollector.js';
 import { collectNVDCves } from './nvdCollector.js';
 import { collectKEV } from './kevCollector.js';
+import { collectRansomware } from './ransomwareCollector.js';
+import { collectGitHubAdvisories } from './githubAdvisories.js';
+import { collectHackerNews } from './hnCollector.js';
+import { collectANSSI } from './anssiScraper.js';
+import { enrichEPSS } from './epss.js';
 import { clusterItems } from './cluster.js';
 import { composeItem, composeSummary, composeSynthese, itemAuthority } from './compose.js';
 import { normalizeReport } from '../lib/schema.js';
@@ -12,10 +17,29 @@ export function todayISO() {
 
 const HOURS = { daily: 24, weekly: 168, monthly: 720 };
 
+// ── Titres des rapports (reflètent la période couverte) ─────────────────────────
+const cap = (s) => s.charAt(0).toUpperCase() + s.slice(1);
+const D = (iso) => new Date(iso + 'T12:00:00');
+const frFull  = (iso) => D(iso).toLocaleDateString('fr-FR', { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' });
+const frDay   = (iso) => D(iso).toLocaleDateString('fr-FR', { day: 'numeric', month: 'long' });
+const frDayY  = (iso) => D(iso).toLocaleDateString('fr-FR', { day: 'numeric', month: 'long', year: 'numeric' });
+
+function weekRange(iso) {
+  const end = D(iso);
+  const start = new Date(end); start.setDate(end.getDate() - 7);
+  const startISO = start.toISOString().slice(0, 10);
+  return `Semaine du ${frDay(startISO)} au ${frDayY(iso)}`;
+}
+function monthCovered(iso) {
+  // Rapport mensuel généré le 1er → couvre le mois précédent.
+  const d = D(iso); d.setDate(1); d.setDate(0); // dernier jour du mois précédent
+  return cap(d.toLocaleDateString('fr-FR', { month: 'long', year: 'numeric' }));
+}
+
 const TITLES = {
-  daily:   (d) => `Briefing Cyber — ${d}`,
-  weekly:  (d) => `Veille Cyber — Semaine du ${d}`,
-  monthly: (d) => `Veille Cyber — Mois au ${d}`,
+  daily:   (d) => `Briefing du ${frFull(d)}`,
+  weekly:  (d) => weekRange(d),
+  monthly: (d) => `Veille cyber — ${monthCovered(d)}`,
 };
 
 /**
@@ -30,20 +54,32 @@ export async function generateReport(type, dateISO = todayISO()) {
   }
   const hours = HOURS[type];
 
-  const [rssItems, nvdItems, kevItems] = await Promise.all([
-    collectRSSItems(hours),
-    collectNVDCves(hours),
-    collectKEV(hours),
-  ]);
+  // Collecte multi-sources en parallèle (chaque connecteur tolère ses propres pannes).
+  const [rssItems, nvdItems, kevItems, ransomItems, ghItems, hnItems, anssiItems] =
+    await Promise.all([
+      collectRSSItems(hours),
+      collectNVDCves(hours),
+      collectKEV(hours),
+      collectRansomware(hours),
+      collectGitHubAdvisories(hours),
+      collectHackerNews(hours),
+      collectANSSI(hours),
+    ]);
 
-  const collected = [...kevItems, ...nvdItems, ...rssItems];
+  const collected = [
+    ...kevItems, ...nvdItems, ...ghItems, ...rssItems,
+    ...ransomItems, ...anssiItems, ...hnItems,
+  ];
   if (!collected.length) {
     throw new Error('Aucun article collecté — vérifie ta connexion réseau.');
   }
 
   // Regroupe les articles d'une même info (même CVE / titres proches) pour
-  // mesurer le recoupement multi-sources, puis rédige chaque item représentatif.
+  // mesurer le recoupement multi-sources.
   const clusters = clusterItems(collected, itemAuthority);
+  // Enrichit les vulnérabilités avec leur probabilité d'exploitation (EPSS).
+  await enrichEPSS(clusters);
+  // Rédige + score chaque item représentatif.
   const all = clusters.map(composeItem);
 
   // Regroupe par section + tri par score d'importance décroissant.
