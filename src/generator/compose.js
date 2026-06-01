@@ -145,43 +145,84 @@ function recencyBonus(item, big = 6, mid = 3) {
 }
 
 /**
- * Score d'une VULNÉRABILITÉ : criticité technique + importance des logiciels touchés.
- * (L'autorité/le recoupement comptent peu : une RCE critique reste critique même si
- *  une seule base la référence.)
+ * Score d'une VULNÉRABILITÉ — uniquement les scores communautaires standards :
+ * CVSS (criticité technique), EPSS (probabilité d'exploitation), CISA KEV
+ * (exploitation avérée) et l'ubiquité du logiciel affecté (cf. SSVC : prévalence /
+ * automatisabilité). Ni autorité éditoriale ni recoupement : une RCE critique reste
+ * critique même référencée par une seule base.
  * @param {object} item
  * @returns {number} 0-100
  */
 function scoreVuln(item) {
-  let s = ({ critical: 35, high: 22, news: 14, culture: 10 })[item.severity] ?? 14;
-  if (item.cvss) s += Math.round((item.cvss / 10) * 20);   // criticité CVSS, jusqu'à +20
-  if (item.exploited) s += 25;                              // activement exploité (CISA KEV)
+  let s = ({ critical: 30, high: 20, news: 12, culture: 8 })[item.severity] ?? 12;
+  if (item.cvss) s += Math.round((item.cvss / 10) * 25);   // CVSS, jusqu'à +25
+  if (item.exploited) s += 25;                             // KEV : exploitation avérée
+  else if (item.epss != null) s += Math.round(item.epss * 20); // EPSS : probabilité, ≤ +20
   else if (EXPLOIT_RE.test(`${item.title} ${item.detail || item.body || ''}`)) s += 12;
-  else if (item.epss) s += Math.round(item.epss * 15);     // probabilité d'exploitation (EPSS), ≤ +15
-  if (item.ransomware) s += 8;
-  if (isWidespread(item)) s += 18;                          // logiciel/système très répandu
-  s += Math.round(itemAuthority(item) / 12);               // léger gage de fiabilité (≤ +4)
-  s += recencyBonus(item, 5, 3);
+  if (item.ransomware) s += 6;
+  if (isWidespread(item)) s += 15;                         // ubiquité du logiciel/système
+  s += recencyBonus(item, 4, 2);
   return Math.max(0, Math.min(100, Math.round(s)));
 }
 
+// ── Impact du contenu d'une info (valeurs d'information de Galtung & Ruge) ───────
+// Lexique déterministe : « négativité » (gravité de la menace) + acteurs/cibles
+// majeurs (prominence). Chaque signal présent ajoute son poids.
+const IMPACT_LEXICON = [
+  { re: /zero.?day|0.?day|jour.?z[ée]ro/, w: 10 },
+  { re: /actively exploit|exploited in the wild|activement exploit|exploitation active|in[- ]the[- ]wild/, w: 10 },
+  { re: /\brce\b|remote code execution|ex[ée]cution de code/, w: 9 },
+  { re: /supply.?chain|cha[îi]ne d'approvisionnement|supply chain/, w: 9 },
+  { re: /nation.?state|state.?sponsored|\bapt\d*\b|[ée]tatique|espionnage|spyware/, w: 8 },
+  { re: /critical infrastructure|infrastructure critique|\boiv\b|\bscada\b|\bics\b|h[ôo]pital|hospital|sant[ée]|[ée]nergie|energy|nucl[ée]aire/, w: 8 },
+  { re: /ransomware|ran[çc]ongiciel/, w: 6 },
+  { re: /data breach|fuite de donn[ée]es|\bleak\b|vol de donn[ée]es|exfiltrat|piratage/, w: 5 },
+  { re: /backdoor|porte d[ée]rob[ée]e|\bwiper\b|rootkit|botnet/, w: 5 },
+  { re: /\bgouvernement|government|d[ée]fense|defense|minist[èe]re|military|arm[ée]e/, w: 5 },
+  { re: /urgent|emergency|alerte|patch now|correctif urgent|sans d[ée]lai/, w: 4 },
+];
+const SUPERLATIVE = /largest|biggest|record|massive|unprecedented|first.?ever|jamais vu|sans pr[ée]c[ée]dent|historique|g[ée]ant/;
+
+// Magnitude (ampleur) : ordre de grandeur du nombre de victimes/débit/montant.
+function magnitudeBonus(t) {
+  let b = 0;
+  if (/(\d+(?:[.,]\d+)?)\s*(milliards?|billion)/.test(t)) b = Math.max(b, 6);
+  if (/(\d+(?:[.,]\d+)?)\s*(millions?|\bm\b)/.test(t)) b = Math.max(b, 5);
+  if (/(\d+(?:[.,]\d+)?)\s*tbps/.test(t)) b = Math.max(b, 5);
+  const m = t.match(/(\d[\d.,\s]{3,})\s*(records|comptes|accounts|users|utilisateurs|victim|victimes|personnes|patients|clients)/);
+  if (m) {
+    const n = parseInt(m[1].replace(/[.,\s]/g, ''), 10);
+    if (n >= 1e6) b = Math.max(b, 6);
+    else if (n >= 1e5) b = Math.max(b, 4);
+    else if (n >= 1e4) b = Math.max(b, 2);
+  }
+  return b;
+}
+
+function contentImpact(item) {
+  const t = `${item.title} ${item.body || ''} ${item.detail || ''}`.toLowerCase();
+  let c = 0;
+  for (const { re, w } of IMPACT_LEXICON) if (re.test(t)) c += w;
+  c = Math.min(26, c);
+  if (SUPERLATIVE.test(t)) c += 4;
+  c += magnitudeBonus(t);
+  return Math.min(34, c);
+}
+
 /**
- * Score d'une INFO (attaque, incident, signal) : importance par l'autorité de la
- * source et le suivi par la communauté cyber (recoupement multi-organismes).
+ * Score d'une INFO (attaque, incident, signal). Théorisé à partir de deux cadres :
+ *  - Admiralty Code (NATO AJP-2.1) : fiabilité de la source, évaluée EN ISOLATION
+ *    → une source de référence seule suffit à rendre une info majeure ;
+ *  - valeurs d'information de Galtung & Ruge : impact intrinsèque du contenu
+ *    (gravité, ampleur, acteurs majeurs) — une info critique mono-source reste forte.
+ * Aucun recoupement, aucune métrique de simple visibilité.
  * @param {object} item
  * @returns {number} 0-100
  */
 function scoreNews(item) {
-  // 1. Organisation de confiance qui publie (18 → 50)
-  let s = itemAuthority(item);
-  // 2. Suivi par de nombreux organismes : +13 par source au-delà du premier (max +42)
-  s += Math.min(42, Math.max(0, (item.corroboration || 1) - 1) * 13);
-  // 3. Suivi par la communauté (points Hacker News), ≤ +18
-  if (item.hnPoints) s += Math.min(18, Math.round(item.hnPoints / 20));
-  // 4. Gravité de l'évènement
-  s += ({ critical: 14, high: 10, news: 12, culture: 6 })[item.severity] ?? 8;
-  // 5. Fraîcheur
-  s += recencyBonus(item, 6, 3);
-  return Math.max(0, Math.min(100, Math.round(s)));
+  const reliability = Math.round(itemAuthority(item) * 1.8); // Admiralty : 18→32 … 50→90
+  const impact = contentImpact(item);                          // Galtung-Ruge : 0 → 34
+  return Math.max(0, Math.min(100, reliability + impact + recencyBonus(item, 5, 2)));
 }
 
 /**
