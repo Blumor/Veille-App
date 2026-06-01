@@ -154,7 +154,10 @@ function renderSidebar() {
     if (group.length) html += `<div class="group"><h3>${typeMeta(t).group}</h3>${group.map(itemHTML).join('')}</div>`;
   }
   side.innerHTML = html;
-  side.querySelectorAll('.item').forEach((el) => (el.onclick = () => selectReport(el.dataset.id)));
+  side.querySelectorAll('.item').forEach((el) => (el.onclick = () => {
+    selectReport(el.dataset.id);
+    toggleDrawer(false);   // referme le tiroir sur mobile après sélection
+  }));
 }
 
 // ── recherche (barre + binding) ─────────────────────────────────────────────────
@@ -509,6 +512,16 @@ async function selectReport(id) {
   }
 }
 
+// ── tiroir archive (mobile) ─────────────────────────────────────────────────────
+function toggleDrawer(open) {
+  const side = $('#side');
+  const ov = $('#sideOverlay');
+  if (!side || !ov) return;
+  const willOpen = open === undefined ? !side.classList.contains('open') : open;
+  side.classList.toggle('open', willOpen);
+  ov.classList.toggle('show', willOpen);
+}
+
 // ── init ──────────────────────────────────────────────────────────────────────
 async function init() {
   renderEmpty();
@@ -516,6 +529,9 @@ async function init() {
   try { STATE.index = await loadIndex(); } catch { STATE.index = []; }
   renderSidebar();
   if (STATE.index.length) selectReport(STATE.index[0].id);
+
+  $('#btnMenu').onclick = () => toggleDrawer();
+  $('#sideOverlay').onclick = () => toggleDrawer(false);
 
   if (STATE.static) {
     // Pas de backend : la génération à la demande n'a pas de sens (les rapports

@@ -37,6 +37,12 @@ body{background:var(--bg);color:var(--ink);font-family:var(--serif);-webkit-font
 .dot.busy{background:var(--high)}
 @keyframes pulse{0%{box-shadow:0 0 0 0 rgba(47,125,79,.4)}70%{box-shadow:0 0 0 7px rgba(47,125,79,0)}100%{box-shadow:0 0 0 0 rgba(47,125,79,0)}}
 .spacer{flex:1}
+/* Bouton menu (archive) — visible seulement sur mobile */
+.menu-btn{display:none;flex-shrink:0;width:38px;height:38px;border:1px solid var(--line2);background:var(--panel);color:var(--ink);border-radius:7px;font-size:17px;line-height:1;cursor:pointer;place-items:center}
+.menu-btn:hover{border-color:var(--accent);color:var(--accent)}
+/* Voile derrière le tiroir mobile */
+.side-overlay{position:fixed;inset:0;background:rgba(0,0,0,.55);z-index:40;opacity:0;visibility:hidden;transition:opacity .25s}
+.side-overlay.show{opacity:1;visibility:visible}
 .actions{display:flex;gap:9px}
 .btn{font-family:var(--mono);font-size:11.5px;font-weight:600;letter-spacing:.03em;padding:9px 15px;border-radius:5px;cursor:pointer;border:1px solid var(--line2);background:var(--panel);color:var(--ink);transition:.14s;display:flex;align-items:center;gap:8px}
 .btn:hover{border-color:var(--accent);color:var(--accent);transform:translateY(-1px)}
@@ -196,12 +202,41 @@ body{background:var(--bg);color:var(--ink);font-family:var(--serif);-webkit-font
 
 @media(max-width:760px){
   .app{grid-template-columns:1fr}
-  .side{display:none}
-  .wrap{padding:26px 20px 80px}
-  .rep-title{font-size:29px}
-  .detail-title{font-size:26px}
-  .topbar{padding:12px 18px}
+
+  /* Bandeau compact */
+  .topbar{padding:11px 14px;gap:12px}
+  .menu-btn{display:grid}
   .brand .sub{display:none}
+  .brand .logo{width:30px;height:30px;font-size:18px}
+  .brand .name{font-size:17px;letter-spacing:.06em}
+  .status{display:none}
+  .actions{gap:7px}
+  .btn{padding:8px 11px}
   .btn .lbl{display:none}
-  .feed-item{padding:18px 6px}
+
+  /* Sidebar → tiroir coulissant accessible via ☰ */
+  .side{position:fixed;top:0;left:0;bottom:0;width:84%;max-width:320px;z-index:50;
+    transform:translateX(-100%);transition:transform .25s ease;padding-top:10px;
+    box-shadow:2px 0 26px rgba(0,0,0,.5);border-right:1px solid var(--line2)}
+  .side.open{transform:translateX(0)}
+
+  /* Contenu : lisibilité mobile */
+  .wrap{padding:22px 16px 80px}
+  .rep-head{padding-bottom:18px}
+  .rep-title{font-size:25px;line-height:1.15}
+  .rep-summary{font-size:16px}
+  .detail-title{font-size:23px}
+  .detail-body p{font-size:16.5px}
+  .detail-facts{gap:8px}
+  .detail-facts .fact{flex:1;min-width:calc(50% - 4px)}
+
+  /* Flux d'articles compact mais lisible */
+  .feed-item{gap:13px;padding:16px 4px}
+  .fi-score{width:46px;height:46px}
+  .fi-score-n{font-size:16px}
+  .fi-score-u{font-size:7px}
+  .fi-title{font-size:18px}
+  .fi-excerpt{font-size:14px}
+  .tabs{gap:14px}
+  .search-input{font-size:16px}   /* ≥16px évite le zoom auto iOS au focus */
 }
