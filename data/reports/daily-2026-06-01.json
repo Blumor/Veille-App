@@ -1,0 +1,89 @@
+{
+  "id": "daily-2026-06-01",
+  "type": "daily",
+  "date": "2026-06-01",
+  "title": "Briefing du 1er juin 2026",
+  "summary": "Deux RCE critiques exploitées activement (Netlogon, PAN-OS), méga-leak du secteur éducatif, et démantèlement d'un VPN cybercriminel piloté par la France.",
+  "generatedAt": "2026-06-01T08:00:00.000Z",
+  "sections": [
+    {
+      "id": "vulns",
+      "items": [
+        {
+          "title": "Windows Netlogon — RCE non authentifiée sur contrôleur de domaine",
+          "cve": "CVE-2026-41089",
+          "severity": "critical",
+          "body": "Exécution de code en SYSTEM via une requête Netlogon forgée, sans authentification → prise complète du domaine. Exploitation active confirmée dans la journée ; comparée à Zerologon. CVSS 9.8.",
+          "action": "Patcher les contrôleurs de domaine en priorité absolue, restreindre l'accès réseau au service Netlogon, activer le logging (Event IDs 5827-5831).",
+          "url": "https://cybersecuritynews.com/windows-netlogon-0-click-rce/"
+        },
+        {
+          "title": "Palo Alto PAN-OS GlobalProtect — contournement d'authentification",
+          "cve": "CVE-2026-0257",
+          "severity": "critical",
+          "body": "Bypass d'auth permettant d'établir des connexions VPN non autorisées via des cookies d'override forgés. Exploitation confirmée par Rapid7 dès le 17 mai. Deadline CISA KEV aujourd'hui.",
+          "action": "Patcher immédiatement ou désactiver les cookies d'override, puis auditer les logs GlobalProtect.",
+          "url": "https://security.paloaltonetworks.com/CVE-2026-0257"
+        },
+        {
+          "title": "Noyau Linux CIFS « CIFSwitch » — élévation de privilèges vers root",
+          "cve": null,
+          "severity": "high",
+          "body": "Faille présente depuis 19 ans permettant à tout utilisateur local d'obtenir root. PoC public. Vulnérable en config par défaut sur Mint, CentOS Stream 9, Rocky/AlmaLinux 9, Kali, SUSE SLES 15 SP7.",
+          "action": "Patch noyau dès disponible ; en attendant, blacklister le module CIFS si SMB inutilisé, retirer cifs-utils, désactiver les user namespaces non privilégiés.",
+          "url": "https://threat-modeling.com/vulnerability-intelligence-report-may-31-2026/"
+        }
+      ]
+    },
+    {
+      "id": "attacks",
+      "items": [
+        {
+          "title": "Méga-leak éducation — ShinyHunters revendique ~275 M d'enregistrements",
+          "cve": null,
+          "severity": "news",
+          "body": "Vol de données via des instances Canvas (Instructure) compromises, touchant élèves, enseignants et personnels, avec une liste de 8 809 établissements impactés.",
+          "action": null,
+          "url": "https://www.malwarebytes.com/blog/news/2026/05/millions-of-students-personal-data-stolen-in-major-education-cyberattack"
+        },
+        {
+          "title": "Carnival — violation de données ~6 M de personnes",
+          "cve": null,
+          "severity": "news",
+          "body": "Le croisiériste a confirmé une fuite affectant près de 6 millions de clients et collaborateurs.",
+          "action": null,
+          "url": "https://www.malwarebytes.com/blog/news/2026/05/actively-exploited-cpanel-bug-exposes-millions-of-websites-to-takeover"
+        },
+        {
+          "title": "Opération Saffron (FR/NL) — démantèlement de First VPN",
+          "cve": null,
+          "severity": "news",
+          "body": "Europol et Eurojust, sous pilotage français et néerlandais, ont saisi 33 serveurs dans 27 pays. Le service, actif depuis 2014, était utilisé par 25+ groupes de rançongiciel.",
+          "action": null,
+          "url": "https://www.donneespersonnelles.fr/actualite-cybersecurite-2026"
+        }
+      ]
+    },
+    {
+      "id": "culture",
+      "items": [
+        {
+          "title": "IA offensive : agent LLM observé en post-compromission",
+          "cve": null,
+          "severity": "culture",
+          "body": "Un acteur a utilisé un agent LLM pour conduire des actions post-intrusion après exploitation d'un service exposé. L'automatisation des phases post-exploit par IA se concrétise.",
+          "action": null,
+          "url": "https://cvefeed.io/newsroom/latest"
+        },
+        {
+          "title": "Échéances CISA KEV & nouveau ransomware",
+          "cve": null,
+          "severity": "culture",
+          "body": "À surveiller : Microsoft Defender (CVE-2026-41091/-45498, deadline 3 juin) et Trend Micro Apex One (4 juin). Émergence du ransomware « The Gentlemen » écrit en Go.",
+          "action": null,
+          "url": "https://threat-modeling.com/vulnerability-intelligence-report-may-31-2026/"
+        }
+      ]
+    }
+  ]
+}

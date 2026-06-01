@@ -1,0 +1,69 @@
+name: Veille automatique
+
+# Génère les rapports sans aucune machine allumée : GitHub exécute le cron,
+# puis le rapport est commité dans le dépôt (data/reports/).
+#
+# IMPORTANT : les horaires cron sont en UTC. Paris = UTC+2 (été) / UTC+1 (hiver).
+# Ajuste les valeurs ci-dessous selon l'heure souhaitée.
+# Note : GitHub désactive les workflows planifiés après 60 jours sans activité
+# sur le dépôt — un commit de temps en temps suffit à les garder actifs.
+
+on:
+  schedule:
+    - cron: '30 5 * * *'   # quotidien — ~07h30 Paris (été) / 06h30 (hiver)
+    - cron: '0 6 * * 0'    # hebdomadaire le dimanche — ~08h00 Paris (été)
+  workflow_dispatch:        # déclenchement manuel depuis l'onglet Actions
+    inputs:
+      type:
+        description: 'Type de rapport'
+        required: true
+        default: daily
+        type: choice
+        options: [daily, weekly]
+
+permissions:
+  contents: write           # autorise le push du rapport généré
+
+jobs:
+  generate:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Récupérer le code
+        uses: actions/checkout@v4
+
+      - name: Installer Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Installer les dépendances
+        run: npm install
+
+      - name: Déterminer le type de rapport
+        id: kind
+        run: |
+          if [ "${{ github.event_name }}" = "workflow_dispatch" ]; then
+            echo "type=${{ github.event.inputs.type }}" >> "$GITHUB_OUTPUT"
+          elif [ "${{ github.event.schedule }}" = "0 6 * * 0" ]; then
+            echo "type=weekly" >> "$GITHUB_OUTPUT"
+          else
+            echo "type=daily" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Générer le rapport
+        env:
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+          VEILLE_MODEL: claude-sonnet-4-6
+        run: node src/index.js ${{ steps.kind.outputs.type }}
+
+      - name: Commiter le rapport
+        run: |
+          git config user.name "veille-bot"
+          git config user.email "veille-bot@users.noreply.github.com"
+          git add data/reports
+          if git diff --cached --quiet; then
+            echo "Aucun nouveau rapport à committer."
+          else
+            git commit -m "Rapport ${{ steps.kind.outputs.type }} du $(date -u +%Y-%m-%d)"
+            git push
+          fi
