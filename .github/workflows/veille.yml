@@ -7,14 +7,16 @@ name: Veille automatique
 # Logique CUMULATIVE : le rapport journalier est généré CHAQUE jour ; le lundi on
 # ajoute l'hebdomadaire ; le 1er du mois on ajoute le mensuel (jamais à la place).
 #
-# Horaire : un seul cron quotidien à 04h00 UTC ≈ 06h00 Paris l'été / 05h00 l'hiver
-# (GitHub ne planifie qu'en UTC, sans bascule heure d'été). Pour décaler, change
-# l'heure du cron ci-dessous. Note : GitHub suspend les workflows planifiés après
-# 60 jours sans activité sur le dépôt — un commit occasionnel les réactive.
+# Horaire : un seul cron quotidien à 04h07 UTC ≈ 06h07 Paris l'été / 05h07 l'hiver.
+# La minute non-ronde (07) évite les créneaux les plus encombrés de GitHub (minute 0),
+# qui subissent les pires retards — le cron GitHub reste « best-effort » (jamais à la
+# seconde près). GitHub ne planifie qu'en UTC, sans bascule heure d'été : pour décaler,
+# change l'heure ci-dessous. Note : les workflows planifiés sont suspendus après 60 jours
+# sans activité sur le dépôt — un commit occasionnel les réactive.
 
 on:
   schedule:
-    - cron: '0 4 * * *'     # tous les jours — ~06h00 Paris (été) / 05h00 (hiver)
+    - cron: '7 4 * * *'     # tous les jours — ~06h07 Paris (été) / 05h07 (hiver)
   workflow_dispatch:         # déclenchement manuel depuis l'onglet Actions
     inputs:
       type:
