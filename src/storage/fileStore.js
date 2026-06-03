@@ -2,16 +2,15 @@ import { promises as fs } from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 
-/**
- * Stockage des rapports sous forme de fichiers JSON dans data/reports/.
- * Un index léger (_index.json) liste les métadonnées pour l'affichage.
- *
- * Évolution prévue : remplacer cette implémentation par un adaptateur
- * SQLite/Postgres en conservant la même interface (list / get / save).
- */
+// Persistance des rapports en fichiers JSON (data/reports/), indexés par _index.json.
+// Interface stable list/get/save (remplaçable par une base sans toucher au reste).
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const REPORTS_DIR = path.resolve(__dirname, '../../data/reports');
 const INDEX_PATH = path.join(REPORTS_DIR, '_index.json');
+
+// Identifiant de rapport autorisé : <type>-AAAA-MM-JJ. Empêche toute traversée de
+// chemin (l'id provient d'une URL publique : /api/reports/:id).
+const VALID_ID = /^[a-z]+-\d{4}-\d{2}-\d{2}$/;
 
 async function ensureDir() {
   await fs.mkdir(REPORTS_DIR, { recursive: true });
@@ -32,8 +31,9 @@ export async function listReports() {
   return idx.sort((a, b) => (b.date + b.type).localeCompare(a.date + a.type));
 }
 
-/** Rapport complet par id, ou null. */
+/** Rapport complet par id (id validé contre la traversée de chemin), ou null. */
 export async function getReport(id) {
+  if (!VALID_ID.test(id || '')) return null;
   await ensureDir();
   return readJSON(path.join(REPORTS_DIR, `${id}.json`), null);
 }

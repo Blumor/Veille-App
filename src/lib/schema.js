@@ -1,20 +1,8 @@
+// Normalisation et validation du « contrat de rapport » partagé par le générateur,
+// le serveur et le front. Garantit des champs propres, typés et bornés.
 const SEVERITIES = ['critical', 'high', 'news', 'culture'];
 
-export function extractJSON(text) {
-  if (!text) return null;
-  let t = text.replace(/```json/gi, '').replace(/```/g, '').trim();
-  const a = t.indexOf('{');
-  const b = t.lastIndexOf('}');
-  if (a < 0 || b < 0) return null;
-  const raw = t.slice(a, b + 1);
-  try { return JSON.parse(raw); } catch {
-    try { return JSON.parse(raw.replace(/,\s*([}\]])/g, '$1')); } catch { return null; }
-  }
-}
-
-function clean(s) {
-  return typeof s === 'string' ? s.trim() : '';
-}
+const clean = (s) => (typeof s === 'string' ? s.trim() : '');
 
 function normalizeSources(sources, fallbackUrl) {
   if (Array.isArray(sources) && sources.length) {

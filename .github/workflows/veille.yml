@@ -1,16 +1,9 @@
 name: Veille automatique
 
-# Génère les rapports et les commit dans le dépôt (data/reports/), sans machine allumée.
-# Génération 100 % gratuite (RSS + NVD + KEV + …) : AUCUN secret ni clé API requis ici.
-#
-# DÉCLENCHEMENT à heure fixe (≈ 6h Paris) : assuré par un service cron externe gratuit
-# (cron-job.org, fuseau Europe/Paris) qui appelle l'API GitHub `workflow_dispatch` avec
-# { "inputs": { "type": "auto" } }. Le token de ce service vit CHEZ LE SERVICE EXTERNE,
-# jamais dans ce dépôt public. (Le cron natif GitHub est volontairement retiré : il est
-# best-effort et livrait systématiquement ~3 h en retard.)
-#
-# type = auto  → logique CUMULATIVE : quotidien chaque jour, + hebdo le lundi,
-#                + mensuel le 1er du mois. (daily/weekly/monthly = un seul type, à la main.)
+# Génère les rapports et les commit dans data/reports/ (aucun secret ni clé requis).
+# Déclenché à 6h Paris par un service cron externe (cron-job.org) appelant l'API GitHub
+# `workflow_dispatch` avec { "inputs": { "type": "auto" } } ; son token reste hors dépôt.
+# type=auto = cumulatif : quotidien chaque jour, + hebdo le lundi, + mensuel le 1er.
 
 on:
   workflow_dispatch:

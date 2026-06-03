@@ -57,6 +57,11 @@ const shortHost = (u) => {
   try { return new URL(u).hostname.replace(/^www\./, ''); } catch { return 'lien'; }
 };
 
+// N'autorise que http(s) pour les liens (neutralise les URLs javascript:/data: issues des flux).
+const safeUrl = (u) => {
+  try { return /^https?:$/.test(new URL(u).protocol) ? u : '#'; } catch { return '#'; }
+};
+
 const frDate = (iso) => {
   try {
     return new Date(iso + 'T12:00:00').toLocaleDateString('fr-FR', {
@@ -356,7 +361,7 @@ function renderDetail(item) {
     ? item.sources
     : item.url ? [{ url: item.url, label: shortHost(item.url) }] : [];
   const linksHTML = sources
-    .map((s) => `<a class="src-link" href="${esc(s.url)}" target="_blank" rel="noopener noreferrer">
+    .map((s) => `<a class="src-link" href="${esc(safeUrl(s.url))}" target="_blank" rel="noopener noreferrer">
       <span class="src-link-icon">↗</span>${esc(s.label || shortHost(s.url))}
     </a>`)
     .join('');

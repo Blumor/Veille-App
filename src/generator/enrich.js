@@ -16,6 +16,19 @@ function decodeEntities(s = '') {
 }
 const stripHTML = (h = '') => h.replace(/<[^>]+>/g, ' ').replace(/\s+/g, ' ').trim();
 
+// Anti-SSRF : n'autorise que http(s) vers un hôte public (bloque localhost / IP internes).
+function isPublicHttpUrl(u) {
+  let url;
+  try { url = new URL(u); } catch { return false; }
+  if (!/^https?:$/.test(url.protocol)) return false;
+  const h = url.hostname.toLowerCase();
+  if (h === 'localhost' || h.endsWith('.local') || h.endsWith('.internal') || h === '::1') return false;
+  if (/^(127\.|10\.|192\.168\.|169\.254\.|0\.)/.test(h)) return false;
+  if (/^172\.(1[6-9]|2\d|3[01])\./.test(h)) return false;
+  if (/^(fe80:|fc|fd)/.test(h)) return false;
+  return true;
+}
+
 function metaContent(html, key) {
   const re1 = new RegExp(`<meta[^>]+(?:property|name)=["']${key}["'][^>]*content=["']([^"']*)["']`, 'i');
   const re2 = new RegExp(`<meta[^>]+content=["']([^"']*)["'][^>]+(?:property|name)=["']${key}["']`, 'i');
@@ -78,7 +91,7 @@ export async function enrichDetails(items) {
     (it) => it
       && it.section !== 'synthese'
       && (it.detail || '').length < MIN_DETAIL
-      && /^https?:\/\//i.test(it.sources?.[0]?.url || '')
+      && isPublicHttpUrl(it.sources?.[0]?.url || '')
   );
   if (!targets.length) return items;
 

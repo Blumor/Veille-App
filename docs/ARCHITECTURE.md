@@ -1,106 +1,72 @@
 # Architecture
 
-## Principe
-
-Génération **100 % gratuite et déterministe** : aucune API payante, aucune clé.
-Trois responsabilités reliées par un **format de rapport unique** :
+Génération **100 % gratuite et déterministe** (aucune clé API, aucun LLM). Tout
+converge vers un **format de rapport unique** (`src/lib/schema.js`).
 
 ```
-  CLI / cron / API
+  CLI (src/index.js) / API (src/server.js)
         │
         ▼
- ┌───────────────┐   collecte : RSS · NVD · CISA KEV
- │   generator    │   regroupement multi-sources (cluster)
- │                │   scoring + rédaction par gabarits (compose)
- └──────┬────────┘
-        │  rapport normalisé (lib/schema.js)
+   generator/        collecte → regroupement → score + rédaction → enrichissement
+        │            (rapport normalisé : lib/schema.js)
         ▼
- ┌───────────────┐
- │   storage      │  data/reports/*.json + _index.json
- └──────┬────────┘
+   storage/          data/reports/*.json + _index.json
         │
-   ┌────┴─────────┐
-   ▼              ▼
-┌────────────┐  ┌──────────────┐
-│ server.js   │ │  public/ (UI) │
-│  (REST)     │─▶│  console      │
-└────────────┘  └──────────────┘
+        ▼
+   public/           console web (statique), lit les JSON
 ```
 
-## Pipeline de génération
+## Pipeline (`src/generator/generate.js`)
 
-`generate.js` orchestre, dans l'ordre :
+1. **Collecte** (en parallèle, sans clé) :
+   - `rssCollector.js` — 30 flux RSS (presse FR + internationale, CERT-FR, recherche éditeurs).
+   - `nvdCollector.js` — API NVD (CVE critiques, CVSS, éditeur via CPE).
+   - `kevCollector.js` — CISA KEV (vulnérabilités activement exploitées).
+   - `ransomwareCollector.js` — ransomware.live (victimes, France priorisée).
+   - `githubAdvisories.js` — GitHub Advisory DB (open-source).
+   - `hnCollector.js` — Hacker News (signal communautaire).
+   - `anssiScraper.js` — publications ANSSI (scraping du sitemap cyber.gouv.fr, faute de RSS).
+2. **Regroupement** — `cluster.js` fusionne les articles d'une même info (CVE / titres proches).
+3. **Enrichissement vulns** — `epss.js` ajoute la probabilité d'exploitation (EPSS) par CVE.
+4. **Score + rédaction** — `compose.js` : accroche FR, action, et **score d'importance /100**
+   (voir plus bas).
+5. **Sélection** — tri par score, découpe en sections, items « France » jamais coupés.
+6. **Enrichissement descriptions** — `enrich.js` complète les descriptions trop courtes en
+   récupérant le texte de la page source (déterministe, tolérant, anti-SSRF).
+7. **Normalisation** — `lib/schema.js` valide et fige le contrat de données.
 
-1. **Collecte** (en parallèle, aucune clé requise) :
-   - `rssCollector.js` — 17 flux RSS (presse, CERT-FR/CISA, recherche éditeurs).
-   - `nvdCollector.js` — API NVD (CVE critiques, score CVSS, éditeur via CPE).
-   - `kevCollector.js` — catalogue CISA KEV (vulnérabilités activement exploitées).
-2. **Regroupement** — `cluster.js` fusionne les articles d'une même info (même CVE,
-   ou titres proches) et compte le **recoupement multi-médias** (`corroboration`).
-3. **Rédaction & score** — `compose.js` :
-   - `composeItem()` — accroche FR + extrait + action recommandée par gabarits ;
-   - `scoreItem()` — score d'importance /100 = **autorité de la source** +
-     **recoupement multi-sources** + **gravité** (+ exploitation, CVSS, fraîcheur) ;
-   - `composeSummary()` / `composeSynthese()` — résumé exécutif et synthèse rédigée
-     (hebdo / mensuel).
-4. **Tri + sections** — tri par score décroissant, découpe en sections selon le type.
-5. **Normalisation** — `lib/schema.js` valide et fige le contrat de données.
+## Calcul du score (`compose.js`)
 
-## Modules
+- **Vulnérabilités** : scores communautaires (CVSS + EPSS + CISA KEV + ubiquité du logiciel).
+- **Autres infos** : fiabilité de la source (Admiralty Code, évaluée en isolation) + impact
+  intrinsèque du contenu (valeurs d'information de Galtung & Ruge). Pas de recoupement.
 
-| Module | Rôle | Point d'extension |
-|---|---|---|
-| `config/default.js` | Sections (ordre/libellés/icône) + port | Ajouter une section ⇒ ici + le front la connaît |
-| `src/generator/rssCollector.js` | Flux RSS + classement sévérité/section, vendor | Ajouter/retirer une source dans `FEEDS` |
-| `src/generator/nvdCollector.js` | CVE critiques via l'API NVD | Élargir aux sévérités HIGH, autres fenêtres |
-| `src/generator/kevCollector.js` | Vulnérabilités exploitées (CISA KEV) | Filtrer par éditeur, échéances |
-| `src/generator/cluster.js` | Regroupement multi-sources (corroboration) | Affiner la similarité de titres |
-| `src/generator/compose.js` | Rédaction par gabarits + scoring | Ajuster les poids d'autorité / la formule de score |
-| `src/generator/generate.js` | Orchestration d'une génération | Ajouter un type, enchaîner des passes |
-| `src/lib/schema.js` | Normalisation + validation du rapport | Renforcer la validation, nouveaux champs |
-| `src/storage/fileStore.js` | Persistance fichiers (list/get/save) | Remplacer par SQLite/Postgres (même interface) |
-| `src/server.js` | API REST + front statique | Auth, notifications |
-| `public/` | Console (UI, thème sombre éditorial) | Filtres, recherche, vue comparée |
-
-## Le contrat de données
-
-Tout passe par une structure de rapport stable (voir `lib/schema.js`) :
+## Contrat de données (`lib/schema.js`)
 
 ```jsonc
 {
-  "id": "daily-2026-06-01",
-  "type": "daily | weekly | monthly",
-  "date": "YYYY-MM-DD",
-  "title": "…",
-  "summary": "…",
-  "generatedAt": "ISO-8601",
-  "sections": [
-    { "id": "vulns", "items": [
-      {
-        "title", "cve", "severity": "critical|high|news|culture",
-        "score": 0,            // importance /100
-        "corroboration": 1,    // nb de médias recoupant l'info
-        "body",                // accroche + extrait (preview)
-        "detail",              // analyse complète
-        "action",              // recommandation
-        "sources": [{ "url", "label" }],
-        "url",
-        "pubDate": "ISO-8601"
-      }
-    ]}
-  ]
+  "id": "daily-2026-06-01", "type": "daily|weekly|monthly", "date": "YYYY-MM-DD",
+  "title", "summary", "generatedAt",
+  "sections": [{ "id": "vulns", "items": [{
+    "title", "cve", "severity": "critical|high|news|culture",
+    "score": 0, "corroboration": 1, "region": "fr|intl",
+    "body", "detail", "action", "sources": [{ "url", "label" }], "url", "pubDate"
+  }]}]
 }
 ```
 
-Le générateur (`compose.js`), le validateur (`schema.js`) et le front (`app.js`)
-restent alignés sur ce contrat. Toute modification se fait à ces endroits.
+Générateur, validateur (`schema.js`) et front (`app.js`) restent alignés sur ce contrat.
 
-## Choix assumés
+## Automatisation & déploiement
 
-- **Zéro coût, zéro clé** : sources publiques gratuites (RSS, NVD, CISA KEV),
-  rédaction par gabarits — pas de LLM, donc rien à payer ni à provisionner.
-- **Front sans build** : HTML/CSS/JS purs, aucun outillage à maintenir.
-- **Stockage fichiers** : simple, versionnable, lisible ; migrable vers une base
-  derrière la même interface quand le volume l'exigera.
-- **Score explicable** : la priorité de lecture repose sur des critères lisibles
-  (autorité, recoupement, gravité) plutôt que sur une boîte noire.
+- **Génération** : workflow `.github/workflows/veille.yml` (`workflow_dispatch`, type `auto`
+  = quotidien + hebdo le lundi + mensuel le 1er), déclenché à 6h Paris par un service cron
+  externe via l'API GitHub (token hors dépôt — voir README).
+- **Déploiement** : `.github/workflows/pages.yml` build (`scripts/build-static.mjs`) + publie
+  sur GitHub Pages à chaque push et après chaque génération.
+
+## Sécurité
+
+- Dépôt **public** : aucun secret committé (token du cron externe stocké hors dépôt).
+- `getReport(id)` valide l'id (anti-traversée de chemin) ; le front neutralise les URLs non
+  http(s) ; le scraping bloque les hôtes privés (anti-SSRF).

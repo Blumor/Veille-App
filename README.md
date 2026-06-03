@@ -92,11 +92,12 @@ veille-cyber/
 │   │   ├── anssiScraper.js    # scraping publications ANSSI
 │   │   ├── cluster.js         # regroupement multi-sources
 │   │   ├── compose.js         # rédaction par gabarits + calcul du score
+│   │   ├── enrich.js          # enrichissement des descriptions (scraping)
 │   │   └── generate.js        # orchestration d'une génération
 │   ├── lib/schema.js          # normalisation + validation du rapport
 │   └── storage/fileStore.js   # persistance JSON des rapports
 ├── public/                    # front statique (console web, responsive)
 ├── scripts/build-static.mjs   # build du site statique
 ├── data/reports/              # rapports archivés (JSON)
-└── docs/                      # architecture + roadmap
+└── docs/ARCHITECTURE.md       # architecture détaillée
 ```

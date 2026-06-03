@@ -99,8 +99,8 @@ export async function generateReport(type, dateISO = todayISO()) {
   const limit = type === 'daily' ? 15 : 25;
   const FR_EXTRA = type === 'daily' ? 10 : 15; // garantit la couverture France
 
-  // Top par score, MAIS on ne coupe jamais les items « France » (jusqu'à FR_EXTRA en plus) :
-  // l'utilisateur doit pouvoir suivre la cyber FR en continu via le filtre France.
+  // Top par score, sans jamais couper les items « France » (jusqu'à FR_EXTRA en plus),
+  // pour que le filtre France reste alimenté.
   const pick = (arr) => {
     const top = arr.slice(0, limit);
     const inTop = new Set(top);

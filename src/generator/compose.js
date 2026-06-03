@@ -119,7 +119,7 @@ const FRANCE_RE = /\bfrance\b|fran[çc]ais|française|\banssi\b|\bcnil\b|cert-fr
  * @param {object} item
  * @returns {'fr'|'intl'}
  */
-export function regionOf(item) {
+function regionOf(item) {
   if ((item.sources || []).some((s) => FR_CENTRIC.has(s.label))) return 'fr';
   if (FRANCE_RE.test(`${item.title} ${item.body || ''} ${item.detail || ''}`)) return 'fr';
   return 'intl';
@@ -225,12 +225,8 @@ function scoreNews(item) {
   return Math.max(0, Math.min(100, reliability + impact + recencyBonus(item, 5, 2)));
 }
 
-/**
- * Score d'importance sur 100 — deux logiques distinctes selon le type de topic.
- * @param {object} item
- * @returns {number} 0-100
- */
-export function scoreItem(item) {
+// Score d'importance /100 : deux logiques selon le type (vulnérabilité vs info).
+function scoreItem(item) {
   return item.section === 'vulns' ? scoreVuln(item) : scoreNews(item);
 }
 
