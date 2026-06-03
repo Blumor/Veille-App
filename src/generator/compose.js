@@ -254,10 +254,11 @@ export function composeItem(item) {
   const previewSrc = (item.body || '').trim();   // texte source propre (desc/extrait)
   const fullSrc = (item.detail || item.body || '').trim();
 
-  const preview = previewSrc ? `${lead}\n\n${excerpt(previewSrc, 320)}` : lead;
+  const preview = previewSrc ? `${lead}\n\n${excerpt(previewSrc, 460)}` : lead;
   const detail = fullSrc && !fullSrc.startsWith(lead) ? `${lead}\n\n${fullSrc}` : (fullSrc || lead);
 
   const enriched = { ...item, body: preview, detail, action: defaultAction(item) };
+  enriched.lead = lead;             // conservé pour l'enrichissement ultérieur (enrich.js)
   enriched.score = scoreItem(enriched);
   enriched.region = regionOf(item);
   return enriched;

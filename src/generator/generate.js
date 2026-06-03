@@ -6,6 +6,7 @@ import { collectGitHubAdvisories } from './githubAdvisories.js';
 import { collectHackerNews } from './hnCollector.js';
 import { collectANSSI } from './anssiScraper.js';
 import { enrichEPSS } from './epss.js';
+import { enrichDetails } from './enrich.js';
 import { clusterItems } from './cluster.js';
 import { composeItem, composeSummary, composeSynthese, itemAuthority } from './compose.js';
 import { normalizeReport } from '../lib/schema.js';
@@ -124,6 +125,9 @@ export async function generateReport(type, dateISO = todayISO()) {
   if (!sections.length) {
     throw new Error("Aucune section non vide — pas assez d'articles collectés.");
   }
+
+  // Enrichit les descriptions maigres des items réellement affichés (scraping page source).
+  await enrichDetails(sections.flatMap((s) => s.items));
 
   const raw = {
     date: dateISO,
