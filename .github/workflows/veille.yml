@@ -1,22 +1,21 @@
 name: Veille automatique
 
-# Génère les rapports et les commit dans data/reports/ (aucun secret ni clé requis).
-# Déclenché à 6h Paris par un service cron externe (cron-job.org) appelant l'API GitHub
-# `workflow_dispatch` avec { "inputs": { "type": "auto" } } ; son token reste hors dépôt.
+# Génère les rapports et les commit dans data/reports/.
+# Déclenché à 6h Paris par un service cron externe.
 # type=auto = cumulatif : quotidien chaque jour, + hebdo le lundi, + mensuel le 1er.
 
 on:
   workflow_dispatch:
     inputs:
       type:
-        description: 'Type de rapport (auto = quotidien + hebdo le lundi + mensuel le 1er)'
+        description: "Type de rapport (auto = quotidien + hebdo le lundi + mensuel le 1er)"
         required: true
         default: auto
         type: choice
         options: [auto, daily, weekly, monthly]
 
 permissions:
-  contents: write            # autorise le push des rapports générés (GITHUB_TOKEN runtime)
+  contents: write # autorise le push des rapports générés (GITHUB_TOKEN runtime)
 
 concurrency:
   group: veille-auto
@@ -32,7 +31,7 @@ jobs:
       - name: Installer Node
         uses: actions/setup-node@v4
         with:
-          node-version: '20'
+          node-version: "20"
 
       - name: Installer les dépendances
         run: npm install
