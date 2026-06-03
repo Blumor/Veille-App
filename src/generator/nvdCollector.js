@@ -1,7 +1,7 @@
-const NVD_BASE = 'https://services.nvd.nist.gov/rest/json/cves/2.0';
+const NVD_BASE = "https://services.nvd.nist.gov/rest/json/cves/2.0";
 
 function fmtISO(d) {
-  return d.toISOString().replace(/\.\d+Z$/, '');
+  return d.toISOString().replace(/\.\d+Z$/, "");
 }
 
 function getBaseScore(metrics = {}) {
@@ -20,11 +20,12 @@ function getVendor(cve) {
     .flatMap((n) => n.cpeMatch || [])
     .find((m) => m.criteria)?.criteria;
   if (!cpe) return null;
-  const parts = cpe.split(':'); // [cpe,2.3,part,vendor,product,...]
-  const vendor = parts[3] && parts[3] !== '*' ? parts[3] : null;
-  const product = parts[4] && parts[4] !== '*' ? parts[4] : null;
-  const tidy = (s) => (s ? s.replace(/_/g, ' ').replace(/\b\w/g, (c) => c.toUpperCase()) : null);
-  return [tidy(vendor), tidy(product)].filter(Boolean).join(' ') || null;
+  const parts = cpe.split(":"); // [cpe,2.3,part,vendor,product,...]
+  const vendor = parts[3] && parts[3] !== "*" ? parts[3] : null;
+  const product = parts[4] && parts[4] !== "*" ? parts[4] : null;
+  const tidy = (s) =>
+    s ? s.replace(/_/g, " ").replace(/\b\w/g, (c) => c.toUpperCase()) : null;
+  return [tidy(vendor), tidy(product)].filter(Boolean).join(" ") || null;
 }
 
 /**
@@ -40,7 +41,7 @@ export async function collectNVDCves(hours = 48) {
   let data;
   try {
     const res = await fetch(url, {
-      headers: { 'User-Agent': 'VeilleCyber/1.0' },
+      headers: { "User-Agent": "VeilleApp/1.0" },
       signal: AbortSignal.timeout(20_000),
     });
     if (!res.ok) return [];
@@ -53,34 +54,37 @@ export async function collectNVDCves(hours = 48) {
     const cve = v.cve;
     const score = getBaseScore(cve.metrics);
     const vendor = getVendor(cve);
-    const enDesc = cve.descriptions?.find((d) => d.lang === 'en')?.value || '';
-    const shortTitle = enDesc.length > 90 ? enDesc.slice(0, 90) + '…' : enDesc;
+    const enDesc = cve.descriptions?.find((d) => d.lang === "en")?.value || "";
+    const shortTitle = enDesc.length > 90 ? enDesc.slice(0, 90) + "…" : enDesc;
     const cwes = (cve.weaknesses || [])
       .flatMap((w) => w.description)
       .map((d) => d.value)
-      .filter((v) => v !== 'NVD-CWE-noinfo')
-      .join(', ');
+      .filter((v) => v !== "NVD-CWE-noinfo")
+      .join(", ");
 
     const detailLines = [
       enDesc,
-      score ? `Score CVSS : ${score}` : '',
-      cwes ? `Type de faiblesse (CWE) : ${cwes}` : '',
+      score ? `Score CVSS : ${score}` : "",
+      cwes ? `Type de faiblesse (CWE) : ${cwes}` : "",
     ].filter(Boolean);
 
     return {
       title: vendor ? `${cve.id} — ${vendor}` : `${cve.id} — ${shortTitle}`,
       cve: cve.id,
-      severity: score >= 9 ? 'critical' : 'high',
-      section: 'vulns',
+      severity: score >= 9 ? "critical" : "high",
+      section: "vulns",
       vendor,
       cvss: score || null,
       exploited: false,
       body: enDesc,
-      detail: detailLines.join('\n\n'),
+      detail: detailLines.join("\n\n"),
       action: null, // rempli par compose.js
       sources: [
-        { url: `https://nvd.nist.gov/vuln/detail/${cve.id}`, label: 'NVD' },
-        { url: `https://www.cvedetails.com/cve/${cve.id}/`,  label: 'CVE Details' },
+        { url: `https://nvd.nist.gov/vuln/detail/${cve.id}`, label: "NVD" },
+        {
+          url: `https://www.cvedetails.com/cve/${cve.id}/`,
+          label: "CVE Details",
+        },
       ],
       pubDate: new Date(cve.published),
     };

@@ -1,8 +1,8 @@
 // Enrichissement EPSS (FIRST.org, gratuit, sans clé) : probabilité qu'une CVE
 // soit exploitée dans les 30 prochains jours (0–1). Sert à prioriser les
 // vulnérabilités par risque réel d'exploitation.
-const URL = 'https://api.first.org/data/v1/epss';
-const UA = { 'User-Agent': 'VeilleCyber/1.0' };
+const URL = "https://api.first.org/data/v1/epss";
+const UA = { "User-Agent": "VeilleApp/1.0" };
 const BATCH = 80;
 
 /**
@@ -18,13 +18,16 @@ export async function enrichEPSS(items) {
   for (let i = 0; i < cves.length; i += BATCH) {
     const batch = cves.slice(i, i + BATCH);
     try {
-      const r = await fetch(`${URL}?cve=${batch.join(',')}`, {
-        headers: UA, signal: AbortSignal.timeout(15_000),
+      const r = await fetch(`${URL}?cve=${batch.join(",")}`, {
+        headers: UA,
+        signal: AbortSignal.timeout(15_000),
       });
       if (!r.ok) continue;
       const data = await r.json();
       for (const e of data.data || []) score.set(e.cve, parseFloat(e.epss));
-    } catch { /* tolère un lot en échec */ }
+    } catch {
+      /* tolère un lot en échec */
+    }
   }
 
   for (const it of items) {

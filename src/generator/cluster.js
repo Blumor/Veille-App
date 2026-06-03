@@ -6,23 +6,80 @@
 
 // Mots vides (FR + EN) et termes cyber trop génériques pour distinguer un sujet.
 const STOP = new Set([
-  'the', 'and', 'for', 'with', 'from', 'that', 'this', 'are', 'has', 'have', 'was',
-  'were', 'will', 'into', 'over', 'after', 'amid', 'says', 'used', 'using', 'how',
-  'les', 'des', 'une', 'un', 'la', 'le', 'de', 'du', 'dans', 'sur', 'par', 'aux',
-  'pour', 'avec', 'que', 'qui', 'son', 'ses', 'est', 'plus',
-  'security', 'cyber', 'attack', 'attacks', 'flaw', 'flaws', 'bug', 'bugs', 'data',
-  'vulnerability', 'vulnerabilities', 'new', 'report', 'hackers', 'hacker', 'threat',
-  'threats', 'malware', 'breach', 'update', 'warns', 'warning',
+  "the",
+  "and",
+  "for",
+  "with",
+  "from",
+  "that",
+  "this",
+  "are",
+  "has",
+  "have",
+  "was",
+  "were",
+  "will",
+  "into",
+  "over",
+  "after",
+  "amid",
+  "says",
+  "used",
+  "using",
+  "how",
+  "les",
+  "des",
+  "une",
+  "un",
+  "la",
+  "le",
+  "de",
+  "du",
+  "dans",
+  "sur",
+  "par",
+  "aux",
+  "pour",
+  "avec",
+  "que",
+  "qui",
+  "son",
+  "ses",
+  "est",
+  "plus",
+  "security",
+  "cyber",
+  "attack",
+  "attacks",
+  "flaw",
+  "flaws",
+  "bug",
+  "bugs",
+  "data",
+  "vulnerability",
+  "vulnerabilities",
+  "new",
+  "report",
+  "hackers",
+  "hacker",
+  "threat",
+  "threats",
+  "malware",
+  "breach",
+  "update",
+  "warns",
+  "warning",
 ]);
 
 // Sources purement référentielles (bases de données), pas des médias éditoriaux.
-const REF_ONLY = new Set(['NVD', 'CVE Details']);
+const REF_ONLY = new Set(["NVD", "CVE Details"]);
 
 function tokens(title) {
-  return (title || '')
+  return (title || "")
     .toLowerCase()
-    .normalize('NFD').replace(/[̀-ͯ]/g, '')
-    .replace(/[^a-z0-9 ]/g, ' ')
+    .normalize("NFD")
+    .replace(/[̀-ͯ]/g, "")
+    .replace(/[^a-z0-9 ]/g, " ")
     .split(/\s+/)
     .filter((w) => w.length > 3 && !STOP.has(w));
 }
@@ -50,7 +107,10 @@ export function clusterItems(items, authorityOf) {
           if (c.cve) continue;
           let overlap = 0;
           for (const w of sig) if (c.sig.has(w)) overlap++;
-          if (overlap >= 3) { target = c; break; } // titres proches = même sujet
+          if (overlap >= 3) {
+            target = c;
+            break;
+          } // titres proches = même sujet
         }
       }
     }
@@ -59,7 +119,11 @@ export function clusterItems(items, authorityOf) {
       target.members.push(it);
       tokens(it.title).forEach((w) => target.sig.add(w));
     } else {
-      const c = { cve: it.cve || null, sig: new Set(tokens(it.title)), members: [it] };
+      const c = {
+        cve: it.cve || null,
+        sig: new Set(tokens(it.title)),
+        members: [it],
+      };
       clusters.push(c);
       if (it.cve) byCVE.set(it.cve, c);
     }
@@ -75,7 +139,9 @@ function finalize(cluster, authorityOf) {
   const rep = [...members].sort((a, b) => {
     const da = authorityOf(b) - authorityOf(a);
     if (da !== 0) return da;
-    return (b.detail || b.body || '').length - (a.detail || a.body || '').length;
+    return (
+      (b.detail || b.body || "").length - (a.detail || a.body || "").length
+    );
   })[0];
 
   // Fusion des sources (dédup par label).
@@ -94,17 +160,18 @@ function finalize(cluster, authorityOf) {
   const outlets = new Set(
     members
       .flatMap((m) => (m.sources || []).map((s) => s.label))
-      .filter((l) => l && !REF_ONLY.has(l))
+      .filter((l) => l && !REF_ONLY.has(l)),
   );
 
   const severity = members
     .map((m) => m.severity)
     .sort((a, b) => (SEV_RANK[a] ?? 9) - (SEV_RANK[b] ?? 9))[0];
 
-  const pubDate = members.reduce((mx, m) => {
-    const d = m.pubDate ? new Date(m.pubDate) : null;
-    return d && (!mx || d > mx) ? d : mx;
-  }, null) || rep.pubDate;
+  const pubDate =
+    members.reduce((mx, m) => {
+      const d = m.pubDate ? new Date(m.pubDate) : null;
+      return d && (!mx || d > mx) ? d : mx;
+    }, null) || rep.pubDate;
 
   return {
     ...rep,
