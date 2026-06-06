@@ -1,0 +1,954 @@
+{
+  "id": "daily-2026-06-06",
+  "type": "daily",
+  "date": "2026-06-06",
+  "title": "Rapport quotidien - samedi 6 juin 2026",
+  "summary": "Sur les dernières 24 heures, la veille recense 16 vulnérabilités critiques, 32 incidents ou compromissions et 24 signaux de fond. Acteurs et produits les plus exposés : Microsoft, tinymce (npm) et github.com/klever-io/klever-go (go).",
+  "generatedAt": "2026-06-06T04:00:58.816Z",
+  "sections": [
+    {
+      "id": "vulns",
+      "items": [
+        {
+          "title": "CVE-2026-10580 — The Hippoo Mobile App for WooCommerce plugin for WordPress is vulnerable to Authentication…",
+          "cve": "CVE-2026-10580",
+          "severity": "critical",
+          "score": 74,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Vulnérabilité critique CVE-2026-10580 (score CVSS 9.8).\n\nThe Hippoo Mobile App for WooCommerce plugin for WordPress is vulnerable to Authentication Bypass leading to Administrator Account Takeover in all versions up to and including 1.9.4. This is due to a logic conflation in HippooPermissions::get_user_permissions(), which returns the same null sentinel for both administrators and unauthenticated visitors — a value that HippooPermissions::has_role_access() unconditionally interprets as full administrator access…",
+          "detail": "Vulnérabilité critique CVE-2026-10580 (score CVSS 9.8).\n\nThe Hippoo Mobile App for WooCommerce plugin for WordPress is vulnerable to Authentication Bypass leading to Administrator Account Takeover in all versions up to and including 1.9.4. This is due to a logic conflation in HippooPermissions::get_user_permissions(), which returns the same null sentinel for both administrators and unauthenticated visitors — a value that HippooPermissions::has_role_access() unconditionally interprets as full administrator access — causing override_extension_permission_callback() to assign __return_true as the permission callback for every WordPress and WooCommerce REST route cloned under /wc-hippoo/v1/ext/ by HippooControllerWithAuth::re_register_external_routes(), while the block_unauthorized_access() pre-dispatch guard fails to block unauthenticated users for the same reason. This makes it possible for unauthenticated attackers to invoke any core REST endpoint without credentials — most critically, sending a POST request to /wc-hippoo/v1/ext/wp/v2/users/<id> with a {\"password\":\"<new_password>\"} body to reset the password of any WordPress user, including the site administrator, and gain full administrative control of the site.\n\nScore CVSS : 9.8\n\nType de faiblesse (CWE) : CWE-285",
+          "action": "Vérifier l'exposition du parc et appliquer le correctif éditeur dès sa disponibilité.",
+          "sources": [
+            {
+              "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-10580",
+              "label": "NVD"
+            },
+            {
+              "url": "https://www.cvedetails.com/cve/CVE-2026-10580/",
+              "label": "CVE Details"
+            }
+          ],
+          "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-10580",
+          "pubDate": "2026-06-05T19:16:28.830Z"
+        },
+        {
+          "title": "Nightmare Eclipse incident shows the researcher-vendor fights may never fully go away",
+          "cve": null,
+          "severity": "critical",
+          "score": 61,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Vulnérabilité critique affectant Microsoft.\n\nMicrosoft reopened some wounds and has reignited debate over the past couple weeks about vulnerability disclosure and the sometimes adversarial dynamic it creates between security researchers and vendors.&nbsp; The latest controversy ensued when Microsoft threatened criminal legal action against a security researcher who publicly disclosed a series of zero-day vulnerabilities with proof-of-concept exploits.",
+          "detail": "Vulnérabilité critique affectant Microsoft.\n\nMicrosoft reopened some wounds and has reignited debate over the past couple weeks about vulnerability disclosure and the sometimes adversarial dynamic it creates between security researchers and vendors.&nbsp; The latest controversy ensued when Microsoft threatened criminal legal action against a security researcher who publicly disclosed a series of zero-day vulnerabilities with proof-of-concept exploits. Microsoft insisted it received no details about the vulnerabilities prior to release, adding that the defects were not responsibly disclosed and put its customers at unnecessary risk. The public dispute between Microsoft and the researcher known as “ Nightmare Eclipse ,” who couldn’t be identified or reached for comment, sparked dismay among some security professionals. Microsoft’s forceful response and the resulting backlash revived a friction point between vendors and researchers who find and report flaws in the software they sell. “The fight is being argued as coordinated disclosure, but the grievance underneath is personal and specific in a way disclosure shouldn&#8217;t be, especially with a vendor that has been at it for so long,” Katie Moussouris, founder and CEO at Luta Security, told CyberScoop. “Microsoft seemed to get emotional and shouldn&#8217;t have publicly said anything, but somehow felt justified in calling out a researcher and involved law enforcement in th",
+          "action": "Vérifier l'exposition du parc et appliquer le correctif éditeur dès sa disponibilité.",
+          "sources": [
+            {
+              "url": "https://cyberscoop.com/microsoft-coordinated-vulnerability-disclosure-debacle/",
+              "label": "CyberScoop"
+            }
+          ],
+          "url": "https://cyberscoop.com/microsoft-coordinated-vulnerability-disclosure-debacle/",
+          "pubDate": "2026-06-05T14:48:55.000Z"
+        },
+        {
+          "title": "CVE-2026-47744 — Shopper: Authorization bypass and RBAC privilege escalation in team settings",
+          "cve": "CVE-2026-47744",
+          "severity": "critical",
+          "score": 59,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Vulnérabilité critique CVE-2026-47744 affectant shopper/framework (composer) (score CVSS 9.9).\n\nShopper: Authorization bypass and RBAC privilege escalation in team settings\n\n--> Name Query To see all available qualifiers, see our documentation .\n\nCombined, these two defects allow a low-privilege authenticated user to obtain administrator privileges and remove the legitimate administrators from the panel.\n\ncomposer require shopper/admin:^2.8 Workarounds None.",
+          "detail": "Vulnérabilité critique CVE-2026-47744 affectant shopper/framework (composer) (score CVSS 9.9).\n\nShopper: Authorization bypass and RBAC privilege escalation in team settings\n\n--> Name Query To see all available qualifiers, see our documentation .\n\nCombined, these two defects allow a low-privilege authenticated user to obtain administrator privileges and remove the legitimate administrators from the panel.\n\ncomposer require shopper/admin:^2.8 Workarounds None. Upgrade to v2.8.0 .\n\nmckenziearts published to shopperlabs/shopper May 20, 2026 Published by the National Vulnerability Database May 29, 2026 Published to the GitHub Advisory Database Jun 5, 2026 Reviewed Jun 5, 2026 Last updated Jun 5, 2026 Severity Critical 9.9 CVSS overall score This score calculates overall vulnerability severity from 0 to 10 and is based on the Common Vulnerability Scoring System (CVSS). / 10 CVSS v3 base metrics Attack vector Network Attack complexity Low Privileges required Low User interaction None Scope Changed Confidentiality High Integrity High Availability High Learn more about base metrics CVSS v3 base metrics Attack vector: More severe the more the remote (logically and physically) an attacker can be in order to exploit the vulnerability. Attack complexity: More severe for the least complex attacks. Privileges required: More severe if no privileges are required. User interaction: More severe when no user interaction is required. Scope: More severe when a scope change occurs, e.g. one vulnerable component impacts resources in components beyond its security scope. Confidentiality: More severe when loss of data confidentiality is highest, measuring the level of data access available to an unauthorized user. Integrity: More severe when loss of data integrity is the highest, measuring the c",
+          "action": "Vérifier l'exposition du parc et appliquer le correctif éditeur dès sa disponibilité.",
+          "sources": [
+            {
+              "url": "https://github.com/advisories/GHSA-c3qp-2ggw-xjg7",
+              "label": "GitHub Advisory"
+            }
+          ],
+          "url": "https://github.com/advisories/GHSA-c3qp-2ggw-xjg7",
+          "pubDate": "2026-06-05T20:35:51.000Z"
+        },
+        {
+          "title": "CVE-2025-71318 — NetMan 204 fails to enforce authentication on its administrative pages and command endpoin…",
+          "cve": "CVE-2025-71318",
+          "severity": "critical",
+          "score": 59,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Vulnérabilité critique CVE-2025-71318 (score CVSS 9.8).\n\nNetMan 204 fails to enforce authentication on its administrative pages and command endpoints. A remote, unauthenticated attacker can directly request administrative pages (such as administration.html, administration-commands.html, and configuration.html) to disclose sensitive information including LDAP configuration and active user details, and can invoke privileged UPS control commands — including shutdown, reboot, switch-on-bypass, and battery test — wit…",
+          "detail": "Vulnérabilité critique CVE-2025-71318 (score CVSS 9.8).\n\nNetMan 204 fails to enforce authentication on its administrative pages and command endpoints. A remote, unauthenticated attacker can directly request administrative pages (such as administration.html, administration-commands.html, and configuration.html) to disclose sensitive information including LDAP configuration and active user details, and can invoke privileged UPS control commands — including shutdown, reboot, switch-on-bypass, and battery test — without supplying any credentials.\n\nScore CVSS : 9.8\n\nType de faiblesse (CWE) : CWE-306",
+          "action": "Vérifier l'exposition du parc et appliquer le correctif éditeur dès sa disponibilité.",
+          "sources": [
+            {
+              "url": "https://nvd.nist.gov/vuln/detail/CVE-2025-71318",
+              "label": "NVD"
+            },
+            {
+              "url": "https://www.cvedetails.com/cve/CVE-2025-71318/",
+              "label": "CVE Details"
+            }
+          ],
+          "url": "https://nvd.nist.gov/vuln/detail/CVE-2025-71318",
+          "pubDate": "2026-06-05T18:16:54.910Z"
+        },
+        {
+          "title": "CVE-2025-71317 — NetMan 204 contains a hard-coded backdoor account with the username and password 'eurek' t…",
+          "cve": "CVE-2025-71317",
+          "severity": "critical",
+          "score": 59,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Vulnérabilité critique CVE-2025-71317 (score CVSS 9.8).\n\nNetMan 204 contains a hard-coded backdoor account with the username and password 'eurek' that grants administrative access. A remote, unauthenticated attacker can authenticate through the cgi-bin/login.cgi endpoint (for example /cgi-bin/login.cgi?username=eurek&password=eurek, which due to lax parameter validation can be shortened to /cgi-bin/login.cgi?username=eurek%20eurek) to obtain administrator privileges, allowing them to alter device configuration,…",
+          "detail": "Vulnérabilité critique CVE-2025-71317 (score CVSS 9.8).\n\nNetMan 204 contains a hard-coded backdoor account with the username and password 'eurek' that grants administrative access. A remote, unauthenticated attacker can authenticate through the cgi-bin/login.cgi endpoint (for example /cgi-bin/login.cgi?username=eurek&password=eurek, which due to lax parameter validation can be shortened to /cgi-bin/login.cgi?username=eurek%20eurek) to obtain administrator privileges, allowing them to alter device configuration, enable the telnet/SSH services, and reset local user credentials.\n\nScore CVSS : 9.8\n\nType de faiblesse (CWE) : CWE-798",
+          "action": "Vérifier l'exposition du parc et appliquer le correctif éditeur dès sa disponibilité.",
+          "sources": [
+            {
+              "url": "https://nvd.nist.gov/vuln/detail/CVE-2025-71317",
+              "label": "NVD"
+            },
+            {
+              "url": "https://www.cvedetails.com/cve/CVE-2025-71317/",
+              "label": "CVE Details"
+            }
+          ],
+          "url": "https://nvd.nist.gov/vuln/detail/CVE-2025-71317",
+          "pubDate": "2026-06-05T18:16:54.737Z"
+        },
+        {
+          "title": "CVE-2026-47668 — DbGate: Unauthenticated Remote Code Execution via JSON Script Runner",
+          "cve": "CVE-2026-47668",
+          "severity": "critical",
+          "score": 59,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Vulnérabilité critique CVE-2026-47668 affectant dbgate-serve (npm) (score CVSS 10).\n\nDbGate: Unauthenticated Remote Code Execution via JSON Script Runner\n\n--> Name Query To see all available qualifiers, see our documentation .\n\nFile: packages/api/src/controllers/runners.js - start() method\n\nThe /runners/start endpoint accepts a POST body containing a script object.",
+          "detail": "Vulnérabilité critique CVE-2026-47668 affectant dbgate-serve (npm) (score CVSS 10).\n\nDbGate: Unauthenticated Remote Code Execution via JSON Script Runner\n\n--> Name Query To see all available qualifiers, see our documentation .\n\nFile: packages/api/src/controllers/runners.js - start() method\n\nThe /runners/start endpoint accepts a POST body containing a script object. When script.type == 'json' , the request follows a different code path than raw shell scripts:\n\nThe only validation performed is checkSecureDirectoriesInScript() , which props.fileName values\n\nFile: packages/tools/src/ScriptWriter.ts - assignCore() method\n\nThe JSON script's commands array contains objects with type: \"assign\" . The assignCore method generates JavaScript by direct string concatenation of user-controlled values:",
+          "action": "Vérifier l'exposition du parc et appliquer le correctif éditeur dès sa disponibilité.",
+          "sources": [
+            {
+              "url": "https://github.com/advisories/GHSA-8v3q-9vmx-36vc",
+              "label": "GitHub Advisory"
+            }
+          ],
+          "url": "https://github.com/advisories/GHSA-8v3q-9vmx-36vc",
+          "pubDate": "2026-06-05T16:25:23.000Z"
+        },
+        {
+          "title": "CVE-2026-6274 — Improper Authentication, Missing authentication for critical function, Weak Authentication…",
+          "cve": "CVE-2026-6274",
+          "severity": "critical",
+          "score": 59,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Vulnérabilité critique CVE-2026-6274 (score CVSS 9.8).\n\nImproper Authentication, Missing authentication for critical function, Weak Authentication vulnerability in DTS Electronics Industry and Trade Ltd. Co. Redline WR3200 allows Accessing Functionality Not Properly Constrained by ACLs. This issue affects Redline WR3200: from 7.1.3 before 7.1.8.",
+          "detail": "Vulnérabilité critique CVE-2026-6274 (score CVSS 9.8).\n\nImproper Authentication, Missing authentication for critical function, Weak Authentication vulnerability in DTS Electronics Industry and Trade Ltd. Co. Redline WR3200 allows Accessing Functionality Not Properly Constrained by ACLs.\n\nThis issue affects Redline WR3200: from 7.1.3 before 7.1.8.\n\nScore CVSS : 9.8\n\nType de faiblesse (CWE) : CWE-287, CWE-306, CWE-1390",
+          "action": "Vérifier l'exposition du parc et appliquer le correctif éditeur dès sa disponibilité.",
+          "sources": [
+            {
+              "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-6274",
+              "label": "NVD"
+            },
+            {
+              "url": "https://www.cvedetails.com/cve/CVE-2026-6274/",
+              "label": "CVE Details"
+            }
+          ],
+          "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-6274",
+          "pubDate": "2026-06-05T09:16:26.373Z"
+        },
+        {
+          "title": "CVE-2026-47731 — NASA AMMOS Instrument Toolkit: Path traversal resulting in arbitrary file append (can be triggered over the network by unauthenticated attacker)",
+          "cve": "CVE-2026-47731",
+          "severity": "critical",
+          "score": 57,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Vulnérabilité critique CVE-2026-47731 affectant ait-core (pip) (score CVSS 9.1).\n\nNASA AMMOS Instrument Toolkit: Path traversal resulting in arbitrary file append (can be triggered over the network by unauthenticated attacker)\n\n--> Name Query To see all available qualifiers, see our documentation .\n\nThis issue affects BSC (Binary Stream Capture) and usage of the ait-bsc server. This impacts AIT-Core versions before 3.1.1, from 2.x before 2.6.1.",
+          "detail": "Vulnérabilité critique CVE-2026-47731 affectant ait-core (pip) (score CVSS 9.1).\n\nNASA AMMOS Instrument Toolkit: Path traversal resulting in arbitrary file append (can be triggered over the network by unauthenticated attacker)\n\n--> Name Query To see all available qualifiers, see our documentation .\n\nThis issue affects BSC (Binary Stream Capture) and usage of the ait-bsc server. This impacts AIT-Core versions before 3.1.1, from 2.x before 2.6.1. Users are recommended to upgrade to version 3.1.1 or 2.6.1.\n\nA remote attacker can use this vulnerability to append data to arbitrary files on the system (if the ait-bsc has privileges to write to them). It is easy to use this to corrupt data on the system (which can include the AIT-Core python code to crash the server after it is restarted and python attempts to execute the corrupted code). It should be mentioned here that there seems to be a bug in the TCP handler that results in a lot of data being written in an infinite loop after the connection has been closed, this could result in excessive disk space use. That the attacker can modify executable files like python or bash scripts means that this vulnerability could also lead to Remote Code Execution as soon as the user runs the modified code. However, depending on the system, it is not so easy to execute this attack in practice (it might not be possible), because ait-bsc adds a header in front of attacker-controlled data.\n\nThe vulnerability is mitigated by constraining BSC ability to write paths only in the project root log directory which is configured through the bsc.yaml. Additionally, any attempts to traverse outside of the configured location are rejected.\n\nStreamCaptureManagerServer exposes an unauthenticated POST endpoint:\n\n# ait/core/bsc.py class StreamCaptureManager",
+          "action": "Vérifier l'exposition du parc et appliquer le correctif éditeur dès sa disponibilité.",
+          "sources": [
+            {
+              "url": "https://github.com/advisories/GHSA-p462-prxw-mjx4",
+              "label": "GitHub Advisory"
+            }
+          ],
+          "url": "https://github.com/advisories/GHSA-p462-prxw-mjx4",
+          "pubDate": "2026-06-05T18:11:27.000Z"
+        },
+        {
+          "title": "Cisco warns of unpatched SD-WAN zero-day exploited in attacks",
+          "cve": "CVE-2026-20245",
+          "severity": "critical",
+          "score": 49,
+          "corroboration": 6,
+          "region": "intl",
+          "body": "Vulnérabilité critique CVE-2026-20245 affectant Cisco.\n\nGood luck, sys admins\n\nThe threat is real. Unknown miscreants are exploiting a high-severity, zero-day bug in Cisco’s SD-WAN management software, and the networking giant hasn’t said when it will patch the flaw.\n\nCisco issued an advisory on Thursday for the Catalyst SD-WAN Manager vulnerability, tracked as CVE-2026-20245, and it sounds like attackers have been exploiting this security failure for at least the last week.\n\nIt’s due to a validation error - th…",
+          "detail": "Vulnérabilité critique CVE-2026-20245 affectant Cisco.\n\nGood luck, sys admins\n\nThe threat is real. Unknown miscreants are exploiting a high-severity, zero-day bug in Cisco’s SD-WAN management software, and the networking giant hasn’t said when it will patch the flaw.\n\nCisco issued an advisory on Thursday for the Catalyst SD-WAN Manager vulnerability, tracked as CVE-2026-20245, and it sounds like attackers have been exploiting this security failure for at least the last week.\n\nIt’s due to a validation error - the software fails to properly validate user-supplied input - and an authenticated, local attacker can exploit the flaw by uploading a specially crafted file to vulnerable systems. From there, they can escalate privileges and execute commands with root privileges.\n\nThe vulnerability affects all versions of the SD-WAN software, regardless of device configuration, and across all deployment types including on-premises, cloud-based, and FedRAMP-certified deployments.\n\nSwitchzilla says it became aware of attacks against this vulnerability in June.\n\n“To exploit this vulnerability, an attacker must have netadmin privileges on an affected system,” the vendor said. “This would require valid credentials or exploitation of CVE-2026-20182 or CVE-2026-20127 . Cisco is not aware of successful exploitation by other methods.”",
+          "action": "Vérifier l'exposition du parc et appliquer le correctif éditeur dès sa disponibilité.",
+          "sources": [
+            {
+              "url": "https://www.theregister.com/security/2026/06/05/yet-another-cisco-sd-wan-0-day-under-attack-and-no-patch-in-sight/5251855",
+              "label": "The Register"
+            },
+            {
+              "url": "https://www.helpnetsecurity.com/2026/06/05/cisco-sd-wan-cve-2026-20245-0-day-exploited/",
+              "label": "Help Net Security"
+            },
+            {
+              "url": "https://www.bleepingcomputer.com/news/security/new-cisco-sd-wan-flaw-exploited-in-zero-day-attacks-to-gain-root/",
+              "label": "BleepingComputer"
+            },
+            {
+              "url": "https://www.securityweek.com/cisco-warns-of-7th-sd-wan-zero-day-exploited-in-2026/",
+              "label": "SecurityWeek"
+            },
+            {
+              "url": "https://www.globalsecuritymag.fr/vulnerabilite-dans-cisco-catalyst-sd-wan-05-juin-2026.html",
+              "label": "Global Sec Mag"
+            },
+            {
+              "url": "https://securityaffairs.com/193203/security/cisco-sd-wan-has-a-new-root-level-problem-and-theres-no-fix-yet.html",
+              "label": "Security Affairs"
+            }
+          ],
+          "url": "https://www.theregister.com/security/2026/06/05/yet-another-cisco-sd-wan-0-day-under-attack-and-no-patch-in-sight/5251855",
+          "pubDate": "2026-06-06T04:00:49.387Z"
+        },
+        {
+          "title": "Threat Brief: Active Exploitation of PAN-OS CVE-2026-0257",
+          "cve": "CVE-2026-0257",
+          "severity": "high",
+          "score": 49,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Vulnérabilité élevée CVE-2026-0257 affectant PAN-OS.\n\nWe include indicators of activity and mitigations for PAN-OS vulnerability CVE-2026-0257.\n\nPalo Alto Networks Unit 42 has observed active exploitation of PAN-OS vulnerability CVE-2026-0257 by an unidentified threat actor attempting to access GlobalProtect.",
+          "detail": "Vulnérabilité élevée CVE-2026-0257 affectant PAN-OS.\n\nWe include indicators of activity and mitigations for PAN-OS vulnerability CVE-2026-0257.\n\nPalo Alto Networks Unit 42 has observed active exploitation of PAN-OS vulnerability CVE-2026-0257 by an unidentified threat actor attempting to access GlobalProtect. This security flaw involves an authentication bypass in the portal and gateway components of vulnerable versions of PAN-OS ® software, which could allow unauthorized attackers to circumvent security controls and initiate VPN connections. This CVE was added to the Known Exploited Vulnerability (KEV) catalog on May 29.\n\nNo post-access behavior or lateral movement has been identified as of this time. Only a small portion of the probed devices actually established VPN sessions, resulting in gateway-connected events.\n\nWe advise organizations to proactively hunt for the indicators of the activity specified in this report and activate incident response protocols for any successful gateway-connected events linked to these indicators. Additionally, we strongly recommend reviewing the security advisory for CVE-2026-0257 , following the available workarounds and mitigations or upgrading to a version that includes a fix for this issue.\n\nFor pre-Proof of Concept release (May 29, 2026) activities, search for these IP addresses in GlobalProtect logs to look for successful login connection:\n\nSearch GlobalProtect logs for successful gateway-connected events from any IP address using suspicious host IDs or device names, including but not limited to:\n\nAs part of post-PoC release monitoring, search GlobalProtect logs for successful gateway-connected events matching the following hard-coded client configuration values from the PoC code.",
+          "action": "Vérifier l'exposition du parc et appliquer le correctif éditeur dès sa disponibilité.",
+          "sources": [
+            {
+              "url": "https://unit42.paloaltonetworks.com/active-exploitation-of-pan-os-cve-2026-0257/",
+              "label": "Unit 42"
+            }
+          ],
+          "url": "https://unit42.paloaltonetworks.com/active-exploitation-of-pan-os-cve-2026-0257/",
+          "pubDate": "2026-06-05T14:05:42.000Z"
+        },
+        {
+          "title": "Moratoire sur l’IA : Anthropic veut geler un marché qu’elle domine",
+          "cve": null,
+          "severity": "critical",
+          "score": 49,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Vulnérabilité critique affectant Exchange.\n\nIl y a quelque chose de singulier dans la démarche d&rsquo;Anthropic. Quelques jours seulement après avoir déposé son dossier d&rsquo;introduction en Bourse auprès de la Securities and Exchange Commission (SEC) pour une opération à plus de 1000 milliards $, l&rsquo;inventeur de Claude veut lever le pied.",
+          "detail": "Vulnérabilité critique affectant Exchange.\n\nIl y a quelque chose de singulier dans la démarche d&rsquo;Anthropic. Quelques jours seulement après avoir déposé son dossier d&rsquo;introduction en Bourse auprès de la Securities and Exchange Commission (SEC) pour une opération à plus de 1000 milliards $, l&rsquo;inventeur de Claude veut lever le pied. L&rsquo;Anthropic Institute, son centre de réflexion interne, publie un texte « When AI builds itself » signé par Marina Favaro et Jack Clark, cofondateur de la firme, appelant à la création d&rsquo;un dispositif mondial permettant de ralentir ou de suspendre le développement des IA les plus avancées. La thèse centrale est simple à énoncer mais troublante dans ses implications. Les modèles d&rsquo;IA avancent si vite qu&rsquo;ils pourraient bientôt être capables de s&rsquo;améliorer eux-mêmes sans intervention humaine. Ce seuil, désigné par le terme d&rsquo;« auto-amélioration récursive », est au cœur de l&rsquo;argumentaire d&rsquo;Anthropic. L&rsquo;IA qui se construit elle-même : une réalité en marche Pour étayer sa demande, Anthropic fait quelque chose d&rsquo;inhabituel dans un secteur peu enclin à la transparence : publier ses propres données internes. Et les chiffres sont impressionnants. En mai 2026, plus de 80 % du code intégré dans la base de code d&rsquo;Anthropic est rédigé par Claude. Avant le lancement de Claude Code en février 2025, cette proportion était quasi n",
+          "action": "Vérifier l'exposition du parc et appliquer le correctif éditeur dès sa disponibilité.",
+          "sources": [
+            {
+              "url": "https://www.silicon.fr/data-ia-1372/moratoire-sur-lia-anthropic-veut-geler-un-marche-quelle-domine-227530",
+              "label": "Silicon.fr"
+            }
+          ],
+          "url": "https://www.silicon.fr/data-ia-1372/moratoire-sur-lia-anthropic-veut-geler-un-marche-quelle-domine-227530",
+          "pubDate": "2026-06-05T12:00:05.000Z"
+        },
+        {
+          "title": "Chrome 149 Patches 429 Vulnerabilities",
+          "cve": null,
+          "severity": "critical",
+          "score": 49,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Vulnérabilité critique affectant Chrome.\n\nChrome 149 was released with patches for 429 vulnerabilities, including over 100 critical and high-severity bugs.\n\nOver 100 bugs are critical or high-severity, mainly use-after-free and insufficient validation of untrusted input flaws.\n\nSubscribe to the SecurityWeek Email Briefing for the latest cybersecurity threats, trends, and expert insights.\n\nSubscribe to the SecurityWeek Email Briefing to stay informed on the latest threats, trends, and technology, a…",
+          "detail": "Vulnérabilité critique affectant Chrome.\n\nChrome 149 was released with patches for 429 vulnerabilities, including over 100 critical and high-severity bugs.\n\nOver 100 bugs are critical or high-severity, mainly use-after-free and insufficient validation of untrusted input flaws.\n\nSubscribe to the SecurityWeek Email Briefing for the latest cybersecurity threats, trends, and expert insights.\n\nSubscribe to the SecurityWeek Email Briefing to stay informed on the latest threats, trends, and technology, along with insightful columns from industry experts.\n\nOrganizations are investing heavily in third-party risk management, but breaches, delays, and blind spots continue to persist. Join this live webinar as we examine the gap between how organizations think their third-party risk programs are performing and what’s actually happening in practice.\n\nExplore how attackers are using AI to scale threats and how security teams can respond with AI-driven defenses. Protecting against unmonitored use of generative AI (Shadow AI) in business units and building and enforcing AI governance frameworks.\n\nOpal Security has appointed CPO, CTO, VP of Field Engineering, VP of Marketing, and Head of Product and Solutions Marketing.",
+          "action": "Vérifier l'exposition du parc et appliquer le correctif éditeur dès sa disponibilité.",
+          "sources": [
+            {
+              "url": "https://www.securityweek.com/chrome-149-patches-429-vulnerabilities/",
+              "label": "SecurityWeek"
+            }
+          ],
+          "url": "https://www.securityweek.com/chrome-149-patches-429-vulnerabilities/",
+          "pubDate": "2026-06-05T11:13:57.000Z"
+        },
+        {
+          "title": "Hackers Exploit Critical Everest Forms Pro WordPress Plugin Flaw to Take Over Sites",
+          "cve": "CVE-2026-3300",
+          "severity": "critical",
+          "score": 49,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Vulnérabilité critique CVE-2026-3300 affectant WordPress.\n\nThreat actors are actively exploiting a critical security flaw in Everest Forms Pro, a WordPress plugin with about 4,000 active installations, to execute arbitrary code, leading to a complete site compromise. The vulnerability in question is CVE-2026-3300 (CVSS score: 9.8), a remote code execution bug impacting all versions of the plugin up to, and including, 1.9.12. A patch for the flaw was",
+          "detail": "Vulnérabilité critique CVE-2026-3300 affectant WordPress.\n\nThreat actors are actively exploiting a critical security flaw in Everest Forms Pro, a WordPress plugin with about 4,000 active installations, to execute arbitrary code, leading to a complete site compromise. The vulnerability in question is CVE-2026-3300 (CVSS score: 9.8), a remote code execution bug impacting all versions of the plugin up to, and including, 1.9.12. A patch for the flaw was",
+          "action": "Vérifier l'exposition du parc et appliquer le correctif éditeur dès sa disponibilité.",
+          "sources": [
+            {
+              "url": "https://thehackernews.com/2026/06/hackers-exploit-critical-everest-forms.html",
+              "label": "The Hacker News"
+            }
+          ],
+          "url": "https://thehackernews.com/2026/06/hackers-exploit-critical-everest-forms.html",
+          "pubDate": "2026-06-05T08:38:59.000Z"
+        },
+        {
+          "title": "CVE-2026-24425 — Twig: Possible sandbox bypass when using a source policy",
+          "cve": "CVE-2026-24425",
+          "severity": "high",
+          "score": 46,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Vulnérabilité élevée CVE-2026-24425 affectant twig/twig (composer) (score CVSS 8.8).\n\nTwig: Possible sandbox bypass when using a source policy\n\n--> Name Query To see all available qualifiers, see our documentation .\n\nThe issue affects the sort , filter , map , and reduce filters.\n\nIn the affected versions, the runtime check that rejects non- Closure callbacks in sandbox mode does not use the current template Source .",
+          "detail": "Vulnérabilité élevée CVE-2026-24425 affectant twig/twig (composer) (score CVSS 8.8).\n\nTwig: Possible sandbox bypass when using a source policy\n\n--> Name Query To see all available qualifiers, see our documentation .\n\nThe issue affects the sort , filter , map , and reduce filters.\n\nIn the affected versions, the runtime check that rejects non- Closure callbacks in sandbox mode does not use the current template Source . As a result, when the sandbox is enabled through a source policy instead of being enabled globally, Twig can incorrectly treat the current execution as non-sandboxed for these callback checks.\n\nThis can allow user-controlled templates to pass arbitrary PHP callables to callback-accepting filters even though the template is being sandboxed through a source policy.\n\nThe patch makes callback sandbox checks source-aware by propagating the current template Source to callback-accepting filters and using it when deciding whether sandbox restrictions apply.\n\nWe would like to thank XavLim and Wade Sparks for reporting the issue and Fabien Potencier for fixing the issue.",
+          "action": "Vérifier l'exposition du parc et appliquer le correctif éditeur dès sa disponibilité.",
+          "sources": [
+            {
+              "url": "https://github.com/advisories/GHSA-2q52-x2ff-qgfr",
+              "label": "GitHub Advisory"
+            }
+          ],
+          "url": "https://github.com/advisories/GHSA-2q52-x2ff-qgfr",
+          "pubDate": "2026-06-05T20:41:33.000Z"
+        },
+        {
+          "title": "CVE-2026-47743 — Shopper: Multiple data integrity and disclosure issues in admin Livewire components",
+          "cve": "CVE-2026-47743",
+          "severity": "high",
+          "score": 46,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Vulnérabilité élevée CVE-2026-47743 affectant shopper/framework (composer) (score CVSS 8.7).\n\nShopper: Multiple data integrity and disclosure issues in admin Livewire components\n\n--> Name Query To see all available qualifiers, see our documentation .\n\ncomposer require shopper/admin:^2.8 Workarounds None. Upgrade to v2.8.0 .\n\nmckenziearts published to shopperlabs/shopper May 20, 2026 Published to the GitHub Advisory Database Jun 5, 2026 Reviewed Jun 5, 2026 Last updated Jun 5, 2026 Severity High 8.7 CVSS overall score This score calculates overall v…",
+          "detail": "Vulnérabilité élevée CVE-2026-47743 affectant shopper/framework (composer) (score CVSS 8.7).\n\nShopper: Multiple data integrity and disclosure issues in admin Livewire components\n\n--> Name Query To see all available qualifiers, see our documentation .\n\ncomposer require shopper/admin:^2.8 Workarounds None. Upgrade to v2.8.0 .\n\nmckenziearts published to shopperlabs/shopper May 20, 2026 Published to the GitHub Advisory Database Jun 5, 2026 Reviewed Jun 5, 2026 Last updated Jun 5, 2026 Severity High 8.7 CVSS overall score This score calculates overall vulnerability severity from 0 to 10 and is based on the Common Vulnerability Scoring System (CVSS). / 10 CVSS v3 base metrics Attack vector Network Attack complexity Low Privileges required Low User interaction Required Scope Changed Confidentiality High Integrity High Availability None Learn more about base metrics CVSS v3 base metrics Attack vector: More severe the more the remote (logically and physically) an attacker can be in order to exploit the vulnerability. Attack complexity: More severe for the least complex attacks. Privileges required: More severe if no privileges are required. User interaction: More severe when no user interaction is required. Scope: More severe when a scope change occurs, e.g. one vulnerable component impacts resources in components beyond its security scope. Confidentiality: More severe when loss of data confidentiality is highest, measuring the level of data access available to an unauthorized user. Integrity: More severe when loss of data integrity is the highest, measuring the consequence of data modification possible by an unauthorized user. Availability: More severe when the loss of impacted component availability is highest. CVSS:3.1/AV:N/AC:L/PR:L/UI:R/S:C/C:H/I:H/A:N EPSS score Weaknesses",
+          "action": "Vérifier l'exposition du parc et appliquer le correctif éditeur dès sa disponibilité.",
+          "sources": [
+            {
+              "url": "https://github.com/advisories/GHSA-hr9v-r8r2-hg7j",
+              "label": "GitHub Advisory"
+            }
+          ],
+          "url": "https://github.com/advisories/GHSA-hr9v-r8r2-hg7j",
+          "pubDate": "2026-06-05T20:35:14.000Z"
+        }
+      ]
+    },
+    {
+      "id": "attacks",
+      "items": [
+        {
+          "title": "Chinese APT deploys new malware to keep access to hacked networks",
+          "cve": null,
+          "severity": "news",
+          "score": 76,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Incident de sécurité rapporté par BleepingComputer.\n\nA Chinese espionage group tracked as UNC5221 has been accessing Microsoft 365 environments using the Brickstorm backdoor and previously undocumented malware named Plenet and AgentPSD.\n\nNew 'HTTP/2 Bomb' DoS attack crashes web servers in under a minute\n\nPolice dismantles 9 crime groups in illegal streaming crackdown\n\nVS Code zero-day lets hackers steal GitHub tokens in one click\n\nSuspicious Polyfill login prompts pop up on Toshiba, Muji websites\n\nCISA: Hack…",
+          "detail": "Incident de sécurité rapporté par BleepingComputer.\n\nA Chinese espionage group tracked as UNC5221 has been accessing Microsoft 365 environments using the Brickstorm backdoor and previously undocumented malware named Plenet and AgentPSD.\n\nNew 'HTTP/2 Bomb' DoS attack crashes web servers in under a minute\n\nPolice dismantles 9 crime groups in illegal streaming crackdown\n\nVS Code zero-day lets hackers steal GitHub tokens in one click\n\nSuspicious Polyfill login prompts pop up on Toshiba, Muji websites\n\nCISA: Hackers now exploit SolarWinds Serv-U flaw to crash servers\n\nChinese APT deploys new malware to keep access to hacked networks",
+          "action": "Surveiller les indicateurs de compromission associés et contrôler les actifs exposés.",
+          "sources": [
+            {
+              "url": "https://www.bleepingcomputer.com/news/security/chinese-apt-deploys-new-malware-to-keep-access-to-hacked-networks/",
+              "label": "BleepingComputer"
+            }
+          ],
+          "url": "https://www.bleepingcomputer.com/news/security/chinese-apt-deploys-new-malware-to-keep-access-to-hacked-networks/",
+          "pubDate": "2026-06-05T18:09:47.000Z"
+        },
+        {
+          "title": "Aspire hospital — rançongiciel nova",
+          "cve": null,
+          "severity": "news",
+          "score": 73,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Incident de sécurité rapporté par ransomware.live.\n\nVictime revendiquée par le groupe de rançongiciel nova. Secteur : Healthcare. Both aspirehospitals.co.in and aspirehospitals.in Under Nova Company Control, servers encrypted and patients data stolen, A Healthcare provider based on Plot No: 163, 208, Ekamra Road, Unit-6, Ganga Nagar, Bhubaneswar, India, Odisha, you need to think well to contact us for recover and to secure patients records - Nova Provide tree and samples from stolen data, free 2 files decry…",
+          "detail": "Incident de sécurité rapporté par ransomware.live.\n\nVictime revendiquée par le groupe de rançongiciel nova.\n\nSecteur : Healthcare.\n\nBoth aspirehospitals.co.in and aspirehospitals.in Under Nova Company Control, servers encrypted and patients data stolen, A Healthcare provider based on Plot No: 163, 208, Ekamra Road, Unit-6, Ganga Nagar, Bhubaneswar, India, Odisha, you need to think well to contact us for recover and to secure patients records - Nova Provide tree and samples from stolen data, free 2 files decrypt to the company when its get in touch with support department.",
+          "action": "Surveiller les indicateurs de compromission associés et contrôler les actifs exposés.",
+          "sources": [
+            {
+              "url": "https://www.ransomware.live/id/QXNwaXJlIGhvc3BpdGFsQG5vdmE=",
+              "label": "ransomware.live"
+            }
+          ],
+          "url": "https://www.ransomware.live/id/QXNwaXJlIGhvc3BpdGFsQG5vdmE=",
+          "pubDate": "2026-06-05T21:23:44.560Z"
+        },
+        {
+          "title": "IronWorm and New Miasma Worm Variant Hit npm in Supply Chain Attacks",
+          "cve": null,
+          "severity": "news",
+          "score": 73,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Incident de sécurité rapporté par The Hacker News.\n\nMultiple software supply chain attacks have hit the npm ecosystem, with threat actors using both malicious and poisoned versions of over 50 legitimate packages to distribute a Rust-based information stealer and a self-spreading worm, respectively. According to JFrog, the information stealer \"scrapes every secret it can find on a developer's machine, hides behind an eBPF kernel rootkit, and",
+          "detail": "Incident de sécurité rapporté par The Hacker News.\n\nMultiple software supply chain attacks have hit the npm ecosystem, with threat actors using both malicious and poisoned versions of over 50 legitimate packages to distribute a Rust-based information stealer and a self-spreading worm, respectively. According to JFrog, the information stealer \"scrapes every secret it can find on a developer's machine, hides behind an eBPF kernel rootkit, and",
+          "action": "Surveiller les indicateurs de compromission associés et contrôler les actifs exposés.",
+          "sources": [
+            {
+              "url": "https://thehackernews.com/2026/06/ironworm-and-new-miasma-worm-variant.html",
+              "label": "The Hacker News"
+            }
+          ],
+          "url": "https://thehackernews.com/2026/06/ironworm-and-new-miasma-worm-variant.html",
+          "pubDate": "2026-06-05T18:05:30.000Z"
+        },
+        {
+          "title": "Silent Ransom Group (SRG): Switching To DNS Fast Flux Infrastructure",
+          "cve": null,
+          "severity": "news",
+          "score": 72,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Incident de sécurité rapporté par Security Affairs.\n\nResearchers exposed the Silent Ransom Group &#8216;s Fast Flux infrastructure as the FBI warns of ongoing attacks targeting U.S. law firms and businesses. Resecurity uncovered the Silent Ransom Group (SRG)&#8217;s Fast Flux network infrastructure and shares available intelligence with the cybersecurity community to disrupt their malicious activities and enable ISP/DNS providers to counter this threat.",
+          "detail": "Incident de sécurité rapporté par Security Affairs.\n\nResearchers exposed the Silent Ransom Group &#8216;s Fast Flux infrastructure as the FBI warns of ongoing attacks targeting U.S. law firms and businesses. Resecurity uncovered the Silent Ransom Group (SRG)&#8217;s Fast Flux network infrastructure and shares available intelligence with the cybersecurity community to disrupt their malicious activities and enable ISP/DNS providers to counter this threat. &#8220;Resecurity is the first to uncover the SRG&#8217;s Fast Flux network infrastructure and is sharing this intelligence with the cybersecurity community to disrupt their malicious activities and enable ISP/DNS providers to counter this threat.&#8221; reads the report published by Resecurity. The Silent Ransom Group, also known as Luna Moth, Chatty Spider, and UNC3753 , is a cyber extortion group active since 2022 that focuses on stealing sensitive data and extorting victims rather than encrypting files. The group primarily targets organizations in sectors such as legal services, healthcare, hospitality, finance, and insurance. The experts also outlined the use of X-CSRF (Cross-Site Request Forgery) token to prevent indexing of their Data Leak Site (DLS) &#8211; a unique, secret, and unpredictable string that a server-side application generates and assigns to a user&#8217;s session. The Federal Bureau of Investigation (FBI) recently issued an advisory about the SRG, which is ac",
+          "action": "Surveiller les indicateurs de compromission associés et contrôler les actifs exposés.",
+          "sources": [
+            {
+              "url": "https://securityaffairs.com/193215/cyber-crime/silent-ransom-group-srg-switching-to-dns-fast-flux-infrastructure.html",
+              "label": "Security Affairs"
+            }
+          ],
+          "url": "https://securityaffairs.com/193215/cyber-crime/silent-ransom-group-srg-switching-to-dns-fast-flux-infrastructure.html",
+          "pubDate": "2026-06-05T17:54:38.000Z"
+        },
+        {
+          "title": "Android Spyware Asin Targets Arabic Users via Fake News, PDF and War Map Apps",
+          "cve": null,
+          "severity": "high",
+          "score": 72,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Incident de sécurité rapporté par The Hacker News.\n\nArabic-speaking users have emerged as the target of a new Android spyware codenamed Asin, according to findings from ESET. The Slovakian cybersecurity company said it first detected the malware spread via multiple campaigns in early 2025, with each attack wave making use of distinct websites mimicking utilities, war-related updates, and a government news source: govlens[.]net, which",
+          "detail": "Incident de sécurité rapporté par The Hacker News.\n\nArabic-speaking users have emerged as the target of a new Android spyware codenamed Asin, according to findings from ESET. The Slovakian cybersecurity company said it first detected the malware spread via multiple campaigns in early 2025, with each attack wave making use of distinct websites mimicking utilities, war-related updates, and a government news source: govlens[.]net, which",
+          "action": "Surveiller les indicateurs de compromission associés et contrôler les actifs exposés.",
+          "sources": [
+            {
+              "url": "https://thehackernews.com/2026/06/android-spyware-asin-targets-arabic.html",
+              "label": "The Hacker News"
+            }
+          ],
+          "url": "https://thehackernews.com/2026/06/android-spyware-asin-targets-arabic.html",
+          "pubDate": "2026-06-05T14:53:40.000Z"
+        },
+        {
+          "title": "Over 900 US gas station tank gauge systems exposed to attacks",
+          "cve": null,
+          "severity": "critical",
+          "score": 71,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Incident de sécurité rapporté par BleepingComputer.\n\nOver 900 automatic tank gauge (ATG) systems across the United States, used to monitor fuel and chemical storage tanks across various critical infrastructure sectors, have been found exposed online and are vulnerable to ongoing attacks.\n\nNew 'HTTP/2 Bomb' DoS attack crashes web servers in under a minute\n\nPolice dismantles 9 crime groups in illegal streaming crackdown\n\nVS Code zero-day lets hackers steal GitHub tokens in one click\n\nSuspicious Polyfill login…",
+          "detail": "Incident de sécurité rapporté par BleepingComputer.\n\nOver 900 automatic tank gauge (ATG) systems across the United States, used to monitor fuel and chemical storage tanks across various critical infrastructure sectors, have been found exposed online and are vulnerable to ongoing attacks.\n\nNew 'HTTP/2 Bomb' DoS attack crashes web servers in under a minute\n\nPolice dismantles 9 crime groups in illegal streaming crackdown\n\nVS Code zero-day lets hackers steal GitHub tokens in one click\n\nSuspicious Polyfill login prompts pop up on Toshiba, Muji websites\n\nCISA: Hackers now exploit SolarWinds Serv-U flaw to crash servers\n\nChinese APT deploys new malware to keep access to hacked networks",
+          "action": "Surveiller les indicateurs de compromission associés et contrôler les actifs exposés.",
+          "sources": [
+            {
+              "url": "https://www.bleepingcomputer.com/news/security/over-900-us-gas-station-tank-gauge-systems-exposed-to-attacks/",
+              "label": "BleepingComputer"
+            }
+          ],
+          "url": "https://www.bleepingcomputer.com/news/security/over-900-us-gas-station-tank-gauge-systems-exposed-to-attacks/",
+          "pubDate": "2026-06-05T14:50:15.000Z"
+        },
+        {
+          "title": "Hackers Leak DentaQuest Information Impacting 2.6 Million",
+          "cve": null,
+          "severity": "news",
+          "score": 69,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Incident de sécurité rapporté par SecurityWeek.\n\nThe personal information of 2.6 million was included in data allegedly stolen and leaked from dental benefits administrator DentaQuest.\n\nThe ShinyHunters extortion group leaked roughly 234 GB of data allegedly stolen from the dental benefits administrator.\n\nSubscribe to the SecurityWeek Email Briefing for the latest cybersecurity threats, trends, and expert insights.\n\nSubscribe to the SecurityWeek Email Briefing to stay informed on the latest threats, tren…",
+          "detail": "Incident de sécurité rapporté par SecurityWeek.\n\nThe personal information of 2.6 million was included in data allegedly stolen and leaked from dental benefits administrator DentaQuest.\n\nThe ShinyHunters extortion group leaked roughly 234 GB of data allegedly stolen from the dental benefits administrator.\n\nSubscribe to the SecurityWeek Email Briefing for the latest cybersecurity threats, trends, and expert insights.\n\nSubscribe to the SecurityWeek Email Briefing to stay informed on the latest threats, trends, and technology, along with insightful columns from industry experts.\n\nOrganizations are investing heavily in third-party risk management, but breaches, delays, and blind spots continue to persist. Join this live webinar as we examine the gap between how organizations think their third-party risk programs are performing and what’s actually happening in practice.\n\nExplore how attackers are using AI to scale threats and how security teams can respond with AI-driven defenses. Protecting against unmonitored use of generative AI (Shadow AI) in business units and building and enforcing AI governance frameworks.\n\nOpal Security has appointed CPO, CTO, VP of Field Engineering, VP of Marketing, and Head of Product and Solutions Marketing.",
+          "action": "Surveiller les indicateurs de compromission associés et contrôler les actifs exposés.",
+          "sources": [
+            {
+              "url": "https://www.securityweek.com/hackers-leak-dentaquest-information-impacting-2-6-million/",
+              "label": "SecurityWeek"
+            }
+          ],
+          "url": "https://www.securityweek.com/hackers-leak-dentaquest-information-impacting-2-6-million/",
+          "pubDate": "2026-06-05T11:33:27.000Z"
+        },
+        {
+          "title": "Nightclub Giant RCI Says Data Breach Affects 40,000 Individuals",
+          "cve": null,
+          "severity": "news",
+          "score": 64,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Incident de sécurité rapporté par SecurityWeek.\n\nAdult nightclub giant RCI Hospitality Holdings has informed authorities that a data breach affects roughly 40,000 individuals.\n\nThe company detected a network intrusion in March and an investigation showed that some files were stolen during the attack.\n\nSubscribe to the SecurityWeek Email Briefing for the latest cybersecurity threats, trends, and expert insights.\n\nSubscribe to the SecurityWeek Email Briefing to stay informed on the latest threats, trends,…",
+          "detail": "Incident de sécurité rapporté par SecurityWeek.\n\nAdult nightclub giant RCI Hospitality Holdings has informed authorities that a data breach affects roughly 40,000 individuals.\n\nThe company detected a network intrusion in March and an investigation showed that some files were stolen during the attack.\n\nSubscribe to the SecurityWeek Email Briefing for the latest cybersecurity threats, trends, and expert insights.\n\nSubscribe to the SecurityWeek Email Briefing to stay informed on the latest threats, trends, and technology, along with insightful columns from industry experts.\n\nOrganizations are investing heavily in third-party risk management, but breaches, delays, and blind spots continue to persist. Join this live webinar as we examine the gap between how organizations think their third-party risk programs are performing and what’s actually happening in practice.\n\nExplore how attackers are using AI to scale threats and how security teams can respond with AI-driven defenses. Protecting against unmonitored use of generative AI (Shadow AI) in business units and building and enforcing AI governance frameworks.\n\nOpal Security has appointed CPO, CTO, VP of Field Engineering, VP of Marketing, and Head of Product and Solutions Marketing.",
+          "action": "Surveiller les indicateurs de compromission associés et contrôler les actifs exposés.",
+          "sources": [
+            {
+              "url": "https://www.securityweek.com/nightclub-giant-rci-says-data-breach-affects-40000-individuals/",
+              "label": "SecurityWeek"
+            }
+          ],
+          "url": "https://www.securityweek.com/nightclub-giant-rci-says-data-breach-affects-40000-individuals/",
+          "pubDate": "2026-06-05T07:24:08.000Z"
+        },
+        {
+          "title": "What 2026 DBIR Confirms: Attacks Are Living in the Browser",
+          "cve": null,
+          "severity": "news",
+          "score": 63,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Incident de sécurité rapporté par BleepingComputer.\n\nPhishing, shadow AI, malicious extensions, and credential theft increasingly happen inside the browser. Keep Aware explains what the 2026 Verizon DBIR reveals about browser-layer security gaps and modern attacks.\n\nNew 'HTTP/2 Bomb' DoS attack crashes web servers in under a minute\n\nPolice dismantles 9 crime groups in illegal streaming crackdown\n\nVS Code zero-day lets hackers steal GitHub tokens in one click\n\nSuspicious Polyfill login prompts pop up on Toshi…",
+          "detail": "Incident de sécurité rapporté par BleepingComputer.\n\nPhishing, shadow AI, malicious extensions, and credential theft increasingly happen inside the browser. Keep Aware explains what the 2026 Verizon DBIR reveals about browser-layer security gaps and modern attacks.\n\nNew 'HTTP/2 Bomb' DoS attack crashes web servers in under a minute\n\nPolice dismantles 9 crime groups in illegal streaming crackdown\n\nVS Code zero-day lets hackers steal GitHub tokens in one click\n\nSuspicious Polyfill login prompts pop up on Toshiba, Muji websites\n\nCISA: Hackers now exploit SolarWinds Serv-U flaw to crash servers\n\nChinese APT deploys new malware to keep access to hacked networks",
+          "action": "Surveiller les indicateurs de compromission associés et contrôler les actifs exposés.",
+          "sources": [
+            {
+              "url": "https://www.bleepingcomputer.com/news/security/what-2026-dbir-confirms-attacks-are-living-in-the-browser/",
+              "label": "BleepingComputer"
+            }
+          ],
+          "url": "https://www.bleepingcomputer.com/news/security/what-2026-dbir-confirms-attacks-are-living-in-the-browser/",
+          "pubDate": "2026-06-05T14:00:10.000Z"
+        },
+        {
+          "title": "huashan.com.cn — rançongiciel krybit (CN)",
+          "cve": null,
+          "severity": "news",
+          "score": 61,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Incident de sécurité rapporté par ransomware.live.\n\nRansomware.live discovered on 2026-06-06 that huashan.com.cn has been claimed by Krybit ransomware group\n\nSponsored by Hudson Rock – Use Hudson Rock's free cybercrime intelligence tools to learn how Infostealer infections are leading to ransomware attacks\n\nThe following DNS records were found for the victim's domain.\n\nLegal Disclaimer: Ransomware.live does not engage in the acquisition, exfiltration, downloading, possession, hosting, access, consultation,…",
+          "detail": "Incident de sécurité rapporté par ransomware.live.\n\nRansomware.live discovered on 2026-06-06 that huashan.com.cn has been claimed by Krybit ransomware group\n\nSponsored by Hudson Rock – Use Hudson Rock's free cybercrime intelligence tools to learn how Infostealer infections are leading to ransomware attacks\n\nThe following DNS records were found for the victim's domain.\n\nLegal Disclaimer: Ransomware.live does not engage in the acquisition, exfiltration, downloading, possession, hosting, access, consultation, redistribution, or disclosure of unlawfully obtained data. This platform indexes only publicly visible information posted by ransomware operators and open web sources without accessing or obtaining the underlying stolen content . The service is provided to support public awareness, legitimate research, and cyber-resilience. No stolen personal or confidential data is collected or distributed via this site.\n\nSession: 057726c909af65969646b040bbbfa5c4df67f5166a33cbac6cd9e1302b0b3ca148",
+          "action": "Surveiller les indicateurs de compromission associés et contrôler les actifs exposés.",
+          "sources": [
+            {
+              "url": "https://www.ransomware.live/id/aHVhc2hhbi5jb20uY25Aa3J5Yml0",
+              "label": "ransomware.live"
+            }
+          ],
+          "url": "https://www.ransomware.live/id/aHVhc2hhbi5jb20uY25Aa3J5Yml0",
+          "pubDate": "2026-06-06T00:56:18.865Z"
+        },
+        {
+          "title": "Jeffrey Burr — rançongiciel anubis",
+          "cve": null,
+          "severity": "news",
+          "score": 61,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Incident de sécurité rapporté par ransomware.live.\n\nRansomware.live discovered on 2026-06-05 that Jeffrey Burr has been claimed by Anubis ransomware group\n\nSponsored by Hudson Rock – Use Hudson Rock's free cybercrime intelligence tools to learn how Infostealer infections are leading to ransomware attacks\n\nLegal Disclaimer: Ransomware.live does not engage in the acquisition, exfiltration, downloading, possession, hosting, access, consultation, redistribution, or disclosure of unlawfully obtained data.",
+          "detail": "Incident de sécurité rapporté par ransomware.live.\n\nRansomware.live discovered on 2026-06-05 that Jeffrey Burr has been claimed by Anubis ransomware group\n\nSponsored by Hudson Rock – Use Hudson Rock's free cybercrime intelligence tools to learn how Infostealer infections are leading to ransomware attacks\n\nLegal Disclaimer: Ransomware.live does not engage in the acquisition, exfiltration, downloading, possession, hosting, access, consultation, redistribution, or disclosure of unlawfully obtained data. This platform indexes only publicly visible information posted by ransomware operators and open web sources without accessing or obtaining the underlying stolen content . The service is provided to support public awareness, legitimate research, and cyber-resilience. No stolen personal or confidential data is collected or distributed via this site.\n\nSession: 057726c909af65969646b040bbbfa5c4df67f5166a33cbac6cd9e1302b0b3ca148",
+          "action": "Surveiller les indicateurs de compromission associés et contrôler les actifs exposés.",
+          "sources": [
+            {
+              "url": "https://www.ransomware.live/id/SmVmZnJleSBCdXJyQGFudWJpcw==",
+              "label": "ransomware.live"
+            }
+          ],
+          "url": "https://www.ransomware.live/id/SmVmZnJleSBCdXJyQGFudWJpcw==",
+          "pubDate": "2026-06-05T22:20:22.407Z"
+        },
+        {
+          "title": "schultz.com.br — rançongiciel krybit (BR)",
+          "cve": null,
+          "severity": "news",
+          "score": 61,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Incident de sécurité rapporté par ransomware.live.\n\nRansomware.live discovered on 2026-06-05 that schultz.com.br has been claimed by Krybit ransomware group\n\nSponsored by Hudson Rock – Use Hudson Rock's free cybercrime intelligence tools to learn how Infostealer infections are leading to ransomware attacks\n\nThe following DNS records were found for the victim's domain.\n\nLegal Disclaimer: Ransomware.live does not engage in the acquisition, exfiltration, downloading, possession, hosting, access, consultation,…",
+          "detail": "Incident de sécurité rapporté par ransomware.live.\n\nRansomware.live discovered on 2026-06-05 that schultz.com.br has been claimed by Krybit ransomware group\n\nSponsored by Hudson Rock – Use Hudson Rock's free cybercrime intelligence tools to learn how Infostealer infections are leading to ransomware attacks\n\nThe following DNS records were found for the victim's domain.\n\nLegal Disclaimer: Ransomware.live does not engage in the acquisition, exfiltration, downloading, possession, hosting, access, consultation, redistribution, or disclosure of unlawfully obtained data. This platform indexes only publicly visible information posted by ransomware operators and open web sources without accessing or obtaining the underlying stolen content . The service is provided to support public awareness, legitimate research, and cyber-resilience. No stolen personal or confidential data is collected or distributed via this site.\n\nSession: 057726c909af65969646b040bbbfa5c4df67f5166a33cbac6cd9e1302b0b3ca148",
+          "action": "Surveiller les indicateurs de compromission associés et contrôler les actifs exposés.",
+          "sources": [
+            {
+              "url": "https://www.ransomware.live/id/c2NodWx0ei5jb20uYnJAa3J5Yml0",
+              "label": "ransomware.live"
+            }
+          ],
+          "url": "https://www.ransomware.live/id/c2NodWx0ei5jb20uYnJAa3J5Yml0",
+          "pubDate": "2026-06-05T21:21:56.449Z"
+        },
+        {
+          "title": "D&M Contractors — rançongiciel anubis",
+          "cve": null,
+          "severity": "news",
+          "score": 61,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Incident de sécurité rapporté par ransomware.live.\n\nRansomware.live discovered on 2026-06-05 that D&M Contractors has been claimed by Anubis ransomware group\n\nSponsored by Hudson Rock – Use Hudson Rock's free cybercrime intelligence tools to learn how Infostealer infections are leading to ransomware attacks\n\nLegal Disclaimer: Ransomware.live does not engage in the acquisition, exfiltration, downloading, possession, hosting, access, consultation, redistribution, or disclosure of unlawfully obtained data.",
+          "detail": "Incident de sécurité rapporté par ransomware.live.\n\nRansomware.live discovered on 2026-06-05 that D&M Contractors has been claimed by Anubis ransomware group\n\nSponsored by Hudson Rock – Use Hudson Rock's free cybercrime intelligence tools to learn how Infostealer infections are leading to ransomware attacks\n\nLegal Disclaimer: Ransomware.live does not engage in the acquisition, exfiltration, downloading, possession, hosting, access, consultation, redistribution, or disclosure of unlawfully obtained data. This platform indexes only publicly visible information posted by ransomware operators and open web sources without accessing or obtaining the underlying stolen content . The service is provided to support public awareness, legitimate research, and cyber-resilience. No stolen personal or confidential data is collected or distributed via this site.\n\nSession: 057726c909af65969646b040bbbfa5c4df67f5166a33cbac6cd9e1302b0b3ca148",
+          "action": "Surveiller les indicateurs de compromission associés et contrôler les actifs exposés.",
+          "sources": [
+            {
+              "url": "https://www.ransomware.live/id/RCZNIENvbnRyYWN0b3JzQGFudWJpcw==",
+              "label": "ransomware.live"
+            }
+          ],
+          "url": "https://www.ransomware.live/id/RCZNIENvbnRyYWN0b3JzQGFudWJpcw==",
+          "pubDate": "2026-06-05T20:50:26.499Z"
+        },
+        {
+          "title": "Access Dental — rançongiciel worldleaks (États-Unis)",
+          "cve": null,
+          "severity": "news",
+          "score": 61,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Incident de sécurité rapporté par ransomware.live.\n\nVictime revendiquée par le groupe de rançongiciel worldleaks. Pays : États-Unis. Secteur : Healthcare. Access Dental is a dental insurance and managed care company operating in the United States. It provides affordable dental health plans primarily to underserved and low-income populations, including Medicaid and individual plan members.",
+          "detail": "Incident de sécurité rapporté par ransomware.live.\n\nVictime revendiquée par le groupe de rançongiciel worldleaks.\n\nPays : États-Unis.\n\nSecteur : Healthcare.\n\nAccess Dental is a dental insurance and managed care company operating in the United States. It provides affordable dental health plans primarily to underserved and low-income populations, including Medicaid and individual plan members. The company works with a network of licensed dentists to deliver preventive and restorative dental services, focusing on improving access to oral healthcare across California and other states.",
+          "action": "Surveiller les indicateurs de compromission associés et contrôler les actifs exposés.",
+          "sources": [
+            {
+              "url": "https://www.ransomware.live/id/b2JyaWVuZW5nLmNvbUBpbmNyYW5zb20=",
+              "label": "ransomware.live"
+            }
+          ],
+          "url": "https://www.ransomware.live/id/b2JyaWVuZW5nLmNvbUBpbmNyYW5zb20=",
+          "pubDate": "2026-06-05T20:06:41.957Z"
+        },
+        {
+          "title": "Demand.ioNEW — rançongiciel coinbasecartel",
+          "cve": null,
+          "severity": "news",
+          "score": 61,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Incident de sécurité rapporté par ransomware.live.\n\nRansomware.live discovered on 2026-06-05 that Demand.ioNEW has been claimed by Coinbasecartel ransomware group\n\nSponsored by Hudson Rock – Use Hudson Rock's free cybercrime intelligence tools to learn how Infostealer infections are leading to ransomware attacks\n\nLegal Disclaimer: Ransomware.live does not engage in the acquisition, exfiltration, downloading, possession, hosting, access, consultation, redistribution, or disclosure of unlawfully obtained data…",
+          "detail": "Incident de sécurité rapporté par ransomware.live.\n\nRansomware.live discovered on 2026-06-05 that Demand.ioNEW has been claimed by Coinbasecartel ransomware group\n\nSponsored by Hudson Rock – Use Hudson Rock's free cybercrime intelligence tools to learn how Infostealer infections are leading to ransomware attacks\n\nLegal Disclaimer: Ransomware.live does not engage in the acquisition, exfiltration, downloading, possession, hosting, access, consultation, redistribution, or disclosure of unlawfully obtained data. This platform indexes only publicly visible information posted by ransomware operators and open web sources without accessing or obtaining the underlying stolen content . The service is provided to support public awareness, legitimate research, and cyber-resilience. No stolen personal or confidential data is collected or distributed via this site.\n\nSession: 057726c909af65969646b040bbbfa5c4df67f5166a33cbac6cd9e1302b0b3ca148",
+          "action": "Surveiller les indicateurs de compromission associés et contrôler les actifs exposés.",
+          "sources": [
+            {
+              "url": "https://www.ransomware.live/id/RGVtYW5kLmlvTkVXQGNvaW5iYXNlY2FydGVs",
+              "label": "ransomware.live"
+            }
+          ],
+          "url": "https://www.ransomware.live/id/RGVtYW5kLmlvTkVXQGNvaW5iYXNlY2FydGVs",
+          "pubDate": "2026-06-05T19:21:24.643Z"
+        },
+        {
+          "title": "Goodvest victime d’une cyberattaque : des données patrimoniales de clients exposées",
+          "cve": null,
+          "severity": "news",
+          "score": 52,
+          "corroboration": 1,
+          "region": "fr",
+          "body": "Incident de sécurité rapporté par Cyberattaque.org.\n\nLa société française Goodvest, spécialisée dans l’épargne responsable et l’investissement durable, informe ses clients avoir été victime d’une\n\nAttaque Mis à jour le 5 juin 2026 à 6h33 Goodvest victime d’une cyberattaque : des données patrimoniales de clients exposées La société française Goodvest , spécialisée dans l’épargne responsable et l’investissement durable, informe ses clients avoir été victime d’une cyberattaque ayant conduit à l’exposition de ce…",
+          "detail": "Incident de sécurité rapporté par Cyberattaque.org.\n\nLa société française Goodvest, spécialisée dans l’épargne responsable et l’investissement durable, informe ses clients avoir été victime d’une\n\nAttaque Mis à jour le 5 juin 2026 à 6h33 Goodvest victime d’une cyberattaque : des données patrimoniales de clients exposées La société française Goodvest , spécialisée dans l’épargne responsable et l’investissement durable, informe ses clients avoir été victime d’une cyberattaque ayant conduit à l’exposition de certaines données personnelles.\n\nSelon le courrier adressé aux personnes concernées, l’incident a été détecté le 2 juin 2026 après la découverte d’un accès non autorisé à une plateforme contenant des informations clients.\n\nL’entreprise précise toutefois que les contrats, investissements et fonds des clients n’auraient pas été affectés par cette intrusion.\n\nD’après les explications fournies par Goodvest, les attaquants seraient parvenus à accéder à une plateforme hébergeant certaines données personnelles après une série d’actions techniques destinées à contourner les mécanismes de protection mis en place.\n\nLa société évoque notamment l’exploitation d’une clé d’accès technique ainsi que l’utilisation automatisée d’une API de données. Les opérations auraient été réalisées sous anonymisation afin de masquer l’origine des connexions malveillantes.\n\nUne fois l’incident identifié, Goodvest indique avoir immédiatement révoqué les accès concernés et renforcé les mesures de sécurité de son environnement.",
+          "action": "Surveiller les indicateurs de compromission associés et contrôler les actifs exposés.",
+          "sources": [
+            {
+              "url": "https://www.cyberattaque.org/goodvest-victime-dune-cyberattaque-des-donnees-patrimoniales-de-clients-exposees/",
+              "label": "Cyberattaque.org"
+            }
+          ],
+          "url": "https://www.cyberattaque.org/goodvest-victime-dune-cyberattaque-des-donnees-patrimoniales-de-clients-exposees/",
+          "pubDate": "2026-06-05T04:33:21.000Z"
+        }
+      ]
+    },
+    {
+      "id": "culture",
+      "items": [
+        {
+          "title": "EU unveils tech sovereignty package to cut reliance on US, Chinese suppliers",
+          "cve": null,
+          "severity": "high",
+          "score": 78,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Signal de veille — The Record.\n\nThe package bundles two draft laws — a Chips Act 2.0 and a Cloud and AI Development Act (CADA) — alongside an Open Source Strategy and a roadmap for digitalizing the energy system.\n\nThe European Commission proposed a sweeping set of laws and strategies this week aimed at reducing the European Union's reliance on foreign technology, amid concerns that its long-standing tech dependencies are becoming a security vulnerability.\n\nSpanning semiconductors, cloud…",
+          "detail": "Signal de veille — The Record.\n\nThe package bundles two draft laws — a Chips Act 2.0 and a Cloud and AI Development Act (CADA) — alongside an Open Source Strategy and a roadmap for digitalizing the energy system.\n\nThe European Commission proposed a sweeping set of laws and strategies this week aimed at reducing the European Union's reliance on foreign technology, amid concerns that its long-standing tech dependencies are becoming a security vulnerability.\n\nSpanning semiconductors, cloud computing, artificial intelligence and open-source software, the proposals amount to what the Commission's tech lead Henna Virkkunen called “a major shift in how Europe approaches technological sovereignty.”\n\nThe package bundles two draft laws — a Chips Act 2.0 and a Cloud and AI Development Act (CADA) — alongside an Open Source Strategy and a roadmap for digitalizing the energy system, intended together to “help widen choice in core technologies for EU businesses, citizens and public administrations.”\n\n“We live in a world where geopolitics and technology are inseparable. Those who champion technological innovation will shape the future — and we must ensure that Europe plays a leading role in this,” said Virkkunen.\n\n“It is time for Europe to be in control of its data, of its supply chains, and of its future in a clean and sustainable way. We are strengthening Europe’s digital autonomy and resilience while keeping our economy open to partners around the world.”\n\nAccording to the Commission, the EU relies on foreign countries for more than 80% of its key digital products, services, infrastructure and intellectual property. The move to loosen the grip of American and Chinese suppliers comes amid worsening relations with the Trump administration and fears dependence could be weaponised — ove",
+          "action": null,
+          "sources": [
+            {
+              "url": "https://therecord.media/eu-unveils-tech-sovereignty-package-cut-reliance-us-china",
+              "label": "The Record"
+            }
+          ],
+          "url": "https://therecord.media/eu-unveils-tech-sovereignty-package-cut-reliance-us-china",
+          "pubDate": "2026-06-05T13:38:00.000Z"
+        },
+        {
+          "title": "Dark web Nemesis Market vendor gets 26 years for selling drugs",
+          "cve": null,
+          "severity": "culture",
+          "score": 67,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Signal de veille — BleepingComputer.\n\nA California man was sentenced to more than 26 years in federal prison for trafficking fentanyl and methamphetamine through Nemesis Market, one of the world's largest dark web marketplaces.\n\nNew 'HTTP/2 Bomb' DoS attack crashes web servers in under a minute\n\nPolice dismantles 9 crime groups in illegal streaming crackdown\n\nVS Code zero-day lets hackers steal GitHub tokens in one click\n\nSuspicious Polyfill login prompts pop up on Toshiba, Muji websites\n\nCISA…",
+          "detail": "Signal de veille — BleepingComputer.\n\nA California man was sentenced to more than 26 years in federal prison for trafficking fentanyl and methamphetamine through Nemesis Market, one of the world's largest dark web marketplaces.\n\nNew 'HTTP/2 Bomb' DoS attack crashes web servers in under a minute\n\nPolice dismantles 9 crime groups in illegal streaming crackdown\n\nVS Code zero-day lets hackers steal GitHub tokens in one click\n\nSuspicious Polyfill login prompts pop up on Toshiba, Muji websites\n\nCISA: Hackers now exploit SolarWinds Serv-U flaw to crash servers\n\nChinese APT deploys new malware to keep access to hacked networks",
+          "action": null,
+          "sources": [
+            {
+              "url": "https://www.bleepingcomputer.com/news/security/dark-web-nemesis-market-vendor-gets-26-years-for-selling-drugs/",
+              "label": "BleepingComputer"
+            }
+          ],
+          "url": "https://www.bleepingcomputer.com/news/security/dark-web-nemesis-market-vendor-gets-26-years-for-selling-drugs/",
+          "pubDate": "2026-06-05T17:50:58.000Z"
+        },
+        {
+          "title": "Five Eyes: Chinese Spies Target Government, Military Staff With Fake Job Opportunities",
+          "cve": null,
+          "severity": "culture",
+          "score": 64,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Signal de veille — SecurityWeek.\n\nFive Eyes countries warn of Chinese intelligence fake recruitment campaigns targeting government and military personnel.\n\nPosing as recruiters on online platforms, Chinese intelligence officers target personnel with access to classified or privileged information.\n\nSubscribe to the SecurityWeek Email Briefing for the latest cybersecurity threats, trends, and expert insights.\n\nSubscribe to the SecurityWeek Email Briefing to stay informed on the latest threat…",
+          "detail": "Signal de veille — SecurityWeek.\n\nFive Eyes countries warn of Chinese intelligence fake recruitment campaigns targeting government and military personnel.\n\nPosing as recruiters on online platforms, Chinese intelligence officers target personnel with access to classified or privileged information.\n\nSubscribe to the SecurityWeek Email Briefing for the latest cybersecurity threats, trends, and expert insights.\n\nSubscribe to the SecurityWeek Email Briefing to stay informed on the latest threats, trends, and technology, along with insightful columns from industry experts.\n\nOrganizations are investing heavily in third-party risk management, but breaches, delays, and blind spots continue to persist. Join this live webinar as we examine the gap between how organizations think their third-party risk programs are performing and what’s actually happening in practice.\n\nExplore how attackers are using AI to scale threats and how security teams can respond with AI-driven defenses. Protecting against unmonitored use of generative AI (Shadow AI) in business units and building and enforcing AI governance frameworks.\n\nOpal Security has appointed CPO, CTO, VP of Field Engineering, VP of Marketing, and Head of Product and Solutions Marketing.",
+          "action": null,
+          "sources": [
+            {
+              "url": "https://www.securityweek.com/five-eyes-chinese-spies-target-government-military-staff-with-fake-job-opportunities/",
+              "label": "SecurityWeek"
+            }
+          ],
+          "url": "https://www.securityweek.com/five-eyes-chinese-spies-target-government-military-staff-with-fake-job-opportunities/",
+          "pubDate": "2026-06-05T08:46:44.000Z"
+        },
+        {
+          "title": "Suspicious Polyfill login prompts pop up on Toshiba, Muji websites",
+          "cve": null,
+          "severity": "culture",
+          "score": 63,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Signal de veille — BleepingComputer.\n\nTech giant Toshiba and mega-retailer Muji warned visitors that suspicious sign-in screens popping up on their websites could collect credentials.\n\nNew 'HTTP/2 Bomb' DoS attack crashes web servers in under a minute\n\nPolice dismantles 9 crime groups in illegal streaming crackdown\n\nVS Code zero-day lets hackers steal GitHub tokens in one click\n\nSuspicious Polyfill login prompts pop up on Toshiba, Muji websites\n\nCISA: Hackers now exploit SolarWinds Serv-U flaw…",
+          "detail": "Signal de veille — BleepingComputer.\n\nTech giant Toshiba and mega-retailer Muji warned visitors that suspicious sign-in screens popping up on their websites could collect credentials.\n\nNew 'HTTP/2 Bomb' DoS attack crashes web servers in under a minute\n\nPolice dismantles 9 crime groups in illegal streaming crackdown\n\nVS Code zero-day lets hackers steal GitHub tokens in one click\n\nSuspicious Polyfill login prompts pop up on Toshiba, Muji websites\n\nCISA: Hackers now exploit SolarWinds Serv-U flaw to crash servers\n\nChinese APT deploys new malware to keep access to hacked networks",
+          "action": null,
+          "sources": [
+            {
+              "url": "https://www.bleepingcomputer.com/news/security/suspicious-polyfill-login-prompts-pop-up-on-toshiba-muji-websites/",
+              "label": "BleepingComputer"
+            }
+          ],
+          "url": "https://www.bleepingcomputer.com/news/security/suspicious-polyfill-login-prompts-pop-up-on-toshiba-muji-websites/",
+          "pubDate": "2026-06-05T21:54:42.000Z"
+        },
+        {
+          "title": "Trump AI Order Seeks Voluntary Frontier Model Testing",
+          "cve": null,
+          "severity": "culture",
+          "score": 60,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Signal de veille — Dark Reading.\n\nThe White House's executive order establishes voluntary framework for early government access to frontier models while investing in federal security.",
+          "detail": "Signal de veille — Dark Reading.\n\nThe White House's executive order establishes voluntary framework for early government access to frontier models while investing in federal security.",
+          "action": null,
+          "sources": [
+            {
+              "url": "https://www.darkreading.com/cybersecurity-operations/trump-ai-order-seeks-voluntary-frontier-model-testing",
+              "label": "Dark Reading"
+            }
+          ],
+          "url": "https://www.darkreading.com/cybersecurity-operations/trump-ai-order-seeks-voluntary-frontier-model-testing",
+          "pubDate": "2026-06-05T13:00:00.000Z"
+        },
+        {
+          "title": "AI Worm",
+          "cve": null,
+          "severity": "culture",
+          "score": 59,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Signal de veille — Schneier on Sec..\n\nResearchers have prototyped an AI-powered internet worm. The coolest thing about the prototype is that it carries its own LLM with it, and runs it on computers that have been broken into. This is the closest to John Brunner’s original 1975 conception of a computer worm that I’ve seen.\n\nThe coolest thing about the prototype is that it carries its own LLM with it, and runs it on computers that have been broken into.\n\nThis is the closest to John Brunner’s ori…",
+          "detail": "Signal de veille — Schneier on Sec..\n\nResearchers have prototyped an AI-powered internet worm. The coolest thing about the prototype is that it carries its own LLM with it, and runs it on computers that have been broken into. This is the closest to John Brunner’s original 1975 conception of a computer worm that I’ve seen.\n\nThe coolest thing about the prototype is that it carries its own LLM with it, and runs it on computers that have been broken into.\n\nThis is the closest to John Brunner’s original 1975 conception of a computer worm that I’ve seen.\n\nFirst Post Kitty Wins Again! ⠀⠀⠀⠀⠀⠀⠀⢠⣿⣿⣦⠀⠀⠀⠀⠀⠀⠀⠀⠀⢀⣴⣿⣦⡀⠀⠀⠀⠀⠀⠀⠀ ⠀⠀⠀⠀⠀⠀⢠⣿⣿⣿⣿⣆⠀⠀⠀⠀⠀⠀⠀⠀⣾⣿⣿⣿⣷⠀⠀⠀⠀⠀⠀⠀ ⠀⠀⠀⠀⠀⢀⣾⣿⣿⣿⣿⣿⡆⠀⠀⠀⠀⠀⠀⣸⣿⣿⣿⣿⣿⡆⠀⠀⠀⠀⠀⠀ ⠀⠀⠀⠀⠀⣾⣿⣿⣿⣿⣿⣿⣿⡀⠀⠀⠀⠀⢀⣿⣿⣿⣿⣿⣿⣿⠀⠀⠀⠀⠀⠀ ⠀⠀⠀⠀⢸⣿⣿⣿⣿⣿⣿⣿⣿⣧⠀⠀⠀⠀⣼⣿⣿⣿⣿⣿⣿⣿⡇⠀⠀⠀⠀⠀ ⠀⠀⠀⠀⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣠⣤⣤⣼⣿⣿⣿⣿⣿⣿⣿⣿⣷⠀⠀⠀⠀⠀ ⠀⠀⠀⢀⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⠀⠀⠀⠀⠀ ⠀⠀⠀⢸⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⠀⠀⠀⠀⠀ ⠀⠀⠀⠘⣿⣿⣿⣿⠟⠁⠀⠀⠀⠹⣿⣿⣿⣿⣿⠟⠁⠀⠀⠹⣿⣿⣿⠇⠀⠀⠀⠀ ⠀⠀⠀⠀⣿⣿⣿⡇⠀⠀⠀⢼⣿⠀⢿⣿⣿⣿⣿⠀⣾⣷⠀⠀⢿⣿⣿⣿⠀⠀⠀⠀ ⠀⠀⠀⢠⣿⣿⣿⣷⡀⠀⠀⠈⠋⢀⣿⣿⣿⣿⣿⡀⠙⠋⠀⢀⣾⣿⣿⡇⠀⠀⠀⠀ ⢀⣀⣀⣀⣿⣿⣿⣿⣿⣶⣶⣶⣶⣿⣿⣿⣿⣾⣿⣷⣦⣤⣴⣿⣿⣿⣿⣤⠤⢤⣤⡄ ⠈⠉⠉⢉⣙⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣇⣀⣀⣀⡀⠀ ⠐⠚⠋⠉⢀⣬⡿⢿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⡿⣥⣀⡀⠈⠀⠈⠛ ⠀⠀⠴⠚⠉⠀⠀⠀⠉⠛⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⡿⠛⠋⠁⠀⠀⠀⠉⠛⠢⠀⠀ ⠀⠀⠀⠀⠀⠀⠀⠀⠀⣸⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⡇⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀ ⠀⠀⠀⠀⠀⠀⠀⠀⣰⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣧⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀ ⠀⠀⠀⠀⠀⠀⠀⢠⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⡀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀ ⠀⠀⠀⠀⠀⠀⢠⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣇⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀ ⠀⠀⠀⠀⠀⢠⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⡀⠀⠀⠀⠀⠀⠀⠀⠀⠀ ⠀⠀⠀⠀⢠⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣧⠀⠀⠀⠀⠀⠀⠀⠀⠀ ⠀⠀⠀⠀⣾⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⡄⠀⠀⠀⠀⠀⠀⠀⠀ ⠀⠀⠀⢸⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⡇⠀⠀⠀⠀⠀⠀⠀⠀\n\nAI worms were invented decades ago. The first one, named ANIMAL ran on the Univac 1100 series (the first computer I used, when I was eight years ago, was a Univac 90/30 running OS/3, incredibly advanced for that time, it was a very good time for me).\n\nANIMAL was an ELIZA-style expert system that learned how identify animals by asking questions. It used another program (I think the UNIVAC term for “program” was “processor,” but I may be wrong here) nam",
+          "action": null,
+          "sources": [
+            {
+              "url": "https://www.schneier.com/blog/archives/2026/06/ai-worm.html",
+              "label": "Schneier on Sec."
+            }
+          ],
+          "url": "https://www.schneier.com/blog/archives/2026/06/ai-worm.html",
+          "pubDate": "2026-06-05T13:21:23.000Z"
+        },
+        {
+          "title": "Only 10% of SOCs Say They’re Getting Excellent Value From AI. Here’s What the Second Wave Has to Deliver",
+          "cve": null,
+          "severity": "culture",
+          "score": 59,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Signal de veille — The Hacker News.\n\nEighteen months ago, the AI SOC was a marketing line. Today it's a budget item. The category has crossed over from interesting to inevitable, with billions of dollars now flowing into AI-powered security operations platforms, agentic SOC tools, and AI co-pilots built into every layer of the security stack. The data shows SOCs are buying, deploying, and standing up AI capabilities at the fastest",
+          "detail": "Signal de veille — The Hacker News.\n\nEighteen months ago, the AI SOC was a marketing line. Today it's a budget item. The category has crossed over from interesting to inevitable, with billions of dollars now flowing into AI-powered security operations platforms, agentic SOC tools, and AI co-pilots built into every layer of the security stack. The data shows SOCs are buying, deploying, and standing up AI capabilities at the fastest",
+          "action": null,
+          "sources": [
+            {
+              "url": "https://thehackernews.com/2026/06/only-10-of-socs-say-theyre-getting.html",
+              "label": "The Hacker News"
+            }
+          ],
+          "url": "https://thehackernews.com/2026/06/only-10-of-socs-say-theyre-getting.html",
+          "pubDate": "2026-06-05T11:20:00.000Z"
+        },
+        {
+          "title": "Industry Reactions to New Trump AI Cybersecurity Executive Order: Feedback Friday",
+          "cve": null,
+          "severity": "culture",
+          "score": 59,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Signal de veille — SecurityWeek.\n\nIndustry professionals commented on various aspects of President Donald Trump's new AI cybersecurity executive order.\n\nExperts commented on the EO’s voluntary nature, the balance between innovation and security, and potential implementation gaps.\n\nSubscribe to the SecurityWeek Email Briefing for the latest cybersecurity threats, trends, and expert insights.\n\nSubscribe to the SecurityWeek Email Briefing to stay informed on the latest threats, trends, and te…",
+          "detail": "Signal de veille — SecurityWeek.\n\nIndustry professionals commented on various aspects of President Donald Trump's new AI cybersecurity executive order.\n\nExperts commented on the EO’s voluntary nature, the balance between innovation and security, and potential implementation gaps.\n\nSubscribe to the SecurityWeek Email Briefing for the latest cybersecurity threats, trends, and expert insights.\n\nSubscribe to the SecurityWeek Email Briefing to stay informed on the latest threats, trends, and technology, along with insightful columns from industry experts.\n\nOrganizations are investing heavily in third-party risk management, but breaches, delays, and blind spots continue to persist. Join this live webinar as we examine the gap between how organizations think their third-party risk programs are performing and what’s actually happening in practice.\n\nExplore how attackers are using AI to scale threats and how security teams can respond with AI-driven defenses. Protecting against unmonitored use of generative AI (Shadow AI) in business units and building and enforcing AI governance frameworks.\n\nOpal Security has appointed CPO, CTO, VP of Field Engineering, VP of Marketing, and Head of Product and Solutions Marketing.",
+          "action": null,
+          "sources": [
+            {
+              "url": "https://www.securityweek.com/industry-reactions-to-new-trump-ai-cybersecurity-executive-order-feedback-friday/",
+              "label": "SecurityWeek"
+            }
+          ],
+          "url": "https://www.securityweek.com/industry-reactions-to-new-trump-ai-cybersecurity-executive-order-feedback-friday/",
+          "pubDate": "2026-06-05T10:24:56.000Z"
+        },
+        {
+          "title": "Name That Toon Contest",
+          "cve": null,
+          "severity": "culture",
+          "score": 55,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Signal de veille — Dark Reading.\n\nName That Toon Contest",
+          "detail": "Signal de veille — Dark Reading.\n\nName That Toon Contest",
+          "action": null,
+          "sources": [
+            {
+              "url": "https://www.darkreading.com/events/celebrate-20-years-of-dark-reading-name-that-toon-contest",
+              "label": "Dark Reading"
+            }
+          ],
+          "url": "https://www.darkreading.com/events/celebrate-20-years-of-dark-reading-name-that-toon-contest",
+          "pubDate": "2026-06-06T04:00:49.380Z"
+        },
+        {
+          "title": "L’IA a un sérieux problème de facturation, et son sauveur pourrait être la fondation Linux",
+          "cve": null,
+          "severity": "culture",
+          "score": 55,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Signal de veille — Numerama.\n\nLa Linux Foundation a annoncé son intention de lancer la Tokenomics Foundation, une nouvelle fondation dédiée à l'établissement de normes ouvertes pour l'économie de l'infrastructure IA. L'objectif affiché par le communiqué de la Linux Foundation du 3 juin 2026 est clair : définir des standards, des benchmarks et des\n\nAmine Baba Aissa Amine Baba Aissa 2 min 2 min Amine Baba Aissa Amine Baba Aissa Ne plus voir cette pub Lecture Zen Résumer l'article Résumé…",
+          "detail": "Signal de veille — Numerama.\n\nLa Linux Foundation a annoncé son intention de lancer la Tokenomics Foundation, une nouvelle fondation dédiée à l'établissement de normes ouvertes pour l'économie de l'infrastructure IA. L'objectif affiché par le communiqué de la Linux Foundation du 3 juin 2026 est clair : définir des standards, des benchmarks et des\n\nAmine Baba Aissa Amine Baba Aissa 2 min 2 min Amine Baba Aissa Amine Baba Aissa Ne plus voir cette pub Lecture Zen Résumer l'article Résumé de l'article Résumé par IA, vérifié par Numerama\n\nNous générons pour vous un résumé de l’article grâce à une IA et nous le vérifions afin de nous assurer qu’il n’y ait aucune erreur, pour garantir l’authenticité de l’info.\n\nRecevez tous les soirs un résumé de l’actu importante avec Le Récap’\n\nL&rsquo;objectif affich&eacute; par le communiqu&eacute; de la Linux Foundation du 3 juin 2026 est clair : d&eacute;finir des standards, des benchmarks et des bonnes pratiques pour mesurer et g&eacute;rer le co&ucirc;t de l&rsquo; IA , l&agrave; o&ugrave; r&egrave;gne aujourd&rsquo;hui un flou presque total.\n\nPour Jim Zemlin, PDG de la Linux Foundation, le probl&egrave;me n&rsquo;est plus anecdotique : « &Agrave; mesure que les entreprises d&eacute;ploient leurs charges de travail d&rsquo;IA g&eacute;n&eacute;rative et agentique du stade pilote &agrave; la production, les tokens sont devenus la nouvelle unit&eacute; de mesure des d&eacute;penses technologiques. »\n\nOr, les factures qui parviennent aux entreprises ont un d&eacute;faut majeur, celui d&rsquo;&ecirc;tre souvent incompr&eacute;hensibles. Un flou que d&eacute;plore Nishant Gupta, directeur g&eacute;n&eacute;ral de l&rsquo;ing&eacute;nierie chez Salesforce dont l&rsquo;entreprise soutient l&rsquo;initiative : « L&rsquo;&eacute;conomie des jet",
+          "action": null,
+          "sources": [
+            {
+              "url": "https://www.numerama.com/tech/2268261-lia-a-un-serieux-probleme-de-facturation-et-son-sauveur-pourrait-etre-la-fondation-linux.html",
+              "label": "Numerama"
+            }
+          ],
+          "url": "https://www.numerama.com/tech/2268261-lia-a-un-serieux-probleme-de-facturation-et-son-sauveur-pourrait-etre-la-fondation-linux.html",
+          "pubDate": "2026-06-05T13:50:10.000Z"
+        },
+        {
+          "title": "« Quand l’IA qui se construit elle-même » : Anthropic publie ses données internes et dessine trois futurs, dont un qu’elle redoute",
+          "cve": null,
+          "severity": "culture",
+          "score": 55,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Signal de veille — Numerama.\n\nAnthropic a publié un article de blog détaillant, chiffres internes à l'appui, les progrès de Claude dans le développement de ses propres modèles, et les implications que l'entreprise en tire pour l'avenir de l'IA. C'est un article de blog particulièrement dense qu'Anthropic vient de publier, signé de son\n\nAmine Baba Aissa Amine Baba Aissa 3 min 3 min Amine Baba Aissa Amine Baba Aissa Ne plus voir cette pub Lecture Zen Résumer l'article Résumé de l'article…",
+          "detail": "Signal de veille — Numerama.\n\nAnthropic a publié un article de blog détaillant, chiffres internes à l'appui, les progrès de Claude dans le développement de ses propres modèles, et les implications que l'entreprise en tire pour l'avenir de l'IA. C'est un article de blog particulièrement dense qu'Anthropic vient de publier, signé de son\n\nAmine Baba Aissa Amine Baba Aissa 3 min 3 min Amine Baba Aissa Amine Baba Aissa Ne plus voir cette pub Lecture Zen Résumer l'article Résumé de l'article Résumé par IA, vérifié par Numerama\n\nNous générons pour vous un résumé de l’article grâce à une IA et nous le vérifions afin de nous assurer qu’il n’y ait aucune erreur, pour garantir l’authenticité de l’info.\n\nRecevez tous les soirs un résumé de l’actu importante avec Le Récap’\n\nC&rsquo;est un article de blog particuli&egrave;rement dense qu&rsquo;Anthropic vient de publier, sign&eacute; de son co-fondateur Jack Clark et de la chercheuse Marina Favaro.\n\nLe texte, intitul&eacute; « When AI builds itself » (Quand l&rsquo;IA se construit elle-m&ecirc;me )et publi&eacute; le 4 juin, ne pr&eacute;sente pas un nouveau mod&egrave;le ni une fonctionnalit&eacute; in&eacute;dite. Il d&eacute;voile des donn&eacute;es internes jamais rendues publiques sur ce qu&rsquo;Anthropic appelle l&rsquo;auto-am&eacute;lioration r&eacute;cursive, soit la capacit&eacute; d&rsquo;une IA &agrave; concevoir elle-m&ecirc;me ses propres successeurs.\n\nUn sujet sur lequel l&rsquo;entreprise investit massivement, et pas seulement en recherche : Andrej Karpathy, ex-chercheur fondateur d&rsquo;OpenAI et directeur de l&rsquo;IA chez Tesla, a rejoint Anthropic en mai sp&eacute;cifiquement pour piloter l&rsquo;utilisation de Claude dans l&rsquo;acc&eacute;l&eacute;ration du pr&eacute;-entra&icirc;nement des mod&egrave;les. A",
+          "action": null,
+          "sources": [
+            {
+              "url": "https://www.numerama.com/cyberguerre/2267897-quand-lia-qui-se-construit-elle-meme-anthropic-publie-ses-donnees-internes-et-dessine-trois-futurs-dont-un-quelle-redoute.html",
+              "label": "Numerama"
+            }
+          ],
+          "url": "https://www.numerama.com/cyberguerre/2267897-quand-lia-qui-se-construit-elle-meme-anthropic-publie-ses-donnees-internes-et-dessine-trois-futurs-dont-un-quelle-redoute.html",
+          "pubDate": "2026-06-05T08:55:35.000Z"
+        },
+        {
+          "title": "Infosecurity Europe: Practical Lessons From Lloyds' Agentic AI Security Playbook",
+          "cve": null,
+          "severity": "culture",
+          "score": 52,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Signal de veille — Infosecurity Mag.\n\nLloyds Banking Group shared its approach for securing agentic AI workflows, with a mix of hands on experimentation and cross functional governance\n\nLloyds Banking Group is treating agentic AI not as a theoretical threat or boardroom buzzword, but as an engineering problem to be designed, constrained and tested at scale.\n\nIn a candid session at the Open Worldwide Application Security Project&rsquo;s (OWASP) GenAI Security Summit during Infosecurity Europe,…",
+          "detail": "Signal de veille — Infosecurity Mag.\n\nLloyds Banking Group shared its approach for securing agentic AI workflows, with a mix of hands on experimentation and cross functional governance\n\nLloyds Banking Group is treating agentic AI not as a theoretical threat or boardroom buzzword, but as an engineering problem to be designed, constrained and tested at scale.\n\nIn a candid session at the Open Worldwide Application Security Project&rsquo;s (OWASP) GenAI Security Summit during Infosecurity Europe, two members of Lloyd&rsquo;s security function laid out how the UK&rsquo;s largest bank is operationalizing AI security across product lifecycles, governance and real time defenses, all while keeping regulators and customers front of mind.\n\nSpeaking at the summit, Manija Poulatova, director of security engineering and operations at Lloyds Banking Group, started with an honest admission: &ldquo;We decided the only way we can actually embed security into adoption of AI and agents is to actually understand what is AI and agentic.&rdquo;\n\nShe said the company articulated its AI and innovation roadmap around 11 &ldquo;bets&rdquo; and security as the 12 th bet, with &ldquo;the purpose of understanding agentic AI and actually building security controls to secure its use cases.&rdquo;\n\n&ldquo;Security teams have been the &lsquo;ministry of no&rsquo; for too long, and we want to change the game,&rdquo; she added.\n\nKirsty Montignani, head of security data and AI at Lloyds, reinforced the pragmatic posture: &ldquo;The AI big bets are all low‑risk, high‑value use cases that serve our customers.&rdquo;",
+          "action": null,
+          "sources": [
+            {
+              "url": "https://www.infosecurity-magazine.com/news/lloyds-agentic-ai-security-playbook/",
+              "label": "Infosecurity Mag"
+            }
+          ],
+          "url": "https://www.infosecurity-magazine.com/news/lloyds-agentic-ai-security-playbook/",
+          "pubDate": "2026-06-05T11:30:00.000Z"
+        },
+        {
+          "title": "Infosecurity Europe: Reactive Security Is Failing Healthcare Organizations, Experts Warn",
+          "cve": null,
+          "severity": "culture",
+          "score": 52,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Signal de veille — Infosecurity Mag.\n\nA perfect storm of legacy devices, hyper connectivity and human fatigue is bad news for the healthcare sector, warns Cyber Salus\n\nHealthcare organizations (HCO) must embrace AI-powered tools to spot and contain threats faster, or continue to risk potentially fatal consequences for patients, experts have warned.\n\nSpeaking at Infosecurity Europe on June 4, Cyber Salus CEO, Sher Baig, said HCOs across the globe face the same threats and operational constraint…",
+          "detail": "Signal de veille — Infosecurity Mag.\n\nA perfect storm of legacy devices, hyper connectivity and human fatigue is bad news for the healthcare sector, warns Cyber Salus\n\nHealthcare organizations (HCO) must embrace AI-powered tools to spot and contain threats faster, or continue to risk potentially fatal consequences for patients, experts have warned.\n\nSpeaking at Infosecurity Europe on June 4, Cyber Salus CEO, Sher Baig, said HCOs across the globe face the same threats and operational constraints.\n\nLegacy infrastructure, hyper-connectivity and human fatigue are fomenting a perfect storm of risk, he argued. In rare cases, breaches can lead to patient fatalities.\n\n&ldquo;If there was ever an industry where the potential harm bad actors can do is directly correlated to human impact, it&rsquo;s healthcare,&rdquo; Baig told attendees.\n\nThe sector is frequently described as the most targeted, with ransomware a particularly acute concern given its potential impact on clinical services.\n\nSome 93% of HCOs suffered at least one cyber-attack in 2025, with an average of 43 attacks per organization, up from 40 in 2024, according to Proofpoint research.",
+          "action": null,
+          "sources": [
+            {
+              "url": "https://www.infosecurity-magazine.com/news/reactive-security-failing/",
+              "label": "Infosecurity Mag"
+            }
+          ],
+          "url": "https://www.infosecurity-magazine.com/news/reactive-security-failing/",
+          "pubDate": "2026-06-05T08:00:00.000Z"
+        },
+        {
+          "title": "AI agent governance gets harder when agents outnumber your people",
+          "cve": null,
+          "severity": "culture",
+          "score": 52,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Signal de veille — Help Net Security.\n\nIn this Help Net Security video, Amit Gautam, CTO at Abluva, explains the security risks that autonomous AI agents bring into enterprise environments. He opens with a real case: a reconciliation agent at a financial services firm had legitimate access to a customer database.",
+          "detail": "Signal de veille — Help Net Security.\n\nIn this Help Net Security video, Amit Gautam, CTO at Abluva, explains the security risks that autonomous AI agents bring into enterprise environments. He opens with a real case: a reconciliation agent at a financial services firm had legitimate access to a customer database. A poison instruction from upstream changed its behavior, and it scanned the entire table, extracting six million records and posting them to a Slack webhook that sent them outside the company. &#8230; More &#8594; The post AI agent governance gets harder when agents outnumber your people appeared first on Help Net Security .",
+          "action": null,
+          "sources": [
+            {
+              "url": "https://www.helpnetsecurity.com/2026/06/05/ai-agent-governance-video/",
+              "label": "Help Net Security"
+            }
+          ],
+          "url": "https://www.helpnetsecurity.com/2026/06/05/ai-agent-governance-video/",
+          "pubDate": "2026-06-05T05:00:33.000Z"
+        },
+        {
+          "title": "Trafic Internet : les robots ont officiellement dépassé les humains selon Cloudflare",
+          "cve": null,
+          "severity": "culture",
+          "score": 48,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Signal de veille — IT-Connect.\n\nPour la première fois de l'histoire d'Internet, le trafic généré par les bots a officiellement dépassé celui des humains, d'après les stats Cloudflare.\n\nActualités IT & Tech, tutoriels en administration système, réseau et cybersécurité.\n\nArchitecture Réseau Cybersécurité Linux & Logiciels Libres Microsoft (On-Premise) Microsoft 365 & Azure Self-Hosting & Open Source Stockage & NAS Cours IT Actualités Entreprise Actu Cybersécurité Web Logiciel – OS Matériel…",
+          "detail": "Signal de veille — IT-Connect.\n\nPour la première fois de l'histoire d'Internet, le trafic généré par les bots a officiellement dépassé celui des humains, d'après les stats Cloudflare.\n\nActualités IT & Tech, tutoriels en administration système, réseau et cybersécurité.\n\nArchitecture Réseau Cybersécurité Linux & Logiciels Libres Microsoft (On-Premise) Microsoft 365 & Azure Self-Hosting & Open Source Stockage & NAS Cours IT Actualités Entreprise Actu Cybersécurité Web Logiciel – OS Matériel Réseaux sociaux Mobile Bons Plans Tests Débutants Livres Vidéos IT-Connect » Actualités » Web » Trafic Internet : les robots ont officiellement dépassé les humains selon Cloudflare Web Trafic Internet : les robots ont officiellement dépassé les humains selon Cloudflare 05/06/2026 Florian BURNEL 0 commentaire IA , Web Pour la première fois de l'histoire d'Internet, le trafic généré par les bots a officiellement dépassé celui des humains. C'est le constat partagé par Matthew Prince, PDG et cofondateur de Cloudflare, qui pointe du doigt l'explosion du trafic agentique.\n\nTout le monde se doutait que le trafic généré par les bots, et donc indirectement par l'IA, allait dépasser celui généré par les humains. Même si cette croisée des courbes était attendue, était-elle attendue si rapidement ? Pas vraiment.\n\n\"Bon, ça s'est passé plus vite que ce que j'avais prédit. Je pensais que ce serait fin 2027, puis début 2027, mais le trafic agentique qui croît si vite que les bots ont maintenant dépassé le trafic humain en ligne pour la première fois dans l'histoire d'Internet.\" , précise Matthew Prince, le PDG de Cloudflare, dans un post X .\n\nMême si ce constat est basé uniquement sur les données de Cloudflare (qui voit passer une grande partie du trafic), cela donne une idée claire de la tendance actu",
+          "action": null,
+          "sources": [
+            {
+              "url": "https://www.it-connect.fr/trafic-internet-les-robots-ont-officiellement-depasse-les-humains-selon-cloudflare/",
+              "label": "IT-Connect"
+            }
+          ],
+          "url": "https://www.it-connect.fr/trafic-internet-les-robots-ont-officiellement-depasse-les-humains-selon-cloudflare/",
+          "pubDate": "2026-06-05T16:30:40.000Z"
+        },
+        {
+          "title": "Entre hyperscalers, les stacks agentiques se suivent… et se ressemblent ?",
+          "cve": null,
+          "severity": "high",
+          "score": 45,
+          "corroboration": 1,
+          "region": "fr",
+          "body": "Signal de veille — Silicon.fr.\n\nIl y a AWS, Microsoft et Google Cloud ; mais n&rsquo;oublions pas Alibaba Cloud. On nous a fait la remarque au Google Cloud Summit Paris 2026. Nous nous intéressions à la façon dont clients et partenaires percevaient la constitution des stacks agentiques chez les « trois grands » clouders américains.",
+          "detail": "Signal de veille — Silicon.fr.\n\nIl y a AWS, Microsoft et Google Cloud ; mais n&rsquo;oublions pas Alibaba Cloud. On nous a fait la remarque au Google Cloud Summit Paris 2026. Nous nous intéressions à la façon dont clients et partenaires percevaient la constitution des stacks agentiques chez les « trois grands » clouders américains. Avec un angle en particulier : convergence ou divergence ? Alibaba nous a été mentionné pour sa promptitude à implémenter OpenClaw / Hermes, à l&rsquo;appui d&rsquo;une sandbox spécifique. NVIDIA a souvent été cité en parallèle, lui qui s&rsquo;est aussi positionné sur le sujet, sous la bannière OpenShell . Google Cloud, en avance sur les modèles first-party Des TPU aux agents prépackagés, le niveau de maîtrise de Google Cloud sur sa stack n&rsquo;a pas échappé aux participants (quelque 3600 annoncés). Et la marque Gemini Enterprise Agent Platform, forme de rebrand de Vertex AI, semble avoir fait son effet. Cette maîtrise &#8211; ou tout du moins sa démonstration &#8211; a particulièrement transparu au niveau des LLM. Dans la keynote introductrice du Summit, il n&rsquo;y en a guère eu que pour Gemini . Une famille qui s&rsquo;oriente de plus en plus ouvertement sur la « quadrimodalité » (texte, image, audio, vidéo). Gemini Omni et Gemma 4 en sont les derniers témoins. On nous a rappelé, à ce propos, que Gartner avait classé Google comme « leader » sur la multimodalité. AWS a aussi",
+          "action": null,
+          "sources": [
+            {
+              "url": "https://www.silicon.fr/cloud-1370/google-cloud-summit-paris-2026-227517",
+              "label": "Silicon.fr"
+            }
+          ],
+          "url": "https://www.silicon.fr/cloud-1370/google-cloud-summit-paris-2026-227517",
+          "pubDate": "2026-06-05T10:51:06.000Z"
+        }
+      ]
+    }
+  ]
+}
