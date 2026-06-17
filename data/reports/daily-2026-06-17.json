@@ -1,0 +1,1004 @@
+{
+  "id": "daily-2026-06-17",
+  "type": "daily",
+  "date": "2026-06-17",
+  "title": "Rapport quotidien - mercredi 17 juin 2026",
+  "summary": "Sur les dernières 24 heures, la veille recense 20 vulnérabilités critiques, 33 incidents ou compromissions et 24 signaux de fond. Acteurs et produits les plus exposés : Microsoft, n8n (npm) et crawl4ai (pip).",
+  "generatedAt": "2026-06-17T04:01:16.311Z",
+  "sections": [
+    {
+      "id": "vulns",
+      "items": [
+        {
+          "title": "Crawl4AI: Arbitrary file write (symlink/TOCTOU) plus log and webhook-header injection in Docker server",
+          "cve": null,
+          "severity": "critical",
+          "score": 74,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Vulnérabilité critique affectant crawl4ai (pip) (score CVSS 9.8).\n\nCrawl4AI: Arbitrary file write (symlink/TOCTOU) plus log and webhook-header injection in Docker server\n\n--> Name Query To see all available qualifiers, see our documentation .\n\nPOST /screenshot and POST /pdf accept an output_path constrained to ALLOWED_OUTPUT_DIR by validate_output_path .",
+          "detail": "Vulnérabilité critique affectant crawl4ai (pip) (score CVSS 9.8).\n\nCrawl4AI: Arbitrary file write (symlink/TOCTOU) plus log and webhook-header injection in Docker server\n\n--> Name Query To see all available qualifiers, see our documentation .\n\nPOST /screenshot and POST /pdf accept an output_path constrained to ALLOWED_OUTPUT_DIR by validate_output_path . The 0.8.7 check was string-only: it did not resolve symlinks, so a symlinked path component inside the output directory could redirect the write outside the directory, and the final open() followed symlinks. On a deployment where the runtime user can write executable/cron locations this is an arbitrary-write to code-execution primitive. The API is unauthenticated by default.\n\nFix: validate_output_path now resolves the real path (symlinks) of the parent and re-checks containment, and the write uses O_NOFOLLOW ( write_output_file ). output_path remains supported.\n\nUser-controlled URLs/errors reflected into log lines could embed CR/LF and forge additional log entries. Fix: a logging filter strips CR/LF/control characters from all records.\n\nArbitrary file write (potential code execution) for #1; log forging for #2; request smuggling / header injection on outbound webhooks for #3.\n\nunclecode published to unclecode/crawl4ai Jun 4, 2026 Published to the GitHub Advisory Database Jun 16, 2026 Reviewed Jun 16, 2026 Last updated Jun 16, 2026 Severity High 8.1 CVSS overall score This score calculates overall vulnerability severity from 0 to 10 and is based on the Common Vulnerability Scoring System (CVSS). / 10 CVSS v3 base metrics Attack vector Network Attack complexity High Privileges required None User interaction None Scope Unchanged Confidentiality High Integrity High Availability High Learn more about base metrics CVSS v3 bas",
+          "action": "Vérifier l'exposition du parc et appliquer le correctif éditeur dès sa disponibilité.",
+          "sources": [
+            {
+              "url": "https://github.com/advisories/GHSA-7cx2-g3h9-382p",
+              "label": "GitHub Advisory"
+            }
+          ],
+          "url": "https://github.com/advisories/GHSA-7cx2-g3h9-382p",
+          "pubDate": "2026-06-16T21:02:19.000Z"
+        },
+        {
+          "title": "CVE-2026-53753 — Crawl4AI: AST Sandbox Escape via gi_frame.f_back Chain - Pre-Auth RCE in Docker API",
+          "cve": "CVE-2026-53753",
+          "severity": "critical",
+          "score": 74,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Vulnérabilité critique CVE-2026-53753 affectant crawl4ai (pip) (score CVSS 9.8).\n\nCrawl4AI: AST Sandbox Escape via gi_frame.f_back Chain - Pre-Auth RCE in Docker API\n\n--> Name Query To see all available qualifiers, see our documentation .\n\nThe attack requires no authentication (JWT disabled by default) and is triggered via POST /crawl with a crafted extraction schema.\n\nAn attacker sends a POST /crawl request with a JsonCssExtractionStrategy schema containing a malicious computed field expression that:\n\nUnauthenticated remote code execut…",
+          "detail": "Vulnérabilité critique CVE-2026-53753 affectant crawl4ai (pip) (score CVSS 9.8).\n\nCrawl4AI: AST Sandbox Escape via gi_frame.f_back Chain - Pre-Auth RCE in Docker API\n\n--> Name Query To see all available qualifiers, see our documentation .\n\nThe attack requires no authentication (JWT disabled by default) and is triggered via POST /crawl with a crafted extraction schema.\n\nAn attacker sends a POST /crawl request with a JsonCssExtractionStrategy schema containing a malicious computed field expression that:\n\nUnauthenticated remote code execution inside the Docker container. An attacker can execute arbitrary system commands, read/write files, and exfiltrate secrets.\n\nunclecode published to unclecode/crawl4ai Jun 2, 2026 Published to the GitHub Advisory Database Jun 16, 2026 Reviewed Jun 16, 2026 Last updated Jun 16, 2026 Severity Critical 9.8 CVSS overall score This score calculates overall vulnerability severity from 0 to 10 and is based on the Common Vulnerability Scoring System (CVSS). / 10 CVSS v3 base metrics Attack vector Network Attack complexity Low Privileges required None User interaction None Scope Unchanged Confidentiality High Integrity High Availability High Learn more about base metrics CVSS v3 base metrics Attack vector: More severe the more the remote (logically and physically) an attacker can be in order to exploit the vulnerability. Attack complexity: More severe for the least complex attacks. Privileges required: More severe if no privileges are required. User interaction: More severe when no user interaction is required. Scope: More severe when a scope change occurs, e.g. one vulnerable component impacts resources in components beyond its security scope. Confidentiality: More severe when loss of data confidentiality is highest, measuring the level of data",
+          "action": "Vérifier l'exposition du parc et appliquer le correctif éditeur dès sa disponibilité.",
+          "sources": [
+            {
+              "url": "https://github.com/advisories/GHSA-qxjp-w3pj-48m7",
+              "label": "GitHub Advisory"
+            }
+          ],
+          "url": "https://github.com/advisories/GHSA-qxjp-w3pj-48m7",
+          "pubDate": "2026-06-16T20:13:07.000Z"
+        },
+        {
+          "title": "CVE-2026-53755 — Crawl4AI: SSRF via proxy settings in the Docker server bypasses the crawl-URL SSRF check",
+          "cve": "CVE-2026-53755",
+          "severity": "high",
+          "score": 61,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Vulnérabilité élevée CVE-2026-53755 affectant crawl4ai (pip) (score CVSS 8.6).\n\nCrawl4AI: SSRF via proxy settings in the Docker server bypasses the crawl-URL SSRF check\n\n--> Name Query To see all available qualifiers, see our documentation .\n\n/crawl , /crawl/stream , and /crawl/job accept a browser_config (and crawler_config ). The following all feed Chromium's egress and were unchecked:\n\nAn attacker sends /crawl with a benign, validation-passing URL but a proxy_config.server pointing at an internal IP.",
+          "detail": "Vulnérabilité élevée CVE-2026-53755 affectant crawl4ai (pip) (score CVSS 8.6).\n\nCrawl4AI: SSRF via proxy settings in the Docker server bypasses the crawl-URL SSRF check\n\n--> Name Query To see all available qualifiers, see our documentation .\n\n/crawl , /crawl/stream , and /crawl/job accept a browser_config (and crawler_config ). The following all feed Chromium's egress and were unchecked:\n\nAn attacker sends /crawl with a benign, validation-passing URL but a proxy_config.server pointing at an internal IP. Chromium routes all requests through that proxy. For plain-HTTP targets the proxy receives the full request and can return any content, which is then returned verbatim in the crawl result ( results[0].html / cleaned_html / markdown ). In a real deployment the proxy would be an attacker-controlled server pointing at cloud metadata (e.g. AWS IMDSv1 at 169.254.169.254) to retrieve IAM credential tokens.\n\nUnauthenticated server-side request forgery to internal services and cloud-metadata endpoints, with the response returned to the attacker.\n\nEvery proxy destination is validated with the same global-routability check used for crawl URLs (reject any resolved address that is not is_global , including IPv6 transition forms) before the browser is constructed; proxy/DNS-redirecting flags are stripped from extra_args . A legitimate public proxy still works. Honors CRAWL4AI_ALLOW_INTERNAL_URLS .\n\nGeo ( geo-chen ) - reported the proxy_config.server SSRF with a clear PoC.",
+          "action": "Vérifier l'exposition du parc et appliquer le correctif éditeur dès sa disponibilité.",
+          "sources": [
+            {
+              "url": "https://github.com/advisories/GHSA-6qhc-x826-342c",
+              "label": "GitHub Advisory"
+            }
+          ],
+          "url": "https://github.com/advisories/GHSA-6qhc-x826-342c",
+          "pubDate": "2026-06-16T21:02:55.000Z"
+        },
+        {
+          "title": "Critical Fortinet FortiSandbox flaws now exploited in attacks",
+          "cve": null,
+          "severity": "critical",
+          "score": 61,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Vulnérabilité critique affectant Fortinet.\n\nAttackers are now exploiting several critical vulnerabilities in Fortinet's FortiSandbox cyber threat detection platform, according to threat intelligence company Defused.\n\nOver 400 Arch Linux packages compromised to push rootkit, infostealer\n\nMicrosoft fixes Windows update failures linked to WUSA installer\n\nOracle mitigates PeopleSoft zero-day exploited in data theft attacks\n\nMaine disables data breach notification portal after fake disclosures\n\nMalicious…",
+          "detail": "Vulnérabilité critique affectant Fortinet.\n\nAttackers are now exploiting several critical vulnerabilities in Fortinet's FortiSandbox cyber threat detection platform, according to threat intelligence company Defused.\n\nOver 400 Arch Linux packages compromised to push rootkit, infostealer\n\nMicrosoft fixes Windows update failures linked to WUSA installer\n\nOracle mitigates PeopleSoft zero-day exploited in data theft attacks\n\nMaine disables data breach notification portal after fake disclosures\n\nMalicious JetBrains Marketplace plugins steal AI API keys from developers\n\nNew Rokarolla Android malware targets 217 banking, crypto apps",
+          "action": "Vérifier l'exposition du parc et appliquer le correctif éditeur dès sa disponibilité.",
+          "sources": [
+            {
+              "url": "https://www.bleepingcomputer.com/news/security/critical-fortinet-fortisandbox-flaws-now-exploited-in-attacks/",
+              "label": "BleepingComputer"
+            }
+          ],
+          "url": "https://www.bleepingcomputer.com/news/security/critical-fortinet-fortisandbox-flaws-now-exploited-in-attacks/",
+          "pubDate": "2026-06-16T09:19:51.000Z"
+        },
+        {
+          "title": "CVE-2026-54312 — n8n: Microsoft SQL Node Prototype Pollution",
+          "cve": "CVE-2026-54312",
+          "severity": "high",
+          "score": 60,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Vulnérabilité élevée CVE-2026-54312 affectant n8n (npm) (score CVSS 8.5).\n\nn8n: Microsoft SQL Node Prototype Pollution\n\n--> Name Query To see all available qualifiers, see our documentation .\n\nThe issue has been fixed in n8n version 2.24.0. Users should upgrade to this version or later to remediate the vulnerability.\n\nIf upgrading is not immediately possible, administrators should consider the following temporary mitigations:\n\nThese workarounds do not fully remediate the risk and should only be used as short-term mitigation measu…",
+          "detail": "Vulnérabilité élevée CVE-2026-54312 affectant n8n (npm) (score CVSS 8.5).\n\nn8n: Microsoft SQL Node Prototype Pollution\n\n--> Name Query To see all available qualifiers, see our documentation .\n\nThe issue has been fixed in n8n version 2.24.0. Users should upgrade to this version or later to remediate the vulnerability.\n\nIf upgrading is not immediately possible, administrators should consider the following temporary mitigations:\n\nThese workarounds do not fully remediate the risk and should only be used as short-term mitigation measures.\n\nJubke published to n8n-io/n8n Jun 10, 2026 Published to the GitHub Advisory Database Jun 16, 2026 Reviewed Jun 16, 2026 Last updated Jun 16, 2026 Severity High 7.2 CVSS overall score This score calculates overall vulnerability severity from 0 to 10 and is based on the Common Vulnerability Scoring System (CVSS). / 10 CVSS v4 base metrics Exploitability Metrics Attack Vector Network Attack Complexity Low Attack Requirements None Privileges Required Low User interaction None Vulnerable System Impact Metrics Confidentiality Low Integrity Low Availability High Subsequent System Impact Metrics Confidentiality None Integrity None Availability None Learn more about base metrics CVSS v4 base metrics Exploitability Metrics Attack Vector: This metric reflects the context by which vulnerability exploitation is possible. This metric value (and consequently the resulting severity) will be larger the more remote (logically, and physically) an attacker can be in order to exploit the vulnerable system. The assumption is that the number of potential attackers for a vulnerability that could be exploited from across a network is larger than the number of potential attackers that could exploit a vulnerability requiring physical access to a device, and therefor",
+          "action": "Vérifier l'exposition du parc et appliquer le correctif éditeur dès sa disponibilité.",
+          "sources": [
+            {
+              "url": "https://github.com/advisories/GHSA-x6p3-m6h9-fx7r",
+              "label": "GitHub Advisory"
+            }
+          ],
+          "url": "https://github.com/advisories/GHSA-x6p3-m6h9-fx7r",
+          "pubDate": "2026-06-16T22:38:52.000Z"
+        },
+        {
+          "title": "CVE-2026-49980 — Rclone: Unauthenticated command execution in `rclone rcd --rc-serve` via inline remote instantiation, bypassing CVE-2026-41179 fix",
+          "cve": "CVE-2026-49980",
+          "severity": "critical",
+          "score": 59,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Vulnérabilité critique CVE-2026-49980 affectant github.com/rclone/rclone (go) (score CVSS 9.8).\n\nRclone: Unauthenticated command execution in `rclone rcd --rc-serve` via inline remote instantiation, bypassing CVE-2026-41179 fix\n\n--> Name Query To see all available qualifiers, see our documentation .\n\n/[remote:path]/object The remote value is parsed from the URL and passed to normal backend initialization. Inline remote configuration can set backend options that execute local commands during initialization.",
+          "detail": "Vulnérabilité critique CVE-2026-49980 affectant github.com/rclone/rclone (go) (score CVSS 9.8).\n\nRclone: Unauthenticated command execution in `rclone rcd --rc-serve` via inline remote instantiation, bypassing CVE-2026-41179 fix\n\n--> Name Query To see all available qualifiers, see our documentation .\n\n/[remote:path]/object The remote value is parsed from the URL and passed to normal backend initialization. Inline remote configuration can set backend options that execute local commands during initialization. As a result, a single unauthenticated GET or HEAD request can execute a command as the rclone process user.\n\nVersions from 1.55.0 onwards are vulnerable to command execution. Earlier versions (from 1.46.0) are vulnerable to the unauthenticated local file read described under \"Additional impact\" but not to command execution, because inline backend option overrides did not exist until 1.55.0.\n\nAn unauthenticated network attacker who can reach the RC HTTP listener can execute commands as the rclone process user.\n\nThe vulnerabilities in this advisory have been fixed by two commits:\n\nncw published to rclone/rclone Jun 5, 2026 Published to the GitHub Advisory Database Jun 16, 2026 Reviewed Jun 16, 2026 Last updated Jun 16, 2026 Severity Critical 9.8 CVSS overall score This score calculates overall vulnerability severity from 0 to 10 and is based on the Common Vulnerability Scoring System (CVSS). / 10 CVSS v3 base metrics Attack vector Network Attack complexity Low Privileges required None User interaction None Scope Unchanged Confidentiality High Integrity High Availability High Learn more about base metrics CVSS v3 base metrics Attack vector: More severe the more the remote (logically and physically) an attacker can be in order to exploit the vulnerability. Attack complexi",
+          "action": "Vérifier l'exposition du parc et appliquer le correctif éditeur dès sa disponibilité.",
+          "sources": [
+            {
+              "url": "https://github.com/advisories/GHSA-qw24-gh76-8rvv",
+              "label": "GitHub Advisory"
+            }
+          ],
+          "url": "https://github.com/advisories/GHSA-qw24-gh76-8rvv",
+          "pubDate": "2026-06-16T23:39:41.000Z"
+        },
+        {
+          "title": "CVE-2026-49402 — Deno: Command Injection via spawnSync & spawn on Windows",
+          "cve": "CVE-2026-49402",
+          "severity": "high",
+          "score": 59,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Vulnérabilité élevée CVE-2026-49402 affectant deno (rust) (score CVSS 8.1).\n\nDeno: Command Injection via spawnSync & spawn on Windows\n\n--> Name Query To see all available qualifiers, see our documentation .\n\nThis was the Windows counterpart to CVE-2026-27190 , which fixed the same class of bug in the Unix branch of escapeShellArg .\n\nOn Windows, child_process with shell: true ran the command via cmd.exe /d /s /c \" \" .",
+          "detail": "Vulnérabilité élevée CVE-2026-49402 affectant deno (rust) (score CVSS 8.1).\n\nDeno: Command Injection via spawnSync & spawn on Windows\n\n--> Name Query To see all available qualifiers, see our documentation .\n\nThis was the Windows counterpart to CVE-2026-27190 , which fixed the same class of bug in the Unix branch of escapeShellArg .\n\nOn Windows, child_process with shell: true ran the command via cmd.exe /d /s /c \" \" . Deno assembled that command line by joining the program name and each argument through escapeShellArg() .\n\nA secondary defect existed even when arguments were quoted: cmd.exe expands %FOO% environment-variable references inside double-quoted strings. Without either doubling % or rejecting it, an argument like \"%USERPROFILE%\" leaked environment data into the command line.\n\nAny Deno program on Windows that called child_process.spawn / spawnSync / exec (or any shell helper that funneled through escapeShellArg ) with shell: true and incorporated untrusted input into an argument was exposed to arbitrary command execution in the context of the Deno process. The CVSS vector treated this as network-reachable / high-complexity because the typical exposure path was a Deno service accepting external input and forwarding it to a shelled-out subprocess.\n\nbartlomieju published to denoland/deno May 27, 2026 Published to the GitHub Advisory Database Jun 16, 2026 Reviewed Jun 16, 2026 Last updated Jun 16, 2026 Severity High 8.1 CVSS overall score This score calculates overall vulnerability severity from 0 to 10 and is based on the Common Vulnerability Scoring System (CVSS). / 10 CVSS v3 base metrics Attack vector Network Attack complexity High Privileges required None User interaction None Scope Unchanged Confidentiality High Integrity High Availability High Learn more abou",
+          "action": "Vérifier l'exposition du parc et appliquer le correctif éditeur dès sa disponibilité.",
+          "sources": [
+            {
+              "url": "https://github.com/advisories/GHSA-7xh3-mhg9-jcw8",
+              "label": "GitHub Advisory"
+            }
+          ],
+          "url": "https://github.com/advisories/GHSA-7xh3-mhg9-jcw8",
+          "pubDate": "2026-06-16T19:07:44.000Z"
+        },
+        {
+          "title": "CVE-2026-52844 — Caddy: Windows `file_server` path authorization bypass via encoded backslash",
+          "cve": "CVE-2026-52844",
+          "severity": "high",
+          "score": 58,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Vulnérabilité élevée CVE-2026-52844 affectant github.com/caddyserver/caddy/v2 (go) (score CVSS 7.5).\n\nCaddy: Windows `file_server` path authorization bypass via encoded backslash\n\n--> Name Query To see all available qualifiers, see our documentation .\n\nAn unauthenticated remote client can request /private%5csecret.txt and bypass Caddy path-scoped auth/deny routes protecting /private/* .\n\nThis is related to, but distinct from, GHSA-4xrr-hq4w-6vf4 / CVE-2026-27585 . That advisory fixed backslash handling in the file matcher / try_files glob path.",
+          "detail": "Vulnérabilité élevée CVE-2026-52844 affectant github.com/caddyserver/caddy/v2 (go) (score CVSS 7.5).\n\nCaddy: Windows `file_server` path authorization bypass via encoded backslash\n\n--> Name Query To see all available qualifiers, see our documentation .\n\nAn unauthenticated remote client can request /private%5csecret.txt and bypass Caddy path-scoped auth/deny routes protecting /private/* .\n\nThis is related to, but distinct from, GHSA-4xrr-hq4w-6vf4 / CVE-2026-27585 . That advisory fixed backslash handling in the file matcher / try_files glob path. This report does not use try_files or the file matcher; it affects ordinary path route matchers in front of direct file_server serving and reproduces on current HEAD.\n\nTested on current HEAD 6c675e29f87cbe7326983ddb6d739175119d394c with a Windows caddy.exe built from this repository.\n\ncd C:\\Users\\Public\\caddy - backslash - poc .\\ caddy.exe run -- config Caddyfile -- adapter caddyfile Baseline request, expected to be blocked:\n\ncurl -v --path-as-is http:// windows-host > :19080/private/secret.txt Observed:",
+          "action": "Vérifier l'exposition du parc et appliquer le correctif éditeur dès sa disponibilité.",
+          "sources": [
+            {
+              "url": "https://github.com/advisories/GHSA-qrp7-cvwr-j2c6",
+              "label": "GitHub Advisory"
+            }
+          ],
+          "url": "https://github.com/advisories/GHSA-qrp7-cvwr-j2c6",
+          "pubDate": "2026-06-16T21:28:11.000Z"
+        },
+        {
+          "title": "CVE-2026-53754 — Crawl4AI: SSRF filter bypass in Docker server via IPv6 transition forms (NAT64 / 6to4 / unspecified / v4-mapped)",
+          "cve": "CVE-2026-53754",
+          "severity": "high",
+          "score": 58,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Vulnérabilité élevée CVE-2026-53754 affectant crawl4ai (pip) (score CVSS 7.5).\n\nCrawl4AI: SSRF filter bypass in Docker server via IPv6 transition forms (NAT64 / 6to4 / unspecified / v4-mapped)\n\n--> Name Query To see all available qualifiers, see our documentation .\n\nBecause the Docker API is unauthenticated by default ( jwt_enabled: false ), no credentials are required.\n\nThe blocklist was applied to crawl URLs ( POST /crawl , /md , /html , /screenshot , /pdf , /execute_js ) and webhook URLs ( /crawl/job , /llm/job ).",
+          "detail": "Vulnérabilité élevée CVE-2026-53754 affectant crawl4ai (pip) (score CVSS 7.5).\n\nCrawl4AI: SSRF filter bypass in Docker server via IPv6 transition forms (NAT64 / 6to4 / unspecified / v4-mapped)\n\n--> Name Query To see all available qualifiers, see our documentation .\n\nBecause the Docker API is unauthenticated by default ( jwt_enabled: false ), no credentials are required.\n\nThe blocklist was applied to crawl URLs ( POST /crawl , /md , /html , /screenshot , /pdf , /execute_js ) and webhook URLs ( /crawl/job , /llm/job ). All shared the same incomplete check.\n\nThe following all resolve to (or route to) blocked internal addresses but were NOT caught:\n\nThe error message also echoed the resolved internal IP, acting as a minor DNS/oracle leak.\n\nServer-Side Request Forgery: an unauthenticated attacker can make the server fetch internal-network URLs and cloud instance-metadata endpoints, potentially exposing internal services and cloud credentials.",
+          "action": "Vérifier l'exposition du parc et appliquer le correctif éditeur dès sa disponibilité.",
+          "sources": [
+            {
+              "url": "https://github.com/advisories/GHSA-4qqr-vv2q-cmr5",
+              "label": "GitHub Advisory"
+            }
+          ],
+          "url": "https://github.com/advisories/GHSA-4qqr-vv2q-cmr5",
+          "pubDate": "2026-06-16T21:00:04.000Z"
+        },
+        {
+          "title": "CVE-2026-48519 — Langflow: Unauthenticated RCE in Shareable Playgrounds",
+          "cve": "CVE-2026-48519",
+          "severity": "critical",
+          "score": 58,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Vulnérabilité critique CVE-2026-48519 affectant langflow (pip) (score CVSS 9.6).\n\nLangflow: Unauthenticated RCE in Shareable Playgrounds\n\n--> Name Query To see all available qualifiers, see our documentation .\n\nShareable Playground feature works by enabling the execution of workflows by unauthenticated users, by accessing a link. Specifically, it enables the route /api/v1/build_public_tmp to execute any public flow, given a public flow ID.",
+          "detail": "Vulnérabilité critique CVE-2026-48519 affectant langflow (pip) (score CVSS 9.6).\n\nLangflow: Unauthenticated RCE in Shareable Playgrounds\n\n--> Name Query To see all available qualifiers, see our documentation .\n\nShareable Playground feature works by enabling the execution of workflows by unauthenticated users, by accessing a link. Specifically, it enables the route /api/v1/build_public_tmp to execute any public flow, given a public flow ID. When the route executes the flow, it allows for providing arbitrary custom Python code as the nodes code, inside the JSON payload!\n\nThe vulnerable field is data.nodes[X].data.node.template.code.value. See PoC for an example.\n\nExample PoC (replace flow ID with the correct one), and download test_with_python.json :\n\ncurl ' http://localhost:7860/api/v1/build_public_tmp/ /flow?start_component_id=ChatInput-syEJp&log_builds=false&event_delivery=streaming ' \\ -H ' Content-Type: application/json ' \\ -b ' client_id=anything ' \\ --data-raw \" $( cat test_with_python.json ) \" Search for touch /tmp/pwned in the test_with_python.json and edit for any other code.\n\n... File \"/Users/ori/Work/research/langchain/langflow/src/backend/base/langflow/api/build.py\", line 495, in generate_flow_events ids, vertices_to_run, graph = await build_graph_and_get_order() File \"/Users/ori/Work/research/langchain/langflow/src/backend/base/langflow/api/build.py\", line 234, in build_graph_and_get_order graph = await create_graph(fresh_session, flow_id_str, flow_name) File \"/Users/ori/Work/research/langchain/langflow/src/backend/base/langflow/api/build.py\", line 298, in create_graph return await build_graph_from_data( File \"/Users/ori/Work/research/langchain/langflow/src/backend/base/langflow/api/utils/core.py\", line 192, in build_graph_from_data graph = Graph.from_payloa",
+          "action": "Vérifier l'exposition du parc et appliquer le correctif éditeur dès sa disponibilité.",
+          "sources": [
+            {
+              "url": "https://github.com/advisories/GHSA-v5ff-9q35-q26f",
+              "label": "GitHub Advisory"
+            }
+          ],
+          "url": "https://github.com/advisories/GHSA-v5ff-9q35-q26f",
+          "pubDate": "2026-06-16T17:35:32.000Z"
+        },
+        {
+          "title": "CVE-2026-54157 — LobeHub: Unauthenticated SSRF in `/webapi/proxy`",
+          "cve": "CVE-2026-54157",
+          "severity": "critical",
+          "score": 57,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Vulnérabilité critique CVE-2026-54157 affectant @lobehub/lobehub (npm) (score CVSS 9).\n\nLobeHub: Unauthenticated SSRF in `/webapi/proxy`\n\n--> Name Query To see all available qualifiers, see our documentation .\n\nType: Server-Side Request Forgery (CWE-918) Affected Endpoint: POST /webapi/proxy Vulnerable File: src/app/(backend)/webapi/proxy/route.ts\n\nThe route handler reads a URL from the request body and passes it to ssrfSafeFetch() without calling checkAuth() first.",
+          "detail": "Vulnérabilité critique CVE-2026-54157 affectant @lobehub/lobehub (npm) (score CVSS 9).\n\nLobeHub: Unauthenticated SSRF in `/webapi/proxy`\n\n--> Name Query To see all available qualifiers, see our documentation .\n\nType: Server-Side Request Forgery (CWE-918) Affected Endpoint: POST /webapi/proxy Vulnerable File: src/app/(backend)/webapi/proxy/route.ts\n\nThe route handler reads a URL from the request body and passes it to ssrfSafeFetch() without calling checkAuth() first. Every other webapi route ( /webapi/chat/* , /webapi/models/* , /webapi/create-image/* ) wraps the handler in checkAuth() , but the proxy does not. The Next.js middleware also skips /webapi/ routes — defaultMiddleware() calls NextResponse.next() for any path starting with /webapi/ , so neither the route handler nor the middleware performs authentication.\n\ncurl -X POST -H \"Content-Type: text/plain;charset=UTF-8\" \\ -d \"https://httpbin.org/ip\" \\ \"https://app.lobehub.com/webapi/proxy\"\n\nThe proxy is fully unauthenticated and returns the complete response from any external URL. I confirmed the following on app.lobehub.com:\n\nThe proxy also leaks Vercel infrastructure details. The Traceparent and X-Vercel-Id headers from internal request tracing appear in every proxied response. The server's egress IP is exposed. Vercel Edge Config and the Vercel API are both reachable through the proxy (they return auth errors, not SSRF blocks), which means the proxy reaches Vercel's management plane.",
+          "action": "Vérifier l'exposition du parc et appliquer le correctif éditeur dès sa disponibilité.",
+          "sources": [
+            {
+              "url": "https://github.com/advisories/GHSA-xmwj-c75x-6346",
+              "label": "GitHub Advisory"
+            }
+          ],
+          "url": "https://github.com/advisories/GHSA-xmwj-c75x-6346",
+          "pubDate": "2026-06-16T20:15:57.000Z"
+        },
+        {
+          "title": "CVE-2026-48746 — vLLM: OpenAI auth bypass",
+          "cve": "CVE-2026-48746",
+          "severity": "critical",
+          "score": 57,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Vulnérabilité critique CVE-2026-48746 affectant vllm (pip) (score CVSS 9.1).\n\nvLLM: OpenAI auth bypass\n\n--> Name Query To see all available qualifiers, see our documentation .\n\nIn https://github.com/vllm-project/vllm/blob/v0.14.0/vllm/entrypoints/openai/api_server.py#L689-L692 the url_path is taken from the URL , which is reconstructed by starlette based on the request scope .\n\nFastAPI/starlette's routing uses the HTTP path and does not depend on the parsed url.path attribute, allowing attackers to reach an endpoint via a certain pa…",
+          "detail": "Vulnérabilité critique CVE-2026-48746 affectant vllm (pip) (score CVSS 9.1).\n\nvLLM: OpenAI auth bypass\n\n--> Name Query To see all available qualifiers, see our documentation .\n\nIn https://github.com/vllm-project/vllm/blob/v0.14.0/vllm/entrypoints/openai/api_server.py#L689-L692 the url_path is taken from the URL , which is reconstructed by starlette based on the request scope .\n\nFastAPI/starlette's routing uses the HTTP path and does not depend on the parsed url.path attribute, allowing attackers to reach an endpoint via a certain path while providing a different value in the .path .\n\nrussellb published to vllm-project/vllm Jun 2, 2026 Published to the GitHub Advisory Database Jun 16, 2026 Reviewed Jun 16, 2026 Last updated Jun 16, 2026 Severity Critical 9.1 CVSS overall score This score calculates overall vulnerability severity from 0 to 10 and is based on the Common Vulnerability Scoring System (CVSS). / 10 CVSS v3 base metrics Attack vector Network Attack complexity Low Privileges required None User interaction None Scope Unchanged Confidentiality High Integrity None Availability High Learn more about base metrics CVSS v3 base metrics Attack vector: More severe the more the remote (logically and physically) an attacker can be in order to exploit the vulnerability. Attack complexity: More severe for the least complex attacks. Privileges required: More severe if no privileges are required. User interaction: More severe when no user interaction is required. Scope: More severe when a scope change occurs, e.g. one vulnerable component impacts resources in components beyond its security scope. Confidentiality: More severe when loss of data confidentiality is highest, measuring the level of data access available to an unauthorized user. Integrity: More severe when loss of da",
+          "action": "Vérifier l'exposition du parc et appliquer le correctif éditeur dès sa disponibilité.",
+          "sources": [
+            {
+              "url": "https://github.com/advisories/GHSA-94f4-hr76-p5j6",
+              "label": "GitHub Advisory"
+            }
+          ],
+          "url": "https://github.com/advisories/GHSA-94f4-hr76-p5j6",
+          "pubDate": "2026-06-16T17:36:41.000Z"
+        },
+        {
+          "title": "CVE-2026-53776 — Perry before 0.5.1166 contains a JWT validation vulnerability that allows remote attackers…",
+          "cve": "CVE-2026-53776",
+          "severity": "critical",
+          "score": 57,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Vulnérabilité critique CVE-2026-53776 (score CVSS 9.1).\n\nPerry before 0.5.1166 contains a JWT validation vulnerability that allows remote attackers to bypass token expiration by exploiting the unconditional setting of validate_exp = false in the verify_decode helper within the stdlib JWT verification path.",
+          "detail": "Vulnérabilité critique CVE-2026-53776 (score CVSS 9.1).\n\nPerry before 0.5.1166 contains a JWT validation vulnerability that allows remote attackers to bypass token expiration by exploiting the unconditional setting of validate_exp = false in the verify_decode helper within the stdlib JWT verification path. Attackers in possession of a previously issued bearer token can present expired tokens to any jwt.verify() call and retain authenticated access indefinitely, bypassing force-expired sessions such as user logout or administrative revocation.\n\nScore CVSS : 9.1\n\nType de faiblesse (CWE) : CWE-613",
+          "action": "Vérifier l'exposition du parc et appliquer le correctif éditeur dès sa disponibilité.",
+          "sources": [
+            {
+              "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-53776",
+              "label": "NVD"
+            },
+            {
+              "url": "https://www.cvedetails.com/cve/CVE-2026-53776/",
+              "label": "CVE Details"
+            }
+          ],
+          "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-53776",
+          "pubDate": "2026-06-16T17:16:42.620Z"
+        },
+        {
+          "title": "Fortinet Warned as Three Critical FortiSandbox Bugs Come Under Attack",
+          "cve": "CVE-2026-39813",
+          "severity": "critical",
+          "score": 54,
+          "corroboration": 4,
+          "region": "intl",
+          "body": "Vulnérabilité critique CVE-2026-39813 affectant Fortinet.\n\nThree FortiSandbox flaws, including one patched last week, are being actively exploited, highlighting the shrinking window for defenders. Cybersecurity firm Defused Cyber confirmed it&#8217;s seen active exploitation of three vulnerabilities in Fortinet FortiSandbox within a 24-hour window. Two of them had patches sitting available since April. The third got fixed last week, which, apparently, wasn&#8217;t fast enough.",
+          "detail": "Vulnérabilité critique CVE-2026-39813 affectant Fortinet.\n\nThree FortiSandbox flaws, including one patched last week, are being actively exploited, highlighting the shrinking window for defenders. Cybersecurity firm Defused Cyber confirmed it&#8217;s seen active exploitation of three vulnerabilities in Fortinet FortiSandbox within a 24-hour window. Two of them had patches sitting available since April. The third got fixed last week, which, apparently, wasn&#8217;t fast enough. We are observing exploitation of multiple Fortinet FortiSandbox vulnerabilities during the past 24 hours, including: CVE-2026-39813 (no previous recorded exploitation) CVE-2026-39808 CVE-2026-25089 (vibecoded, likely faulty exploit) Per our research a working exploit for… pic.twitter.com/obZTugupWT &mdash; Defused (@DefusedCyber) June 15, 2026 CVE-2026-39813 (CVSS score: 9.1) is a path traversal vulnerability in FortiSandbox JRPC API that could allow an unauthenticated attacker to bypass authentication via specially crafted HTTP requests. Its twin, CVE-2026-39808 (CVSS score of 9.8), carries the same severity score and is an OS command injection flaw, same attack vector, same result: unauthenticated code execution via crafted HTTP requests. Both had patches available for two months. The third flaw, CVE-2026-25089 , hits a broader surface. Fortinet described it as an operating system command injection impacting FortiSandbox, FortiSandbox Cloud, and FortiSandbox Pa",
+          "action": "Vérifier l'exposition du parc et appliquer le correctif éditeur dès sa disponibilité.",
+          "sources": [
+            {
+              "url": "https://www.theregister.com/security/2026/06/16/three-critical-fortinet-sandbox-bugs-splattered-by-unknown-attackers/5256461",
+              "label": "The Register"
+            },
+            {
+              "url": "https://securityaffairs.com/193709/ai/fortinet-warned-as-three-critical-fortisandbox-bugs-come-under-attack.html",
+              "label": "Security Affairs"
+            },
+            {
+              "url": "https://www.helpnetsecurity.com/2026/06/16/fortisandbox-vulnerabilities-cve-2026-39813-cve-2026-39808-cve-2026-25089/",
+              "label": "Help Net Security"
+            },
+            {
+              "url": "https://thehackernews.com/2026/06/attackers-exploit-three-fortinet.html",
+              "label": "The Hacker News"
+            }
+          ],
+          "url": "https://www.theregister.com/security/2026/06/16/three-critical-fortinet-sandbox-bugs-splattered-by-unknown-attackers/5256461",
+          "pubDate": "2026-06-16T18:27:12.000Z"
+        },
+        {
+          "title": "CVE-2026-20262: CISCO Catalyst SD-WAN Flaw Under Active Targeted Exploitation",
+          "cve": "CVE-2026-20262",
+          "severity": "critical",
+          "score": 49,
+          "corroboration": 4,
+          "region": "intl",
+          "body": "Vulnérabilité critique CVE-2026-20262 affectant Cisco.\n\nCisco warned that CVE-2026-20262, a Catalyst SD-WAN Manager vulnerability allowing arbitrary file writes, is being actively exploited. Cisco confirmed active exploitation of CVE-2026-20262 , an arbitrary file write vulnerability affecting Catalyst SD-WAN Manager. CVE-2026-20262 (CVSS score of 6.5) is an arbitrary file write vulnerability in the web interface of Cisco Catalyst SD-WAN Manager.",
+          "detail": "Vulnérabilité critique CVE-2026-20262 affectant Cisco.\n\nCisco warned that CVE-2026-20262, a Catalyst SD-WAN Manager vulnerability allowing arbitrary file writes, is being actively exploited. Cisco confirmed active exploitation of CVE-2026-20262 , an arbitrary file write vulnerability affecting Catalyst SD-WAN Manager. CVE-2026-20262 (CVSS score of 6.5) is an arbitrary file write vulnerability in the web interface of Cisco Catalyst SD-WAN Manager. The flaw is caused by improper validation of user-supplied input during file uploads, allowing an authenticated remote attacker to create or overwrite files on the underlying operating system through a crafted HTTP request. A successful attack could enable further privilege escalation to root. Exploitation requires valid credentials for a low-privileged user account. &#8220;A vulnerability in the web UI of Cisco Catalyst SD-WAN Manager, formerly SD-WAN vManage, could allow an authenticated, remote attacker to create a file or overwrite any file on the filesystem of an affected system.&#8221; reads the advisory . &#8220;This vulnerability exists because the affected software does not properly validate user-supplied input during a file upload process. An attacker could exploit this vulnerability by sending a crafted HTTP request to an affected API endpoint of the affected system. A successful exploit could allow the attacker to create or overwrite any file on the underlying operating system.",
+          "action": "Vérifier l'exposition du parc et appliquer le correctif éditeur dès sa disponibilité.",
+          "sources": [
+            {
+              "url": "https://securityaffairs.com/193693/security/cve-2026-20262-cisco-catalyst-sd-wan-flaw-under-active-targeted-exploitation.html",
+              "label": "Security Affairs"
+            },
+            {
+              "url": "https://thehackernews.com/2026/06/cisco-releases-security-updates-for.html",
+              "label": "The Hacker News"
+            },
+            {
+              "url": "https://www.globalsecuritymag.fr/vulnerabilite-dans-cisco-catalyst-16-juin-2026.html",
+              "label": "Global Sec Mag"
+            },
+            {
+              "url": "https://www.helpnetsecurity.com/2026/06/16/cisco-sd-wan-cve-2026-20262-exploited/",
+              "label": "Help Net Security"
+            }
+          ],
+          "url": "https://securityaffairs.com/193693/security/cve-2026-20262-cisco-catalyst-sd-wan-flaw-under-active-targeted-exploitation.html",
+          "pubDate": "2026-06-17T04:01:03.865Z"
+        },
+        {
+          "title": "Microsoft Copilot : un simple clic suffisait pour exfiltrer les données sensibles",
+          "cve": null,
+          "severity": "critical",
+          "score": 49,
+          "corroboration": 1,
+          "region": "fr",
+          "body": "Vulnérabilité critique affectant Microsoft.\n\nDes chercheurs en sécurité ont mis au jour une vulnérabilité critique dans Microsoft 365 Copilot Enterprise Search qui aurait pu permettre à un attaquant\n\nFaille Mis à jour le 16 juin 2026 à 16h01 Microsoft Copilot : un simple clic suffisait pour exfiltrer les données sensibles Des chercheurs en sécurité ont mis au jour une vulnérabilité critique dans Microsoft 365 Copilot Enterprise Search qui aurait pu permettre à un attaquant d&rsquo;exfiltrer des donné…",
+          "detail": "Vulnérabilité critique affectant Microsoft.\n\nDes chercheurs en sécurité ont mis au jour une vulnérabilité critique dans Microsoft 365 Copilot Enterprise Search qui aurait pu permettre à un attaquant\n\nFaille Mis à jour le 16 juin 2026 à 16h01 Microsoft Copilot : un simple clic suffisait pour exfiltrer les données sensibles Des chercheurs en sécurité ont mis au jour une vulnérabilité critique dans Microsoft 365 Copilot Enterprise Search qui aurait pu permettre à un attaquant d&rsquo;exfiltrer des données sensibles à partir du compte Microsoft 365 d&rsquo;une victime via un simple clic sur un lien Microsoft légitime.\n\nBaptisée SearchLeak , cette chaîne d&rsquo;attaque repose sur l&rsquo;enchaînement de plusieurs vulnérabilités permettant de détourner le fonctionnement de Copilot afin d&rsquo;accéder aux informations auxquelles l&rsquo;utilisateur connecté a normalement accès : e-mails, fichiers SharePoint, documents OneDrive, agendas professionnels ou encore codes d&rsquo;authentification reçus par e-mail.\n\nLe scénario est particulièrement préoccupant car il ne repose ni sur une pièce jointe malveillante, ni sur un téléchargement, ni sur la saisie d&rsquo;identifiants. Selon les chercheurs de Varonis, une simple visite sur une URL spécialement conçue pouvait suffire.\n\nLe lien pointait vers un véritable domaine Microsoft. Pour l&rsquo;utilisateur, rien ne permettait de distinguer cette URL d&rsquo;un lien Copilot légitime. Les solutions classiques de filtrage d&rsquo;URL ou les protections anti-phishing avaient donc peu de chances de détecter l&rsquo;attaque.\n\nUne fois le lien ouvert, Copilot interprétait automatiquement certains paramètres de l&rsquo;URL comme des instructions à exécuter. Au lieu d&rsquo;effectuer une simple recherche, l&rsquo;assistant IA pouvait être ame",
+          "action": "Vérifier l'exposition du parc et appliquer le correctif éditeur dès sa disponibilité.",
+          "sources": [
+            {
+              "url": "https://www.cyberattaque.org/microsoft-copilot-un-simple-clic-suffisait-pour-exfiltrer-les-donnees-sensibles/",
+              "label": "Cyberattaque.org"
+            }
+          ],
+          "url": "https://www.cyberattaque.org/microsoft-copilot-un-simple-clic-suffisait-pour-exfiltrer-les-donnees-sensibles/",
+          "pubDate": "2026-06-16T14:01:09.000Z"
+        },
+        {
+          "title": "Bulletin d'actualité CERTFR-2026-ACT-026 (15 juin 2026)",
+          "cve": null,
+          "severity": "culture",
+          "score": 12,
+          "corroboration": 1,
+          "region": "fr",
+          "body": "Vulnérabilité élevée.\n\nCe bulletin d'actualité du CERT-FR revient sur les vulnérabilités significatives de la semaine passée pour souligner leurs criticités. Il ne remplace pas l'analyse de l'ensemble des avis et alertes publiés par le CERT-FR dans le cadre d'une analyse de risques pour prioriser l'application des... Voir en ligne : https://www.cert.ssi.gouv.fr/actual...",
+          "detail": "Vulnérabilité élevée.\n\nCe bulletin d'actualité du CERT-FR revient sur les vulnérabilités significatives de la semaine passée pour souligner leurs criticités. Il ne remplace pas l'analyse de l'ensemble des avis et alertes publiés par le CERT-FR dans le cadre d'une analyse de risques pour prioriser l'application des... Voir en ligne : https://www.cert.ssi.gouv.fr/actual...",
+          "action": "Vérifier l'exposition du parc et appliquer le correctif éditeur dès sa disponibilité.",
+          "sources": [
+            {
+              "url": "https://www.globalsecuritymag.fr/bulletin-d-actualite-certfr-2026-act-026-15-juin-2026.html",
+              "label": "Global Sec Mag"
+            }
+          ],
+          "url": "https://www.globalsecuritymag.fr/bulletin-d-actualite-certfr-2026-act-026-15-juin-2026.html",
+          "pubDate": "2026-06-17T04:01:03.867Z"
+        }
+      ]
+    },
+    {
+      "id": "attacks",
+      "items": [
+        {
+          "title": "Ransomware gang abuses Microsoft Teams relays to hide malicious traffic",
+          "cve": null,
+          "severity": "high",
+          "score": 74,
+          "corroboration": 2,
+          "region": "intl",
+          "body": "Incident de sécurité rapporté par Help Net Security.\n\nDragonForce used Backdoor.Turn malware to hide command-and-control traffic through Microsoft Teams relay infrastructure.\n\nDragonForce is a ransomware-as-a-service operation that has been active since 2023. The group provides affiliates with ransomware tools and supporting services in exchange for a share of ransom payments.\n\n“Backdoor.Turn obtains an anonymous Teams visitor token from Microsoft’s Skype-backed identity services, uses a legitimate Microsoft…",
+          "detail": "Incident de sécurité rapporté par Help Net Security.\n\nDragonForce used Backdoor.Turn malware to hide command-and-control traffic through Microsoft Teams relay infrastructure.\n\nDragonForce is a ransomware-as-a-service operation that has been active since 2023. The group provides affiliates with ransomware tools and supporting services in exchange for a share of ransom payments.\n\n“Backdoor.Turn obtains an anonymous Teams visitor token from Microsoft’s Skype-backed identity services, uses a legitimate Microsoft TURN relay to set up the connection, and then runs a QUIC session to the attacker’s real command-and-control (C2) server,” Symantec explained.\n\nBecause the malware relied on legitimate Microsoft Teams infrastructure during the communication process, defenders monitoring network traffic would primarily see outbound connections to legitimate Microsoft servers. The attackers remained on the victim network for between one and two months.\n\n“To our knowledge this is the first time TURN relay infrastructure has been abused this way in the wild.”\n\nThe activity, first observed in December 2025, appears to have started with the exploitation of a vulnerable SQL or Microsoft SQL Server system, although researchers could not determine the exact entry point and noted that the access may have been obtained from an access broker.\n\nOnce inside the network, the attackers downloaded a ZIP archive containing a legitimate VirtualBox/DbgView executable and a malicious DLL used for sideloading.",
+          "action": "Surveiller les indicateurs de compromission associés et contrôler les actifs exposés.",
+          "sources": [
+            {
+              "url": "https://www.helpnetsecurity.com/2026/06/16/dragonforce-microsoft-teams-malware-backdoor-turn/",
+              "label": "Help Net Security"
+            },
+            {
+              "url": "https://www.bleepingcomputer.com/news/security/ransomware-gang-abuses-microsoft-teams-relays-to-hide-malicious-traffic/",
+              "label": "BleepingComputer"
+            }
+          ],
+          "url": "https://www.helpnetsecurity.com/2026/06/16/dragonforce-microsoft-teams-malware-backdoor-turn/",
+          "pubDate": "2026-06-16T14:22:30.000Z"
+        },
+        {
+          "title": "TINYpulse NINTENDO BREACH (nintendo.com) — rançongiciel shadowbyt3$ (JP)",
+          "cve": null,
+          "severity": "news",
+          "score": 70,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Incident de sécurité rapporté par ransomware.live.\n\nVictime revendiquée par le groupe de rançongiciel shadowbyt3$. Pays : JP. Secteur : Technology. This will be quick. You don't even want to read the private messages as some will be embarrasing. Some people are confused but this breach doesn't affect you unless if you use tinypulse and work for nintendo. There will be more victims coming soon. If you get a email by us. by us we mean are only email on are leak site, then respond or it will get leaked.",
+          "detail": "Incident de sécurité rapporté par ransomware.live.\n\nVictime revendiquée par le groupe de rançongiciel shadowbyt3$.\n\nPays : JP.\n\nSecteur : Technology.\n\nThis will be quick. You don't even want to read the private messages as some will be embarrasing. Some people are confused but this breach doesn't affect you unless if you use tinypulse and work for nintendo. There will be more victims coming soon. If you get a email by us. by us we mean are only email on are leak site, then respond or it will get leaked. We will send file trees for confirmation to prove we actually breached your company. It's pretty funny how companies are defending themselves and when the truth comes out now they want to stay quiet. We have no further questions to answer. This is a warning to all companies if you get breached by us, It's best to contact us especially if we show you the file size. This was true negligence and now you will likely face a massive lawsuit, have fun tinypulse and told you this would be quick. uncompressed file size: (856MB) compressed size: (6.89MB) The included data includes: - full name, first name, last name, email (the w9 is only one and multiple invoices) - Private Employee Chats: Direct internal messages and conversations between workers. - Mar 10, 2025 Sure, it's Knowledge Team—we've needed more content creators for years, but it seems all we can ever get approved are more associates, often temporarily. This helps some, and I know there are vague rumors that maybe we will be able to swap our associates over to NOA employees in the future, but that's not what we need—we need more writers so that we can distribute the primary work among more people. overworking chat: Sep 22, 2025 How happy are you at work? 3 I'm generally extremely content, but the overwhelming number of overlapping high-priority projects and a constant stream of meetings, has left me with little to no available occupancy. This has made it tough to manage everything effectively and still make time for innovation.",
+          "action": "Surveiller les indicateurs de compromission associés et contrôler les actifs exposés.",
+          "sources": [
+            {
+              "url": "https://www.ransomware.live/id/VElOWXB1bHNlIE5JTlRFTkRPIEJSRUFDSCAobmludGVuZG8uY29tKUBzaGFkb3dieXQzJA==",
+              "label": "ransomware.live"
+            }
+          ],
+          "url": "https://www.ransomware.live/id/VElOWXB1bHNlIE5JTlRFTkRPIEJSRUFDSCAobmludGVuZG8uY29tKUBzaGFkb3dieXQzJA==",
+          "pubDate": "2026-06-16T06:50:16.135Z"
+        },
+        {
+          "title": "UK to require ID or face scan before you can make social media accounts",
+          "cve": null,
+          "severity": "news",
+          "score": 68,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Incident de sécurité rapporté par BleepingComputer.\n\nOpening a new social media account in the UK will soon mean proving you're over 16 with an ID upload or a facial age scan, under a government ban on under-16s taking effect in spring 2027. Security experts warn the age checks are easy to circumvent and create new data-breach risks.\n\nOver 400 Arch Linux packages compromised to push rootkit, infostealer\n\nMicrosoft fixes Windows update failures linked to WUSA installer\n\nOracle mitigates PeopleSoft zero-day ex…",
+          "detail": "Incident de sécurité rapporté par BleepingComputer.\n\nOpening a new social media account in the UK will soon mean proving you're over 16 with an ID upload or a facial age scan, under a government ban on under-16s taking effect in spring 2027. Security experts warn the age checks are easy to circumvent and create new data-breach risks.\n\nOver 400 Arch Linux packages compromised to push rootkit, infostealer\n\nMicrosoft fixes Windows update failures linked to WUSA installer\n\nOracle mitigates PeopleSoft zero-day exploited in data theft attacks\n\nMaine disables data breach notification portal after fake disclosures\n\nMalicious JetBrains Marketplace plugins steal AI API keys from developers\n\nNew Rokarolla Android malware targets 217 banking, crypto apps",
+          "action": "Surveiller les indicateurs de compromission associés et contrôler les actifs exposés.",
+          "sources": [
+            {
+              "url": "https://www.bleepingcomputer.com/news/security/uk-to-require-id-or-face-scan-before-you-can-make-social-media-accounts/",
+              "label": "BleepingComputer"
+            }
+          ],
+          "url": "https://www.bleepingcomputer.com/news/security/uk-to-require-id-or-face-scan-before-you-can-make-social-media-accounts/",
+          "pubDate": "2026-06-16T14:38:49.000Z"
+        },
+        {
+          "title": "Windows version of SprySOCKS Linux malware used to attack govt orgs",
+          "cve": null,
+          "severity": "news",
+          "score": 68,
+          "corroboration": 3,
+          "region": "intl",
+          "body": "Incident de sécurité rapporté par BleepingComputer.\n\nWindows variants for the SprySOCKS Linux malware have been used in attacks targeting government organizations in at least four countries.\n\nOver 400 Arch Linux packages compromised to push rootkit, infostealer\n\nMicrosoft fixes Windows update failures linked to WUSA installer\n\nOracle mitigates PeopleSoft zero-day exploited in data theft attacks\n\nMaine disables data breach notification portal after fake disclosures\n\nMalicious JetBrains Marketplace plugins ste…",
+          "detail": "Incident de sécurité rapporté par BleepingComputer.\n\nWindows variants for the SprySOCKS Linux malware have been used in attacks targeting government organizations in at least four countries.\n\nOver 400 Arch Linux packages compromised to push rootkit, infostealer\n\nMicrosoft fixes Windows update failures linked to WUSA installer\n\nOracle mitigates PeopleSoft zero-day exploited in data theft attacks\n\nMaine disables data breach notification portal after fake disclosures\n\nMalicious JetBrains Marketplace plugins steal AI API keys from developers\n\nNew Rokarolla Android malware targets 217 banking, crypto apps",
+          "action": "Surveiller les indicateurs de compromission associés et contrôler les actifs exposés.",
+          "sources": [
+            {
+              "url": "https://www.bleepingcomputer.com/news/security/windows-version-of-sprysocks-linux-malware-used-to-attack-govt-orgs/",
+              "label": "BleepingComputer"
+            },
+            {
+              "url": "https://www.infosecurity-magazine.com/news/sprysocks-backdoor-windows/",
+              "label": "Infosecurity Mag"
+            },
+            {
+              "url": "https://thehackernews.com/2026/06/china-linked-sprysocks-backdoor-expands.html",
+              "label": "The Hacker News"
+            }
+          ],
+          "url": "https://www.bleepingcomputer.com/news/security/windows-version-of-sprysocks-linux-malware-used-to-attack-govt-orgs/",
+          "pubDate": "2026-06-16T14:30:00.000Z"
+        },
+        {
+          "title": "Atomic Arch Supply Chain Attack Hits 1,500 AUR Packages",
+          "cve": null,
+          "severity": "news",
+          "score": 68,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Incident de sécurité rapporté par SecurityWeek.\n\nAt least 1,500 malicious packages were published to the Arch User Repository (AUR) as part of the Atomic Arch supply chain attack.\n\nArch Linux suspended account registrations in response to the wave of malicious packages being uploaded to AUR.\n\nSubscribe to the SecurityWeek Email Briefing for the latest cybersecurity threats, trends, and expert insights.\n\nSubscribe to the SecurityWeek Email Briefing to stay informed on the latest threats, trends, and techn…",
+          "detail": "Incident de sécurité rapporté par SecurityWeek.\n\nAt least 1,500 malicious packages were published to the Arch User Repository (AUR) as part of the Atomic Arch supply chain attack.\n\nArch Linux suspended account registrations in response to the wave of malicious packages being uploaded to AUR.\n\nSubscribe to the SecurityWeek Email Briefing for the latest cybersecurity threats, trends, and expert insights.\n\nSubscribe to the SecurityWeek Email Briefing to stay informed on the latest threats, trends, and technology, along with insightful columns from industry experts.\n\nToday’s attackers are no longer breaking in — they’re logging in. Join this live webinar as we break down the modern identity attack chain and examine how recent breaches exploited weaknesses in authentication, identity verification, and access management processes.\n\nAI has accelerated both sides of the fight. Adversaries are weaponizing vulnerabilities faster, while defenders are racing to ship detections and configurations. Join this live webinar as we explore how to prove your controls actually hold against new threats, map your security maturity, and unite breach simulation with automated pentesting into a single, coordinated program.\n\nStephen Garcia has been named Chief Information Security Officer at BreachRx.",
+          "action": "Surveiller les indicateurs de compromission associés et contrôler les actifs exposés.",
+          "sources": [
+            {
+              "url": "https://www.securityweek.com/atomic-arch-supply-chain-attack-hits-1500-aur-packages/",
+              "label": "SecurityWeek"
+            }
+          ],
+          "url": "https://www.securityweek.com/atomic-arch-supply-chain-attack-hits-1500-aur-packages/",
+          "pubDate": "2026-06-16T10:51:49.000Z"
+        },
+        {
+          "title": "iRhythm discloses data breach, says hackers stole patient info",
+          "cve": null,
+          "severity": "news",
+          "score": 68,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Incident de sécurité rapporté par BleepingComputer.\n\nDigital healthcare company iRhythm Holdings has disclosed a data breach after hackers stole patients' personal and health information stored on third-party-hosted business applications.\n\nOver 400 Arch Linux packages compromised to push rootkit, infostealer\n\nMicrosoft fixes Windows update failures linked to WUSA installer\n\nOracle mitigates PeopleSoft zero-day exploited in data theft attacks\n\nMaine disables data breach notification portal after fake disclosu…",
+          "detail": "Incident de sécurité rapporté par BleepingComputer.\n\nDigital healthcare company iRhythm Holdings has disclosed a data breach after hackers stole patients' personal and health information stored on third-party-hosted business applications.\n\nOver 400 Arch Linux packages compromised to push rootkit, infostealer\n\nMicrosoft fixes Windows update failures linked to WUSA installer\n\nOracle mitigates PeopleSoft zero-day exploited in data theft attacks\n\nMaine disables data breach notification portal after fake disclosures\n\nMalicious JetBrains Marketplace plugins steal AI API keys from developers\n\nNew Rokarolla Android malware targets 217 banking, crypto apps",
+          "action": "Surveiller les indicateurs de compromission associés et contrôler les actifs exposés.",
+          "sources": [
+            {
+              "url": "https://www.bleepingcomputer.com/news/security/irhythm-discloses-data-breach-says-hackers-stole-patient-info/",
+              "label": "BleepingComputer"
+            }
+          ],
+          "url": "https://www.bleepingcomputer.com/news/security/irhythm-discloses-data-breach-says-hackers-stole-patient-info/",
+          "pubDate": "2026-06-16T06:31:59.000Z"
+        },
+        {
+          "title": "WordPress : 1,2 million de sites exposés après le piratage d’OptinMonster",
+          "cve": null,
+          "severity": "news",
+          "score": 67,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Incident de sécurité rapporté par IT-Connect.\n\nOptinMonster, TrustPulse et PushEngage ont été visés par une attaque supply chain exposant plus de 1,2 million de sites WordPress. Voici comment réagir.\n\nActualités IT & Tech, tutoriels en administration système, réseau et cybersécurité.\n\nArchitecture Réseau Cybersécurité Linux & Logiciels Libres Microsoft (On-Premise) Microsoft 365 & Azure Self-Hosting & Open Source Stockage & NAS Cours IT Actualités Entreprise Actu Cybersécurité Web Logiciel – OS Matérie…",
+          "detail": "Incident de sécurité rapporté par IT-Connect.\n\nOptinMonster, TrustPulse et PushEngage ont été visés par une attaque supply chain exposant plus de 1,2 million de sites WordPress. Voici comment réagir.\n\nActualités IT & Tech, tutoriels en administration système, réseau et cybersécurité.\n\nArchitecture Réseau Cybersécurité Linux & Logiciels Libres Microsoft (On-Premise) Microsoft 365 & Azure Self-Hosting & Open Source Stockage & NAS Cours IT Actualités Entreprise Actu Cybersécurité Web Logiciel – OS Matériel Réseaux sociaux Mobile Bons Plans Tests Débutants Livres Vidéos IT-Connect » Actualités » Actu Cybersécurité » WordPress : 1,2 million de sites exposés après le piratage d’OptinMonster Actu Cybersécurité WordPress : 1,2 million de sites exposés après le piratage d’OptinMonster 16/06/2026 Florian BURNEL 0 commentaire Cybersécurité , Wordpress Une attaque de type supply chain a touché trois extensions WordPress éditées par Awesome Motive : OptinMonster, TrustPulse et PushEngage. Cet incident de sécurité majeur a exposé plus de 1,2 million de sites WordPress à une compromission, preuve de la popularité de ces extensions. Grâce à cette méthode, les pirates ont pu injecter du code JavaScript malveillant dans des fichiers diffusés via le CDN officiel des extensions. Voici ce que l'on sait.\n\nCette nouvelle attaque sur la chaîne d'approvisionnement a été détectée par Sansec, qui a signalé le 13 juin 2026 que du code malveillant était servi via des fichiers JavaScript hébergés sur le CDN d'OptinMonster, TrustPulse et PushEngage. En détournant une ressource de confiance, les attaquants ont pu atteindre des milliers d'installations WordPress sans avoir à cibler chacune d'elles directement. Encore un bel exemple des risques liés à la chaîne d'approvisionnement, même si ces derniers",
+          "action": "Surveiller les indicateurs de compromission associés et contrôler les actifs exposés.",
+          "sources": [
+            {
+              "url": "https://www.it-connect.fr/wordpress-1-2-million-de-sites-exposes-apres-le-piratage-doptinmonster/",
+              "label": "IT-Connect"
+            }
+          ],
+          "url": "https://www.it-connect.fr/wordpress-1-2-million-de-sites-exposes-apres-le-piratage-doptinmonster/",
+          "pubDate": "2026-06-16T12:05:07.000Z"
+        },
+        {
+          "title": "Fake Microsoft Alerts Used to Deploy North Korean NarwhalRAT Malware",
+          "cve": null,
+          "severity": "news",
+          "score": 67,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Incident de sécurité rapporté par The Hacker News.\n\nThe North Korean state-sponsored hacking group known as ScarCruft (aka APT37) has been observed using spear-phishing messages impersonating Microsoft Account security notifications to deliver malware called NarwhalRAT. \"The attack email contained a message impersonating an MS account security alert,\" the Genians Security Center (GSC) said. \"It was designed to create concern over possible",
+          "detail": "Incident de sécurité rapporté par The Hacker News.\n\nThe North Korean state-sponsored hacking group known as ScarCruft (aka APT37) has been observed using spear-phishing messages impersonating Microsoft Account security notifications to deliver malware called NarwhalRAT. \"The attack email contained a message impersonating an MS account security alert,\" the Genians Security Center (GSC) said. \"It was designed to create concern over possible",
+          "action": "Surveiller les indicateurs de compromission associés et contrôler les actifs exposés.",
+          "sources": [
+            {
+              "url": "https://thehackernews.com/2026/06/fake-microsoft-alerts-used-to-deploy.html",
+              "label": "The Hacker News"
+            }
+          ],
+          "url": "https://thehackernews.com/2026/06/fake-microsoft-alerts-used-to-deploy.html",
+          "pubDate": "2026-06-16T08:14:55.000Z"
+        },
+        {
+          "title": "Crooks found a new way to collaborate using Teams – by hiding command-and-control traffic",
+          "cve": null,
+          "severity": "high",
+          "score": 66,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Incident de sécurité rapporté par The Register.\n\nCybercrims deploying DragonForce ransomware appear to have gained access to a major US services company's network, then spent two months up to no good while disguising their command-and-control activities as legitimate Microsoft Teams traffic.",
+          "detail": "Incident de sécurité rapporté par The Register.\n\nCybercrims deploying DragonForce ransomware appear to have gained access to a major US services company's network, then spent two months up to no good while disguising their command-and-control activities as legitimate Microsoft Teams traffic. Researchers at security firm Symantec said the intrusion began with attackers gaining access to the victim's environment before deploying a custom Go-based backdoor, tracked as \"Backdoor.Turn,\" to maintain communication with the compromised systems. Rather than reaching out to attacker-controlled infrastructure that might raise alarms, the backdoor hid its activity inside traffic associated with Microsoft's widely used collaboration platform. To anyone monitoring network traffic, the compromised systems appeared to communicate only with legitimate Microsoft servers. \"The attackers in this campaign use exceptionally sophisticated cyber tradecraft,\" Symantec said. \"The configuration of Backdoor.Turn means that security products only see C&C traffic going to legitimate Teams servers, leaving defenders unaware that data is being siphoned away by malicious actors.\" Symantec said the attackers installed Backdoor.Turn on systems after deploying DragonForce ransomware, potentially giving them a way back into compromised networks or access they could later sell to other criminals. To connect to Microsoft's infrastructure, the backdoor first reques",
+          "action": "Surveiller les indicateurs de compromission associés et contrôler les actifs exposés.",
+          "sources": [
+            {
+              "url": "https://www.theregister.com/cyber-crime/2026/06/16/crooks-found-a-new-way-to-collaborate-using-teams-by-hiding-command-and-control-traffic/5256296",
+              "label": "The Register"
+            }
+          ],
+          "url": "https://www.theregister.com/cyber-crime/2026/06/16/crooks-found-a-new-way-to-collaborate-using-teams-by-hiding-command-and-control-traffic/5256296",
+          "pubDate": "2026-06-16T14:41:00.000Z"
+        },
+        {
+          "title": "thecreditpros.com — rançongiciel Icarus (États-Unis)",
+          "cve": null,
+          "severity": "news",
+          "score": 66,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Incident de sécurité rapporté par ransomware.live.\n\nVictime revendiquée par le groupe de rançongiciel Icarus. Pays : États-Unis. Secteur : Financial Services. TheCreditPros' Salesforce instance was breached and 263MB of data were taken from it, including: 01_input_fullcards.csv - 51,691 lines of full-info credit/debit cards: Id,First_Name__c,Last_Name__c,Middle_Name__c,Email__c,Credit_Card__c,CCV__c,Exp_Month__c,Exp_Year__c,SSN__c,DOB__c,Street_Address__c,City__c,State__c,Zip_Code__c,Mobile_Number__c,IP_Add…",
+          "detail": "Incident de sécurité rapporté par ransomware.live.\n\nVictime revendiquée par le groupe de rançongiciel Icarus.\n\nPays : États-Unis.\n\nSecteur : Financial Services.\n\nTheCreditPros' Salesforce instance was breached and 263MB of data were taken from it, including:\r\n\r\n01_input_fullcards.csv - 51,691 lines of full-info credit/debit cards: Id,First_Name__c,Last_Name__c,Middle_Name__c,Email__c,Credit_Card__c,CCV__c,Exp_Month__c,Exp_Year__c,SSN__c,DOB__c,Street_Address__c,City__c,State__c,Zip_Code__c,Mobile_Number__c,IP_Address__c,Transaction_ID__c,Status__c,CreatedDate\r\n\r\n02_contacts_ssn.csv - 847,990 lines: Id,Name,FirstName,LastName,Email,Phone,MobilePhone,HomePhone,SSN_hidden_field__c,Birthdate,MailingStreet,MailingCity,MailingState,MailingPostalCode,Status__c,Bank_Account_Number__c,Bank_Name__c,Bank_Account_Type__c,CreatedDate\r\n\r\n03_creditcards.csv - 722,403 lines: Id,Card_number__c,card_number_hidden__c,cvv__c,expiration_month__c,expiration_year__c,Active__c,BIN__c,Issuing_Bank__c,Prepaid__c,CreatedDate\r\n\r\n04_leads.csv - 3,598 liens: Id,Name,FirstName,LastName,Email,Phone,MobilePhone,Street,City,State,PostalCode,Status,CreatedDate\r\n\r\nPay or leak!\n\nData stolen: PII, Credit cards",
+          "action": "Surveiller les indicateurs de compromission associés et contrôler les actifs exposés.",
+          "sources": [
+            {
+              "url": "https://www.ransomware.live/id/R29sZnZpZXcgRGV2ZWxvcG1lbnRhbCBDZW50ZXJAcWlsaW4=",
+              "label": "ransomware.live"
+            }
+          ],
+          "url": "https://www.ransomware.live/id/R29sZnZpZXcgRGV2ZWxvcG1lbnRhbCBDZW50ZXJAcWlsaW4=",
+          "pubDate": "2026-06-16T12:25:22.033Z"
+        },
+        {
+          "title": "Cybercrime Group Claims Novo Nordisk Hack",
+          "cve": null,
+          "severity": "news",
+          "score": 64,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Incident de sécurité rapporté par SecurityWeek.\n\nThe cybercrime group FulcrumSec has claimed responsibility for hacking the pharmaceutical giant Novo Nordisk.\n\nThe hack-and-leak group FulcrumSec claims to have stolen 1.3TB of data from the pharmaceutical giant.\n\nSubscribe to the SecurityWeek Email Briefing for the latest cybersecurity threats, trends, and expert insights.\n\nSubscribe to the SecurityWeek Email Briefing to stay informed on the latest threats, trends, and technology, along with insightful co…",
+          "detail": "Incident de sécurité rapporté par SecurityWeek.\n\nThe cybercrime group FulcrumSec has claimed responsibility for hacking the pharmaceutical giant Novo Nordisk.\n\nThe hack-and-leak group FulcrumSec claims to have stolen 1.3TB of data from the pharmaceutical giant.\n\nSubscribe to the SecurityWeek Email Briefing for the latest cybersecurity threats, trends, and expert insights.\n\nSubscribe to the SecurityWeek Email Briefing to stay informed on the latest threats, trends, and technology, along with insightful columns from industry experts.\n\nToday’s attackers are no longer breaking in — they’re logging in. Join this live webinar as we break down the modern identity attack chain and examine how recent breaches exploited weaknesses in authentication, identity verification, and access management processes.\n\nAI has accelerated both sides of the fight. Adversaries are weaponizing vulnerabilities faster, while defenders are racing to ship detections and configurations. Join this live webinar as we explore how to prove your controls actually hold against new threats, map your security maturity, and unite breach simulation with automated pentesting into a single, coordinated program.\n\nStephen Garcia has been named Chief Information Security Officer at BreachRx.",
+          "action": "Surveiller les indicateurs de compromission associés et contrôler les actifs exposés.",
+          "sources": [
+            {
+              "url": "https://www.securityweek.com/cybercrime-group-claims-novo-nordisk-hack/",
+              "label": "SecurityWeek"
+            }
+          ],
+          "url": "https://www.securityweek.com/cybercrime-group-claims-novo-nordisk-hack/",
+          "pubDate": "2026-06-16T12:32:27.000Z"
+        },
+        {
+          "title": "New Rokarolla Android malware targets 217 banking, crypto apps",
+          "cve": null,
+          "severity": "news",
+          "score": 63,
+          "corroboration": 2,
+          "region": "intl",
+          "body": "Incident de sécurité rapporté par BleepingComputer.\n\nA new Android banking trojan named Rokarolla is targeting 217 banking and cryptocurrency applications using an extensive set of 137 commands.\n\nOver 400 Arch Linux packages compromised to push rootkit, infostealer\n\nMicrosoft fixes Windows update failures linked to WUSA installer\n\nOracle mitigates PeopleSoft zero-day exploited in data theft attacks\n\nMaine disables data breach notification portal after fake disclosures\n\nMalicious JetBrains Marketplace plugins…",
+          "detail": "Incident de sécurité rapporté par BleepingComputer.\n\nA new Android banking trojan named Rokarolla is targeting 217 banking and cryptocurrency applications using an extensive set of 137 commands.\n\nOver 400 Arch Linux packages compromised to push rootkit, infostealer\n\nMicrosoft fixes Windows update failures linked to WUSA installer\n\nOracle mitigates PeopleSoft zero-day exploited in data theft attacks\n\nMaine disables data breach notification portal after fake disclosures\n\nMalicious JetBrains Marketplace plugins steal AI API keys from developers\n\nNew Rokarolla Android malware targets 217 banking, crypto apps",
+          "action": "Surveiller les indicateurs de compromission associés et contrôler les actifs exposés.",
+          "sources": [
+            {
+              "url": "https://www.bleepingcomputer.com/news/security/new-rokarolla-android-malware-targets-217-banking-crypto-apps/",
+              "label": "BleepingComputer"
+            },
+            {
+              "url": "https://thehackernews.com/2026/06/new-rokarolla-android-malware-steals.html",
+              "label": "The Hacker News"
+            }
+          ],
+          "url": "https://www.bleepingcomputer.com/news/security/new-rokarolla-android-malware-targets-217-banking-crypto-apps/",
+          "pubDate": "2026-06-16T20:04:11.000Z"
+        },
+        {
+          "title": "Steam Workshop abused to spread malware via Wallpaper Engine app",
+          "cve": null,
+          "severity": "news",
+          "score": 63,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Incident de sécurité rapporté par BleepingComputer.\n\nThreat actors are abusing Steam Workshop, Valve's community hub for downloading game-related content, to push various malware hidden in wallpaper packages.\n\nOver 400 Arch Linux packages compromised to push rootkit, infostealer\n\nMicrosoft fixes Windows update failures linked to WUSA installer\n\nOracle mitigates PeopleSoft zero-day exploited in data theft attacks\n\nMaine disables data breach notification portal after fake disclosures\n\nMalicious JetBrains Marke…",
+          "detail": "Incident de sécurité rapporté par BleepingComputer.\n\nThreat actors are abusing Steam Workshop, Valve's community hub for downloading game-related content, to push various malware hidden in wallpaper packages.\n\nOver 400 Arch Linux packages compromised to push rootkit, infostealer\n\nMicrosoft fixes Windows update failures linked to WUSA installer\n\nOracle mitigates PeopleSoft zero-day exploited in data theft attacks\n\nMaine disables data breach notification portal after fake disclosures\n\nMalicious JetBrains Marketplace plugins steal AI API keys from developers\n\nNew Rokarolla Android malware targets 217 banking, crypto apps",
+          "action": "Surveiller les indicateurs de compromission associés et contrôler les actifs exposés.",
+          "sources": [
+            {
+              "url": "https://www.bleepingcomputer.com/news/security/steam-workshop-abused-to-spread-malware-via-wallpaper-engine-app/",
+              "label": "BleepingComputer"
+            }
+          ],
+          "url": "https://www.bleepingcomputer.com/news/security/steam-workshop-abused-to-spread-malware-via-wallpaper-engine-app/",
+          "pubDate": "2026-06-16T18:27:55.000Z"
+        },
+        {
+          "title": "GhostTree Attack Abused Recursive Windows Junctions to Hide Malware",
+          "cve": null,
+          "severity": "news",
+          "score": 63,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Incident de sécurité rapporté par BleepingComputer.\n\nGhostTree uses recursive NTFS junctions to generate vast numbers of valid Windows file paths. Varonis explains how the technique could cause Microsoft Defender folder scans to never complete, leaving malware undetected.\n\nOver 400 Arch Linux packages compromised to push rootkit, infostealer\n\nMicrosoft fixes Windows update failures linked to WUSA installer\n\nOracle mitigates PeopleSoft zero-day exploited in data theft attacks\n\nMaine disables data breach notif…",
+          "detail": "Incident de sécurité rapporté par BleepingComputer.\n\nGhostTree uses recursive NTFS junctions to generate vast numbers of valid Windows file paths. Varonis explains how the technique could cause Microsoft Defender folder scans to never complete, leaving malware undetected.\n\nOver 400 Arch Linux packages compromised to push rootkit, infostealer\n\nMicrosoft fixes Windows update failures linked to WUSA installer\n\nOracle mitigates PeopleSoft zero-day exploited in data theft attacks\n\nMaine disables data breach notification portal after fake disclosures\n\nMalicious JetBrains Marketplace plugins steal AI API keys from developers\n\nNew Rokarolla Android malware targets 217 banking, crypto apps",
+          "action": "Surveiller les indicateurs de compromission associés et contrôler les actifs exposés.",
+          "sources": [
+            {
+              "url": "https://www.bleepingcomputer.com/news/security/ghosttree-attack-abused-recursive-windows-junctions-to-hide-malware/",
+              "label": "BleepingComputer"
+            }
+          ],
+          "url": "https://www.bleepingcomputer.com/news/security/ghosttree-attack-abused-recursive-windows-junctions-to-hide-malware/",
+          "pubDate": "2026-06-16T14:17:27.000Z"
+        },
+        {
+          "title": "Service Notice: Scheduled Maintenance and Infrastructure Upgrades — rançongiciel shinyhunters",
+          "cve": null,
+          "severity": "news",
+          "score": 61,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Incident de sécurité rapporté par ransomware.live.\n\nVictime revendiquée par le groupe de rançongiciel shinyhunters. * The primary server hosting all leaked data is currently undergoing scheduled maintenance and will be unavailable for approximately 24 hours. * To improve your downloading experience, we are currently deploying multiple data mirrors to ensure faster, more reliable download speeds.",
+          "detail": "Incident de sécurité rapporté par ransomware.live.\n\nVictime revendiquée par le groupe de rançongiciel shinyhunters.\n\n* The primary server hosting all leaked data is currently undergoing scheduled maintenance and will be unavailable for approximately 24 hours. * To improve your downloading experience, we are currently deploying multiple data mirrors to ensure faster, more reliable download speeds. Additionally, we will soon offer torrent links for all hosted files to provide a more robust distribution network. * No data has been lost as we keep several backups of everything that has been leaked on here since Day 1. These files will remain publicly accessible with ease till the end of time. We appreciate your patience as we upgrade our infrastructure. | Updated: 17 June 2026",
+          "action": "Surveiller les indicateurs de compromission associés et contrôler les actifs exposés.",
+          "sources": [
+            {
+              "url": "https://www.ransomware.live/id/U2VydmljZSBOb3RpY2U6IFNjaGVkdWxlZCBNYWludGVuYW5jZSBhbmQgSW5mcmFzdHJ1Y3R1cmUgVXBncmFkZXNAc2hpbnlodW50ZXJz",
+              "label": "ransomware.live"
+            }
+          ],
+          "url": "https://www.ransomware.live/id/U2VydmljZSBOb3RpY2U6IFNjaGVkdWxlZCBNYWludGVuYW5jZSBhbmQgSW5mcmFzdHJ1Y3R1cmUgVXBncmFkZXNAc2hpbnlodW50ZXJz",
+          "pubDate": "2026-06-17T00:56:38.701Z"
+        },
+        {
+          "title": "Autosur : 63 000 contrôles techniques revendiqués dans une fuite de données",
+          "cve": null,
+          "severity": "news",
+          "score": 57,
+          "corroboration": 1,
+          "region": "fr",
+          "body": "Incident de sécurité rapporté par Cyberattaque.org.\n\nLes hackers ChimeraZ et misere revendiquent la publication d'une base de données attribuée à Autosur, l'un des principaux réseaux français de contrôle\n\nAttaque Mis à jour le 16 juin 2026 à 18h24 Autosur : 63 000 contrôles techniques revendiqués dans une fuite de données Les hackers ChimeraZ et misere revendiquent la publication d&rsquo;une base de données attribuée à Autosur , l&rsquo;un des principaux réseaux français de contrôle technique automobile.\n\nSe…",
+          "detail": "Incident de sécurité rapporté par Cyberattaque.org.\n\nLes hackers ChimeraZ et misere revendiquent la publication d'une base de données attribuée à Autosur, l'un des principaux réseaux français de contrôle\n\nAttaque Mis à jour le 16 juin 2026 à 18h24 Autosur : 63 000 contrôles techniques revendiqués dans une fuite de données Les hackers ChimeraZ et misere revendiquent la publication d&rsquo;une base de données attribuée à Autosur , l&rsquo;un des principaux réseaux français de contrôle technique automobile.\n\nSelon leur publication, les fichiers diffusés représenteraient plus de 63 000 enregistrements liés à des contrôles techniques réalisés dans plusieurs centres du réseau. Les auteurs estiment que les données concernent environ 20 000 propriétaires de véhicules .\n\nLa base, d&rsquo;un volume d&rsquo;environ 211 Mo , contient des informations détaillées sur les véhicules contrôlés, leurs propriétaires, les opérations réalisées ainsi que les contrôleurs techniques ayant effectué les inspections.\n\nLes données publiées ne se limitent pas à de simples coordonnées. Les échantillons montrent la présence de comptes-rendus complets de contrôle technique contenant de nombreuses informations administratives et techniques.\n\nLes fichiers concernent à la fois des visites techniques périodiques, des contre-visites et des visites complémentaires.\n\nLes dossiers exposés contiennent également les coordonnées associées aux propriétaires des véhicules contrôlés.",
+          "action": "Surveiller les indicateurs de compromission associés et contrôler les actifs exposés.",
+          "sources": [
+            {
+              "url": "https://www.cyberattaque.org/autosur-63-000-controles-techniques-revendiques-dans-une-fuite-de-donnees/",
+              "label": "Cyberattaque.org"
+            }
+          ],
+          "url": "https://www.cyberattaque.org/autosur-63-000-controles-techniques-revendiques-dans-une-fuite-de-donnees/",
+          "pubDate": "2026-06-16T16:24:33.000Z"
+        },
+        {
+          "title": "G7 d’Évian : plusieurs sites publics de Haute-Savoie ciblés par des cyberattaques",
+          "cve": null,
+          "severity": "news",
+          "score": 52,
+          "corroboration": 1,
+          "region": "fr",
+          "body": "Incident de sécurité rapporté par Cyberattaque.org.\n\nPlusieurs sites internet de collectivités et de services publics de Haute-Savoie ont été visés par une série de cyberattaques le 15 juin 2026, à quelques\n\nAttaque Mis à jour le 16 juin 2026 à 15h33 G7 d’Évian : plusieurs sites publics de Haute-Savoie ciblés par des cyberattaques Plusieurs sites internet de collectivités et de services publics de Haute-Savoie ont été visés par une série de cyberattaques le 15 juin 2026 , à quelques heures de l&rsquo;ouvertu…",
+          "detail": "Incident de sécurité rapporté par Cyberattaque.org.\n\nPlusieurs sites internet de collectivités et de services publics de Haute-Savoie ont été visés par une série de cyberattaques le 15 juin 2026, à quelques\n\nAttaque Mis à jour le 16 juin 2026 à 15h33 G7 d’Évian : plusieurs sites publics de Haute-Savoie ciblés par des cyberattaques Plusieurs sites internet de collectivités et de services publics de Haute-Savoie ont été visés par une série de cyberattaques le 15 juin 2026 , à quelques heures de l&rsquo;ouverture du sommet du G7 organisé à Évian-les-Bains.\n\nL&rsquo;opération a été revendiquée sur Telegram par le collectif pro-russe NoName057(016) , connu pour mener des attaques par déni de service (DDoS) contre des institutions publiques, collectivités et infrastructures occidentales depuis le début de la guerre en Ukraine.\n\nDans son message publié sur Telegram, le groupe explique avoir souhaité marquer symboliquement la tenue du G7 en France en ciblant plusieurs services locaux situés à proximité d&rsquo;Évian-les-Bains.\n\nDes captures d&rsquo;écran publiées par le groupe montrent différents messages d&rsquo;erreur temporaires, notamment des erreurs 500, 503 ou encore des limitations de requêtes, caractéristiques des perturbations provoquées lors d&rsquo;attaques par saturation.\n\nDans son message, NoName057(016) fait directement référence au sommet du G7 organisé les 15 et 16 juin à Évian-les-Bains. Le groupe présente cette opération comme une réponse symbolique à l&rsquo;événement international réunissant les dirigeants des principales puissances occidentales.\n\nDepuis plusieurs années, le collectif revendique régulièrement des attaques contre des pays soutenant l&rsquo;Ukraine ou accueillant des événements politiques majeurs. Les collectivités locales et les organismes pu",
+          "action": "Surveiller les indicateurs de compromission associés et contrôler les actifs exposés.",
+          "sources": [
+            {
+              "url": "https://www.cyberattaque.org/g7-devian-plusieurs-sites-publics-de-haute-savoie-cibles-par-des-cyberattaques/",
+              "label": "Cyberattaque.org"
+            }
+          ],
+          "url": "https://www.cyberattaque.org/g7-devian-plusieurs-sites-publics-de-haute-savoie-cibles-par-des-cyberattaques/",
+          "pubDate": "2026-06-16T13:33:37.000Z"
+        }
+      ]
+    },
+    {
+      "id": "culture",
+      "items": [
+        {
+          "title": "A case for how to shape ‘ingredient lists’ for AI models",
+          "cve": null,
+          "severity": "culture",
+          "score": 73,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Signal de veille — CyberScoop.\n\nA policy paper published Tuesday advocates for software bills of materials (SBOMs) for artificial intelligence as a mechanism for reducing cyber risk and improving transparency, and seeks to give lawmakers, federal agencies and others a roadmap on how to proceed. The SBOM, commonly described as an inventory of software ingredients, emerged in the 2010s and has expanded beyond software to include hardware and AI .",
+          "detail": "Signal de veille — CyberScoop.\n\nA policy paper published Tuesday advocates for software bills of materials (SBOMs) for artificial intelligence as a mechanism for reducing cyber risk and improving transparency, and seeks to give lawmakers, federal agencies and others a roadmap on how to proceed. The SBOM, commonly described as an inventory of software ingredients, emerged in the 2010s and has expanded beyond software to include hardware and AI . But the paper from the Institute for Security and Technology , which CyberScoop is the first to report on, argues that AIBOMS require foundational work before they can be widely implemented. This comes as some companies are already offering AIBOM services and other organizations are actively shaping AIBOM policy. “What we&#8217;re worried about is we would end up in a ‘fire, ready, aim’ situation where everyone was doing it, but we were all doing slightly different things,” said a co-author of the paper, Allan Friedman, who has worked on SBOMs in multiple U.S. government roles. “If we don&#8217;t have a shared vision, it becomes a lot harder to have a coherent policy. It becomes a lot harder to have common tools and interoperable data and it becomes a lot harder to use the data that we&#8217;re tracking to actually deliver on the promise of supply chain transparency.” The idea for the paper sprung from discussions with Hill aides and Pentagon staffers, Friedman said, a",
+          "action": null,
+          "sources": [
+            {
+              "url": "https://cyberscoop.com/ai-bill-of-materials-policy-roadmap/",
+              "label": "CyberScoop"
+            }
+          ],
+          "url": "https://cyberscoop.com/ai-bill-of-materials-policy-roadmap/",
+          "pubDate": "2026-06-16T16:00:00.000Z"
+        },
+        {
+          "title": "FTC warns of record $3.5 billion losses to imposter scams in 2025",
+          "cve": null,
+          "severity": "culture",
+          "score": 73,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Signal de veille — BleepingComputer.\n\nThe U.S. Federal Trade Commission (FTC) warned that Americans lost $3.5 billion to imposter scams in 2025, with reported losses nearly tripling since 2020.\n\nOver 400 Arch Linux packages compromised to push rootkit, infostealer\n\nMicrosoft fixes Windows update failures linked to WUSA installer\n\nOracle mitigates PeopleSoft zero-day exploited in data theft attacks\n\nMaine disables data breach notification portal after fake disclosures\n\nMalicious JetBrains Marke…",
+          "detail": "Signal de veille — BleepingComputer.\n\nThe U.S. Federal Trade Commission (FTC) warned that Americans lost $3.5 billion to imposter scams in 2025, with reported losses nearly tripling since 2020.\n\nOver 400 Arch Linux packages compromised to push rootkit, infostealer\n\nMicrosoft fixes Windows update failures linked to WUSA installer\n\nOracle mitigates PeopleSoft zero-day exploited in data theft attacks\n\nMaine disables data breach notification portal after fake disclosures\n\nMalicious JetBrains Marketplace plugins steal AI API keys from developers\n\nNew Rokarolla Android malware targets 217 banking, crypto apps",
+          "action": null,
+          "sources": [
+            {
+              "url": "https://www.bleepingcomputer.com/news/security/ftc-warns-of-record-35-billion-losses-to-imposter-scams-in-2025/",
+              "label": "BleepingComputer"
+            }
+          ],
+          "url": "https://www.bleepingcomputer.com/news/security/ftc-warns-of-record-35-billion-losses-to-imposter-scams-in-2025/",
+          "pubDate": "2026-06-16T13:42:19.000Z"
+        },
+        {
+          "title": "SprySOCKS Windows Variant Abuses Kernel Drivers to Evade Detection",
+          "cve": null,
+          "severity": "culture",
+          "score": 65,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Signal de veille — Dark Reading.\n\nFishMonger, a China-nexus threat group, has deployed an undocumented version of the Linux backdoor against government targets in Honduras, Taiwan, Thailand, and Pakistan.",
+          "detail": "Signal de veille — Dark Reading.\n\nFishMonger, a China-nexus threat group, has deployed an undocumented version of the Linux backdoor against government targets in Honduras, Taiwan, Thailand, and Pakistan.",
+          "action": null,
+          "sources": [
+            {
+              "url": "https://www.darkreading.com/threat-intelligence/sprysocks-windows-variant-kernel-drivers",
+              "label": "Dark Reading"
+            }
+          ],
+          "url": "https://www.darkreading.com/threat-intelligence/sprysocks-windows-variant-kernel-drivers",
+          "pubDate": "2026-06-16T20:11:48.000Z"
+        },
+        {
+          "title": "Endpoint Security Startup Ent Emerges From Stealth With $100 Million Seed Round",
+          "cve": null,
+          "severity": "culture",
+          "score": 64,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Signal de veille — SecurityWeek.\n\nMagnitude has emerged from stealth mode with $10 million in seed funding to redefine TPRM through autonomous AI agents.\n\nThe company is enhancing third-party risk management (TPRM) through autonomous AI agents.\n\nSubscribe to the SecurityWeek Email Briefing for the latest cybersecurity threats, trends, and expert insights.\n\nSubscribe to the SecurityWeek Email Briefing to stay informed on the latest threats, trends, and technology, along with insightful colu…",
+          "detail": "Signal de veille — SecurityWeek.\n\nMagnitude has emerged from stealth mode with $10 million in seed funding to redefine TPRM through autonomous AI agents.\n\nThe company is enhancing third-party risk management (TPRM) through autonomous AI agents.\n\nSubscribe to the SecurityWeek Email Briefing for the latest cybersecurity threats, trends, and expert insights.\n\nSubscribe to the SecurityWeek Email Briefing to stay informed on the latest threats, trends, and technology, along with insightful columns from industry experts.\n\nToday’s attackers are no longer breaking in — they’re logging in. Join this live webinar as we break down the modern identity attack chain and examine how recent breaches exploited weaknesses in authentication, identity verification, and access management processes.\n\nAI has accelerated both sides of the fight. Adversaries are weaponizing vulnerabilities faster, while defenders are racing to ship detections and configurations. Join this live webinar as we explore how to prove your controls actually hold against new threats, map your security maturity, and unite breach simulation with automated pentesting into a single, coordinated program.\n\nStephen Garcia has been named Chief Information Security Officer at BreachRx.",
+          "action": null,
+          "sources": [
+            {
+              "url": "https://www.securityweek.com/magnitude-emerges-from-stealth-mode-with-10-million-in-funding/",
+              "label": "SecurityWeek"
+            }
+          ],
+          "url": "https://www.securityweek.com/magnitude-emerges-from-stealth-mode-with-10-million-in-funding/",
+          "pubDate": "2026-06-16T13:34:57.000Z"
+        },
+        {
+          "title": "Malicious JetBrains Marketplace plugins steal AI API keys from developers",
+          "cve": null,
+          "severity": "culture",
+          "score": 63,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Signal de veille — BleepingComputer.\n\nAt least 15 malicious plugins found on the JetBrains Marketplace were designed to steal AI API keys from developers.\n\nOver 400 Arch Linux packages compromised to push rootkit, infostealer\n\nMicrosoft fixes Windows update failures linked to WUSA installer\n\nOracle mitigates PeopleSoft zero-day exploited in data theft attacks\n\nMaine disables data breach notification portal after fake disclosures\n\nMalicious JetBrains Marketplace plugins steal AI API keys from d…",
+          "detail": "Signal de veille — BleepingComputer.\n\nAt least 15 malicious plugins found on the JetBrains Marketplace were designed to steal AI API keys from developers.\n\nOver 400 Arch Linux packages compromised to push rootkit, infostealer\n\nMicrosoft fixes Windows update failures linked to WUSA installer\n\nOracle mitigates PeopleSoft zero-day exploited in data theft attacks\n\nMaine disables data breach notification portal after fake disclosures\n\nMalicious JetBrains Marketplace plugins steal AI API keys from developers\n\nNew Rokarolla Android malware targets 217 banking, crypto apps",
+          "action": null,
+          "sources": [
+            {
+              "url": "https://www.bleepingcomputer.com/news/security/malicious-jetbrains-marketplace-plugins-steal-ai-api-keys-from-developers/",
+              "label": "BleepingComputer"
+            }
+          ],
+          "url": "https://www.bleepingcomputer.com/news/security/malicious-jetbrains-marketplace-plugins-steal-ai-api-keys-from-developers/",
+          "pubDate": "2026-06-16T21:54:50.000Z"
+        },
+        {
+          "title": "Security Community Slams US Ban on Exporting Mythos, Fable",
+          "cve": null,
+          "severity": "culture",
+          "score": 60,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Signal de veille — Dark Reading.\n\nAn open letter signed by dozens of security experts asked the government to reverse export restrictions on Anthropic's Claude Fable 5 and Mythos 5 models.",
+          "detail": "Signal de veille — Dark Reading.\n\nAn open letter signed by dozens of security experts asked the government to reverse export restrictions on Anthropic's Claude Fable 5 and Mythos 5 models.",
+          "action": null,
+          "sources": [
+            {
+              "url": "https://www.darkreading.com/vulnerabilities-threats/security-community-slams-us-ban-on-exporting-mythos-fable",
+              "label": "Dark Reading"
+            }
+          ],
+          "url": "https://www.darkreading.com/vulnerabilities-threats/security-community-slams-us-ban-on-exporting-mythos-fable",
+          "pubDate": "2026-06-16T22:00:06.000Z"
+        },
+        {
+          "title": "Lawmakers leary about Trump administration’s Anthropic order",
+          "cve": null,
+          "severity": "critical",
+          "score": 59,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Signal de veille — CyberScoop.\n\nMembers of Congress responded with skepticism and caution Tuesday to the Trump administration’s decision to impose export controls on Anthropic’s newest AI models. The Friday order , which Anthropic said forced it to disable its Fable 5 and Mythos 5 artificial intelligence models, was prompted by what the administration said were national security concerns that a large number of cybersecurity professionals have dismissed as ill-founded .",
+          "detail": "Signal de veille — CyberScoop.\n\nMembers of Congress responded with skepticism and caution Tuesday to the Trump administration’s decision to impose export controls on Anthropic’s newest AI models. The Friday order , which Anthropic said forced it to disable its Fable 5 and Mythos 5 artificial intelligence models, was prompted by what the administration said were national security concerns that a large number of cybersecurity professionals have dismissed as ill-founded . Several Hill Democrats told CyberScoop they were concerned that the administration’s decision was driven by other considerations. Notably, the administration has feuded with Anthropic over use of its models for domestic surveillance and fully autonomous weapons. Sen. Angus King, a Maine independent who caucuses with Democrats, said he would need to be convinced it was a legitimate national security order and hadn’t yet seen a full justification. “What they did was pretty extreme, and I&#8217;d want to see what the basis was, as opposed to all the other issues that are swirling around in cybersecurity,” he said. “I&#8217;m a little skeptical because of their otherwise announced antipathy to this company.” Leaders of the House Homeland Security Committee had contrasting takes, with Chairman Andrew Garbarino, R-N.Y., offering a two-pronged response and the top Democrat on the panel, Bennie Thompson of Mississippi, panning the order. “The administr",
+          "action": null,
+          "sources": [
+            {
+              "url": "https://cyberscoop.com/congress-reacts-anthropic-ai-export-controls/",
+              "label": "CyberScoop"
+            }
+          ],
+          "url": "https://cyberscoop.com/congress-reacts-anthropic-ai-export-controls/",
+          "pubDate": "2026-06-16T21:03:33.000Z"
+        },
+        {
+          "title": "Hacker Conversations: Isira Adithya, the Evolution of an Ethical Hacker",
+          "cve": null,
+          "severity": "culture",
+          "score": 59,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Signal de veille — SecurityWeek.\n\nHacker conversation with Sri Lanka-born Isira Adithya, a successful bug bounty hunter driven by the desire to bend systems to his will\n\nFrom building LED bulbs to graduating college and buying a house with money earned from bug bounties.\n\nSubscribe to the SecurityWeek Email Briefing for the latest cybersecurity threats, trends, and expert insights.\n\nSubscribe to the SecurityWeek Email Briefing to stay informed on the latest threats, trends, and technology,…",
+          "detail": "Signal de veille — SecurityWeek.\n\nHacker conversation with Sri Lanka-born Isira Adithya, a successful bug bounty hunter driven by the desire to bend systems to his will\n\nFrom building LED bulbs to graduating college and buying a house with money earned from bug bounties.\n\nSubscribe to the SecurityWeek Email Briefing for the latest cybersecurity threats, trends, and expert insights.\n\nSubscribe to the SecurityWeek Email Briefing to stay informed on the latest threats, trends, and technology, along with insightful columns from industry experts.\n\nToday’s attackers are no longer breaking in — they’re logging in. Join this live webinar as we break down the modern identity attack chain and examine how recent breaches exploited weaknesses in authentication, identity verification, and access management processes.\n\nAI has accelerated both sides of the fight. Adversaries are weaponizing vulnerabilities faster, while defenders are racing to ship detections and configurations. Join this live webinar as we explore how to prove your controls actually hold against new threats, map your security maturity, and unite breach simulation with automated pentesting into a single, coordinated program.\n\nStephen Garcia has been named Chief Information Security Officer at BreachRx.",
+          "action": null,
+          "sources": [
+            {
+              "url": "https://www.securityweek.com/hacker-conversations-isira-adithya-the-evolution-of-an-ethical-hacker/",
+              "label": "SecurityWeek"
+            }
+          ],
+          "url": "https://www.securityweek.com/hacker-conversations-isira-adithya-the-evolution-of-an-ethical-hacker/",
+          "pubDate": "2026-06-16T14:27:45.000Z"
+        },
+        {
+          "title": "Can CISOs Trust Their Applications? TrustCloud Wants to Replace the Questionnaire",
+          "cve": null,
+          "severity": "culture",
+          "score": 59,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Signal de veille — SecurityWeek.\n\nBy continuously analyzing security, infrastructure, and governance data, TrustCloud aims to give CISOs a real-time view of application risk and board-ready assurance. The post Can CISOs Trust Their Applications? TrustCloud Wants to Replace the Questionnaire appeared first on SecurityWeek .",
+          "detail": "Signal de veille — SecurityWeek.\n\nBy continuously analyzing security, infrastructure, and governance data, TrustCloud aims to give CISOs a real-time view of application risk and board-ready assurance. The post Can CISOs Trust Their Applications? TrustCloud Wants to Replace the Questionnaire appeared first on SecurityWeek .",
+          "action": null,
+          "sources": [
+            {
+              "url": "https://www.securityweek.com/can-cisos-trust-their-applications-trustcloud-wants-to-replace-the-questionnaire/",
+              "label": "SecurityWeek"
+            }
+          ],
+          "url": "https://www.securityweek.com/can-cisos-trust-their-applications-trustcloud-wants-to-replace-the-questionnaire/",
+          "pubDate": "2026-06-16T12:15:00.000Z"
+        },
+        {
+          "title": "Cal Water Investigating Iranian Hackers’ Claims",
+          "cve": null,
+          "severity": "culture",
+          "score": 59,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Signal de veille — SecurityWeek.\n\nCalifornia Water Service (Cal Water) is investigating recent hacking claims by the Iran-linked threat actor Handala.\n\nCalifornia Water Service says there is no indication of operational disruptions to its water and wastewater systems.\n\nSubscribe to the SecurityWeek Email Briefing for the latest cybersecurity threats, trends, and expert insights.\n\nSubscribe to the SecurityWeek Email Briefing to stay informed on the latest threats, trends, and technology, al…",
+          "detail": "Signal de veille — SecurityWeek.\n\nCalifornia Water Service (Cal Water) is investigating recent hacking claims by the Iran-linked threat actor Handala.\n\nCalifornia Water Service says there is no indication of operational disruptions to its water and wastewater systems.\n\nSubscribe to the SecurityWeek Email Briefing for the latest cybersecurity threats, trends, and expert insights.\n\nSubscribe to the SecurityWeek Email Briefing to stay informed on the latest threats, trends, and technology, along with insightful columns from industry experts.\n\nToday’s attackers are no longer breaking in — they’re logging in. Join this live webinar as we break down the modern identity attack chain and examine how recent breaches exploited weaknesses in authentication, identity verification, and access management processes.\n\nAI has accelerated both sides of the fight. Adversaries are weaponizing vulnerabilities faster, while defenders are racing to ship detections and configurations. Join this live webinar as we explore how to prove your controls actually hold against new threats, map your security maturity, and unite breach simulation with automated pentesting into a single, coordinated program.\n\nStephen Garcia has been named Chief Information Security Officer at BreachRx.",
+          "action": null,
+          "sources": [
+            {
+              "url": "https://www.securityweek.com/cal-water-investigating-iranian-hackers-claims/",
+              "label": "SecurityWeek"
+            }
+          ],
+          "url": "https://www.securityweek.com/cal-water-investigating-iranian-hackers-claims/",
+          "pubDate": "2026-06-16T11:53:11.000Z"
+        },
+        {
+          "title": "La France coupe les ponts avec Palantir : la DGSI bascule vers ChapsVision",
+          "cve": null,
+          "severity": "high",
+          "score": 59,
+          "corroboration": 2,
+          "region": "fr",
+          "body": "Signal de veille — Silicon.fr.\n\nLa DGSI choisit le français ChapsVision et tourne le dos à Palantir.\n\nLa solution de Chapvision va remplacer Palantir au sein des services de renseignement de la sécurité intérieure (DGSI).\n\nC&rsquo;est la surprise du chef réservé par Sébastien Lecornu.\n\nDans une vidéo publiée sur X consacrée à l&rsquo;implémentation de l&rsquo;IA dans le service public, le Premier ministre annonce ce 16 juin, que l&rsquo;éditeur français ChapsVision est retenu par la DGSI…",
+          "detail": "Signal de veille — Silicon.fr.\n\nLa DGSI choisit le français ChapsVision et tourne le dos à Palantir.\n\nLa solution de Chapvision va remplacer Palantir au sein des services de renseignement de la sécurité intérieure (DGSI).\n\nC&rsquo;est la surprise du chef réservé par Sébastien Lecornu.\n\nDans une vidéo publiée sur X consacrée à l&rsquo;implémentation de l&rsquo;IA dans le service public, le Premier ministre annonce ce 16 juin, que l&rsquo;éditeur français ChapsVision est retenu par la DGSI pour remplacer l&rsquo;américain Palantir.\n\nL&rsquo;annonce est d&rsquo;autant plus surprenante que la DGSI a reconduit Palantir pour trois ans en décembre dernier, officiellement pour faute d&rsquo;alternative européenne crédible.\n\nNul n&rsquo;est prophète en son pays. Il y a un mois le service de renseignement allemand, le BvF, avait pris la décision de lâcher l&rsquo;américain pour adopter ArgonOS, la plateforme de ChapsVision qui mobilise l&rsquo;intelligence artificielle pour agréger et croiser des données issues de sources hétérogènes.\n\nC&rsquo;est cette solution qui sera utilisée par la DGSI. Selon les Echos , ce choix technologique devrait s&rsquo;appliquer au sein de tous les ministères.",
+          "action": null,
+          "sources": [
+            {
+              "url": "https://www.silicon.fr/data-ia-1372/la-dgsi-choisit-le-francais-chapsvision-et-tourne-le-dos-a-palantir-227691",
+              "label": "Silicon.fr"
+            },
+            {
+              "url": "https://www.numerama.com/cyberguerre/2276849-la-france-coupe-les-ponts-avec-palantir-la-dgsi-bascule-vers-chapsvision.html",
+              "label": "Numerama"
+            }
+          ],
+          "url": "https://www.silicon.fr/data-ia-1372/la-dgsi-choisit-le-francais-chapsvision-et-tourne-le-dos-a-palantir-227691",
+          "pubDate": "2026-06-16T11:43:26.000Z"
+        },
+        {
+          "title": "White House Issues Memo to Bolster NSS Cybersecurity",
+          "cve": null,
+          "severity": "culture",
+          "score": 59,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Signal de veille — SecurityWeek.\n\nPresident Trump signed NSPM-12 to bolster NSS cybersecurity and establish a clear structure for its governance and accountability.\n\nNSPM-12 establishes a clear structure for NSS cybersecurity governance and accountability and reestablishes CNSS.\n\nSubscribe to the SecurityWeek Email Briefing for the latest cybersecurity threats, trends, and expert insights.\n\nSubscribe to the SecurityWeek Email Briefing to stay informed on the latest threats, trends, and tec…",
+          "detail": "Signal de veille — SecurityWeek.\n\nPresident Trump signed NSPM-12 to bolster NSS cybersecurity and establish a clear structure for its governance and accountability.\n\nNSPM-12 establishes a clear structure for NSS cybersecurity governance and accountability and reestablishes CNSS.\n\nSubscribe to the SecurityWeek Email Briefing for the latest cybersecurity threats, trends, and expert insights.\n\nSubscribe to the SecurityWeek Email Briefing to stay informed on the latest threats, trends, and technology, along with insightful columns from industry experts.\n\nToday’s attackers are no longer breaking in — they’re logging in. Join this live webinar as we break down the modern identity attack chain and examine how recent breaches exploited weaknesses in authentication, identity verification, and access management processes.\n\nAI has accelerated both sides of the fight. Adversaries are weaponizing vulnerabilities faster, while defenders are racing to ship detections and configurations. Join this live webinar as we explore how to prove your controls actually hold against new threats, map your security maturity, and unite breach simulation with automated pentesting into a single, coordinated program.\n\nStephen Garcia has been named Chief Information Security Officer at BreachRx.",
+          "action": null,
+          "sources": [
+            {
+              "url": "https://www.securityweek.com/white-house-issues-memo-to-bolster-nss-cybersecurity/",
+              "label": "SecurityWeek"
+            }
+          ],
+          "url": "https://www.securityweek.com/white-house-issues-memo-to-bolster-nss-cybersecurity/",
+          "pubDate": "2026-06-16T11:41:46.000Z"
+        },
+        {
+          "title": "Flock Cameras Are Being Used for Stalking",
+          "cve": null,
+          "severity": "culture",
+          "score": 59,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Signal de veille — Schneier on Sec..\n\nThere are over a dozen cases around the country where police officers are using the Flock surveillance camera system to obsessively and illegally stalk people . Alternate link .",
+          "detail": "Signal de veille — Schneier on Sec..\n\nThere are over a dozen cases around the country where police officers are using the Flock surveillance camera system to obsessively and illegally stalk people . Alternate link .",
+          "action": null,
+          "sources": [
+            {
+              "url": "https://www.schneier.com/blog/archives/2026/06/flock-cameras-are-being-used-for-stalking.html",
+              "label": "Schneier on Sec."
+            }
+          ],
+          "url": "https://www.schneier.com/blog/archives/2026/06/flock-cameras-are-being-used-for-stalking.html",
+          "pubDate": "2026-06-16T11:03:31.000Z"
+        },
+        {
+          "title": "Software supply chains are heading for a transparency test",
+          "cve": null,
+          "severity": "high",
+          "score": 57,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Signal de veille — Help Net Security.\n\nSoftware supply chain visibility is becoming part of product security work as the EU Cyber Resilience Act (CRA) moves toward application in December 2027. ENISA&#8217;s SBOM Adoption State of Play 2026 shows organizations preparing for CRA obligations through SBOM tooling, automation, and changes to software development practices.",
+          "detail": "Signal de veille — Help Net Security.\n\nSoftware supply chain visibility is becoming part of product security work as the EU Cyber Resilience Act (CRA) moves toward application in December 2027. ENISA&#8217;s SBOM Adoption State of Play 2026 shows organizations preparing for CRA obligations through SBOM tooling, automation, and changes to software development practices. Level of SBOM adoption based on organisation size (Source: ENISA) SBOMs move from best practice to requirement The CRA requires manufacturers to create, maintain, and, where necessary, provide &#8230; More &#8594; The post Software supply chains are heading for a transparency test appeared first on Help Net Security .",
+          "action": null,
+          "sources": [
+            {
+              "url": "https://www.helpnetsecurity.com/2026/06/16/enisa-software-supply-chain-transparency/",
+              "label": "Help Net Security"
+            }
+          ],
+          "url": "https://www.helpnetsecurity.com/2026/06/16/enisa-software-supply-chain-transparency/",
+          "pubDate": "2026-06-16T09:24:51.000Z"
+        },
+        {
+          "title": "Au fait, c’est quoi ChapsVision, la start-up choisie pour succéder à Palantir en France ?",
+          "cve": null,
+          "severity": "culture",
+          "score": 55,
+          "corroboration": 1,
+          "region": "fr",
+          "body": "Signal de veille — Numerama.\n\nL'entreprise française vient d'être désignée pour porter le projet OTDH, censé doter la France d'une alternative souveraine à Palantir. Mais la bascule s'annonce longue. Le nom était attendu depuis des mois, le voilà enfin officiel.",
+          "detail": "Signal de veille — Numerama.\n\nL'entreprise française vient d'être désignée pour porter le projet OTDH, censé doter la France d'une alternative souveraine à Palantir. Mais la bascule s'annonce longue. Le nom était attendu depuis des mois, le voilà enfin officiel. ChapsVision a été retenue pour déployer sa plateforme ArgonOS dans le cadre de\n\nAmine Baba Aissa Amine Baba Aissa 2 min 2 min Amine Baba Aissa Amine Baba Aissa Ne plus voir cette pub Lecture Zen Résumer l'article Résumé de l'article Résumé par IA, vérifié par Numerama\n\nNous générons pour vous un résumé de l’article grâce à une IA et nous le vérifions afin de nous assurer qu’il n’y ait aucune erreur, pour garantir l’authenticité de l’info.\n\nRecevez tous les soirs un résumé de l’actu importante avec Le Récap’\n\nLe nom &eacute;tait attendu depuis des mois, le voil&agrave; enfin officiel.\n\nChapsVision a &eacute;t&eacute; retenue pour d&eacute;ployer sa plateforme ArgonOS dans le cadre de l&rsquo;OTDH, l&rsquo;Outil de Traitement de la Donn&eacute;e H&eacute;t&eacute;rog&egrave;ne, un partenariat d&rsquo;innovation pilot&eacute; par la DGSI pour doter la France d&rsquo;un outil souverain de traitement massif de donn&eacute;es.\n\nReste que l&rsquo;identification du successeur de Palantir ne signifie pas un basculement imm&eacute;diat. En d&eacute;cembre 2025, la DGSI a renouvel&eacute; pour trois ans son contrat avec l&rsquo;entreprise am&eacute;ricaine , partenaire depuis 2016 des services de renseignement fran&ccedil;ais.",
+          "action": null,
+          "sources": [
+            {
+              "url": "https://www.numerama.com/cyberguerre/2277279-au-fait-cest-quoi-chapsvision-la-start-up-choisie-pour-succeder-a-palantir-en-france.html",
+              "label": "Numerama"
+            }
+          ],
+          "url": "https://www.numerama.com/cyberguerre/2277279-au-fait-cest-quoi-chapsvision-la-start-up-choisie-pour-succeder-a-palantir-en-france.html",
+          "pubDate": "2026-06-16T13:27:55.000Z"
+        }
+      ]
+    }
+  ]
+}
