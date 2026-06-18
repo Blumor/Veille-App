@@ -203,6 +203,8 @@ async function loadReport(id) {
 }
 
 // ── sidebar ───────────────────────────────────────────────────────────────────
+const SIDEBAR_LIMIT = 5;
+
 function renderSidebar() {
   const side = $("#side");
   if (!STATE.index.length) {
@@ -220,17 +222,26 @@ function renderSidebar() {
   let html = "";
   for (const t of ["daily", "weekly", "monthly"]) {
     const group = STATE.index.filter((x) => x.type === t);
-    if (group.length)
-      html += `<div class="group"><h3>${typeMeta(t).group}</h3>${group.map(itemHTML).join("")}</div>`;
+    if (!group.length) continue;
+    const visible = group.slice(0, SIDEBAR_LIMIT);
+    html += `<div class="group"><h3>${typeMeta(t).group}</h3>${visible.map(itemHTML).join("")}</div>`;
+  }
+  const totalHidden = STATE.index.length -
+    ["daily", "weekly", "monthly"].reduce((n, t) =>
+      n + Math.min(STATE.index.filter((x) => x.type === t).length, SIDEBAR_LIMIT), 0);
+  if (totalHidden > 0) {
+    html += `<div class="side-archive-btn" id="btnArchive">📁 Archives <span class="side-archive-count">${totalHidden} ancien(s)</span></div>`;
   }
   side.innerHTML = html;
   side.querySelectorAll(".item").forEach(
     (el) =>
       (el.onclick = () => {
         selectReport(el.dataset.id);
-        toggleDrawer(false); // referme le tiroir sur mobile après sélection
+        toggleDrawer(false);
       }),
   );
+  const archBtn = $("#btnArchive");
+  if (archBtn) archBtn.onclick = () => { showArchive(); toggleDrawer(false); };
 }
 
 // ── recherche (barre + binding) ─────────────────────────────────────────────────
@@ -610,6 +621,47 @@ function renderEmpty() {
       <div class="empty-sub">Sélectionne un rapport dans l'archive, ou génère un briefing (jour / semaine / mois) agrégé depuis les flux RSS, l'API NVD et le catalogue CISA KEV — gratuit, sans clé API.</div>
     </div>
   </div>`;
+}
+
+// ── archive complète ─────────────────────────────────────────────────────────
+function showArchive() {
+  STATE.selected = null;
+  STATE.report = null;
+  STATE.activeItem = null;
+  renderSidebar();
+
+  const itemHTML = (x) => `
+    <div class="arch-item" data-id="${x.id}">
+      <span class="tag ${x.type}">${typeMeta(x.type).tag}</span>
+      <span class="arch-label">${esc(reportLabel(x.type, x.date))}</span>
+      <span class="arch-date">${x.date}</span>
+    </div>`;
+
+  let html = `<div class="wrap"><div class="arch-head">
+    <button class="back-btn" id="btnBackArch">← Retour</button>
+    <h2 class="rep-title">Archives complètes</h2>
+    <p class="rep-summary">${STATE.index.length} rapport(s) au total</p>
+  </div>`;
+  for (const t of ["daily", "weekly", "monthly"]) {
+    const group = STATE.index.filter((x) => x.type === t);
+    if (!group.length) continue;
+    html += `<div class="arch-group">
+      <h3 class="arch-group-title">${typeMeta(t).group} <span class="arch-group-count">${group.length}</span></h3>
+      ${group.map(itemHTML).join("")}
+    </div>`;
+  }
+  html += "</div>";
+
+  const main = $("#main");
+  main.innerHTML = html;
+  main.scrollTop = 0;
+  main.querySelectorAll(".arch-item").forEach((el) => {
+    el.onclick = () => selectReport(el.dataset.id);
+  });
+  $("#btnBackArch").onclick = () => {
+    if (STATE.index.length) selectReport(STATE.index[0].id);
+    else renderEmpty();
+  };
 }
 
 // ── generation ────────────────────────────────────────────────────────────────
