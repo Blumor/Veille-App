@@ -400,23 +400,20 @@ function feedItemHTML(item) {
   const rel = relativeTime(item.pubDate);
   const dateTxt = [date, rel].filter(Boolean).join(" · ");
 
-  return `<article class="feed-item ${sev}" tabindex="0" role="button">
-    <div class="fi-score ${scoreClass(score)}" title="Score d'importance sur 100">
-      <span class="fi-score-n">${score}</span><span class="fi-score-u">/100</span>
-    </div>
-    <div class="fi-body">
-      <div class="fi-top">
+  return `<article class="feed-item sev-${sev}" tabindex="0" role="button">
+    <div class="fi-head">
+      <div class="fi-tags">
         <span class="pill ${sev}">${SEV_LABELS[sev] || "Info"}</span>
         ${item.cve ? `<span class="cve">${esc(item.cve)}</span>` : ""}
-        ${corro >= 2 ? `<span class="fi-corro" title="Information recoupée par plusieurs médias">✓ recoupé ×${corro}</span>` : ""}
+        ${corro >= 2 ? `<span class="fi-corro" title="Information recoupée par plusieurs médias">✓ ${corro} sources</span>` : ""}
       </div>
-      <h3 class="fi-title">${esc(item.title)}</h3>
-      ${item.body ? `<div class="fi-excerpt">${paragraphs(item.body, "fi-p")}</div>` : ""}
-      <div class="fi-foot">
-        ${bylineHTML(item)}
-        ${dateTxt ? `<span class="fi-date">${esc(dateTxt)}</span>` : ""}
-        <span class="fi-arr">Lire ›</span>
-      </div>
+      <span class="fi-score ${scoreClass(score)}" title="Score d'importance">${score}</span>
+    </div>
+    <h3 class="fi-title">${esc(item.title)}</h3>
+    ${item.body ? `<div class="fi-excerpt">${paragraphs(item.body, "fi-p")}</div>` : ""}
+    <div class="fi-foot">
+      ${bylineHTML(item)}
+      ${dateTxt ? `<span class="fi-date">${esc(dateTxt)}</span>` : ""}
     </div>
   </article>`;
 }
