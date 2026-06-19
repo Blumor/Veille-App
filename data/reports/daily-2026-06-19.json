@@ -1,0 +1,1060 @@
+{
+  "id": "daily-2026-06-19",
+  "type": "daily",
+  "date": "2026-06-19",
+  "title": "Rapport quotidien - vendredi 19 juin 2026",
+  "summary": "Sur les dernières 24 heures, la veille recense 29 vulnérabilités critiques, 47 incidents ou compromissions et 22 signaux de fond. Acteurs et produits les plus exposés : Microsoft, openclaw (npm) et praisonai (pip).",
+  "generatedAt": "2026-06-19T04:01:07.318Z",
+  "sections": [
+    {
+      "id": "vulns",
+      "items": [
+        {
+          "title": "PraisonAI: Webhook signature verification skipped (fail-open) when secret unset, allowing forged inbound webhooks (WhatsApp & Linear bots)",
+          "cve": null,
+          "severity": "critical",
+          "score": 74,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Vulnérabilité critique affectant praisonai (pip) (score CVSS 9.8).\n\npraisonai-platform: default JWT signing secret 'dev-secret-change-me' enables token forgery\n\n--> Name Query To see all available qualifiers, see our documentation .\n\nPackage: praisonai-platform on PyPI Latest version (and version tested): 0.1.4 , current as of 2026-06-01. File: praisonai_platform/services/auth_service.py (sha256 cc29d43c5412da2c73c818859b8d8b146587842999b777336017ab9d9e509258 ).",
+          "detail": "Vulnérabilité critique affectant praisonai (pip) (score CVSS 9.8).\n\npraisonai-platform: default JWT signing secret 'dev-secret-change-me' enables token forgery\n\n--> Name Query To see all available qualifiers, see our documentation .\n\nPackage: praisonai-platform on PyPI Latest version (and version tested): 0.1.4 , current as of 2026-06-01. File: praisonai_platform/services/auth_service.py (sha256 cc29d43c5412da2c73c818859b8d8b146587842999b777336017ab9d9e509258 ). Weakness: CWE-798 Use of Hardcoded Credentials + CWE-1188 Insecure Default Initialization of Resource.\n\n_DEFAULT_SECRET = \"dev-secret-change-me\" JWT_SECRET = os . environ . get ( \"PLATFORM_JWT_SECRET\" , _DEFAULT_SECRET ) JWT_ALGORITHM = \"HS256\" JWT_TTL_SECONDS = int ( os . environ . get ( \"PLATFORM_JWT_TTL\" , str ( 30 * 24 * 3600 ))) if JWT_SECRET == _DEFAULT_SECRET and os . environ . get ( \"PLATFORM_ENV\" , \"dev\" ) != \"dev\" : raise RuntimeError ( \"PLATFORM_JWT_SECRET must be set to a strong random value in production. \" \"Set PLATFORM_ENV=dev to suppress this check during development.\" ) The guard at line 33 is meant to catch the \"deployed to production with the default secret\" failure mode. But it only fires when both :\n\nIf the operator left both env vars unset — the most common mis-deploy — PLATFORM_ENV falls back to \"dev\" , the second leg of the and evaluates False , and the guard does NOT fire. The server starts up signing every JWT with the public string 'dev-secret-change-me' .\n\nThe fix is to invert the polarity: refuse startup when the secret is the default regardless of PLATFORM_ENV , except when an explicit PLATFORM_ALLOW_DEV_SECRET=true (or equivalent) flag is set. That flips \"default-allow\" to \"default-deny\", which is what the line-33 comment implies the author wanted.\n\nExpected behavior, reading line",
+          "action": "Vérifier l'exposition du parc et appliquer le correctif éditeur dès sa disponibilité.",
+          "sources": [
+            {
+              "url": "https://github.com/advisories/GHSA-cwj8-7gp2-ggcw",
+              "label": "GitHub Advisory"
+            }
+          ],
+          "url": "https://github.com/advisories/GHSA-cwj8-7gp2-ggcw",
+          "pubDate": "2026-06-18T14:27:34.000Z"
+        },
+        {
+          "title": "Crawl4AI: Unauthenticated SSRF on the Docker server streaming crawl path (/crawl/stream)",
+          "cve": null,
+          "severity": "high",
+          "score": 61,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Vulnérabilité élevée affectant crawl4ai (pip) (score CVSS 8.6).\n\nCrawl4AI: Unauthenticated SSRF on the Docker server streaming crawl path (/crawl/stream)\n\n--> Name Query To see all available qualifiers, see our documentation .\n\nPOST /crawl/stream , and POST /crawl with crawler_config.stream=true (both route to handle_stream_crawl_request , deploy/docker/api.py ).\n\nUnauthenticated read server-side request forgery: an attacker reads internal-only services and cloud-metadata endpoints (e.g.",
+          "detail": "Vulnérabilité élevée affectant crawl4ai (pip) (score CVSS 8.6).\n\nCrawl4AI: Unauthenticated SSRF on the Docker server streaming crawl path (/crawl/stream)\n\n--> Name Query To see all available qualifiers, see our documentation .\n\nPOST /crawl/stream , and POST /crawl with crawler_config.stream=true (both route to handle_stream_crawl_request , deploy/docker/api.py ).\n\nUnauthenticated read server-side request forgery: an attacker reads internal-only services and cloud-metadata endpoints (e.g. http://169.254.169.254/ for IAM credentials), with the response body streamed back. This is the same class and severity as the project's prior \"SSRF via Direct Crawl Endpoints\" advisory; /crawl/stream is part of that endpoint family and was never covered by the destination check.\n\nhandle_stream_crawl_request now validates every seed URL's destination with the same global-routability check as handle_crawl_request , before any fetch. The SSRF regression test was hardened to assert per-handler coverage (including the streaming handler) rather than a bare occurrence count, which previously let this gap pass.\n\nKOH Jun Sheng - reported the streaming-path SSRF with a runnable PoC and noted the count-based regression test that masked it, plus the shared root cause with redirect/deep-crawl link following.\n\nunclecode published to unclecode/crawl4ai Jun 18, 2026 Published to the GitHub Advisory Database Jun 18, 2026 Reviewed Jun 18, 2026 Last updated Jun 18, 2026 Severity High 8.6 CVSS overall score This score calculates overall vulnerability severity from 0 to 10 and is based on the Common Vulnerability Scoring System (CVSS). / 10 CVSS v3 base metrics Attack vector Network Attack complexity Low Privileges required None User interaction None Scope Changed Confidentiality High Integrity None Availa",
+          "action": "Vérifier l'exposition du parc et appliquer le correctif éditeur dès sa disponibilité.",
+          "sources": [
+            {
+              "url": "https://github.com/advisories/GHSA-wm69-2pc3-rmmf",
+              "label": "GitHub Advisory"
+            }
+          ],
+          "url": "https://github.com/advisories/GHSA-wm69-2pc3-rmmf",
+          "pubDate": "2026-06-18T17:25:50.000Z"
+        },
+        {
+          "title": "CVE-2026-0755 — gemini-mcp-tool vulnerable to OS command injection and @file exfiltration via prompt quoting (CVE-2026-0755)",
+          "cve": "CVE-2026-0755",
+          "severity": "critical",
+          "score": 60,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Vulnérabilité critique CVE-2026-0755 affectant gemini-mcp-tool (npm) (score CVSS 9.8).\n\ngemini-mcp-tool vulnerable to OS command injection and @file exfiltration via prompt quoting (CVE-2026-0755)\n\n--> Name Query To see all available qualifiers, see our documentation .\n\nFix (1.1.6): removed the broken shell:false double-quote wrapping; added assertSafeFileReferences() to contain @file refs to the working directory; hardened Windows cmd.exe argument quoting.\n\njamubc published to jamubc/gemini-mcp-tool May 30, 2026 Published to the GitHub Advis…",
+          "detail": "Vulnérabilité critique CVE-2026-0755 affectant gemini-mcp-tool (npm) (score CVSS 9.8).\n\ngemini-mcp-tool vulnerable to OS command injection and @file exfiltration via prompt quoting (CVE-2026-0755)\n\n--> Name Query To see all available qualifiers, see our documentation .\n\nFix (1.1.6): removed the broken shell:false double-quote wrapping; added assertSafeFileReferences() to contain @file refs to the working directory; hardened Windows cmd.exe argument quoting.\n\njamubc published to jamubc/gemini-mcp-tool May 30, 2026 Published to the GitHub Advisory Database Jun 18, 2026 Reviewed Jun 18, 2026 Last updated Jun 18, 2026 Severity Critical 9.8 CVSS overall score This score calculates overall vulnerability severity from 0 to 10 and is based on the Common Vulnerability Scoring System (CVSS). / 10 CVSS v3 base metrics Attack vector Network Attack complexity Low Privileges required None User interaction None Scope Unchanged Confidentiality High Integrity High Availability High Learn more about base metrics CVSS v3 base metrics Attack vector: More severe the more the remote (logically and physically) an attacker can be in order to exploit the vulnerability. Attack complexity: More severe for the least complex attacks. Privileges required: More severe if no privileges are required. User interaction: More severe when no user interaction is required. Scope: More severe when a scope change occurs, e.g. one vulnerable component impacts resources in components beyond its security scope. Confidentiality: More severe when loss of data confidentiality is highest, measuring the level of data access available to an unauthorized user. Integrity: More severe when loss of data integrity is the highest, measuring the consequence of data modification possible by an unauthorized user. Availability:",
+          "action": "Vérifier l'exposition du parc et appliquer le correctif éditeur dès sa disponibilité.",
+          "sources": [
+            {
+              "url": "https://github.com/advisories/GHSA-4h5r-5jm8-jxjm",
+              "label": "GitHub Advisory"
+            }
+          ],
+          "url": "https://github.com/advisories/GHSA-4h5r-5jm8-jxjm",
+          "pubDate": "2026-06-18T20:44:58.000Z"
+        },
+        {
+          "title": "Crawl4AI: Unauthenticated RCE via Chromium launch-argument injection in browser_config.extra_args",
+          "cve": null,
+          "severity": "critical",
+          "score": 59,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Vulnérabilité critique affectant crawl4ai (pip) (score CVSS 10).\n\nCrawl4AI: Unauthenticated RCE via Chromium launch-argument injection in browser_config.extra_args\n\n--> Name Query To see all available qualifiers, see our documentation .\n\nThe earlier extra_args SSRF patch (0.8.9) used a denylist scoped to proxy/DNS flags; a denylist of launch switches is inherently incomplete, and these command-execution switches were not covered.\n\n/crawl , /crawl/stream , /crawl/job accepting a request browser_config.extra_args .\n\nUnauth…",
+          "detail": "Vulnérabilité critique affectant crawl4ai (pip) (score CVSS 10).\n\nCrawl4AI: Unauthenticated RCE via Chromium launch-argument injection in browser_config.extra_args\n\n--> Name Query To see all available qualifiers, see our documentation .\n\nThe earlier extra_args SSRF patch (0.8.9) used a denylist scoped to proxy/DNS flags; a denylist of launch switches is inherently incomplete, and these command-execution switches were not covered.\n\n/crawl , /crawl/stream , /crawl/job accepting a request browser_config.extra_args .\n\nUnauthenticated remote code execution as the container runtime user; full read/write of application data, mounted secrets, environment, and tokens, and out-of-band exfiltration independent of the HTTP response.\n\n0.9.0 establishes a trust boundary for request-supplied configuration: extra_args (along with other power fields such as proxy , user_data_dir , cdp_url , init_scripts ) is a forbidden field for untrusted request bodies. Any request that sets extra_args is rejected with HTTP 400 rather than scrubbed against an always-incomplete denylist. In-process SDK callers (trusted) are unaffected.\n\nY4tacker - reported the --no-zygote + --utility-cmd-prefix command-injection chain with a confirmed in-container PoC and an allowlist/reject recommendation. UDU_RisePho (hoanggxyuuki) - independently reported the request-supplied Chromium launch-flag RCE class ( --renderer-cmd-prefix ), confirmed still reproducing on 0.8.9.",
+          "action": "Vérifier l'exposition du parc et appliquer le correctif éditeur dès sa disponibilité.",
+          "sources": [
+            {
+              "url": "https://github.com/advisories/GHSA-r253-r9jw-qg44",
+              "label": "GitHub Advisory"
+            }
+          ],
+          "url": "https://github.com/advisories/GHSA-r253-r9jw-qg44",
+          "pubDate": "2026-06-18T17:25:34.000Z"
+        },
+        {
+          "title": "CVE-2026-47103 — python-statemachine SCXML <data expr> Eval Injection",
+          "cve": "CVE-2026-47103",
+          "severity": "critical",
+          "score": 59,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Vulnérabilité critique CVE-2026-47103 affectant python-statemachine (pip) (score CVSS 9.8).\n\npython-statemachine SCXML <data expr> Eval Injection\n\n--> Name Query To see all available qualifiers, see our documentation .\n\nSCXMLProcessor.parse_scxml_file() processes SCXML documents and evaluates element expr attributes via the following call chain:\n\nSCXMLProcessor.parse_scxml_file() SCXMLProcessor.process_definition() create_datamodel_action_callable() _create_dataitem_callable() _eval() eval() _eval() calls Python's built-in eval() directly on the e…",
+          "detail": "Vulnérabilité critique CVE-2026-47103 affectant python-statemachine (pip) (score CVSS 9.8).\n\npython-statemachine SCXML <data expr> Eval Injection\n\n--> Name Query To see all available qualifiers, see our documentation .\n\nSCXMLProcessor.parse_scxml_file() processes SCXML documents and evaluates element expr attributes via the following call chain:\n\nSCXMLProcessor.parse_scxml_file() SCXMLProcessor.process_definition() create_datamodel_action_callable() _create_dataitem_callable() _eval() eval() _eval() calls Python's built-in eval() directly on the expression string without sandboxing or restriction.\n\n1. Install: pip install python-statemachine==3.1.2 2. Create an SCXML file containing: 3. Run: SCXMLProcessor.parse_scxml_file(DATA_EXPR_CHART) SCXMLProcessor.start() 4. During start(), reaches _eval(), which calls eval(). 5. Result: data_marker_before_start: False data_marker_after_start: True success: True Impact This is an eval injection vulnerability (CWE-95). Remote or local code execution depending on whether the consuming application accepts SCXML content from remote users, uploaded files, configuration, plugins, or other untrusted sources.\n\nfgmacedo published to fgmacedo/python-statemachine Jun 17, 2026 Published by the National Vulnerability Database Jun 17, 2026 Published to the GitHub Advisory Database Jun 18, 2026 Reviewed Jun 18, 2026 Last updated Jun 18, 2026 Severity Critical 9.3 CVSS overall score This score calculates overall vulnerability severity from 0 to 10 and is based on the Common Vulnerability Scoring System (CVSS). / 10 CVSS v4 base metrics Exploitability Metrics Attack Vector Network Attack Complexity Low Attack Requirements None Privileges Required None User interaction None Vulnerable System Impact Metrics Confidentiality High Integrity High Avail",
+          "action": "Vérifier l'exposition du parc et appliquer le correctif éditeur dès sa disponibilité.",
+          "sources": [
+            {
+              "url": "https://github.com/advisories/GHSA-v4jc-pm6r-3vj8",
+              "label": "GitHub Advisory"
+            }
+          ],
+          "url": "https://github.com/advisories/GHSA-v4jc-pm6r-3vj8",
+          "pubDate": "2026-06-18T14:28:02.000Z"
+        },
+        {
+          "title": "PraisonAI: Missing Authentication for Critical Function and Improper Neutralization of Special Elements used in an OS Command ('OS Command Injection') in praisonai",
+          "cve": null,
+          "severity": "critical",
+          "score": 59,
+          "corroboration": 2,
+          "region": "intl",
+          "body": "Vulnérabilité critique affectant praisonai (pip) (score CVSS 9.8).\n\nPraisonAI A2U incomplete authentication fix leaves current serve command unauthenticated by default\n\n--> Name Query To see all available qualifiers, see our documentation .\n\npraisonai serve a2u --host 0.0.0.0 --port 8002 The current CLI wrapper does not expose --api-key , does not install the common API-key middleware, and does not generate a token for A2U. It calls create_a2u_routes(app) directly.",
+          "detail": "Vulnérabilité critique affectant praisonai (pip) (score CVSS 9.8).\n\nPraisonAI A2U incomplete authentication fix leaves current serve command unauthenticated by default\n\n--> Name Query To see all available qualifiers, see our documentation .\n\npraisonai serve a2u --host 0.0.0.0 --port 8002 The current CLI wrapper does not expose --api-key , does not install the common API-key middleware, and does not generate a token for A2U. It calls create_a2u_routes(app) directly. That helper only enforces auth if A2U_AUTH_TOKEN is already present; if the variable is missing, _authenticate_request() returns None and treats auth as disabled.\n\nThis is an incomplete-fix report for the published A2U issue, not a separate trust-model-only concern.\n\nsrc/praisonai/praisonai/cli/commands/serve.py:570-585 It forwards only those values to the shared serve handler:\n\nargs = [ \"a2u\" , \"--host\" , host , \"--port\" , str ( port )] The serve handler for A2U likewise accepts only host and port , then creates the app:\n\nsrc/praisonai/praisonai/cli/features/serve.py:802-817 _create_a2u_app() registers A2U routes directly:",
+          "action": "Vérifier l'exposition du parc et appliquer le correctif éditeur dès sa disponibilité.",
+          "sources": [
+            {
+              "url": "https://github.com/advisories/GHSA-jxcw-qp4h-6jfq",
+              "label": "GitHub Advisory"
+            },
+            {
+              "url": "https://www.securityweek.com/critical-command-execution-vulnerability-patched-in-cisco-ise/",
+              "label": "SecurityWeek"
+            }
+          ],
+          "url": "https://github.com/advisories/GHSA-jxcw-qp4h-6jfq",
+          "pubDate": "2026-06-18T14:27:00.000Z"
+        },
+        {
+          "title": "PraisonAI: Remote Code Execution via Sandbox Escape in `codeMode` Tool",
+          "cve": null,
+          "severity": "critical",
+          "score": 59,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Vulnérabilité critique affectant praisonai (npm) (score CVSS 9.9).\n\nnpm PraisonAI AgentLoop onToolCall approval runs after tool execution\n\n--> Name Query To see all available qualifiers, see our documentation .\n\nBecause AI SDK generateText() executes tools with an execute function as part of the generation call, onToolCall can deny a tool only after the sensitive side effect has already happened.",
+          "detail": "Vulnérabilité critique affectant praisonai (npm) (score CVSS 9.9).\n\nnpm PraisonAI AgentLoop onToolCall approval runs after tool execution\n\n--> Name Query To see all available qualifiers, see our documentation .\n\nBecause AI SDK generateText() executes tools with an execute function as part of the generation call, onToolCall can deny a tool only after the sensitive side effect has already happened. PraisonAI then returns finishReason: \"tool_rejected\" , which is a false security signal: the rejected tool already ran.\n\nThe PoV is deterministic and local-only. It uses mock AI SDK modules, no live model call, no API key, and no network target. The tool increments an in-memory counter rather than touching the filesystem or executing commands.\n\nIn src/praisonai-ts/src/ai/agent-loop.ts , the public config says:\n\nThe published npm:praisonai@1.7.1 dist files preserve the same order:\n\nThis is not a trust-model-only issue. PraisonAI explicitly labels onToolCall as an approval callback and shows an approval example. A user who returns false from that callback expects the tool not to run.",
+          "action": "Vérifier l'exposition du parc et appliquer le correctif éditeur dès sa disponibilité.",
+          "sources": [
+            {
+              "url": "https://github.com/advisories/GHSA-h2w2-v7j6-xqm4",
+              "label": "GitHub Advisory"
+            }
+          ],
+          "url": "https://github.com/advisories/GHSA-h2w2-v7j6-xqm4",
+          "pubDate": "2026-06-18T14:26:51.000Z"
+        },
+        {
+          "title": "npm PraisonAI AgentOS exposes unauthenticated agent listing and invocation",
+          "cve": null,
+          "severity": "critical",
+          "score": 59,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Vulnérabilité critique affectant praisonai (npm) (score CVSS 9.8).\n\nnpm PraisonAI MCPServer exposes unauthenticated HTTP tools/call\n\n--> Name Query To see all available qualifiers, see our documentation .\n\nThis lets any network client that can reach the HTTP port list tools and invoke registered server-side tools without credentials. Supplying Authorization: Bearer invalid makes no difference.\n\nMCPServerConfig exposes server metadata, tools/resources/prompts, stdio, port, and logging.",
+          "detail": "Vulnérabilité critique affectant praisonai (npm) (score CVSS 9.8).\n\nnpm PraisonAI MCPServer exposes unauthenticated HTTP tools/call\n\n--> Name Query To see all available qualifiers, see our documentation .\n\nThis lets any network client that can reach the HTTP port list tools and invoke registered server-side tools without credentials. Supplying Authorization: Bearer invalid makes no difference.\n\nMCPServerConfig exposes server metadata, tools/resources/prompts, stdio, port, and logging. It does not expose an auth token, authorization policy, MCPSecurity instance, authorization callback, or loopback-only option:\n\nPraisonAI's MCP documentation says MCP servers allow AI models to use tools and communicate with external systems. The same page's security considerations say to use API keys in production, implement rate limiting, validate incoming requests, use HTTPS, and limit custom tool permissions.\n\nPraisonAI's security page also documents prior breaking hardening where API servers were changed to require authentication by default and bind to 127.0.0.1 instead of 0.0.0.0 . It separately lists MCP tools/call issues as security vulnerabilities.\n\nThis is not merely a deployment hardening suggestion. The package exposes an HTTP MCP server API and a separate security manager, but the server's own HTTP transport provides no way to enforce the documented API-key requirement.",
+          "action": "Vérifier l'exposition du parc et appliquer le correctif éditeur dès sa disponibilité.",
+          "sources": [
+            {
+              "url": "https://github.com/advisories/GHSA-j4f3-55x4-r6q2",
+              "label": "GitHub Advisory"
+            }
+          ],
+          "url": "https://github.com/advisories/GHSA-j4f3-55x4-r6q2",
+          "pubDate": "2026-06-18T14:26:48.000Z"
+        },
+        {
+          "title": "npm PraisonAI MCPSecurity Basic/OAuth authentication policies accept invalid credentials without validation",
+          "cve": null,
+          "severity": "critical",
+          "score": 58,
+          "corroboration": 2,
+          "region": "intl",
+          "body": "Vulnérabilité critique affectant praisonai (npm) (score CVSS 9.6).\n\nCrawl4AI: Arbitrary file write (path traversal) in crawler downloads can lead to RCE\n\n--> Name Query To see all available qualifiers, see our documentation .\n\nThe HTTP-strategy sink is reachable pre-auth on the default Docker deployment; both are reachable for SDK users simply by crawling an attacker-controlled URL.",
+          "detail": "Vulnérabilité critique affectant praisonai (npm) (score CVSS 9.6).\n\nCrawl4AI: Arbitrary file write (path traversal) in crawler downloads can lead to RCE\n\n--> Name Query To see all available qualifiers, see our documentation .\n\nThe HTTP-strategy sink is reachable pre-auth on the default Docker deployment; both are reachable for SDK users simply by crawling an attacker-controlled URL. The default Playwright crawl path that does not trigger a download is unaffected.\n\nArbitrary file write with attacker-controlled content as the user running the crawler, escalating to remote code execution.\n\nBoth sinks now resolve the destination through a single hardened helper ( _safe_download_filepath ) that reduces the attacker-influenced name to a bare basename (dropping absolute paths and .. components) and re-checks, via realpath , that the resolved path stays inside the downloads root (defeating symlink/TOCTOU escapes). A traversal attempt is rejected; normal downloads are unchanged.\n\nY4tacker - reported the Content-Disposition path traversal in the HTTP crawler with a clear PoC and a basename + realpath-containment fix recommendation.\n\nunclecode published to unclecode/crawl4ai Jun 18, 2026 Published to the GitHub Advisory Database Jun 18, 2026 Reviewed Jun 18, 2026 Last updated Jun 18, 2026 Severity Critical 9.6 CVSS overall score This score calculates overall vulnerability severity from 0 to 10 and is based on the Common Vulnerability Scoring System (CVSS). / 10 CVSS v3 base metrics Attack vector Network Attack complexity Low Privileges required None User interaction Required Scope Changed Confidentiality High Integrity High Availability High Learn more about base metrics CVSS v3 base metrics Attack vector: More severe the more the remote (logically and physically) an attacker can",
+          "action": "Vérifier l'exposition du parc et appliquer le correctif éditeur dès sa disponibilité.",
+          "sources": [
+            {
+              "url": "https://github.com/advisories/GHSA-2jq4-q6vv-4cp3",
+              "label": "GitHub Advisory"
+            },
+            {
+              "url": "https://www.globalsecuritymag.fr/vigilance-fr-himmelblau-read-write-access-via-kerberos-cache-files-analyzed-on.html",
+              "label": "Global Sec Mag"
+            }
+          ],
+          "url": "https://github.com/advisories/GHSA-2jq4-q6vv-4cp3",
+          "pubDate": "2026-06-19T04:01:04.631Z"
+        },
+        {
+          "title": "netlicensing-mcp: REST Path Traversal Bypasses Token Redaction",
+          "cve": null,
+          "severity": "critical",
+          "score": 58,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Vulnérabilité critique affectant netlicensing-mcp (pip) (score CVSS 9.6).\n\nnetlicensing-mcp: REST Path Traversal Bypasses Token Redaction\n\n--> Name Query To see all available qualifiers, see our documentation .\n\nThe vulnerability is a path traversal (CWE-22) that exploits the interaction between unsanitized string interpolation and httpx 's WHATWG URL normalization.\n\nRedaction bypass — src/netlicensing_mcp/server.py:336 and src/netlicensing_mcp/redaction.py:180-239\n\nThe tool handler wraps the response via _wrap_json(entity, \"Prod…",
+          "detail": "Vulnérabilité critique affectant netlicensing-mcp (pip) (score CVSS 9.6).\n\nnetlicensing-mcp: REST Path Traversal Bypasses Token Redaction\n\n--> Name Query To see all available qualifiers, see our documentation .\n\nThe vulnerability is a path traversal (CWE-22) that exploits the interaction between unsanitized string interpolation and httpx 's WHATWG URL normalization.\n\nRedaction bypass — src/netlicensing_mcp/server.py:336 and src/netlicensing_mcp/redaction.py:180-239\n\nThe tool handler wraps the response via _wrap_json(entity, \"Product\") , which calls only the generic _json() redaction. The token-specific path _wrap_json_token_read() → redact_token_read() is never invoked. The function redact_token_read() at redaction.py:180-239 is the only code that masks APIKEY number and SHOP shopURL fields; because it is not on this code path, the raw API key value is returned verbatim in the MCP tool output.\n\n# Build from the repository root (requires repo/ and vuln-001/ directories) docker build -t netlicensing-vuln-001 \\ -f vuln-001/Dockerfile \\ reports/pypiAi_1561_Labs64__NetLicensing-MCP/ # Run — exit code 0 confirms the vulnerability docker run --rm netlicensing-vuln-001 Option B — Direct Python\n\nAdd a centralized path-segment validator in client.py and call it from all HTTP helper functions ( nl_get , nl_post , nl_put , nl_delete ):",
+          "action": "Vérifier l'exposition du parc et appliquer le correctif éditeur dès sa disponibilité.",
+          "sources": [
+            {
+              "url": "https://github.com/advisories/GHSA-hxpf-9xvq-wph8",
+              "label": "GitHub Advisory"
+            }
+          ],
+          "url": "https://github.com/advisories/GHSA-hxpf-9xvq-wph8",
+          "pubDate": "2026-06-18T17:22:02.000Z"
+        },
+        {
+          "title": "CVE-2026-53853 — OpenClaw: Linux and macOS exec allowlists skipped configured argument patterns",
+          "cve": "CVE-2026-53853",
+          "severity": "high",
+          "score": 57,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Vulnérabilité élevée CVE-2026-53853 affectant openclaw (npm) (score CVSS 7.1).\n\nOpenClaw: Linux and macOS exec allowlists skipped configured argument patterns\n\n--> Name Query To see all available qualifiers, see our documentation .\n\nThis meant an operator could configure an allowlist entry that appeared to permit only a narrow argv shape, but OpenClaw would allow other argv for the same executable without an approval prompt when tools.exec.security was set to allowlist .\n\nThis issue is limited to direct enforcement of configured argPa…",
+          "detail": "Vulnérabilité élevée CVE-2026-53853 affectant openclaw (npm) (score CVSS 7.1).\n\nOpenClaw: Linux and macOS exec allowlists skipped configured argument patterns\n\n--> Name Query To see all available qualifiers, see our documentation .\n\nThis meant an operator could configure an allowlist entry that appeared to permit only a narrow argv shape, but OpenClaw would allow other argv for the same executable without an approval prompt when tools.exec.security was set to allowlist .\n\nThis issue is limited to direct enforcement of configured argPattern values. OpenClaw's exec approvals remain best-effort guardrails and do not attempt to semantically model every interpreter, loader, package script, shell feature, or transitive file a command may use.\n\nThis affects OpenClaw gateway deployments that meet all of these conditions:\n\nPath-only allowlist entries are not additionally affected by this issue, because those entries intentionally allow any arguments for the matched executable. Windows was not affected by this specific bug because the affected code path already applied argPattern checks on Windows.\n\nIf an untrusted or lower-trust sender can influence a tool-enabled agent to call exec, they may be able to run disallowed arguments for an executable that the operator intended to restrict with argPattern . Depending on the executable, those arguments can cause host-side file access, network access, or command execution that should have required an approval prompt.",
+          "action": "Vérifier l'exposition du parc et appliquer le correctif éditeur dès sa disponibilité.",
+          "sources": [
+            {
+              "url": "https://github.com/advisories/GHSA-v2ww-5rh7-2h5v",
+              "label": "GitHub Advisory"
+            }
+          ],
+          "url": "https://github.com/advisories/GHSA-v2ww-5rh7-2h5v",
+          "pubDate": "2026-06-18T20:33:22.000Z"
+        },
+        {
+          "title": "F5 Patches Critical NGINX Vulnerabilities Enabling Unauthenticated Code Execution",
+          "cve": "CVE-2026-42530",
+          "severity": "critical",
+          "score": 49,
+          "corroboration": 2,
+          "region": "intl",
+          "body": "Vulnérabilité critique CVE-2026-42530 affectant F5.\n\nF5 released emergency updates for critical NGINX flaws (CVE-2026-42530, CVE-2026-42055) that could enable unauthenticated code execution. F5 has issued out-of-band patches for multiple NGINX vulnerabilities , including two critical flaws, respectively tracked as CVE-2026-42530 and CVE-2026-42055 (CVSS 9.2).",
+          "detail": "Vulnérabilité critique CVE-2026-42530 affectant F5.\n\nF5 released emergency updates for critical NGINX flaws (CVE-2026-42530, CVE-2026-42055) that could enable unauthenticated code execution. F5 has issued out-of-band patches for multiple NGINX vulnerabilities , including two critical flaws, respectively tracked as CVE-2026-42530 and CVE-2026-42055 (CVSS 9.2). The bugs affect HTTP modules and can be exploited remotely without authentication to trigger memory corruption, potentially causing service restarts or enabling arbitrary code execution. The flaw CVE-2026-42530 (CVSS score of 9.2) is a critical Use-After-Free vulnerability in the ngx_http_v3_module of NGINX Open Source. When HTTP/3 QUIC support is enabled, a remote unauthenticated attacker can exploit a specially crafted HTTP/3 session to reopen a QPACK encoder stream, causing memory corruption in the NGINX worker process. Successful exploitation may lead to service disruption and worker process restarts, and under certain conditions, such as when ASLR is disabled or bypassed, could allow arbitrary code execution. &#8220;NGINX Open Source has a vulnerability in the ngx_http_v3_module module. When NGINX Open Source is configured to use the HTTP/3 QUIC module, a remote unauthenticated attacker along with conditions beyond their control can use a specially crafted HTTP/3 session to reopen a QPACK encoder stream. This may cause a Use-After-Free in the NGINX worker process, leadi",
+          "action": "Vérifier l'exposition du parc et appliquer le correctif éditeur dès sa disponibilité.",
+          "sources": [
+            {
+              "url": "https://thehackernews.com/2026/06/f5-patches-two-critical-nginx-open.html",
+              "label": "The Hacker News"
+            },
+            {
+              "url": "https://securityaffairs.com/193842/security/f5-patches-critical-nginx-vulnerabilities-enabling-unauthenticated-code-execution.html",
+              "label": "Security Affairs"
+            }
+          ],
+          "url": "https://thehackernews.com/2026/06/f5-patches-two-critical-nginx-open.html",
+          "pubDate": "2026-06-18T17:32:14.000Z"
+        },
+        {
+          "title": "Cisco fixed a critical ISE vulnerability that lets attackers to gain root access",
+          "cve": "CVE-2026-20181",
+          "severity": "critical",
+          "score": 49,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Vulnérabilité critique CVE-2026-20181 affectant Cisco.\n\nCisco addressed CVE-2026-20181, a critical ISE vulnerability that lets authenticated admins execute commands and gain root access. Cisco addressed a critical command execution vulnerability, tracked as CVE-2026-20181 (CVSS score of 9.1), affecting Identity Services Engine (ISE) and ISE-PIC.",
+          "detail": "Vulnérabilité critique CVE-2026-20181 affectant Cisco.\n\nCisco addressed CVE-2026-20181, a critical ISE vulnerability that lets authenticated admins execute commands and gain root access. Cisco addressed a critical command execution vulnerability, tracked as CVE-2026-20181 (CVSS score of 9.1), affecting Identity Services Engine (ISE) and ISE-PIC. The flaw stems from improper validation of user-supplied input, allowing an authenticated attacker with administrative credentials to send crafted HTTP requests and execute commands on the underlying operating system. Successful exploitation can lead to privilege escalation and full root access. According to the advisory, only an attacker with valid administrative credentials can exploit this vulnerability. &#8220;This vulnerability is due to insufficient validation of user-supplied input. An attacker could exploit this vulnerability by sending a crafted HTTP request to an affected device. A successful exploit could allow the attacker to obtain user-level access to the underlying operating system and then elevate privileges to root.&#8221; reads the advisory . &#8220;In single-node deployments, successful exploitation of this vulnerability could cause the affected ISE node to become unavailable, resulting in a denial of service (DoS) condition. In that condition, endpoints that have not already authenticated would be unable to access the network until the node is restored.&#8221; In single-n",
+          "action": "Vérifier l'exposition du parc et appliquer le correctif éditeur dès sa disponibilité.",
+          "sources": [
+            {
+              "url": "https://securityaffairs.com/193849/uncategorized/cisco-fixed-a-critical-ise-vulnerability-that-lets-attackers-to-gain-root-access.html",
+              "label": "Security Affairs"
+            }
+          ],
+          "url": "https://securityaffairs.com/193849/uncategorized/cisco-fixed-a-critical-ise-vulnerability-that-lets-attackers-to-gain-root-access.html",
+          "pubDate": "2026-06-18T16:11:00.000Z"
+        },
+        {
+          "title": "Google told researcher 'Nice catch!' Then denied bug bounty for flaw it still hasn't fixed",
+          "cve": null,
+          "severity": "critical",
+          "score": 49,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Vulnérabilité critique affectant Google.\n\nEXCLUSIVE Google has a security hole in a Kubernetes operator that could allow attackers to bypass Google Cloud Platform (GCP) identity and access protections and gain full control over any organization's cloud environment. Or it has a serious communication and transparency problem when it comes to its bug bounty programs. Maybe both.",
+          "detail": "Vulnérabilité critique affectant Google.\n\nEXCLUSIVE Google has a security hole in a Kubernetes operator that could allow attackers to bypass Google Cloud Platform (GCP) identity and access protections and gain full control over any organization's cloud environment. Or it has a serious communication and transparency problem when it comes to its bug bounty programs. Maybe both. Researcher and frequent cloud bug hunter Justin O'Leary told us that he found and reported to Google a major flaw that allows any Kubernetes namespace user to bypass GCP's Identity and Access Management (IAM) controls and therefore gain root access to managing an organization's cloud resources. Google initially rated the bug high priority and high severity, with a rep telling O'Leary \"Nice Catch!\" Then, the cloud giant changed course and told O'Leary and The Register that there's no vulnerability, so no fix and no reward payout. The bug report, however, is still marked high-priority and accepted. O'Leary spoke exclusively with The Register about the vulnerability, which he named ConfigConfusion, and what has happened since he reported it to Google on March 8. He is also releasing a blog post with more details. It stems from an issue in Config Connector, an open source Kubernetes add-on that lets users manage Google Cloud resources through Kubernetes. According to O'Leary, Config Connector doesn't perform an authorization check, and this allows any",
+          "action": "Vérifier l'exposition du parc et appliquer le correctif éditeur dès sa disponibilité.",
+          "sources": [
+            {
+              "url": "https://www.theregister.com/security/2026/06/18/google-told-researcher-nice-catch-then-denied-bug-bounty-for-flaw-it-still-hasnt-fixed/5258076",
+              "label": "The Register"
+            }
+          ],
+          "url": "https://www.theregister.com/security/2026/06/18/google-told-researcher-nice-catch-then-denied-bug-bounty-for-flaw-it-still-hasnt-fixed/5258076",
+          "pubDate": "2026-06-18T15:00:00.000Z"
+        },
+        {
+          "title": "F5 issues out-of-band patches for critical NGINX vulnerabilities",
+          "cve": null,
+          "severity": "critical",
+          "score": 49,
+          "corroboration": 2,
+          "region": "intl",
+          "body": "Vulnérabilité critique affectant F5.\n\nCybersecurity company F5 has released out-of-band security updates to address multiple NGINX web server vulnerabilities, including two critical-severity flaws that could allow attackers to execute code on vulnerable systems.\n\nFortiBleed leak exposes Fortinet VPN credentials for 73,000 devices.\n\nMalicious JetBrains Marketplace plugins steal AI API keys from developers\n\nSteam Workshop abused to spread malware via Wallpaper Engine app\n\nGentlemen ransomware us…",
+          "detail": "Vulnérabilité critique affectant F5.\n\nCybersecurity company F5 has released out-of-band security updates to address multiple NGINX web server vulnerabilities, including two critical-severity flaws that could allow attackers to execute code on vulnerable systems.\n\nFortiBleed leak exposes Fortinet VPN credentials for 73,000 devices.\n\nMalicious JetBrains Marketplace plugins steal AI API keys from developers\n\nSteam Workshop abused to spread malware via Wallpaper Engine app\n\nGentlemen ransomware uses multiple EDR killers to disable defenses\n\nNintendo confirms data stolen in WebMD subsidiary cyberattack\n\nUSB worm spreads crypto-stealing malware via Windows shortcut files",
+          "action": "Vérifier l'exposition du parc et appliquer le correctif éditeur dès sa disponibilité.",
+          "sources": [
+            {
+              "url": "https://www.bleepingcomputer.com/news/security/f5-issues-out-of-band-patches-for-critical-nginx-vulnerabilities/",
+              "label": "BleepingComputer"
+            },
+            {
+              "url": "https://www.securityweek.com/f5-patches-critical-high-severity-nginx-vulnerabilities/",
+              "label": "SecurityWeek"
+            }
+          ],
+          "url": "https://www.bleepingcomputer.com/news/security/f5-issues-out-of-band-patches-for-critical-nginx-vulnerabilities/",
+          "pubDate": "2026-06-18T11:33:00.000Z"
+        },
+        {
+          "title": "Schneider Electric EasyLogic T150 and Saitel DP",
+          "cve": "CVE-2026-6865",
+          "severity": "critical",
+          "score": 34,
+          "corroboration": 1,
+          "region": "fr",
+          "body": "Vulnérabilité critique CVE-2026-6865.\n\nView CSAF Summary Successful exploitation this vulnerability could allow an attacker to gain unauthorized access to sensitive files The following versions of Schneider Electric EasyLogic T150 and Saitel DP are affected: Schneider Electric EasyLogic T150 (formerly Saitel DR) Remote Terminal Unit &amp; Controller Firmware installed on Schneider Electric EasyLogic T150 (formerly Saitel DR) Remote Terminal Unit &amp; Controller (All versions) vers:semver/&lt;=…",
+          "detail": "Vulnérabilité critique CVE-2026-6865.\n\nView CSAF Summary Successful exploitation this vulnerability could allow an attacker to gain unauthorized access to sensitive files The following versions of Schneider Electric EasyLogic T150 and Saitel DP are affected: Schneider Electric EasyLogic T150 (formerly Saitel DR) Remote Terminal Unit &amp; Controller Firmware installed on Schneider Electric EasyLogic T150 (formerly Saitel DR) Remote Terminal Unit &amp; Controller (All versions) vers:semver/&lt;=11.06.31 (CVE-2026-6865) Schneider Electric Saitel DP Remote Terminal Unit &amp; Controller Firmware installed on Schneider Electric Saitel DP Remote Terminal Unit &amp; Controller (All versions) vers:semver/&lt;=11.06.36 (CVE-2026-6865) CVSS Vendor Equipment Vulnerabilities v3 7.1 Schneider Electric Schneider Electric EasyLogic T150 and Saitel DP Improper Limitation of a Pathname to a Restricted Directory ('Path Traversal') Background Critical Infrastructure Sectors: Energy, Critical Manufacturing Countries/Areas Deployed: Worldwide Company Headquarters Location: France Vulnerabilities Expand All + CVE-2026-6865 CWE-22: Improper Limitation of a Pathname to a Restricted Directory (\"Path Traversal\") vulnerability that could cause unauthorized access to sensitive files when user-supplied input is improperly handled during server-side file path processing. View CVE Details Affected Products Schneider Electric EasyLogic T150 and S",
+          "action": "Vérifier l'exposition du parc et appliquer le correctif éditeur dès sa disponibilité.",
+          "sources": [
+            {
+              "url": "https://www.cisa.gov/news-events/ics-advisories/icsa-26-169-04",
+              "label": "CISA Advisories"
+            }
+          ],
+          "url": "https://www.cisa.gov/news-events/ics-advisories/icsa-26-169-04",
+          "pubDate": "2026-06-18T12:00:00.000Z"
+        },
+        {
+          "title": "Les rencontres du Clusif",
+          "cve": null,
+          "severity": "high",
+          "score": 24,
+          "corroboration": 1,
+          "region": "fr",
+          "body": "Vulnérabilité élevée.\n\nPour la première fois depuis sa création, le Clusif organise une journée complète d'échanges pour ses membres. Cette journée est ouverte à la presse. Mercredi 1er juillet 2026 - 9 h-17h Pavillon Royal Carrefour du Bout des Lacs 75016 Paris Programme 8h30 - Accueil Café 9h - Introduction Odile Duthil, présidente du Clusif 9h15 - Keynote d'ouverture Vincent Strubel, directeur de l'ANSSI 9h45 - Table ronde 1 - SecNum Cloud : contraintes réglementaires ou avan…",
+          "detail": "Vulnérabilité élevée.\n\nPour la première fois depuis sa création, le Clusif organise une journée complète d'échanges pour ses membres. Cette journée est ouverte à la presse. Mercredi 1er juillet 2026 - 9 h-17h Pavillon Royal Carrefour du Bout des Lacs 75016 Paris Programme 8h30 - Accueil Café 9h - Introduction Odile Duthil, présidente du Clusif 9h15 - Keynote d'ouverture Vincent Strubel, directeur de l'ANSSI 9h45 - Table ronde 1 - SecNum Cloud : contraintes réglementaires ou avantage stratégique ? Mohamed Ait Saidi, Head of Security, Oodrive ; Stéphane Gomez, Director of IS, IT and Security, Scaleway Le référentiel SecNumCloud redéfinit les exigences de sécurité, de souveraineté et de conformité auxquelles les RSSI doivent désormais répondre dans leurs stratégies cloud. Protection des données sensibles, maîtrise des risques fournisseurs, résilience des infrastructures : les enjeux dépassent aujourd'hui le seul cadre technique. Cette table ronde réunira experts cybersécurité, industriels et autorité nationale pour partager retours d'expérience, arbitrages et bonnes pratiques autour du cloud de confiance. Quels impacts concrets pour les politiques de sécurité, la gestion des risques et les architectures IT des entreprises ? Un échange opérationnel pour décrypter à la fois les avantages stratégiques du SecNumCloud et les contraintes techniques, organisationnelles et réglementaires qu'il impose aux entrep",
+          "action": "Vérifier l'exposition du parc et appliquer le correctif éditeur dès sa disponibilité.",
+          "sources": [
+            {
+              "url": "https://www.globalsecuritymag.fr/les-rencontres-du-clusif.html",
+              "label": "Global Sec Mag"
+            }
+          ],
+          "url": "https://www.globalsecuritymag.fr/les-rencontres-du-clusif.html",
+          "pubDate": "2026-06-19T04:01:04.623Z"
+        },
+        {
+          "title": "Alibaba Cloud inaugure sa région France sans services IA",
+          "cve": null,
+          "severity": "high",
+          "score": 24,
+          "corroboration": 1,
+          "region": "fr",
+          "body": "Vulnérabilité élevée.\n\nInstances GPU, fonctions, bureaux virtuels, sauvegarde managée&#8230; Autant de services pour le moment non disponibles dans la région France d&rsquo;Alibaba Cloud. Désormais officiellement inaugurée , elle comprend deux zones de disponibilité. C&rsquo;est la troisième que le groupe chinois ouvre en Europe après celles de Francfort (2016 ; 3 AZ) et de Londres (2018 ; 2 AZ).",
+          "detail": "Vulnérabilité élevée.\n\nInstances GPU, fonctions, bureaux virtuels, sauvegarde managée&#8230; Autant de services pour le moment non disponibles dans la région France d&rsquo;Alibaba Cloud. Désormais officiellement inaugurée , elle comprend deux zones de disponibilité. C&rsquo;est la troisième que le groupe chinois ouvre en Europe après celles de Francfort (2016 ; 3 AZ) et de Londres (2018 ; 2 AZ). Il en prévoit une autre cette année aux Pays-Bas (où se trouve pour le moment une zone réseau). L&rsquo;inauguration s&rsquo;accompagne d&rsquo;une promesse de déployer, d&rsquo;ici à fin 2026, une « suite de services agentiques » (développement d&rsquo;agents, sandbox , garde-fous, centre de sécurité&#8230;). En l&rsquo;état, le « centre de gravité » Model Studio n&rsquo;est disponible dans aucune des trois régions européennes d&rsquo;Alibaba Cloud. C&rsquo;est aussi le cas, entre autres, de : SASE DataHub (traitement de données en flux) Outillage DevOps Grafana et OTel managés Détection de données sensibles, modération de contenu, détection de fraude Hors produits mondiaux (CDN, DNS, monitoring &#8230;), une vingtaine sont actuellement disponibles dans la région France. Parmi eux : Instances de calcul Stockages objet, bloc et fichier Load balancing et adresses IP élastiques VPC, NAT et VPN Kubernetes managé et registre de conteneurs Bases de données Tablestore, ApsaraDB (RDS, MongoDB) et Tair (compatible R",
+          "action": "Vérifier l'exposition du parc et appliquer le correctif éditeur dès sa disponibilité.",
+          "sources": [
+            {
+              "url": "https://www.silicon.fr/cloud-1370/alibaba-cloud-france-227780",
+              "label": "Silicon.fr"
+            }
+          ],
+          "url": "https://www.silicon.fr/cloud-1370/alibaba-cloud-france-227780",
+          "pubDate": "2026-06-18T08:38:13.000Z"
+        }
+      ]
+    },
+    {
+      "id": "attacks",
+      "items": [
+        {
+          "title": "CISA Urges Hardening Fortinet Devices After Reports of Credential Exposure",
+          "cve": null,
+          "severity": "high",
+          "score": 100,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Incident de sécurité rapporté par CISA Advisories.\n\nCISA is aware of global reports that malicious cyber actors have targeted internet-accessible Fortinet devices across government and private sector organizations using compromised credentials. This activity, referred to as FortiBleed, involves the exposure of leaked credentials associated with approximately 74,000 Fortinet devices, including firewalls and virtual private network (VPN) gateways.",
+          "detail": "Incident de sécurité rapporté par CISA Advisories.\n\nCISA is aware of global reports that malicious cyber actors have targeted internet-accessible Fortinet devices across government and private sector organizations using compromised credentials. This activity, referred to as FortiBleed, involves the exposure of leaked credentials associated with approximately 74,000 Fortinet devices, including firewalls and virtual private network (VPN) gateways. &nbsp; To defend against this malicious cyber activity, CISA urges impacted Fortinet customers with FortiGate appliances and associated secure sockets layer (SSL) VPN gateways to immediately: Terminate sessions and reset credentials. Terminate all active SSL VPN and administrative sessions. Reset all Fortinet VPN and administrative passwords, especially on internet-facing systems, and enforce strong password policies. Ensure secure credential storage. Confirm your organization’s use of the Password-Based Key Derivation Function 2 (PBKDF2) algorithm to store administrator credentials and remove weaker legacy hashes per Fortinet’s guidance (see, Fortinet's Technical Tip: Enforcing PBKDF2 as hash function for administrator accounts in FortiOS v7.2.11 and later ). &nbsp; Review logs. Review firewall, VPN, authentication, and domain controller logs for lateral movement, unusual access, suspicious accounts, or unauthorized configuration changes. Enable phishing-resistant multifactor authentica",
+          "action": "Surveiller les indicateurs de compromission associés et contrôler les actifs exposés.",
+          "sources": [
+            {
+              "url": "https://www.cisa.gov/news-events/alerts/2026/06/18/cisa-urges-hardening-fortinet-devices-after-reports-credential-exposure",
+              "label": "CISA Advisories"
+            }
+          ],
+          "url": "https://www.cisa.gov/news-events/alerts/2026/06/18/cisa-urges-hardening-fortinet-devices-after-reports-credential-exposure",
+          "pubDate": "2026-06-18T12:00:00.000Z"
+        },
+        {
+          "title": "Australian sugar producer works to restore operations as ransomware group claims attack",
+          "cve": null,
+          "severity": "news",
+          "score": 80,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Incident de sécurité rapporté par The Record.\n\nMackay Sugar said it was \"working urgently\" to verify claims that a highly active ransomware group was behind a cyberattack that shut down harvesting and milling operations.\n\nMore than a week after a cyberattack disrupted operations at Australia's second-largest sugar producer, the company said it is investigating claims by a ransomware group as it continues to restore its systems.\n\nThe threat actor known as Gentlemen claimed responsibility for the inciden…",
+          "detail": "Incident de sécurité rapporté par The Record.\n\nMackay Sugar said it was \"working urgently\" to verify claims that a highly active ransomware group was behind a cyberattack that shut down harvesting and milling operations.\n\nMore than a week after a cyberattack disrupted operations at Australia's second-largest sugar producer, the company said it is investigating claims by a ransomware group as it continues to restore its systems.\n\nThe threat actor known as Gentlemen claimed responsibility for the incident at Mackay Sugar, which disrupted sugar mill operations across one of the country's largest cane-growing regions.\n\nMackay Sugar has not attributed the incident to a specific threat actor or confirmed Gentlemen's involvement. However, in a statement on Wednesday, the company said it was aware of the hackers' claim on the group's dark web leak site and had found evidence that an external party had accessed parts of its IT environment.\n\n\"We are working urgently to verify these claims, including the nature and extent of any information that may have been accessed,\" the company said.\n\nThe cyberattack earlier this month forced two of Mackay Sugar's mills to suspend operations shortly after the annual sugarcane crushing season began, bringing harvesting to a halt across large parts of Queensland's Mackay region. The company's Racecourse and Farleigh mills have remained shut since June 10, while its third facility avoided disruption because it was not operating at the time of the attack.\n\nThe company said it continues to restore systems and expects some harvesting to resume this week.",
+          "action": "Surveiller les indicateurs de compromission associés et contrôler les actifs exposés.",
+          "sources": [
+            {
+              "url": "https://therecord.media/mackay-sugar-cyberattack-claimed-gentlemen",
+              "label": "The Record"
+            }
+          ],
+          "url": "https://therecord.media/mackay-sugar-cyberattack-claimed-gentlemen",
+          "pubDate": "2026-06-18T14:20:00.000Z"
+        },
+        {
+          "title": "‘Popa’ Botnet Linked to Publicly-Traded Israeli Firm",
+          "cve": null,
+          "severity": "critical",
+          "score": 79,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Incident de sécurité rapporté par Krebs on Security.\n\nFor the past four years, a sprawling Android-based botnet called Popa has forced millions of consumer TV boxes to relay Internet traffic linked to advertising fraud, account takeovers, and mass data-scraping efforts. This week, researchers from multiple security firms concluded that the Popa botnet is linked to NetNut , a &#8220;residential proxy&#8221; provider operated by the publicly-traded Israeli firm Alarum Technologies Ltd [NASDAQ: ALAR].",
+          "detail": "Incident de sécurité rapporté par Krebs on Security.\n\nFor the past four years, a sprawling Android-based botnet called Popa has forced millions of consumer TV boxes to relay Internet traffic linked to advertising fraud, account takeovers, and mass data-scraping efforts. This week, researchers from multiple security firms concluded that the Popa botnet is linked to NetNut , a &#8220;residential proxy&#8221; provider operated by the publicly-traded Israeli firm Alarum Technologies Ltd [NASDAQ: ALAR]. Malicious streaming devices sold online that enroll the user&#8217;s home Internet address in a residential proxy service. Image: HUMAN Security. Popa is a massive botnet, but by all accounts it is unlike traditional botnets that enlist compromised systems in destructive activities, such as coordinating huge distributed denial-of-service attacks. Rather, Popa appears designed with a singular purpose: Implementing a persistent communications layer capable of registering a device, maintaining long-lived encrypted connections, and opening communication tunnels on demand. Experts say Popa is a plugin component associated with the Vo1d botnet, a large-scale malware campaign targeting unofficial Android-based TV boxes. These devices, which are marketed under thousands of brand names and model numbers and broadly available for purchase at top e-commerce destinations, all advertise the ability to stream hundreds of subscription video services f",
+          "action": "Surveiller les indicateurs de compromission associés et contrôler les actifs exposés.",
+          "sources": [
+            {
+              "url": "https://krebsonsecurity.com/2026/06/popa-botnet-linked-to-publicly-traded-israeli-firm/",
+              "label": "Krebs on Security"
+            }
+          ],
+          "url": "https://krebsonsecurity.com/2026/06/popa-botnet-linked-to-publicly-traded-israeli-firm/",
+          "pubDate": "2026-06-18T17:37:58.000Z"
+        },
+        {
+          "title": "Gentlemen ransomware uses multiple EDR killers to disable defenses",
+          "cve": null,
+          "severity": "news",
+          "score": 74,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Incident de sécurité rapporté par BleepingComputer.\n\nThe Gentlemen ransomware-as-a-service (RaaS) is actively developing and maintaining a suite of endpoint detection and response (EDR) killers to help affiliates evade detection in attacks.\n\nFortiBleed leak exposes Fortinet VPN credentials for 73,000 devices.\n\nMalicious JetBrains Marketplace plugins steal AI API keys from developers\n\nSteam Workshop abused to spread malware via Wallpaper Engine app\n\nGentlemen ransomware uses multiple EDR killers to disable de…",
+          "detail": "Incident de sécurité rapporté par BleepingComputer.\n\nThe Gentlemen ransomware-as-a-service (RaaS) is actively developing and maintaining a suite of endpoint detection and response (EDR) killers to help affiliates evade detection in attacks.\n\nFortiBleed leak exposes Fortinet VPN credentials for 73,000 devices.\n\nMalicious JetBrains Marketplace plugins steal AI API keys from developers\n\nSteam Workshop abused to spread malware via Wallpaper Engine app\n\nGentlemen ransomware uses multiple EDR killers to disable defenses\n\nNintendo confirms data stolen in WebMD subsidiary cyberattack\n\nUSB worm spreads crypto-stealing malware via Windows shortcut files",
+          "action": "Surveiller les indicateurs de compromission associés et contrôler les actifs exposés.",
+          "sources": [
+            {
+              "url": "https://www.bleepingcomputer.com/news/security/gentlemen-ransomware-uses-multiple-edr-killers-to-disable-defenses/",
+              "label": "BleepingComputer"
+            }
+          ],
+          "url": "https://www.bleepingcomputer.com/news/security/gentlemen-ransomware-uses-multiple-edr-killers-to-disable-defenses/",
+          "pubDate": "2026-06-18T22:31:52.000Z"
+        },
+        {
+          "title": "Telegram admits it couldn't police exam-leak channels, India tells court",
+          "cve": null,
+          "severity": "high",
+          "score": 73,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Incident de sécurité rapporté par BleepingComputer.\n\nIndia's government has told the Delhi High Court that Telegram was warned about two weeks before it was blocked, and that the platform admitted it could not proactively detect the channels selling leaked exam papers. Telegram says it cooperated and the ban is unlawful.\n\nFortiBleed leak exposes Fortinet VPN credentials for 73,000 devices.\n\nMalicious JetBrains Marketplace plugins steal AI API keys from developers\n\nSteam Workshop abused to spread malware via…",
+          "detail": "Incident de sécurité rapporté par BleepingComputer.\n\nIndia's government has told the Delhi High Court that Telegram was warned about two weeks before it was blocked, and that the platform admitted it could not proactively detect the channels selling leaked exam papers. Telegram says it cooperated and the ban is unlawful.\n\nFortiBleed leak exposes Fortinet VPN credentials for 73,000 devices.\n\nMalicious JetBrains Marketplace plugins steal AI API keys from developers\n\nSteam Workshop abused to spread malware via Wallpaper Engine app\n\nGentlemen ransomware uses multiple EDR killers to disable defenses\n\nNintendo confirms data stolen in WebMD subsidiary cyberattack\n\nUSB worm spreads crypto-stealing malware via Windows shortcut files",
+          "action": "Surveiller les indicateurs de compromission associés et contrôler les actifs exposés.",
+          "sources": [
+            {
+              "url": "https://www.bleepingcomputer.com/news/security/telegram-admits-it-couldnt-police-exam-leak-channels-india-tells-court/",
+              "label": "BleepingComputer"
+            }
+          ],
+          "url": "https://www.bleepingcomputer.com/news/security/telegram-admits-it-couldnt-police-exam-leak-channels-india-tells-court/",
+          "pubDate": "2026-06-18T12:18:49.000Z"
+        },
+        {
+          "title": "ShapedPlugin update flow hacked to infect WordPress sites",
+          "cve": null,
+          "severity": "news",
+          "score": 72,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Incident de sécurité rapporté par BleepingComputer.\n\nMultiple WordPress plugins from ShapedPlugin were compromised in a supply chain attack that distributed infected releases to paying customers via the vendor's official update system.\n\nFortiBleed leak exposes Fortinet VPN credentials for 73,000 devices.\n\nMalicious JetBrains Marketplace plugins steal AI API keys from developers\n\nSteam Workshop abused to spread malware via Wallpaper Engine app\n\nGentlemen ransomware uses multiple EDR killers to disable defense…",
+          "detail": "Incident de sécurité rapporté par BleepingComputer.\n\nMultiple WordPress plugins from ShapedPlugin were compromised in a supply chain attack that distributed infected releases to paying customers via the vendor's official update system.\n\nFortiBleed leak exposes Fortinet VPN credentials for 73,000 devices.\n\nMalicious JetBrains Marketplace plugins steal AI API keys from developers\n\nSteam Workshop abused to spread malware via Wallpaper Engine app\n\nGentlemen ransomware uses multiple EDR killers to disable defenses\n\nNintendo confirms data stolen in WebMD subsidiary cyberattack\n\nUSB worm spreads crypto-stealing malware via Windows shortcut files",
+          "action": "Surveiller les indicateurs de compromission associés et contrôler les actifs exposés.",
+          "sources": [
+            {
+              "url": "https://www.bleepingcomputer.com/news/security/shapedplugin-update-flow-hacked-to-infect-wordpress-sites/",
+              "label": "BleepingComputer"
+            }
+          ],
+          "url": "https://www.bleepingcomputer.com/news/security/shapedplugin-update-flow-hacked-to-infect-wordpress-sites/",
+          "pubDate": "2026-06-18T12:55:36.000Z"
+        },
+        {
+          "title": "NAIC.org — rançongiciel shinyhunters (États-Unis)",
+          "cve": null,
+          "severity": "news",
+          "score": 71,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Incident de sécurité rapporté par ransomware.live.\n\nVictime revendiquée par le groupe de rançongiciel shinyhunters. Pays : États-Unis. Secteur : Business Services. Over 3.1 terabytes of National Association of Insurance Commissioners data (105,000+ files) was compromised across the INSData statistical platform, Vision credit rating feeds, SERFF, OPTINS, UCAA, EDP, RDC, and state insurance department reporting systems (NAIC, all fifty state insurance departments, and thousands of licensed insurers), includin…",
+          "detail": "Incident de sécurité rapporté par ransomware.live.\n\nVictime revendiquée par le groupe de rançongiciel shinyhunters.\n\nPays : États-Unis.\n\nSecteur : Business Services.\n\nOver 3.1 terabytes of National Association of Insurance Commissioners data (105,000+ files) was compromised across the INSData statistical platform, Vision credit rating feeds, SERFF, OPTINS, UCAA, EDP, RDC, and state insurance department reporting systems (NAIC, all fifty state insurance departments, and thousands of licensed insurers), including 2.1 million insurer regulatory filing PDFs, 40,000 quarterly statistical CSVs with federal EINs and company data, 45,000+ licensed rating agency files from Moody's, Fitch, S&P, Kroll, DBRS, and AM Best with CUSIP and ISIN identifiers, statutory annual and quarterly financial statements, premium and loss statistics, and HR Ratings master data. This is a final warning to reach out by 22 June 2026 before we leak along with several annoying (digital) problems that'll come your way. Make the right decision, don't be the next headline. | Updated: 18 June 2026 | Warning: FINAL WARNING PAY OR LEAK",
+          "action": "Surveiller les indicateurs de compromission associés et contrôler les actifs exposés.",
+          "sources": [
+            {
+              "url": "https://www.ransomware.live/id/SG9tZXMgQnkgSiBBbnRob255QHFpbGlu",
+              "label": "ransomware.live"
+            }
+          ],
+          "url": "https://www.ransomware.live/id/SG9tZXMgQnkgSiBBbnRob255QHFpbGlu",
+          "pubDate": "2026-06-18T17:54:29.655Z"
+        },
+        {
+          "title": "DragonForce Hackers Abuse Microsoft Teams Relays to Hide Backdoor.Turn C2 Traffic",
+          "cve": null,
+          "severity": "high",
+          "score": 70,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Incident de sécurité rapporté par The Hacker News.\n\nThreat actors associated with the DragonForce ransomware have been observed using a custom Go-based remote access trojan (RAT) called Backdoor.Turn to conceal command-and-control (C2) traffic inside Microsoft Teams relay infrastructure. According to findings from Broadcom-owned Symantec and Carbon Black, the backdoor was deployed against a major U.S. services firm. The name of the company was",
+          "detail": "Incident de sécurité rapporté par The Hacker News.\n\nThreat actors associated with the DragonForce ransomware have been observed using a custom Go-based remote access trojan (RAT) called Backdoor.Turn to conceal command-and-control (C2) traffic inside Microsoft Teams relay infrastructure. According to findings from Broadcom-owned Symantec and Carbon Black, the backdoor was deployed against a major U.S. services firm. The name of the company was",
+          "action": "Surveiller les indicateurs de compromission associés et contrôler les actifs exposés.",
+          "sources": [
+            {
+              "url": "https://thehackernews.com/2026/06/dragonforce-hackers-abuse-microsoft.html",
+              "label": "The Hacker News"
+            }
+          ],
+          "url": "https://thehackernews.com/2026/06/dragonforce-hackers-abuse-microsoft.html",
+          "pubDate": "2026-06-18T13:30:07.000Z"
+        },
+        {
+          "title": "Police cleans nearly 15,000 SocGholish-infected sites tied to Evil Corp",
+          "cve": null,
+          "severity": "high",
+          "score": 68,
+          "corroboration": 2,
+          "region": "intl",
+          "body": "Incident de sécurité rapporté par CyberScoop.\n\nCybersecurity firms, researchers and officials took down 106 servers and remediated nearly 15,000 sites that were infected with the malware.\n\nListen to this article 0:00 Learn more. This feature uses an automated voice, which may result in occasional errors in pronunciation, tone, or sentiment.",
+          "detail": "Incident de sécurité rapporté par CyberScoop.\n\nCybersecurity firms, researchers and officials took down 106 servers and remediated nearly 15,000 sites that were infected with the malware.\n\nListen to this article 0:00 Learn more. This feature uses an automated voice, which may result in occasional errors in pronunciation, tone, or sentiment. (Getty) Authorities on Thursday disrupted a botnet, a malware framework and seized infrastructure that Evil Corp and other cybercrime groups used to steal data and break into various networks.\n\nThe globally coordinated effort targeted SocGholish, multi-stage malware that has compromised websites, redirected users to traffic distribution systems (TDS) and slipped malware into their networks since 2017.\n\n&ldquo;The malware establishes an initial foothold into victim computers, collectively known as a botnet, and is then used by threat actors for further targeting with ransomware campaigns and espionage,&rdquo; the FBI&rsquo;s cyber division said in a statement.\n\nCybersecurity firms, researchers and officials from the United States, Canada, Germany, the Netherlands and Europol took down 106 servers and remediated nearly 15,000 sites that were infected with the malware. Officials also disabled the botnet and notified victims.\n\nSites infected with SocGholish, which are primarily hosted on WordPress, were widespread and provided everyday services including restaurants and auto repair shops, according to the Dutch National Police .\n\nThe botnet, also known as &ldquo;FakeUpdates,&rdquo; is linked to the Russian cybercrime group Evil Corp. It also provided initial access to other ransomware variants, including DoppelPaymer, WastedLoocker, Hades Ransomware, LockBit, RansomHub and others, according to Infoblox , which participated in the takedow",
+          "action": "Surveiller les indicateurs de compromission associés et contrôler les actifs exposés.",
+          "sources": [
+            {
+              "url": "https://cyberscoop.com/socgholish-malware-botnet-takedown-evilcorp/",
+              "label": "CyberScoop"
+            },
+            {
+              "url": "https://www.bleepingcomputer.com/news/security/law-enforcement-nukes-socgholish-malware-from-nearly-15-000-sites/",
+              "label": "BleepingComputer"
+            }
+          ],
+          "url": "https://cyberscoop.com/socgholish-malware-botnet-takedown-evilcorp/",
+          "pubDate": "2026-06-18T22:03:32.000Z"
+        },
+        {
+          "title": "FortiBleed leak exposes Fortinet VPN credentials for 73,000 devices.",
+          "cve": null,
+          "severity": "critical",
+          "score": 68,
+          "corroboration": 3,
+          "region": "intl",
+          "body": "Incident de sécurité rapporté par Security Affairs.\n\nFortiBleed: Admin Passwords for 75,000 Fortinet Firewalls Are Out in the Wild. Half the Internet-Facing Fortinets on the Planet.\n\nCisco fixed a critical ISE vulnerability that lets attackers to gain root access\n\nF5 Patches Critical NGINX Vulnerabilities Enabling Unauthenticated Code Execution\n\nMicrosoft Confirms RoguePlanet Zero-Day in Defender, Patch Under Development\n\nFortiBleed Exposes Admin Passwords for 75,000 Fortinet Firewalls\n\nDragonForce Hid Insid…",
+          "detail": "Incident de sécurité rapporté par Security Affairs.\n\nFortiBleed: Admin Passwords for 75,000 Fortinet Firewalls Are Out in the Wild. Half the Internet-Facing Fortinets on the Planet.\n\nCisco fixed a critical ISE vulnerability that lets attackers to gain root access\n\nF5 Patches Critical NGINX Vulnerabilities Enabling Unauthenticated Code Execution\n\nMicrosoft Confirms RoguePlanet Zero-Day in Defender, Patch Under Development\n\nFortiBleed Exposes Admin Passwords for 75,000 Fortinet Firewalls\n\nDragonForce Hid Inside Microsoft Teams and Nobody Noticed for Two Months\n\nU.S. CISA adds Widget Factory Joomla Content Editor flaw to its Known Exploited Vulnerabilities catalog",
+          "action": "Surveiller les indicateurs de compromission associés et contrôler les actifs exposés.",
+          "sources": [
+            {
+              "url": "https://securityaffairs.com/193817/hacking/fortibleed-exposes-admin-passwords-for-75000-fortinet-firewalls.html",
+              "label": "Security Affairs"
+            },
+            {
+              "url": "https://www.bleepingcomputer.com/news/security/fortibleed-leak-exposes-fortinet-vpn-credentials-for-73-000-devices/",
+              "label": "BleepingComputer"
+            },
+            {
+              "url": "https://www.helpnetsecurity.com/2026/06/18/fortinet-fortibleed-data-leak/",
+              "label": "Help Net Security"
+            }
+          ],
+          "url": "https://securityaffairs.com/193817/hacking/fortibleed-exposes-admin-passwords-for-75000-fortinet-firewalls.html",
+          "pubDate": "2026-06-18T12:54:39.000Z"
+        },
+        {
+          "title": "Hostile States Behind 75% of Cyber-Attacks on UK Critical Infrastructure, NCSC Warns",
+          "cve": null,
+          "severity": "critical",
+          "score": 68,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Incident de sécurité rapporté par Infosecurity Mag.\n\nRichard Horne, the NCSC CEO, said three-quarters of cyber-attacks targeting UK critical infrastructure came from nation-state actors\n\nThree-quarter of cyber incidents affecting UK critical infrastructure organizations over the past year originated from nation-state actors or were linked to hostile states such as Russia, China and Iran, according to Richard Horne, CEO of the UK&rsquo;s National Cyber Security Centre (NCSC).\n\nSpeaking at the Royal United Ser…",
+          "detail": "Incident de sécurité rapporté par Infosecurity Mag.\n\nRichard Horne, the NCSC CEO, said three-quarters of cyber-attacks targeting UK critical infrastructure came from nation-state actors\n\nThree-quarter of cyber incidents affecting UK critical infrastructure organizations over the past year originated from nation-state actors or were linked to hostile states such as Russia, China and Iran, according to Richard Horne, CEO of the UK&rsquo;s National Cyber Security Centre (NCSC).\n\nSpeaking at the Royal United Services Institute (RUSI) Annual Security Lecture 2026 on June 17, Horne said the agency dealt with 200 cyber incidents affecting critical nation infrastructure (CNI) between June 2025 and May 2026.\n\nThis builds on Horne&rsquo;s disclosure in Aprill that the NCSC had dealt with 204 &ldquo;national significant&rdquo; cyber incidents at the time of its last annual review.\n\nHorne described the threat across three contested spaces he labelled far, mid and near.\n\nIn the far space, &ldquo;the adversaries&rsquo; home turf,&rdquo; he said the UK and partners press adversaries with intelligence collection, sanctions, law enforcement action and offensive cyber operations to disrupt and degrade their capability at source.\n\nIn the mid space, where digital infrastructure is shared by both legitimate and malicious actors, Horne warned attackers are exploiting cloud and open-source supply chains to spread malicious code and achieve scaled impact. He also cautioned that cloud-based AI services will play an increasing role in the future to enable attackers.",
+          "action": "Surveiller les indicateurs de compromission associés et contrôler les actifs exposés.",
+          "sources": [
+            {
+              "url": "https://www.infosecurity-magazine.com/news/hostile-states-cni-75-percent-ncsc/",
+              "label": "Infosecurity Mag"
+            }
+          ],
+          "url": "https://www.infosecurity-magazine.com/news/hostile-states-cni-75-percent-ncsc/",
+          "pubDate": "2026-06-18T09:10:00.000Z"
+        },
+        {
+          "title": "INC Ransomware Emerges as Major RaaS Threat in 2026 with 830+ Victims Since 2023",
+          "cve": null,
+          "severity": "news",
+          "score": 65,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Incident de sécurité rapporté par The Hacker News.\n\nCybersecurity researchers have charted the evolution of INC from an nascent ransomware-as-a-service (RaaS) operation to one of the most prolific cybercrime groups in 2026, claiming no less than 830 victims since August 2023. \"The disruption of LockBit and the shutdown of BlackCat created opportunities for INC to expand as affiliates migrated to alternative ransomware operations,\" Acronis",
+          "detail": "Incident de sécurité rapporté par The Hacker News.\n\nCybersecurity researchers have charted the evolution of INC from an nascent ransomware-as-a-service (RaaS) operation to one of the most prolific cybercrime groups in 2026, claiming no less than 830 victims since August 2023. \"The disruption of LockBit and the shutdown of BlackCat created opportunities for INC to expand as affiliates migrated to alternative ransomware operations,\" Acronis",
+          "action": "Surveiller les indicateurs de compromission associés et contrôler les actifs exposés.",
+          "sources": [
+            {
+              "url": "https://thehackernews.com/2026/06/inc-ransomware-claims-830-victims-since.html",
+              "label": "The Hacker News"
+            }
+          ],
+          "url": "https://thehackernews.com/2026/06/inc-ransomware-claims-830-victims-since.html",
+          "pubDate": "2026-06-18T14:12:48.000Z"
+        },
+        {
+          "title": "Tor-Based Clipper Malware Targets Wallet Seed Phrases",
+          "cve": null,
+          "severity": "high",
+          "score": 64,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Incident de sécurité rapporté par Security Affairs.\n\nUSB .lnk malware steals crypto via clipboard hijack, replaces wallet addresses, steals seed phrases, and screenshots. Microsoft Threat Intelligence has been tracking a clipboard-stealing malware (Clipper) campaign since February 2026 that targets cryptocurrency wallets. A clipper is a type of malicious software that monitors and manipulates your clipboard, the temporary memory where data is stored when you copy and paste.",
+          "detail": "Incident de sécurité rapporté par Security Affairs.\n\nUSB .lnk malware steals crypto via clipboard hijack, replaces wallet addresses, steals seed phrases, and screenshots. Microsoft Threat Intelligence has been tracking a clipboard-stealing malware (Clipper) campaign since February 2026 that targets cryptocurrency wallets. A clipper is a type of malicious software that monitors and manipulates your clipboard, the temporary memory where data is stored when you copy and paste. It spreads through malicious shortcut files on USB drives, hides its command server inside the Tor network, and can replace wallet addresses in your clipboard before you paste them. The attacker collects the crypto; you collect the confusion. What makes it harder to spot is that this clipper doesn&#8217;t use a traditional installer or expose any real IP addresses. It ships with its own Tor client, routes traffic through a local proxy on port 9050, and resolves everything to .onion domains inside Tor. &#8220;The clipper in this campaign relies on Windows Script Host and ActiveX-driven logic to launch a bundled Tor proxy and poll a hidden-service C2 server. It carries out high-frequency clipboard theft, screenshot exfiltration, and wallet-address substitution.&#8221; reads the report published by Microsoft. &#8220;The execution of this clipper is notable because it does not depend on a traditional installer or exposed IP-based C2 infrastructure. Instead, it dep",
+          "action": "Surveiller les indicateurs de compromission associés et contrôler les actifs exposés.",
+          "sources": [
+            {
+              "url": "https://securityaffairs.com/193860/uncategorized/tor-based-clipper-malware-targets-wallet-seed-phrases.html",
+              "label": "Security Affairs"
+            }
+          ],
+          "url": "https://securityaffairs.com/193860/uncategorized/tor-based-clipper-malware-targets-wallet-seed-phrases.html",
+          "pubDate": "2026-06-18T18:32:32.000Z"
+        },
+        {
+          "title": "ICO Cautions Healthcare Worker After Princess of Wales Incident",
+          "cve": null,
+          "severity": "news",
+          "score": 64,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Incident de sécurité rapporté par Infosecurity Mag.\n\nHospital insider escapes criminal prosecution after attempting to sell royal’s medical records\n\nThe UK&rsquo;s data protection watchdog has decided not to purse a criminal investigation against a former healthcare worker who tried to access and sell the medical records of the Princess of Wales.\n\nThe Information Commissioner&rsquo;s Office (ICO) began a criminal investigation into an insider at the London Clinic back in 2024 after reports emerged following…",
+          "detail": "Incident de sécurité rapporté par Infosecurity Mag.\n\nHospital insider escapes criminal prosecution after attempting to sell royal’s medical records\n\nThe UK&rsquo;s data protection watchdog has decided not to purse a criminal investigation against a former healthcare worker who tried to access and sell the medical records of the Princess of Wales.\n\nThe Information Commissioner&rsquo;s Office (ICO) began a criminal investigation into an insider at the London Clinic back in 2024 after reports emerged following the royal spending time there for abdominal surgery.\n\nIt&rsquo;s believed that the nurse was struck off following the incident.\n\n&ldquo;Following a full assessment under the Code for Crown Prosecutors and the ICO&rsquo;s Prosecution Policy, the ICO issued a now former healthcare professional from London with a formal caution in relation to an offence under section 170(5) of the Data Protection Act 2018,&rdquo; the ICO said in a statement on June 17.\n\n&ldquo;The conduct involved the deliberate misuse of highly sensitive personal information and an offer to disclose it for financial gain, representing a clear breach of trust.&rdquo;\n\nRead more on the ICO: ICO Prepares &pound;6m Fine for NHS Supplier Advanced",
+          "action": "Surveiller les indicateurs de compromission associés et contrôler les actifs exposés.",
+          "sources": [
+            {
+              "url": "https://www.infosecurity-magazine.com/news/ico-cautions-healthcare-worker/",
+              "label": "Infosecurity Mag"
+            }
+          ],
+          "url": "https://www.infosecurity-magazine.com/news/ico-cautions-healthcare-worker/",
+          "pubDate": "2026-06-18T14:45:00.000Z"
+        },
+        {
+          "title": "Kodak Admits Data Breach After ShinyHunters Hack Claims",
+          "cve": null,
+          "severity": "news",
+          "score": 64,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Incident de sécurité rapporté par SecurityWeek.\n\nKodak has confirmed suffering a data breach after the ShinyHunters cybercrime group claimed to have stolen information from its systems.\n\nKodak told SecurityWeek it believes there is no threat to its systems or operations as a result of the cybersecurity incident.\n\nSubscribe to the SecurityWeek Email Briefing for the latest cybersecurity threats, trends, and expert insights.\n\nSubscribe to the SecurityWeek Email Briefing to stay informed on the latest threa…",
+          "detail": "Incident de sécurité rapporté par SecurityWeek.\n\nKodak has confirmed suffering a data breach after the ShinyHunters cybercrime group claimed to have stolen information from its systems.\n\nKodak told SecurityWeek it believes there is no threat to its systems or operations as a result of the cybersecurity incident.\n\nSubscribe to the SecurityWeek Email Briefing for the latest cybersecurity threats, trends, and expert insights.\n\nSubscribe to the SecurityWeek Email Briefing to stay informed on the latest threats, trends, and technology, along with insightful columns from industry experts.\n\nToday’s attackers are no longer breaking in — they’re logging in. Join this live webinar as we break down the modern identity attack chain and examine how recent breaches exploited weaknesses in authentication, identity verification, and access management processes.\n\nAI has accelerated both sides of the fight. Adversaries are weaponizing vulnerabilities faster, while defenders are racing to ship detections and configurations. Join this live webinar as we explore how to prove your controls actually hold against new threats, map your security maturity, and unite breach simulation with automated pentesting into a single, coordinated program.\n\nSolarWinds has appointed Justin Henkel as Chief Information Security Officer.",
+          "action": "Surveiller les indicateurs de compromission associés et contrôler les actifs exposés.",
+          "sources": [
+            {
+              "url": "https://www.securityweek.com/kodak-admits-data-breach-after-shinyhunters-hack-claims/",
+              "label": "SecurityWeek"
+            }
+          ],
+          "url": "https://www.securityweek.com/kodak-admits-data-breach-after-shinyhunters-hack-claims/",
+          "pubDate": "2026-06-18T07:18:51.000Z"
+        },
+        {
+          "title": "Autosur exposé par une nouvelle fuite",
+          "cve": null,
+          "severity": "news",
+          "score": 59,
+          "corroboration": 1,
+          "region": "fr",
+          "body": "Incident de sécurité rapporté par Zataz.\n\nFuite Autosur : données clients, véhicules et contrôleurs exposées, avec risque de phishing ciblé.\n\nFont Resizer Aa Actus cyber Darkweb Intelligence Artificielle ZATAZ Community Logiciels Vidéos Moteurs de recherche de fuites Actus cyber Justice Sécurité réseaux sociaux Vie privée OSINT News Darkweb Fuite de données Codes malveillants Espionnage Sécurité Ransomwares Piratage / Hack infiltration Intelligence Artificielle ZATAZ Community Userlock Community R…",
+          "detail": "Incident de sécurité rapporté par Zataz.\n\nFuite Autosur : données clients, véhicules et contrôleurs exposées, avec risque de phishing ciblé.\n\nFont Resizer Aa Actus cyber Darkweb Intelligence Artificielle ZATAZ Community Logiciels Vidéos Moteurs de recherche de fuites Actus cyber Justice Sécurité réseaux sociaux Vie privée OSINT News Darkweb Fuite de données Codes malveillants Espionnage Sécurité Ransomwares Piratage / Hack infiltration Intelligence Artificielle ZATAZ Community Userlock Community Réseaux sociaux ZATAZ News Letter ZATAZ – Chaque vendredi midi PROTOCOLE D&rsquo;ALERTE ZATAZ Logiciels Vidéos Vidéos Youtube ZATAZ Émission ZATAZ Twitch Moteurs de recherche de fuites Follow US Actus cyber Darkweb Intelligence Artificielle ZATAZ Community Logiciels Vidéos Moteurs de recherche de fuites ZATAZ.COM > Actualités > Actualités > Divers > Autosur exposé par une nouvelle fuite Actualités Divers Internet Clandestin (darknet) Piratage RGPD Autosur exposé par une nouvelle fuite dernière mise à jour : 18/06/2026 11:26 Par Damien Bancal - Chercheur / Journaliste / Conférencier / Enseignant Il y a 19 heures Il y a 19 heures Partager 7 minutes de lecture Partager Une base Autosur partielle circule en ligne, avec des données clients, véhicules et contrôleurs, ravivant une alerte déjà ancienne. Une nouvelle fuite attribuée à deux pirates informatique vise de nouveau Autosur, réseau de contrôle technique automobile. Les pirates affirment publier une base partielle d’AUTOSUR.FR. Le jeu revendiqué contient plusieurs dizaines de milliers de clients. Les extraits fournis par les deux cyber criminels montrent des informations sensibles : identité, adresse, téléphone, plaques, numéros de série, factures, contrôles, contrôleurs et relances.\n\nAutosur se retrouve de nouveau associé à une",
+          "action": "Surveiller les indicateurs de compromission associés et contrôler les actifs exposés.",
+          "sources": [
+            {
+              "url": "https://www.zataz.com/autosur-expose-par-une-nouvelle-fuite/",
+              "label": "Zataz"
+            }
+          ],
+          "url": "https://www.zataz.com/autosur-expose-par-une-nouvelle-fuite/",
+          "pubDate": "2026-06-18T09:20:30.000Z"
+        },
+        {
+          "title": "MaGestionLocative : des documents de gestion locative revendiqués dans une fuite de données",
+          "cve": null,
+          "severity": "news",
+          "score": 57,
+          "corroboration": 1,
+          "region": "fr",
+          "body": "Incident de sécurité rapporté par Cyberattaque.org.\n\nLe hacker ChimeraZ revendique la publication d'une base de données attribuée à MaGestionLocative.fr, une autre société spécialisée dans la gestion\n\nAttaque Mis à jour le 18 juin 2026 à 21h17 MaGestionLocative : des documents de gestion locative revendiqués dans une fuite de données Le hacker ChimeraZ revendique la publication d&rsquo;une base de données attribuée à MaGestionLocative.fr , une autre société spécialisée dans la gestion locative pour les propr…",
+          "detail": "Incident de sécurité rapporté par Cyberattaque.org.\n\nLe hacker ChimeraZ revendique la publication d'une base de données attribuée à MaGestionLocative.fr, une autre société spécialisée dans la gestion\n\nAttaque Mis à jour le 18 juin 2026 à 21h17 MaGestionLocative : des documents de gestion locative revendiqués dans une fuite de données Le hacker ChimeraZ revendique la publication d&rsquo;une base de données attribuée à MaGestionLocative.fr , une autre société spécialisée dans la gestion locative pour les propriétaires bailleurs et les professionnels de l&rsquo;immobilier.\n\nD&rsquo;après le message publié sur un forum cybercriminel, la fuite représenterait environ 79 000 documents pour un volume total de 114 Mo . Les échantillons diffusés montrent principalement des courriers administratifs, quittances de loyer et documents liés à la gestion quotidienne de biens immobiliers.\n\nLes extraits publiés laissent apparaître des documents générés par la plateforme dans le cadre de la gestion de logements loués. Plusieurs types de pièces semblent concernés :\n\nLes exemples diffusés montrent notamment des quittances détaillant le montant des loyers réglés ainsi que des échanges relatifs aux obligations d&rsquo;assurance habitation des locataires.\n\nContrairement à certaines revendications récentes portant principalement sur des annonces immobilières ou des données publiques, cette publication semble contenir des documents administratifs directement liés à des occupants et à des propriétaires de logements.\n\nLes informations visibles dans les échantillons incluent des noms, prénoms, adresses postales complètes, références de contrats de location, montants de loyers ainsi que divers échanges concernant la situation locative des personnes concernées.",
+          "action": "Surveiller les indicateurs de compromission associés et contrôler les actifs exposés.",
+          "sources": [
+            {
+              "url": "https://www.cyberattaque.org/magestionlocative-des-documents-de-gestion-locative-revendiques-dans-une-fuite-de-donnees/",
+              "label": "Cyberattaque.org"
+            }
+          ],
+          "url": "https://www.cyberattaque.org/magestionlocative-des-documents-de-gestion-locative-revendiques-dans-une-fuite-de-donnees/",
+          "pubDate": "2026-06-18T19:17:04.000Z"
+        },
+        {
+          "title": "Bien’ici : les prospects de six agences immobilières diffusées en fuite",
+          "cve": null,
+          "severity": "news",
+          "score": 52,
+          "corroboration": 1,
+          "region": "fr",
+          "body": "Incident de sécurité rapporté par Cyberattaque.org.\n\nUn utilisateur opérant sous le pseudonyme 0xSec affirme avoir mis la main sur plusieurs exports de données associés à Bien'ici, le portail immobilier\n\nAttaque Mis à jour le 18 juin 2026 à 21h27 Bien’ici : les prospects de six agences immobilières diffusées en fuite Un utilisateur opérant sous le pseudonyme 0xSec affirme avoir mis la main sur plusieurs exports de données associés à Bien&rsquo;ici , le portail immobilier lancé par les professionnels de l&rsq…",
+          "detail": "Incident de sécurité rapporté par Cyberattaque.org.\n\nUn utilisateur opérant sous le pseudonyme 0xSec affirme avoir mis la main sur plusieurs exports de données associés à Bien'ici, le portail immobilier\n\nAttaque Mis à jour le 18 juin 2026 à 21h27 Bien’ici : les prospects de six agences immobilières diffusées en fuite Un utilisateur opérant sous le pseudonyme 0xSec affirme avoir mis la main sur plusieurs exports de données associés à Bien&rsquo;ici , le portail immobilier lancé par les professionnels de l&rsquo;immobilier français. Les fichiers diffusés semblent toutefois se limiter à un nombre restreint d&rsquo;agences immobilières situées principalement dans l&rsquo;Ain et en Haute-Savoie.\n\nLa publication évoque sept secteurs géographiques couvrant notamment Bourg-en-Bresse, Ferney-Voltaire, Meximieux, Oyonnax, Saint-Genis-Pouilly, Valserhône et Viry. Au total, plusieurs milliers de demandes de contact auraient été exportées entre 2023 et 2026.\n\nContrairement à certaines revendications récentes visant des logiciels immobiliers, les données présentées ici ressemblent davantage à des exports marketing ou commerciaux issus du suivi des prospects ayant interagi avec des annonces immobilières.\n\nLes colonnes publiées montrent la présence de nombreuses informations relatives aux demandes effectuées par les internautes :\n\nL&rsquo;intérêt de ces données ne réside pas seulement dans les coordonnées des personnes concernées. Les fichiers permettent également de reconstituer les recherches immobilières effectuées par certains prospects, les biens consultés ainsi que les démarches engagées auprès des agences.\n\nLes informations disponibles peuvent révéler qu&rsquo;une personne recherche activement un logement dans une ville donnée, qu&rsquo;elle a demandé une visite ou encore qu&rsq",
+          "action": "Surveiller les indicateurs de compromission associés et contrôler les actifs exposés.",
+          "sources": [
+            {
+              "url": "https://www.cyberattaque.org/bienici-les-prospects-de-six-agences-immobilieres-diffusees-en-fuite/",
+              "label": "Cyberattaque.org"
+            }
+          ],
+          "url": "https://www.cyberattaque.org/bienici-les-prospects-de-six-agences-immobilieres-diffusees-en-fuite/",
+          "pubDate": "2026-06-18T19:27:00.000Z"
+        },
+        {
+          "title": "Timer Immobilier : des données d’acquéreurs et de vendeurs diffusées publiquement",
+          "cve": null,
+          "severity": "news",
+          "score": 52,
+          "corroboration": 1,
+          "region": "fr",
+          "body": "Incident de sécurité rapporté par Cyberattaque.org.\n\nUn hacker utilisant le pseudonyme 0xSec affirme avoir obtenu et publié une base de données attribuée à Timer Immobilier, une agence immobilière française\n\nAttaque Mis à jour le 18 juin 2026 à 21h28 Timer Immobilier : des données d’acquéreurs et de vendeurs diffusées publiquement Un hacker utilisant le pseudonyme 0xSec affirme avoir obtenu et publié une base de données attribuée à Timer Immobilier , une agence immobilière française spécialisée dans la vente…",
+          "detail": "Incident de sécurité rapporté par Cyberattaque.org.\n\nUn hacker utilisant le pseudonyme 0xSec affirme avoir obtenu et publié une base de données attribuée à Timer Immobilier, une agence immobilière française\n\nAttaque Mis à jour le 18 juin 2026 à 21h28 Timer Immobilier : des données d’acquéreurs et de vendeurs diffusées publiquement Un hacker utilisant le pseudonyme 0xSec affirme avoir obtenu et publié une base de données attribuée à Timer Immobilier , une agence immobilière française spécialisée dans la vente interactive de biens immobiliers.\n\nContrairement aux récentes revendications portant sur plusieurs centaines de milliers d&rsquo;enregistrements, cette publication concerne un volume beaucoup plus limité. Les fichiers diffusés contiennent néanmoins des informations personnelles relatives à des particuliers engagés dans des projets immobiliers.\n\nLes données publiées sont réparties dans deux fichiers distincts, l&rsquo;un consacré aux acquéreurs et l&rsquo;autre aux propriétaires.\n\nLes informations concernent des personnes ayant manifestement utilisé les services de Timer Immobilier dans le cadre d&rsquo;un achat ou d&rsquo;une vente de bien immobilier.\n\nBien que la fuite soit présentée comme limitée, les données exposées permettent d&rsquo;identifier directement plusieurs particuliers grâce à la combinaison des noms, coordonnées téléphoniques, adresses électroniques et parfois des adresses postales complètes.\n\nCe type d&rsquo;information peut être réutilisé pour des campagnes de démarchage ciblé, des tentatives de phishing ou des escroqueries liées à l&rsquo;immobilier, secteur régulièrement visé par les cybercriminels.",
+          "action": "Surveiller les indicateurs de compromission associés et contrôler les actifs exposés.",
+          "sources": [
+            {
+              "url": "https://www.cyberattaque.org/timer-immobilier-des-donnees-dacquereurs-et-de-vendeurs-diffusees-publiquement/",
+              "label": "Cyberattaque.org"
+            }
+          ],
+          "url": "https://www.cyberattaque.org/timer-immobilier-des-donnees-dacquereurs-et-de-vendeurs-diffusees-publiquement/",
+          "pubDate": "2026-06-18T19:20:38.000Z"
+        }
+      ]
+    },
+    {
+      "id": "culture",
+      "items": [
+        {
+          "title": "Dream Raises $260 Million at $3 Billion Valuation",
+          "cve": null,
+          "severity": "critical",
+          "score": 78,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Signal de veille — SecurityWeek.\n\nDream has raised $260 million at a $3 billion valuation for sovereign AI infrastructure for governments and national cyber defenses.\n\nThe Israeli startup provides sovereign AI and cyber defenses for governments and critical infrastructure.\n\nSubscribe to the SecurityWeek Email Briefing for the latest cybersecurity threats, trends, and expert insights.\n\nSubscribe to the SecurityWeek Email Briefing to stay informed on the latest threats, trends, and technolog…",
+          "detail": "Signal de veille — SecurityWeek.\n\nDream has raised $260 million at a $3 billion valuation for sovereign AI infrastructure for governments and national cyber defenses.\n\nThe Israeli startup provides sovereign AI and cyber defenses for governments and critical infrastructure.\n\nSubscribe to the SecurityWeek Email Briefing for the latest cybersecurity threats, trends, and expert insights.\n\nSubscribe to the SecurityWeek Email Briefing to stay informed on the latest threats, trends, and technology, along with insightful columns from industry experts.\n\nToday’s attackers are no longer breaking in — they’re logging in. Join this live webinar as we break down the modern identity attack chain and examine how recent breaches exploited weaknesses in authentication, identity verification, and access management processes.\n\nAI has accelerated both sides of the fight. Adversaries are weaponizing vulnerabilities faster, while defenders are racing to ship detections and configurations. Join this live webinar as we explore how to prove your controls actually hold against new threats, map your security maturity, and unite breach simulation with automated pentesting into a single, coordinated program.\n\nSolarWinds has appointed Justin Henkel as Chief Information Security Officer.",
+          "action": null,
+          "sources": [
+            {
+              "url": "https://www.securityweek.com/dream-raises-260-million-at-3-billion-valuation/",
+              "label": "SecurityWeek"
+            }
+          ],
+          "url": "https://www.securityweek.com/dream-raises-260-million-at-3-billion-valuation/",
+          "pubDate": "2026-06-18T11:55:07.000Z"
+        },
+        {
+          "title": "Killing me gently: Inside Gentlemen’s EDR killer framework",
+          "cve": null,
+          "severity": "culture",
+          "score": 77,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Signal de veille — ESET WeLiveSec..\n\nESET Research shares the results of a months-long investigation into the suite of EDR killers maintained by the RaaS gang Gentlemen\n\nAward-winning news, views, and insight from the ESET security community\n\nTIPS & ADVICE BUSINESS SECURITY ESET RESEARCH About ESET Research Blogposts Podcasts White papers Threat reports WeLiveScience FEATURED Ukraine crisis – Digital security resource center WeLiveProgress COVID-19 Resources Videos TOPICS Digital Security Sca…",
+          "detail": "Signal de veille — ESET WeLiveSec..\n\nESET Research shares the results of a months-long investigation into the suite of EDR killers maintained by the RaaS gang Gentlemen\n\nAward-winning news, views, and insight from the ESET security community\n\nTIPS & ADVICE BUSINESS SECURITY ESET RESEARCH About ESET Research Blogposts Podcasts White papers Threat reports WeLiveScience FEATURED Ukraine crisis – Digital security resource center WeLiveProgress COVID-19 Resources Videos TOPICS Digital Security Scams How to Privacy Cybercrime Kids online Social media Internet of Things Malware Ransomware Secure coding Mobile security Critical infrastructure Threat research ABOUT US About WeLiveSecurity Our Experts Contact Us English Español Deutsch Português Français Award-winning news, views, and insight from the ESET security community\n\nESET Research shares the results of a months-long investigation into the suite of EDR killers maintained by the RaaS gang Gentlemen\n\nESET researchers analyzed the robust EDR-killing toolset of the ransomware-as-a-service gang Gentlemen. Since the beginning of 2026, Gentlemen has emerged as one of the most active gangs in the ransomware ecosystem. The group distinguishes itself through a mature, operator-maintained set of endpoint detection and response (EDR) killers, i.e., tools for disrupting security software. Additionally, unlike most top-tier gangs, Gentlemen does not exhibit a strong US-centric victimology, instead targeting victims across Southeast Asia, South America, and Western Europe.\n\nWhile there have been multiple reports covering Gentlemen in recent months, they have not focused on a detailed analysis of the group&rsquo;s EDR killers. Thanks to ESET&rsquo;s continued incident-level visibility, we can however provide a uniquely deep view into Gen",
+          "action": null,
+          "sources": [
+            {
+              "url": "https://www.welivesecurity.com/en/eset-research/killing-me-gently-inside-gentlemens-edr-killer-framework/",
+              "label": "ESET WeLiveSec."
+            }
+          ],
+          "url": "https://www.welivesecurity.com/en/eset-research/killing-me-gently-inside-gentlemens-edr-killer-framework/",
+          "pubDate": "2026-06-18T09:46:32.000Z"
+        },
+        {
+          "title": "Bulgaria allowed surveillance tech firm to sell products to repressive regimes, report says",
+          "cve": null,
+          "severity": "high",
+          "score": 75,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Signal de veille — The Record.\n\nThe nonprofit Human Rights Watch obtained export licensing records covering 2018 through 2023, which show the Bulgarian government allowed the surveillance firm Circles to peddle the tech to law enforcement and intelligence agencies in several countries known for human rights abuses.\n\nA Bulgaria-based surveillance technology firm sold its controversial wares to countries known for repressing their citizens, allowing those governments to snoop on conversati…",
+          "detail": "Signal de veille — The Record.\n\nThe nonprofit Human Rights Watch obtained export licensing records covering 2018 through 2023, which show the Bulgarian government allowed the surveillance firm Circles to peddle the tech to law enforcement and intelligence agencies in several countries known for human rights abuses.\n\nA Bulgaria-based surveillance technology firm sold its controversial wares to countries known for repressing their citizens, allowing those governments to snoop on conversations and monitor phones’ locations and web browsing, according to a new report.\n\nThe nonprofit Human Rights Watch obtained export licensing records covering 2018 through 2023, which show the Bulgarian government allowed the surveillance firm Circles to peddle the tech to law enforcement and intelligence agencies in El Salvador, the United Arab Emirates, Serbia, Azerbaijan, Guatemala, Bahrain, Jordan, Malaysia, Morocco and Panama.\n\nMany of those countries have long records for crushing dissent and some have used spyware to snoop on dissidents and journalists in the past.\n\nThe documents put the European Union’s export control regime — meant to stop the sale of sophisticated surveillance technology — in a harsh light. The EU has struggled to control the flow of spyware and other surveillance technology from being sold beyond its borders despite loud calls for it to do more to confront the problem.\n\n“All EU governments should be clamping down on exports of tools that can be used for repression, not rubber-stamping them,” Zach Campbell, senior surveillance researcher at Human Rights Watch, said in a statement.\n\n“The European Commission has evidence that EU governments have been issuing licenses seemingly without conducting serious human rights due diligence, and yet appears to have taken no ac",
+          "action": null,
+          "sources": [
+            {
+              "url": "https://therecord.media/bulgaria-allowed-surveillance-tech-firm-to-sell-to-repressive-regimes-report",
+              "label": "The Record"
+            }
+          ],
+          "url": "https://therecord.media/bulgaria-allowed-surveillance-tech-firm-to-sell-to-repressive-regimes-report",
+          "pubDate": "2026-06-18T19:30:00.000Z"
+        },
+        {
+          "title": "Majority of Internet-Accessible REDCap Servers Outdated",
+          "cve": null,
+          "severity": "culture",
+          "score": 64,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Signal de veille — SecurityWeek.\n\nMost of the internet-accessible REDCap servers, which are regularly targeted by China-linked UNC6508, are outdated.\n\nThese servers are regularly targeted by China-linked UNC6508 for initial access and backdoor deployment.\n\nSubscribe to the SecurityWeek Email Briefing for the latest cybersecurity threats, trends, and expert insights.\n\nSubscribe to the SecurityWeek Email Briefing to stay informed on the latest threats, trends, and technology, along with insi…",
+          "detail": "Signal de veille — SecurityWeek.\n\nMost of the internet-accessible REDCap servers, which are regularly targeted by China-linked UNC6508, are outdated.\n\nThese servers are regularly targeted by China-linked UNC6508 for initial access and backdoor deployment.\n\nSubscribe to the SecurityWeek Email Briefing for the latest cybersecurity threats, trends, and expert insights.\n\nSubscribe to the SecurityWeek Email Briefing to stay informed on the latest threats, trends, and technology, along with insightful columns from industry experts.\n\nToday’s attackers are no longer breaking in — they’re logging in. Join this live webinar as we break down the modern identity attack chain and examine how recent breaches exploited weaknesses in authentication, identity verification, and access management processes.\n\nAI has accelerated both sides of the fight. Adversaries are weaponizing vulnerabilities faster, while defenders are racing to ship detections and configurations. Join this live webinar as we explore how to prove your controls actually hold against new threats, map your security maturity, and unite breach simulation with automated pentesting into a single, coordinated program.\n\nSolarWinds has appointed Justin Henkel as Chief Information Security Officer.",
+          "action": null,
+          "sources": [
+            {
+              "url": "https://www.securityweek.com/majority-of-internet-accessible-redcap-servers-outdated/",
+              "label": "SecurityWeek"
+            }
+          ],
+          "url": "https://www.securityweek.com/majority-of-internet-accessible-redcap-servers-outdated/",
+          "pubDate": "2026-06-18T17:07:48.000Z"
+        },
+        {
+          "title": "SailPoint to Acquire Entro in Reported $200 Million Deal",
+          "cve": null,
+          "severity": "culture",
+          "score": 64,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Signal de veille — SecurityWeek.\n\nSailPoint has announced an agreement to acquire Entro, an Israel-based company specializing in non-human identity and credential security.\n\nIsrael-based Entro specializes in non-human identity and credential security solutions, and it will enable SailPoint to enhance its products.\n\nSubscribe to the SecurityWeek Email Briefing for the latest cybersecurity threats, trends, and expert insights.\n\nSubscribe to the SecurityWeek Email Briefing to stay informed on…",
+          "detail": "Signal de veille — SecurityWeek.\n\nSailPoint has announced an agreement to acquire Entro, an Israel-based company specializing in non-human identity and credential security.\n\nIsrael-based Entro specializes in non-human identity and credential security solutions, and it will enable SailPoint to enhance its products.\n\nSubscribe to the SecurityWeek Email Briefing for the latest cybersecurity threats, trends, and expert insights.\n\nSubscribe to the SecurityWeek Email Briefing to stay informed on the latest threats, trends, and technology, along with insightful columns from industry experts.\n\nToday’s attackers are no longer breaking in — they’re logging in. Join this live webinar as we break down the modern identity attack chain and examine how recent breaches exploited weaknesses in authentication, identity verification, and access management processes.\n\nAI has accelerated both sides of the fight. Adversaries are weaponizing vulnerabilities faster, while defenders are racing to ship detections and configurations. Join this live webinar as we explore how to prove your controls actually hold against new threats, map your security maturity, and unite breach simulation with automated pentesting into a single, coordinated program.\n\nSolarWinds has appointed Justin Henkel as Chief Information Security Officer.",
+          "action": null,
+          "sources": [
+            {
+              "url": "https://www.securityweek.com/sailpoint-to-acquire-entro-in-reported-200-million-deal/",
+              "label": "SecurityWeek"
+            }
+          ],
+          "url": "https://www.securityweek.com/sailpoint-to-acquire-entro-in-reported-200-million-deal/",
+          "pubDate": "2026-06-18T08:36:42.000Z"
+        },
+        {
+          "title": "Orphaned AI Agents: How to Find Hidden Access Risks Inside Your Network",
+          "cve": null,
+          "severity": "culture",
+          "score": 63,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Signal de veille — The Hacker News.\n\nIf an autonomous AI agent interacts with your company's core intellectual property today, can your security team instantly name the person who authorized it? For most enterprises, the answer is a simple no. The rush to adopt internal AI tools has left a massive trail of administrative debt: orphaned agents (AI tools left running after their creator leaves the company) and standing privileges (",
+          "detail": "Signal de veille — The Hacker News.\n\nIf an autonomous AI agent interacts with your company's core intellectual property today, can your security team instantly name the person who authorized it? For most enterprises, the answer is a simple no. The rush to adopt internal AI tools has left a massive trail of administrative debt: orphaned agents (AI tools left running after their creator leaves the company) and standing privileges (",
+          "action": null,
+          "sources": [
+            {
+              "url": "https://thehackernews.com/2026/06/orphaned-ai-agents-how-to-find-hidden.html",
+              "label": "The Hacker News"
+            }
+          ],
+          "url": "https://thehackernews.com/2026/06/orphaned-ai-agents-how-to-find-hidden.html",
+          "pubDate": "2026-06-18T15:33:49.000Z"
+        },
+        {
+          "title": "5 reasons Microsoft 365 backup isn’t enough for business data protection",
+          "cve": null,
+          "severity": "culture",
+          "score": 63,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Signal de veille — BleepingComputer.\n\nMicrosoft 365 helps keep services running, but protecting and recovering business data remains your responsibility. Acronis breaks down five gaps organizations should consider when evaluating Microsoft 365 data protection.\n\nFortiBleed leak exposes Fortinet VPN credentials for 73,000 devices.\n\nMalicious JetBrains Marketplace plugins steal AI API keys from developers\n\nSteam Workshop abused to spread malware via Wallpaper Engine app\n\nGentlemen ransomware uses…",
+          "detail": "Signal de veille — BleepingComputer.\n\nMicrosoft 365 helps keep services running, but protecting and recovering business data remains your responsibility. Acronis breaks down five gaps organizations should consider when evaluating Microsoft 365 data protection.\n\nFortiBleed leak exposes Fortinet VPN credentials for 73,000 devices.\n\nMalicious JetBrains Marketplace plugins steal AI API keys from developers\n\nSteam Workshop abused to spread malware via Wallpaper Engine app\n\nGentlemen ransomware uses multiple EDR killers to disable defenses\n\nNintendo confirms data stolen in WebMD subsidiary cyberattack\n\nUSB worm spreads crypto-stealing malware via Windows shortcut files",
+          "action": null,
+          "sources": [
+            {
+              "url": "https://www.bleepingcomputer.com/news/security/5-reasons-microsoft-365-backup-isnt-enough-for-business-data-protection/",
+              "label": "BleepingComputer"
+            }
+          ],
+          "url": "https://www.bleepingcomputer.com/news/security/5-reasons-microsoft-365-backup-isnt-enough-for-business-data-protection/",
+          "pubDate": "2026-06-18T13:48:56.000Z"
+        },
+        {
+          "title": "Microsoft fixes Windows Server 2016 security update failures",
+          "cve": null,
+          "severity": "culture",
+          "score": 63,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Signal de veille — BleepingComputer.\n\nMicrosoft has fixed a known issue causing the June 2026 security updates to fail on Windows Server 2016 systems that weren't up to date.\n\nFortiBleed leak exposes Fortinet VPN credentials for 73,000 devices.\n\nMalicious JetBrains Marketplace plugins steal AI API keys from developers\n\nSteam Workshop abused to spread malware via Wallpaper Engine app\n\nGentlemen ransomware uses multiple EDR killers to disable defenses\n\nNintendo confirms data stolen in WebMD subs…",
+          "detail": "Signal de veille — BleepingComputer.\n\nMicrosoft has fixed a known issue causing the June 2026 security updates to fail on Windows Server 2016 systems that weren't up to date.\n\nFortiBleed leak exposes Fortinet VPN credentials for 73,000 devices.\n\nMalicious JetBrains Marketplace plugins steal AI API keys from developers\n\nSteam Workshop abused to spread malware via Wallpaper Engine app\n\nGentlemen ransomware uses multiple EDR killers to disable defenses\n\nNintendo confirms data stolen in WebMD subsidiary cyberattack\n\nUSB worm spreads crypto-stealing malware via Windows shortcut files",
+          "action": null,
+          "sources": [
+            {
+              "url": "https://www.bleepingcomputer.com/news/microsoft/microsoft-fixes-windows-server-2016-security-update-failures/",
+              "label": "BleepingComputer"
+            }
+          ],
+          "url": "https://www.bleepingcomputer.com/news/microsoft/microsoft-fixes-windows-server-2016-security-update-failures/",
+          "pubDate": "2026-06-18T10:14:20.000Z"
+        },
+        {
+          "title": "Congress tees up No FAKES Act, aiming at AI-generated deepfakes",
+          "cve": null,
+          "severity": "culture",
+          "score": 59,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Signal de veille — CyberScoop.\n\nThe Senate Judiciary Committee approved a new bill this week that seeks to prevent unauthorized deepfakes of American artists, performers and public figures. While the bill sailed through a committee voice vote, both Senators and outside groups say they’re worried it could become a tool for the powerful to quash free speech.&nbsp; The NO FAKES Act , introduced by Sens.",
+          "detail": "Signal de veille — CyberScoop.\n\nThe Senate Judiciary Committee approved a new bill this week that seeks to prevent unauthorized deepfakes of American artists, performers and public figures. While the bill sailed through a committee voice vote, both Senators and outside groups say they’re worried it could become a tool for the powerful to quash free speech.&nbsp; The NO FAKES Act , introduced by Sens. Chris Coons, D-Del., and Marsha Blackburn, R-Tenn., would give Americans near-exclusive rights to their own digital AI replicas, and those rights live on, passing to heirs, executors and estates for at least 70 years after an individual dies. While living, creators would be able to essentially license their likeness and image to others, over 10-year contracts for adults and 5 years for minors. It would also permit individuals to sue anyone who uses their AI-generated image without permission, and pay up to $750,000 for violations. Blackburn submitted letters of support for the bill from more than 40 groups, including the Screen Actors Guild – American Federation of Television and Radio Artists, the American Medical Association, Creative Artists Agency, the Broadcasters’ Associations and the Human Artistry Campaign. “It is imperative that we put this national standard in place for voice and visual likeness protection of creators, to protect from proliferation of harmful AIgenerated deepfakes that are created witho",
+          "action": null,
+          "sources": [
+            {
+              "url": "https://cyberscoop.com/congress-tees-up-no-fakes-act-aiming-at-ai-generated-deepfakes/",
+              "label": "CyberScoop"
+            }
+          ],
+          "url": "https://cyberscoop.com/congress-tees-up-no-fakes-act-aiming-at-ai-generated-deepfakes/",
+          "pubDate": "2026-06-18T20:20:09.000Z"
+        },
+        {
+          "title": "The Scripts on Your Checkout Page Are Now a PCI DSS Problem",
+          "cve": null,
+          "severity": "culture",
+          "score": 59,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Signal de veille — The Hacker News.\n\nAn independent PCI assessor tested Reflectiz against the new PCI DSS rules. Here is the verdict: See the full QSA assessment here → When a customer types their card number into your checkout, their browser is running far more than your code. Analytics tags, a tag manager, a support widget, a payment iframe: a modern checkout loads dozens of third-party scripts, and any one of them can be turned",
+          "detail": "Signal de veille — The Hacker News.\n\nAn independent PCI assessor tested Reflectiz against the new PCI DSS rules. Here is the verdict: See the full QSA assessment here → When a customer types their card number into your checkout, their browser is running far more than your code. Analytics tags, a tag manager, a support widget, a payment iframe: a modern checkout loads dozens of third-party scripts, and any one of them can be turned",
+          "action": null,
+          "sources": [
+            {
+              "url": "https://thehackernews.com/2026/06/the-scripts-on-your-checkout-page-are.html",
+              "label": "The Hacker News"
+            }
+          ],
+          "url": "https://thehackernews.com/2026/06/the-scripts-on-your-checkout-page-are.html",
+          "pubDate": "2026-06-18T13:58:39.000Z"
+        },
+        {
+          "title": "Messageries : le braquage à 200 milliards de dollars qui saigne à blanc l’économie mondiale",
+          "cve": null,
+          "severity": "culture",
+          "score": 55,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Signal de veille — UnderNews.\n\nUne nouvelle étude de Kaspersky met en lumière l&#8217;ampleur des escroqueries par messagerie, un fléau frappant les ménages du monde entier qui devient, en toute discrétion, une menace macroéconomique. Tribune &#8211; Dans un contexte mondial marqué par une instabilité sans précédent dans l&#8217;histoire récente, une nouvelle étude de Kaspersky révèle que des réseaux d&#8217;escrocs organisés [&#8230;] The post Messageries : le braquage à 200 milliards…",
+          "detail": "Signal de veille — UnderNews.\n\nUne nouvelle étude de Kaspersky met en lumière l&#8217;ampleur des escroqueries par messagerie, un fléau frappant les ménages du monde entier qui devient, en toute discrétion, une menace macroéconomique. Tribune &#8211; Dans un contexte mondial marqué par une instabilité sans précédent dans l&#8217;histoire récente, une nouvelle étude de Kaspersky révèle que des réseaux d&#8217;escrocs organisés [&#8230;] The post Messageries : le braquage à 200 milliards de dollars qui saigne à blanc l’économie mondiale first appeared on UnderNews .",
+          "action": null,
+          "sources": [
+            {
+              "url": "https://www.undernews.fr/reseau-securite/messageries-le-braquage-a-200-milliards-de-dollars-qui-saigne-a-blanc-leconomie-mondiale.html",
+              "label": "UnderNews"
+            }
+          ],
+          "url": "https://www.undernews.fr/reseau-securite/messageries-le-braquage-a-200-milliards-de-dollars-qui-saigne-a-blanc-leconomie-mondiale.html",
+          "pubDate": "2026-06-18T08:09:30.000Z"
+        },
+        {
+          "title": "Edge AI et stockage local : les caméras de surveillance qui coupent le cordon avec le cloud [Sponso]",
+          "cve": null,
+          "severity": "culture",
+          "score": 55,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Signal de veille — Numerama.\n\nCet article a été réalisé en collaboration avec Reolink Si les caméras et sonnettes connectées ont le vent en poupe, elles partagent un angle mort majeur : pour profiter pleinement de leurs fonctionnalités, il faut accepter de fermer les yeux sur la souveraineté de ses données en les envoyant sur le cloud. Une fatalité ? Pas forcément.",
+          "detail": "Signal de veille — Numerama.\n\nCet article a été réalisé en collaboration avec Reolink Si les caméras et sonnettes connectées ont le vent en poupe, elles partagent un angle mort majeur : pour profiter pleinement de leurs fonctionnalités, il faut accepter de fermer les yeux sur la souveraineté de ses données en les envoyant sur le cloud. Une fatalité ? Pas forcément. Cet article a été réalisé en collaboration avec Reolink Il s’agit d’un contenu créé par des rédacteurs indépendants au sein de l’entité Humanoid xp. L’équipe éditoriale de Numerama n’a pas participé à sa création. Nous nous engageons auprès de nos lecteurs pour que ces contenus soient intéressants, qualitatifs et correspondent à leurs intérêts. En savoir plus",
+          "action": null,
+          "sources": [
+            {
+              "url": "https://www.numerama.com/tech/2276693-edge-ai-et-stockage-local-les-cameras-de-surveillance-qui-coupent-le-cordon-avec-le-cloud.html",
+              "label": "Numerama"
+            }
+          ],
+          "url": "https://www.numerama.com/tech/2276693-edge-ai-et-stockage-local-les-cameras-de-surveillance-qui-coupent-le-cordon-avec-le-cloud.html",
+          "pubDate": "2026-06-18T05:47:00.000Z"
+        },
+        {
+          "title": "Fake GitHub Stars and AI Videos Mask a Crypto Clipper",
+          "cve": null,
+          "severity": "culture",
+          "score": 52,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Signal de veille — Infosecurity Mag.\n\nA Rust crypto clipper hides behind fake GitHub stars and AI-narrated YouTube videos\n\nA cryptocurrency-stealing malware campaign has been spreading by faking its own popularity, dressing up booby-trapped \"tools\" with bogus GitHub stars, inflated download counts and AI-narrated YouTube tutorials.\n\nNew analysis from Check Point Research traced the operation to a Rust-based clipboard hijacker, a \"clipper\" that swaps copied crypto wallet addresses for the attac…",
+          "detail": "Signal de veille — Infosecurity Mag.\n\nA Rust crypto clipper hides behind fake GitHub stars and AI-narrated YouTube videos\n\nA cryptocurrency-stealing malware campaign has been spreading by faking its own popularity, dressing up booby-trapped \"tools\" with bogus GitHub stars, inflated download counts and AI-narrated YouTube tutorials.\n\nNew analysis from Check Point Research traced the operation to a Rust-based clipboard hijacker, a \"clipper\" that swaps copied crypto wallet addresses for the attacker's own, built for both Windows and macOS.\n\nThe lures are \"edge\" tools that promise easy money, crypto sniper bots and \"predictors\" that claim to forecast crash-gambling games, aimed at traders and gamblers chasing shortcuts. A WordPress phishing page acts as the hub, funneling victims to the downloads.\n\nThe campaign stands out for the effort it puts into looking legitimate. Check Point said the actor leaned on \"Ghost Networks\" of fake accounts to manufacture social proof across several platforms, including:\n\nSix or more GitHub accounts, with repositories padded out with fake stars and forks\n\nSourceForge projects showing 44,485 downloads, most from Android devices despite no Android build",
+          "action": null,
+          "sources": [
+            {
+              "url": "https://www.infosecurity-magazine.com/news/crypto-clipboard-hijacker-fake/",
+              "label": "Infosecurity Mag"
+            }
+          ],
+          "url": "https://www.infosecurity-magazine.com/news/crypto-clipboard-hijacker-fake/",
+          "pubDate": "2026-06-18T15:00:00.000Z"
+        },
+        {
+          "title": "Cybercriminals Are Worried About AI Taking Their Jobs Too",
+          "cve": null,
+          "severity": "culture",
+          "score": 52,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Signal de veille — Infosecurity Mag.\n\nAnalysis of chatter on underground forums by Sophos finds that hackers fear AI could take work away from them\n\nCybercriminals are experiencing the same worries as many employees working in legitimate jobs: many are worried that the rise of AI tools and large language models (LLMs) could result in them losing their jobs.\n\nThat is according to analysis of chatter on cybercriminal discussion boards, dark web marketplaces and messaging apps by cybersecurity re…",
+          "detail": "Signal de veille — Infosecurity Mag.\n\nAnalysis of chatter on underground forums by Sophos finds that hackers fear AI could take work away from them\n\nCybercriminals are experiencing the same worries as many employees working in legitimate jobs: many are worried that the rise of AI tools and large language models (LLMs) could result in them losing their jobs.\n\nThat is according to analysis of chatter on cybercriminal discussion boards, dark web marketplaces and messaging apps by cybersecurity researchers at Sophos Counter Threat Unit (CTU), which has showcased some of the hopes and fears that hackers have around the rise of AI applications and tools.\n\nThe research detailed how AI-based hacking tools have become an increasingly common offering on underground marketplaces. Sellers, both established and new, claim to offer AI-powered kits which can aid attackers with generating phishing and social engineering campaigns , developing malware , performing actions within compromised networks and more.\n\nFor example, the Sophos blog post detailed how one user is exploring the use of generative AI to overcome language barriers, distribute content at scale, and rapidly respond to any victims who respond to the lure.\n\nAnother detailed how they have used AI to generate deepfake audio and video profiles to help build realistic profiles to use for romance fraud. Meanwhile, several sellers offer tools which claim to automate malware coding with AI.\n\nAccording to Sophos, not everyone has welcomed the rise of AI toolkits for cybercrime with open arms. Users across cybercriminal underground forums and Telegram channels expressed concern about how the rise of AI could reshape roles, pricing and competitive advantage within the criminal economy.",
+          "action": null,
+          "sources": [
+            {
+              "url": "https://www.infosecurity-magazine.com/news/cybercriminals-worried-ai-take/",
+              "label": "Infosecurity Mag"
+            }
+          ],
+          "url": "https://www.infosecurity-magazine.com/news/cybercriminals-worried-ai-take/",
+          "pubDate": "2026-06-18T12:30:00.000Z"
+        },
+        {
+          "title": "Cybercrime Surges in APAC as Digitalization Takes Hold",
+          "cve": null,
+          "severity": "culture",
+          "score": 52,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Signal de veille — Infosecurity Mag.\n\nInterpol claims cybercrime accounts for third of crime in over half of Asia and South Pacific countries\n\nCybercrime is taking hold in Asia and the South Pacific just as it has elsewhere in the world, with organized crime gangs exploiting the adoption of new technologies, according to Interpol.\n\nThe policing network said that cybercrime now accounts for 30% of crime in over half of the countries covered by its 2025/2026 Asia and South Pacific Cyberthreat As…",
+          "detail": "Signal de veille — Infosecurity Mag.\n\nInterpol claims cybercrime accounts for third of crime in over half of Asia and South Pacific countries\n\nCybercrime is taking hold in Asia and the South Pacific just as it has elsewhere in the world, with organized crime gangs exploiting the adoption of new technologies, according to Interpol.\n\nThe policing network said that cybercrime now accounts for 30% of crime in over half of the countries covered by its 2025/2026 Asia and South Pacific Cyberthreat Assessment Report.\n\nThe study, which is sponsored by the UK government, assessed cybercrime trends across 18 Southeast Asian countries and Pacific Island states.\n\nIt found that a third of the countries surveyed reported over 10,000 cases of online scams. These rely heavily on social engineering and impact individuals, enterprises, and governmental bodies, the report noted. Spear-phishing, smishing and AI-generated messages are becoming increasingly prevalent.\n\nThe second &ldquo;most significant&rdquo; cybercrime threat highlighted in the report was infostealers and banking trojans, followed by ransomware, deepfakes and misinformation, and business email compromise (BEC).\n\nRead more on Asian cybercrime: 20,000 Asian IPs and Domains Dismantled in Infostealer Crackdown.",
+          "action": null,
+          "sources": [
+            {
+              "url": "https://www.infosecurity-magazine.com/news/cybercrime-surges-apac-digitization/",
+              "label": "Infosecurity Mag"
+            }
+          ],
+          "url": "https://www.infosecurity-magazine.com/news/cybercrime-surges-apac-digitization/",
+          "pubDate": "2026-06-18T08:30:00.000Z"
+        },
+        {
+          "title": "INVITATION POUR LES UECC",
+          "cve": null,
+          "severity": "culture",
+          "score": 50,
+          "corroboration": 1,
+          "region": "fr",
+          "body": "Signal de veille — Global Sec Mag.\n\nBonjour, En tant que partenaire soutien des Universités d'Été de la Cybersécurité et du Cloud de Confiance (UECC), nous avons le plaisir de vous convier à la 12ème édition, l'événement phare de la rentrée pour les acteurs de la cybersécurité.",
+          "detail": "Signal de veille — Global Sec Mag.\n\nBonjour, En tant que partenaire soutien des Universités d'Été de la Cybersécurité et du Cloud de Confiance (UECC), nous avons le plaisir de vous convier à la 12ème édition, l'événement phare de la rentrée pour les acteurs de la cybersécurité. Au programme cette année : « Réarmement numérique : l'Europe est-elle prête à conquérir sa souveraineté ? » Avec des échanges autour de thèmes clés : • Cybersécurité et défense : Comment positionner les solutions européennes sur la scène mondiale ? • Cybersécurité et IA : L'IA, un outil à double tranchant pour la sécurité numérique. • Dépendance numérique : La commande publique et privée, leviers d'émancipation ? • Priorités de l'État : Comment la sécurité numérique s'impose-t-elle en 2026/2027 ? Pour en savoir plus sur le programme : https://uecc-hexatrust.com/programme Un lieu unique pour réunir l'écosystème du numérique souverain : entreprises, clients, partenaires, décideurs, médias et associations. Plus de 800 participants et 80 partenaires sont attendus. Date : Jeudi 10 septembre 2026 Lieu : Station F – Paris 13 Horaires : 9h – 18h L'accès est offert aux RSSI, CISO, CSO, DPO, Respnsables Cyber et Cybersécurité, grâce à notre soutien à l'événement. Pour vous inscrire, utilisez le code : UECC2026-GLOBALSECURITYMAG https://uecc-hexatrust.com/page-inscription Nous serions ravi.e.s de vous compter parmi nous pour ces échanges essentiels.",
+          "action": null,
+          "sources": [
+            {
+              "url": "https://www.globalsecuritymag.fr/invitation-pour-les-uecc.html",
+              "label": "Global Sec Mag"
+            }
+          ],
+          "url": "https://www.globalsecuritymag.fr/invitation-pour-les-uecc.html",
+          "pubDate": "2026-06-19T04:01:04.625Z"
+        }
+      ]
+    }
+  ]
+}
