@@ -1,0 +1,1086 @@
+{
+  "id": "daily-2026-06-26",
+  "type": "daily",
+  "date": "2026-06-26",
+  "title": "Rapport quotidien - vendredi 26 juin 2026",
+  "summary": "Sur les dernières 24 heures, la veille recense 27 vulnérabilités critiques, 35 incidents ou compromissions et 28 signaux de fond. Acteurs et produits les plus exposés : golang.org/x/crypto/ssh (go), Cisco et Magick.NET-Q16-AnyCPU (nuget).",
+  "generatedAt": "2026-06-26T04:01:22.818Z",
+  "sections": [
+    {
+      "id": "vulns",
+      "items": [
+        {
+          "title": "CVE-2026-46595 — golang.org/x/crypto/ssh: Invoking VerifiedPublicKeyCallback permissions skip enforcement",
+          "cve": "CVE-2026-46595",
+          "severity": "critical",
+          "score": 59,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Vulnérabilité critique CVE-2026-46595 affectant golang.org/x/crypto/ssh (go) (score CVSS 10).\n\ngolang.org/x/crypto/ssh: Invoking VerifiedPublicKeyCallback permissions skip enforcement\n\n--> Name Query To see all available qualifiers, see our documentation .\n\nPublished by the National Vulnerability Database May 22, 2026 Published to the GitHub Advisory Database Jun 25, 2026 Reviewed Jun 25, 2026 Last updated Jun 25, 2026 Severity Critical 10.0 CVSS overall score This score calculates overall vulnerability severity from 0 to 10 and is based on the Comm…",
+          "detail": "Vulnérabilité critique CVE-2026-46595 affectant golang.org/x/crypto/ssh (go) (score CVSS 10).\n\ngolang.org/x/crypto/ssh: Invoking VerifiedPublicKeyCallback permissions skip enforcement\n\n--> Name Query To see all available qualifiers, see our documentation .\n\nPublished by the National Vulnerability Database May 22, 2026 Published to the GitHub Advisory Database Jun 25, 2026 Reviewed Jun 25, 2026 Last updated Jun 25, 2026 Severity Critical 10.0 CVSS overall score This score calculates overall vulnerability severity from 0 to 10 and is based on the Common Vulnerability Scoring System (CVSS). / 10 CVSS v3 base metrics Attack vector Network Attack complexity Low Privileges required None User interaction None Scope Changed Confidentiality High Integrity High Availability Low Learn more about base metrics CVSS v3 base metrics Attack vector: More severe the more the remote (logically and physically) an attacker can be in order to exploit the vulnerability. Attack complexity: More severe for the least complex attacks. Privileges required: More severe if no privileges are required. User interaction: More severe when no user interaction is required. Scope: More severe when a scope change occurs, e.g. one vulnerable component impacts resources in components beyond its security scope. Confidentiality: More severe when loss of data confidentiality is highest, measuring the level of data access available to an unauthorized user. Integrity: More severe when loss of data integrity is the highest, measuring the consequence of data modification possible by an unauthorized user. Availability: More severe when the loss of impacted component availability is highest. CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:C/C:H/I:H/A:L EPSS score 0.385% Exploit Prediction Scoring System (EPSS) This score estimates the",
+          "action": "Vérifier l'exposition du parc et appliquer le correctif éditeur dès sa disponibilité.",
+          "sources": [
+            {
+              "url": "https://github.com/advisories/GHSA-x527-x647-q7gg",
+              "label": "GitHub Advisory"
+            }
+          ],
+          "url": "https://github.com/advisories/GHSA-x527-x647-q7gg",
+          "pubDate": "2026-06-25T22:23:16.000Z"
+        },
+        {
+          "title": "CVE-2026-55166 — Lemur: ACME SSRF + creator-equality IDOR lead to AWS IAM/PKI compromise",
+          "cve": "CVE-2026-55166",
+          "severity": "critical",
+          "score": 59,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Vulnérabilité critique CVE-2026-55166 affectant lemur (pip) (score CVSS 9.9).\n\nLemur: ACME SSRF + creator-equality IDOR lead to AWS IAM/PKI compromise\n\n--> Name Query To see all available qualifiers, see our documentation .\n\nLemur is Netflix's TLS certificate management service. It brokers between corporate SSO, internal authorities (CFSSL, an internal CA), and ACME-style external authorities such as Let's Encrypt.",
+          "detail": "Vulnérabilité critique CVE-2026-55166 affectant lemur (pip) (score CVSS 9.9).\n\nLemur: ACME SSRF + creator-equality IDOR lead to AWS IAM/PKI compromise\n\n--> Name Query To see all available qualifiers, see our documentation .\n\nLemur is Netflix's TLS certificate management service. It brokers between corporate SSO, internal authorities (CFSSL, an internal CA), and ACME-style external authorities such as Let's Encrypt. The bug here is a chain of three independent decisions in three different files, each defensible on its own, that combine into a critical authorization break.\n\nSink 1 — SSO auto-provision ( lemur/lemur/auth/views.py:300-308 ). When a new federated identity hits the SSO callback, Lemur calls user_service.create(..., active=True, ...) . There is no invite, no admin approval, no allowlist of email domains, no role-defaulting to read-only . Any SSO holder Lemur's IdP accepts becomes an active Lemur user.\n\nSink 2 — ACME acme_url SSRF ( lemur/lemur/plugins/lemur_acme/acme_handlers.py:161-201 ). When an authenticated user posts a new ACME authority, the plugin reads options.get(\"acme_url\", current_app.config.get(\"ACME_DIRECTORY_URL\")) and calls ClientV2.get_directory(directory_url, net) — a server-side HTTP fetch. There is no URL allowlist, no scheme filter (so file:// and gopher:// are reachable in some requests versions), no RFC1918/link-local filter, no DNS rebinding protection. The lemur worker dutifully fetches whatever URL the user supplies, and — because the upstream acme.client.ClientV2 returns the response body as part of the constructed Directory — the body is round-tripped into the authority object Lemur stores. On AWS, that means http://169.254.169.254/latest/meta-data/iam/security-credentials/ returns the worker's AccessKeyId , SecretAccessKey , and STS",
+          "action": "Vérifier l'exposition du parc et appliquer le correctif éditeur dès sa disponibilité.",
+          "sources": [
+            {
+              "url": "https://github.com/advisories/GHSA-v2wp-frmc-5q3v",
+              "label": "GitHub Advisory"
+            }
+          ],
+          "url": "https://github.com/advisories/GHSA-v2wp-frmc-5q3v",
+          "pubDate": "2026-06-25T22:07:19.000Z"
+        },
+        {
+          "title": "CVE-2026-42508 — golang.org/x/crypto/ssh/knownhosts vulnerable to auth bypass via unenforced @revoked status",
+          "cve": "CVE-2026-42508",
+          "severity": "critical",
+          "score": 57,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Vulnérabilité critique CVE-2026-42508 affectant golang.org/x/crypto/ssh/knownhosts (go) (score CVSS 9.1).\n\ngolang.org/x/crypto/ssh/knownhosts vulnerable to auth bypass via unenforced @revoked status\n\n--> Name Query To see all available qualifiers, see our documentation .\n\nPublished by the National Vulnerability Database May 22, 2026 Published to the GitHub Advisory Database Jun 25, 2026 Reviewed Jun 25, 2026 Last updated Jun 25, 2026 Severity Critical 9.1 CVSS overall score This score calculates overall vulnerability severity from 0 to 10 and is based on the Co…",
+          "detail": "Vulnérabilité critique CVE-2026-42508 affectant golang.org/x/crypto/ssh/knownhosts (go) (score CVSS 9.1).\n\ngolang.org/x/crypto/ssh/knownhosts vulnerable to auth bypass via unenforced @revoked status\n\n--> Name Query To see all available qualifiers, see our documentation .\n\nPublished by the National Vulnerability Database May 22, 2026 Published to the GitHub Advisory Database Jun 25, 2026 Reviewed Jun 25, 2026 Last updated Jun 25, 2026 Severity Critical 9.1 CVSS overall score This score calculates overall vulnerability severity from 0 to 10 and is based on the Common Vulnerability Scoring System (CVSS). / 10 CVSS v3 base metrics Attack vector Network Attack complexity Low Privileges required None User interaction None Scope Unchanged Confidentiality High Integrity High Availability None Learn more about base metrics CVSS v3 base metrics Attack vector: More severe the more the remote (logically and physically) an attacker can be in order to exploit the vulnerability. Attack complexity: More severe for the least complex attacks. Privileges required: More severe if no privileges are required. User interaction: More severe when no user interaction is required. Scope: More severe when a scope change occurs, e.g. one vulnerable component impacts resources in components beyond its security scope. Confidentiality: More severe when loss of data confidentiality is highest, measuring the level of data access available to an unauthorized user. Integrity: More severe when loss of data integrity is the highest, measuring the consequence of data modification possible by an unauthorized user. Availability: More severe when the loss of impacted component availability is highest. CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:N EPSS score 0.368% Exploit Prediction Scoring System (EPSS) This sc",
+          "action": "Vérifier l'exposition du parc et appliquer le correctif éditeur dès sa disponibilité.",
+          "sources": [
+            {
+              "url": "https://github.com/advisories/GHSA-5cgq-3rg8-m6cv",
+              "label": "GitHub Advisory"
+            }
+          ],
+          "url": "https://github.com/advisories/GHSA-5cgq-3rg8-m6cv",
+          "pubDate": "2026-06-25T22:22:04.000Z"
+        },
+        {
+          "title": "CVE-2026-39834 — golang.org/x/crypto/ssh vulnerable to infinite loop on large channel writes",
+          "cve": "CVE-2026-39834",
+          "severity": "critical",
+          "score": 57,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Vulnérabilité critique CVE-2026-39834 affectant golang.org/x/crypto/ssh (go) (score CVSS 9.1).\n\ngolang.org/x/crypto/ssh vulnerable to infinite loop on large channel writes\n\n--> Name Query To see all available qualifiers, see our documentation .\n\nPublished by the National Vulnerability Database May 22, 2026 Published to the GitHub Advisory Database Jun 25, 2026 Reviewed Jun 25, 2026 Severity Critical 9.1 CVSS overall score This score calculates overall vulnerability severity from 0 to 10 and is based on the Common Vulnerability Scoring System (CVSS).",
+          "detail": "Vulnérabilité critique CVE-2026-39834 affectant golang.org/x/crypto/ssh (go) (score CVSS 9.1).\n\ngolang.org/x/crypto/ssh vulnerable to infinite loop on large channel writes\n\n--> Name Query To see all available qualifiers, see our documentation .\n\nPublished by the National Vulnerability Database May 22, 2026 Published to the GitHub Advisory Database Jun 25, 2026 Reviewed Jun 25, 2026 Severity Critical 9.1 CVSS overall score This score calculates overall vulnerability severity from 0 to 10 and is based on the Common Vulnerability Scoring System (CVSS). / 10 CVSS v3 base metrics Attack vector Network Attack complexity Low Privileges required None User interaction None Scope Unchanged Confidentiality None Integrity High Availability High Learn more about base metrics CVSS v3 base metrics Attack vector: More severe the more the remote (logically and physically) an attacker can be in order to exploit the vulnerability. Attack complexity: More severe for the least complex attacks. Privileges required: More severe if no privileges are required. User interaction: More severe when no user interaction is required. Scope: More severe when a scope change occurs, e.g. one vulnerable component impacts resources in components beyond its security scope. Confidentiality: More severe when loss of data confidentiality is highest, measuring the level of data access available to an unauthorized user. Integrity: More severe when loss of data integrity is the highest, measuring the consequence of data modification possible by an unauthorized user. Availability: More severe when the loss of impacted component availability is highest. CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:H/A:H EPSS score 0.466% Exploit Prediction Scoring System (EPSS) This score estimates the probability of this vulnerability b",
+          "action": "Vérifier l'exposition du parc et appliquer le correctif éditeur dès sa disponibilité.",
+          "sources": [
+            {
+              "url": "https://github.com/advisories/GHSA-rm3j-f69w-wqmq",
+              "label": "GitHub Advisory"
+            }
+          ],
+          "url": "https://github.com/advisories/GHSA-rm3j-f69w-wqmq",
+          "pubDate": "2026-06-25T22:21:40.000Z"
+        },
+        {
+          "title": "CVE-2026-39831 — golang.org/x/crypto/ssh: FIDO/U2F security key physical presence check can be bypassed",
+          "cve": "CVE-2026-39831",
+          "severity": "critical",
+          "score": 57,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Vulnérabilité critique CVE-2026-39831 affectant golang.org/x/crypto/ssh (go) (score CVSS 9.1).\n\ngolang.org/x/crypto/ssh: FIDO/U2F security key physical presence check can be bypassed\n\n--> Name Query To see all available qualifiers, see our documentation .\n\nPublished by the National Vulnerability Database May 22, 2026 Published to the GitHub Advisory Database Jun 25, 2026 Reviewed Jun 25, 2026 Last updated Jun 25, 2026 Severity Critical 9.1 CVSS overall score This score calculates overall vulnerability severity from 0 to 10 and is based on the Common…",
+          "detail": "Vulnérabilité critique CVE-2026-39831 affectant golang.org/x/crypto/ssh (go) (score CVSS 9.1).\n\ngolang.org/x/crypto/ssh: FIDO/U2F security key physical presence check can be bypassed\n\n--> Name Query To see all available qualifiers, see our documentation .\n\nPublished by the National Vulnerability Database May 22, 2026 Published to the GitHub Advisory Database Jun 25, 2026 Reviewed Jun 25, 2026 Last updated Jun 25, 2026 Severity Critical 9.1 CVSS overall score This score calculates overall vulnerability severity from 0 to 10 and is based on the Common Vulnerability Scoring System (CVSS). / 10 CVSS v3 base metrics Attack vector Network Attack complexity Low Privileges required None User interaction None Scope Unchanged Confidentiality High Integrity High Availability None Learn more about base metrics CVSS v3 base metrics Attack vector: More severe the more the remote (logically and physically) an attacker can be in order to exploit the vulnerability. Attack complexity: More severe for the least complex attacks. Privileges required: More severe if no privileges are required. User interaction: More severe when no user interaction is required. Scope: More severe when a scope change occurs, e.g. one vulnerable component impacts resources in components beyond its security scope. Confidentiality: More severe when loss of data confidentiality is highest, measuring the level of data access available to an unauthorized user. Integrity: More severe when loss of data integrity is the highest, measuring the consequence of data modification possible by an unauthorized user. Availability: More severe when the loss of impacted component availability is highest. CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:N EPSS score 0.373% Exploit Prediction Scoring System (EPSS) This score estimates th",
+          "action": "Vérifier l'exposition du parc et appliquer le correctif éditeur dès sa disponibilité.",
+          "sources": [
+            {
+              "url": "https://github.com/advisories/GHSA-89gr-r52h-f8rx",
+              "label": "GitHub Advisory"
+            }
+          ],
+          "url": "https://github.com/advisories/GHSA-89gr-r52h-f8rx",
+          "pubDate": "2026-06-25T22:21:12.000Z"
+        },
+        {
+          "title": "CVE-2026-39830 — golang.org/x/crypto/ssh: Invoking client can cause server deadlock on unexpected responses",
+          "cve": "CVE-2026-39830",
+          "severity": "critical",
+          "score": 57,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Vulnérabilité critique CVE-2026-39830 affectant golang.org/x/crypto/ssh (go) (score CVSS 9.1).\n\ngolang.org/x/crypto/ssh: Invoking client can cause server deadlock on unexpected responses\n\n--> Name Query To see all available qualifiers, see our documentation .\n\nPublished by the National Vulnerability Database May 22, 2026 Published to the GitHub Advisory Database Jun 25, 2026 Reviewed Jun 25, 2026 Last updated Jun 25, 2026 Severity Critical 9.1 CVSS overall score This score calculates overall vulnerability severity from 0 to 10 and is based on the Com…",
+          "detail": "Vulnérabilité critique CVE-2026-39830 affectant golang.org/x/crypto/ssh (go) (score CVSS 9.1).\n\ngolang.org/x/crypto/ssh: Invoking client can cause server deadlock on unexpected responses\n\n--> Name Query To see all available qualifiers, see our documentation .\n\nPublished by the National Vulnerability Database May 22, 2026 Published to the GitHub Advisory Database Jun 25, 2026 Reviewed Jun 25, 2026 Last updated Jun 25, 2026 Severity Critical 9.1 CVSS overall score This score calculates overall vulnerability severity from 0 to 10 and is based on the Common Vulnerability Scoring System (CVSS). / 10 CVSS v3 base metrics Attack vector Network Attack complexity Low Privileges required None User interaction None Scope Unchanged Confidentiality High Integrity None Availability High Learn more about base metrics CVSS v3 base metrics Attack vector: More severe the more the remote (logically and physically) an attacker can be in order to exploit the vulnerability. Attack complexity: More severe for the least complex attacks. Privileges required: More severe if no privileges are required. User interaction: More severe when no user interaction is required. Scope: More severe when a scope change occurs, e.g. one vulnerable component impacts resources in components beyond its security scope. Confidentiality: More severe when loss of data confidentiality is highest, measuring the level of data access available to an unauthorized user. Integrity: More severe when loss of data integrity is the highest, measuring the consequence of data modification possible by an unauthorized user. Availability: More severe when the loss of impacted component availability is highest. CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:N/A:H EPSS score 0.392% Exploit Prediction Scoring System (EPSS) This score estimate",
+          "action": "Vérifier l'exposition du parc et appliquer le correctif éditeur dès sa disponibilité.",
+          "sources": [
+            {
+              "url": "https://github.com/advisories/GHSA-vgwf-h737-ff37",
+              "label": "GitHub Advisory"
+            }
+          ],
+          "url": "https://github.com/advisories/GHSA-vgwf-h737-ff37",
+          "pubDate": "2026-06-25T22:18:17.000Z"
+        },
+        {
+          "title": "CVE-2026-39832 — golang.org/x/crypto/ssh/agent doesn't drop invoking agent constraints when forwarding keys",
+          "cve": "CVE-2026-39832",
+          "severity": "critical",
+          "score": 57,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Vulnérabilité critique CVE-2026-39832 affectant golang.org/x/crypto/ssh/agent (go) (score CVSS 9.1).\n\ngolang.org/x/crypto/ssh/agent doesn't drop invoking agent constraints when forwarding keys\n\n--> Name Query To see all available qualifiers, see our documentation .\n\nPublished by the National Vulnerability Database May 22, 2026 Published to the GitHub Advisory Database Jun 25, 2026 Reviewed Jun 25, 2026 Last updated Jun 25, 2026 Severity Critical 9.1 CVSS overall score This score calculates overall vulnerability severity from 0 to 10 and is based on the Com…",
+          "detail": "Vulnérabilité critique CVE-2026-39832 affectant golang.org/x/crypto/ssh/agent (go) (score CVSS 9.1).\n\ngolang.org/x/crypto/ssh/agent doesn't drop invoking agent constraints when forwarding keys\n\n--> Name Query To see all available qualifiers, see our documentation .\n\nPublished by the National Vulnerability Database May 22, 2026 Published to the GitHub Advisory Database Jun 25, 2026 Reviewed Jun 25, 2026 Last updated Jun 25, 2026 Severity Critical 9.1 CVSS overall score This score calculates overall vulnerability severity from 0 to 10 and is based on the Common Vulnerability Scoring System (CVSS). / 10 CVSS v3 base metrics Attack vector Network Attack complexity Low Privileges required None User interaction None Scope Unchanged Confidentiality High Integrity High Availability None Learn more about base metrics CVSS v3 base metrics Attack vector: More severe the more the remote (logically and physically) an attacker can be in order to exploit the vulnerability. Attack complexity: More severe for the least complex attacks. Privileges required: More severe if no privileges are required. User interaction: More severe when no user interaction is required. Scope: More severe when a scope change occurs, e.g. one vulnerable component impacts resources in components beyond its security scope. Confidentiality: More severe when loss of data confidentiality is highest, measuring the level of data access available to an unauthorized user. Integrity: More severe when loss of data integrity is the highest, measuring the consequence of data modification possible by an unauthorized user. Availability: More severe when the loss of impacted component availability is highest. CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:N EPSS score 0.397% Exploit Prediction Scoring System (EPSS) This score es",
+          "action": "Vérifier l'exposition du parc et appliquer le correctif éditeur dès sa disponibilité.",
+          "sources": [
+            {
+              "url": "https://github.com/advisories/GHSA-f5wc-c3c7-36mc",
+              "label": "GitHub Advisory"
+            }
+          ],
+          "url": "https://github.com/advisories/GHSA-f5wc-c3c7-36mc",
+          "pubDate": "2026-06-25T22:14:00.000Z"
+        },
+        {
+          "title": "CVE-2026-39833 — golang.org/x/crypto/ssh/agent doesn't enforce invoking key constraints",
+          "cve": "CVE-2026-39833",
+          "severity": "critical",
+          "score": 57,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Vulnérabilité critique CVE-2026-39833 affectant golang.org/x/crypto/ssh/agent (go) (score CVSS 9.1).\n\ngolang.org/x/crypto/ssh/agent doesn't enforce invoking key constraints\n\n--> Name Query To see all available qualifiers, see our documentation .\n\nPublished by the National Vulnerability Database May 22, 2026 Published to the GitHub Advisory Database Jun 25, 2026 Reviewed Jun 25, 2026 Severity Critical 9.1 CVSS overall score This score calculates overall vulnerability severity from 0 to 10 and is based on the Common Vulnerability Scoring System (CVSS).",
+          "detail": "Vulnérabilité critique CVE-2026-39833 affectant golang.org/x/crypto/ssh/agent (go) (score CVSS 9.1).\n\ngolang.org/x/crypto/ssh/agent doesn't enforce invoking key constraints\n\n--> Name Query To see all available qualifiers, see our documentation .\n\nPublished by the National Vulnerability Database May 22, 2026 Published to the GitHub Advisory Database Jun 25, 2026 Reviewed Jun 25, 2026 Severity Critical 9.1 CVSS overall score This score calculates overall vulnerability severity from 0 to 10 and is based on the Common Vulnerability Scoring System (CVSS). / 10 CVSS v3 base metrics Attack vector Network Attack complexity Low Privileges required None User interaction None Scope Unchanged Confidentiality High Integrity High Availability None Learn more about base metrics CVSS v3 base metrics Attack vector: More severe the more the remote (logically and physically) an attacker can be in order to exploit the vulnerability. Attack complexity: More severe for the least complex attacks. Privileges required: More severe if no privileges are required. User interaction: More severe when no user interaction is required. Scope: More severe when a scope change occurs, e.g. one vulnerable component impacts resources in components beyond its security scope. Confidentiality: More severe when loss of data confidentiality is highest, measuring the level of data access available to an unauthorized user. Integrity: More severe when loss of data integrity is the highest, measuring the consequence of data modification possible by an unauthorized user. Availability: More severe when the loss of impacted component availability is highest. CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:N EPSS score 0.36% Exploit Prediction Scoring System (EPSS) This score estimates the probability of this vulnerability b",
+          "action": "Vérifier l'exposition du parc et appliquer le correctif éditeur dès sa disponibilité.",
+          "sources": [
+            {
+              "url": "https://github.com/advisories/GHSA-jppx-rxg9-jmrx",
+              "label": "GitHub Advisory"
+            }
+          ],
+          "url": "https://github.com/advisories/GHSA-jppx-rxg9-jmrx",
+          "pubDate": "2026-06-25T22:13:31.000Z"
+        },
+        {
+          "title": "CVE-2026-48713 — i18next-fs-backend vulnerable to prototype pollution via crafted missing-key string",
+          "cve": "CVE-2026-48713",
+          "severity": "critical",
+          "score": 57,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Vulnérabilité critique CVE-2026-48713 affectant i18next-fs-backend (npm) (score CVSS 9.1).\n\ni18next-fs-backend vulnerable to prototype pollution via crafted missing-key string\n\n--> Name Query To see all available qualifiers, see our documentation .\n\nBackend.writeFile() splits each queued missing-key string on the configured keySeparator (default . ) before calling the internal setPath() walker.",
+          "detail": "Vulnérabilité critique CVE-2026-48713 affectant i18next-fs-backend (npm) (score CVSS 9.1).\n\ni18next-fs-backend vulnerable to prototype pollution via crafted missing-key string\n\n--> Name Query To see all available qualifiers, see our documentation .\n\nBackend.writeFile() splits each queued missing-key string on the configured keySeparator (default . ) before calling the internal setPath() walker. The walker ( getLastOfPath in lib/utils.js ) did not guard against unsafe segments, so a key like \"__proto__.polluted\" was split into [\"__proto__\", \"polluted\"] and walked straight into Object.prototype , allowing an attacker to write arbitrary properties onto the global object prototype.\n\nDepending on the host application, polluted prototype properties may cause crashes, corrupted translation behaviour, configuration poisoning, or bypasses of property-based security checks.\n\nApplications are directly affected only if all of the following hold:\n\nApps that do not expose missing-key persistence to untrusted input are not directly affected through this attack path.\n\nFixed in i18next-fs-backend 2.6.6 . The traversal helper now refuses to descend through __proto__ , constructor , or prototype segments and drops the offending write silently. Legitimate dotted keys (e.g. \"header.title\" ) are unaffected.",
+          "action": "Vérifier l'exposition du parc et appliquer le correctif éditeur dès sa disponibilité.",
+          "sources": [
+            {
+              "url": "https://github.com/advisories/GHSA-2933-q333-qg83",
+              "label": "GitHub Advisory"
+            }
+          ],
+          "url": "https://github.com/advisories/GHSA-2933-q333-qg83",
+          "pubDate": "2026-06-25T17:28:46.000Z"
+        },
+        {
+          "title": "CVE-2026-48714 — i18next-http-middleware: MissingKeyHandler does not reject keys whose segments contain prototype-polluting names",
+          "cve": "CVE-2026-48714",
+          "severity": "critical",
+          "score": 57,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Vulnérabilité critique CVE-2026-48714 affectant i18next-http-middleware (npm) (score CVSS 9.1).\n\ni18next-http-middleware: MissingKeyHandler does not reject keys whose segments contain prototype-polluting names\n\n--> Name Query To see all available qualifiers, see our documentation .\n\nApplications that expose missingKeyHandler to untrusted input AND use i18next-fs-backend ≤ 2.6.5 are directly exploitable for remote prototype pollution.",
+          "detail": "Vulnérabilité critique CVE-2026-48714 affectant i18next-http-middleware (npm) (score CVSS 9.1).\n\ni18next-http-middleware: MissingKeyHandler does not reject keys whose segments contain prototype-polluting names\n\n--> Name Query To see all available qualifiers, see our documentation .\n\nApplications that expose missingKeyHandler to untrusted input AND use i18next-fs-backend ≤ 2.6.5 are directly exploitable for remote prototype pollution. Other downstream backends that split the missing-key string the same way may be similarly affected.\n\nDepending on the host application, polluted prototype properties may cause crashes, corrupted translation behaviour, configuration poisoning, or bypasses of property-based security checks.\n\nFixed in i18next-http-middleware 3.9.7 . A new utils.hasUnsafeKeySegment(key, keySeparator) helper is now used by missingKeyHandler ; the configured i18next.options.keySeparator is honoured (default . ; false disables segment splitting and only the literal-key denylist applies). Legitimate dotted keys (e.g. \"header.title\" ) are unaffected.\n\nThe root-cause fix has been shipped in i18next-fs-backend 2.6.6 — see the companion advisory.\n\nadrai published to i18next/i18next-http-middleware May 22, 2026 Published by the National Vulnerability Database Jun 15, 2026 Published to the GitHub Advisory Database Jun 25, 2026 Reviewed Jun 25, 2026 Severity Critical 9.1 CVSS overall score This score calculates overall vulnerability severity from 0 to 10 and is based on the Common Vulnerability Scoring System (CVSS). / 10 CVSS v3 base metrics Attack vector Network Attack complexity Low Privileges required None User interaction None Scope Unchanged Confidentiality None Integrity High Availability High Learn more about base metrics CVSS v3 base metrics Attack vector: More s",
+          "action": "Vérifier l'exposition du parc et appliquer le correctif éditeur dès sa disponibilité.",
+          "sources": [
+            {
+              "url": "https://github.com/advisories/GHSA-f49m-vf83-692w",
+              "label": "GitHub Advisory"
+            }
+          ],
+          "url": "https://github.com/advisories/GHSA-f49m-vf83-692w",
+          "pubDate": "2026-06-25T17:28:12.000Z"
+        },
+        {
+          "title": "Cisco Catalyst SD-WAN Zero-Day CVE-2026-20245 Exploited Months Before Disclosure",
+          "cve": "CVE-2026-20245",
+          "severity": "critical",
+          "score": 51,
+          "corroboration": 3,
+          "region": "intl",
+          "body": "Vulnérabilité critique CVE-2026-20245 affectant Cisco.\n\nHackers exploited Cisco Catalyst SD-WAN flaw CVE-2026-20245 as a zero-day months before disclosure, enabling privileged command execution. Google-owned Mandiant reported that an unknown threat actor exploited Cisco Catalyst SD-WAN vulnerability CVE-2026-20245 (CVSS base score of 7.8) as a zero-day at least two months before it was publicly disclosed.",
+          "detail": "Vulnérabilité critique CVE-2026-20245 affectant Cisco.\n\nHackers exploited Cisco Catalyst SD-WAN flaw CVE-2026-20245 as a zero-day months before disclosure, enabling privileged command execution. Google-owned Mandiant reported that an unknown threat actor exploited Cisco Catalyst SD-WAN vulnerability CVE-2026-20245 (CVSS base score of 7.8) as a zero-day at least two months before it was publicly disclosed. The flaw allows an authenticated attacker with netadmin privileges to execute arbitrary commands with elevated rights by using a crafted file. Cisco has confirmed awareness of active exploitation and released fixes. An authenticated local attacker can trigger the vulnerability to run arbitrary commands as root. The mechanics are straightforward: bad input validation. Although the flaw requires netadmin privileges, attackers can obtain them using stolen credentials or by exploiting previously disclosed vulnerabilities such as CVE-2026-20182 and CVE-2026-20127 . “This vulnerability is due to insufficient validation of user-supplied input. An attacker could exploit this vulnerability by uploading a crafted file to the affected system. A successful exploit could allow the attacker to perform command injection attacks on an affected system and elevate their privileges as the&nbsp;root&nbsp;user.”&nbsp; reads the advisory . “To exploit this vulnerability, the attacker must have&nbsp;netadmin&nbsp;privileges on the affected system. This w",
+          "action": "Vérifier l'exposition du parc et appliquer le correctif éditeur dès sa disponibilité.",
+          "sources": [
+            {
+              "url": "https://securityaffairs.com/194200/hacking/cisco-catalyst-sd-wan-zero-day-cve-2026-20245-exploited-months-before-disclosure.html",
+              "label": "Security Affairs"
+            },
+            {
+              "url": "https://www.securityweek.com/cisco-sd-wan-zero-day-exploited-months-before-patching/",
+              "label": "SecurityWeek"
+            },
+            {
+              "url": "https://thehackernews.com/2026/06/cisco-catalyst-sd-wan-zero-day-cve-2026.html",
+              "label": "The Hacker News"
+            }
+          ],
+          "url": "https://securityaffairs.com/194200/hacking/cisco-catalyst-sd-wan-zero-day-cve-2026-20245-exploited-months-before-disclosure.html",
+          "pubDate": "2026-06-25T09:17:31.000Z"
+        },
+        {
+          "title": "Why patch directives only go so far",
+          "cve": "CVE-2026-50751",
+          "severity": "critical",
+          "score": 48,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Vulnérabilité critique CVE-2026-50751.\n\nWhen CISA issues an emergency directive, the message to every federal agency and every security team paying attention is to patch now. For CVE-2026-50751, a CVSS 9.3 authentication bypass in Check Point Remote Access VPN, that directive landed on June 21. despite exploitation beginning in early May. That, six-week active intrusion gap is not a footnote. It is the entire story. The flaw itself is straightforward in the worst possible way.",
+          "detail": "Vulnérabilité critique CVE-2026-50751.\n\nWhen CISA issues an emergency directive, the message to every federal agency and every security team paying attention is to patch now. For CVE-2026-50751, a CVSS 9.3 authentication bypass in Check Point Remote Access VPN, that directive landed on June 21. despite exploitation beginning in early May. That, six-week active intrusion gap is not a footnote. It is the entire story. The flaw itself is straightforward in the worst possible way. A logic error in the certificate-validation process, triggered when the deprecated IKEv1 key-exchange protocol is enabled, allows a remote attacker to establish a fully authenticated VPN session without a valid password. No phishing. No credential theft. No lateral movement required to reach the perimeter. The attacker walks through the front door, and the door logs it as a legitimate entry. By the time Check Point disclosed the vulnerability on June 8, a Qilin ransomware affiliate had already used it to compromise a few dozen organizations worldwide. The post-access playbook was efficient, including Rclone for data exfiltration, the Tox protocol for command-and-control communication routed through disposable VPS infrastructure. Quiet, fast, and designed to complete the job before detection had a chance to matter. The security product became the attack vector There is a particular irony to CVE-2026-50751 that the industry needs to sit with. The",
+          "action": "Vérifier l'exposition du parc et appliquer le correctif éditeur dès sa disponibilité.",
+          "sources": [
+            {
+              "url": "https://cyberscoop.com/why-security-patching-is-not-enough-cve-2026-50751-op-ed/",
+              "label": "CyberScoop"
+            }
+          ],
+          "url": "https://cyberscoop.com/why-security-patching-is-not-enough-cve-2026-50751-op-ed/",
+          "pubDate": "2026-06-25T09:00:00.000Z"
+        },
+        {
+          "title": "CVE-2026-48508 — Lemur has an authorization bypass in StrictRolePermission / AuthorityCreatorPermission",
+          "cve": "CVE-2026-48508",
+          "severity": "high",
+          "score": 46,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Vulnérabilité élevée CVE-2026-48508 affectant lemur (pip) (score CVSS 8.8).\n\nLemur has an authorization bypass in StrictRolePermission / AuthorityCreatorPermission\n\n--> Name Query To see all available qualifiers, see our documentation .\n\nFlask-Principal's Permission.allows() returns True whenever self.needs is empty.",
+          "detail": "Vulnérabilité élevée CVE-2026-48508 affectant lemur (pip) (score CVSS 8.8).\n\nLemur has an authorization bypass in StrictRolePermission / AuthorityCreatorPermission\n\n--> Name Query To see all available qualifiers, see our documentation .\n\nFlask-Principal's Permission.allows() returns True whenever self.needs is empty. The .can() gate therefore passes for every authenticated identity, including the lowest-privilege role Lemur ships ( read-only ).\n\nA user holding only read-only can create root Certificate Authorities, create and edit notifications (an SSRF sink), create domain entries, and upload arbitrary certificates. These classes are the sole authorization check on those endpoints.\n\n# lemur/auth/permissions.py class AuthorityCreatorPermission ( Permission ): def __init__ ( self ): requires_admin = current_app . config . get ( \"ADMIN_ONLY_AUTHORITY_CREATION\" , False ) if requires_admin : super (). __init__ ( RoleNeed ( \"admin\" )) else : super (). __init__ () # empty Need set class StrictRolePermission ( Permission ): def __init__ ( self ): strict_role_enforcement = current_app . config . get ( \"LEMUR_STRICT_ROLE_ENFORCEMENT\" , False ) if strict_role_enforcement : needs = [ RoleNeed ( \"admin\" ), RoleNeed ( \"operator\" )] super (). __init__ ( * needs ) else : super (). __init__ () # empty Need set flask_principal.Permission.allows() (upstream, v0.4.0):\n\ndef allows ( self , identity ): if self . needs and not self . needs . intersection ( identity . provides ): return False ... return True When self.needs == set() , the first guard is falsy and is skipped. excludes is also empty, so allows() returns True for any identity. AuthenticatedResource (the parent class for these views) sets method_decorators = [login_required] , which checks authentication only, no role. So the per",
+          "action": "Vérifier l'exposition du parc et appliquer le correctif éditeur dès sa disponibilité.",
+          "sources": [
+            {
+              "url": "https://github.com/advisories/GHSA-qcqw-jwxc-2hqg",
+              "label": "GitHub Advisory"
+            }
+          ],
+          "url": "https://github.com/advisories/GHSA-qcqw-jwxc-2hqg",
+          "pubDate": "2026-06-25T18:48:39.000Z"
+        },
+        {
+          "title": "What do Ports Hear When Nobody's Listening&#x3f; An Assessment of Automated Cybercrime &#x5b;Guest Diary&#x5d;, (Wed, Jun 24th)",
+          "cve": "CVE-2016-20017",
+          "severity": "critical",
+          "score": 46,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Vulnérabilité critique CVE-2016-20017.\n\n[This is a Guest Diary by Nicole Phillips, an ISC intern as part of the SANS.edu BACS program] &quot; I was just sitting here enjoying the company. Plants got a lot to say, if you take the time to listen. &quot; &mdash; Eeyore, Winnie the Pooh Introduction: Listening to the Static Setting up and contributing to the DShield honeypot project [ 1 ] as an ISC intern is a meaningful part of the BACS program at SANS [2].",
+          "detail": "Vulnérabilité critique CVE-2016-20017.\n\n[This is a Guest Diary by Nicole Phillips, an ISC intern as part of the SANS.edu BACS program] &quot; I was just sitting here enjoying the company. Plants got a lot to say, if you take the time to listen. &quot; &mdash; Eeyore, Winnie the Pooh Introduction: Listening to the Static Setting up and contributing to the DShield honeypot project [ 1 ] as an ISC intern is a meaningful part of the BACS program at SANS [2]. Over the last several months I&#39;ve been thrilled to observe real-time SSH/Telnet activity, check every new file hash and TTY log and hunt for unique http requests. That said, reviewing raw honeypot logs can feel overwhelming. Every day, public facing servers are bombarded by millions of identical hits, mostly automated, creating a fog of noise that seems repetitive, yet disconnected and chaotic. After seeing the same sequence of activity day in and day out, it becomes easy to dismiss traffic as loud background static. But like Eeyore&#39;s observation of the Hundred Acre Wood, the background noise has a lot to say if you stop to listen. Witnessing the noise helps you understand how to recognize the anomalies. When slowing down and looking more closely at patterns, the fog lifts, revealing layers of orchestration in an automated shadow economy that increasingly drives my curiosity. &bull; What are automated botnets and scanners? &bull; How do they operate? &bull; W",
+          "action": "Vérifier l'exposition du parc et appliquer le correctif éditeur dès sa disponibilité.",
+          "sources": [
+            {
+              "url": "https://isc.sans.edu/diary/rss/33104",
+              "label": "SANS ISC"
+            }
+          ],
+          "url": "https://isc.sans.edu/diary/rss/33104",
+          "pubDate": "2026-06-25T10:01:19.000Z"
+        },
+        {
+          "title": "CVE-2026-39829 — golang.org/x/crypto/ssh: Invoking pathological RSA/DSA parameters may cause DoS",
+          "cve": "CVE-2026-39829",
+          "severity": "high",
+          "score": 43,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Vulnérabilité élevée CVE-2026-39829 affectant golang.org/x/crypto/ssh (go) (score CVSS 7.5).\n\ngolang.org/x/crypto/ssh: Invoking pathological RSA/DSA parameters may cause DoS\n\n--> Name Query To see all available qualifiers, see our documentation .\n\nPublished by the National Vulnerability Database May 22, 2026 Published to the GitHub Advisory Database Jun 25, 2026 Reviewed Jun 25, 2026 Last updated Jun 25, 2026 Severity High 7.5 CVSS overall score This score calculates overall vulnerability severity from 0 to 10 and is based on the Common Vulnerabili…",
+          "detail": "Vulnérabilité élevée CVE-2026-39829 affectant golang.org/x/crypto/ssh (go) (score CVSS 7.5).\n\ngolang.org/x/crypto/ssh: Invoking pathological RSA/DSA parameters may cause DoS\n\n--> Name Query To see all available qualifiers, see our documentation .\n\nPublished by the National Vulnerability Database May 22, 2026 Published to the GitHub Advisory Database Jun 25, 2026 Reviewed Jun 25, 2026 Last updated Jun 25, 2026 Severity High 7.5 CVSS overall score This score calculates overall vulnerability severity from 0 to 10 and is based on the Common Vulnerability Scoring System (CVSS). / 10 CVSS v3 base metrics Attack vector Network Attack complexity Low Privileges required None User interaction None Scope Unchanged Confidentiality None Integrity None Availability High Learn more about base metrics CVSS v3 base metrics Attack vector: More severe the more the remote (logically and physically) an attacker can be in order to exploit the vulnerability. Attack complexity: More severe for the least complex attacks. Privileges required: More severe if no privileges are required. User interaction: More severe when no user interaction is required. Scope: More severe when a scope change occurs, e.g. one vulnerable component impacts resources in components beyond its security scope. Confidentiality: More severe when loss of data confidentiality is highest, measuring the level of data access available to an unauthorized user. Integrity: More severe when loss of data integrity is the highest, measuring the consequence of data modification possible by an unauthorized user. Availability: More severe when the loss of impacted component availability is highest. CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H EPSS score 0.304% Exploit Prediction Scoring System (EPSS) This score estimates the probability",
+          "action": "Vérifier l'exposition du parc et appliquer le correctif éditeur dès sa disponibilité.",
+          "sources": [
+            {
+              "url": "https://github.com/advisories/GHSA-w879-237q-wc7r",
+              "label": "GitHub Advisory"
+            }
+          ],
+          "url": "https://github.com/advisories/GHSA-w879-237q-wc7r",
+          "pubDate": "2026-06-25T22:18:43.000Z"
+        },
+        {
+          "title": "Schneider Electric PowerLogic P7",
+          "cve": "CVE-2026-9716",
+          "severity": "critical",
+          "score": 34,
+          "corroboration": 1,
+          "region": "fr",
+          "body": "Vulnérabilité critique CVE-2026-9716.\n\nView CSAF Summary Schneider Electric is aware of a vulnerability in its PowerLogic™ P7 product. The PowerLogic™ P7 is a protection and control platform designed for complex and advanced electrical network applications. Failure to apply the remediation provided below may risk unauthorized execution of privileged commands or loss of HMI operability and configuration functionality, which could result in loss of control over system operations and disruption of…",
+          "detail": "Vulnérabilité critique CVE-2026-9716.\n\nView CSAF Summary Schneider Electric is aware of a vulnerability in its PowerLogic™ P7 product. The PowerLogic™ P7 is a protection and control platform designed for complex and advanced electrical network applications. Failure to apply the remediation provided below may risk unauthorized execution of privileged commands or loss of HMI operability and configuration functionality, which could result in loss of control over system operations and disruption of critical services. The following versions of Schneider Electric PowerLogic P7 are affected: PowerLogic™ P7 vers:intdot/&lt;=0.2.003.001.000 PowerLogic™ P7 0.2.003.001.000&nbsp; CVSS Vendor Equipment Vulnerabilities v3 7.5 Schneider Electric Schneider Electric PowerLogic P7 NULL Pointer Dereference, Improper Neutralization of Special Elements used in an OS Command ('OS Command Injection'), Reachable Assertion Background Critical Infrastructure Sectors: Commercial Facilities, Critical Manufacturing, Energy Countries/Areas Deployed: Worldwide Company Headquarters Location: France Vulnerabilities Expand All + CVE-2026-9716 CWE-476 NULL Pointer Dereference vulnerability exists that could cause a denial-of-service condition, rendering the device’s HMI and configuration functionality unavailable when malformed requests are received over exposed network interfaces. View CVE Details Affected Products Schneider Electric PowerLogic P7 V",
+          "action": "Vérifier l'exposition du parc et appliquer le correctif éditeur dès sa disponibilité.",
+          "sources": [
+            {
+              "url": "https://www.cisa.gov/news-events/ics-advisories/icsa-26-176-07",
+              "label": "CISA Advisories"
+            }
+          ],
+          "url": "https://www.cisa.gov/news-events/ics-advisories/icsa-26-176-07",
+          "pubDate": "2026-06-25T12:00:00.000Z"
+        },
+        {
+          "title": "Quelques solutions françaises pour amorcer la transition post-quantique",
+          "cve": null,
+          "severity": "critical",
+          "score": 34,
+          "corroboration": 1,
+          "region": "fr",
+          "body": "Vulnérabilité critique.\n\nPour un inventaire cryptographique en vue d&rsquo;une transition post-quantique, compter 60 % du budget en ressources humaines, 25 % en outils/licences et 15 % en frais opérationnels. Cette estimation indicative est calibrée sur le profil d&rsquo;une organisation d&rsquo;environ 10 000 collaborateurs avec un datacenter principal. Elle figure dans un guide produit par un groupe de travail du Campus Cyber *.",
+          "detail": "Vulnérabilité critique.\n\nPour un inventaire cryptographique en vue d&rsquo;une transition post-quantique, compter 60 % du budget en ressources humaines, 25 % en outils/licences et 15 % en frais opérationnels. Cette estimation indicative est calibrée sur le profil d&rsquo;une organisation d&rsquo;environ 10 000 collaborateurs avec un datacenter principal. Elle figure dans un guide produit par un groupe de travail du Campus Cyber *. Ce guide propose une démarche en 4 phases : Préparation en 2026 (évaluation d&#8217;empreinte cryptographique et élaboration de la stratégie de transition) Démarrage du déploiement en 2026-2027 (intégration et test de la PQC en environnement contrôlé) Migration des systèmes critiques entre 2028 et 2030 Généralisation et finalisation entre 2030 et 2035 Une quinzaine d&rsquo;outils de 8 fournisseurs français En parallèle, le groupe de travail publie un panorama d&rsquo;outils mobilisables pour la migration vers le post-quantique. Il apparaît que les outils d&rsquo;inventaire ne permettent pas tous d&rsquo;ajouter des capteurs et/ou de fournir des données externes. Ni forcément de configurer la politique de sécurité. Sur la partie gestion des certificats, le scoring n&rsquo;est souvent pas personnalisable. Du côté des HSM, beaucoup ne prennent pas encore en compte les algorithmes PQC et certains frameworks ne sont pas crypto-agiles. Le panorama comprend une quinzaine de produits",
+          "action": "Vérifier l'exposition du parc et appliquer le correctif éditeur dès sa disponibilité.",
+          "sources": [
+            {
+              "url": "https://www.silicon.fr/cybersecurite-1371/post-quantique-solutions-francaises-228008",
+              "label": "Silicon.fr"
+            }
+          ],
+          "url": "https://www.silicon.fr/cybersecurite-1371/post-quantique-solutions-francaises-228008",
+          "pubDate": "2026-06-25T10:06:58.000Z"
+        },
+        {
+          "title": "Le nom de votre père, d’une tante ou d’un cousin : une campagne de phishing exploite les liens familiaux pour piéger les Français",
+          "cve": null,
+          "severity": "high",
+          "score": 24,
+          "corroboration": 1,
+          "region": "fr",
+          "body": "Vulnérabilité élevée.\n\nUne vague de mails malveillants frappe actuellement la France avec une caractéristique inédite : les messages usurpent l'identité de membres de la famille des victimes en usurpant leurs noms exacts. Numerama a pu recueillir plusieurs échantillons de cette campagne. Recevoir un mail qui semble venir de sa tante.",
+          "detail": "Vulnérabilité élevée.\n\nUne vague de mails malveillants frappe actuellement la France avec une caractéristique inédite : les messages usurpent l'identité de membres de la famille des victimes en usurpant leurs noms exacts. Numerama a pu recueillir plusieurs échantillons de cette campagne. Recevoir un mail qui semble venir de sa tante. Voir\n\nAmine Baba Aissa Amine Baba Aissa 2 min 2 min Amine Baba Aissa Amine Baba Aissa Ne plus voir cette pub Lecture Zen Résumer l'article Résumé de l'article Résumé par IA, vérifié par Numerama\n\nNous générons pour vous un résumé de l’article grâce à une IA et nous le vérifions afin de nous assurer qu’il n’y ait aucune erreur, pour garantir l’authenticité de l’info.\n\nRecevez tous les soirs un résumé de l’actu importante avec Le Récap’\n\nRecevoir un mail qui semble venir de sa tante. Voir son prénom et son nom écrits sans aucune faute. Et pourtant, se retrouver face à un piège.\n\nC&rsquo;est le risque encouru par de nombreux français ces derniers jours, ciblées par une campagne de phishing dont la particularité tient à sa précision : les attaquants connaissent non seulement le nom et l&rsquo;adresse mail de la victime, mais aussi le prénom et le nom exacts d&rsquo;un de ses proches.\n\nPremier réflexe, légitime : penser que la boîte mail du proche a été compromise. Mais l&rsquo;examen des en-têtes dissipe rapidement ce doute. L&rsquo;adresse de l&rsquo;expéditeur réel n&rsquo;a aucun lien avec celle du contact usurpé, il s&rsquo;agit d&rsquo;une adresse tierce, sans rapport. Le nom affiché dans le champ « De : » est simplement falsifié, une technique connue sous le nom de display name spoofing .",
+          "action": "Vérifier l'exposition du parc et appliquer le correctif éditeur dès sa disponibilité.",
+          "sources": [
+            {
+              "url": "https://www.numerama.com/cyberguerre/2285481-le-nom-de-votre-pere-dune-tante-ou-dun-cousin-une-campagne-de-phishing-exploite-les-liens-familiaux-pour-pieger-les-francais.html",
+              "label": "Numerama"
+            }
+          ],
+          "url": "https://www.numerama.com/cyberguerre/2285481-le-nom-de-votre-pere-dune-tante-ou-dun-cousin-une-campagne-de-phishing-exploite-les-liens-familiaux-pour-pieger-les-francais.html",
+          "pubDate": "2026-06-25T15:16:00.000Z"
+        },
+        {
+          "title": "LeHACK 2026, la scène hacker éthique française en alerte",
+          "cve": null,
+          "severity": "news",
+          "score": 16,
+          "corroboration": 1,
+          "region": "fr",
+          "body": "Vulnérabilité élevée.\n\nLeHACK 2026 réunit hackers et experts cyber, avec le confessionnal ZATAZ pour signaler failles et fuites.\n\nFont Resizer Aa Actus cyber Darkweb Intelligence Artificielle ZATAZ Community Logiciels Vidéos Moteurs de recherche de fuites Actus cyber Justice Sécurité réseaux sociaux Vie privée OSINT News Darkweb Fuite de données Codes malveillants Espionnage Sécurité Ransomwares Piratage / Hack infiltration Intelligence Artificielle ZATAZ Community Userlock Comm…",
+          "detail": "Vulnérabilité élevée.\n\nLeHACK 2026 réunit hackers et experts cyber, avec le confessionnal ZATAZ pour signaler failles et fuites.\n\nFont Resizer Aa Actus cyber Darkweb Intelligence Artificielle ZATAZ Community Logiciels Vidéos Moteurs de recherche de fuites Actus cyber Justice Sécurité réseaux sociaux Vie privée OSINT News Darkweb Fuite de données Codes malveillants Espionnage Sécurité Ransomwares Piratage / Hack infiltration Intelligence Artificielle ZATAZ Community Userlock Community Réseaux sociaux ZATAZ News Letter ZATAZ – Chaque vendredi midi PROTOCOLE D&rsquo;ALERTE ZATAZ Logiciels Vidéos Vidéos Youtube ZATAZ Émission ZATAZ Twitch Moteurs de recherche de fuites Follow US Actus cyber Darkweb Intelligence Artificielle ZATAZ Community Logiciels Vidéos Moteurs de recherche de fuites ZATAZ.COM > Actualités > Actualités > Divers > LeHACK 2026, la scène hacker éthique française en alerte Actualités Divers RGPD zataz watch LeHACK 2026, la scène hacker éthique française en alerte dernière mise à jour : 25/06/2026 11:23 Par Damien Bancal - Chercheur / Journaliste / Conférencier / Enseignant Il y a 19 heures Il y a 19 heures Partager 9 minutes de lecture Partager Depuis 2003, leHACK rassemble hackers, experts et curieux autour d’un même enjeu : comprendre, tester et renforcer la sécurité numérique. LeHACK 2026 s’inscrit dans une histoire commencée sous le nom HackerzVoice, aujourd’hui HZV, association à but non lucratif devenue le Premier Syndicat de Hackers de France. Présentée comme la plus ancienne et la plus grande convention de hacking hexagonale, elle réunit des profils variés autour de conférences, d’ateliers et de défis techniques. L’événement défend une approche ouverte, bénévole et indépendante, tout en accueillant un public international grâce à des contenus angloph",
+          "action": "Vérifier l'exposition du parc et appliquer le correctif éditeur dès sa disponibilité.",
+          "sources": [
+            {
+              "url": "https://www.zataz.com/lehack-2026-la-scene-hacker-ethique-francaise-en-alerte/",
+              "label": "Zataz"
+            }
+          ],
+          "url": "https://www.zataz.com/lehack-2026-la-scene-hacker-ethique-francaise-en-alerte/",
+          "pubDate": "2026-06-25T09:23:18.000Z"
+        }
+      ]
+    },
+    {
+      "id": "attacks",
+      "items": [
+        {
+          "title": "CL-STA-1062 Targets Southeast Asian Governments and Critical Infrastructure",
+          "cve": null,
+          "severity": "critical",
+          "score": 99,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Incident de sécurité rapporté par Unit 42.\n\nGovernment entities and critical infrastructure were targeted for espionage in SE Asia by attackers using a hybrid toolkit, including custom TinyRCT backdoor.\n\nThroughout 2025, we observed a cluster of activity targeting government entities and critical infrastructure in Southeast Asia.",
+          "detail": "Incident de sécurité rapporté par Unit 42.\n\nGovernment entities and critical infrastructure were targeted for espionage in SE Asia by attackers using a hybrid toolkit, including custom TinyRCT backdoor.\n\nThroughout 2025, we observed a cluster of activity targeting government entities and critical infrastructure in Southeast Asia. Specifically, the activity targeted state-owned enterprises in the energy and government sectors.\n\nThe Chinese-speaking attackers behind this cluster, which we track as CL-STA-1062 , have been active since at least March 2022. We assess with high confidence that this is the same cluster, known as UAT-7237, that was reported for its campaigns against web hosting infrastructure in Taiwan in mid 2025. We also observed CL-STA-1062 campaigns in earlier operations targeting strategic sectors in East Asia, indicating a broader, sustained regional focus.\n\nFrom a technical standpoint, the attackers behind CL-STA-1062 rely on a hybrid toolkit. While they frequently use common open-source tools such as SoftEther VPN, Mimikatz and VNT, they have recently introduced TinyRCT, a bespoke, previously undocumented backdoor.\n\nWe detail the latest campaign linked to CL-STA-1062 against the energy and government sectors in Southeast Asia, and provide a technical analysis of the new TinyRCT backdoor.\n\nPalo Alto Networks customers are better protected from the threats discussed above through the following products and services:\n\nIf you think you might have been compromised or have an urgent matter, contact the Unit 42 Incident Response team .",
+          "action": "Surveiller les indicateurs de compromission associés et contrôler les actifs exposés.",
+          "sources": [
+            {
+              "url": "https://unit42.paloaltonetworks.com/cl-sta-1062-tinyrct-backdoor/",
+              "label": "Unit 42"
+            }
+          ],
+          "url": "https://unit42.paloaltonetworks.com/cl-sta-1062-tinyrct-backdoor/",
+          "pubDate": "2026-06-25T22:00:52.000Z"
+        },
+        {
+          "title": "Gamaredon in 2025: Leveraging tunnels, workers, dead drops, and new alliances",
+          "cve": null,
+          "severity": "news",
+          "score": 82,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Incident de sécurité rapporté par ESET WeLiveSec..\n\nESET Research analyzes Gamaredon’s new toolset and the group’s growing reliance on legitimate online services to hide its C&C infrastructure and exfiltrate stolen data.\n\nAward-winning news, views, and insight from the ESET security community\n\nTIPS & ADVICE BUSINESS SECURITY ESET RESEARCH About ESET Research Blogposts Podcasts White papers Threat reports WeLiveScience FEATURED Ukraine crisis – Digital security resource center WeLiveProgress COVID-19 Resourc…",
+          "detail": "Incident de sécurité rapporté par ESET WeLiveSec..\n\nESET Research analyzes Gamaredon’s new toolset and the group’s growing reliance on legitimate online services to hide its C&C infrastructure and exfiltrate stolen data.\n\nAward-winning news, views, and insight from the ESET security community\n\nTIPS & ADVICE BUSINESS SECURITY ESET RESEARCH About ESET Research Blogposts Podcasts White papers Threat reports WeLiveScience FEATURED Ukraine crisis – Digital security resource center WeLiveProgress COVID-19 Resources Videos TOPICS Digital Security Scams How to Privacy Cybercrime Kids online Social media Internet of Things Malware Ransomware Secure coding Mobile security Critical infrastructure Threat research ABOUT US About WeLiveSecurity Our Experts Contact Us English Español Deutsch Português Français Award-winning news, views, and insight from the ESET security community\n\nESET Research analyzes Gamaredon’s new toolset and the group’s growing reliance on legitimate online services to hide its C&C infrastructure and exfiltrate stolen data\n\nCyberespionage has remained a constant feature of Russia&rsquo;s war against Ukraine. ESET Research has long tracked Gamaredon , one of the most active Russia-aligned advanced persistent threat (APT) groups targeting Ukraine. The group, attributed by the Security Service of Ukraine (SSU) to the 18th Center of Information Security of Russia&rsquo;s FSB, maintained a high operational tempo throughout 2025.\n\nIn our latest research, we analyze Gamaredon&rsquo;s activity during 2025, including new tools added to its arsenal, significant shifts in how it protects its network infrastructure, and its growing use of legitimate third-party services to hide both command and control (C&C) information and stolen data. The full technical details are avail",
+          "action": "Surveiller les indicateurs de compromission associés et contrôler les actifs exposés.",
+          "sources": [
+            {
+              "url": "https://www.welivesecurity.com/en/eset-research/gamaredon-2025-leveraging-tunnels-workers-dead-drops-new-alliances/",
+              "label": "ESET WeLiveSec."
+            }
+          ],
+          "url": "https://www.welivesecurity.com/en/eset-research/gamaredon-2025-leveraging-tunnels-workers-dead-drops-new-alliances/",
+          "pubDate": "2026-06-25T08:45:00.000Z"
+        },
+        {
+          "title": "Nation-state actors cracked critical Australian infrastructure to ‘cripple it at a time of their choosing’",
+          "cve": null,
+          "severity": "critical",
+          "score": 71,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Incident de sécurité rapporté par The Register.\n\nAustralia’s Security and Intelligence Organisation (ASIO) has established dedicated teams to counter nation-state attacks on critical infrastructure, the org’s director general Mike Burgess revealed yesterday. “We discovered nation-state hackers had compromised the network of an Australian critical infrastructure provider,” Burgess said yesterday in remarks accompanying the release of ASIO’s annual threat assessment, a task it performs in its role as Austr…",
+          "detail": "Incident de sécurité rapporté par The Register.\n\nAustralia’s Security and Intelligence Organisation (ASIO) has established dedicated teams to counter nation-state attacks on critical infrastructure, the org’s director general Mike Burgess revealed yesterday. “We discovered nation-state hackers had compromised the network of an Australian critical infrastructure provider,” Burgess said yesterday in remarks accompanying the release of ASIO’s annual threat assessment, a task it performs in its role as Australia’s equivalent to the FBI and MI5. “ASIO assessed the hackers were preparing for sabotage. They weren’t planting ‘digital dynamite’ as such; they were mapping out the network and maintaining access so they could cripple it at a time of their choosing.” “In this case, a state-sponsored group didn’t just achieve access to the Australian critical infrastructure provider, it successfully acquired credentials – login details and passwords – for active users of the networks, including the IT professionals guarding it,” he added. Burgess said ASIO “identified, tracked and attributed the hack, and worked with the victim company and our security partners to remediate the compromise – work which is ongoing.” “The scale of this activity – led by one nation-state in particular – is difficult to overstate,” he added, before saying Australia is not alone in facing such attacks. “We struggle to find a single country in our region that has",
+          "action": "Surveiller les indicateurs de compromission associés et contrôler les actifs exposés.",
+          "sources": [
+            {
+              "url": "https://www.theregister.com/security/2026/06/25/nation-state-actors-cracked-critical-australian-infrastructure-to-cripple-it-at-a-time-of-their-choosing/5261877",
+              "label": "The Register"
+            }
+          ],
+          "url": "https://www.theregister.com/security/2026/06/25/nation-state-actors-cracked-critical-australian-infrastructure-to-cripple-it-at-a-time-of-their-choosing/5261877",
+          "pubDate": "2026-06-25T04:31:01.000Z"
+        },
+        {
+          "title": "Inside Mistic, the New Stealth Backdoor in Ransomware Intrusions",
+          "cve": null,
+          "severity": "news",
+          "score": 70,
+          "corroboration": 3,
+          "region": "intl",
+          "body": "Incident de sécurité rapporté par The Register.\n\nMistic is a stealthy backdoor used by KongTuke-linked actors to keep long-term access in ransomware-targeted networks. Mistic is the kind of backdoor that tells you the operator wants time, not noise. Symantec security researchers say it has shown up in financially motivated attacks against insurance, education, IT, and professional services firms, and they link it to KongTuke, also known as Woodgnat, an access broker active since at least 2024.",
+          "detail": "Incident de sécurité rapporté par The Register.\n\nMistic is a stealthy backdoor used by KongTuke-linked actors to keep long-term access in ransomware-targeted networks. Mistic is the kind of backdoor that tells you the operator wants time, not noise. Symantec security researchers say it has shown up in financially motivated attacks against insurance, education, IT, and professional services firms, and they link it to KongTuke, also known as Woodgnat, an access broker active since at least 2024. That group has a clear business model: break in, hold the door open, and sell that access to ransomware crews like Qilin , Interlock , Rhysida , Akira , 8Base , and Black Basta . The infection path looks built for camouflage. In the cases Symantec analyzed, the attack started when the legitimate MpExtMs.exe process loaded a malicious DLL named version.dll , which then dropped the Mistic loader, EndpointDlp.dll . The name looks close enough to Microsoft security tooling to be useful, and that’s probably the point. A separate .NET DLL also showed a fake login screen to steal credentials, because apparently criminals still enjoy borrowing your own trust against you. &#8220;Mistic was side-loaded through MpExtMs.exe, a legitimate file, and loaded from a DLL named EndpointDlp.dll, a name associated with Microsoft endpoint-security tooling. This would help the backdoor blend in with trusted software.&#8221; reads the report published by Syman",
+          "action": "Surveiller les indicateurs de compromission associés et contrôler les actifs exposés.",
+          "sources": [
+            {
+              "url": "https://www.theregister.com/security/2026/06/25/self-destructing-mistic-backdoor-linked-to-access-broker-selling-corporate-footholds-to-ransomware-gangs/5262579",
+              "label": "The Register"
+            },
+            {
+              "url": "https://securityaffairs.com/194207/cyber-crime/inside-mistic-the-new-stealth-backdoor-in-ransomware-intrusions.html",
+              "label": "Security Affairs"
+            },
+            {
+              "url": "https://thehackernews.com/2026/06/new-mistic-backdoor-linked-to-kongtuke.html",
+              "label": "The Hacker News"
+            }
+          ],
+          "url": "https://www.theregister.com/security/2026/06/25/self-destructing-mistic-backdoor-linked-to-access-broker-selling-corporate-footholds-to-ransomware-gangs/5262579",
+          "pubDate": "2026-06-25T22:26:55.000Z"
+        },
+        {
+          "title": "Ex-Huntress analyst claims company insider fed info to a ransomware crim. Social media drama ensues",
+          "cve": null,
+          "severity": "high",
+          "score": 70,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Incident de sécurité rapporté par The Register.\n\nSecurity firm Huntress allegedly has a turncoat insider leaking info to a ransomware operation, according to an ex-employee who took his grievances to social media after claiming the security shop tried to “silence” him with legal threats. And it all started with a Pinocchio GIF and clown emoji.",
+          "detail": "Incident de sécurité rapporté par The Register.\n\nSecurity firm Huntress allegedly has a turncoat insider leaking info to a ransomware operation, according to an ex-employee who took his grievances to social media after claiming the security shop tried to “silence” him with legal threats. And it all started with a Pinocchio GIF and clown emoji. Late last week, Huntress disclosed that it is among the “hundreds of Klue customers” compromised in the supply-chain attack, stating that “Huntress believes in radical transparency about security incidents, including when it affects our company.” Ben Folland, a former security operations analyst at Huntress who left the company in February, responded with a Pinocchio GIF and clown emoji - although, to be clear, his complaints about his former employer have nothing to do with the Klue incident. These stem from an earlier incident that Folland also detailed in a series of posts. According to Folland’s resignation letter, which he also shared on LinkedIn, he left the security firm for “personal reasons, and due to a conflict of interest,” with his last day of work being February 19. This conflict, Folland alleges, arose from his December discovery that “another Huntress employee passed communications from US law enforcement to a cybercriminal, DevMan, who is actively and publicly targeting my family and me.” DevMan is a ransomware operation that first emerged in April 2025 and uses modifie",
+          "action": "Surveiller les indicateurs de compromission associés et contrôler les actifs exposés.",
+          "sources": [
+            {
+              "url": "https://www.theregister.com/cyber-crime/2026/06/25/ex-huntress-analyst-claims-company-insider-fed-info-to-a-ransomware-crim-social-media-drama-ensues/5262538",
+              "label": "The Register"
+            }
+          ],
+          "url": "https://www.theregister.com/cyber-crime/2026/06/25/ex-huntress-analyst-claims-company-insider-fed-info-to-a-ransomware-crim-social-media-drama-ensues/5262538",
+          "pubDate": "2026-06-25T20:36:22.000Z"
+        },
+        {
+          "title": "Nathan Austad Pleads Guilty in DraftKings Hacking Scheme, Gets 18 Months",
+          "cve": null,
+          "severity": "news",
+          "score": 69,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Incident de sécurité rapporté par Security Affairs.\n\nThird DraftKings hacker gets 18 months in prison for a 2022 credential-stuffing attack that compromised 1,600 accounts and stole $600,000. Nathan Austad, the third person sentenced over the 2022 DraftKings credential-stuffing attack , received 18 months in prison. The group used usernames and passwords stolen from other breaches to access about 1,600 accounts and steal roughly $600,000. Austad also ran a website selling compromised accounts.",
+          "detail": "Incident de sécurité rapporté par Security Affairs.\n\nThird DraftKings hacker gets 18 months in prison for a 2022 credential-stuffing attack that compromised 1,600 accounts and stole $600,000. Nathan Austad, the third person sentenced over the 2022 DraftKings credential-stuffing attack , received 18 months in prison. The group used usernames and passwords stolen from other breaches to access about 1,600 accounts and steal roughly $600,000. Austad also ran a website selling compromised accounts. Austad must pay about $1.8 million in restitution and forfeiture and faces three years of supervised release. &#8220;On or about November 18, 2022, AUSTAD and others launched a “credential stuffing attack” on the Betting Website. During a credential stuffing attack, a cyber threat actor collects stolen credentials, or username and password pairs, obtained from other large-scale data breaches of other companies, which can often be purchased on the darkweb . The threat actor then systematically attempts to use those stolen credentials to obtain unauthorized access to accounts held by the same user with other companies and providers, in order to compromise accounts where the user has maintained the same password.&#8221; read the charging documents and other filings and statements made in court. &#8220;Here, in connection with the attack on the Betting Website, AUSTAD and his coconspirators made a series of attempts to log into the Betting Webs",
+          "action": "Surveiller les indicateurs de compromission associés et contrôler les actifs exposés.",
+          "sources": [
+            {
+              "url": "https://securityaffairs.com/194184/cyber-crime/nathan-austad-pleads-guilty-in-draftkings-hacking-scheme-gets-18-months.html",
+              "label": "Security Affairs"
+            }
+          ],
+          "url": "https://securityaffairs.com/194184/cyber-crime/nathan-austad-pleads-guilty-in-draftkings-hacking-scheme-gets-18-months.html",
+          "pubDate": "2026-06-25T07:14:20.000Z"
+        },
+        {
+          "title": "Russian APT 'Gamaredon' Upgrades Its Arsenal, Requiring New Defenses",
+          "cve": null,
+          "severity": "news",
+          "score": 68,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Incident de sécurité rapporté par Dark Reading.\n\nThe FSB state-sponsored operation has gotten a lot better at loading its malware and hiding its servers.",
+          "detail": "Incident de sécurité rapporté par Dark Reading.\n\nThe FSB state-sponsored operation has gotten a lot better at loading its malware and hiding its servers.",
+          "action": "Surveiller les indicateurs de compromission associés et contrôler les actifs exposés.",
+          "sources": [
+            {
+              "url": "https://www.darkreading.com/threat-intelligence/russia-apt-gamaredon-arsenal-defense",
+              "label": "Dark Reading"
+            }
+          ],
+          "url": "https://www.darkreading.com/threat-intelligence/russia-apt-gamaredon-arsenal-defense",
+          "pubDate": "2026-06-25T21:12:01.000Z"
+        },
+        {
+          "title": "Major Increase in Ransomware Attacks Targeting Europe, Warns New Report",
+          "cve": null,
+          "severity": "news",
+          "score": 67,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Incident de sécurité rapporté par Infosecurity Mag.\n\nAnalysis of ransomware incidents by researchers at Black Kite found that attacks have risen 50% in the last year, with supply chain attacks increasing\n\nThere number of ransomware attacks against organizations across Europe has significantly increased during the past year, a new report has warned.\n\nThis according to analysis of publicly disclosed ransomware incidents by researchers at cyber risk management provider Black Kite.",
+          "detail": "Incident de sécurité rapporté par Infosecurity Mag.\n\nAnalysis of ransomware incidents by researchers at Black Kite found that attacks have risen 50% in the last year, with supply chain attacks increasing\n\nThere number of ransomware attacks against organizations across Europe has significantly increased during the past year, a new report has warned.\n\nThis according to analysis of publicly disclosed ransomware incidents by researchers at cyber risk management provider Black Kite. They found that ransomware attacks rose 55.1% year-over-year in the first four months of 2026 and reached an average of 171 incidents per month.\n\nThe findings have been detailed in the company&rsquo;s 2026 European Cyber Risk Report , published on June 25.\n\nJust five countries accounted for 70% of all ransomware incidents across Europe: Germany (18%), the UK (17%), France (12%), Italy (12%), and Spain (10%).\n\nThe most common form of ransomware was Qilin , which targeted organizations in 26 of the 31 countries analyzed and was behind a total of 372 recorded incidents.\n\nQilin activity accounted for more than double that of the next most prominent ransomware deployed in attacks, which was Akira . Akira ransomware accounted for 159 recorded incidents during the reporting period, while SafePay ransomware was the third most common, with 80 reported incidents.",
+          "action": "Surveiller les indicateurs de compromission associés et contrôler les actifs exposés.",
+          "sources": [
+            {
+              "url": "https://www.infosecurity-magazine.com/news/increase-ransomware-europe/",
+              "label": "Infosecurity Mag"
+            }
+          ],
+          "url": "https://www.infosecurity-magazine.com/news/increase-ransomware-europe/",
+          "pubDate": "2026-06-25T10:45:00.000Z"
+        },
+        {
+          "title": "Delegal Poindexter & Underkofler, P.A. — rançongiciel morpheus",
+          "cve": null,
+          "severity": "news",
+          "score": 66,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Incident de sécurité rapporté par ransomware.live.\n\nRansomware.live discovered on 2026-06-25 that Delegal Poindexter & Underkofler, P.A. has been claimed by Morpheus ransomware group\n\nSponsored by Hudson Rock – Use Hudson Rock's free cybercrime intelligence tools to learn how Infostealer infections are leading to ransomware attacks\n\nLegal Disclaimer: Ransomware.live does not engage in the acquisition, exfiltration, downloading, possession, hosting, access, consultation, redistribution, or disclosure of unla…",
+          "detail": "Incident de sécurité rapporté par ransomware.live.\n\nRansomware.live discovered on 2026-06-25 that Delegal Poindexter & Underkofler, P.A. has been claimed by Morpheus ransomware group\n\nSponsored by Hudson Rock – Use Hudson Rock's free cybercrime intelligence tools to learn how Infostealer infections are leading to ransomware attacks\n\nLegal Disclaimer: Ransomware.live does not engage in the acquisition, exfiltration, downloading, possession, hosting, access, consultation, redistribution, or disclosure of unlawfully obtained data. This platform indexes only publicly visible information posted by ransomware operators and open web sources without accessing or obtaining the underlying stolen content . The service is provided to support public awareness, legitimate research, and cyber-resilience. No stolen personal or confidential data is collected or distributed via this site.\n\nSession: 057726c909af65969646b040bbbfa5c4df67f5166a33cbac6cd9e1302b0b3ca148",
+          "action": "Surveiller les indicateurs de compromission associés et contrôler les actifs exposés.",
+          "sources": [
+            {
+              "url": "https://www.ransomware.live/id/RGVsZWdhbCBQb2luZGV4dGVyICYgVW5kZXJrb2ZsZXIsIFAuQS5AbW9ycGhldXM=",
+              "label": "ransomware.live"
+            }
+          ],
+          "url": "https://www.ransomware.live/id/RGVsZWdhbCBQb2luZGV4dGVyICYgVW5kZXJrb2ZsZXIsIFAuQS5AbW9ycGhldXM=",
+          "pubDate": "2026-06-25T08:08:27.420Z"
+        },
+        {
+          "title": "Nachlass Nord — rançongiciel anubis (Allemagne)",
+          "cve": null,
+          "severity": "news",
+          "score": 65,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Incident de sécurité rapporté par ransomware.live.\n\nRansomware.live discovered on 2026-06-25 that Nachlass Nord has been claimed by Anubis ransomware group\n\nSponsored by Hudson Rock – Use Hudson Rock's free cybercrime intelligence tools to learn how Infostealer infections are leading to ransomware attacks\n\nLegal Disclaimer: Ransomware.live does not engage in the acquisition, exfiltration, downloading, possession, hosting, access, consultation, redistribution, or disclosure of unlawfully obtained data.",
+          "detail": "Incident de sécurité rapporté par ransomware.live.\n\nRansomware.live discovered on 2026-06-25 that Nachlass Nord has been claimed by Anubis ransomware group\n\nSponsored by Hudson Rock – Use Hudson Rock's free cybercrime intelligence tools to learn how Infostealer infections are leading to ransomware attacks\n\nLegal Disclaimer: Ransomware.live does not engage in the acquisition, exfiltration, downloading, possession, hosting, access, consultation, redistribution, or disclosure of unlawfully obtained data. This platform indexes only publicly visible information posted by ransomware operators and open web sources without accessing or obtaining the underlying stolen content . The service is provided to support public awareness, legitimate research, and cyber-resilience. No stolen personal or confidential data is collected or distributed via this site.\n\nSession: 057726c909af65969646b040bbbfa5c4df67f5166a33cbac6cd9e1302b0b3ca148",
+          "action": "Surveiller les indicateurs de compromission associés et contrôler les actifs exposés.",
+          "sources": [
+            {
+              "url": "https://www.ransomware.live/id/TmFjaGxhc3MgTm9yZEBhbnViaXM=",
+              "label": "ransomware.live"
+            }
+          ],
+          "url": "https://www.ransomware.live/id/TmFjaGxhc3MgTm9yZEBhbnViaXM=",
+          "pubDate": "2026-06-25T17:50:28.950Z"
+        },
+        {
+          "title": "Clearview Eye Centre — rançongiciel interlock (Canada)",
+          "cve": null,
+          "severity": "news",
+          "score": 65,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Incident de sécurité rapporté par ransomware.live.\n\nVictime revendiquée par le groupe de rançongiciel interlock. Pays : Canada. Secteur : Healthcare. Clearview Eye Centre is a state-of-the-art ophthalmology clinic run by doctors Faisal Adatia and Ryan Yau in Calgary, Alberta. They disregard security regulations and medical confidentiality, show no respect for their clients' privacy, and make no attempt to protect the information stored in their databases.",
+          "detail": "Incident de sécurité rapporté par ransomware.live.\n\nVictime revendiquée par le groupe de rançongiciel interlock.\n\nPays : Canada.\n\nSecteur : Healthcare.\n\nClearview Eye Centre is a state-of-the-art ophthalmology clinic run by doctors Faisal Adatia and Ryan Yau in Calgary, Alberta. They disregard security regulations and medical confidentiality, show no respect for their clients' privacy, and make no attempt to protect the information stored in their databases. Their practices are extremely lax, resulting in client information including medical records, personal data, incident reports, and financial and tax information being exposed to you.",
+          "action": "Surveiller les indicateurs de compromission associés et contrôler les actifs exposés.",
+          "sources": [
+            {
+              "url": "https://www.ransomware.live/id/Q2xlYXJ2aWV3IEV5ZSBDZW50cmVAaW50ZXJsb2Nr",
+              "label": "ransomware.live"
+            }
+          ],
+          "url": "https://www.ransomware.live/id/Q2xlYXJ2aWV3IEV5ZSBDZW50cmVAaW50ZXJsb2Nr",
+          "pubDate": "2026-06-25T15:48:33.027Z"
+        },
+        {
+          "title": "Minnesota man known as ‘Snoopy’ sentenced in DraftKings hack",
+          "cve": null,
+          "severity": "news",
+          "score": 64,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Incident de sécurité rapporté par CyberScoop.\n\nA 21-year-old Minnesota man who operated under the online alias &#8220;Snoopy&#8221; was sentenced Tuesday to 18 months in federal prison for his role in a 2022 credential stuffing attack that compromised roughly 60,000 user accounts on the fantasy sports and betting platform DraftKings, resulting in hundreds of thousands of dollars in losses to customers.",
+          "detail": "Incident de sécurité rapporté par CyberScoop.\n\nA 21-year-old Minnesota man who operated under the online alias &#8220;Snoopy&#8221; was sentenced Tuesday to 18 months in federal prison for his role in a 2022 credential stuffing attack that compromised roughly 60,000 user accounts on the fantasy sports and betting platform DraftKings, resulting in hundreds of thousands of dollars in losses to customers. Nathan Austad pleaded guilty in December to one count of conspiring to commit computer intrusion in the U.S. District Court for the Southern District of New York, which imposed the sentence. In addition to the prison term, Austad was ordered to serve three years of supervised release, pay over $1.3 million in restitution, and forfeit an additional $463,000. In November 2022, Austad and his co-conspirators launched the attack against DraftKings via credential stuffing, successfully compromising approximately 60,000 accounts. In roughly 1,600 of those cases, the attackers added a new payment method under their own control to the compromised account and withdrew the available funds, stealing approximately $600,000 in total. Access to the remaining compromised accounts was sold through cybercriminal marketplaces. Austad operated his own such shop, named after the Peanuts comic strip character Snoopy. Investigators also identified cryptocurrency accounts under Austad&#8217;s control that received approximately $465,000 in assets,",
+          "action": "Surveiller les indicateurs de compromission associés et contrôler les actifs exposés.",
+          "sources": [
+            {
+              "url": "https://cyberscoop.com/draftkings-hack-sentencing-nathan-austad-snoopy/",
+              "label": "CyberScoop"
+            }
+          ],
+          "url": "https://cyberscoop.com/draftkings-hack-sentencing-nathan-austad-snoopy/",
+          "pubDate": "2026-06-25T14:19:23.000Z"
+        },
+        {
+          "title": "Poland busts SIM-swapping gang tied to millions in crypto theft",
+          "cve": null,
+          "severity": "news",
+          "score": 63,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Incident de sécurité rapporté par BleepingComputer.\n\nAuthorities in Poland have arrested four members of an organized cybercrime group accused of breaching telecommunications partners and hijacking email accounts to carry out SIM-swapping attacks.\n\nMicrosoft quietly extends free Windows 10 ESU support to October 2027\n\nMandiant reveals how Cisco SD-WAN zero-day attacks gained root access\n\nMalicious Edge extension abuses Native Messaging as bridge to malware\n\nNew macOS ClickFix attack silently mounts DMGs to p…",
+          "detail": "Incident de sécurité rapporté par BleepingComputer.\n\nAuthorities in Poland have arrested four members of an organized cybercrime group accused of breaching telecommunications partners and hijacking email accounts to carry out SIM-swapping attacks.\n\nMicrosoft quietly extends free Windows 10 ESU support to October 2027\n\nMandiant reveals how Cisco SD-WAN zero-day attacks gained root access\n\nMalicious Edge extension abuses Native Messaging as bridge to malware\n\nNew macOS ClickFix attack silently mounts DMGs to push infostealer\n\nPoland busts SIM-swapping gang tied to millions in crypto theft\n\nOrder-tracking app Shop abused to push callback phishing attacks",
+          "action": "Surveiller les indicateurs de compromission associés et contrôler les actifs exposés.",
+          "sources": [
+            {
+              "url": "https://www.bleepingcomputer.com/news/security/poland-busts-sim-swapping-gang-tied-to-millions-in-crypto-theft/",
+              "label": "BleepingComputer"
+            }
+          ],
+          "url": "https://www.bleepingcomputer.com/news/security/poland-busts-sim-swapping-gang-tied-to-millions-in-crypto-theft/",
+          "pubDate": "2026-06-25T22:37:42.000Z"
+        },
+        {
+          "title": "Order-tracking app Shop abused to push callback phishing attacks",
+          "cve": null,
+          "severity": "news",
+          "score": 63,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Incident de sécurité rapporté par BleepingComputer.\n\nThreat actors are increasingly abusing Shop, the order-tracking app from Shopify, by adding fake purchase receipts in users' order histories to trick them into providing sensitive data or installing remote access software.\n\nMicrosoft quietly extends free Windows 10 ESU support to October 2027\n\nMandiant reveals how Cisco SD-WAN zero-day attacks gained root access\n\nMalicious Edge extension abuses Native Messaging as bridge to malware\n\nNew macOS ClickFix atta…",
+          "detail": "Incident de sécurité rapporté par BleepingComputer.\n\nThreat actors are increasingly abusing Shop, the order-tracking app from Shopify, by adding fake purchase receipts in users' order histories to trick them into providing sensitive data or installing remote access software.\n\nMicrosoft quietly extends free Windows 10 ESU support to October 2027\n\nMandiant reveals how Cisco SD-WAN zero-day attacks gained root access\n\nMalicious Edge extension abuses Native Messaging as bridge to malware\n\nNew macOS ClickFix attack silently mounts DMGs to push infostealer\n\nPoland busts SIM-swapping gang tied to millions in crypto theft\n\nOrder-tracking app Shop abused to push callback phishing attacks",
+          "action": "Surveiller les indicateurs de compromission associés et contrôler les actifs exposés.",
+          "sources": [
+            {
+              "url": "https://www.bleepingcomputer.com/news/security/order-tracking-app-shop-abused-to-push-callback-phishing-attacks/",
+              "label": "BleepingComputer"
+            }
+          ],
+          "url": "https://www.bleepingcomputer.com/news/security/order-tracking-app-shop-abused-to-push-callback-phishing-attacks/",
+          "pubDate": "2026-06-25T19:45:48.000Z"
+        },
+        {
+          "title": "Bluekit phishing kit adopts browser-in-the-middle for login theft",
+          "cve": null,
+          "severity": "news",
+          "score": 63,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Incident de sécurité rapporté par BleepingComputer.\n\nThe Bluekit phishing-as-a-service platform continues to evolve with nearly 70 new hostnames identified over the past week and by adding browser-in-the-middle capabilities for improved data theft.\n\nMicrosoft quietly extends free Windows 10 ESU support to October 2027\n\nMandiant reveals how Cisco SD-WAN zero-day attacks gained root access\n\nMalicious Edge extension abuses Native Messaging as bridge to malware\n\nNew macOS ClickFix attack silently mounts DMGs to…",
+          "detail": "Incident de sécurité rapporté par BleepingComputer.\n\nThe Bluekit phishing-as-a-service platform continues to evolve with nearly 70 new hostnames identified over the past week and by adding browser-in-the-middle capabilities for improved data theft.\n\nMicrosoft quietly extends free Windows 10 ESU support to October 2027\n\nMandiant reveals how Cisco SD-WAN zero-day attacks gained root access\n\nMalicious Edge extension abuses Native Messaging as bridge to malware\n\nNew macOS ClickFix attack silently mounts DMGs to push infostealer\n\nPoland busts SIM-swapping gang tied to millions in crypto theft\n\nOrder-tracking app Shop abused to push callback phishing attacks",
+          "action": "Surveiller les indicateurs de compromission associés et contrôler les actifs exposés.",
+          "sources": [
+            {
+              "url": "https://www.bleepingcomputer.com/news/security/bluekit-phishing-kit-adopts-browser-in-the-middle-for-login-theft/",
+              "label": "BleepingComputer"
+            }
+          ],
+          "url": "https://www.bleepingcomputer.com/news/security/bluekit-phishing-kit-adopts-browser-in-the-middle-for-login-theft/",
+          "pubDate": "2026-06-25T15:00:00.000Z"
+        },
+        {
+          "title": "Secours populaire (59) : les données de familles et de salariés en fuite",
+          "cve": null,
+          "severity": "news",
+          "score": 57,
+          "corroboration": 1,
+          "region": "fr",
+          "body": "Incident de sécurité rapporté par Cyberattaque.org.\n\nUne nouvelle revendication de fuite de données cible le Secours populaire du Nord (59). Sur un forum cybercriminel, un acteur utilisant le pseudonyme\n\nAttaque Mis à jour le 25 juin 2026 à 22h41 Secours populaire (59) : les données de familles et de salariés en fuite Une nouvelle revendication de fuite de données cible le Secours populaire du Nord (59) .",
+          "detail": "Incident de sécurité rapporté par Cyberattaque.org.\n\nUne nouvelle revendication de fuite de données cible le Secours populaire du Nord (59). Sur un forum cybercriminel, un acteur utilisant le pseudonyme\n\nAttaque Mis à jour le 25 juin 2026 à 22h41 Secours populaire (59) : les données de familles et de salariés en fuite Une nouvelle revendication de fuite de données cible le Secours populaire du Nord (59) . Sur un forum cybercriminel, un acteur utilisant le pseudonyme Cybernox affirme avoir publié plusieurs fichiers internes ainsi que des journaux (« logs ») et un accès à un panneau d&rsquo;administration, sans que ces éléments puissent être vérifiés de manière indépendante à ce stade.\n\nD&rsquo;après la revendication, plusieurs fichiers auraient été extraits des systèmes de l&rsquo;association. Le principal fichier, nommé extractionfamilles.csv , contiendrait 482 enregistrements relatifs à des familles bénéficiaires. Un second fichier intitulé Liste des salariés.csv regrouperait une vingtaine de fiches concernant des employés.\n\nLes exemples diffusés montrent la présence d&rsquo;informations personnelles telles que :\n\nConcernant les salariés, les extraits publiés contiennent notamment des informations administratives liées aux ressources humaines, comme le nom, la date de naissance, la date d’embauche, le poste occupé ou encore des références de contrats de prévoyance.\n\nBien que le volume revendiqué reste relativement limité, la nature des informations peut être particulièrement sensible. Les bénéficiaires d&rsquo;une association d&rsquo;aide sociale figurent parmi les publics les plus vulnérables, et la divulgation de leurs coordonnées ou de certains éléments familiaux pourrait être utilisée dans des campagnes de fraude ou d&rsquo;hameçonnage ciblées.\n\nLa revendication me",
+          "action": "Surveiller les indicateurs de compromission associés et contrôler les actifs exposés.",
+          "sources": [
+            {
+              "url": "https://www.cyberattaque.org/secours-populaire-59-les-donnees-de-familles-et-de-salaries-en-fuite/",
+              "label": "Cyberattaque.org"
+            }
+          ],
+          "url": "https://www.cyberattaque.org/secours-populaire-59-les-donnees-de-familles-et-de-salaries-en-fuite/",
+          "pubDate": "2026-06-25T20:41:15.000Z"
+        },
+        {
+          "title": "Henley : une fuite de code source expose les secrets techniques de centaines de CSE et grandes entreprises",
+          "cve": null,
+          "severity": "high",
+          "score": 57,
+          "corroboration": 1,
+          "region": "fr",
+          "body": "Incident de sécurité rapporté par Cyberattaque.org.\n\nUne importante fuite de données attribuée à Henley France a été publiée sur un forum cybercriminel. L'auteur de la revendication affirme avoir mis en\n\nAttaque Mis à jour le 25 juin 2026 à 22h36 Henley : une fuite de code source expose les secrets techniques de centaines de CSE et grandes entreprises Une importante fuite de données attribuée à Henley France a été publiée sur un forum cybercriminel.",
+          "detail": "Incident de sécurité rapporté par Cyberattaque.org.\n\nUne importante fuite de données attribuée à Henley France a été publiée sur un forum cybercriminel. L'auteur de la revendication affirme avoir mis en\n\nAttaque Mis à jour le 25 juin 2026 à 22h36 Henley : une fuite de code source expose les secrets techniques de centaines de CSE et grandes entreprises Une importante fuite de données attribuée à Henley France a été publiée sur un forum cybercriminel. L&rsquo;auteur de la revendication affirme avoir mis en ligne plusieurs gigaoctets de données internes provenant de l&rsquo;éditeur français de solutions numériques destinées aux CSE, CE et plateformes d&rsquo;avantages salariés .\n\nSelon les analyses réalisées sur les fichiers, la fuite comprend environ 176 991 fichiers représentant près de 3 Go de données . Contrairement à une simple base de clients, il s&rsquo;agirait principalement d&rsquo;un export technique contenant du code source, des dépôts applicatifs et de nombreux secrets de configuration.\n\nLes fichiers analysés montrent la présence de plusieurs dépôts de développement utilisés par Henley. Les données revendiquées comprendraient notamment :\n\nCe type de fuite est particulièrement sensible, car il peut permettre à un attaquant de comprendre le fonctionnement interne des applications, d&rsquo;identifier d&rsquo;éventuelles vulnérabilités ou d&rsquo;accéder à d&rsquo;autres systèmes lorsque certains secrets sont encore valides.\n\nAu-delà des éléments techniques, on retrouve la présence de nombreuses données issues d&rsquo;environnements de production. Environ 6 269 adresses e-mail nominatives uniques auraient été identifiées, dont plus de 4 600 suivant le format prénom.nom.\n\nLes données observées ou modélisées dans les différents dépôts peuvent inclure :",
+          "action": "Surveiller les indicateurs de compromission associés et contrôler les actifs exposés.",
+          "sources": [
+            {
+              "url": "https://www.cyberattaque.org/henley-une-fuite-de-code-source-expose-les-secrets-techniques-de-centaines-de-cse-et-grandes-entreprises/",
+              "label": "Cyberattaque.org"
+            }
+          ],
+          "url": "https://www.cyberattaque.org/henley-une-fuite-de-code-source-expose-les-secrets-techniques-de-centaines-de-cse-et-grandes-entreprises/",
+          "pubDate": "2026-06-25T20:36:09.000Z"
+        },
+        {
+          "title": "Insee : 12 800 agents de l’Insee dans une fuite de données internes",
+          "cve": null,
+          "severity": "news",
+          "score": 57,
+          "corroboration": 1,
+          "region": "fr",
+          "body": "Incident de sécurité rapporté par Cyberattaque.org.\n\nUne nouvelle revendication visant une administration française a été publiée sur un forum cybercriminel. Un acteur utilisant le pseudonyme Saturne affirme\n\nAttaque Mis à jour le 25 juin 2026 à 22h31 Insee : 12 800 agents de l’Insee dans une fuite de données internes Une nouvelle revendication visant une administration française a été publiée sur un forum cybercriminel.",
+          "detail": "Incident de sécurité rapporté par Cyberattaque.org.\n\nUne nouvelle revendication visant une administration française a été publiée sur un forum cybercriminel. Un acteur utilisant le pseudonyme Saturne affirme\n\nAttaque Mis à jour le 25 juin 2026 à 22h31 Insee : 12 800 agents de l’Insee dans une fuite de données internes Une nouvelle revendication visant une administration française a été publiée sur un forum cybercriminel. Un acteur utilisant le pseudonyme Saturne affirme avoir mis en ligne une base de données provenant de trombi.insee.fr , l&rsquo;annuaire interne de l&rsquo;Institut national de la statistique et des études économiques (Insee). Le fichier revendiqué contiendrait 12 796 enregistrements correspondant à des agents de l&rsquo;établissement.\n\nAu moment de la publication, cette fuite repose uniquement sur les déclarations de son auteur. L&rsquo;origine exacte des données et les circonstances de leur extraction n&rsquo;ont pas été confirmées de manière indépendante.\n\nTrombi.insee.fr est présenté comme l&rsquo;annuaire interne de l&rsquo;Insee. Il permet aux agents de retrouver les coordonnées professionnelles, les affectations et différentes informations administratives concernant les personnels de l&rsquo;établissement.\n\nSelon la revendication, les données diffusées correspondent à un export réalisé en juin 2026 regroupant près de 12 800 fiches d&rsquo;agents.\n\nD&rsquo;après les colonnes décrites par l&rsquo;auteur de la fuite, les fiches contiendraient principalement des informations professionnelles et administratives relatives aux agents. Les données revendiquées comprennent notamment :\n\nLes exemples publiés par l&rsquo;auteur montrent également la présence de différents identifiants administratifs propres aux systèmes internes de l&rsquo;Insee, ainsi que d",
+          "action": "Surveiller les indicateurs de compromission associés et contrôler les actifs exposés.",
+          "sources": [
+            {
+              "url": "https://www.cyberattaque.org/insee-12-800-agents-de-linsee-dans-une-fuite-de-donnees-internes/",
+              "label": "Cyberattaque.org"
+            }
+          ],
+          "url": "https://www.cyberattaque.org/insee-12-800-agents-de-linsee-dans-une-fuite-de-donnees-internes/",
+          "pubDate": "2026-06-25T04:46:18.000Z"
+        },
+        {
+          "title": "AKAOLIFE : 14,4 millions d’enregistrements revendiqués dans une fuite visant un prestataire RH de France Travail",
+          "cve": null,
+          "severity": "news",
+          "score": 57,
+          "corroboration": 1,
+          "region": "fr",
+          "body": "Incident de sécurité rapporté par Cyberattaque.org.\n\nUne revendication d&#8217;une ampleur exceptionnelle a été publiée sur un forum cybercriminel. Les auteurs, se présentant sous les... L’article AKAOLIFE : 14,4 millions d’enregistrements revendiqués dans une fuite visant un prestataire RH de France Travail est apparu en premier sur Cyberattaque.org .",
+          "detail": "Incident de sécurité rapporté par Cyberattaque.org.\n\nUne revendication d&#8217;une ampleur exceptionnelle a été publiée sur un forum cybercriminel. Les auteurs, se présentant sous les... L’article AKAOLIFE : 14,4 millions d’enregistrements revendiqués dans une fuite visant un prestataire RH de France Travail est apparu en premier sur Cyberattaque.org .",
+          "action": "Surveiller les indicateurs de compromission associés et contrôler les actifs exposés.",
+          "sources": [
+            {
+              "url": "https://www.cyberattaque.org/akaolife-144-millions-denregistrements-revendiques-dans-une-fuite-visant-un-prestataire-rh-de-france-travail/",
+              "label": "Cyberattaque.org"
+            }
+          ],
+          "url": "https://www.cyberattaque.org/akaolife-144-millions-denregistrements-revendiques-dans-une-fuite-visant-un-prestataire-rh-de-france-travail/",
+          "pubDate": "2026-06-25T04:39:35.000Z"
+        },
+        {
+          "title": "Apimo : plus de 28 000 clients, prospects et biens immobiliers revendiqués après une cyberattaque",
+          "cve": null,
+          "severity": "news",
+          "score": 54,
+          "corroboration": 1,
+          "region": "fr",
+          "body": "Incident de sécurité rapporté par Cyberattaque.org.\n\nUne importante base de données attribuée à Apimo, un logiciel CRM utilisé par de nombreuses agences immobilières, a été publiée sur un forum\n\nAttaque Mis à jour le 25 juin 2026 à 22h57 Apimo : plus de 28 000 clients, prospects et biens immobiliers revendiqués après une cyberattaque Une importante base de données attribuée à Apimo , un logiciel CRM utilisé par de nombreuses agences immobilières, a été publiée sur un forum cybercriminel.",
+          "detail": "Incident de sécurité rapporté par Cyberattaque.org.\n\nUne importante base de données attribuée à Apimo, un logiciel CRM utilisé par de nombreuses agences immobilières, a été publiée sur un forum\n\nAttaque Mis à jour le 25 juin 2026 à 22h57 Apimo : plus de 28 000 clients, prospects et biens immobiliers revendiqués après une cyberattaque Une importante base de données attribuée à Apimo , un logiciel CRM utilisé par de nombreuses agences immobilières, a été publiée sur un forum cybercriminel. L&rsquo;auteur de la revendication affirme avoir extrait deux bases distinctes, Homeloop et MD-immobilier , représentant au total plus de 28 000 enregistrements répartis entre contacts, prospects, biens immobiliers, demandes clients, utilisateurs et documents de facturation.\n\nSelon les éléments publiés, la fuite concerne deux environnements différents hébergés sur Apimo :\n\nLes captures d&rsquo;écran et extraits diffusés montrent qu&rsquo;il ne s&rsquo;agit pas d&rsquo;un simple export de contacts mais d&rsquo;une extraction structurée comprenant plusieurs modules du CRM.\n\nLe plus gros volume concerne la base des biens immobiliers. Le fichier Properties.csv contiendrait 11 564 annonces avec de nombreux champs :\n\nLes exemples publiés montrent que les descriptions marketing complètes des biens sont également présentes dans la base.\n\nLes bases contiennent également un important volume de prospects immobiliers.",
+          "action": "Surveiller les indicateurs de compromission associés et contrôler les actifs exposés.",
+          "sources": [
+            {
+              "url": "https://www.cyberattaque.org/apimo-homeloop-md-immobilier-cyberattaque-fuite/",
+              "label": "Cyberattaque.org"
+            }
+          ],
+          "url": "https://www.cyberattaque.org/apimo-homeloop-md-immobilier-cyberattaque-fuite/",
+          "pubDate": "2026-06-25T20:56:06.000Z"
+        }
+      ]
+    },
+    {
+      "id": "culture",
+      "items": [
+        {
+          "title": "SecurityWeek ICS Cybersecurity Conference Heads to Nashville for Special 25-Year Anniversary Edition",
+          "cve": null,
+          "severity": "culture",
+          "score": 67,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Signal de veille — SecurityWeek.\n\nSecurityWeek will host its renowned Industrial Control Systems (ICS) Cybersecurity Conference from October 6-8, 2026, at the W Nashville.\n\nThe 2026 Industrial Control Systems (ICS) Cybersecurity Conference takes place October 6-8, 2026, at the W Nashville.\n\nSubscribe to the SecurityWeek Email Briefing for the latest cybersecurity threats, trends, and expert insights.\n\nSubscribe to the SecurityWeek Email Briefing to stay informed on the latest threats, tren…",
+          "detail": "Signal de veille — SecurityWeek.\n\nSecurityWeek will host its renowned Industrial Control Systems (ICS) Cybersecurity Conference from October 6-8, 2026, at the W Nashville.\n\nThe 2026 Industrial Control Systems (ICS) Cybersecurity Conference takes place October 6-8, 2026, at the W Nashville.\n\nSubscribe to the SecurityWeek Email Briefing for the latest cybersecurity threats, trends, and expert insights.\n\nSubscribe to the SecurityWeek Email Briefing to stay informed on the latest threats, trends, and technology, along with insightful columns from industry experts.\n\nJoin this live webinar as we break down why email-layer defenses alone can't keep pace with the modern phishing ecosystem, how agentic AI is changing the capacity equation for security teams, and more.\n\nThis year's summit will help organizations learn how to utilize tools, controls, and design models needed to properly secure cloud environments. Interact with leading solution providers and other end users facing similar challenges in securing a variety of cloud deployments.\n\nFable Security has appointed Jacob Berry as Chief Information Security Officer.",
+          "action": null,
+          "sources": [
+            {
+              "url": "https://www.securityweek.com/securityweek-ics-cybersecurity-conference-heads-to-nashville-for-special-25-year-anniversary-edition/",
+              "label": "SecurityWeek"
+            }
+          ],
+          "url": "https://www.securityweek.com/securityweek-ics-cybersecurity-conference-heads-to-nashville-for-special-25-year-anniversary-edition/",
+          "pubDate": "2026-06-25T09:00:00.000Z"
+        },
+        {
+          "title": "AI and Liability",
+          "cve": null,
+          "severity": "high",
+          "score": 64,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Signal de veille — Schneier on Sec..\n\nEarlier this month, a German court ruled that Google is liable for its AI search summaries. Rejecting defenses like &#8220;users can check for themselves,&#8221; and that they generally know &#8220;that information generated with AI should not be blindly trusted,&#8221; the court held that the AI&#8217;s summaries are reflections of the company and &#8220;above all an expression of Google&#8217;s business activities.&#8221; This is the latest skirmish in a…",
+          "detail": "Signal de veille — Schneier on Sec..\n\nEarlier this month, a German court ruled that Google is liable for its AI search summaries. Rejecting defenses like &#8220;users can check for themselves,&#8221; and that they generally know &#8220;that information generated with AI should not be blindly trusted,&#8221; the court held that the AI&#8217;s summaries are reflections of the company and &#8220;above all an expression of Google&#8217;s business activities.&#8221; This is the latest skirmish in a decades-old battle over internet publishing. Historically, there were two different types of information distributors: carriers and publishers. A phone company is a carrier. It&#8217;ll transmit whatever you say, even discussions about committing a crime. Words are words, and the phone company does not know&#8212;nor is it liable for&#8212;the words you choose to speak. A newspaper, on the other hand, is a publisher. It decides the words it publishes, and what quotes to include in its articles. If those words or quotes are defamatory or otherwise illegal, it&#8217;s liable. Internet companies have long tried to play both ends of this distinction. They claim to be a carrier when it suits them, and also to be a publisher when that is advantageous. Section 230 of the 1996 Communication Decency Act enshrined this straddling when it shielded internet providers from liability for the speech of others on their platforms: &#8220;No p",
+          "action": null,
+          "sources": [
+            {
+              "url": "https://www.schneier.com/blog/archives/2026/06/ai-and-liability.html",
+              "label": "Schneier on Sec."
+            }
+          ],
+          "url": "https://www.schneier.com/blog/archives/2026/06/ai-and-liability.html",
+          "pubDate": "2026-06-25T17:03:15.000Z"
+        },
+        {
+          "title": "Federal court rules Trump election-focused executive order illegal",
+          "cve": null,
+          "severity": "critical",
+          "score": 64,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Signal de veille — CyberScoop.\n\nA federal judge in Massachusetts struck down major sections of a Trump administration executive order&nbsp; that would have restricted mail-in ballots through the U.S. Postal Service and required states to adopt federally approved voter lists. The ruling Thursday from Judge Indira Talwani of the U.S.",
+          "detail": "Signal de veille — CyberScoop.\n\nA federal judge in Massachusetts struck down major sections of a Trump administration executive order&nbsp; that would have restricted mail-in ballots through the U.S. Postal Service and required states to adopt federally approved voter lists. The ruling Thursday from Judge Indira Talwani of the U.S. District Court of Massachusetts found those parts of the order were unconstitutional, while declaring another section that directs federal law enforcement agencies to investigate and prosecute noncompliant state and local officials legally nonbinding. Talwani wrote that the U.S. Constitution empowers States and Congress in different roles but “does not grant the President any specific power over elections.” While the White House has cited the 2002 Help America Vote Act (HAVA) and Civil Rights-era voting laws as justification, Talwani found those laws do not authorize the government to regulate state voter registration practices. “Notably, nowhere in HAVA does Congress prescribe who should be included on State voter lists,” Talwani wrote. “Further, neither in HAVA nor any other federal statute does Congress authorize the federal government to create their own voting database. Instead, Congress, consistent with the Constitution, has left that authority to the States alone.” Talwani also declined to remove President Trump and Commerce Secretary Howard Lutnick as named defendants in th",
+          "action": null,
+          "sources": [
+            {
+              "url": "https://cyberscoop.com/judge-strikes-down-trump-election-executive-order/",
+              "label": "CyberScoop"
+            }
+          ],
+          "url": "https://cyberscoop.com/judge-strikes-down-trump-election-executive-order/",
+          "pubDate": "2026-06-25T16:16:20.000Z"
+        },
+        {
+          "title": "Russia uses Cellebrite to break into human rights activist’s phone, even after cancellation of contract",
+          "cve": null,
+          "severity": "culture",
+          "score": 64,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Signal de veille — CyberScoop.\n\nRussian authorities used Cellebrite phone-cracking technology to break into a device belonging to a prominent domestic human rights activist they arrested and imprisoned, despite the company canceling its contract with the Russian government, according to a report published Thursday.",
+          "detail": "Signal de veille — CyberScoop.\n\nRussian authorities used Cellebrite phone-cracking technology to break into a device belonging to a prominent domestic human rights activist they arrested and imprisoned, despite the company canceling its contract with the Russian government, according to a report published Thursday. The University of Toronto’s Citizen Lab reached its conclusions after analyzing a phone belonging to Andrey Pivovarov and examining court documents he provided confirming the usage of Cellebrite’s UFED product. Pivovarov was arrested in March 2021, sentenced in 2022 and released in 2024 as part of a prisoner exchange. Citizen Lab found evidence that authorities accessed his phone around June 2021 while the phone was in Russian government hands. Investigators also said it appears Russian authorities might have used information it got from Pivoarov’s phone to surveil other regime opponents, combining information in the court documents with the later targeting of fellow dissident Anastasiya Burakova in a hacking campaign linked to Russia’s Federal Security Service (FSB). “The historic architecture of Cellebrite forensic systems means that much of the functionality in the UFED product has continued to operate long after updates cease,” Citizen Lab said in its report. “Furthermore, Cellebrite systems have historically featured an offline mode. Consequently, the way Cellebrite’s technology was designed a",
+          "action": null,
+          "sources": [
+            {
+              "url": "https://cyberscoop.com/russia-cellebrite-activist-phone-hacking/",
+              "label": "CyberScoop"
+            }
+          ],
+          "url": "https://cyberscoop.com/russia-cellebrite-activist-phone-hacking/",
+          "pubDate": "2026-06-25T14:52:06.000Z"
+        },
+        {
+          "title": "Runlayer Raises $30 Million in Series A Funding",
+          "cve": null,
+          "severity": "culture",
+          "score": 64,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Signal de veille — SecurityWeek.\n\nRunlayer has raised $30 million in Series A funding to provide the controls required for the safe enterprise adoption of AI tools.\n\nThe startup’s platform functions as a secure control layer, aiming to secure AI tools across enterprises.\n\nSubscribe to the SecurityWeek Email Briefing for the latest cybersecurity threats, trends, and expert insights.\n\nSubscribe to the SecurityWeek Email Briefing to stay informed on the latest threats, trends, and technology,…",
+          "detail": "Signal de veille — SecurityWeek.\n\nRunlayer has raised $30 million in Series A funding to provide the controls required for the safe enterprise adoption of AI tools.\n\nThe startup’s platform functions as a secure control layer, aiming to secure AI tools across enterprises.\n\nSubscribe to the SecurityWeek Email Briefing for the latest cybersecurity threats, trends, and expert insights.\n\nSubscribe to the SecurityWeek Email Briefing to stay informed on the latest threats, trends, and technology, along with insightful columns from industry experts.\n\nJoin this live webinar as we break down why email-layer defenses alone can't keep pace with the modern phishing ecosystem, how agentic AI is changing the capacity equation for security teams, and more.\n\nThis year's summit will help organizations learn how to utilize tools, controls, and design models needed to properly secure cloud environments. Interact with leading solution providers and other end users facing similar challenges in securing a variety of cloud deployments.\n\nFable Security has appointed Jacob Berry as Chief Information Security Officer.",
+          "action": null,
+          "sources": [
+            {
+              "url": "https://www.securityweek.com/runlayer-raises-30-million-in-series-a-funding/",
+              "label": "SecurityWeek"
+            }
+          ],
+          "url": "https://www.securityweek.com/runlayer-raises-30-million-in-series-a-funding/",
+          "pubDate": "2026-06-25T12:39:50.000Z"
+        },
+        {
+          "title": "Anthropic is testing desktop-like Claude Cowork for mobile",
+          "cve": null,
+          "severity": "culture",
+          "score": 63,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Signal de veille — BleepingComputer.\n\nAnthropic appears to be testing Claude Cowork support on mobile, allowing you to manage long-running Claude tasks from your phone.\n\nMicrosoft quietly extends free Windows 10 ESU support to October 2027\n\nMandiant reveals how Cisco SD-WAN zero-day attacks gained root access\n\nMalicious Edge extension abuses Native Messaging as bridge to malware\n\nNew macOS ClickFix attack silently mounts DMGs to push infostealer\n\nPoland busts SIM-swapping gang tied to millions…",
+          "detail": "Signal de veille — BleepingComputer.\n\nAnthropic appears to be testing Claude Cowork support on mobile, allowing you to manage long-running Claude tasks from your phone.\n\nMicrosoft quietly extends free Windows 10 ESU support to October 2027\n\nMandiant reveals how Cisco SD-WAN zero-day attacks gained root access\n\nMalicious Edge extension abuses Native Messaging as bridge to malware\n\nNew macOS ClickFix attack silently mounts DMGs to push infostealer\n\nPoland busts SIM-swapping gang tied to millions in crypto theft\n\nOrder-tracking app Shop abused to push callback phishing attacks",
+          "action": null,
+          "sources": [
+            {
+              "url": "https://www.bleepingcomputer.com/news/artificial-intelligence/anthropic-is-testing-desktop-like-claude-cowork-for-mobile/",
+              "label": "BleepingComputer"
+            }
+          ],
+          "url": "https://www.bleepingcomputer.com/news/artificial-intelligence/anthropic-is-testing-desktop-like-claude-cowork-for-mobile/",
+          "pubDate": "2026-06-25T22:53:32.000Z"
+        },
+        {
+          "title": "Microsoft quietly extends free Windows 10 ESU support to October 2027",
+          "cve": null,
+          "severity": "culture",
+          "score": 63,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Signal de veille — BleepingComputer.\n\nMicrosoft has quietly extended its free Windows 10 Extended Security Updates (ESU) program for consumers by an additional year, allowing enrolled devices to continue receiving security updates until October 12, 2027.\n\nMicrosoft quietly extends free Windows 10 ESU support to October 2027\n\nMandiant reveals how Cisco SD-WAN zero-day attacks gained root access\n\nMalicious Edge extension abuses Native Messaging as bridge to malware\n\nNew macOS ClickFix attack sil…",
+          "detail": "Signal de veille — BleepingComputer.\n\nMicrosoft has quietly extended its free Windows 10 Extended Security Updates (ESU) program for consumers by an additional year, allowing enrolled devices to continue receiving security updates until October 12, 2027.\n\nMicrosoft quietly extends free Windows 10 ESU support to October 2027\n\nMandiant reveals how Cisco SD-WAN zero-day attacks gained root access\n\nMalicious Edge extension abuses Native Messaging as bridge to malware\n\nNew macOS ClickFix attack silently mounts DMGs to push infostealer\n\nPoland busts SIM-swapping gang tied to millions in crypto theft\n\nOrder-tracking app Shop abused to push callback phishing attacks",
+          "action": null,
+          "sources": [
+            {
+              "url": "https://www.bleepingcomputer.com/news/microsoft/microsoft-quietly-extends-free-windows-10-esu-support-to-october-2027/",
+              "label": "BleepingComputer"
+            }
+          ],
+          "url": "https://www.bleepingcomputer.com/news/microsoft/microsoft-quietly-extends-free-windows-10-esu-support-to-october-2027/",
+          "pubDate": "2026-06-25T18:29:20.000Z"
+        },
+        {
+          "title": "PirloTV sports piracy network disrupted as 44 domains seized",
+          "cve": null,
+          "severity": "culture",
+          "score": 63,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Signal de veille — BleepingComputer.\n\nA major sports piracy ring linked to the illegal PirloTV streaming platform has been disrupted in an action that targeted 44 domains.\n\nMicrosoft quietly extends free Windows 10 ESU support to October 2027\n\nMandiant reveals how Cisco SD-WAN zero-day attacks gained root access\n\nMalicious Edge extension abuses Native Messaging as bridge to malware\n\nNew macOS ClickFix attack silently mounts DMGs to push infostealer\n\nPoland busts SIM-swapping gang tied to milli…",
+          "detail": "Signal de veille — BleepingComputer.\n\nA major sports piracy ring linked to the illegal PirloTV streaming platform has been disrupted in an action that targeted 44 domains.\n\nMicrosoft quietly extends free Windows 10 ESU support to October 2027\n\nMandiant reveals how Cisco SD-WAN zero-day attacks gained root access\n\nMalicious Edge extension abuses Native Messaging as bridge to malware\n\nNew macOS ClickFix attack silently mounts DMGs to push infostealer\n\nPoland busts SIM-swapping gang tied to millions in crypto theft\n\nOrder-tracking app Shop abused to push callback phishing attacks",
+          "action": null,
+          "sources": [
+            {
+              "url": "https://www.bleepingcomputer.com/news/security/pirlotv-sports-piracy-network-disrupted-as-44-domains-seized/",
+              "label": "BleepingComputer"
+            }
+          ],
+          "url": "https://www.bleepingcomputer.com/news/security/pirlotv-sports-piracy-network-disrupted-as-44-domains-seized/",
+          "pubDate": "2026-06-25T15:36:56.000Z"
+        },
+        {
+          "title": "Opération Endgame : comment les autorités ont démantelé trois piliers du cybercrime-as-a-service",
+          "cve": null,
+          "severity": "culture",
+          "score": 60,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Signal de veille — Numerama.\n\nDes centaines de serveurs mis hors ligne, 27 millions d'identifiants récupérés, 41 millions d'euros en crypto gelés : l'opération Endgame vient de frapper deux des outils les plus répandus dans l'écosystème cybercriminel. Le 24 juin 2026, Europol a annoncé une nouvelle vague de l'opération Endgame, déjà connue pour\n\nAmine Baba Aissa Amine Baba Aissa 2 min 2 min Amine Baba Aissa Amine Baba Aissa Ne plus voir cette pub Lecture Zen Résumer l'article Résumé de…",
+          "detail": "Signal de veille — Numerama.\n\nDes centaines de serveurs mis hors ligne, 27 millions d'identifiants récupérés, 41 millions d'euros en crypto gelés : l'opération Endgame vient de frapper deux des outils les plus répandus dans l'écosystème cybercriminel. Le 24 juin 2026, Europol a annoncé une nouvelle vague de l'opération Endgame, déjà connue pour\n\nAmine Baba Aissa Amine Baba Aissa 2 min 2 min Amine Baba Aissa Amine Baba Aissa Ne plus voir cette pub Lecture Zen Résumer l'article Résumé de l'article Résumé par IA, vérifié par Numerama\n\nNous générons pour vous un résumé de l’article grâce à une IA et nous le vérifions afin de nous assurer qu’il n’y ait aucune erreur, pour garantir l’authenticité de l’info.\n\nRecevez tous les soirs un résumé de l’actu importante avec Le Récap’\n\nLe 24 juin 2026, Europol a annoncé une nouvelle vague de l&rsquo;opération Endgame , déjà connue pour avoir démembré plusieurs écosystèmes cybercriminels.\n\nCette fois-ci, les cibles sont multiples et trois familles de malwares sont concernées : SocGholish, Amadey et StealC.\n\nMicrosoft, qui a participé à l&rsquo;opération en tant que partenaire privé, a publié deux billets de blog autour de cette affaire, annonçant notamment intenter une action civile contre plusieurs opérateurs présumés , en invoquant le RICO, une loi antimafia américaine.",
+          "action": null,
+          "sources": [
+            {
+              "url": "https://www.numerama.com/cyberguerre/2285137-operation-endgame-comment-les-autorites-ont-demantele-trois-piliers-du-cybercrime-as-a-service.html",
+              "label": "Numerama"
+            }
+          ],
+          "url": "https://www.numerama.com/cyberguerre/2285137-operation-endgame-comment-les-autorites-ont-demantele-trois-piliers-du-cybercrime-as-a-service.html",
+          "pubDate": "2026-06-25T14:10:00.000Z"
+        },
+        {
+          "title": "NIST Opens Updated IoT Security Guidance to Public Review",
+          "cve": null,
+          "severity": "culture",
+          "score": 59,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Signal de veille — SecurityWeek.\n\nNIST has opened its updated guidance on establishing cybersecurity requirements for IoT products for public feedback.\n\nThe guidance aims to establish product cybersecurity requirements for IoT devices integrated into federal agencies’ networks.\n\nSubscribe to the SecurityWeek Email Briefing for the latest cybersecurity threats, trends, and expert insights.\n\nSubscribe to the SecurityWeek Email Briefing to stay informed on the latest threats, trends, and tech…",
+          "detail": "Signal de veille — SecurityWeek.\n\nNIST has opened its updated guidance on establishing cybersecurity requirements for IoT products for public feedback.\n\nThe guidance aims to establish product cybersecurity requirements for IoT devices integrated into federal agencies’ networks.\n\nSubscribe to the SecurityWeek Email Briefing for the latest cybersecurity threats, trends, and expert insights.\n\nSubscribe to the SecurityWeek Email Briefing to stay informed on the latest threats, trends, and technology, along with insightful columns from industry experts.\n\nJoin this live webinar as we break down why email-layer defenses alone can't keep pace with the modern phishing ecosystem, how agentic AI is changing the capacity equation for security teams, and more.\n\nThis year's summit will help organizations learn how to utilize tools, controls, and design models needed to properly secure cloud environments. Interact with leading solution providers and other end users facing similar challenges in securing a variety of cloud deployments.\n\nFable Security has appointed Jacob Berry as Chief Information Security Officer.",
+          "action": null,
+          "sources": [
+            {
+              "url": "https://www.securityweek.com/nist-opens-updated-iot-security-guidance-to-public-review/",
+              "label": "SecurityWeek"
+            }
+          ],
+          "url": "https://www.securityweek.com/nist-opens-updated-iot-security-guidance-to-public-review/",
+          "pubDate": "2026-06-25T08:29:26.000Z"
+        },
+        {
+          "title": "Local Police Collusion Hampers Crackdown on Asian Scam Centers",
+          "cve": null,
+          "severity": "high",
+          "score": 55,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Signal de veille — Dark Reading.\n\nWith tens of billions of dollars flowing into regional economies from cybercrime, scam centers continue to flourish, despite international and law-enforcement efforts.",
+          "detail": "Signal de veille — Dark Reading.\n\nWith tens of billions of dollars flowing into regional economies from cybercrime, scam centers continue to flourish, despite international and law-enforcement efforts.",
+          "action": null,
+          "sources": [
+            {
+              "url": "https://www.darkreading.com/threat-intelligence/police-collusion-crackdown-asian-scam-centers",
+              "label": "Dark Reading"
+            }
+          ],
+          "url": "https://www.darkreading.com/threat-intelligence/police-collusion-crackdown-asian-scam-centers",
+          "pubDate": "2026-06-25T19:07:41.000Z"
+        },
+        {
+          "title": "Des indices dans le code de Claude font miroiter un retour de Fable 5",
+          "cve": null,
+          "severity": "culture",
+          "score": 55,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Signal de veille — Numerama.\n\nPrès de deux semaines après la suspension forcée du modèle grand public le plus puissant d'Anthropic, une mise à jour discrète de Claude Code suggère que l'entreprise américaine prépare activement son retour, avec un modèle de distribution revu.",
+          "detail": "Signal de veille — Numerama.\n\nPrès de deux semaines après la suspension forcée du modèle grand public le plus puissant d'Anthropic, une mise à jour discrète de Claude Code suggère que l'entreprise américaine prépare activement son retour, avec un modèle de distribution revu. Le retour de Fable 5 se dessine-t-il en coulisses ? Le 24 juin 2026, un\n\nAmine Baba Aissa Amine Baba Aissa 2 min 2 min Amine Baba Aissa Amine Baba Aissa Ne plus voir cette pub Lecture Zen Résumer l'article Résumé de l'article Résumé par IA, vérifié par Numerama\n\nNous générons pour vous un résumé de l’article grâce à une IA et nous le vérifions afin de nous assurer qu’il n’y ait aucune erreur, pour garantir l’authenticité de l’info.\n\nRecevez tous les soirs un résumé de l’actu importante avec Le Récap’\n\nLe 24 juin 2026, un compte X sous le pseudonyme synthwavedd a signalé un changement discret dans Claude Code v2.1.190. Plusieurs chaînes intégrées au binaire laissent à penser qu’Anthropic prépare le retour de Fable 5, le modèle suspendu depuis le 12 juin à la suite d’une directive gouvernementale.\n\nParmi les indices relevés figurerait cette nouvelle mention : « Vous avez utilisé la totalité de votre quota Fable 5 inclus pour cette semaine. Continuer à utiliser Fable 5 consomme des crédits d’utilisation », tandis que l’ancienne formule « acheté séparément de votre formule d’abonnement » aurait disparu.\n\nEt votre vie numérique devient sereine Bitdefender Premium Security est une solution de cybersécurité européenne qui vous protège automatiquement contre les pirates et toutes les menaces du web. Profitez de vos activités en ligne en toute tranquillité Sponsorisé La solution de cybersécurité tout-en-un De quoi suggérer un retour rapide du premier modèle de classe Mythos de l’entreprise, mais aussi une no",
+          "action": null,
+          "sources": [
+            {
+              "url": "https://www.numerama.com/tech/2284783-des-indices-dans-le-code-de-claude-font-miroiter-un-retour-de-fable-5.html",
+              "label": "Numerama"
+            }
+          ],
+          "url": "https://www.numerama.com/tech/2284783-des-indices-dans-le-code-de-claude-font-miroiter-un-retour-de-fable-5.html",
+          "pubDate": "2026-06-25T08:11:00.000Z"
+        },
+        {
+          "title": "Reco Agent Security helps organizations govern AI agents and reduce exposure",
+          "cve": null,
+          "severity": "culture",
+          "score": 52,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Signal de veille — Help Net Security.\n\nReco announced Reco Agent Security, which expands the Reco Platform with advanced capabilities that prevent data exposure, unintended use and process disruption caused by AI agents operating across connected applications and workflows. Agents function inside interconnected enterprise ecosystems where they can read sensitive data, invoke tools, trigger workflows, update records, communicate with other systems and take autonomous action.",
+          "detail": "Signal de veille — Help Net Security.\n\nReco announced Reco Agent Security, which expands the Reco Platform with advanced capabilities that prevent data exposure, unintended use and process disruption caused by AI agents operating across connected applications and workflows. Agents function inside interconnected enterprise ecosystems where they can read sensitive data, invoke tools, trigger workflows, update records, communicate with other systems and take autonomous action. Agent security risks, therefore, are not isolated to the agent itself, but rather extend to the applications &#8230; More &#8594; The post Reco Agent Security helps organizations govern AI agents and reduce exposure appeared first on Help Net Security .",
+          "action": null,
+          "sources": [
+            {
+              "url": "https://www.helpnetsecurity.com/2026/06/25/reco-agent-security-helps-organizations-govern-ai-agents-and-reduce-exposure/",
+              "label": "Help Net Security"
+            }
+          ],
+          "url": "https://www.helpnetsecurity.com/2026/06/25/reco-agent-security-helps-organizations-govern-ai-agents-and-reduce-exposure/",
+          "pubDate": "2026-06-25T13:45:02.000Z"
+        },
+        {
+          "title": "Twenty Million US IP Connections Used by Proxy Services",
+          "cve": null,
+          "severity": "culture",
+          "score": 52,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Signal de veille — Infosecurity Mag.\n\nDigital Citizens Alliance report claims that millions of Americans may have unwittingly had IP connections used by cybercriminals\n\nMillions of residential IP connections in the US are collected annually for use in proxy services, with many households unaware that they may ultimately be used by threat actors, a new report has warned.\n\nNon-profit the Digital Citizens Alliance claimed in a new report, Cybercrime by Doorbell , that an estimated 20 million or m…",
+          "detail": "Signal de veille — Infosecurity Mag.\n\nDigital Citizens Alliance report claims that millions of Americans may have unwittingly had IP connections used by cybercriminals\n\nMillions of residential IP connections in the US are collected annually for use in proxy services, with many households unaware that they may ultimately be used by threat actors, a new report has warned.\n\nNon-profit the Digital Citizens Alliance claimed in a new report, Cybercrime by Doorbell , that an estimated 20 million or more connections end up as proxies, often without the knowledge of their owners.\n\nAlthough proxy services were originally introduced for legitimate business-oriented data collection, such as ad verification and geo-testing of websites, they&rsquo;re increasingly used by state actors and cybercriminals alike, the report warned.\n\n&ldquo;A joint investigation by the Digital Citizens Alliance, and cyber investigation firm risk3sixty, of residential proxies found a web of compromised consumer devices, disguised data centers, foreign infrastructure, and overlapping criminal operations that together represent a serious threat to national and economic security,&rdquo; it claimed.\n\nThe report authors analyzed IP connections across seven proxy providers, and found 80% were linked to residential addresses and 85% had been flagged as likely associated with fraud &ndash; indicating they&rsquo;re used repeatedly for cybercrime.\n\nRead more on proxy networks: Google Disrupts Extensive Residential Proxy Networks",
+          "action": null,
+          "sources": [
+            {
+              "url": "https://www.infosecurity-magazine.com/news/twenty-million-us-ip-connections/",
+              "label": "Infosecurity Mag"
+            }
+          ],
+          "url": "https://www.infosecurity-magazine.com/news/twenty-million-us-ip-connections/",
+          "pubDate": "2026-06-25T13:00:00.000Z"
+        },
+        {
+          "title": "Veritone introduces Assess to streamline evidence analysis and compliance reviews",
+          "cve": null,
+          "severity": "critical",
+          "score": 52,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Signal de veille — Help Net Security.\n\nVeritone has announced the launch of Veritone Assess, an AI-powered data analysis solution designed to help public sector agencies identify inconsistencies, missing information, and critical intelligence gaps hidden within complex datasets.",
+          "detail": "Signal de veille — Help Net Security.\n\nVeritone has announced the launch of Veritone Assess, an AI-powered data analysis solution designed to help public sector agencies identify inconsistencies, missing information, and critical intelligence gaps hidden within complex datasets. By automatically evaluating reports, witness statements, financial records, and other evidentiary materials against policies, regulations, and investigative criteria, Assess reduces the time required for manual reviews while helping improve the speed and accuracy of decision-making. As public sector agencies face growing volumes of digital &#8230; More &#8594; The post Veritone introduces Assess to streamline evidence analysis and compliance reviews appeared first on Help Net Security .",
+          "action": null,
+          "sources": [
+            {
+              "url": "https://www.helpnetsecurity.com/2026/06/25/veritone-introduces-assess-to-streamline-evidence-analysis-and-compliance-reviews/",
+              "label": "Help Net Security"
+            }
+          ],
+          "url": "https://www.helpnetsecurity.com/2026/06/25/veritone-introduces-assess-to-streamline-evidence-analysis-and-compliance-reviews/",
+          "pubDate": "2026-06-25T12:33:55.000Z"
+        },
+        {
+          "title": "Ceci n’est pas un PC Copilot+ : Microsoft relance des Surface 8 Go",
+          "cve": null,
+          "severity": "culture",
+          "score": 45,
+          "corroboration": 1,
+          "region": "fr",
+          "body": "Signal de veille — Silicon.fr.\n\nMicrosoft n&rsquo;en a pas fait grande publicité, mais il vend à nouveau des Surface à 8 Go de RAM. Deux produits sont concernés : Surface Pro 12 pouces et Surface Laptop 13 pouces. Modèles les plus « abordables » dans leurs gammes respectives, ils utilisent un CPU d&rsquo;ancienne génération (Snapdragon X Plus, lancé en 2024 ; le X2 Plus est sorti depuis). Les configs à 8 Go ne sont pour le moment pas proposées sur le Microsoft Store français.",
+          "detail": "Signal de veille — Silicon.fr.\n\nMicrosoft n&rsquo;en a pas fait grande publicité, mais il vend à nouveau des Surface à 8 Go de RAM. Deux produits sont concernés : Surface Pro 12 pouces et Surface Laptop 13 pouces. Modèles les plus « abordables » dans leurs gammes respectives, ils utilisent un CPU d&rsquo;ancienne génération (Snapdragon X Plus, lancé en 2024 ; le X2 Plus est sorti depuis). Les configs à 8 Go ne sont pour le moment pas proposées sur le Microsoft Store français. On les retrouve en revanche aux USA. À partir de 850 $ HT pour Surface Pro et 950 $ HT pour Surface Laptop (SSD 256 Go). Il en coûte 200 $ de plus pour avoir 16 Go de RAM (et 100 € de plus pour un SSD 512 Go). En France, pas de versions 8 Go, donc, mais des remises sur les 16 Go. Habituellement fixé à 1250 €, le ticket d&rsquo;entrée pour Surface Pro 12 pouces est actuellement à 650 €. Celui de Surface Laptop 13 pouces passe de 1149 € à 829 €. Il n&rsquo;y a pas remise sur les versions 512 Go (Surface Pro : 1249 € ; Laptop : 1349 €). 8 Go, comme le MacBook Neo Qui dit 8 Go dit pas de label « PC Copilot+ ». Et pas d&rsquo;accès aux services d&rsquo;IA locale qui vont avec. Microsoft promet néanmoins d&rsquo;optimiser Windows 11 pour ces configurations qu&rsquo;il destine à « la productivité quotidienne », à « la navigation web » et au « divertissement »&#8230; Apple a un discours similaire &#8211; quoique plus axé sur l&rsquo;IA &#8211; à",
+          "action": null,
+          "sources": [
+            {
+              "url": "https://www.silicon.fr/workspace-1376/microsoft-surface-8-go-227989",
+              "label": "Silicon.fr"
+            }
+          ],
+          "url": "https://www.silicon.fr/workspace-1376/microsoft-surface-8-go-227989",
+          "pubDate": "2026-06-25T06:52:23.000Z"
+        }
+      ]
+    }
+  ]
+}
