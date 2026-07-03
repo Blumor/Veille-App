@@ -1,0 +1,954 @@
+{
+  "id": "daily-2026-07-03",
+  "type": "daily",
+  "date": "2026-07-03",
+  "title": "Rapport quotidien - vendredi 3 juillet 2026",
+  "summary": "Sur les dernières 24 heures, la veille recense 15 vulnérabilités critiques, 28 incidents ou compromissions et 31 signaux de fond. Acteurs et produits les plus exposés : openclaw (npm), Microsoft et mautic/core (composer).",
+  "generatedAt": "2026-07-03T04:01:27.487Z",
+  "sections": [
+    {
+      "id": "vulns",
+      "items": [
+        {
+          "title": "CVE-2026-49283 — SimpleSAMLphp HTTP-Artifact TLS validator confusion allows cross-IdP authentication bypass",
+          "cve": "CVE-2026-49283",
+          "severity": "high",
+          "score": 61,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Vulnérabilité élevée CVE-2026-49283 affectant simplesamlphp/saml2 (composer) (score CVSS 8.7).\n\nSimpleSAMLphp HTTP-Artifact TLS validator confusion allows cross-IdP authentication bypass\n\n--> Name Query To see all available qualifiers, see our documentation .\n\nIn the HTTPArtifact::receive() flow, the SOAP ArtifactResponse receives a TLS-based validator from SOAPClient::addSSLValidator() . The embedded SAML Response then receives a validator that delegates signature validation to that outer ArtifactResponse .",
+          "detail": "Vulnérabilité élevée CVE-2026-49283 affectant simplesamlphp/saml2 (composer) (score CVSS 8.7).\n\nSimpleSAMLphp HTTP-Artifact TLS validator confusion allows cross-IdP authentication bypass\n\n--> Name Query To see all available qualifiers, see our documentation .\n\nIn the HTTPArtifact::receive() flow, the SOAP ArtifactResponse receives a TLS-based validator from SOAPClient::addSSLValidator() . The embedded SAML Response then receives a validator that delegates signature validation to that outer ArtifactResponse . Later, the SP validates the embedded Response against metadata selected from the embedded response issuer, not necessarily the artifact issuer.\n\nThe critical issue is that SOAPClient::validateSSL() returns normally when the TLS public key does not match the key currently being validated. SAML2\\Message::validate() treats any validator call that does not throw an exception as successful. As a result, an ArtifactResponse obtained from one IdP can validate an unsigned embedded SAML Response that claims to be issued by a different IdP.\n\nIn a multi-IdP/federation deployment where a malicious or lower-trust IdP can issue an HTTP-Artifact response to an SP, this can allow the attacker to authenticate to the SP as arbitrary users from a higher-trust victim IdP.\n\nA malicious or lower-trust IdP in the same SP/federation trust set can authenticate to the SP as users from another IdP when HTTP-Artifact is used. The attacker can choose assertion attributes, NameID , and session data in the forged unsigned assertion.\n\nThis is an authentication bypass and identity-provider impersonation issue. In realistic federations, the security boundary between IdPs matters: a compromised or low-assurance IdP should not be able to mint identities for a high-assurance IdP.",
+          "action": "Vérifier l'exposition du parc et appliquer le correctif éditeur dès sa disponibilité.",
+          "sources": [
+            {
+              "url": "https://github.com/advisories/GHSA-6929-8p9f-26jx",
+              "label": "GitHub Advisory"
+            }
+          ],
+          "url": "https://github.com/advisories/GHSA-6929-8p9f-26jx",
+          "pubDate": "2026-07-02T20:25:56.000Z"
+        },
+        {
+          "title": "CISA: Microsoft SharePoint RCE flaw now actively exploited",
+          "cve": null,
+          "severity": "critical",
+          "score": 61,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Vulnérabilité critique affectant Microsoft.\n\nCISA warned on Wednesday that attackers have begun exploiting a high-severity Microsoft SharePoint remote code execution vulnerability patched in May.\n\nCISA: Windows BlueHammer flaw now exploited by ransomware gangs\n\nKali Linux 2026.2 released with 9 new tools, NetHunter updates\n\nNew BioShocking attack manipulates AI browser into data theft\n\nClaude Fable 5 isn’t permanently leaving subscriptions, Anthropic says\n\nClaude Fable relaunch disappoints users with…",
+          "detail": "Vulnérabilité critique affectant Microsoft.\n\nCISA warned on Wednesday that attackers have begun exploiting a high-severity Microsoft SharePoint remote code execution vulnerability patched in May.\n\nCISA: Windows BlueHammer flaw now exploited by ransomware gangs\n\nKali Linux 2026.2 released with 9 new tools, NetHunter updates\n\nNew BioShocking attack manipulates AI browser into data theft\n\nClaude Fable 5 isn’t permanently leaving subscriptions, Anthropic says\n\nClaude Fable relaunch disappoints users with nerfed performance\n\nHow to enable Kernel-mode Hardware-enforced Stack Protection in Windows 11",
+          "action": "Vérifier l'exposition du parc et appliquer le correctif éditeur dès sa disponibilité.",
+          "sources": [
+            {
+              "url": "https://www.bleepingcomputer.com/news/security/cisa-microsoft-sharepoint-rce-flaw-now-actively-exploited/",
+              "label": "BleepingComputer"
+            }
+          ],
+          "url": "https://www.bleepingcomputer.com/news/security/cisa-microsoft-sharepoint-rce-flaw-now-actively-exploited/",
+          "pubDate": "2026-07-02T10:52:43.000Z"
+        },
+        {
+          "title": "CVE-2026-49352 — 9router's Hardcoded Default fallback JWT Secret  Allows Authentication Bypass",
+          "cve": "CVE-2026-49352",
+          "severity": "critical",
+          "score": 59,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Vulnérabilité critique CVE-2026-49352 affectant 9router (npm) (score CVSS 9.8).\n\n9router's Hardcoded Default fallback JWT Secret  Allows Authentication Bypass\n\n--> Name Query To see all available qualifiers, see our documentation .\n\nv0.2.21 – v0.4.30 — src/app/api/auth/login/route.js and src/middleware.js :\n\nconst SECRET = new TextEncoder ( ) . encode ( process . env .",
+          "detail": "Vulnérabilité critique CVE-2026-49352 affectant 9router (npm) (score CVSS 9.8).\n\n9router's Hardcoded Default fallback JWT Secret  Allows Authentication Bypass\n\n--> Name Query To see all available qualifiers, see our documentation .\n\nv0.2.21 – v0.4.30 — src/app/api/auth/login/route.js and src/middleware.js :\n\nconst SECRET = new TextEncoder ( ) . encode ( process . env . JWT_SECRET || \"9router-default-secret-change-me\" ) ; v0.4.31 – v0.4.41 (current) — src/lib/auth/dashboardSession.js (centralized via OIDC refactor, commit c3d91b0 ):\n\nconst SECRET = new TextEncoder ( ) . encode ( process . env . JWT_SECRET || \"9router-default-secret-change-me\" ) ; The fallback string was introduced in commit 23cfb19 (2026-01-09) and has never been removed. The OIDC refactor in c3d91b0 only relocated it to a shared module . This vulnerability has existed since 9router first introduced authentication.\n\nRequire JWT_SECRET at startup and fail fast rather than falling back silently:\n\ndecolua published to decolua/9router May 31, 2026 Published to the GitHub Advisory Database Jul 2, 2026 Reviewed Jul 2, 2026 Last updated Jul 2, 2026 Severity Critical 9.8 CVSS overall score This score calculates overall vulnerability severity from 0 to 10 and is based on the Common Vulnerability Scoring System (CVSS). / 10 CVSS v3 base metrics Attack vector Network Attack complexity Low Privileges required None User interaction None Scope Unchanged Confidentiality High Integrity High Availability High Learn more about base metrics CVSS v3 base metrics Attack vector: More severe the more the remote (logically and physically) an attacker can be in order to exploit the vulnerability. Attack complexity: More severe for the least complex attacks. Privileges required: More severe if no privileges are required. User int",
+          "action": "Vérifier l'exposition du parc et appliquer le correctif éditeur dès sa disponibilité.",
+          "sources": [
+            {
+              "url": "https://github.com/advisories/GHSA-jphh-m39h-6gwx",
+              "label": "GitHub Advisory"
+            }
+          ],
+          "url": "https://github.com/advisories/GHSA-jphh-m39h-6gwx",
+          "pubDate": "2026-07-02T20:56:55.000Z"
+        },
+        {
+          "title": "CVE-2026-54617 — LaunchServer FileServerHandler has an unauthenticated path traversal issue",
+          "cve": "CVE-2026-54617",
+          "severity": "critical",
+          "score": 59,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Vulnérabilité critique CVE-2026-54617 affectant pro.gravit.launcher:launchserver-api (maven) (score CVSS 9.8).\n\nLaunchServer FileServerHandler has an unauthenticated path traversal issue\n\n--> Name Query To see all available qualifiers, see our documentation .\n\nThe readable files include the server's own secrets, which turns this from information disclosure into full compromise: the ECDSA private key that signs access JWTs ( .keys/ecdsa_id ), the refresh-token salt ( .keys/legacySalt ), and LaunchServer.json (database credentials).",
+          "detail": "Vulnérabilité critique CVE-2026-54617 affectant pro.gravit.launcher:launchserver-api (maven) (score CVSS 9.8).\n\nLaunchServer FileServerHandler has an unauthenticated path traversal issue\n\n--> Name Query To see all available qualifiers, see our documentation .\n\nThe readable files include the server's own secrets, which turns this from information disclosure into full compromise: the ECDSA private key that signs access JWTs ( .keys/ecdsa_id ), the refresh-token salt ( .keys/legacySalt ), and LaunchServer.json (database credentials). With the signing key an attacker mints a valid access token for any account, including admins. That is a full authentication bypass. Pre-auth, default config, port 9274.\n\nAffected: GravitLauncher LaunchServer ≤ 5.7.11 (the LaunchServer application; the published pro.gravit.launcher:*-api Maven artifacts do not contain the vulnerable code).\n\npath = Paths . get ( IOHelper . getPathFromUrlFragment ( uri )). normalize (). toString (). substring ( 1 ); // line 194 File file = base . resolve ( path ). toFile (); // line 200 - no second normalize() substring(1) blindly strips a leading slash, assuming the request-target always starts with / . Netty's HttpServerCodec accepts a request-target without a leading slash verbatim ( decoderResult().isSuccess() == true ). For such a target, normalize() cannot collapse the leading .. , substring(1) turns ../ into ./ (leaving the remaining .. ), and base.resolve(path) , which is not re-normalized, resolves outside updatesDir .\n\nfile.isHidden() (line 201) is checked only on the final path component, so targets that don't start with a dot ( ecdsa_id , rsa_id , legacySalt , LaunchServer.json ) are served even with showHiddenFiles=false .\n\nThe file server is enabled by default ( netty.fileServerEnabled=true ) and b",
+          "action": "Vérifier l'exposition du parc et appliquer le correctif éditeur dès sa disponibilité.",
+          "sources": [
+            {
+              "url": "https://github.com/advisories/GHSA-5g75-477j-2c2f",
+              "label": "GitHub Advisory"
+            }
+          ],
+          "url": "https://github.com/advisories/GHSA-5g75-477j-2c2f",
+          "pubDate": "2026-07-02T20:49:18.000Z"
+        },
+        {
+          "title": "CVE-2026-9559 — Mautic vulnerable to Path Traversal via Campaign Import",
+          "cve": "CVE-2026-9559",
+          "severity": "critical",
+          "score": 59,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Vulnérabilité critique CVE-2026-9559 affectant mautic/core (composer) (score CVSS 9.9).\n\nMautic vulnerable to Path Traversal via Campaign Import\n\n--> Name Query To see all available qualifiers, see our documentation .\n\nAn authenticated user with campaign import privileges ( campaign:imports:create ) can write arbitrary PHP files to sensitive system directories.",
+          "detail": "Vulnérabilité critique CVE-2026-9559 affectant mautic/core (composer) (score CVSS 9.9).\n\nMautic vulnerable to Path Traversal via Campaign Import\n\n--> Name Query To see all available qualifiers, see our documentation .\n\nAn authenticated user with campaign import privileges ( campaign:imports:create ) can write arbitrary PHP files to sensitive system directories. An attacker can exploit this to overwrite critical internal configuration or cache components, resulting in Remote Code Execution (RCE) under the context of the web server user.\n\nThis security issue has been addressed in the following release:\n\nNote: Mautic 6.x, 5.x, and 4.x branches are not affected by this vulnerability. For general security support regarding legacy Mautic 4 releases, please refer to the ELTS page.\n\nThere are no official workarounds. To mitigate this risk without upgrading, revoke campaign import permissions ( campaign:imports:create ) from non-administrative users.\n\npatrykgruszka published to mautic/mautic May 29, 2026 Published by the National Vulnerability Database May 29, 2026 Published to the GitHub Advisory Database Jul 2, 2026 Reviewed Jul 2, 2026 Severity Critical 9.9 CVSS overall score This score calculates overall vulnerability severity from 0 to 10 and is based on the Common Vulnerability Scoring System (CVSS). / 10 CVSS v3 base metrics Attack vector Network Attack complexity Low Privileges required Low User interaction None Scope Changed Confidentiality High Integrity High Availability High Learn more about base metrics CVSS v3 base metrics Attack vector: More severe the more the remote (logically and physically) an attacker can be in order to exploit the vulnerability. Attack complexity: More severe for the least complex attacks. Privileges required: More severe if no privileges ar",
+          "action": "Vérifier l'exposition du parc et appliquer le correctif éditeur dès sa disponibilité.",
+          "sources": [
+            {
+              "url": "https://github.com/advisories/GHSA-6r9h-4h75-7q4x",
+              "label": "GitHub Advisory"
+            }
+          ],
+          "url": "https://github.com/advisories/GHSA-6r9h-4h75-7q4x",
+          "pubDate": "2026-07-02T19:48:50.000Z"
+        },
+        {
+          "title": "CVE-2026-9558 — Mautic has Server-Side Template Injection (SSTI) in Theme Templates",
+          "cve": "CVE-2026-9558",
+          "severity": "critical",
+          "score": 59,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Vulnérabilité critique CVE-2026-9558 affectant mautic/core (composer) (score CVSS 9.9).\n\nMautic has Server-Side Template Injection (SSTI) in Theme Templates\n\n--> Name Query To see all available qualifiers, see our documentation .\n\nAn authenticated user with theme upload and creation privileges can bypass boundaries to execute arbitrary system commands on the hosting server (Remote Code Execution) or access restricted system files and configuration settings.\n\nThis security issue has been addressed in the following releases:\n\nMautic strongly rec…",
+          "detail": "Vulnérabilité critique CVE-2026-9558 affectant mautic/core (composer) (score CVSS 9.9).\n\nMautic has Server-Side Template Injection (SSTI) in Theme Templates\n\n--> Name Query To see all available qualifiers, see our documentation .\n\nAn authenticated user with theme upload and creation privileges can bypass boundaries to execute arbitrary system commands on the hosting server (Remote Code Execution) or access restricted system files and configuration settings.\n\nThis security issue has been addressed in the following releases:\n\nMautic strongly recommend upgrading to a patched version immediately.\n\nThere are no official workarounds. To mitigate this vulnerability without upgrading, restrict theme upload and creation permissions ( core:themes:create ) to only highly trusted administrators.\n\npatrykgruszka published to mautic/mautic May 29, 2026 Published by the National Vulnerability Database May 29, 2026 Published to the GitHub Advisory Database Jul 2, 2026 Reviewed Jul 2, 2026 Severity Critical 9.9 CVSS overall score This score calculates overall vulnerability severity from 0 to 10 and is based on the Common Vulnerability Scoring System (CVSS). / 10 CVSS v3 base metrics Attack vector Network Attack complexity Low Privileges required Low User interaction None Scope Changed Confidentiality High Integrity High Availability High Learn more about base metrics CVSS v3 base metrics Attack vector: More severe the more the remote (logically and physically) an attacker can be in order to exploit the vulnerability. Attack complexity: More severe for the least complex attacks. Privileges required: More severe if no privileges are required. User interaction: More severe when no user interaction is required. Scope: More severe when a scope change occurs, e.g. one vulnerable component impa",
+          "action": "Vérifier l'exposition du parc et appliquer le correctif éditeur dès sa disponibilité.",
+          "sources": [
+            {
+              "url": "https://github.com/advisories/GHSA-9fx4-7cmj-47vg",
+              "label": "GitHub Advisory"
+            }
+          ],
+          "url": "https://github.com/advisories/GHSA-9fx4-7cmj-47vg",
+          "pubDate": "2026-07-02T19:48:08.000Z"
+        },
+        {
+          "title": "Ransomware Groups Turn to Citrix Bleed 2, BYOVD, and Supply Chain Credentials",
+          "cve": "CVE-2025-5777",
+          "severity": "high",
+          "score": 59,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Vulnérabilité élevée CVE-2025-5777 affectant Citrix.\n\nThreat actors associated with the Anubis ransomware operation have been observed exploiting the Citrix Bleed 2 (CVE-2025-5777) vulnerability to obtain initial access. \"Although tactics differ between affiliates, common patterns emerged in tradecraft through use of legitimate Remote Management and Monitoring (RMM) tooling, credential access, and hands-on-keyboard procedures used for lateral",
+          "detail": "Vulnérabilité élevée CVE-2025-5777 affectant Citrix.\n\nThreat actors associated with the Anubis ransomware operation have been observed exploiting the Citrix Bleed 2 (CVE-2025-5777) vulnerability to obtain initial access. \"Although tactics differ between affiliates, common patterns emerged in tradecraft through use of legitimate Remote Management and Monitoring (RMM) tooling, credential access, and hands-on-keyboard procedures used for lateral",
+          "action": "Vérifier l'exposition du parc et appliquer le correctif éditeur dès sa disponibilité.",
+          "sources": [
+            {
+              "url": "https://thehackernews.com/2026/07/ransomware-groups-turn-to-citrix-bleed.html",
+              "label": "The Hacker News"
+            }
+          ],
+          "url": "https://thehackernews.com/2026/07/ransomware-groups-turn-to-citrix-bleed.html",
+          "pubDate": "2026-07-02T18:30:33.000Z"
+        },
+        {
+          "title": "CVE-2026-52830 — fast-mcp-telegram: Bearer token path traversal bypasses reserved Telegram session protection",
+          "cve": "CVE-2026-52830",
+          "severity": "critical",
+          "score": 58,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Vulnérabilité critique CVE-2026-52830 affectant fast-mcp-telegram (pip) (score CVSS 9.4).\n\nfast-mcp-telegram: Bearer token path traversal bypasses reserved Telegram session protection\n\n--> Name Query To see all available qualifiers, see our documentation .\n\nThis bypasses the reserved session name control that is intended to prevent HTTP multi-user sessions from colliding with the default stdio or legacy account.",
+          "detail": "Vulnérabilité critique CVE-2026-52830 affectant fast-mcp-telegram (pip) (score CVSS 9.4).\n\nfast-mcp-telegram: Bearer token path traversal bypasses reserved Telegram session protection\n\n--> Name Query To see all available qualifiers, see our documentation .\n\nThis bypasses the reserved session name control that is intended to prevent HTTP multi-user sessions from colliding with the default stdio or legacy account. With account-prefixed MCP tools enabled, the attacker still sees and calls the prefixed tools for the default account, so the prefix middleware does not stop the session selection bypass.\n\nAn unauthenticated network client can access the Telegram account represented by the default telegram.session file without knowing a generated bearer token, if that legacy or default session file is present on a server running HTTP auth. The attacker can then call Telegram MCP tools as that account, including message reading, message sending, MTProto API calls, and attachment-producing tool surfaces available to the session.\n\nSessionFileTokenVerifier.verify_token() strips whitespace and rejects exact reserved names:\n\nif token . lower () in RESERVED_SESSION_NAMES : return None It then appends .session to the raw token and checks the resulting path:\n\n~/.config/fast-mcp-telegram/../fast-mcp-telegram/telegram.session = ~/.config/fast-mcp-telegram/telegram.session The exact token telegram is denied, but the traversal alias reaches the same file and is accepted. This is especially important because telegram is the documented default session_name , and the security documentation says reserved names are blocked to prevent conflicts with stdio and HTTP no-auth sessions.",
+          "action": "Vérifier l'exposition du parc et appliquer le correctif éditeur dès sa disponibilité.",
+          "sources": [
+            {
+              "url": "https://github.com/advisories/GHSA-rxw2-pc8j-vxwm",
+              "label": "GitHub Advisory"
+            }
+          ],
+          "url": "https://github.com/advisories/GHSA-rxw2-pc8j-vxwm",
+          "pubDate": "2026-07-02T20:38:50.000Z"
+        },
+        {
+          "title": "CVE-2026-49289 — SimpleSAMLphp has Possible DoS via XPath Transform",
+          "cve": "CVE-2026-49289",
+          "severity": "high",
+          "score": 58,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Vulnérabilité élevée CVE-2026-49289 affectant simplesamlphp/saml2 (composer) (score CVSS 7.5).\n\nSimpleSAMLphp has Possible DoS via XPath Transform\n\n--> Name Query To see all available qualifiers, see our documentation .\n\nAn attacker is able to send specially crafted messages to any entity relying on SimpleSAMLphp (or directly on this SAML2-library) to be able to perform a Denial-of-Service attack.\n\ntvdijen published to simplesamlphp/saml2 May 29, 2026 Published to the GitHub Advisory Database Jul 2, 2026 Reviewed Jul 2, 2026 Severity High 7.5 CVSS ov…",
+          "detail": "Vulnérabilité élevée CVE-2026-49289 affectant simplesamlphp/saml2 (composer) (score CVSS 7.5).\n\nSimpleSAMLphp has Possible DoS via XPath Transform\n\n--> Name Query To see all available qualifiers, see our documentation .\n\nAn attacker is able to send specially crafted messages to any entity relying on SimpleSAMLphp (or directly on this SAML2-library) to be able to perform a Denial-of-Service attack.\n\ntvdijen published to simplesamlphp/saml2 May 29, 2026 Published to the GitHub Advisory Database Jul 2, 2026 Reviewed Jul 2, 2026 Severity High 7.5 CVSS overall score This score calculates overall vulnerability severity from 0 to 10 and is based on the Common Vulnerability Scoring System (CVSS). / 10 CVSS v3 base metrics Attack vector Network Attack complexity Low Privileges required None User interaction None Scope Unchanged Confidentiality None Integrity None Availability High Learn more about base metrics CVSS v3 base metrics Attack vector: More severe the more the remote (logically and physically) an attacker can be in order to exploit the vulnerability. Attack complexity: More severe for the least complex attacks. Privileges required: More severe if no privileges are required. User interaction: More severe when no user interaction is required. Scope: More severe when a scope change occurs, e.g. one vulnerable component impacts resources in components beyond its security scope. Confidentiality: More severe when loss of data confidentiality is highest, measuring the level of data access available to an unauthorized user. Integrity: More severe when loss of data integrity is the highest, measuring the consequence of data modification possible by an unauthorized user. Availability: More severe when the loss of impacted component availability is highest. CVSS:3.1/AV:N/AC:L/PR:",
+          "action": "Vérifier l'exposition du parc et appliquer le correctif éditeur dès sa disponibilité.",
+          "sources": [
+            {
+              "url": "https://github.com/advisories/GHSA-5cjr-mxj5-wmrx",
+              "label": "GitHub Advisory"
+            }
+          ],
+          "url": "https://github.com/advisories/GHSA-5cjr-mxj5-wmrx",
+          "pubDate": "2026-07-02T20:27:23.000Z"
+        },
+        {
+          "title": "CVE-2026-49284 — SimpleSAMLphp SP accepts a response from an unexpected IdP when unsigned `Response/InResponseTo` is combined with a signed assertion lacking `SubjectConfirmationData/InResponseTo`",
+          "cve": "CVE-2026-49284",
+          "severity": "high",
+          "score": 57,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Vulnérabilité élevée CVE-2026-49284 affectant simplesamlphp/simplesamlphp (composer) (score CVSS 7.1).\n\nSimpleSAMLphp SP accepts a response from an unexpected IdP when unsigned `Response/InResponseTo` is combined with a signed assertion lacking `SubjectConfirmationData/InResponseTo`\n\n--> Name Query To see all available qualifiers, see our documentation .\n\nThat behavior becomes security-relevant when combined with the response-processing rule that accepts an unsigned samlp:Response/@InResponseTo outside the signed assertion whenever the signed assertion's Sub…",
+          "detail": "Vulnérabilité élevée CVE-2026-49284 affectant simplesamlphp/simplesamlphp (composer) (score CVSS 7.1).\n\nSimpleSAMLphp SP accepts a response from an unexpected IdP when unsigned `Response/InResponseTo` is combined with a signed assertion lacking `SubjectConfirmationData/InResponseTo`\n\n--> Name Query To see all available qualifiers, see our documentation .\n\nThat behavior becomes security-relevant when combined with the response-processing rule that accepts an unsigned samlp:Response/@InResponseTo outside the signed assertion whenever the signed assertion's SubjectConfirmationData does not carry its own InResponseTo . A response issued by one trusted IdP can therefore be bound to SP state created for another IdP.\n\nIn a multi-IdP deployment, a lower-trust IdP can satisfy SP state created for a different expected IdP. This can bypass an SP flow that intentionally routes the user to a specific IdP, including deployments that set enable_unsolicited to false to prevent IdP-initiated logins.\n\nThe impact is highest when the SP trusts multiple IdPs with different assurance levels, tenant boundaries, or attribute namespaces, and application authorization depends on the selected/expected IdP. In those deployments this is an authentication/authorization bypass candidate. Impact strongly depends on whether an attacker can obtain a signed IdP-initiated assertion from a lower-trust trusted IdP and whether the downstream application maps identifiers globally.\n\ntvdijen published to simplesamlphp/simplesamlphp May 29, 2026 Published to the GitHub Advisory Database Jul 2, 2026 Reviewed Jul 2, 2026 Severity High 7.1 CVSS overall score This score calculates overall vulnerability severity from 0 to 10 and is based on the Common Vulnerability Scoring System (CVSS). / 10 CVSS v3 base metrics Att",
+          "action": "Vérifier l'exposition du parc et appliquer le correctif éditeur dès sa disponibilité.",
+          "sources": [
+            {
+              "url": "https://github.com/advisories/GHSA-q8r6-xj3f-wrrm",
+              "label": "GitHub Advisory"
+            }
+          ],
+          "url": "https://github.com/advisories/GHSA-q8r6-xj3f-wrrm",
+          "pubDate": "2026-07-02T20:47:21.000Z"
+        },
+        {
+          "title": "U.S. CISA adds a Microsoft SharePoint Server flaw to its Known Exploited Vulnerabilities catalog",
+          "cve": "CVE-2026-45659",
+          "severity": "critical",
+          "score": 50,
+          "corroboration": 3,
+          "region": "intl",
+          "body": "Vulnérabilité critique CVE-2026-45659 affectant Microsoft.\n\nU.S. Cybersecurity and Infrastructure Security Agency (CISA) adds a Microsoft SharePoint Server flaw to its Known Exploited Vulnerabilities catalog. The U.S. Cybersecurity and Infrastructure Security Agency (CISA) added a Microsoft SharePoint Server flaw, tracked as CVE-2026-45659 (CVSS score v3.1 of 8.8), to its Known Exploited Vulnerabilities (KEV) catalog .",
+          "detail": "Vulnérabilité critique CVE-2026-45659 affectant Microsoft.\n\nU.S. Cybersecurity and Infrastructure Security Agency (CISA) adds a Microsoft SharePoint Server flaw to its Known Exploited Vulnerabilities catalog. The U.S. Cybersecurity and Infrastructure Security Agency (CISA) added a Microsoft SharePoint Server flaw, tracked as CVE-2026-45659 (CVSS score v3.1 of 8.8), to its Known Exploited Vulnerabilities (KEV) catalog . At the end of May, Microsoft released security updates to patch the high-severity SharePoint vulnerability CVE-2026-45659 that could allow remote code execution. The flaw does not require complex conditions for exploitation, making it a serious risk for unpatched systems. Organizations using Microsoft SharePoint should apply the updates as soon as possible. The root cause is deserialization of untrusted data. “Deserialization of untrusted data in Microsoft Office SharePoint allows an authorized attacker to execute code over a network.”&nbsp; reads &nbsp;the advisory. “In a network-based attack, an authenticated attacker, who has a minimum of Site Member permissions (PR:L), could execute code remotely on the SharePoint Server.” Deserialization of untrusted data is a security vulnerability that happens when an application accepts and processes serialized data from an untrusted source without proper validation. An attacker can craft a payload that runs code on the server. In this case, all it takes is network access and a lo",
+          "action": "Vérifier l'exposition du parc et appliquer le correctif éditeur dès sa disponibilité.",
+          "sources": [
+            {
+              "url": "https://www.securityweek.com/cisa-warns-of-actively-exploited-microsoft-sharepoint-vulnerability/",
+              "label": "SecurityWeek"
+            },
+            {
+              "url": "https://securityaffairs.com/194654/security/u-s-cisa-adds-a-microsoft-sharepoint-server-flaw-to-its-known-exploited-vulnerabilities-catalog.html",
+              "label": "Security Affairs"
+            },
+            {
+              "url": "https://thehackernews.com/2026/07/sharepoint-rce-cve-2026-45659-added-to.html",
+              "label": "The Hacker News"
+            }
+          ],
+          "url": "https://www.securityweek.com/cisa-warns-of-actively-exploited-microsoft-sharepoint-vulnerability/",
+          "pubDate": "2026-07-02T15:56:54.000Z"
+        },
+        {
+          "title": "430,000 FortiGate Devices Exposed in FortiBleed Ransomware Link",
+          "cve": null,
+          "severity": "critical",
+          "score": 49,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Vulnérabilité critique affectant FortiGate.\n\nFortiBleed exposed 430,000 FortiGate firewalls, linked to INC Ransom and Lynx, enabling domain compromise and at least 12 ransomware attacks. SOCRadar&#8217;s Threat Research Unit has connected FortiBleed , a large-scale campaign that harvested credentials from over 430,000 FortiGate firewalls worldwide, directly to two active ransomware operations: INC Ransom and Lynx . The link isn&#8217;t circumstantial.",
+          "detail": "Vulnérabilité critique affectant FortiGate.\n\nFortiBleed exposed 430,000 FortiGate firewalls, linked to INC Ransom and Lynx, enabling domain compromise and at least 12 ransomware attacks. SOCRadar&#8217;s Threat Research Unit has connected FortiBleed , a large-scale campaign that harvested credentials from over 430,000 FortiGate firewalls worldwide, directly to two active ransomware operations: INC Ransom and Lynx . The link isn&#8217;t circumstantial. An operator with access to FortiBleed&#8217;s own infrastructure was found actively logged into the negotiation panels of both ransomware groups, handling ransom demands in real time. FortiBleed has been documented since SOCRadar&#8217;s first report. The operation uses a custom tool written in Go called FortigateSniffer, which passively intercepts authentication traffic by abusing FortiOS&#8217;s own built-in packet diagnostic command across two dozen protocols. The attacker never sends malicious payloads to the firewall. They just listen to the traffic the device generates itself. It&#8217;s a quiet way to collect credentials at scale, and it&#8217;s been running across more than 150 countries. After the initial disclosure, SOCRadar continued mapping the campaign using Shodan, Censys, Validin, and its own scanning. That work turned up roughly 200 additional operational servers beyond the original dataset, a mix of credential sniffers and network scanners that hadn&#8217;t",
+          "action": "Vérifier l'exposition du parc et appliquer le correctif éditeur dès sa disponibilité.",
+          "sources": [
+            {
+              "url": "https://securityaffairs.com/194645/security/430000-fortigate-devices-exposed-in-fortibleed-ransomware-link.html",
+              "label": "Security Affairs"
+            }
+          ],
+          "url": "https://securityaffairs.com/194645/security/430000-fortigate-devices-exposed-in-fortibleed-ransomware-link.html",
+          "pubDate": "2026-07-02T10:37:36.000Z"
+        },
+        {
+          "title": "Adobe fixed multiple maximum-severity flaws in ColdFusion and Campaign Classic",
+          "cve": "CVE-2026-48276",
+          "severity": "critical",
+          "score": 49,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Vulnérabilité critique CVE-2026-48276 affectant Adobe.\n\nAdobe fixed multiple critical flaws, including max severity bugs in ColdFusion and Campaign Classic that could lead to remote code execution Adobe has released security updates for ColdFusion and Campaign Classic , fixing multiple critical vulnerabilities, including seven maximum-severity issues (CVSS score of 10.0).",
+          "detail": "Vulnérabilité critique CVE-2026-48276 affectant Adobe.\n\nAdobe fixed multiple critical flaws, including max severity bugs in ColdFusion and Campaign Classic that could lead to remote code execution Adobe has released security updates for ColdFusion and Campaign Classic , fixing multiple critical vulnerabilities, including seven maximum-severity issues (CVSS score of 10.0). If exploited, the flaws could allow attackers to execute arbitrary code, escalate privileges, read sensitive files, or bypass security protections. Adobe strongly recommends that customers apply the updates as soon as possible to reduce the risk of compromise. The vulnerabilities include: CVE-2026-48276, CVE-2026-48283 (CVSS score of 10.0) – Allow attackers to upload malicious files and execute arbitrary code. CVE-2026-48277, CVE-2026-48281, CVE-2026-48316 (CVSS score of 10.0) – Input validation flaws that could let attackers execute arbitrary code. CVE-2026-48282 (CVSS score of 10.0) – A path traversal flaw that could result in arbitrary code execution. CVE-2026-48313 (CVSS score of 9.3) – A path traversal flaw that could let attackers read sensitive files. CVE-2026-48315 (CVSS score of 9.3) – An input validation flaw that could allow privilege escalation. Adobe addressed these vulnerabilities in ColdFusion 2023 Update 21 and ColdFusion 2025 Update 10. Security researchers Anirudh Anand, Matan Sandori, and 2Bsecure reported several of the vulnerabilities. The firm",
+          "action": "Vérifier l'exposition du parc et appliquer le correctif éditeur dès sa disponibilité.",
+          "sources": [
+            {
+              "url": "https://securityaffairs.com/194622/security/adobe-fixed-multiple-maximum-severity-flaws-in-coldfusion-and-campaign-classic.html",
+              "label": "Security Affairs"
+            }
+          ],
+          "url": "https://securityaffairs.com/194622/security/adobe-fixed-multiple-maximum-severity-flaws-in-coldfusion-and-campaign-classic.html",
+          "pubDate": "2026-07-02T09:21:27.000Z"
+        },
+        {
+          "title": "CVE-2026-49255 — electerm has Command Injection in File System Operations (rmrf, mv, cp)",
+          "cve": "CVE-2026-49255",
+          "severity": "high",
+          "score": 46,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Vulnérabilité élevée CVE-2026-49255 affectant electerm (npm) (score CVSS 8.8).\n\nelecterm has Command Injection in File System Operations (rmrf, mv, cp)\n\n--> Name Query To see all available qualifiers, see our documentation .\n\nIf upgrading is not immediately possible, users can mitigate this vulnerability by:\n\nzxdong262 published to electerm/electerm May 29, 2026 Published to the GitHub Advisory Database Jul 2, 2026 Reviewed Jul 2, 2026 Last updated Jul 2, 2026 Severity High 8.8 CVSS overall score This score calculates overall vulnerab…",
+          "detail": "Vulnérabilité élevée CVE-2026-49255 affectant electerm (npm) (score CVSS 8.8).\n\nelecterm has Command Injection in File System Operations (rmrf, mv, cp)\n\n--> Name Query To see all available qualifiers, see our documentation .\n\nIf upgrading is not immediately possible, users can mitigate this vulnerability by:\n\nzxdong262 published to electerm/electerm May 29, 2026 Published to the GitHub Advisory Database Jul 2, 2026 Reviewed Jul 2, 2026 Last updated Jul 2, 2026 Severity High 8.8 CVSS overall score This score calculates overall vulnerability severity from 0 to 10 and is based on the Common Vulnerability Scoring System (CVSS). / 10 CVSS v3 base metrics Attack vector Network Attack complexity Low Privileges required None User interaction Required Scope Unchanged Confidentiality High Integrity High Availability High Learn more about base metrics CVSS v3 base metrics Attack vector: More severe the more the remote (logically and physically) an attacker can be in order to exploit the vulnerability. Attack complexity: More severe for the least complex attacks. Privileges required: More severe if no privileges are required. User interaction: More severe when no user interaction is required. Scope: More severe when a scope change occurs, e.g. one vulnerable component impacts resources in components beyond its security scope. Confidentiality: More severe when loss of data confidentiality is highest, measuring the level of data access available to an unauthorized user. Integrity: More severe when loss of data integrity is the highest, measuring the consequence of data modification possible by an unauthorized user. Availability: More severe when the loss of impacted component availability is highest. CVSS:3.1/AV:N/AC:L/PR:N/UI:R/S:U/C:H/I:H/A:H EPSS score 0.072% Exploit Prediction Sc",
+          "action": "Vérifier l'exposition du parc et appliquer le correctif éditeur dès sa disponibilité.",
+          "sources": [
+            {
+              "url": "https://github.com/advisories/GHSA-v5ff-xmfp-p245",
+              "label": "GitHub Advisory"
+            }
+          ],
+          "url": "https://github.com/advisories/GHSA-v5ff-xmfp-p245",
+          "pubDate": "2026-07-02T19:22:31.000Z"
+        },
+        {
+          "title": "CVE-2026-52854 — mediawiki/maps has stored XSS through the overlays parameter in the display_map parser function",
+          "cve": "CVE-2026-52854",
+          "severity": "high",
+          "score": 46,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Vulnérabilité élevée CVE-2026-52854 affectant mediawiki/maps (composer) (score CVSS 8.6).\n\nmediawiki/maps has stored XSS through the overlays parameter in the display_map parser function\n\n--> Name Query To see all available qualifiers, see our documentation .\n\nThe maps extension doesn't escape overlay names before passing them to leaflet.",
+          "detail": "Vulnérabilité élevée CVE-2026-52854 affectant mediawiki/maps (composer) (score CVSS 8.6).\n\nmediawiki/maps has stored XSS through the overlays parameter in the display_map parser function\n\n--> Name Query To see all available qualifiers, see our documentation .\n\nThe maps extension doesn't escape overlay names before passing them to leaflet. Leaflet then inserts them as HTML: https://github.com/ProfessionalWiki/Maps/blob/ca5139fabd75f3c34f47ea3fd161306506b053bc/resources/lib/leaflet/leaflet.js#L5243\n\nPreview the following wikitext, using the default configuration options of the extension:\n\nJeroenDeDauw published to ProfessionalWiki/Maps May 28, 2026 Published to the GitHub Advisory Database Jul 2, 2026 Reviewed Jul 2, 2026 Last updated Jul 2, 2026 Severity High 8.6 CVSS overall score This score calculates overall vulnerability severity from 0 to 10 and is based on the Common Vulnerability Scoring System (CVSS). / 10 CVSS v3 base metrics Attack vector Network Attack complexity Low Privileges required None User interaction None Scope Unchanged Confidentiality High Integrity Low Availability Low Learn more about base metrics CVSS v3 base metrics Attack vector: More severe the more the remote (logically and physically) an attacker can be in order to exploit the vulnerability. Attack complexity: More severe for the least complex attacks. Privileges required: More severe if no privileges are required. User interaction: More severe when no user interaction is required. Scope: More severe when a scope change occurs, e.g. one vulnerable component impacts resources in components beyond its security scope. Confidentiality: More severe when loss of data confidentiality is highest, measuring the level of data access available to an unauthorized user. Integrity: More severe when loss of",
+          "action": "Vérifier l'exposition du parc et appliquer le correctif éditeur dès sa disponibilité.",
+          "sources": [
+            {
+              "url": "https://github.com/advisories/GHSA-4h7g-5542-v3fc",
+              "label": "GitHub Advisory"
+            }
+          ],
+          "url": "https://github.com/advisories/GHSA-4h7g-5542-v3fc",
+          "pubDate": "2026-07-02T17:51:24.000Z"
+        }
+      ]
+    },
+    {
+      "id": "attacks",
+      "items": [
+        {
+          "title": "holidaypalace.com — rançongiciel apt73 (MO)",
+          "cve": null,
+          "severity": "news",
+          "score": 77,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Incident de sécurité rapporté par ransomware.live.\n\nRansomware.live discovered on 2026-07-02 that holidaypalace.com has been claimed by Apt73 ransomware group\n\nSponsored by Hudson Rock – Use Hudson Rock's free cybercrime intelligence tools to learn how Infostealer infections are leading to ransomware attacks\n\nThe following DNS records were found for the victim's domain.\n\nLegal Disclaimer: Ransomware.live does not engage in the acquisition, exfiltration, downloading, possession, hosting, access, consultation…",
+          "detail": "Incident de sécurité rapporté par ransomware.live.\n\nRansomware.live discovered on 2026-07-02 that holidaypalace.com has been claimed by Apt73 ransomware group\n\nSponsored by Hudson Rock – Use Hudson Rock's free cybercrime intelligence tools to learn how Infostealer infections are leading to ransomware attacks\n\nThe following DNS records were found for the victim's domain.\n\nLegal Disclaimer: Ransomware.live does not engage in the acquisition, exfiltration, downloading, possession, hosting, access, consultation, redistribution, or disclosure of unlawfully obtained data. This platform indexes only publicly visible information posted by ransomware operators and open web sources without accessing or obtaining the underlying stolen content . The service is provided to support public awareness, legitimate research, and cyber-resilience. No stolen personal or confidential data is collected or distributed via this site.\n\nSession: 057726c909af65969646b040bbbfa5c4df67f5166a33cbac6cd9e1302b0b3ca148",
+          "action": "Surveiller les indicateurs de compromission associés et contrôler les actifs exposés.",
+          "sources": [
+            {
+              "url": "https://www.ransomware.live/id/aG9saWRheXBhbGFjZS5jb21AYXB0NzM=",
+              "label": "ransomware.live"
+            }
+          ],
+          "url": "https://www.ransomware.live/id/aG9saWRheXBhbGFjZS5jb21AYXB0NzM=",
+          "pubDate": "2026-07-02T16:20:49.602Z"
+        },
+        {
+          "title": "FBI Seizes NetNut Proxy Platform, Popa Botnet",
+          "cve": null,
+          "severity": "high",
+          "score": 75,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Incident de sécurité rapporté par Krebs on Security.\n\nThe Federal Bureau of Investigation (FBI) said today it worked with industry partners to seize hundreds of domains associated with NetNut , a sprawling residential proxy service operated by the publicly-traded Israeli company Alarum Technologies [NASDAQ: ALAR].",
+          "detail": "Incident de sécurité rapporté par Krebs on Security.\n\nThe Federal Bureau of Investigation (FBI) said today it worked with industry partners to seize hundreds of domains associated with NetNut , a sprawling residential proxy service operated by the publicly-traded Israeli company Alarum Technologies [NASDAQ: ALAR]. The action comes roughly two weeks after KrebsOnSecurity published findings from multiple security firms connecting NetNut to the Popa botnet, a collection of at least two million devices that have been compromised by malicious software with little or no consent from victims. The NetNut homepage today was replaced by this seizure banner from the FBI. On June 19, three different security firms issued similar findings : That NetNut is a residential proxy network which populates a botnet called Popa, and distributes software for devices commonly found in homes, such as smart TVs and streaming boxes. NetNut&#8217;s software turns those systems into always-on residential proxy nodes that are rented to others, who predominantly use them to relay abusive and intrusive Internet traffic, such as mass content scraping, advertising fraud, and account takeover activity. Earlier today, NetNut&#8217;s homepage was replaced with a seizure notice from the FBI and the Internal Revenue Service Criminal Investigation division. The seizure notice thanked Google , Lumen , Shadowserver and other industry partners for their help in dismantling",
+          "action": "Surveiller les indicateurs de compromission associés et contrôler les actifs exposés.",
+          "sources": [
+            {
+              "url": "https://krebsonsecurity.com/2026/07/fbi-seizes-netnut-proxy-platform-popa-botnet/",
+              "label": "Krebs on Security"
+            }
+          ],
+          "url": "https://krebsonsecurity.com/2026/07/fbi-seizes-netnut-proxy-platform-popa-botnet/",
+          "pubDate": "2026-07-02T19:27:33.000Z"
+        },
+        {
+          "title": "Ferrum AG — rançongiciel anubis (Suisse)",
+          "cve": null,
+          "severity": "news",
+          "score": 70,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Incident de sécurité rapporté par ransomware.live.\n\nRansomware.live discovered on 2026-07-03 that Ferrum AG has been claimed by Anubis ransomware group\n\nSponsored by Hudson Rock – Use Hudson Rock's free cybercrime intelligence tools to learn how Infostealer infections are leading to ransomware attacks\n\nLegal Disclaimer: Ransomware.live does not engage in the acquisition, exfiltration, downloading, possession, hosting, access, consultation, redistribution, or disclosure of unlawfully obtained data.",
+          "detail": "Incident de sécurité rapporté par ransomware.live.\n\nRansomware.live discovered on 2026-07-03 that Ferrum AG has been claimed by Anubis ransomware group\n\nSponsored by Hudson Rock – Use Hudson Rock's free cybercrime intelligence tools to learn how Infostealer infections are leading to ransomware attacks\n\nLegal Disclaimer: Ransomware.live does not engage in the acquisition, exfiltration, downloading, possession, hosting, access, consultation, redistribution, or disclosure of unlawfully obtained data. This platform indexes only publicly visible information posted by ransomware operators and open web sources without accessing or obtaining the underlying stolen content . The service is provided to support public awareness, legitimate research, and cyber-resilience. No stolen personal or confidential data is collected or distributed via this site.\n\nSession: 057726c909af65969646b040bbbfa5c4df67f5166a33cbac6cd9e1302b0b3ca148",
+          "action": "Surveiller les indicateurs de compromission associés et contrôler les actifs exposés.",
+          "sources": [
+            {
+              "url": "https://www.ransomware.live/id/RmVycnVtIEFHQGFudWJpcw==",
+              "label": "ransomware.live"
+            }
+          ],
+          "url": "https://www.ransomware.live/id/RmVycnVtIEFHQGFudWJpcw==",
+          "pubDate": "2026-07-03T00:50:44.262Z"
+        },
+        {
+          "title": "flazio.com — rançongiciel apt73 (BR)",
+          "cve": null,
+          "severity": "news",
+          "score": 69,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Incident de sécurité rapporté par ransomware.live.\n\nRansomware.live discovered on 2026-07-02 that flazio.com has been claimed by Apt73 ransomware group\n\nSponsored by Hudson Rock – Use Hudson Rock's free cybercrime intelligence tools to learn how Infostealer infections are leading to ransomware attacks\n\nThe following DNS records were found for the victim's domain.\n\nLegal Disclaimer: Ransomware.live does not engage in the acquisition, exfiltration, downloading, possession, hosting, access, consultation, redis…",
+          "detail": "Incident de sécurité rapporté par ransomware.live.\n\nRansomware.live discovered on 2026-07-02 that flazio.com has been claimed by Apt73 ransomware group\n\nSponsored by Hudson Rock – Use Hudson Rock's free cybercrime intelligence tools to learn how Infostealer infections are leading to ransomware attacks\n\nThe following DNS records were found for the victim's domain.\n\nLegal Disclaimer: Ransomware.live does not engage in the acquisition, exfiltration, downloading, possession, hosting, access, consultation, redistribution, or disclosure of unlawfully obtained data. This platform indexes only publicly visible information posted by ransomware operators and open web sources without accessing or obtaining the underlying stolen content . The service is provided to support public awareness, legitimate research, and cyber-resilience. No stolen personal or confidential data is collected or distributed via this site.\n\nSession: 057726c909af65969646b040bbbfa5c4df67f5166a33cbac6cd9e1302b0b3ca148",
+          "action": "Surveiller les indicateurs de compromission associés et contrôler les actifs exposés.",
+          "sources": [
+            {
+              "url": "https://www.ransomware.live/id/ZmxhemlvLmNvbUBhcHQ3Mw==",
+              "label": "ransomware.live"
+            }
+          ],
+          "url": "https://www.ransomware.live/id/ZmxhemlvLmNvbUBhcHQ3Mw==",
+          "pubDate": "2026-07-02T16:21:37.062Z"
+        },
+        {
+          "title": "ritavo.com — rançongiciel apt73 (AT)",
+          "cve": null,
+          "severity": "news",
+          "score": 69,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Incident de sécurité rapporté par ransomware.live.\n\nRansomware.live discovered on 2026-07-02 that ritavo.com has been claimed by Apt73 ransomware group\n\nSponsored by Hudson Rock – Use Hudson Rock's free cybercrime intelligence tools to learn how Infostealer infections are leading to ransomware attacks\n\nThe following DNS records were found for the victim's domain.\n\nLegal Disclaimer: Ransomware.live does not engage in the acquisition, exfiltration, downloading, possession, hosting, access, consultation, redis…",
+          "detail": "Incident de sécurité rapporté par ransomware.live.\n\nRansomware.live discovered on 2026-07-02 that ritavo.com has been claimed by Apt73 ransomware group\n\nSponsored by Hudson Rock – Use Hudson Rock's free cybercrime intelligence tools to learn how Infostealer infections are leading to ransomware attacks\n\nThe following DNS records were found for the victim's domain.\n\nLegal Disclaimer: Ransomware.live does not engage in the acquisition, exfiltration, downloading, possession, hosting, access, consultation, redistribution, or disclosure of unlawfully obtained data. This platform indexes only publicly visible information posted by ransomware operators and open web sources without accessing or obtaining the underlying stolen content . The service is provided to support public awareness, legitimate research, and cyber-resilience. No stolen personal or confidential data is collected or distributed via this site.\n\nSession: 057726c909af65969646b040bbbfa5c4df67f5166a33cbac6cd9e1302b0b3ca148",
+          "action": "Surveiller les indicateurs de compromission associés et contrôler les actifs exposés.",
+          "sources": [
+            {
+              "url": "https://www.ransomware.live/id/cml0YXZvLmNvbUBhcHQ3Mw==",
+              "label": "ransomware.live"
+            }
+          ],
+          "url": "https://www.ransomware.live/id/cml0YXZvLmNvbUBhcHQ3Mw==",
+          "pubDate": "2026-07-02T15:51:35.515Z"
+        },
+        {
+          "title": "Pennant Hills Golf Club — rançongiciel qilin (AU)",
+          "cve": null,
+          "severity": "news",
+          "score": 69,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Incident de sécurité rapporté par ransomware.live.\n\nRansomware.live discovered on 2026-07-02 that Pennant Hills Golf Club has been claimed by Qilin ransomware group\n\nSponsored by Hudson Rock – Use Hudson Rock's free cybercrime intelligence tools to learn how Infostealer infections are leading to ransomware attacks\n\nThe following DNS records were found for the victim's domain.\n\nLegal Disclaimer: Ransomware.live does not engage in the acquisition, exfiltration, downloading, possession, hosting, access, consul…",
+          "detail": "Incident de sécurité rapporté par ransomware.live.\n\nRansomware.live discovered on 2026-07-02 that Pennant Hills Golf Club has been claimed by Qilin ransomware group\n\nSponsored by Hudson Rock – Use Hudson Rock's free cybercrime intelligence tools to learn how Infostealer infections are leading to ransomware attacks\n\nThe following DNS records were found for the victim's domain.\n\nLegal Disclaimer: Ransomware.live does not engage in the acquisition, exfiltration, downloading, possession, hosting, access, consultation, redistribution, or disclosure of unlawfully obtained data. This platform indexes only publicly visible information posted by ransomware operators and open web sources without accessing or obtaining the underlying stolen content . The service is provided to support public awareness, legitimate research, and cyber-resilience. No stolen personal or confidential data is collected or distributed via this site.\n\nSession: 057726c909af65969646b040bbbfa5c4df67f5166a33cbac6cd9e1302b0b3ca148",
+          "action": "Surveiller les indicateurs de compromission associés et contrôler les actifs exposés.",
+          "sources": [
+            {
+              "url": "https://www.ransomware.live/id/UGVubmFudCBIaWxscyBHb2xmIENsdWJAcWlsaW4=",
+              "label": "ransomware.live"
+            }
+          ],
+          "url": "https://www.ransomware.live/id/UGVubmFudCBIaWxscyBHb2xmIENsdWJAcWlsaW4=",
+          "pubDate": "2026-07-02T09:25:46.663Z"
+        },
+        {
+          "title": "Medtronic notifies customers impacted by ShinyHunters data breach",
+          "cve": null,
+          "severity": "news",
+          "score": 68,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Incident de sécurité rapporté par BleepingComputer.\n\nHealthcare device firm Medtronic is notifying affected customers about a data breach that exposed their personal data to an unauthorized third party.\n\nCISA: Windows BlueHammer flaw now exploited by ransomware gangs\n\nKali Linux 2026.2 released with 9 new tools, NetHunter updates\n\nNew BioShocking attack manipulates AI browser into data theft\n\nClaude Fable 5 isn’t permanently leaving subscriptions, Anthropic says\n\nClaude Fable relaunch disappoints users with…",
+          "detail": "Incident de sécurité rapporté par BleepingComputer.\n\nHealthcare device firm Medtronic is notifying affected customers about a data breach that exposed their personal data to an unauthorized third party.\n\nCISA: Windows BlueHammer flaw now exploited by ransomware gangs\n\nKali Linux 2026.2 released with 9 new tools, NetHunter updates\n\nNew BioShocking attack manipulates AI browser into data theft\n\nClaude Fable 5 isn’t permanently leaving subscriptions, Anthropic says\n\nClaude Fable relaunch disappoints users with nerfed performance\n\nHow to enable Kernel-mode Hardware-enforced Stack Protection in Windows 11",
+          "action": "Surveiller les indicateurs de compromission associés et contrôler les actifs exposés.",
+          "sources": [
+            {
+              "url": "https://www.bleepingcomputer.com/news/security/medtronic-notifies-customers-impacted-by-shinyhunters-data-breach/",
+              "label": "BleepingComputer"
+            }
+          ],
+          "url": "https://www.bleepingcomputer.com/news/security/medtronic-notifies-customers-impacted-by-shinyhunters-data-breach/",
+          "pubDate": "2026-07-02T04:25:42.000Z"
+        },
+        {
+          "title": "X-Copper Professional — rançongiciel moneymessage",
+          "cve": null,
+          "severity": "news",
+          "score": 66,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Incident de sécurité rapporté par ransomware.live.\n\nVictime revendiquée par le groupe de rançongiciel moneymessage. Secteur : Manufacturing. X-Copper Professional is a Canadian legal and paralegal services firm specializing in traffic ticket defense and driving-related legal matters. Based in Ontario, Canada, the company represents clients facing speeding tickets, careless driving charges, and other Highway Traffic Act violations.",
+          "detail": "Incident de sécurité rapporté par ransomware.live.\n\nVictime revendiquée par le groupe de rançongiciel moneymessage.\n\nSecteur : Manufacturing.\n\nX-Copper Professional is a Canadian legal and paralegal services firm specializing in traffic ticket defense and driving-related legal matters. Based in Ontario, Canada, the company represents clients facing speeding tickets, careless driving charges, and other Highway Traffic Act violations. It employs licensed paralegals and lawyers to help clients reduce or dismiss charges, minimizing fines, demerit points, and insurance premium impacts.",
+          "action": "Surveiller les indicateurs de compromission associés et contrôler les actifs exposés.",
+          "sources": [
+            {
+              "url": "https://www.ransomware.live/id/WC1Db3BwZXIgUHJvZmVzc2lvbmFsQG1vbmV5bWVzc2FnZQ==",
+              "label": "ransomware.live"
+            }
+          ],
+          "url": "https://www.ransomware.live/id/WC1Db3BwZXIgUHJvZmVzc2lvbmFsQG1vbmV5bWVzc2FnZQ==",
+          "pubDate": "2026-07-02T09:55:25.820Z"
+        },
+        {
+          "title": "FortiBleed Credential Theft Linked to INC and Lynx Ransomware Operations",
+          "cve": null,
+          "severity": "critical",
+          "score": 65,
+          "corroboration": 3,
+          "region": "intl",
+          "body": "Incident de sécurité rapporté par Dark Reading.\n\nThe recently discovered financially-motivated FortiBleed campaign has been attributed to INC and Lynx ransomware operations, indicating that the verified, stolen credentials were intended for follow-on intrusions. \"An operator tied to FortiBleed's infrastructure was found actively working negotiation panels for both groups, tying mass FortiGate credential theft directly to ransomware deployment",
+          "detail": "Incident de sécurité rapporté par Dark Reading.\n\nThe recently discovered financially-motivated FortiBleed campaign has been attributed to INC and Lynx ransomware operations, indicating that the verified, stolen credentials were intended for follow-on intrusions. \"An operator tied to FortiBleed's infrastructure was found actively working negotiation panels for both groups, tying mass FortiGate credential theft directly to ransomware deployment",
+          "action": "Surveiller les indicateurs de compromission associés et contrôler les actifs exposés.",
+          "sources": [
+            {
+              "url": "https://www.darkreading.com/threat-intelligence/fortibleed-actors-inc-lynx-ransomware-gangs",
+              "label": "Dark Reading"
+            },
+            {
+              "url": "https://www.securityweek.com/fortibleed-campaign-linked-to-inc-lynx-ransomware-attacks/",
+              "label": "SecurityWeek"
+            },
+            {
+              "url": "https://thehackernews.com/2026/07/fortibleed-credential-theft-linked-to.html",
+              "label": "The Hacker News"
+            }
+          ],
+          "url": "https://www.darkreading.com/threat-intelligence/fortibleed-actors-inc-lynx-ransomware-gangs",
+          "pubDate": "2026-07-02T19:11:33.000Z"
+        },
+        {
+          "title": "ThreatsDay: AI Compute Hijacking, Apple Email Flaw, BlueHammer Ransomware + 14 Stories",
+          "cve": null,
+          "severity": "news",
+          "score": 65,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Incident de sécurité rapporté par The Hacker News.\n\nThis week’s security news is mostly about weak spots. Browsers, bots, sandboxes, AI systems, and email flows all show the same problem in different ways. Everything looks normal until someone tests a small gap and finds a way through. This is not one big break. It is small permissions, weak checks, open systems, and normal tools doing things they were allowed to do. That same pattern runs",
+          "detail": "Incident de sécurité rapporté par The Hacker News.\n\nThis week’s security news is mostly about weak spots. Browsers, bots, sandboxes, AI systems, and email flows all show the same problem in different ways. Everything looks normal until someone tests a small gap and finds a way through. This is not one big break. It is small permissions, weak checks, open systems, and normal tools doing things they were allowed to do. That same pattern runs",
+          "action": "Surveiller les indicateurs de compromission associés et contrôler les actifs exposés.",
+          "sources": [
+            {
+              "url": "https://thehackernews.com/2026/07/threatsday-ai-compute-hijacking-apple.html",
+              "label": "The Hacker News"
+            }
+          ],
+          "url": "https://thehackernews.com/2026/07/threatsday-ai-compute-hijacking-apple.html",
+          "pubDate": "2026-07-02T15:24:18.000Z"
+        },
+        {
+          "title": "‘BioShocking’ Attack Tricks AI Browsers Into Stealing Credentials",
+          "cve": null,
+          "severity": "news",
+          "score": 64,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Incident de sécurité rapporté par SecurityWeek.\n\nThe BioShocking technique exploits AI browser reasoning, showing how easily attackers can subvert safety guardrails with crafted prompts.\n\nResearchers show how context manipulation can cause agentic browsers to abandon safety guardrails and exfiltrate sensitive credentials.\n\nSubscribe to the SecurityWeek Email Briefing for the latest cybersecurity threats, trends, and expert insights.\n\nSubscribe to the SecurityWeek Email Briefing to stay informed on the la…",
+          "detail": "Incident de sécurité rapporté par SecurityWeek.\n\nThe BioShocking technique exploits AI browser reasoning, showing how easily attackers can subvert safety guardrails with crafted prompts.\n\nResearchers show how context manipulation can cause agentic browsers to abandon safety guardrails and exfiltrate sensitive credentials.\n\nSubscribe to the SecurityWeek Email Briefing for the latest cybersecurity threats, trends, and expert insights.\n\nSubscribe to the SecurityWeek Email Briefing to stay informed on the latest threats, trends, and technology, along with insightful columns from industry experts.\n\nJoin this live webinar as we break down why email-layer defenses alone can't keep pace with the modern phishing ecosystem, how agentic AI is changing the capacity equation for security teams, and more.\n\nThis year's summit will help organizations learn how to utilize tools, controls, and design models needed to properly secure cloud environments. Interact with leading solution providers and other end users facing similar challenges in securing a variety of cloud deployments.\n\nJames Phillips has been promoted to the role of Vice President, Cybersecurity Risk Management at AT&T.",
+          "action": "Surveiller les indicateurs de compromission associés et contrôler les actifs exposés.",
+          "sources": [
+            {
+              "url": "https://www.securityweek.com/bioshocking-attack-tricks-ai-browsers-into-stealing-credentials/",
+              "label": "SecurityWeek"
+            }
+          ],
+          "url": "https://www.securityweek.com/bioshocking-attack-tricks-ai-browsers-into-stealing-credentials/",
+          "pubDate": "2026-07-02T10:45:00.000Z"
+        },
+        {
+          "title": "Opera rolls out Paste Protect feature to fight ClickFix attacks",
+          "cve": null,
+          "severity": "news",
+          "score": 63,
+          "corroboration": 2,
+          "region": "intl",
+          "body": "Incident de sécurité rapporté par BleepingComputer.\n\nOpera has introduced Paste Protect, a security feature designed to block ClickFix-style attacks that trick users into executing malicious commands through social engineering.\n\nCISA: Windows BlueHammer flaw now exploited by ransomware gangs\n\nKali Linux 2026.2 released with 9 new tools, NetHunter updates\n\nNew BioShocking attack manipulates AI browser into data theft\n\nClaude Fable 5 isn’t permanently leaving subscriptions, Anthropic says\n\nClaude Fable relaunc…",
+          "detail": "Incident de sécurité rapporté par BleepingComputer.\n\nOpera has introduced Paste Protect, a security feature designed to block ClickFix-style attacks that trick users into executing malicious commands through social engineering.\n\nCISA: Windows BlueHammer flaw now exploited by ransomware gangs\n\nKali Linux 2026.2 released with 9 new tools, NetHunter updates\n\nNew BioShocking attack manipulates AI browser into data theft\n\nClaude Fable 5 isn’t permanently leaving subscriptions, Anthropic says\n\nClaude Fable relaunch disappoints users with nerfed performance\n\nHow to enable Kernel-mode Hardware-enforced Stack Protection in Windows 11",
+          "action": "Surveiller les indicateurs de compromission associés et contrôler les actifs exposés.",
+          "sources": [
+            {
+              "url": "https://www.bleepingcomputer.com/news/security/opera-rolls-out-paste-protect-feature-to-fight-clickfix-attacks/",
+              "label": "BleepingComputer"
+            },
+            {
+              "url": "https://www.helpnetsecurity.com/2026/07/02/opera-blocks-clickfix-attacks-with-new-clipboard-protection-feature/",
+              "label": "Help Net Security"
+            }
+          ],
+          "url": "https://www.bleepingcomputer.com/news/security/opera-rolls-out-paste-protect-feature-to-fight-clickfix-attacks/",
+          "pubDate": "2026-07-02T10:46:58.000Z"
+        },
+        {
+          "title": "oakparkmi.gov — rançongiciel incransom (États-Unis)",
+          "cve": null,
+          "severity": "news",
+          "score": 61,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Incident de sécurité rapporté par ransomware.live.\n\nVictime revendiquée par le groupe de rançongiciel incransom. Pays : États-Unis. Secteur : Public Sector. Oak Park, Michigan, is a vibrant, diverse inner-ring suburb of Metro Detroit located in Oakland County. Incorporated as a city in 1945, it spans 5.5 square miles and is home to roughly 30,000 residents.",
+          "detail": "Incident de sécurité rapporté par ransomware.live.\n\nVictime revendiquée par le groupe de rançongiciel incransom.\n\nPays : États-Unis.\n\nSecteur : Public Sector.\n\nOak Park, Michigan, is a vibrant, diverse inner-ring suburb of Metro Detroit located in Oakland County. Incorporated as a city in 1945, it spans 5.5 square miles and is home to roughly 30,000 residents. The city is currently experiencing a renaissance, transforming areas like the 11 Mile Road corridor into bustling hubs with breweries, restaurants, and new community spaces.",
+          "action": "Surveiller les indicateurs de compromission associés et contrôler les actifs exposés.",
+          "sources": [
+            {
+              "url": "https://www.ransomware.live/id/b2FrcGFya21pLmdvdkBpbmNyYW5zb20=",
+              "label": "ransomware.live"
+            }
+          ],
+          "url": "https://www.ransomware.live/id/b2FrcGFya21pLmdvdkBpbmNyYW5zb20=",
+          "pubDate": "2026-07-02T23:59:00.000Z"
+        },
+        {
+          "title": "Ransomware Thugs Masquerade as Interpol to Entice Small Biz",
+          "cve": null,
+          "severity": "news",
+          "score": 61,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Incident de sécurité rapporté par Dark Reading.\n\nThe ransomware campaign relies on basic social engineering and stretches across multiple regions, including the US, Europe, Middle East, and elsewhere.",
+          "detail": "Incident de sécurité rapporté par Dark Reading.\n\nThe ransomware campaign relies on basic social engineering and stretches across multiple regions, including the US, Europe, Middle East, and elsewhere.",
+          "action": "Surveiller les indicateurs de compromission associés et contrôler les actifs exposés.",
+          "sources": [
+            {
+              "url": "https://www.darkreading.com/cyberattacks-data-breaches/attackers-use-interpol-lure-target-small-businesses",
+              "label": "Dark Reading"
+            }
+          ],
+          "url": "https://www.darkreading.com/cyberattacks-data-breaches/attackers-use-interpol-lure-target-small-businesses",
+          "pubDate": "2026-07-02T18:07:40.000Z"
+        },
+        {
+          "title": "Treet Group of Companies — rançongiciel worldleaks (PK)",
+          "cve": null,
+          "severity": "news",
+          "score": 61,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Incident de sécurité rapporté par ransomware.live.\n\nVictime revendiquée par le groupe de rançongiciel worldleaks. Pays : PK. Secteur : Business Services. Treet Group of Companies is a Pakistani conglomerate headquartered in Lahore, Pakistan. It operates across multiple industries including razor blades and personal care products, textile manufacturing, and power generation. The group is best known for producing Treet razor blades, one of the most recognized brands in Pakistan.",
+          "detail": "Incident de sécurité rapporté par ransomware.live.\n\nVictime revendiquée par le groupe de rançongiciel worldleaks.\n\nPays : PK.\n\nSecteur : Business Services.\n\nTreet Group of Companies is a Pakistani conglomerate headquartered in Lahore, Pakistan. It operates across multiple industries including razor blades and personal care products, textile manufacturing, and power generation. The group is best known for producing Treet razor blades, one of the most recognized brands in Pakistan. It is publicly listed and has been a significant industrial player in Pakistan for several decades.",
+          "action": "Surveiller les indicateurs de compromission associés et contrôler les actifs exposés.",
+          "sources": [
+            {
+              "url": "https://www.ransomware.live/id/VHJlZXQgR3JvdXAgb2YgQ29tcGFuaWVzQHdvcmxkbGVha3M=",
+              "label": "ransomware.live"
+            }
+          ],
+          "url": "https://www.ransomware.live/id/VHJlZXQgR3JvdXAgb2YgQ29tcGFuaWVzQHdvcmxkbGVha3M=",
+          "pubDate": "2026-07-02T13:25:49.000Z"
+        }
+      ]
+    },
+    {
+      "id": "culture",
+      "items": [
+        {
+          "title": "How We Added WebAuthn to a Browser-Based RDP Client",
+          "cve": null,
+          "severity": "culture",
+          "score": 81,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Signal de veille — Unit 42.\n\nA look inside the reverse-engineering journey of building the first RDP client outside of Windows to support WebAuthn redirection.\n\nTL;DR: We built the first RDP client outside of Windows to support WebAuthn redirection, beating Microsoft's own macOS, iOS and Linux clients to it (since then FreeRDP has added support too, which we’re happy to see).",
+          "detail": "Signal de veille — Unit 42.\n\nA look inside the reverse-engineering journey of building the first RDP client outside of Windows to support WebAuthn redirection.\n\nTL;DR: We built the first RDP client outside of Windows to support WebAuthn redirection, beating Microsoft's own macOS, iOS and Linux clients to it (since then FreeRDP has added support too, which we’re happy to see). No browser API could do what we needed, the protocol spec was missing entire commands, and we discovered that Microsoft's Windows implementation routes through internal, undocumented code paths we had to reverse-engineer. This is the story of what we found.\n\nPrisma Browser offers support for more than the standard secure web browser. We often build support for protocols that go beyond web applications. We develop tailored solutions for Prisma Browser to enable its users to solve complicated security issues. One useful example is Remote Desktop Protocol (RDP).\n\nIT operations frequently require SSH, while remote users need to access legacy and on-premises applications using protocols such as RDP. In the past, these were only accessible via thick clients , which required opening risky network tunnels, or through remote session hops that translate traffic into browser-native protocols like HTML5. This translation often impacts performance and breaks core functionality.\n\nTo meet this need, we have developed native clients directly inside the browser. Doing this has also surfaced a demand for even more flexibility and features within these native clients. This post covers one of our recent announcements that not only fills a critical gap but makes our native clients superior to the common thick applications used today.\n\nIt all started when someone asked: \"Can we support security keys? If a user is on a w",
+          "action": null,
+          "sources": [
+            {
+              "url": "https://unit42.paloaltonetworks.com/webauthn-added-to-browser-based-rdp/",
+              "label": "Unit 42"
+            }
+          ],
+          "url": "https://unit42.paloaltonetworks.com/webauthn-added-to-browser-based-rdp/",
+          "pubDate": "2026-07-02T22:00:39.000Z"
+        },
+        {
+          "title": "Launch of UK's National Cyber Action Plan delayed amid Labour leadership crisis",
+          "cve": null,
+          "severity": "high",
+          "score": 70,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Signal de veille — The Record.\n\nThe plan had been due for publication on Monday, the sources said. It has been postponed amid the uncertainty over the governing Labour Party’s leadership contest, which opens July 9.\n\nBritain's National Cyber Action Plan, the government's forthcoming strategy for defending the wider economy against state-backed and criminal hacking, has been delayed again following Prime Minister Keir Starmer's resignation, according to multiple sources with knowledge of…",
+          "detail": "Signal de veille — The Record.\n\nThe plan had been due for publication on Monday, the sources said. It has been postponed amid the uncertainty over the governing Labour Party’s leadership contest, which opens July 9.\n\nBritain's National Cyber Action Plan, the government's forthcoming strategy for defending the wider economy against state-backed and criminal hacking, has been delayed again following Prime Minister Keir Starmer's resignation, according to multiple sources with knowledge of the matter.\n\nThe plan had been due for publication on Monday, the sources said. It has been postponed amid the uncertainty over the governing Labour Party’s leadership contest, which opens July 9.\n\nA government spokesperson told Recorded Future News it remained committed to publishing the National Cyber Action Plan.\n\n“Protecting national security is our first duty, which is why we're taking action: strengthening our defenses through the Cyber Security and Resilience Bill, improving businesses' security with the national Cyber Resilience Pledge, and providing expert support to organizations across the country every day through the National Cyber Security Centre,” they said.\n\nOne part of the launch is still expected to proceed. On Tuesday, a number of FTSE 350 companies are set to sign the government's Cyber Resilience Pledge, a voluntary commitment to improve their digital defenses.\n\nInitially intended as an update to Britain’s National Cyber Strategy 2022, the document was first promised by then-Chancellor of the Duchy of Lancaster Pat McFadden to be due before the end of 2025. By April 2026, the target had moved to “this summer” by the Security Minister Dan Jarvis, and the document had been rebranded from a “strategy” to an “action plan.”",
+          "action": null,
+          "sources": [
+            {
+              "url": "https://therecord.media/launch-of-uk-national-cyber-action-plan-delayed",
+              "label": "The Record"
+            }
+          ],
+          "url": "https://therecord.media/launch-of-uk-national-cyber-action-plan-delayed",
+          "pubDate": "2026-07-02T20:32:00.000Z"
+        },
+        {
+          "title": "Supreme Court decision threatens EU-US data transfer agreement",
+          "cve": null,
+          "severity": "culture",
+          "score": 70,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Signal de veille — The Record.\n\nIn a Tuesday letter, Max Schrems, the founder of the Vienna-based privacy advocacy organization noyb, told European officials he plans to sue to invalidate the EU-U.S. Data Privacy Framework (DPF) that allows for the transfer of personal data from the EU to U.S. companies.\n\nA key data privacy agreement between the European Union and the U.S.",
+          "detail": "Signal de veille — The Record.\n\nIn a Tuesday letter, Max Schrems, the founder of the Vienna-based privacy advocacy organization noyb, told European officials he plans to sue to invalidate the EU-U.S. Data Privacy Framework (DPF) that allows for the transfer of personal data from the EU to U.S. companies.\n\nA key data privacy agreement between the European Union and the U.S. may be in danger following a Supreme Court ruling that allows presidents to remove members of so-called independent agencies at will.\n\nIn a Tuesday letter , Max Schrems, the founder of the Vienna-based privacy advocacy organization noyb, told European officials he plans to sue to invalidate the EU-U.S. Data Privacy Framework (DPF) that allows for the transfer of personal data from the EU to U.S. companies.\n\nThe most recent version of the law, which was formally adopted by the European Commission in 2023 to address worries over how the U.S. gathers data, requires an independent U.S. body to oversee the data transfers to ensure they are regulated and limited. The U.S. Federal Trade Commission (FTC) has been the key organization playing that role\n\nOn Monday, the Supreme Court held that President Donald Trump acted legally in firing FTC Commissioner Rebecca Slaughter without cause, calling into question the independence of that and similar agencies.\n\n“The basis for any EU-US data transfer deal is dead,” Schrems said in a statement released Tuesday. “We call upon the Commission to start an orderly exit from the U.S. cloud, which is not easy, but unfortunately unavoidable.”\n\n“The Commission built a legal house of cards under industry pressure,” Schrems said. “Now that it clearly collapses, it has to take responsibility.”",
+          "action": null,
+          "sources": [
+            {
+              "url": "https://therecord.media/supreme-court-decision-threatens-eu-us-data-sharing",
+              "label": "The Record"
+            }
+          ],
+          "url": "https://therecord.media/supreme-court-decision-threatens-eu-us-data-sharing",
+          "pubDate": "2026-07-02T16:50:00.000Z"
+        },
+        {
+          "title": "Google loses final appeal to overturn €4.1 billion EU fine",
+          "cve": null,
+          "severity": "culture",
+          "score": 69,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Signal de veille — BleepingComputer.\n\nCourt of Justice of the European Union (CJEU) has dismissed Google's final appeal against a &euro;4.1 billion ($4.7 billion) antitrust fine over the company's use of Android to promote its Chrome browser and search service.\n\nCISA: Windows BlueHammer flaw now exploited by ransomware gangs\n\nKali Linux 2026.2 released with 9 new tools, NetHunter updates\n\nNew BioShocking attack manipulates AI browser into data theft\n\nClaude Fable 5 isn’t permanently leaving su…",
+          "detail": "Signal de veille — BleepingComputer.\n\nCourt of Justice of the European Union (CJEU) has dismissed Google's final appeal against a &euro;4.1 billion ($4.7 billion) antitrust fine over the company's use of Android to promote its Chrome browser and search service.\n\nCISA: Windows BlueHammer flaw now exploited by ransomware gangs\n\nKali Linux 2026.2 released with 9 new tools, NetHunter updates\n\nNew BioShocking attack manipulates AI browser into data theft\n\nClaude Fable 5 isn’t permanently leaving subscriptions, Anthropic says\n\nClaude Fable relaunch disappoints users with nerfed performance\n\nHow to enable Kernel-mode Hardware-enforced Stack Protection in Windows 11",
+          "action": null,
+          "sources": [
+            {
+              "url": "https://www.bleepingcomputer.com/news/legal/google-loses-final-appeal-to-overturn-41-billion-eu-fine/",
+              "label": "BleepingComputer"
+            }
+          ],
+          "url": "https://www.bleepingcomputer.com/news/legal/google-loses-final-appeal-to-overturn-41-billion-eu-fine/",
+          "pubDate": "2026-07-02T15:18:51.000Z"
+        },
+        {
+          "title": "Google Disrupts NetNut Residential Proxy Network Spanning 2 Million Home Devices",
+          "cve": null,
+          "severity": "culture",
+          "score": 68,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Signal de veille — The Hacker News.\n\nGoogle has significantly degraded NetNut, one of the biggest networks that turns home devices into rented relays for other people's traffic. Working with the FBI, Lumen, and others, Google's Threat Intelligence Group (GTIG)&nbsp;said this week&nbsp;it had reduced the network's pool of usable devices by millions. Google identifies NetNut, also tracked as Popa, as a network spread across home",
+          "detail": "Signal de veille — The Hacker News.\n\nGoogle has significantly degraded NetNut, one of the biggest networks that turns home devices into rented relays for other people's traffic. Working with the FBI, Lumen, and others, Google's Threat Intelligence Group (GTIG)&nbsp;said this week&nbsp;it had reduced the network's pool of usable devices by millions. Google identifies NetNut, also tracked as Popa, as a network spread across home",
+          "action": null,
+          "sources": [
+            {
+              "url": "https://thehackernews.com/2026/07/google-disrupts-netnut-residential.html",
+              "label": "The Hacker News"
+            }
+          ],
+          "url": "https://thehackernews.com/2026/07/google-disrupts-netnut-residential.html",
+          "pubDate": "2026-07-02T18:54:06.000Z"
+        },
+        {
+          "title": "Anthropic's AI Finds Bugs. IBM Bets $5B It Can Fix Them.",
+          "cve": null,
+          "severity": "high",
+          "score": 64,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Signal de veille — Dark Reading.\n\nIBM and Red Hat assign 20,000 engineers to the new Project Lightwell service as Anthropic's Mythos findings ignite debate over how to secure the open-source software supply chain.",
+          "detail": "Signal de veille — Dark Reading.\n\nIBM and Red Hat assign 20,000 engineers to the new Project Lightwell service as Anthropic's Mythos findings ignite debate over how to secure the open-source software supply chain.",
+          "action": null,
+          "sources": [
+            {
+              "url": "https://www.darkreading.com/vulnerabilities-threats/anthropic-s-ai-finds-bugs-ibm-bets-5b-it-can-fix-them-",
+              "label": "Dark Reading"
+            }
+          ],
+          "url": "https://www.darkreading.com/vulnerabilities-threats/anthropic-s-ai-finds-bugs-ibm-bets-5b-it-can-fix-them-",
+          "pubDate": "2026-07-02T12:33:57.000Z"
+        },
+        {
+          "title": "Claude Fable 5 isn’t permanently leaving subscriptions, Anthropic says",
+          "cve": null,
+          "severity": "culture",
+          "score": 63,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Signal de veille — BleepingComputer.\n\nAnthropic says Claude Fable 5 won't be accessible via Claude subscriptions after July 7, but it's not a permanent change, and the company expects the model to return outside the usage-based plan soon.\n\nCISA: Windows BlueHammer flaw now exploited by ransomware gangs\n\nKali Linux 2026.2 released with 9 new tools, NetHunter updates\n\nNew BioShocking attack manipulates AI browser into data theft\n\nClaude Fable 5 isn’t permanently leaving subscriptions, Anthropic…",
+          "detail": "Signal de veille — BleepingComputer.\n\nAnthropic says Claude Fable 5 won't be accessible via Claude subscriptions after July 7, but it's not a permanent change, and the company expects the model to return outside the usage-based plan soon.\n\nCISA: Windows BlueHammer flaw now exploited by ransomware gangs\n\nKali Linux 2026.2 released with 9 new tools, NetHunter updates\n\nNew BioShocking attack manipulates AI browser into data theft\n\nClaude Fable 5 isn’t permanently leaving subscriptions, Anthropic says\n\nClaude Fable relaunch disappoints users with nerfed performance\n\nHow to enable Kernel-mode Hardware-enforced Stack Protection in Windows 11",
+          "action": null,
+          "sources": [
+            {
+              "url": "https://www.bleepingcomputer.com/news/artificial-intelligence/claude-fable-5-isnt-permanently-leaving-subscriptions-anthropic-says/",
+              "label": "BleepingComputer"
+            }
+          ],
+          "url": "https://www.bleepingcomputer.com/news/artificial-intelligence/claude-fable-5-isnt-permanently-leaving-subscriptions-anthropic-says/",
+          "pubDate": "2026-07-03T01:37:09.000Z"
+        },
+        {
+          "title": "Claude Fable relaunch disappoints users with nerfed performance",
+          "cve": null,
+          "severity": "culture",
+          "score": 63,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Signal de veille — BleepingComputer.\n\nClaude Fable, the company's most powerful model, is now available to all users, but early impressions are disappointing, as it appears to be nowhere near the original release.\n\nCISA: Windows BlueHammer flaw now exploited by ransomware gangs\n\nKali Linux 2026.2 released with 9 new tools, NetHunter updates\n\nNew BioShocking attack manipulates AI browser into data theft\n\nClaude Fable 5 isn’t permanently leaving subscriptions, Anthropic says\n\nClaude Fable relaun…",
+          "detail": "Signal de veille — BleepingComputer.\n\nClaude Fable, the company's most powerful model, is now available to all users, but early impressions are disappointing, as it appears to be nowhere near the original release.\n\nCISA: Windows BlueHammer flaw now exploited by ransomware gangs\n\nKali Linux 2026.2 released with 9 new tools, NetHunter updates\n\nNew BioShocking attack manipulates AI browser into data theft\n\nClaude Fable 5 isn’t permanently leaving subscriptions, Anthropic says\n\nClaude Fable relaunch disappoints users with nerfed performance\n\nHow to enable Kernel-mode Hardware-enforced Stack Protection in Windows 11",
+          "action": null,
+          "sources": [
+            {
+              "url": "https://www.bleepingcomputer.com/news/artificial-intelligence/claude-fable-relaunch-disappoints-users-with-nerfed-performance/",
+              "label": "BleepingComputer"
+            }
+          ],
+          "url": "https://www.bleepingcomputer.com/news/artificial-intelligence/claude-fable-relaunch-disappoints-users-with-nerfed-performance/",
+          "pubDate": "2026-07-03T00:48:30.000Z"
+        },
+        {
+          "title": "Europe Confirms Record €4.1B Penalty Against Google for Android Practices",
+          "cve": null,
+          "severity": "high",
+          "score": 63,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Signal de veille — Security Affairs.\n\nEU&#8217;s top court upheld a €4.1B fine against Google, ruling it abused Android&#8217;s market dominance through restrictive licensing practices. The Court of Justice of the European Union issued its ruling on July 2, 2026, and Google lost. The court dismissed the appeal brought by Google and its parent company Alphabet against an earlier judgment from the General Court, confirming a fine of €4,125,000,000.",
+          "detail": "Signal de veille — Security Affairs.\n\nEU&#8217;s top court upheld a €4.1B fine against Google, ruling it abused Android&#8217;s market dominance through restrictive licensing practices. The Court of Justice of the European Union issued its ruling on July 2, 2026, and Google lost. The court dismissed the appeal brought by Google and its parent company Alphabet against an earlier judgment from the General Court, confirming a fine of €4,125,000,000. Alphabet is jointly and severally liable for €1,520,605,895 of that amount. The case goes back to 2018, when the European Commission concluded that Google had abused its dominant market position through three categories of restrictions built into its Android licensing arrangements. Device manufacturers who wanted access to Google&#8217;s Play Store had to pre-install Google Search and Chrome. To get the licences needed for those apps, they also had to agree not to sell devices running Android versions that Google hadn&#8217;t approved. And Google paid manufacturers and mobile operators a share of its advertising revenue on the condition that they didn&#8217;t pre-install a competing search engine on a defined set of devices. The Commission concluded all three formed a single, coordinated strategy to protect Google&#8217;s search dominance, and fined the company €4,342,865,000. The General Court reviewed the case in 2022 and agreed that the conduct was a single and continuo",
+          "action": null,
+          "sources": [
+            {
+              "url": "https://securityaffairs.com/194663/security/europe-confirms-record-e4-1b-penalty-against-google-for-android-practices.html",
+              "label": "Security Affairs"
+            }
+          ],
+          "url": "https://securityaffairs.com/194663/security/europe-confirms-record-e4-1b-penalty-against-google-for-android-practices.html",
+          "pubDate": "2026-07-02T17:29:42.000Z"
+        },
+        {
+          "title": "Alleged Scattered Spider hacker extradited to the United States",
+          "cve": null,
+          "severity": "critical",
+          "score": 63,
+          "corroboration": 5,
+          "region": "intl",
+          "body": "Signal de veille — Security Affairs.\n\nAlleged Scattered Spider member Peter Stokes, 19, was extradited from Finland to the U.S. over hacking, fraud, and extortion charges.\n\nEurope Confirms Record €4.1B Penalty Against Google for Android Practices\n\nU.S. CISA adds a Microsoft SharePoint Server flaw to its Known Exploited Vulnerabilities catalog\n\n430,000 FortiGate Devices Exposed in FortiBleed Ransomware Link\n\nAdobe fixed multiple maximum-severity flaws in ColdFusion and Campaign Classic\n\nAlleged…",
+          "detail": "Signal de veille — Security Affairs.\n\nAlleged Scattered Spider member Peter Stokes, 19, was extradited from Finland to the U.S. over hacking, fraud, and extortion charges.\n\nEurope Confirms Record €4.1B Penalty Against Google for Android Practices\n\nU.S. CISA adds a Microsoft SharePoint Server flaw to its Known Exploited Vulnerabilities catalog\n\n430,000 FortiGate Devices Exposed in FortiBleed Ransomware Link\n\nAdobe fixed multiple maximum-severity flaws in ColdFusion and Campaign Classic\n\nAlleged Scattered Spider Hacker Extradited to U.S. to Face Cybercrime Charges\n\nOracle E-Business Suite Flaw Under Active Attack, 950 Systems Exposed",
+          "action": null,
+          "sources": [
+            {
+              "url": "https://securityaffairs.com/194613/security/alleged-scattered-spider-hacker-extradited-to-u-s-to-face-cybercrime-charges.html",
+              "label": "Security Affairs"
+            },
+            {
+              "url": "https://cyberscoop.com/scattered-spider-peter-stokes-cybercrime-extradition/",
+              "label": "CyberScoop"
+            },
+            {
+              "url": "https://www.helpnetsecurity.com/2026/07/02/scattered-spider-criminal-group-suspect-extradited/",
+              "label": "Help Net Security"
+            },
+            {
+              "url": "https://www.bleepingcomputer.com/news/security/alleged-scattered-spider-hacker-extradited-to-the-united-states/",
+              "label": "BleepingComputer"
+            },
+            {
+              "url": "https://www.infosecurity-magazine.com/news/scattered-spider-member-extradited/",
+              "label": "Infosecurity Mag"
+            }
+          ],
+          "url": "https://securityaffairs.com/194613/security/alleged-scattered-spider-hacker-extradited-to-u-s-to-face-cybercrime-charges.html",
+          "pubDate": "2026-07-02T15:28:25.000Z"
+        },
+        {
+          "title": "Microsoft fixes bug that removed Copilot buttons in Outlook",
+          "cve": null,
+          "severity": "culture",
+          "score": 63,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Signal de veille — BleepingComputer.\n\nMicrosoft has fixed a known issue causing the Copilot Chat or Copilot buttons in Classic Outlook to disappear for Windows users with the Copilot Chat (Basic) license.\n\nCISA: Windows BlueHammer flaw now exploited by ransomware gangs\n\nKali Linux 2026.2 released with 9 new tools, NetHunter updates\n\nNew BioShocking attack manipulates AI browser into data theft\n\nClaude Fable 5 isn’t permanently leaving subscriptions, Anthropic says\n\nClaude Fable relaunch disapp…",
+          "detail": "Signal de veille — BleepingComputer.\n\nMicrosoft has fixed a known issue causing the Copilot Chat or Copilot buttons in Classic Outlook to disappear for Windows users with the Copilot Chat (Basic) license.\n\nCISA: Windows BlueHammer flaw now exploited by ransomware gangs\n\nKali Linux 2026.2 released with 9 new tools, NetHunter updates\n\nNew BioShocking attack manipulates AI browser into data theft\n\nClaude Fable 5 isn’t permanently leaving subscriptions, Anthropic says\n\nClaude Fable relaunch disappoints users with nerfed performance\n\nHow to enable Kernel-mode Hardware-enforced Stack Protection in Windows 11",
+          "action": null,
+          "sources": [
+            {
+              "url": "https://www.bleepingcomputer.com/news/microsoft/microsoft-fixes-bug-that-removed-copilot-button-in-outlook/",
+              "label": "BleepingComputer"
+            }
+          ],
+          "url": "https://www.bleepingcomputer.com/news/microsoft/microsoft-fixes-bug-that-removed-copilot-button-in-outlook/",
+          "pubDate": "2026-07-02T12:15:47.000Z"
+        },
+        {
+          "title": "Identity Lifecycle Management Wasn't Built for AI Agents",
+          "cve": null,
+          "severity": "culture",
+          "score": 63,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Signal de veille — The Hacker News.\n\nIdentity lifecycle management was architected around a person with an employment record, a manager, and a departure date. AI agents have none of those. As autonomous principals proliferate across enterprise environments, the governance model built for humans develops structural blind spots that traditional IGA tools weren't designed to detect. This guide covers where that model breaks, what it",
+          "detail": "Signal de veille — The Hacker News.\n\nIdentity lifecycle management was architected around a person with an employment record, a manager, and a departure date. AI agents have none of those. As autonomous principals proliferate across enterprise environments, the governance model built for humans develops structural blind spots that traditional IGA tools weren't designed to detect. This guide covers where that model breaks, what it",
+          "action": null,
+          "sources": [
+            {
+              "url": "https://thehackernews.com/2026/07/identity-lifecycle-management.html",
+              "label": "The Hacker News"
+            }
+          ],
+          "url": "https://thehackernews.com/2026/07/identity-lifecycle-management.html",
+          "pubDate": "2026-07-02T11:30:00.000Z"
+        },
+        {
+          "title": "How to Conduct a Successful Audit of AI-Driven Software Development",
+          "cve": null,
+          "severity": "culture",
+          "score": 59,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Signal de veille — SecurityWeek.\n\nA comprehensive audit of AI-assisted software development gives CISOs the visibility needed to quantify risk, strengthen governance, and balance innovation with security.\n\nAs AI-generated code becomes commonplace, CISOs need new audit strategies to measure developer practices, govern AI tool usage, and identify software risks before they reach production.\n\nSubscribe to the SecurityWeek Email Briefing for the latest cybersecurity threats, trends, and expert…",
+          "detail": "Signal de veille — SecurityWeek.\n\nA comprehensive audit of AI-assisted software development gives CISOs the visibility needed to quantify risk, strengthen governance, and balance innovation with security.\n\nAs AI-generated code becomes commonplace, CISOs need new audit strategies to measure developer practices, govern AI tool usage, and identify software risks before they reach production.\n\nSubscribe to the SecurityWeek Email Briefing for the latest cybersecurity threats, trends, and expert insights.\n\nSubscribe to the SecurityWeek Email Briefing to stay informed on the latest threats, trends, and technology, along with insightful columns from industry experts.\n\nJoin this live webinar as we break down why email-layer defenses alone can't keep pace with the modern phishing ecosystem, how agentic AI is changing the capacity equation for security teams, and more.\n\nThis year's summit will help organizations learn how to utilize tools, controls, and design models needed to properly secure cloud environments. Interact with leading solution providers and other end users facing similar challenges in securing a variety of cloud deployments.\n\nJames Phillips has been promoted to the role of Vice President, Cybersecurity Risk Management at AT&T.",
+          "action": null,
+          "sources": [
+            {
+              "url": "https://www.securityweek.com/how-to-conduct-a-successful-audit-of-ai-driven-software-development/",
+              "label": "SecurityWeek"
+            }
+          ],
+          "url": "https://www.securityweek.com/how-to-conduct-a-successful-audit-of-ai-driven-software-development/",
+          "pubDate": "2026-07-02T13:15:00.000Z"
+        },
+        {
+          "title": "Cybersecurity Mission Creep in the US",
+          "cve": null,
+          "severity": "critical",
+          "score": 59,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Signal de veille — Schneier on Sec..\n\nInteresting paper: &#8220; Cybersecurity Mission Creep .&#8221; Abstract: Cybersecurity is experiencing mission creep. Policymakers are casting more and more problems as issues of cybersecurity. So reframed, wildly different policy issues, from misinformation, to child social media safety laws, to antitrust regulations, to alleged journalist misconduct, to anti-sex trafficking statutes become what this Article calls &#8220;cybersecuritized.&#8221; Before t…",
+          "detail": "Signal de veille — Schneier on Sec..\n\nInteresting paper: &#8220; Cybersecurity Mission Creep .&#8221; Abstract: Cybersecurity is experiencing mission creep. Policymakers are casting more and more problems as issues of cybersecurity. So reframed, wildly different policy issues, from misinformation, to child social media safety laws, to antitrust regulations, to alleged journalist misconduct, to anti-sex trafficking statutes become what this Article calls &#8220;cybersecuritized.&#8221; Before this reframing, these issues present as important but not existential. But once cybersecuritization positions the issues as threats intensified by their technological nature, they gain access to the politics and law of urgency and exceptionalism and invite troubling governance responses. Positioned as security threats, cybersecuritized issues become endowed with the apparent normative power to override countervailing considerations, oversimplifying the problem. Cybersecuritization&#8217;s oversimplification similarly risks unidimensional solutions and invites use of argumentative trump cards, like First Amendment challenges. Cybersecuritization also invites deference to purported specialists and their proposed solutions. Together, the reductive tendencies of cybersecuritization and the deference it prompts to specialists renders ultimate governance choices more opaque. And this opacity can erode public trust and political legit",
+          "action": null,
+          "sources": [
+            {
+              "url": "https://www.schneier.com/blog/archives/2026/07/cybersecurity-mission-creep-in-the-us.html",
+              "label": "Schneier on Sec."
+            }
+          ],
+          "url": "https://www.schneier.com/blog/archives/2026/07/cybersecurity-mission-creep-in-the-us.html",
+          "pubDate": "2026-07-02T11:11:44.000Z"
+        },
+        {
+          "title": "Trump Administration Lifts Restrictions on Anthropic’s Claude Models After Cybersecurity Alarm",
+          "cve": null,
+          "severity": "culture",
+          "score": 59,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Signal de veille — SecurityWeek.\n\nAnthropic said Tuesday night that its AI model called Claude Fable 5 is now widely available. The post Trump Administration Lifts Restrictions on Anthropic’s Claude Models After Cybersecurity Alarm appeared first on SecurityWeek .",
+          "detail": "Signal de veille — SecurityWeek.\n\nAnthropic said Tuesday night that its AI model called Claude Fable 5 is now widely available. The post Trump Administration Lifts Restrictions on Anthropic’s Claude Models After Cybersecurity Alarm appeared first on SecurityWeek .",
+          "action": null,
+          "sources": [
+            {
+              "url": "https://www.securityweek.com/trump-administration-lifts-restrictions-on-anthropics-claude-models-after-cybersecurity-alarm/",
+              "label": "SecurityWeek"
+            }
+          ],
+          "url": "https://www.securityweek.com/trump-administration-lifts-restrictions-on-anthropics-claude-models-after-cybersecurity-alarm/",
+          "pubDate": "2026-07-02T11:01:48.000Z"
+        },
+        {
+          "title": "Affaire YggTorrent : la gendarmerie française annonce le démantèlement du site, trois mois après sa fermeture",
+          "cve": null,
+          "severity": "culture",
+          "score": 55,
+          "corroboration": 1,
+          "region": "fr",
+          "body": "Signal de veille — Numerama.\n\nTrois mois après l'effondrement d'YggTorrent, la Gendarmerie nationale revendique le démantèlement de la plateforme et douze interpellations. Un communiqué qui referme un dossier judiciaire, mais qui n'a pas manqué de faire tiquer une partie des internautes.",
+          "detail": "Signal de veille — Numerama.\n\nTrois mois après l'effondrement d'YggTorrent, la Gendarmerie nationale revendique le démantèlement de la plateforme et douze interpellations. Un communiqué qui referme un dossier judiciaire, mais qui n'a pas manqué de faire tiquer une partie des internautes. C’est un communiqué qui a de quoi surprendre : ce jeudi 2\n\nAmine Baba Aissa Amine Baba Aissa 2 min 2 min Amine Baba Aissa Amine Baba Aissa Ne plus voir cette pub Lecture Zen Résumer l'article Résumé de l'article Résumé par IA, vérifié par Numerama\n\nNous générons pour vous un résumé de l’article grâce à une IA et nous le vérifions afin de nous assurer qu’il n’y ait aucune erreur, pour garantir l’authenticité de l’info.\n\nRecevez tous les soirs un résumé de l’actu importante avec Le Récap’\n\nC’est un communiqué qui a de quoi surprendre : ce jeudi 2 juillet 2026, la Gendarmerie nationale annonce avoir « mis fin aux activités de la structure pilotant YGGTORRENT ».\n\nSauf qu&rsquo;YggTorrent, l’un des plus gros annuaires BitTorrent francophones, a déjà disparu depuis mars 2026, et qu’une toute autre histoire avait alors expliqué sa chute.\n\nIl faut revenir à la nuit du 3 au 4 mars 2026 pour comprendre ce décalage de versions. À cette époque, l’effondrement d’YggTorrent est revendiqué par un individu se faisant appeler Gr0lum. Ce dernier reprochait à la direction du site d’avoir imposé, en décembre 2025, un mode payant limitant les téléchargements gratuits et provoquant la révolte des principaux pourvoyeurs de contenus. Le hacker avait alors exfiltré et publié une masse de données compromettantes sur l’organisation interne du site, ses finances et ses pratiques douteuses (cartes bancaires stockées, fausses identités, blanchiment présumé), tout en épargnant les données des utilisateurs.",
+          "action": null,
+          "sources": [
+            {
+              "url": "https://www.numerama.com/tech/2290013-affaire-yggtorrent-la-gendarmerie-francaise-annonce-le-demantelement-du-site-trois-mois-apres-sa-fermeture.html",
+              "label": "Numerama"
+            }
+          ],
+          "url": "https://www.numerama.com/tech/2290013-affaire-yggtorrent-la-gendarmerie-francaise-annonce-le-demantelement-du-site-trois-mois-apres-sa-fermeture.html",
+          "pubDate": "2026-07-02T15:22:38.000Z"
+        },
+        {
+          "title": "Numeum renouvelle sa gouvernance : les entrants, les sortants",
+          "cve": null,
+          "severity": "high",
+          "score": 53,
+          "corroboration": 1,
+          "region": "fr",
+          "body": "Signal de veille — Silicon.fr.\n\nMehdi Houas Après trois ans à la présidence de Numeum; Véronique Torner passe le témoin à Mehdi Houas , élu ce 1 er juillet. L&rsquo;intéressé est président-fondateur de Talan. Il fut, entre janvier et décembre 2011, ministre du Commerce et du Tourisme de Tunisie. Administrateur de Numeum depuis 2017, il avait jusque-là présidé les commissions « Finance et Fiscalité » et « Industrie ».",
+          "detail": "Signal de veille — Silicon.fr.\n\nMehdi Houas Après trois ans à la présidence de Numeum; Véronique Torner passe le témoin à Mehdi Houas , élu ce 1 er juillet. L&rsquo;intéressé est président-fondateur de Talan. Il fut, entre janvier et décembre 2011, ministre du Commerce et du Tourisme de Tunisie. Administrateur de Numeum depuis 2017, il avait jusque-là présidé les commissions « Finance et Fiscalité » et « Industrie ». Deux nouveaux venus au conseil d&rsquo;administration Mi-juin, le syndicat professionnel &#8211; né de la fusion de Syntec Numérique et de TECH IN France &#8211; avait renouvelé partiellement son conseil d&rsquo;administration. Résultat : douze élus pour un mandat de 3 ans&#8230; dont deux nouveaux venus : Homéric de Sarthe et France Titin-Snaider . Homéric de Sarthe est au collège éditeurs/plateformes de Numeum en tant que directeur général de Craft AI. France Titin-Snaider est au collège ESN/ICT, en qualité de directrice impact et RSE chez Harington. Homéric de Sarthe et France Titin-Snaider Des administrateurs récemment cooptés&#8230; et confirmés Des 12 élus, trois avaient été cooptés en février 2026 . En l&rsquo;occurrence : Anne-Gaëlle Chasles (DG services financiers d&rsquo;IBM France) Térence Goudriaan (directeur télécoms, luxe, énergie et BU distribution France chez Capgemini) Bruno Vaffier (DG de Cegid) Anne-Gaëlle Chasles, Térence Goudriaan et Bruno Vaffier Éric Blazy Un autre l&rsquo;",
+          "action": null,
+          "sources": [
+            {
+              "url": "https://www.silicon.fr/business-1367/numeum-renouvelle-gouvernance-228100",
+              "label": "Silicon.fr"
+            }
+          ],
+          "url": "https://www.silicon.fr/business-1367/numeum-renouvelle-gouvernance-228100",
+          "pubDate": "2026-07-02T10:09:59.000Z"
+        }
+      ]
+    }
+  ]
+}
