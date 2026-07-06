@@ -398,16 +398,34 @@ const excerpt = (t) => (t || "").replace(/\s*\n+\s*/g, " ").trim();
 // URL d'image sûre (https only — déjà validé côté schéma, double garde ici).
 const safeImg = (u) => (u && /^https:\/\//i.test(u) ? u : null);
 
-// Visuel d'une carte : image si disponible, sinon placeholder dégradé selon la
-// gravité. Le placeholder est toujours rendu derrière l'image ; si l'image échoue
-// (onerror), elle se retire et le placeholder réapparaît. Le score est en surimpression.
+// Domaine (hôte) de la source principale d'un item.
+function sourceHost(item) {
+  try {
+    return new URL(item.sources?.[0]?.url || "").hostname.replace(/^www\./, "");
+  } catch {
+    return "";
+  }
+}
+// Logo du média via le service de favicons (taille normalisée) — repli universel
+// quand l'article n'a pas d'image de couverture.
+const faviconURL = (host) =>
+  `https://www.google.com/s2/favicons?domain=${encodeURIComponent(host)}&sz=128`;
+
+// Visuel d'une carte, en cascade : image de couverture (og:image) → logo du média
+// (favicon) → nom de la source. Chaque niveau est rendu derrière le suivant ;
+// si l'image de couverture échoue (onerror), elle se retire et le repli réapparaît.
+// Le score reste en surimpression.
 function mediaHTML(item) {
   const sev = (item.severity || "news").toLowerCase();
   const score = item.score ?? 0;
   const img = safeImg(item.image);
-  const kicker = item.cve || item.sources?.[0]?.label || "Veille";
+  const host = sourceHost(item);
+  const label = item.sources?.[0]?.label || "Veille";
   return `<div class="card-media sev-${sev}">
-    <span class="card-ph">${esc(kicker)}</span>
+    <div class="card-ph">
+      ${host ? `<img class="card-logo" src="${esc(faviconURL(host))}" alt="" loading="lazy" onerror="this.remove()">` : ""}
+      <span class="card-ph-label">${esc(label)}</span>
+    </div>
     ${img ? `<img class="card-img" src="${esc(img)}" alt="" loading="lazy" onerror="this.remove()">` : ""}
     <span class="card-score ${scoreClass(score)}" title="Score d'importance">${score}</span>
   </div>`;
@@ -563,9 +581,15 @@ function renderDetail(item) {
 
   const bodyHTML = paragraphs(item.detail || item.body || "", "");
   const img = safeImg(item.image);
-  const mediaHTML = img
-    ? `<figure class="detail-media"><img src="${esc(img)}" alt="" loading="lazy" onerror="this.closest('.detail-media').remove()"></figure>`
-    : "";
+  const host = sourceHost(item);
+  // Même cascade que les cartes : couverture → logo du média → nom de la source.
+  const detailMedia = img
+    ? `<figure class="detail-media sev-${sev}"><img class="detail-img" src="${esc(img)}" alt="" loading="lazy" onerror="this.closest('.detail-media').classList.add('detail-media-ph')">
+        <span class="detail-media-src">${esc(item.sources?.[0]?.label || "")}</span></figure>`
+    : `<figure class="detail-media detail-media-ph sev-${sev}">
+        ${host ? `<img class="card-logo" src="${esc(faviconURL(host))}" alt="" loading="lazy" onerror="this.remove()">` : ""}
+        <span class="card-ph-label">${esc(item.sources?.[0]?.label || "Veille")}</span>
+      </figure>`;
 
   return `<div class="detail-view fade-in">
     <div class="detail-header">
@@ -575,7 +599,7 @@ function renderDetail(item) {
       </div>
       <h1 class="detail-title">${esc(item.title)}</h1>
     </div>
-    ${mediaHTML}
+    ${detailMedia}
     ${factsHTML(item)}
     ${
       bodyHTML
