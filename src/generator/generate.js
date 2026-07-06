@@ -185,6 +185,7 @@ export async function generateReport(type, dateISO = todayISO()) {
         body: it.body,
         detail: it.detail ?? null,
         action: it.action ?? null,
+        image: it.image ?? null,
         sources: it.sources ?? [],
         url: it.sources?.[0]?.url ?? null,
         pubDate: it.pubDate ? new Date(it.pubDate).toISOString() : null,

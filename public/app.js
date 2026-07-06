@@ -392,28 +392,70 @@ function bylineHTML(item) {
   return chips + more;
 }
 
-function feedItemHTML(item) {
+// Extrait de preview compacté (paragraphes → une seule coulée, le CSS gère le clamp).
+const excerpt = (t) => (t || "").replace(/\s*\n+\s*/g, " ").trim();
+
+// URL d'image sûre (https only — déjà validé côté schéma, double garde ici).
+const safeImg = (u) => (u && /^https:\/\//i.test(u) ? u : null);
+
+// Visuel d'une carte : image si disponible, sinon placeholder dégradé selon la
+// gravité. Le placeholder est toujours rendu derrière l'image ; si l'image échoue
+// (onerror), elle se retire et le placeholder réapparaît. Le score est en surimpression.
+function mediaHTML(item) {
   const sev = (item.severity || "news").toLowerCase();
   const score = item.score ?? 0;
+  const img = safeImg(item.image);
+  const kicker = item.cve || item.sources?.[0]?.label || "Veille";
+  return `<div class="card-media sev-${sev}">
+    <span class="card-ph">${esc(kicker)}</span>
+    ${img ? `<img class="card-img" src="${esc(img)}" alt="" loading="lazy" onerror="this.remove()">` : ""}
+    <span class="card-score ${scoreClass(score)}" title="Score d'importance">${score}</span>
+  </div>`;
+}
+
+function cardTagsHTML(item, sev) {
   const corro = item.corroboration || 1;
+  return `<div class="card-tags">
+    <span class="pill ${sev}">${SEV_LABELS[sev] || "Info"}</span>
+    ${item.cve ? `<span class="cve">${esc(item.cve)}</span>` : ""}
+    ${corro >= 2 ? `<span class="card-corro" title="Information recoupée par plusieurs médias">✓ ${corro}</span>` : ""}
+  </div>`;
+}
+
+function cardFootHTML(item) {
   const date = frDateFull(item.pubDate);
   const rel = relativeTime(item.pubDate);
   const dateTxt = [date, rel].filter(Boolean).join(" · ");
+  return `<div class="card-foot">
+    ${bylineHTML(item)}
+    ${dateTxt ? `<span class="card-date">${esc(dateTxt)}</span>` : ""}
+  </div>`;
+}
 
-  return `<article class="feed-item sev-${sev}" tabindex="0" role="button">
-    <div class="fi-head">
-      <div class="fi-tags">
-        <span class="pill ${sev}">${SEV_LABELS[sev] || "Info"}</span>
-        ${item.cve ? `<span class="cve">${esc(item.cve)}</span>` : ""}
-        ${corro >= 2 ? `<span class="fi-corro" title="Information recoupée par plusieurs médias">✓ ${corro} sources</span>` : ""}
-      </div>
-      <span class="fi-score ${scoreClass(score)}" title="Score d'importance">${score}</span>
+// Carte standard (grille).
+function cardHTML(item) {
+  const sev = (item.severity || "news").toLowerCase();
+  return `<article class="card sev-${sev}" tabindex="0" role="button">
+    ${mediaHTML(item)}
+    <div class="card-body">
+      ${cardTagsHTML(item, sev)}
+      <h3 class="card-title">${esc(item.title)}</h3>
+      ${item.body ? `<p class="card-excerpt">${esc(excerpt(item.body))}</p>` : ""}
+      ${cardFootHTML(item)}
     </div>
-    <h3 class="fi-title">${esc(item.title)}</h3>
-    ${item.body ? `<div class="fi-excerpt">${paragraphs(item.body, "fi-p")}</div>` : ""}
-    <div class="fi-foot">
-      ${bylineHTML(item)}
-      ${dateTxt ? `<span class="fi-date">${esc(dateTxt)}</span>` : ""}
+  </article>`;
+}
+
+// Carte « à la une » (1er article, pleine largeur : visuel + texte côte à côte).
+function heroHTML(item) {
+  const sev = (item.severity || "news").toLowerCase();
+  return `<article class="card hero sev-${sev}" tabindex="0" role="button">
+    ${mediaHTML(item)}
+    <div class="card-body">
+      ${cardTagsHTML(item, sev)}
+      <h3 class="card-title">${esc(item.title)}</h3>
+      ${item.body ? `<p class="card-excerpt">${esc(excerpt(item.body))}</p>` : ""}
+      ${cardFootHTML(item)}
     </div>
   </article>`;
 }
@@ -422,13 +464,22 @@ function renderFeed(rep) {
   const items = getFilteredItems(rep);
   if (!items.length)
     return '<div class="feed-empty">Aucun article dans cette section.</div>';
-  return `<div class="feed">${items.map(feedItemHTML).join("")}</div>`;
+  // En vue « Tous » (hors recherche), le 1er article passe en « une ».
+  const heroEligible = !STATE.query.trim() && STATE.sectionFilter === "all";
+  if (heroEligible && items.length > 1) {
+    const [first, ...rest] = items;
+    return `<div class="feed">
+      ${heroHTML(first)}
+      <div class="card-grid">${rest.map(cardHTML).join("")}</div>
+    </div>`;
+  }
+  return `<div class="feed"><div class="card-grid">${items.map(cardHTML).join("")}</div></div>`;
 }
 
 function bindCards(rep) {
   const items = getFilteredItems(rep);
   $("#main")
-    .querySelectorAll(".feed-item")
+    .querySelectorAll(".card")
     .forEach((el, i) => {
       const open = () => showDetail(items[i], rep);
       el.onclick = open;
@@ -511,6 +562,10 @@ function renderDetail(item) {
     .join("");
 
   const bodyHTML = paragraphs(item.detail || item.body || "", "");
+  const img = safeImg(item.image);
+  const mediaHTML = img
+    ? `<figure class="detail-media"><img src="${esc(img)}" alt="" loading="lazy" onerror="this.closest('.detail-media').remove()"></figure>`
+    : "";
 
   return `<div class="detail-view fade-in">
     <div class="detail-header">
@@ -520,6 +575,7 @@ function renderDetail(item) {
       </div>
       <h1 class="detail-title">${esc(item.title)}</h1>
     </div>
+    ${mediaHTML}
     ${factsHTML(item)}
     ${
       bodyHTML

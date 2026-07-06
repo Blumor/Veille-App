@@ -34,6 +34,7 @@ export function normalizeReport(parsed, type, dateISO) {
           body:     clean(it.body),
           detail:   it.detail ? clean(it.detail) : null,
           action:   clean(it.action) || null,
+          image:    it.image && /^https:\/\//i.test(it.image) ? clean(it.image) : null,
           sources:  normalizeSources(it.sources, it.url),
           url:      clean(it.url) || (it.sources?.[0]?.url ? clean(it.sources[0].url) : null),
           pubDate:  it.pubDate ? clean(it.pubDate) : null,

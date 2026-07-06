@@ -72,18 +72,29 @@ function truncateAtSentence(text, max) {
   return dot > max * 0.5 ? cut.slice(0, dot + 1) : cut.trim() + "…";
 }
 
-// Récupère un texte enrichi depuis la page : og:description + premiers paragraphes.
-async function fetchRichText(url) {
-  const res = await fetch(url, {
-    headers: UA,
-    redirect: "follow",
-    signal: AbortSignal.timeout(TIMEOUT),
-  });
-  if (!res.ok) return null;
-  const ctype = res.headers.get("content-type") || "";
-  if (!ctype.includes("html")) return null;
-  const html = await res.text();
+// Image d'illustration : og:image (ou twitter:image), résolue en URL absolue.
+// HTTPS uniquement (le site est publié en https → évite le blocage « mixed content »),
+// hors SVG (souvent des logos/pictogrammes, pas des visuels d'article).
+function extractImage(html, pageUrl) {
+  const raw =
+    metaContent(html, "og:image") ||
+    metaContent(html, "og:image:url") ||
+    metaContent(html, "twitter:image") ||
+    metaContent(html, "twitter:image:src");
+  if (!raw) return null;
+  let abs;
+  try {
+    abs = new URL(raw, pageUrl).href;
+  } catch {
+    return null;
+  }
+  if (!/^https:\/\//i.test(abs)) return null;
+  if (/\.svg(\?|#|$)/i.test(abs)) return null;
+  return abs;
+}
 
+// Texte enrichi : og:description + premiers paragraphes significatifs.
+function extractText(html) {
   const desc =
     metaContent(html, "og:description") || metaContent(html, "description");
 
@@ -104,6 +115,20 @@ async function fetchRichText(url) {
   return rich.length > 80 ? rich : null;
 }
 
+// Récupère la page une seule fois et en extrait texte + image d'illustration.
+async function fetchPage(url) {
+  const res = await fetch(url, {
+    headers: UA,
+    redirect: "follow",
+    signal: AbortSignal.timeout(TIMEOUT),
+  });
+  if (!res.ok) return null;
+  const ctype = res.headers.get("content-type") || "";
+  if (!ctype.includes("html")) return null;
+  const html = await res.text();
+  return { text: extractText(html), image: extractImage(html, res.url || url) };
+}
+
 // Petit pool de concurrence borné.
 async function pool(items, size, worker) {
   let i = 0;
@@ -120,8 +145,9 @@ async function pool(items, size, worker) {
 }
 
 /**
- * Enrichit en place le `body` (preview) et le `detail` des items affichés en récupérant le texte
- * sur la page source.
+ * Enrichit en place les items affichés à partir de leur page source :
+ *  - `image` : visuel d'illustration (og:image) pour toutes les cartes (rendu façon presse) ;
+ *  - `body` (preview) + `detail` : complétés uniquement si la description est trop maigre.
  * Tolérant : en cas d'échec (blocage, page JS, timeout), l'item est laissé tel quel.
  * @param {object[]} items  items déjà rédigés (avec `lead`, `detail`, `sources`)
  */
@@ -130,20 +156,31 @@ export async function enrichDetails(items) {
     (it) =>
       it &&
       it.section !== "synthese" &&
-      (it.detail || "").length < MIN_DETAIL &&
       isPublicHttpUrl(it.sources?.[0]?.url || ""),
   );
   if (!targets.length) return items;
 
   await pool(targets, CONCURRENCY, async (it) => {
     try {
-      const rich = await fetchRichText(it.sources[0].url);
-      if (!rich || rich.length <= (it.detail || "").length) return;
-      const lead = it.lead ? it.lead.trim() : "";
-      it.detail = (lead ? `${lead}\n\n${rich}` : rich).slice(0, 1800);
-      it.body = lead
-        ? `${lead}\n\n${truncateAtSentence(rich, 460)}`
-        : truncateAtSentence(rich, 460);
+      const page = await fetchPage(it.sources[0].url);
+      if (!page) return;
+
+      // Image : récupérée pour toutes les cartes (le front gère l'absence).
+      if (page.image && !it.image) it.image = page.image;
+
+      // Texte : seulement si le detail existant est trop court.
+      const rich = page.text;
+      if (
+        rich &&
+        (it.detail || "").length < MIN_DETAIL &&
+        rich.length > (it.detail || "").length
+      ) {
+        const lead = it.lead ? it.lead.trim() : "";
+        it.detail = (lead ? `${lead}\n\n${rich}` : rich).slice(0, 1800);
+        it.body = lead
+          ? `${lead}\n\n${truncateAtSentence(rich, 460)}`
+          : truncateAtSentence(rich, 460);
+      }
     } catch {
       /* page inaccessible → on garde l'original */
     }
