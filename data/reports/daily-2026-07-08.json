@@ -1,0 +1,1057 @@
+{
+  "id": "daily-2026-07-08",
+  "type": "daily",
+  "date": "2026-07-08",
+  "title": "Rapport quotidien - mercredi 8 juillet 2026",
+  "summary": "Sur les dernières 24 heures, la veille recense 25 vulnérabilités critiques, 38 incidents ou compromissions et 20 signaux de fond. Acteurs et produits les plus exposés : Microsoft, better-auth (npm) et Google.",
+  "generatedAt": "2026-07-08T04:01:30.811Z",
+  "sections": [
+    {
+      "id": "vulns",
+      "items": [
+        {
+          "title": "Better Auth has stored XSS in the auth-server origin via javascript: redirect_uri in oidc-provider and mcp",
+          "cve": null,
+          "severity": "high",
+          "score": 60,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Vulnérabilité élevée affectant better-auth (npm) (score CVSS 8.3).\n\n@better-auth/scim: Account/provider takeover via missing owner binding on non-org SCIM providers\n\n--> Name Query To see all available qualifiers, see our documentation .\n\nThe SCIM management endpoints first shipped in 1.5.0 , so every stable release from 1.5.0 onward is affected, and the stable line is not patched.",
+          "detail": "Vulnérabilité élevée affectant better-auth (npm) (score CVSS 8.3).\n\n@better-auth/scim: Account/provider takeover via missing owner binding on non-org SCIM providers\n\n--> Name Query To see all available qualifiers, see our documentation .\n\nThe SCIM management endpoints first shipped in 1.5.0 , so every stable release from 1.5.0 onward is affected, and the stable line is not patched. On the pre-release line, builds through 1.7.0-beta.3 are affected, and 1.7.0-beta.4 carries the fix.\n\n@better-auth/scim does not bind non-organization SCIM providers to their creator in the default configuration. Any authenticated user can manage another user's non-org provider, including reading its metadata, listing connections, regenerating its SCIM bearer token, and deleting the connection. Regenerating the token rotates it: the legitimate token stops working and the attacker holds a valid one.\n\nThe plugin tracks provider ownership through an opt-in providerOwnership option and a scimProvider.userId column. Both default to off. When ownership is disabled, a non-org provider row is created without a userId , and the management access check denies access only when a stored owner id is present and differs from the caller:\n\nThe most sensitive operation is token regeneration. If Alice creates a non-org provider corp-idp , Bob can call the same generate-token endpoint with providerId: \"corp-idp\" . The existing row passes the ownerless access check, so the plugin deletes it, creates a fresh row, and returns a new SCIM bearer token to Bob. Alice's previous token is now invalid, and Bob's token authenticates against that provider's SCIM API routes.\n\nThis requires no organization membership and no elevated role. It is reachable in the default scim() configuration whenever non-organization providers",
+          "action": "Vérifier l'exposition du parc et appliquer le correctif éditeur dès sa disponibilité.",
+          "image": "https://github.githubassets.com/assets/advisory-database-show-f32c8207dfb2.png",
+          "sources": [
+            {
+              "url": "https://github.com/advisories/GHSA-j8v8-g9cx-5qf4",
+              "label": "GitHub Advisory"
+            }
+          ],
+          "url": "https://github.com/advisories/GHSA-j8v8-g9cx-5qf4",
+          "pubDate": "2026-07-07T20:57:05.000Z"
+        },
+        {
+          "title": "CVE-2026-59705 — mem0's openmemory/api component contains an unauthenticated access vulnerability that allo…",
+          "cve": "CVE-2026-59705",
+          "severity": "critical",
+          "score": 59,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Vulnérabilité critique CVE-2026-59705 (score CVSS 9.8).\n\nmem0's openmemory/api component contains an unauthenticated access vulnerability that allows unauthenticated attackers to read, write, and delete arbitrary user memories by accessing API routers registered without authentication middleware.",
+          "detail": "Vulnérabilité critique CVE-2026-59705 (score CVSS 9.8).\n\nmem0's openmemory/api component contains an unauthenticated access vulnerability that allows unauthenticated attackers to read, write, and delete arbitrary user memories by accessing API routers registered without authentication middleware. Attackers can supply arbitrary user_id parameters or directly access memory retrieval endpoints to expose private memory content, or invoke pause endpoints with global_pause=true to cause denial-of-service across all users.\n\nScore CVSS : 9.8\n\nType de faiblesse (CWE) : CWE-306",
+          "action": "Vérifier l'exposition du parc et appliquer le correctif éditeur dès sa disponibilité.",
+          "image": null,
+          "sources": [
+            {
+              "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-59705",
+              "label": "NVD"
+            },
+            {
+              "url": "https://www.cvedetails.com/cve/CVE-2026-59705/",
+              "label": "CVE Details"
+            }
+          ],
+          "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-59705",
+          "pubDate": "2026-07-07T23:16:55.997Z"
+        },
+        {
+          "title": "CVE-2026-14345 — The WPFunnels – Funnel Builder for WooCommerce with Checkout & One Click Upsell plugin for…",
+          "cve": "CVE-2026-14345",
+          "severity": "critical",
+          "score": 59,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Vulnérabilité critique CVE-2026-14345 (score CVSS 9.8).\n\nThe WPFunnels – Funnel Builder for WooCommerce with Checkout & One Click Upsell plugin for WordPress is vulnerable to Remote Code Execution in all versions up to, and including, 3.12.7 via the 'postData' parameter parameter. This is due to unsanitized write of attacker-controlled postData values into a PHP-includeable .log file combined with the use of include_once to render that file in wpfnl_show_log.",
+          "detail": "Vulnérabilité critique CVE-2026-14345 (score CVSS 9.8).\n\nThe WPFunnels – Funnel Builder for WooCommerce with Checkout & One Click Upsell plugin for WordPress is vulnerable to Remote Code Execution in all versions up to, and including, 3.12.7 via the 'postData' parameter parameter. This is due to unsanitized write of attacker-controlled postData values into a PHP-includeable .log file combined with the use of include_once to render that file in wpfnl_show_log. This makes it possible for unauthenticated attackers to execute code on the server. Exploitation requires that the Log Settings \"Enable Logs\" toggle is on and that an administrator subsequently opens the polluted log file via the plugin's Log Settings View UI; however, the nonce required to reach the optin endpoint is publicly emitted on every funnel step page, so the injection step itself is fully unauthenticated.\n\nScore CVSS : 9.8\n\nType de faiblesse (CWE) : CWE-434",
+          "action": "Vérifier l'exposition du parc et appliquer le correctif éditeur dès sa disponibilité.",
+          "image": null,
+          "sources": [
+            {
+              "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-14345",
+              "label": "NVD"
+            },
+            {
+              "url": "https://www.cvedetails.com/cve/CVE-2026-14345/",
+              "label": "CVE Details"
+            }
+          ],
+          "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-14345",
+          "pubDate": "2026-07-07T06:16:22.113Z"
+        },
+        {
+          "title": "CVE-2026-53552 — Goploy: Cross-namespace IDOR and RCE via body-supplied row id in project and project_file handlers",
+          "cve": "CVE-2026-53552",
+          "severity": "critical",
+          "score": 58,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Vulnérabilité critique CVE-2026-53552 affectant github.com/zhenorzz/goploy (go) (score CVSS 9.6).\n\nGoploy: Cross-namespace IDOR and RCE via body-supplied row id in project and project_file handlers\n\n--> Name Query To see all available qualifiers, see our documentation .\n\nzhenorzz/goploy develop HEAD as of 2026-05-27. Verified against the zhenorzz/goploy:1.17.5 Docker image ( docker.io/zhenorzz/goploy@sha256:69d08e1d16d7a7167426c89456c4bcef8e077a16554a4067ff258fff26d5cd44 ).\n\nThe four handlers and the model lookups have been in this shape across the file…",
+          "detail": "Vulnérabilité critique CVE-2026-53552 affectant github.com/zhenorzz/goploy (go) (score CVSS 9.6).\n\nGoploy: Cross-namespace IDOR and RCE via body-supplied row id in project and project_file handlers\n\n--> Name Query To see all available qualifiers, see our documentation .\n\nzhenorzz/goploy develop HEAD as of 2026-05-27. Verified against the zhenorzz/goploy:1.17.5 Docker image ( docker.io/zhenorzz/goploy@sha256:69d08e1d16d7a7167426c89456c4bcef8e077a16554a4067ff258fff26d5cd44 ).\n\nThe four handlers and the model lookups have been in this shape across the file API and project metadata API.\n\ncmd/server/api/project/handler.go::AddFile (creates file under any project's directory; body controls projectId ):\n\nAdd a namespace-scoped variant of GetData so the model layer requires (id, namespace_id) and switch the four handlers over.\n\nsql.ErrNoRows from the namespace-scoped lookup becomes the correct denial for any cross-namespace id. The same pattern should be applied to other body-id consumers in this file ( Remove , SetAutoDeploy , UploadFile , AddTask , EditProcess , etc.) but the four endpoints above are the immediately exploitable ones.",
+          "action": "Vérifier l'exposition du parc et appliquer le correctif éditeur dès sa disponibilité.",
+          "image": "https://github.githubassets.com/assets/advisory-database-show-f32c8207dfb2.png",
+          "sources": [
+            {
+              "url": "https://github.com/advisories/GHSA-26rh-24rg-j3vv",
+              "label": "GitHub Advisory"
+            }
+          ],
+          "url": "https://github.com/advisories/GHSA-26rh-24rg-j3vv",
+          "pubDate": "2026-07-07T23:42:12.000Z"
+        },
+        {
+          "title": "CVE-2026-53513 — @better-auth/sso provider registration has server-side request forgery via unvalidated OIDC endpoints",
+          "cve": "CVE-2026-53513",
+          "severity": "critical",
+          "score": 58,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Vulnérabilité critique CVE-2026-53513 affectant @better-auth/sso (npm) (score CVSS 9.6).\n\n@better-auth/sso provider registration has server-side request forgery via unvalidated OIDC endpoints\n\n--> Name Query To see all available qualifiers, see our documentation .\n\nFor the non-blind SSRF impact (full IAM credential or internal HTTP body exfiltration), no further configuration is required.\n\nIf developers do not enable the SSO plugin, their application is not affected.\n\nThe @better-auth/sso plugin's POST /sso/register endpoint accepts attacker-co…",
+          "detail": "Vulnérabilité critique CVE-2026-53513 affectant @better-auth/sso (npm) (score CVSS 9.6).\n\n@better-auth/sso provider registration has server-side request forgery via unvalidated OIDC endpoints\n\n--> Name Query To see all available qualifiers, see our documentation .\n\nFor the non-blind SSRF impact (full IAM credential or internal HTTP body exfiltration), no further configuration is required.\n\nIf developers do not enable the SSO plugin, their application is not affected.\n\nThe @better-auth/sso plugin's POST /sso/register endpoint accepts attacker-controlled oidcConfig.userInfoEndpoint , tokenEndpoint , and jwksEndpoint URLs when skipDiscovery: true is set, persists them on the ssoProvider row without origin validation, then issues server-side fetches to those URLs during the OIDC callback. The fetched response body is reflected through the user profile, producing a non-blind SSRF reachable by any authenticated session. The same primitive exists on POST /sso/update-provider .\n\nThe schema field types accept bare strings: no .url() validator, no origin gate. The discovery branch ( skipDiscovery: false ) routes URLs through validateDiscoveryUrl ; the skip-discovery branch persists them as-is. At callback time three fetch sites read the stored URLs: validateAuthorizationCode for the token endpoint, betterFetch for the userInfo endpoint, and validateToken for the JWKS endpoint.\n\nWhen trustEmailVerified: true is configured, the attacker can escalate to account linking. A malicious userInfo response with emailVerified: true and a chosen email triggers OAuth auto-link against any pre-existing user row with that email, compounding the SSRF into account takeover.",
+          "action": "Vérifier l'exposition du parc et appliquer le correctif éditeur dès sa disponibilité.",
+          "image": "https://github.githubassets.com/assets/advisory-database-show-f32c8207dfb2.png",
+          "sources": [
+            {
+              "url": "https://github.com/advisories/GHSA-5rr4-8452-hf4v",
+              "label": "GitHub Advisory"
+            }
+          ],
+          "url": "https://github.com/advisories/GHSA-5rr4-8452-hf4v",
+          "pubDate": "2026-07-07T20:56:19.000Z"
+        },
+        {
+          "title": "CVE-2026-59706 — mem0 contains unauthenticated config API endpoints that expose LLM API keys in plaintext a…",
+          "cve": "CVE-2026-59706",
+          "severity": "critical",
+          "score": 57,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Vulnérabilité critique CVE-2026-59706 (score CVSS 9.3).\n\nmem0 contains unauthenticated config API endpoints that expose LLM API keys in plaintext and allow server-side request forgery via attacker-controlled ollama_base_url parameter. Unauthenticated attackers can retrieve stored secrets like OpenAI API keys via GET /api/v1/config/ or trigger SSRF attacks by setting ollama_base_url to internal addresses like cloud IMDS via PUT /api/v1/config/mem0/llm endpoint.",
+          "detail": "Vulnérabilité critique CVE-2026-59706 (score CVSS 9.3).\n\nmem0 contains unauthenticated config API endpoints that expose LLM API keys in plaintext and allow server-side request forgery via attacker-controlled ollama_base_url parameter. Unauthenticated attackers can retrieve stored secrets like OpenAI API keys via GET /api/v1/config/ or trigger SSRF attacks by setting ollama_base_url to internal addresses like cloud IMDS via PUT /api/v1/config/mem0/llm endpoint.\n\nScore CVSS : 9.3\n\nType de faiblesse (CWE) : CWE-306",
+          "action": "Vérifier l'exposition du parc et appliquer le correctif éditeur dès sa disponibilité.",
+          "image": null,
+          "sources": [
+            {
+              "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-59706",
+              "label": "NVD"
+            },
+            {
+              "url": "https://www.cvedetails.com/cve/CVE-2026-59706/",
+              "label": "CVE Details"
+            }
+          ],
+          "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-59706",
+          "pubDate": "2026-07-07T22:16:54.503Z"
+        },
+        {
+          "title": "CVE-2026-58473 — Cognee before 1.2.0 contains an improper access control vulnerability that allows unauthen…",
+          "cve": "CVE-2026-58473",
+          "severity": "critical",
+          "score": 57,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Vulnérabilité critique CVE-2026-58473 (score CVSS 9.1).\n\nCognee before 1.2.0 contains an improper access control vulnerability that allows unauthenticated attackers to overwrite the global LLM provider configuration by self-registering an account and calling the settings endpoint, which performs no admin or superuser check.",
+          "detail": "Vulnérabilité critique CVE-2026-58473 (score CVSS 9.1).\n\nCognee before 1.2.0 contains an improper access control vulnerability that allows unauthenticated attackers to overwrite the global LLM provider configuration by self-registering an account and calling the settings endpoint, which performs no admin or superuser check. Attackers can redirect all LLM operations instance-wide to an attacker-controlled endpoint by exploiting the process-wide singleton configuration cache, enabling exfiltration of prompts, uploaded documents, extracted entities, and knowledge graph content from all users.\n\nScore CVSS : 9.1\n\nType de faiblesse (CWE) : CWE-306, CWE-862",
+          "action": "Vérifier l'exposition du parc et appliquer le correctif éditeur dès sa disponibilité.",
+          "image": null,
+          "sources": [
+            {
+              "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-58473",
+              "label": "NVD"
+            },
+            {
+              "url": "https://www.cvedetails.com/cve/CVE-2026-58473/",
+              "label": "CVE Details"
+            }
+          ],
+          "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-58473",
+          "pubDate": "2026-07-07T21:17:29.007Z"
+        },
+        {
+          "title": "CVE-2026-53512 — Better Auth: OAuth refresh-token replay via missing client authentication on oidc-provider and mcp plugins",
+          "cve": "CVE-2026-53512",
+          "severity": "critical",
+          "score": 57,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Vulnérabilité critique CVE-2026-53512 affectant better-auth (npm) (score CVSS 9.1).\n\nBetter Auth: OAuth refresh-token replay via missing client authentication on oidc-provider and mcp plugins\n\n--> Name Query To see all available qualifiers, see our documentation .\n\nIf an application only uses @better-auth/oauth-provider (the canonical replacement for oidc-provider ) and the mcp plugin is not enabled, it is not affected.\n\nThe legacy oidcProvider and mcp plugins each expose an OAuth 2.0 token endpoint whose refresh_token grant authenticates…",
+          "detail": "Vulnérabilité critique CVE-2026-53512 affectant better-auth (npm) (score CVSS 9.1).\n\nBetter Auth: OAuth refresh-token replay via missing client authentication on oidc-provider and mcp plugins\n\n--> Name Query To see all available qualifiers, see our documentation .\n\nIf an application only uses @better-auth/oauth-provider (the canonical replacement for oidc-provider ) and the mcp plugin is not enabled, it is not affected.\n\nThe legacy oidcProvider and mcp plugins each expose an OAuth 2.0 token endpoint whose refresh_token grant authenticates the request entirely on possession of the bound refreshToken row and a matching client_id . Neither plugin verifies the registered confidential client's client_secret on the refresh path. An attacker who obtains any valid refresh_token (via database read, log capture, browser-side XSS, or CORS-amplified script in the mcp case) and the public client_id can mint fresh access tokens and rotated refresh tokens until the chain is revoked.\n\nRFC 6749 §6 and OAuth 2.1 §4.3 require confidential clients to authenticate to the token endpoint on every grant, including refresh. The same plugins' authorization_code grant correctly enforces client_secret (the oidc-provider via verifyStoredClientSecret , the mcp plugin via raw equality), which proves the omission on the refresh path is a regression rather than a design choice.\n\nToken rotation issues a new refresh_token with each call, so a single leaked refresh-token grants indefinite access until the row is revoked or its refreshTokenExpiresAt (default 7 days) passes; rotation refreshes that window each call.\n\nTwo adjacent issues on the mcp surface ship in the same patch. The mcp authorization_code grant uses raw === for client-secret comparison and ignores the storeClientSecret: \"encrypted\" | \"hashe",
+          "action": "Vérifier l'exposition du parc et appliquer le correctif éditeur dès sa disponibilité.",
+          "image": "https://github.githubassets.com/assets/advisory-database-show-f32c8207dfb2.png",
+          "sources": [
+            {
+              "url": "https://github.com/advisories/GHSA-pw9m-5jxm-xr6h",
+              "label": "GitHub Advisory"
+            }
+          ],
+          "url": "https://github.com/advisories/GHSA-pw9m-5jxm-xr6h",
+          "pubDate": "2026-07-07T20:11:50.000Z"
+        },
+        {
+          "title": "Suspected Chinese espionage group used a Roundcube exploit chain to burrow into universities",
+          "cve": "CVE-2024-42009",
+          "severity": "critical",
+          "score": 51,
+          "corroboration": 2,
+          "region": "intl",
+          "body": "Vulnérabilité critique CVE-2024-42009.\n\nChina-aligned attackers broke into the networks of U.S. and Canadian universities to steal sensitive data and establish persistent access via webshells and backdoors, Proofpoint threat researchers said Tuesday. The espionage-motivated attacks targeted physics and engineering departments, focusing on administrators and professors with national security links or organizations researching astrophysics and particle physics.",
+          "detail": "Vulnérabilité critique CVE-2024-42009.\n\nChina-aligned attackers broke into the networks of U.S. and Canadian universities to steal sensitive data and establish persistent access via webshells and backdoors, Proofpoint threat researchers said Tuesday. The espionage-motivated attacks targeted physics and engineering departments, focusing on administrators and professors with national security links or organizations researching astrophysics and particle physics. Proofpoint identified less than 10 university victims and estimates a few dozen universities may be impacted, Greg Lesnewich, principal threat researcher at Proofpoint, told CyberScoop. The company first observed the campaign in May and believes the campaign is ongoing.&nbsp; “There is a high likelihood that many victims have not been made aware of this activity yet,” Lesnewich added. Researchers traced the attacks to a pair of critical vulnerabilities in Roundcube, an open-source email client, that were exploited and chained together to steal credentials and gain long-term access. The threat cluster, which Proofpoint tracks as UNK_MassTraction, exploited CVE-2024-42009 to execute JavaScript inside the victim’s browser, then exploited CVE-2025-49113 to gain a foothold in the mailserver.&nbsp; The initial exploit in the chain only requires a victim to open an email, and the attackers sent victims a series of generic lures to trigger the initial access. Proofpoint",
+          "action": "Vérifier l'exposition du parc et appliquer le correctif éditeur dès sa disponibilité.",
+          "image": "https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEitErUXjxgvdr7CLGa67wtfentIJSFkobxbyIMtQNK4mzNTyf_3Mq9mckQNCGONMFqVaCvkvNKf7FqJfevWKstiWEOxt5wDlV_Fus-Ob3bo9vkMb3m5natJZjHhG-0r4FbH5UUBP4aiGtLcJ7mFIIwLw7IPIHOqw5ln1kAC_ZsiOvllGmVXws4bCXBGugBu/s1600/server-hacker.jpg",
+          "sources": [
+            {
+              "url": "https://thehackernews.com/2026/07/suspected-china-aligned-hackers-exploit.html",
+              "label": "The Hacker News"
+            },
+            {
+              "url": "https://cyberscoop.com/china-espionage-attacks-us-canada-universities-proofpoint/",
+              "label": "CyberScoop"
+            }
+          ],
+          "url": "https://thehackernews.com/2026/07/suspected-china-aligned-hackers-exploit.html",
+          "pubDate": "2026-07-07T09:10:51.000Z"
+        },
+        {
+          "title": "Critical Gitea Docker Bug Under Active Exploitation Exposes Repositories and Secrets",
+          "cve": "CVE-2026-20896",
+          "severity": "critical",
+          "score": 49,
+          "corroboration": 2,
+          "region": "intl",
+          "body": "Vulnérabilité critique CVE-2026-20896 affectant Docker.\n\nAttackers are exploiting a critical Gitea flaw (CVE-2026-20896) that bypasses authentication with a single HTTP header, exposing repositories and sensitive data. Sysdig researchers warn that attackers are actively exploiting a critical authentication bypass flaw, tracked as CVE-2026-20896 (CVSS score of 9.8), which affects Gitea official Docker images before version 1.26.3. &#8220;CVE-2026-20896 exploited 13 days after disclosure. One HTTP header.",
+          "detail": "Vulnérabilité critique CVE-2026-20896 affectant Docker.\n\nAttackers are exploiting a critical Gitea flaw (CVE-2026-20896) that bypasses authentication with a single HTTP header, exposing repositories and sensitive data. Sysdig researchers warn that attackers are actively exploiting a critical authentication bypass flaw, tracked as CVE-2026-20896 (CVSS score of 9.8), which affects Gitea official Docker images before version 1.26.3. &#8220;CVE-2026-20896 exploited 13 days after disclosure. One HTTP header. Access on any internet-facing Gitea.&#8221; Sysdig Sr. Director of Threat Research Michael Clark wrote . &#8220;No password. No token. One header. Sysdig sensors caught the first in-the-wild hit 13 days after the advisory, a VPN-exit scanner that grabbed access.&#8221; Attackers can bypass authentication and gain access to internet-facing Gitea instances, including repositories and sensitive secrets, by sending a single crafted HTTP header with a valid username. The flaw is caused by insecure default settings that accept connections from any IP address instead of restricting access to trusted reverse proxies. &#8220;Gitea&#8217;s official Docker image (up to and including 1.26.2) ships REVERSE_PROXY_TRUSTED_PROXIES = * in its default config. If you turn on reverse-proxy login, that wildcard means every source IP is treated as a trusted proxy, so anyone who can reach the port can send an X-WEBAUTH-USER header and get logged in as whoev",
+          "action": "Vérifier l'exposition du parc et appliquer le correctif éditeur dès sa disponibilité.",
+          "image": "https://securityaffairs.com/wp-content/uploads/2026/07/image-21.png",
+          "sources": [
+            {
+              "url": "https://securityaffairs.com/194902/hacking/critical-gitea-docker-bug-under-active-exploitation-exposes-repositories-and-secrets.html",
+              "label": "Security Affairs"
+            },
+            {
+              "url": "https://www.securityweek.com/critical-gitea-flaw-under-active-exploitation-researchers-warn/",
+              "label": "SecurityWeek"
+            }
+          ],
+          "url": "https://securityaffairs.com/194902/hacking/critical-gitea-docker-bug-under-active-exploitation-exposes-repositories-and-secrets.html",
+          "pubDate": "2026-07-07T21:16:29.000Z"
+        },
+        {
+          "title": "Januscape: 16-Year-Old Linux KVM Bug Enables Cloud VM Escape Attacks",
+          "cve": "CVE-2026-53359",
+          "severity": "critical",
+          "score": 49,
+          "corroboration": 2,
+          "region": "intl",
+          "body": "Vulnérabilité critique CVE-2026-53359 affectant Linux.\n\nJanuscape: A 16-year-old Linux KVM flaw lets cloud VM tenants crash hosts and potentially escape guests. It affects Intel and AMD systems. Security researcher Hyunwoo Kim has published details of a use-after-free vulnerability in Linux&#8217;s KVM hypervisor that allows code running inside a guest virtual machine to corrupt host kernel memory. The bug, tracked as CVE-2026-53359 and named Januscape, has been sitting in the kernel since August 2010.",
+          "detail": "Vulnérabilité critique CVE-2026-53359 affectant Linux.\n\nJanuscape: A 16-year-old Linux KVM flaw lets cloud VM tenants crash hosts and potentially escape guests. It affects Intel and AMD systems. Security researcher Hyunwoo Kim has published details of a use-after-free vulnerability in Linux&#8217;s KVM hypervisor that allows code running inside a guest virtual machine to corrupt host kernel memory. The bug, tracked as CVE-2026-53359 and named Januscape, has been sitting in the kernel since August 2010. It affects both Intel and AMD processors, which makes it the first publicly documented guest-to-host KVM exploit that works across both architectures. Kernel-based Virtual Machine (KVM) is a virtualization technology built directly into the Linux kernel that allows one physical computer to run multiple independent virtual machines (VMs). Introducing &quot;Januscape&quot; (CVE-2026-53359) A Guest-to-Host Escape in KVM/x86 exploiting a UAF in the shadow MMU. Triggerable on both Intel and AMD hosts. Threatens x86 public clouds (GCP, AWS) that expose nested virtualization. &quot;16 years&quot; latent. Successfully used as a… pic.twitter.com/UHVC6Tg3Nm &mdash; V4bel (@v4bel) July 6, 2026 Kim used it as a zero-day submission in Google&#8217;s kvmCTF program, which offers up to $250,000 for full guest-to-host escapes. The public proof-of-concept reliably panics the host kernel. A separate, complete exploit that achieves code execution on the",
+          "action": "Vérifier l'exposition du parc et appliquer le correctif éditeur dès sa disponibilité.",
+          "image": "https://securityaffairs.com/wp-content/uploads/2026/07/image-19-767x1024.png",
+          "sources": [
+            {
+              "url": "https://securityaffairs.com/194868/security/januscape-16-year-old-linux-kvm-bug-enables-cloud-vm-escape-attacks.html",
+              "label": "Security Affairs"
+            },
+            {
+              "url": "https://www.it-connect.fr/januscape-faille-kvm-evasion-vm-hote/",
+              "label": "IT-Connect"
+            }
+          ],
+          "url": "https://securityaffairs.com/194868/security/januscape-16-year-old-linux-kvm-bug-enables-cloud-vm-escape-attacks.html",
+          "pubDate": "2026-07-07T14:23:39.000Z"
+        },
+        {
+          "title": "CISA Adds One Known Exploited Vulnerability to Catalog",
+          "cve": "CVE-2026-48282",
+          "severity": "critical",
+          "score": 49,
+          "corroboration": 3,
+          "region": "intl",
+          "body": "Vulnérabilité critique CVE-2026-48282 affectant Adobe.\n\nCISA has added one new vulnerability to its Known Exploited Vulnerabilities (KEV) Catalog , based on evidence of active exploitation. CVE-2026-48282 Adobe ColdFusion Path Traversal Vulnerability This type of vulnerability is a frequent attack vector for malicious cyber actors and poses significant risks to the federal enterprise.",
+          "detail": "Vulnérabilité critique CVE-2026-48282 affectant Adobe.\n\nCISA has added one new vulnerability to its Known Exploited Vulnerabilities (KEV) Catalog , based on evidence of active exploitation. CVE-2026-48282 Adobe ColdFusion Path Traversal Vulnerability This type of vulnerability is a frequent attack vector for malicious cyber actors and poses significant risks to the federal enterprise. Binding Operational Directive (BOD) 26-04: Prioritizing Security Updates Based on Risk establishes vulnerability management requirements for Federal Civilian Executive Branch (FCEB) agencies. BOD 26-04 reinforces the importance of the KEV Catalog and requires federal agencies to prioritize rapid remediation of high-risk vulnerabilities, specifically those identified by Common Vulnerabilities and Exposures (CVEs) listed in CISA’s KEV Catalog on publicly exposed assets that grant total control of the asset post-exploitation, while deferring action for lower-risk vulnerabilities. BOD 26-04 further establishes basic expectations for when agencies must check whether threat actors compromised the system before the patch was applied. While BOD 26-04 applies only to FCEB agencies, CISA encourages all organizations to adopt risk-based vulnerability management and prioritize remediation of KEV Catalog vulnerabilities . CISA will continue to add vulnerabilities to the catalog that meet the specified criteria . Aware of an exploited vulnerability not currently lis",
+          "action": "Vérifier l'exposition du parc et appliquer le correctif éditeur dès sa disponibilité.",
+          "image": "https://www.securityweek.com/wp-content/uploads/2026/04/coding-vulnerability-software-development.jpeg",
+          "sources": [
+            {
+              "url": "https://www.securityweek.com/critical-adobe-coldfusion-vulnerability-exploited-in-attacks/",
+              "label": "SecurityWeek"
+            },
+            {
+              "url": "https://www.helpnetsecurity.com/2026/07/07/adobe-coldfusion-cve-2026-48282-exploitation-detected/",
+              "label": "Help Net Security"
+            },
+            {
+              "url": "https://www.cisa.gov/news-events/alerts/2026/07/07/cisa-adds-one-known-exploited-vulnerability-catalog",
+              "label": "CISA Advisories"
+            }
+          ],
+          "url": "https://www.securityweek.com/critical-adobe-coldfusion-vulnerability-exploited-in-attacks/",
+          "pubDate": "2026-07-07T12:38:34.000Z"
+        },
+        {
+          "title": "Pegasus spyware investigation raises new concerns",
+          "cve": null,
+          "severity": "critical",
+          "score": 46,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Vulnérabilité critique.\n\nInsights from Noelle Murata ( COO, Xcape, Inc. ) about the latest reporting on Pegasus spyware and the targeting of a former European lawmaker who investigated commercial surveillance tools. Noelle discusses what this incident reveals about the misuse of commercial spyware, the risks to lawmakers and journalists, and why it reinforces calls for stronger oversight of surveillance technologies.",
+          "detail": "Vulnérabilité critique.\n\nInsights from Noelle Murata ( COO, Xcape, Inc. ) about the latest reporting on Pegasus spyware and the targeting of a former European lawmaker who investigated commercial surveillance tools. Noelle discusses what this incident reveals about the misuse of commercial spyware, the risks to lawmakers and journalists, and why it reinforces calls for stronger oversight of surveillance technologies. \"The targeted attack was carried out using an Apple Zero-Day, involving a flaw in the HomeKit infrastructure, which allowed a no-click exploit to take over the iPhone of Stelios Kouloglou, a Greek politician and journalist. Messages, location data, email, and other sensitive personal correspondence were exposed as a result. However, the most damning reveal was the release of the committee's spyware report, containing detailed information on commercial spyware abuses focusing on Cyprus, Greece, Hungry, Poland, and Spain that took place in late 2022.\" \"The broader implications of this center around the misuse of surveillance technologies being weaponized against lawmakers, journalists, dissidents, and critics that can result in direct threats to the rule of law itself, as well as compromise the investigation integrity. It underscores the need for stricter regulations on how and where spyware can be used, and what its purpose is. Individuals should maintain patch vigilance to avoid exposure.\"",
+          "action": "Vérifier l'exposition du parc et appliquer le correctif éditeur dès sa disponibilité.",
+          "image": "https://www.globalsecuritymag.fr/local/cache-vignettes/L40xH21/cf9a2161f77d54f3d0c7eb142d8f0d-50687.png",
+          "sources": [
+            {
+              "url": "https://www.globalsecuritymag.fr/pegasus-spyware-investigation-raises-new-concerns.html",
+              "label": "Global Sec Mag"
+            }
+          ],
+          "url": "https://www.globalsecuritymag.fr/pegasus-spyware-investigation-raises-new-concerns.html",
+          "pubDate": "2026-07-08T04:01:17.998Z"
+        },
+        {
+          "title": "Better Auth has insecure cryptographic defaults in oidcProvider: alg=none advertised and plain PKCE accepted by default",
+          "cve": null,
+          "severity": "high",
+          "score": 46,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Vulnérabilité élevée affectant better-auth (npm) (score CVSS 8.7).\n\nBetter Auth has insecure cryptographic defaults in oidcProvider: alg=none advertised and plain PKCE accepted by default\n\n--> Name Query To see all available qualifiers, see our documentation .\n\nIf the application only uses @better-auth/oauth-provider (the canonical replacement) and have not enabled the legacy plugins, it is not affected.",
+          "detail": "Vulnérabilité élevée affectant better-auth (npm) (score CVSS 8.7).\n\nBetter Auth has insecure cryptographic defaults in oidcProvider: alg=none advertised and plain PKCE accepted by default\n\n--> Name Query To see all available qualifiers, see our documentation .\n\nIf the application only uses @better-auth/oauth-provider (the canonical replacement) and have not enabled the legacy plugins, it is not affected. The new package's discovery document excludes none and its authorize schema rejects plain at parse time.\n\nThe legacy oidcProvider and mcp plugins exhibit two related defects in their OIDC discovery and authorize surfaces.\n\nThe discovery document advertises \"none\" in id_token_signing_alg_values_supported (and, for mcp , in resource_signing_alg_values_supported on the OAuth protected-resource metadata). Any relying party that performs algorithm negotiation from this metadata without pinning to a real signing algorithm may accept unsigned tokens.\n\nPKCE plain is enabled by default. The runtime gate in the authorize handler accepts code_challenge_method=plain under this default, and a missing code_challenge_method parameter is silently downgraded to \"plain\" before the allowlist check. Discovery advertises code_challenge_methods_supported: [\"S256\"] , contradicting the runtime acceptance of plain . RFC 9700 §2.1.1 (OAuth 2.1) explicitly forbids plain .\n\nThe metadata builders unconditionally inject \"none\" into the alg list. The runtime authorize gate is structured so a buggy client that strips the code_challenge_method parameter still enters the plain code path because the handler rewrites the missing value to \"plain\" before the allowlist check fires.",
+          "action": "Vérifier l'exposition du parc et appliquer le correctif éditeur dès sa disponibilité.",
+          "image": "https://github.githubassets.com/assets/advisory-database-show-f32c8207dfb2.png",
+          "sources": [
+            {
+              "url": "https://github.com/advisories/GHSA-9h47-pqcx-hjr4",
+              "label": "GitHub Advisory"
+            }
+          ],
+          "url": "https://github.com/advisories/GHSA-9h47-pqcx-hjr4",
+          "pubDate": "2026-07-07T20:55:41.000Z"
+        },
+        {
+          "title": "Hitachi Energy e-mesh EMS",
+          "cve": "CVE-2026-42945",
+          "severity": "critical",
+          "score": 46,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Vulnérabilité critique CVE-2026-42945.\n\nView CSAF Summary Hitachi Energy is aware of a buffer overflow vulnerability that affects e-mesh EMS product versions listed in this document. Successful exploitation of this vulnerability could lead to a buffer overflow condition, potentially resulting in application outages (denial of service) and possible arbitrary code execution. Please refer to the Recommended Immediate Actions for information about the mitigation/remediation.",
+          "detail": "Vulnérabilité critique CVE-2026-42945.\n\nView CSAF Summary Hitachi Energy is aware of a buffer overflow vulnerability that affects e-mesh EMS product versions listed in this document. Successful exploitation of this vulnerability could lead to a buffer overflow condition, potentially resulting in application outages (denial of service) and possible arbitrary code execution. Please refer to the Recommended Immediate Actions for information about the mitigation/remediation. The following versions of Hitachi Energy e-mesh EMS are affected: Hitachi Energy e-mesh EMS 4.1.6, 4.4.2, 4.7.0 CVSS Vendor Equipment Vulnerabilities v3 8.1 Hitachi Energy Hitachi Energy e-mesh EMS Heap-based Buffer Overflow Background Critical Infrastructure Sectors: Energy Countries/Areas Deployed: Worldwide Company Headquarters Location: Switzerland Vulnerabilities Expand All + CVE-2026-42945 NGINX Plus and NGINX Open Source used in e-mesh EMS have a vulnerability in the ngx_http_rewrite_module module. This vulnerability exists when the rewrite directive is followed by a rewrite, if, or set directive and an unnamed Perl-Compatible Regular Expression (PCRE) capture (for example, $1, $2) with a replacement string that includes a question mark (?). An unauthenticated attacker along with conditions beyond its control can exploit this vulnerability by sending crafted HTTP requests. This may cause a heap buffer overflow in the NGINX worker process leadi",
+          "action": "Vérifier l'exposition du parc et appliquer le correctif éditeur dès sa disponibilité.",
+          "image": null,
+          "sources": [
+            {
+              "url": "https://www.cisa.gov/news-events/ics-advisories/icsa-26-188-03",
+              "label": "CISA Advisories"
+            }
+          ],
+          "url": "https://www.cisa.gov/news-events/ics-advisories/icsa-26-188-03",
+          "pubDate": "2026-07-07T12:00:00.000Z"
+        },
+        {
+          "title": "L’AI Act doit-il être l’affaire des DPO ?",
+          "cve": null,
+          "severity": "high",
+          "score": 24,
+          "corroboration": 1,
+          "region": "fr",
+          "body": "Vulnérabilité élevée.\n\nChez les DPO, il y a ceux qui perçoivent la conformité à l&rsquo;AI Act comme un « prolongement naturel » de leurs missions. Et ceux qui estiment qu&rsquo;elle ne relève pas de leur périmètre. De ces deux orientations, aucune « n&rsquo;apparaît s&rsquo;imposer avec la force de l&rsquo;évidence », pour reprendre les propos de la CNIL. La dernière vague de l&rsquo;observatoire du métier des DPO* en témoigne&#8230; dans une certaine mesure.",
+          "detail": "Vulnérabilité élevée.\n\nChez les DPO, il y a ceux qui perçoivent la conformité à l&rsquo;AI Act comme un « prolongement naturel » de leurs missions. Et ceux qui estiment qu&rsquo;elle ne relève pas de leur périmètre. De ces deux orientations, aucune « n&rsquo;apparaît s&rsquo;imposer avec la force de l&rsquo;évidence », pour reprendre les propos de la CNIL. La dernière vague de l&rsquo;observatoire du métier des DPO* en témoigne&#8230; dans une certaine mesure. Ils sont 2390 à avoir répondu à l&rsquo;enquête (1896 internes, 234 mutualisés, 260 externes). 55 % ont déjà l&rsquo;AI Act dans leur périmètre de responsabilité et 71 % souhaitent que leur fonction l&rsquo;englobe . Le DPO, pas mentionné dans l&rsquo;AI Act En novembre 2025, au lancement de l&rsquo;enquête, la CNIL avait rappelé l&rsquo;obligation d&rsquo;impliquer les DPO sur les traitements de données mis en œuvre par l&rsquo;IA. Cela ne suppose toutefois pas forcément d&rsquo;en faire les chefs de file sur la conformité à l&rsquo;AI Act, avait-elle précisé. D&rsquo;autant que le règlement ne mentionne pas explicitement les DPO . La Commission avait ajouté que l&rsquo;application de l&rsquo;AI Act nécessiterait la mobilisation de compétences qui « ne sont pas nécessairement celles attendues du DPO ». Elle avait néanmoins appelé à une « mobilisation judicieuse » de leur expertise RGPD, vu les similarités entre les deux règlements (approche pa",
+          "action": "Vérifier l'exposition du parc et appliquer le correctif éditeur dès sa disponibilité.",
+          "image": "https://www.silicon.fr/wp-content/uploads/2026/07/AI-Act-DPO.jpg",
+          "sources": [
+            {
+              "url": "https://www.silicon.fr/data-ia-1372/dpo-rgpd-ai-act-228193",
+              "label": "Silicon.fr"
+            }
+          ],
+          "url": "https://www.silicon.fr/data-ia-1372/dpo-rgpd-ai-act-228193",
+          "pubDate": "2026-07-07T14:28:26.000Z"
+        },
+        {
+          "title": "Nemea Résidences : 84 853 réservations, locataires et garants revendiqués après une faille IDOR",
+          "cve": null,
+          "severity": "news",
+          "score": 16,
+          "corroboration": 1,
+          "region": "fr",
+          "body": "Vulnérabilité élevée.\n\nUne nouvelle fuite de données attribuée à residence-nemea.com a été revendiquée sur un forum cybercriminel le 6 juillet 2026. L’auteur affirme publier une\n\nAttaque Mis à jour le 7 juillet 2026 à 6h30 Nemea Résidences : 84 853 réservations, locataires et garants revendiqués après une faille IDOR Une nouvelle fuite de données attribuée à residence-nemea.com a été revendiquée sur un forum cybercriminel le 6 juillet 2026 .",
+          "detail": "Vulnérabilité élevée.\n\nUne nouvelle fuite de données attribuée à residence-nemea.com a été revendiquée sur un forum cybercriminel le 6 juillet 2026. L’auteur affirme publier une\n\nAttaque Mis à jour le 7 juillet 2026 à 6h30 Nemea Résidences : 84 853 réservations, locataires et garants revendiqués après une faille IDOR Une nouvelle fuite de données attribuée à residence-nemea.com a été revendiquée sur un forum cybercriminel le 6 juillet 2026 . L’auteur affirme publier une base de 84 853 lignes liée aux réservations de logements en résidences Nemea, avec des informations détaillées sur les locataires, leurs garants, les logements demandés et certains éléments financiers.\n\nLa revendication vise le groupe Nemea ou l’un de ses portails de résidence. Selon les éléments publiés, les données proviendraient du domaine residence-nemea.com . À ce stade, cette fuite reste une revendication non confirmée officiellement .\n\nLa publication est signée par les acteurs misere et ChimeraZ . L’auteur affirme qu’il s’agirait d’une deuxième attaque visant Nemea Group , sans fournir dans l’extrait d’éléments permettant de confirmer publiquement le lien avec un précédent incident.\n\nLa base publiée est présentée sous le nom 84K_reservations.ndjson . Elle serait au format NDJSON , un format structuré où chaque ligne correspond à un objet de données. Le fichier contiendrait 84 853 lignes , ce qui suggère une extraction massive de dossiers de réservation ou de demandes de logement.\n\nL’auteur indique que la vulnérabilité exploitée serait une IDOR , pour Insecure Direct Object Reference . Ce type de faille survient lorsqu’une application permet d’accéder à des ressources en modifiant simplement un identifiant, sans vérifier correctement les droits de l’utilisateur.\n\nDans un scénario de ce type, un att",
+          "action": "Vérifier l'exposition du parc et appliquer le correctif éditeur dès sa disponibilité.",
+          "image": "https://www.cyberattaque.org/wp-content/uploads/2026/05/cyberattaque_hacker9.jpg",
+          "sources": [
+            {
+              "url": "https://www.cyberattaque.org/nemea-residences-84-853-reservations-locataires-et-garants-revendiques-apres-une-faille-idor/",
+              "label": "Cyberattaque.org"
+            }
+          ],
+          "url": "https://www.cyberattaque.org/nemea-residences-84-853-reservations-locataires-et-garants-revendiques-apres-une-faille-idor/",
+          "pubDate": "2026-07-07T04:30:34.000Z"
+        },
+        {
+          "title": "Bulletin d'actualité CERTFR-2026-ACT-029 (06 juillet 2026)",
+          "cve": null,
+          "severity": "culture",
+          "score": 12,
+          "corroboration": 1,
+          "region": "fr",
+          "body": "Vulnérabilité élevée.\n\nCe bulletin d'actualité du CERT-FR revient sur les vulnérabilités significatives de la semaine passée pour souligner leurs criticités. Il ne remplace pas l'analyse de l'ensemble des avis et alertes publiés par le CERT-FR dans le cadre d'une analyse de risques pour prioriser l'application des... Voir en ligne : https://www.cert.ssi.gouv.fr/actual...",
+          "detail": "Vulnérabilité élevée.\n\nCe bulletin d'actualité du CERT-FR revient sur les vulnérabilités significatives de la semaine passée pour souligner leurs criticités. Il ne remplace pas l'analyse de l'ensemble des avis et alertes publiés par le CERT-FR dans le cadre d'une analyse de risques pour prioriser l'application des... Voir en ligne : https://www.cert.ssi.gouv.fr/actual...",
+          "action": "Vérifier l'exposition du parc et appliquer le correctif éditeur dès sa disponibilité.",
+          "image": "https://www.globalsecuritymag.fr/local/cache-vignettes/L40xH21/a3c0c28306689c72833bd0e5592942-00c4a.png",
+          "sources": [
+            {
+              "url": "https://www.globalsecuritymag.fr/bulletin-d-actualite-certfr-2026-act-029-06-juillet-2026.html",
+              "label": "Global Sec Mag"
+            }
+          ],
+          "url": "https://www.globalsecuritymag.fr/bulletin-d-actualite-certfr-2026-act-029-06-juillet-2026.html",
+          "pubDate": "2026-07-08T04:01:17.998Z"
+        }
+      ]
+    },
+    {
+      "id": "attacks",
+      "items": [
+        {
+          "title": "Vidar Stealer Unmasked: Code Signing Abuse, Go Loaders and File Inflation",
+          "cve": null,
+          "severity": "news",
+          "score": 81,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Incident de sécurité rapporté par Unit 42.\n\nA cybercrime campaign combined a loader-as-a-service framework and DLL sideloading via a Go-compiled fake MpClient.dll, a novel evasion layer combination.\n\nIn April 2026, Unit 42 researchers identified a financially motivated campaign delivering Vidar stealer and the XMRig cryptocurrency miner to consumer and small- and medium-sized business victims worldwide.\n\nWe assess the operator of the campaign to be a Vidar stealer malware-as-a-service (MaaS) affilia…",
+          "detail": "Incident de sécurité rapporté par Unit 42.\n\nA cybercrime campaign combined a loader-as-a-service framework and DLL sideloading via a Go-compiled fake MpClient.dll, a novel evasion layer combination.\n\nIn April 2026, Unit 42 researchers identified a financially motivated campaign delivering Vidar stealer and the XMRig cryptocurrency miner to consumer and small- and medium-sized business victims worldwide.\n\nWe assess the operator of the campaign to be a Vidar stealer malware-as-a-service (MaaS) affiliate involved in operations targeting victims in the U.S. and European Union. This article provides a technical analysis of the campaign.\n\nPalo Alto Networks customers are better protected from the threats discussed above through the following products and services:\n\nIf you think you might have been compromised or have an urgent matter, contact the Unit 42 Incident Response team .\n\nSince its emergence, attackers have used Vidar stealer in multiple large-scale campaigns. We identified a notable spike in activity from mid-late April 2026, primarily targeting organizations in the U.S. and the EU.\n\nFigure 1 illustrates the timeline of the April 2026 campaign, which shows the number of Vidar stealer samples discovered each day.",
+          "action": "Surveiller les indicateurs de compromission associés et contrôler les actifs exposés.",
+          "image": "https://unit42.paloaltonetworks.com/wp-content/uploads/2026/07/01_Malware_Category_1920x900-2.jpg",
+          "sources": [
+            {
+              "url": "https://unit42.paloaltonetworks.com/vidar-stealer-xmrig-miner-campaign-analysis/",
+              "label": "Unit 42"
+            }
+          ],
+          "url": "https://unit42.paloaltonetworks.com/vidar-stealer-xmrig-miner-campaign-analysis/",
+          "pubDate": "2026-07-07T22:00:21.000Z"
+        },
+        {
+          "title": "Major Japanese telco says cyberattack exposed 12 million emails",
+          "cve": null,
+          "severity": "news",
+          "score": 75,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Incident de sécurité rapporté par The Record.\n\nThe company said the breach affected an email system used to manage customer email accounts, webmail services and email storage for five Japanese internet service providers.\n\nOne of Japan's largest telecommunications providers said Monday that a cyberattack targeting an email platform it operates for internet service providers exposed more than 12.2 million customer email addresses and 7.6 million passwords.\n\nThe company said the breach affected an email s…",
+          "detail": "Incident de sécurité rapporté par The Record.\n\nThe company said the breach affected an email system used to manage customer email accounts, webmail services and email storage for five Japanese internet service providers.\n\nOne of Japan's largest telecommunications providers said Monday that a cyberattack targeting an email platform it operates for internet service providers exposed more than 12.2 million customer email addresses and 7.6 million passwords.\n\nThe company said the breach affected an email system used to manage customer email accounts, webmail services and email storage for five Japanese internet service providers. KDDI first disclosed the unauthorized access in June but only confirmed the scale of the data exposure after completing its forensic investigation and submitting a report to Japan's communications ministry earlier this week.\n\nAccording to the company, attackers exploited a vulnerability in third-party software used by the email platform. KDDI said it patched the flaw and modified the system immediately after detecting the intrusion, adding that investigators found no evidence the attackers compromised any systems beyond the exploited vulnerability.\n\nKDDI said its own consumer email services for mobile and fixed-line internet customers run on separate infrastructure and were not affected.\n\n\"So far, many customers who use the email service regularly have changed their passwords,\" KDDI said, adding that the affected internet service providers are working to complete mandatory password resets in the coming days.\n\n\"We are analyzing the scope of the impact and the cause, responding to customers in coordination with ISP operators, and taking measures to prevent a recurrence,\" the company said.",
+          "action": "Surveiller les indicateurs de compromission associés et contrôler les actifs exposés.",
+          "image": "https://cms.therecord.media/uploads/ted_balmer_fh_F26_Z_473_Q_unsplash_1ee6a3236b.jpg",
+          "sources": [
+            {
+              "url": "https://therecord.media/major-japanese-telco-cyberattack-12-million-emails",
+              "label": "The Record"
+            }
+          ],
+          "url": "https://therecord.media/major-japanese-telco-cyberattack-12-million-emails",
+          "pubDate": "2026-07-07T14:45:00.000Z"
+        },
+        {
+          "title": "Britain plans to build autonomous AI 'Cyber Shield' to defend nation",
+          "cve": null,
+          "severity": "news",
+          "score": 70,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Incident de sécurité rapporté par The Record.\n\nThe capability, called Cyber Shield, is designed to counter a threat the National Cyber Security Centre (NCSC) said could see attackers “move at machine speed and greater scale, reducing opportunities for detection and response.”\n\nBritain’s cyber agency laid out plans on Tuesday for what it called “a national scale, sovereign defense capability” that would use agentic AI systems to discover and fix cybersecurity weaknesses across government networks and cr…",
+          "detail": "Incident de sécurité rapporté par The Record.\n\nThe capability, called Cyber Shield, is designed to counter a threat the National Cyber Security Centre (NCSC) said could see attackers “move at machine speed and greater scale, reducing opportunities for detection and response.”\n\nBritain’s cyber agency laid out plans on Tuesday for what it called “a national scale, sovereign defense capability” that would use agentic AI systems to discover and fix cybersecurity weaknesses across government networks and critical national infrastructure.\n\nThe capability, called Cyber Shield, is designed to counter a threat the National Cyber Security Centre (NCSC) said could see attackers “move at machine speed and greater scale, reducing opportunities for detection and response.”\n\nAdversaries aided by AI, the agency said in a blog post, can already compress reconnaissance and vulnerability discovery from weeks into minutes.\n\n“This has the potential to overwhelm traditional defenses and increase the risk of advantage shifting towards the attacker,” the NCSC said. “Developing viable solutions that scale and execute at the pace we need in the modern era is the remit of the Cyber Shield.”\n\nThe agency has separately warned of an AI-driven “patch wave” — a surge of newly discovered vulnerabilities emerging faster than most organizations can fix them — and a recent alert from GCHQ said it was likely both offensive and defensive cyber capabilities would be fundamentally transformed within just months.\n\nCyber Shield was referenced by GCHQ director Anne Keast-Butler in her inaugural annual lecture earlier this year, where she said the agency would “hardwire” agentic AI into machine-speed cyber defense and warned of a narrowing window for the U.K. to stay ahead of its adversaries.",
+          "action": "Surveiller les indicateurs de compromission associés et contrôler les actifs exposés.",
+          "image": "https://cms.therecord.media/uploads/cyber_shield_ai_50956fc15b.jpg",
+          "sources": [
+            {
+              "url": "https://therecord.media/britain-plans-autonomous-ai-cyber-shield",
+              "label": "The Record"
+            }
+          ],
+          "url": "https://therecord.media/britain-plans-autonomous-ai-cyber-shield",
+          "pubDate": "2026-07-07T15:31:00.000Z"
+        },
+        {
+          "title": "UK cyber pledge draws only a handful of top firms despite ministerial appeal",
+          "cve": null,
+          "severity": "news",
+          "score": 70,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Incident de sécurité rapporté par The Record.\n\nThose that did sign include large firms such as Aviva, the London Stock Exchange Group and Marks & Spencer, which lost hundreds of millions of pounds in a cyberattack last year, as well as  small cybersecurity consultancies.\n\nFewer than 15 of Britain's 350 largest listed companies signed up to the government's flagship voluntary cybersecurity scheme at its launch on Tuesday, eight months after ministers wrote personally to the chair and chief executive of…",
+          "detail": "Incident de sécurité rapporté par The Record.\n\nThose that did sign include large firms such as Aviva, the London Stock Exchange Group and Marks & Spencer, which lost hundreds of millions of pounds in a cyberattack last year, as well as  small cybersecurity consultancies.\n\nFewer than 15 of Britain's 350 largest listed companies signed up to the government's flagship voluntary cybersecurity scheme at its launch on Tuesday, eight months after ministers wrote personally to the chair and chief executive of every FTSE 350 firm urging them to do so.\n\nTuesday’s launch had been planned to follow the unveiling of Britain’s new National Cyber Action Plan on Monday before that was delayed due to Prime Minister Keir Starmer's resignation.\n\nIn total, 70 founding signatories for the Cyber Resilience Pledge were named at the 10 Downing Street reception hosted by Technology Secretary Liz Kendall. Twenty of them are strategic government suppliers who had been invited to sign the pledge through a separate Government Cyber Charter governing the obligations of companies delivering critical services to the state.\n\nThe Department for Science, Innovation and Technology did not respond to questions from Recorded Future News about whether signing carries procurement consequences for strategic suppliers, nor whether it regarded the FTSE 350 turnout as a strong response to the ministerial letter.\n\nIf the strategic suppliers faced procurement consequences, the launch included just 50 truly voluntary signatories from across the wider economy.\n\nThose that did sign include large firms such as Aviva, the London Stock Exchange Group and Marks & Spencer, which lost hundreds of millions of pounds in a cyberattack last year, as well as small cybersecurity consultancies including C3IA Solutions, Grey Zone S",
+          "action": "Surveiller les indicateurs de compromission associés et contrôler les actifs exposés.",
+          "image": "https://cms.therecord.media/uploads/leo_7jya7i_DF_Gt_Y_unsplash_d4b6370d60.jpg",
+          "sources": [
+            {
+              "url": "https://therecord.media/uk-cyber-pledge-draws-limited-partners-despite-ministerial-appeal",
+              "label": "The Record"
+            }
+          ],
+          "url": "https://therecord.media/uk-cyber-pledge-draws-limited-partners-despite-ministerial-appeal",
+          "pubDate": "2026-07-07T13:10:00.000Z"
+        },
+        {
+          "title": "Google Is Suing Chinese Scammers Who Are Using Gemini",
+          "cve": null,
+          "severity": "news",
+          "score": 70,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Incident de sécurité rapporté par Schneier on Sec..\n\nNot sure this will have any effect, but I support the effort: According to Google&#8217;s legal filing, Outsider Enterprise operates through Telegram. The group offers phishing-as-a-service to individuals who may not be technically savvy enough to set up fraudulent websites and text campaigns on their own.",
+          "detail": "Incident de sécurité rapporté par Schneier on Sec..\n\nNot sure this will have any effect, but I support the effort: According to Google&#8217;s legal filing, Outsider Enterprise operates through Telegram. The group offers phishing-as-a-service to individuals who may not be technically savvy enough to set up fraudulent websites and text campaigns on their own. In its Telegram channels, Outsider Enterprise reportedly provided instructions on how to use Google&#8217;s Gemini AI to create websites that imitate those of Google, YouTube, and government agencies such as New York&#8217;s E-ZPass. The group offered nearly 300 scam templates. [&#8230;] Google worked with AT&amp;T, Verizon, and T-Mobile to block many of these malicious text messages, and Google notes that its on-device scam detection in Google Messages probably helped reduce the number of successful phishing attempts, too. This AI-powered feature apparently stops 10 billion scam texts every month, so it&#8217;s fair to expect it caught at least some Outsider Enterprise activity. Another article .",
+          "action": "Surveiller les indicateurs de compromission associés et contrôler les actifs exposés.",
+          "image": null,
+          "sources": [
+            {
+              "url": "https://www.schneier.com/blog/archives/2026/07/google-is-suing-chinese-scammers-who-are-using-gemini.html",
+              "label": "Schneier on Sec."
+            }
+          ],
+          "url": "https://www.schneier.com/blog/archives/2026/07/google-is-suing-chinese-scammers-who-are-using-gemini.html",
+          "pubDate": "2026-07-07T10:43:40.000Z"
+        },
+        {
+          "title": "County Government Reportedly Paid $1 Million to Cyber Extortion Group",
+          "cve": null,
+          "severity": "news",
+          "score": 69,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Incident de sécurité rapporté par SecurityWeek.\n\nA government entity in the US reportedly paid a $1 million ransom to the Kairos cyber extortion group to prevent the public dissemination of stolen data.\n\nThe alleged victim, believed to be a small Ohio county, reportedly paid the extortion group to prevent the public release of sensitive stolen data.\n\nSubscribe to the SecurityWeek Email Briefing for the latest cybersecurity threats, trends, and expert insights.\n\nSubscribe to the SecurityWeek Email Briefin…",
+          "detail": "Incident de sécurité rapporté par SecurityWeek.\n\nA government entity in the US reportedly paid a $1 million ransom to the Kairos cyber extortion group to prevent the public dissemination of stolen data.\n\nThe alleged victim, believed to be a small Ohio county, reportedly paid the extortion group to prevent the public release of sensitive stolen data.\n\nSubscribe to the SecurityWeek Email Briefing for the latest cybersecurity threats, trends, and expert insights.\n\nSubscribe to the SecurityWeek Email Briefing to stay informed on the latest threats, trends, and technology, along with insightful columns from industry experts.\n\nJoin this live webinar as we break down why email-layer defenses alone can't keep pace with the modern phishing ecosystem, how agentic AI is changing the capacity equation for security teams, and more.\n\nThis year's summit will help organizations learn how to utilize tools, controls, and design models needed to properly secure cloud environments. Interact with leading solution providers and other end users facing similar challenges in securing a variety of cloud deployments.\n\nSherrod DeGrippo has been appointed Head of Threat Intelligence for Palo Alto Networks Unit 42.",
+          "action": "Surveiller les indicateurs de compromission associés et contrôler les actifs exposés.",
+          "image": "https://www.securityweek.com/wp-content/uploads/2025/07/Fraud-Cybercrime-AI.jpeg",
+          "sources": [
+            {
+              "url": "https://www.securityweek.com/county-government-reportedly-paid-1-million-to-cyber-extortion-group/",
+              "label": "SecurityWeek"
+            }
+          ],
+          "url": "https://www.securityweek.com/county-government-reportedly-paid-1-million-to-cyber-extortion-group/",
+          "pubDate": "2026-07-07T17:31:54.000Z"
+        },
+        {
+          "title": "Hidden backdoor in Tenda router firmware grants admin access",
+          "cve": null,
+          "severity": "news",
+          "score": 68,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Incident de sécurité rapporté par BleepingComputer.\n\nA hidden authentication backdoor has been found in multiple Tenda router firmware versions, potentially allowing an attacker to gain administrative access to the device's web management panel.\n\nNetNut proxy network disrupted, 2 million infected devices cut off\n\nClaude Fable 5 isn’t permanently leaving subscriptions, Anthropic says\n\nJadePuffer ransomware used AI agent to automate entire attack\n\nAccenture confirms breach after hacker offers stolen data for s…",
+          "detail": "Incident de sécurité rapporté par BleepingComputer.\n\nA hidden authentication backdoor has been found in multiple Tenda router firmware versions, potentially allowing an attacker to gain administrative access to the device's web management panel.\n\nNetNut proxy network disrupted, 2 million infected devices cut off\n\nClaude Fable 5 isn’t permanently leaving subscriptions, Anthropic says\n\nJadePuffer ransomware used AI agent to automate entire attack\n\nAccenture confirms breach after hacker offers stolen data for sale\n\nChinese hackers develop LONGLEASH malware to expand ORB network\n\nHow to enable Kernel-mode Hardware-enforced Stack Protection in Windows 11",
+          "action": "Surveiller les indicateurs de compromission associés et contrôler les actifs exposés.",
+          "image": "https://www.bleepstatic.com/content/hl-images/2026/07/07/tenda-router.jpg",
+          "sources": [
+            {
+              "url": "https://www.bleepingcomputer.com/news/security/hidden-backdoor-in-tenda-router-firmware-grants-admin-access/",
+              "label": "BleepingComputer"
+            }
+          ],
+          "url": "https://www.bleepingcomputer.com/news/security/hidden-backdoor-in-tenda-router-firmware-grants-admin-access/",
+          "pubDate": "2026-07-07T17:27:22.000Z"
+        },
+        {
+          "title": "Webinar tomorrow: Why modern email attacks require a new approach to defense",
+          "cve": null,
+          "severity": "news",
+          "score": 68,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Incident de sécurité rapporté par BleepingComputer.\n\nTomorrow's webinar explores how behavioral AI can help organizations detect sophisticated phishing, business email compromise, and account takeover attacks while reducing alert fatigue through automated investigation and response workflows.\n\nNetNut proxy network disrupted, 2 million infected devices cut off\n\nClaude Fable 5 isn’t permanently leaving subscriptions, Anthropic says\n\nJadePuffer ransomware used AI agent to automate entire attack\n\nAccenture confi…",
+          "detail": "Incident de sécurité rapporté par BleepingComputer.\n\nTomorrow's webinar explores how behavioral AI can help organizations detect sophisticated phishing, business email compromise, and account takeover attacks while reducing alert fatigue through automated investigation and response workflows.\n\nNetNut proxy network disrupted, 2 million infected devices cut off\n\nClaude Fable 5 isn’t permanently leaving subscriptions, Anthropic says\n\nJadePuffer ransomware used AI agent to automate entire attack\n\nAccenture confirms breach after hacker offers stolen data for sale\n\nChinese hackers develop LONGLEASH malware to expand ORB network\n\nHow to enable Kernel-mode Hardware-enforced Stack Protection in Windows 11",
+          "action": "Surveiller les indicateurs de compromission associés et contrôler les actifs exposés.",
+          "image": "https://www.bleepstatic.com/content/hl-images/2022/08/23/phishing-hook.jpg",
+          "sources": [
+            {
+              "url": "https://www.bleepingcomputer.com/news/security/webinar-tomorrow-why-modern-email-attacks-require-a-new-approach-to-defense/",
+              "label": "BleepingComputer"
+            }
+          ],
+          "url": "https://www.bleepingcomputer.com/news/security/webinar-tomorrow-why-modern-email-attacks-require-a-new-approach-to-defense/",
+          "pubDate": "2026-07-07T12:12:20.000Z"
+        },
+        {
+          "title": "Spanish Police Arrest Man Linked to CARR, Z-Pentest, and NoName057(16)",
+          "cve": null,
+          "severity": "critical",
+          "score": 67,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Incident de sécurité rapporté par Security Affairs.\n\nSpain arrested a suspected CARR and Z-Pentest collaborator in an FBI-led probe for aiding pro-Russian hackers, coordinating attacks, and using crypto. Spanish National Police arrested a man in Palencia last March on charges of membership in and collaboration with a terrorist organization, glorifying terrorism, and computer damage.",
+          "detail": "Incident de sécurité rapporté par Security Affairs.\n\nSpain arrested a suspected CARR and Z-Pentest collaborator in an FBI-led probe for aiding pro-Russian hackers, coordinating attacks, and using crypto. Spanish National Police arrested a man in Palencia last March on charges of membership in and collaboration with a terrorist organization, glorifying terrorism, and computer damage. The investigation, carried out jointly with the FBI, identified him as a collaborator of two pro-Russian hacktivist groups: CyberArmy of Russia Reborn (CARR) and Z-Pentest , both designated as terrorist organizations responsible for attacks against critical infrastructure in the United States and Europe. &#8220;The investigation began last August when, thanks to information provided by the FBI, the National Police investigators were made aware of the alleged involvement of the detainee in actions aimed at providing logistical and support cover to a Ukrainian hacker, located in Ukraine, linked to the pro-Russian hacktivist group CyberArmy of Russia Reborn (CARR), in order to facilitate his escape to Russia, through Poland and Belarus.&#8221; reads the press release published by the Spanish Police. The operational support the suspect allegedly provided — helping a foreign hacker evade capture by routing an escape through two countries — puts this well beyond keyboard activism. &#8220;The suspect also used various encrypted messaging applications to main",
+          "action": "Surveiller les indicateurs de compromission associés et contrôler les actifs exposés.",
+          "image": "https://securityaffairs.com/wp-content/uploads/2016/12/Consular-Department-of-the-Embassy-of-the-Russian-Federation.jpg",
+          "sources": [
+            {
+              "url": "https://securityaffairs.com/194894/hacktivism/spanish-police-arrest-man-linked-to-carr-z-pentest-and-noname05716.html",
+              "label": "Security Affairs"
+            }
+          ],
+          "url": "https://securityaffairs.com/194894/hacktivism/spanish-police-arrest-man-linked-to-carr-z-pentest-and-noname05716.html",
+          "pubDate": "2026-07-07T18:36:55.000Z"
+        },
+        {
+          "title": "YMCA of Western North Carolina — rançongiciel interlock (États-Unis)",
+          "cve": null,
+          "severity": "news",
+          "score": 65,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Incident de sécurité rapporté par ransomware.live.\n\nVictime revendiquée par le groupe de rançongiciel interlock. Pays : États-Unis. Secteur : Consumer Services. The YMCA of Western North Carolina operates seven fitness centers, a summer camp, dozens of food trucks, youth sports programs, and many other initiatives. They are also the state's largest provider of licensed school-age childcare.",
+          "detail": "Incident de sécurité rapporté par ransomware.live.\n\nVictime revendiquée par le groupe de rançongiciel interlock.\n\nPays : États-Unis.\n\nSecteur : Consumer Services.\n\nThe YMCA of Western North Carolina operates seven fitness centers, a summer camp, dozens of food trucks, youth sports programs, and many other initiatives. They are also the state's largest provider of licensed school-age childcare.\nHowever, they don't ensure security and aren't responsible for it, and you can gain access to confidential client information (complete sets of documents, even fingerprints), contracts, and incidents (of which they have many!), as well as to employee personal data and financial documents.",
+          "action": "Surveiller les indicateurs de compromission associés et contrôler les actifs exposés.",
+          "image": "https://images.ransomware.live/victims/5bd0140a1aae3e996a313ff27d1e797a.png",
+          "sources": [
+            {
+              "url": "https://www.ransomware.live/id/UHJlbmVlZCBGdW5lcmFsIFByb2dyYW1zQHBsYXk=",
+              "label": "ransomware.live"
+            }
+          ],
+          "url": "https://www.ransomware.live/id/UHJlbmVlZCBGdW5lcmFsIFByb2dyYW1zQHBsYXk=",
+          "pubDate": "2026-07-07T17:55:54.238Z"
+        },
+        {
+          "title": "CISA Reportedly Using Anthropic’s Mythos to Scan Government Software for Flaws",
+          "cve": null,
+          "severity": "news",
+          "score": 64,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Incident de sécurité rapporté par SecurityWeek.\n\nThe audits are reportedly being spearheaded by CISA’s Attack Surface Evaluation team, a specialized unit tasked with conducting digital defense assessments and simulated hacking exercises. The post CISA Reportedly Using Anthropic’s Mythos to Scan Government Software for Flaws appeared first on SecurityWeek .",
+          "detail": "Incident de sécurité rapporté par SecurityWeek.\n\nThe audits are reportedly being spearheaded by CISA’s Attack Surface Evaluation team, a specialized unit tasked with conducting digital defense assessments and simulated hacking exercises. The post CISA Reportedly Using Anthropic’s Mythos to Scan Government Software for Flaws appeared first on SecurityWeek .",
+          "action": "Surveiller les indicateurs de compromission associés et contrôler les actifs exposés.",
+          "image": "https://www.securityweek.com/wp-content/uploads/2026/04/Claude-Mythos-cybersecurity-AI.jpg",
+          "sources": [
+            {
+              "url": "https://www.securityweek.com/cisa-reportedly-using-anthropics-mythos-to-scan-government-software-for-flaws/",
+              "label": "SecurityWeek"
+            }
+          ],
+          "url": "https://www.securityweek.com/cisa-reportedly-using-anthropics-mythos-to-scan-government-software-for-flaws/",
+          "pubDate": "2026-07-07T13:13:02.000Z"
+        },
+        {
+          "title": "Government's cyber pledge lands 60 signatories, including M&S and, somehow, Capita",
+          "cve": null,
+          "severity": "high",
+          "score": 64,
+          "corroboration": 2,
+          "region": "intl",
+          "body": "Incident de sécurité rapporté par The Register.\n\nAfter serving as last year’s poster child for retail cyber misery, Marks & Spencer has become one of the first companies to sign up to the UK government's new Cyber Resilience Pledge. The retailer is among 60 organizations that have signed up to the voluntary scheme, launched by technology secretary Liz Kendall on Tuesday.",
+          "detail": "Incident de sécurité rapporté par The Register.\n\nAfter serving as last year’s poster child for retail cyber misery, Marks & Spencer has become one of the first companies to sign up to the UK government's new Cyber Resilience Pledge. The retailer is among 60 organizations that have signed up to the voluntary scheme, launched by technology secretary Liz Kendall on Tuesday. Signatories commit to treating cybersecurity as a board-level responsibility, signing up to the National Cyber Security Centre's Early Warning service, and encouraging suppliers to achieve Cyber Essentials certification or an equivalent baseline. \"Today, some of Britain's biggest businesses are taking action to strengthen their cyber defenses and setting a powerful example for others to follow,\" Kendall said. \"By signing this Pledge, they are showing that cyber resilience is no longer just an IT issue - it is a business imperative.\" She warned that cyberattacks can disrupt services, expose customer data, and damage the bottom line, adding that AI is making attacks \"more sophisticated and easier to launch.\" M&S's appearance is hardly surprising. After falling victim to one of the UK's highest-profile cyber incidents last year, opting out would have raised more eyebrows than opting in. More interesting are some of the names missing from the government's roll call. Not every member of last year's cyber casualty club made the guest list. Co-op and Harrods are abs",
+          "action": "Surveiller les indicateurs de compromission associés et contrôler les actifs exposés.",
+          "image": "https://image.theregister.com/225093.jpg?imageId=225093&x=0&y=4.93&cropw=100&croph=63.55&panox=0&panoy=4.93&panow=100&panoh=63.55&width=1200&height=683",
+          "sources": [
+            {
+              "url": "https://www.theregister.com/security/2026/07/07/governments-cyber-pledge-lands-60-signatories-including-ms-and-somehow-capita/5267554",
+              "label": "The Register"
+            },
+            {
+              "url": "https://www.infosecurity-magazine.com/news/uk-gov-launches-cyber-resilience/",
+              "label": "Infosecurity Mag"
+            }
+          ],
+          "url": "https://www.theregister.com/security/2026/07/07/governments-cyber-pledge-lands-60-signatories-including-ms-and-somehow-capita/5267554",
+          "pubDate": "2026-07-07T10:07:00.000Z"
+        },
+        {
+          "title": "Accenture confirms breach after hacker offers stolen data for sale",
+          "cve": null,
+          "severity": "high",
+          "score": 63,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Incident de sécurité rapporté par BleepingComputer.\n\nIT services giant Accenture has confirmed it suffered a security breach after a threat actor claimed to have stolen 35 GB of source code and other data from the company.\n\nNetNut proxy network disrupted, 2 million infected devices cut off\n\nClaude Fable 5 isn’t permanently leaving subscriptions, Anthropic says\n\nJadePuffer ransomware used AI agent to automate entire attack\n\nAccenture confirms breach after hacker offers stolen data for sale\n\nChinese hackers de…",
+          "detail": "Incident de sécurité rapporté par BleepingComputer.\n\nIT services giant Accenture has confirmed it suffered a security breach after a threat actor claimed to have stolen 35 GB of source code and other data from the company.\n\nNetNut proxy network disrupted, 2 million infected devices cut off\n\nClaude Fable 5 isn’t permanently leaving subscriptions, Anthropic says\n\nJadePuffer ransomware used AI agent to automate entire attack\n\nAccenture confirms breach after hacker offers stolen data for sale\n\nChinese hackers develop LONGLEASH malware to expand ORB network\n\nHow to enable Kernel-mode Hardware-enforced Stack Protection in Windows 11",
+          "action": "Surveiller les indicateurs de compromission associés et contrôler les actifs exposés.",
+          "image": "https://www.bleepstatic.com/content/hl-images/2021/10/15/Accenture.jpg",
+          "sources": [
+            {
+              "url": "https://www.bleepingcomputer.com/news/security/accenture-confirms-breach-after-hacker-offers-stolen-data-for-sale/",
+              "label": "BleepingComputer"
+            }
+          ],
+          "url": "https://www.bleepingcomputer.com/news/security/accenture-confirms-breach-after-hacker-offers-stolen-data-for-sale/",
+          "pubDate": "2026-07-07T22:06:07.000Z"
+        },
+        {
+          "title": "Court Filing Reveals Windows Device ID Helped FBI Trace Alleged Scattered Spider Hacker",
+          "cve": null,
+          "severity": "news",
+          "score": 63,
+          "corroboration": 2,
+          "region": "intl",
+          "body": "Incident de sécurité rapporté par The Register.\n\nU.S. prosecutors linked an alleged Scattered Spider hacker to a break-in at a luxury jewelry retailer using a persistent Windows device ID, according to a newly unsealed federal complaint. Microsoft records tied that ID first to the account the attackers used to keep access during the May 2025 intrusion, then to online accounts prosecutors say belong to 19-year-old Peter Stokes. Stokes is",
+          "detail": "Incident de sécurité rapporté par The Register.\n\nU.S. prosecutors linked an alleged Scattered Spider hacker to a break-in at a luxury jewelry retailer using a persistent Windows device ID, according to a newly unsealed federal complaint. Microsoft records tied that ID first to the account the attackers used to keep access during the May 2025 intrusion, then to online accounts prosecutors say belong to 19-year-old Peter Stokes. Stokes is",
+          "action": "Surveiller les indicateurs de compromission associés et contrôler les actifs exposés.",
+          "image": "https://image.theregister.com/5268018.jpg?imageId=5268018&x=0&y=0&cropw=100&croph=100&panox=0&panoy=0&panow=100&panoh=100&width=1200&height=683",
+          "sources": [
+            {
+              "url": "https://www.theregister.com/cyber-crime/2026/07/07/windows-is-watching-anti-piracy-tool-fingers-scattered-spider-suspect/5267953",
+              "label": "The Register"
+            },
+            {
+              "url": "https://thehackernews.com/2026/07/court-filing-reveals-windows-device-id.html",
+              "label": "The Hacker News"
+            }
+          ],
+          "url": "https://www.theregister.com/cyber-crime/2026/07/07/windows-is-watching-anti-piracy-tool-fingers-scattered-spider-suspect/5267953",
+          "pubDate": "2026-07-07T20:47:09.000Z"
+        },
+        {
+          "title": "The GitHub Actions Attack Pattern Your CI Security Scanners Miss",
+          "cve": null,
+          "severity": "news",
+          "score": 63,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Incident de sécurité rapporté par BleepingComputer.\n\nActiveState explains how GitHub Actions attack chains can evade traditional CI security scanners, why passing a scan doesn't guarantee a secure pipeline, and how organizations can better govern their CI/CD workflows.\n\nNetNut proxy network disrupted, 2 million infected devices cut off\n\nClaude Fable 5 isn’t permanently leaving subscriptions, Anthropic says\n\nJadePuffer ransomware used AI agent to automate entire attack\n\nAccenture confirms breach after hacker…",
+          "detail": "Incident de sécurité rapporté par BleepingComputer.\n\nActiveState explains how GitHub Actions attack chains can evade traditional CI security scanners, why passing a scan doesn't guarantee a secure pipeline, and how organizations can better govern their CI/CD workflows.\n\nNetNut proxy network disrupted, 2 million infected devices cut off\n\nClaude Fable 5 isn’t permanently leaving subscriptions, Anthropic says\n\nJadePuffer ransomware used AI agent to automate entire attack\n\nAccenture confirms breach after hacker offers stolen data for sale\n\nChinese hackers develop LONGLEASH malware to expand ORB network\n\nHow to enable Kernel-mode Hardware-enforced Stack Protection in Windows 11",
+          "action": "Surveiller les indicateurs de compromission associés et contrôler les actifs exposés.",
+          "image": "https://www.bleepstatic.com/content/posts/2026/07/06/0_github-actions-header.jpg",
+          "sources": [
+            {
+              "url": "https://www.bleepingcomputer.com/news/security/the-github-actions-attack-pattern-your-ci-security-scanners-miss/",
+              "label": "BleepingComputer"
+            }
+          ],
+          "url": "https://www.bleepingcomputer.com/news/security/the-github-actions-attack-pattern-your-ci-security-scanners-miss/",
+          "pubDate": "2026-07-07T14:01:11.000Z"
+        },
+        {
+          "title": "1001Coques : 327 511 clients revendiqués dans une fuite de données de factures",
+          "cve": null,
+          "severity": "news",
+          "score": 61,
+          "corroboration": 1,
+          "region": "fr",
+          "body": "Incident de sécurité rapporté par Cyberattaque.org.\n\nUne fuite de données attribuée à 1001Coques.fr, boutique française spécialisée dans les coques personnalisables et accessoires mobiles, a été revendiquée\n\nAttaque Mis à jour le 7 juillet 2026 à 6h33 1001Coques : 327 511 clients revendiqués dans une fuite de données de factures Une fuite de données attribuée à 1001Coques.fr , boutique française spécialisée dans les coques personnalisables et accessoires mobiles, a été revendiquée sur un forum cybercriminel…",
+          "detail": "Incident de sécurité rapporté par Cyberattaque.org.\n\nUne fuite de données attribuée à 1001Coques.fr, boutique française spécialisée dans les coques personnalisables et accessoires mobiles, a été revendiquée\n\nAttaque Mis à jour le 7 juillet 2026 à 6h33 1001Coques : 327 511 clients revendiqués dans une fuite de données de factures Une fuite de données attribuée à 1001Coques.fr , boutique française spécialisée dans les coques personnalisables et accessoires mobiles, a été revendiquée sur un forum cybercriminel le 6 juillet 2026 .\n\nL’auteur de la cyberattaque, ChimeraZ, affirme diffuser une base au format JSON de 95 Mo , contenant 404 427 lignes et concernant 327 511 personnes . À ce stade, cette fuite reste une revendication non confirmée officiellement .\n\nLes données présentées dans l’échantillon semblent liées à des factures clients . Chaque ligne peut associer un identifiant de facture, un numéro de facture, une référence de commande, l’identité du client, son adresse, son téléphone, une date et un montant total.\n\nLes champs observés suggèrent donc une extraction issue d’un environnement e-commerce ou d’un outil de gestion des commandes, plutôt qu’une simple liste marketing.\n\nLe volume revendiqué est important pour un site marchand spécialisé. Les données potentiellement exposées comprennent notamment :\n\nAucun mot de passe ni donnée bancaire complète n’apparaît dans les champs cités par la revendication. Mais les informations de facturation restent sensibles, car elles permettent de relier une personne à une commande réelle.",
+          "action": "Surveiller les indicateurs de compromission associés et contrôler les actifs exposés.",
+          "image": "https://www.cyberattaque.org/wp-content/uploads/2026/05/cyberattaque_hacker22.jpg",
+          "sources": [
+            {
+              "url": "https://www.cyberattaque.org/1001coques-327-511-clients-revendiques-dans-une-fuite-de-donnees-de-factures/",
+              "label": "Cyberattaque.org"
+            }
+          ],
+          "url": "https://www.cyberattaque.org/1001coques-327-511-clients-revendiques-dans-une-fuite-de-donnees-de-factures/",
+          "pubDate": "2026-07-07T04:33:53.000Z"
+        }
+      ]
+    },
+    {
+      "id": "culture",
+      "items": [
+        {
+          "title": "Supreme Court allows Texas app law requiring age verification to take effect",
+          "cve": null,
+          "severity": "high",
+          "score": 74,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Signal de veille — The Record.\n\nA student advocacy organization and tech trade group had appealed to the high court to stay the Texas App Store Accountability Act on an emergency basis until the lower court rules.\n\nA Texas law restricting children’s ability to buy or download apps can be enforced while a lower court considers the case, according to a Supreme Court order issued Monday.\n\nA student advocacy organization and tech trade group had appealed to the high court to stay the Texas A…",
+          "detail": "Signal de veille — The Record.\n\nA student advocacy organization and tech trade group had appealed to the high court to stay the Texas App Store Accountability Act on an emergency basis until the lower court rules.\n\nA Texas law restricting children’s ability to buy or download apps can be enforced while a lower court considers the case, according to a Supreme Court order issued Monday.\n\nA student advocacy organization and tech trade group had appealed to the high court to stay the Texas App Store Accountability Act on an emergency basis until the lower court rules.\n\nThe law has been hotly contested and courts have split on whether it is constitutional. In December, a Texas federal judge put enforcement on hold, but last month an appeals court reinstated TASAA.\n\nThe Fifth Circuit Court of Appeals is set to hear arguments in the case in August.\n\nThe CCIA plans to “demonstrate how Texas’ App Store Accountability Act (TASAA) violates the First Amendment,” a statement from the group said. “People should not have to turn over personal data to access the internet any more than they should show government identification to enter a bookstore.”\n\nYouth advocates and tech companies argue that the law violates children’s First Amendment right to free speech.",
+          "action": null,
+          "image": "https://cms.therecord.media/uploads/pexels_mikhail_nilov_6969939_be670bf242.jpg",
+          "sources": [
+            {
+              "url": "https://therecord.media/supreme-court-allows-texas-app-law-age-verification-to-take-effect",
+              "label": "The Record"
+            }
+          ],
+          "url": "https://therecord.media/supreme-court-allows-texas-app-law-age-verification-to-take-effect",
+          "pubDate": "2026-07-07T16:05:00.000Z"
+        },
+        {
+          "title": "More Odd DNS Records: NIMLOC, (Tue, Jul 7th)",
+          "cve": null,
+          "severity": "high",
+          "score": 70,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Signal de veille — SANS ISC.\n\nYesterday, I talked about NAPTR records and how they are related to RCS. But there is another &quot;odd&quot; record that shows up in my DNS logs. This one isn&#39;t new, but I don&#39;t think I ever covered it: NIMLOC. At least that is what Zeek calls it. But let&#39;s see what it is all about. At first, it looks like NIMLOC records are no longer used.",
+          "detail": "Signal de veille — SANS ISC.\n\nYesterday, I talked about NAPTR records and how they are related to RCS. But there is another &quot;odd&quot; record that shows up in my DNS logs. This one isn&#39;t new, but I don&#39;t think I ever covered it: NIMLOC. At least that is what Zeek calls it. But let&#39;s see what it is all about. At first, it looks like NIMLOC records are no longer used. Google&#39;s AI overview explains: &quot;A NIMLOC (Nimrod Locator) DNS record is an obsolete resource record type (Type 32) originally designed for the Nimrod routing architecture to map names to network locators. Because Nimrod was an experimental protocol, NIMLOC records are considered historic and are not used in modern, standard network operations.&quot; While I do have&nbsp;one or the other odd IOT device in my network, I doubt any of them speak &quot;Nimrod&quot;. On the other hand, the queries originate from my macOS systems. This turns out to be an older standard,&nbsp;replaced by a newer (but still old) standard, with the newer standard becoming obsolete before the even older standard is phased out. DNS defines several resource record types. The official list is maintained by IANA [1] and I am including a sample below: &nbsp; TYPE Value Meaning References A 1 IPv4 Address RFC1035 NS 2 Name Server RFC1035 PTR 12 Domain Name Pointer RFC1035 MX 15 Mail Server RFC1035 TXT 16 Text String RFC1035 AAAA 28 IPv6 Address RFC3596",
+          "action": null,
+          "image": null,
+          "sources": [
+            {
+              "url": "https://isc.sans.edu/diary/rss/33128",
+              "label": "SANS ISC"
+            }
+          ],
+          "url": "https://isc.sans.edu/diary/rss/33128",
+          "pubDate": "2026-07-07T18:09:04.000Z"
+        },
+        {
+          "title": "Nayax visée par un « Syndicate » du cybercrime",
+          "cve": null,
+          "severity": "culture",
+          "score": 69,
+          "corroboration": 1,
+          "region": "fr",
+          "body": "Signal de veille — Zataz.\n\nNayax visée par une revendication pirate massive : données de paiement, clients et risque cyber sous surveillance. 1 milliard de CB concernées ?\n\nFont Resizer Aa Actus cyber Darkweb Intelligence Artificielle ZATAZ Community Logiciels Vidéos Moteurs de recherche de fuites Actus cyber Justice Sécurité réseaux sociaux Vie privée OSINT News Darkweb Fuite de données Codes malveillants Espionnage Sécurité Ransomwares Piratage / Hack infiltration Intelligence Art…",
+          "detail": "Signal de veille — Zataz.\n\nNayax visée par une revendication pirate massive : données de paiement, clients et risque cyber sous surveillance. 1 milliard de CB concernées ?\n\nFont Resizer Aa Actus cyber Darkweb Intelligence Artificielle ZATAZ Community Logiciels Vidéos Moteurs de recherche de fuites Actus cyber Justice Sécurité réseaux sociaux Vie privée OSINT News Darkweb Fuite de données Codes malveillants Espionnage Sécurité Ransomwares Piratage / Hack infiltration Intelligence Artificielle ZATAZ Community Userlock Community Réseaux sociaux ZATAZ News Letter ZATAZ – Chaque vendredi midi PROTOCOLE D&rsquo;ALERTE ZATAZ Logiciels Vidéos Vidéos Youtube ZATAZ Émission ZATAZ Twitch Moteurs de recherche de fuites Follow US Actus cyber Darkweb Intelligence Artificielle ZATAZ Community Logiciels Vidéos Moteurs de recherche de fuites ZATAZ.COM > Actualités > Actualités > Divers > Nayax visée par un « Syndicate » du cybercrime Actualités Divers Internet Clandestin (darknet) Piratage Nayax visée par un « Syndicate » du cybercrime dernière mise à jour : 07/07/2026 21:38 Par Damien Bancal - Chercheur / Journaliste / Conférencier / Enseignant Il y a 9 heures Il y a 8 heures Partager 7 minutes de lecture Partager Une revendication pirate affirme viser Nayax, acteur sensible des paiements connectés, avec une fuite annoncée dépassant 100 To de données financières et 1 milliard de CB ! Recevez les news de la semaine, par mail, chaque vendredi midi : inscription gratuite . Cliquer sur la petite enveloppe, dans la barre d’info, en bas à gauche de la page.\n\nLa menace publiée contre Nayax concentre plusieurs signaux critiques pour la cybersécurité et le renseignement économique. Des pirates affirment, selon les constatation du Service de veille et d’investigation de ZATAZ sur plusieurs sites",
+          "action": null,
+          "image": "https://www.zataz.com/wp-content/uploads/Nayax-syndicate-titre.jpg",
+          "sources": [
+            {
+              "url": "https://www.zataz.com/nayax-visee-par-un-syndicate-du-cybercrime/",
+              "label": "Zataz"
+            }
+          ],
+          "url": "https://www.zataz.com/nayax-visee-par-un-syndicate-du-cybercrime/",
+          "pubDate": "2026-07-07T19:30:20.000Z"
+        },
+        {
+          "title": "What Changes When Your Software Supply Chain Includes AI Writing Your Code?",
+          "cve": null,
+          "severity": "high",
+          "score": 68,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Signal de veille — The Hacker News.\n\nSoftware supply chain security was hard enough. Then AI joined the build pipeline. For five years, \"software supply chain security\" meant one question: what's in your code? Which open-source packages, which versions, which transitive dependencies three layers deep that nobody chose on purpose? SolarWinds, Log4Shell, and XZ Utils all taught the same lesson: the risk lives less in the code a",
+          "detail": "Signal de veille — The Hacker News.\n\nSoftware supply chain security was hard enough. Then AI joined the build pipeline. For five years, \"software supply chain security\" meant one question: what's in your code? Which open-source packages, which versions, which transitive dependencies three layers deep that nobody chose on purpose? SolarWinds, Log4Shell, and XZ Utils all taught the same lesson: the risk lives less in the code a",
+          "action": null,
+          "image": "https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEg0OJ0wrmDju3vsLQqciy7DCza9juzf5jkuI6VPy8mXFoQ-2hVj7uNgqJD8ti8Pft2gayFWUH9TfOuIkqnKyduhjMP9-wqBxuvHPoyp39keS52R_MpsuO0bsKX03-fy2PA3V-gjqOaKuSKoOWaotAyzf9Tsc_zUGJpf4i81bHMrCJYhTo7AjtfsdN_OKuY/s1600/AI-WRITER.jpg",
+          "sources": [
+            {
+              "url": "https://thehackernews.com/2026/07/what-changes-when-your-software-supply.html",
+              "label": "The Hacker News"
+            }
+          ],
+          "url": "https://thehackernews.com/2026/07/what-changes-when-your-software-supply.html",
+          "pubDate": "2026-07-07T11:30:00.000Z"
+        },
+        {
+          "title": "ISC Stormcast For Wednesday, July 8th, 2026 https://isc.sans.edu/podcastdetail/9998, (Wed, Jul 8th)",
+          "cve": null,
+          "severity": "culture",
+          "score": 66,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Signal de veille — SANS ISC.\n\n(c) SANS Internet Storm Center. https://isc.sans.edu Creative Commons Attribution-Noncommercial 3.0 United States License.",
+          "detail": "Signal de veille — SANS ISC.\n\n(c) SANS Internet Storm Center. https://isc.sans.edu Creative Commons Attribution-Noncommercial 3.0 United States License.",
+          "action": null,
+          "image": null,
+          "sources": [
+            {
+              "url": "https://isc.sans.edu/diary/rss/33136",
+              "label": "SANS ISC"
+            }
+          ],
+          "url": "https://isc.sans.edu/diary/rss/33136",
+          "pubDate": "2026-07-08T02:00:02.000Z"
+        },
+        {
+          "title": "Keyfactor Scores $1 Billion+ Investment for AI, Post-Quantum Security",
+          "cve": null,
+          "severity": "culture",
+          "score": 65,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Signal de veille — SecurityWeek.\n\nKeyfactor, which helps organizations connect humans, machines, and AI with cryptographic security, secured a strategic growth investment exceeding $1 billion.\n\nThe investment will accelerate Keyfactor’s machine identity, PKI, and cryptographic security platform as enterprises prepare for AI-driven and post-quantum threats.\n\nSubscribe to the SecurityWeek Email Briefing for the latest cybersecurity threats, trends, and expert insights.\n\nSubscribe to the Secu…",
+          "detail": "Signal de veille — SecurityWeek.\n\nKeyfactor, which helps organizations connect humans, machines, and AI with cryptographic security, secured a strategic growth investment exceeding $1 billion.\n\nThe investment will accelerate Keyfactor’s machine identity, PKI, and cryptographic security platform as enterprises prepare for AI-driven and post-quantum threats.\n\nSubscribe to the SecurityWeek Email Briefing for the latest cybersecurity threats, trends, and expert insights.\n\nSubscribe to the SecurityWeek Email Briefing to stay informed on the latest threats, trends, and technology, along with insightful columns from industry experts.\n\nJoin this live webinar as we break down why email-layer defenses alone can't keep pace with the modern phishing ecosystem, how agentic AI is changing the capacity equation for security teams, and more.\n\nThis year's summit will help organizations learn how to utilize tools, controls, and design models needed to properly secure cloud environments. Interact with leading solution providers and other end users facing similar challenges in securing a variety of cloud deployments.\n\nSherrod DeGrippo has been appointed Head of Threat Intelligence for Palo Alto Networks Unit 42.",
+          "action": null,
+          "image": "https://www.securityweek.com/wp-content/uploads/2023/01/Cybersecurity_News-SecurityWeek.jpg",
+          "sources": [
+            {
+              "url": "https://www.securityweek.com/keyfactor-scores-1-billion-investment-for-ai-post-quantum-security/",
+              "label": "SecurityWeek"
+            }
+          ],
+          "url": "https://www.securityweek.com/keyfactor-scores-1-billion-investment-for-ai-post-quantum-security/",
+          "pubDate": "2026-07-07T09:30:00.000Z"
+        },
+        {
+          "title": "Spain arrests suspected member of pro-Russian hacktivist groups",
+          "cve": null,
+          "severity": "critical",
+          "score": 63,
+          "corroboration": 2,
+          "region": "intl",
+          "body": "Signal de veille — CyberScoop.\n\nSpain arrested an alleged Cyber Army of Russia Reborn member accused of supporting pro-Russian cyberattacks targeting critical infrastructure in the U.S. and Europe.\n\nListen to this article 0:00 Learn more. This feature uses an automated voice, which may result in occasional errors in pronunciation, tone, or sentiment.",
+          "detail": "Signal de veille — CyberScoop.\n\nSpain arrested an alleged Cyber Army of Russia Reborn member accused of supporting pro-Russian cyberattacks targeting critical infrastructure in the U.S. and Europe.\n\nListen to this article 0:00 Learn more. This feature uses an automated voice, which may result in occasional errors in pronunciation, tone, or sentiment. Gwengoat, iStock/Getty Images Plus Authorities arrested an alleged member of Cyber Army of Russia Reborn, a pro-Russian hacktivist group accused of committing multiple attacks against critical infrastructure providers in the United States and Europe.\n\nSpain&rsquo;s national police announced the arrest Monday but said it occurred back in March. Officials did not name the man who was detained at his home in Palencia following an investigation triggered by a tip from the FBI in August 2025.\n\nFBI agents in the Los Angeles field office coordinated with Spanish officials to capture the alleged cybercriminal, the agency&rsquo;s cyber division said in a LinkedIn post Monday. The FBI said the arrest was part of Operation Riptide, an ongoing global campaign targeting cybercriminals and the infrastructure and financial networks they use to commit fraud.\n\n&ldquo;Together, we will continue to impose costs on cybercriminals wherever they operate,&rdquo; the FBI said.\n\nSpanish officials said the arrested man provided logistical support to a Ukrainian hacker linked to Cyber Army of Russia Reborn, also known as Z-Pentest, facilitating the Ukrainian&rsquo;s escape to Russia via Poland and Belarus.\n\nThe arrested man also &ldquo;participated in actions attributed to the pro-Russian hacktivist group NoName057(16), whose operations were later claimed in specialized portals related to geopolitics, with the aim of spreading pro-Russian and anti-We",
+          "action": null,
+          "image": "https://cyberscoop.com/wp-content/uploads/sites/3/2025/03/GettyImages-1327354395.jpg",
+          "sources": [
+            {
+              "url": "https://cyberscoop.com/spain-arrests-alleged-cyber-army-of-russia-reborn-member/",
+              "label": "CyberScoop"
+            },
+            {
+              "url": "https://www.bleepingcomputer.com/news/security/spain-arrests-suspected-member-of-pro-russian-hacktivist-groups/",
+              "label": "BleepingComputer"
+            }
+          ],
+          "url": "https://cyberscoop.com/spain-arrests-alleged-cyber-army-of-russia-reborn-member/",
+          "pubDate": "2026-07-07T21:57:05.000Z"
+        },
+        {
+          "title": "Microsoft to enable Windows settings backup by default for orgs",
+          "cve": null,
+          "severity": "culture",
+          "score": 63,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Signal de veille — BleepingComputer.\n\nMicrosoft says the Windows settings backup and restore tool will be enabled by default on Microsoft Entra-joined or Microsoft Entra hybrid-joined enterprise systems after upgrading to Windows 11 26H2.\n\nNetNut proxy network disrupted, 2 million infected devices cut off\n\nClaude Fable 5 isn’t permanently leaving subscriptions, Anthropic says\n\nJadePuffer ransomware used AI agent to automate entire attack\n\nAccenture confirms breach after hacker offers stolen da…",
+          "detail": "Signal de veille — BleepingComputer.\n\nMicrosoft says the Windows settings backup and restore tool will be enabled by default on Microsoft Entra-joined or Microsoft Entra hybrid-joined enterprise systems after upgrading to Windows 11 26H2.\n\nNetNut proxy network disrupted, 2 million infected devices cut off\n\nClaude Fable 5 isn’t permanently leaving subscriptions, Anthropic says\n\nJadePuffer ransomware used AI agent to automate entire attack\n\nAccenture confirms breach after hacker offers stolen data for sale\n\nChinese hackers develop LONGLEASH malware to expand ORB network\n\nHow to enable Kernel-mode Hardware-enforced Stack Protection in Windows 11",
+          "action": null,
+          "image": "https://www.bleepstatic.com/content/hl-images/2026/03/10/Windows.jpg",
+          "sources": [
+            {
+              "url": "https://www.bleepingcomputer.com/news/microsoft/microsoft-to-enable-windows-backup-for-organizations-by-default/",
+              "label": "BleepingComputer"
+            }
+          ],
+          "url": "https://www.bleepingcomputer.com/news/microsoft/microsoft-to-enable-windows-backup-for-organizations-by-default/",
+          "pubDate": "2026-07-07T09:41:19.000Z"
+        },
+        {
+          "title": "Microsoft testing new Cloud Rebuild Windows 11 recovery feature",
+          "cve": null,
+          "severity": "culture",
+          "score": 63,
+          "corroboration": 2,
+          "region": "intl",
+          "body": "Signal de veille — IT-Connect.\n\nMicrosoft teste Cloud rebuild sur Windows 11 : réinstallation complète de l'OS et des pilotes via Windows Update, sans clé USB, même si le PC ne démarre plus.\n\nActualités IT & Tech, tutoriels en administration système, réseau et cybersécurité.\n\nArchitecture Réseau Cybersécurité Linux & Logiciels Libres Microsoft (On-Premise) Microsoft 365 & Azure Self-Hosting & Open Source Stockage & NAS Cours IT Actualités Entreprise Actu Cybersécurité Web Logiciel – OS M…",
+          "detail": "Signal de veille — IT-Connect.\n\nMicrosoft teste Cloud rebuild sur Windows 11 : réinstallation complète de l'OS et des pilotes via Windows Update, sans clé USB, même si le PC ne démarre plus.\n\nActualités IT & Tech, tutoriels en administration système, réseau et cybersécurité.\n\nArchitecture Réseau Cybersécurité Linux & Logiciels Libres Microsoft (On-Premise) Microsoft 365 & Azure Self-Hosting & Open Source Stockage & NAS Cours IT Actualités Entreprise Actu Cybersécurité Web Logiciel – OS Matériel Réseaux sociaux Mobile Bons Plans Tests Débutants Livres Vidéos IT-Connect » Actualités » Logiciel - OS » Windows 11 : avec Cloud rebuild, Microsoft réinstalle votre PC depuis le cloud, même s’il ne démarre plus Logiciel - OS Windows 11 : avec Cloud rebuild, Microsoft réinstalle votre PC depuis le cloud, même s’il ne démarre plus 07/07/2026 Florian BURNEL 0 commentaire Microsoft , Windows 11 Un PC qui refuse de démarrer, pas de clé USB sous la main, aucune image système à disposition. Que faire ? Le 6 juillet 2026, Microsoft a dévoilé une nouvelle option de récupération surnommée Cloud rebuild. L'objectif : réinstaller entièrement le système et ses pilotes en les téléchargeant depuis Windows Update, directement depuis l'environnement de récupération.\n\nSelon Microsoft, Cloud rebuild ramène un PC sous Windows 11 dans un état propre et fonctionnel en effectuant une réinstallation complète du système, y compris lorsque Windows ne démarre plus.\n\nLa vraie différence se situe par rapport à la fonction « Réinitialiser ce PC » que vous connaissez surement déjà, mais dont le fonctionnement est différent :\n\nCette méthode semble pratique sur le papier, mais attention, elle n'est pas sans conséquence : il s'agit d'une réinstallation complète, pas d'une simple remise à zéro qui préserve vos fi",
+          "action": null,
+          "image": "https://www.it-connect.fr/wp-content-itc/uploads/2026/07/Windows-11-Cloud-rebuild.jpg",
+          "sources": [
+            {
+              "url": "https://www.it-connect.fr/windows-11-cloud-rebuild-reinstallation-cloud/",
+              "label": "IT-Connect"
+            },
+            {
+              "url": "https://www.bleepingcomputer.com/news/microsoft/microsoft-testing-new-cloud-rebuild-windows-11-recovery-feature/",
+              "label": "BleepingComputer"
+            }
+          ],
+          "url": "https://www.it-connect.fr/windows-11-cloud-rebuild-reinstallation-cloud/",
+          "pubDate": "2026-07-07T07:45:08.000Z"
+        },
+        {
+          "title": "Œil pour œil : la Chine envisage à son tour de restreindre l’accès à ses modèles d’IA les plus avancés",
+          "cve": null,
+          "severity": "high",
+          "score": 60,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Signal de veille — Numerama.\n\nSelon Reuters, le ministère chinois du Commerce a réuni Alibaba, ByteDance et Z.ai le mois dernier pour discuter d'un possible verrouillage des modèles d'IA les plus avancés du pays. Objectif affiché : empêcher que la technologie nationale ne profite, de gré ou de force, à des puissances étrangères.",
+          "detail": "Signal de veille — Numerama.\n\nSelon Reuters, le ministère chinois du Commerce a réuni Alibaba, ByteDance et Z.ai le mois dernier pour discuter d'un possible verrouillage des modèles d'IA les plus avancés du pays. Objectif affiché : empêcher que la technologie nationale ne profite, de gré ou de force, à des puissances étrangères. C'est une\n\nAmine Baba Aissa Amine Baba Aissa 2 min 2 min Amine Baba Aissa Amine Baba Aissa Ne plus voir cette pub Lecture Zen Résumer l'article Résumé de l'article Résumé par IA, vérifié par Numerama\n\nNous générons pour vous un résumé de l’article grâce à une IA et nous le vérifions afin de nous assurer qu’il n’y ait aucune erreur, pour garantir l’authenticité de l’info.\n\nRecevez tous les soirs un résumé de l’actu importante avec Le Récap’\n\nC&rsquo;est une information Reuters, publiée le 7 juillet , qui pourrait marquer un changement de paradigme brutal dans la guerre de l&rsquo; IA .\n\nTrois sources, sous couvert d&rsquo;anonymat, ont détaillé à l&rsquo;agence de presse le contenu d&rsquo;échanges encore informels entre les autorités chinoises et les géants locaux du secteur de l&rsquo;IA.\n\nComme Washington l&rsquo;a fait avec Anthropic quelques semaines plus tôt , la Chine semble désormais traiter ses modèles de pointe comme des actifs stratégiques à protéger plutôt que comme de simples produits à exporter.",
+          "action": null,
+          "image": "https://c0.lestechnophiles.com/www.numerama.com/wp-content/uploads/2025/12/design-sans-titre-2025-12-19t103658814.jpg?resize=1600,900&key=55b99853",
+          "sources": [
+            {
+              "url": "https://www.numerama.com/tech/2292043-oeil-pour-oeil-la-chine-envisage-a-son-tour-de-restreindre-lacces-a-ses-modeles-dia-les-plus-avances.html",
+              "label": "Numerama"
+            }
+          ],
+          "url": "https://www.numerama.com/tech/2292043-oeil-pour-oeil-la-chine-envisage-a-son-tour-de-restreindre-lacces-a-ses-modeles-dia-les-plus-avances.html",
+          "pubDate": "2026-07-07T15:06:16.000Z"
+        },
+        {
+          "title": "CISO Conversations: Tarah Wheeler, Cybersecurity Leader, Thought Leader and Original Thinker",
+          "cve": null,
+          "severity": "high",
+          "score": 59,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Signal de veille — SecurityWeek.\n\nTarah Wheeler is CISO at TPO Group, a firm that provides cybersecurity consultancy for high-stakes organizations. But despite this elevated position, her journey was far from typical. The post CISO Conversations: Tarah Wheeler, Cybersecurity Leader, Thought Leader and Original Thinker appeared first on SecurityWeek .",
+          "detail": "Signal de veille — SecurityWeek.\n\nTarah Wheeler is CISO at TPO Group, a firm that provides cybersecurity consultancy for high-stakes organizations. But despite this elevated position, her journey was far from typical. The post CISO Conversations: Tarah Wheeler, Cybersecurity Leader, Thought Leader and Original Thinker appeared first on SecurityWeek .",
+          "action": null,
+          "image": "https://www.securityweek.com/wp-content/uploads/2026/06/CISO-Tarah-Wheeler.jpeg",
+          "sources": [
+            {
+              "url": "https://www.securityweek.com/ciso-conversations-tarah-wheeler-cybersecurity-leader-thought-leader-and-original-thinker/",
+              "label": "SecurityWeek"
+            }
+          ],
+          "url": "https://www.securityweek.com/ciso-conversations-tarah-wheeler-cybersecurity-leader-thought-leader-and-original-thinker/",
+          "pubDate": "2026-07-07T12:00:00.000Z"
+        },
+        {
+          "title": "Anthropic dit avoir découvert le « J-Space », l’espace où Claude pense sans le dire",
+          "cve": null,
+          "severity": "culture",
+          "score": 55,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Signal de veille — Numerama.\n\nAnthropic publie un nouveau papier de recherche qui affirme avoir localisé, dans les entrailles de Claude, un espace neuronal jouant le rôle d'une mémoire de travail consciente. Derrière la métaphore neuroscientifique, l'entreprise américaine glisse aussi des enseignements pour la détection de comportements malveillants dans les modèles d'IA.",
+          "detail": "Signal de veille — Numerama.\n\nAnthropic publie un nouveau papier de recherche qui affirme avoir localisé, dans les entrailles de Claude, un espace neuronal jouant le rôle d'une mémoire de travail consciente. Derrière la métaphore neuroscientifique, l'entreprise américaine glisse aussi des enseignements pour la détection de comportements malveillants dans les modèles d'IA.",
+          "action": null,
+          "image": "https://c0.lestechnophiles.com/www.numerama.com/wp-content/uploads/2026/07/design-sans-titre-2026-07-07t092559632.jpg?resize=1600,900&key=1ec51fff",
+          "sources": [
+            {
+              "url": "https://www.numerama.com/cyberguerre/2291589-anthropic-dit-avoir-decouvert-le-j-space-lespace-ou-claude-pense-sans-le-dire.html",
+              "label": "Numerama"
+            }
+          ],
+          "url": "https://www.numerama.com/cyberguerre/2291589-anthropic-dit-avoir-decouvert-le-j-space-lespace-ou-claude-pense-sans-le-dire.html",
+          "pubDate": "2026-07-07T07:51:48.000Z"
+        },
+        {
+          "title": "Scattered Spider’s Structure More Like a Cybercrime Collective Than a Unified Gang",
+          "cve": null,
+          "severity": "culture",
+          "score": 52,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Signal de veille — Infosecurity Mag.\n\nGroup-IB analysis argued Scattered Spider is a decentralized collective of independent clusters\n\nScattered Spider has been reclassified as a decentralized cybercrime collective composed of independent clusters rather than a single, organized threat group.\n\nGroup-IB analysis , published on June 7, challenges the traditional view of the activity as one coordinated operation, arguing that multiple actors share tactics, tools and communities while operating se…",
+          "detail": "Signal de veille — Infosecurity Mag.\n\nGroup-IB analysis argued Scattered Spider is a decentralized collective of independent clusters\n\nScattered Spider has been reclassified as a decentralized cybercrime collective composed of independent clusters rather than a single, organized threat group.\n\nGroup-IB analysis , published on June 7, challenges the traditional view of the activity as one coordinated operation, arguing that multiple actors share tactics, tools and communities while operating separately.\n\nThe firm said this model helps explain why activity attributed to Scattered Spider has continued despite arrests and disruption efforts targeting some alleged members.\n\nThe group, also tracked under names including 0ktapus, Muddled Libra, Octo Tempest and UNC3944 by different security vendors, has been linked to several high-profile incidents since 2022.\n\nRead more on Scattered Spider attacks: Alleged Scattered Spider Member Extradited to US\n\nGroup-IB's research argued that Scattered Spider does not operate with a central hierarchy or shared leadership structure. Instead, the firm described it as a set of smaller clusters connected through common techniques, tools and online communities.",
+          "action": null,
+          "image": "https://assets.infosecurity-magazine.com/webpage/og/6108f052-4fd4-4e6f-be61-bb236b1adb93.jpeg",
+          "sources": [
+            {
+              "url": "https://www.infosecurity-magazine.com/news/scattered-spider-as-cybercrime/",
+              "label": "Infosecurity Mag"
+            }
+          ],
+          "url": "https://www.infosecurity-magazine.com/news/scattered-spider-as-cybercrime/",
+          "pubDate": "2026-07-07T14:00:00.000Z"
+        },
+        {
+          "title": "INVITATION POUR LES UECC",
+          "cve": null,
+          "severity": "culture",
+          "score": 50,
+          "corroboration": 1,
+          "region": "fr",
+          "body": "Signal de veille — Global Sec Mag.\n\nBonjour, En tant que partenaire soutien des Universités d'Été de la Cybersécurité et du Cloud de Confiance (UECC), nous avons le plaisir de vous convier à la 12ème édition, l'événement phare de la rentrée pour les acteurs de la cybersécurité.",
+          "detail": "Signal de veille — Global Sec Mag.\n\nBonjour, En tant que partenaire soutien des Universités d'Été de la Cybersécurité et du Cloud de Confiance (UECC), nous avons le plaisir de vous convier à la 12ème édition, l'événement phare de la rentrée pour les acteurs de la cybersécurité. Au programme cette année : « Réarmement numérique : l'Europe est-elle prête à conquérir sa souveraineté ? » Avec des échanges autour de thèmes clés : • Cybersécurité et défense : Comment positionner les solutions européennes sur la scène mondiale ? • Cybersécurité et IA : L'IA, un outil à double tranchant pour la sécurité numérique. • Dépendance numérique : La commande publique et privée, leviers d'émancipation ? • Priorités de l'État : Comment la sécurité numérique s'impose-t-elle en 2026/2027 ? Pour en savoir plus sur le programme : https://uecc-hexatrust.com/programme Un lieu unique pour réunir l'écosystème du numérique souverain : entreprises, clients, partenaires, décideurs, médias et associations. Plus de 800 participants et 80 partenaires sont attendus. Date : Jeudi 10 septembre 2026 Lieu : Station F – Paris 13 Horaires : 9h – 18h L'accès est offert aux RSSI, CISO, CSO, DPO, Respnsables Cyber et Cybersécurité, grâce à notre soutien à l'événement. Pour vous inscrire, utilisez le code : UECC2026-GLOBALSECURITYMAG https://uecc-hexatrust.com/page-inscription Nous serions ravi.e.s de vous compter parmi nous pour ces échanges essentiels.",
+          "action": null,
+          "image": "https://www.globalsecuritymag.fr/local/cache-vignettes/L40xH21/addc775fbbe8204228f793f2271924-887f5.png",
+          "sources": [
+            {
+              "url": "https://www.globalsecuritymag.fr/invitation-pour-les-uecc.html",
+              "label": "Global Sec Mag"
+            }
+          ],
+          "url": "https://www.globalsecuritymag.fr/invitation-pour-les-uecc.html",
+          "pubDate": "2026-07-08T04:01:18.000Z"
+        },
+        {
+          "title": "Barracuda adds PAM and identity protection with Evo Security acquisition",
+          "cve": null,
+          "severity": "culture",
+          "score": 48,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Signal de veille — Help Net Security.\n\nBarracuda Networks has acquired Evo Security. The acquisition expands the BarracudaONE platform&#8217;s identity security capabilities by adding privileged access management (PAM), access control, identity protection, and identity threat detection and response.",
+          "detail": "Signal de veille — Help Net Security.\n\nBarracuda Networks has acquired Evo Security. The acquisition expands the BarracudaONE platform&#8217;s identity security capabilities by adding privileged access management (PAM), access control, identity protection, and identity threat detection and response. By combining Evo Security’s identity solutions with Barracuda’s existing identity-driven controls, BarracudaONE delivers a unified, end-to-end identity security architecture through a single platform, precisely as global IAM investment surges with double-digit year-over-year growth, according to leading industry analysts. This integrated approach gives partners one &#8230; More &#8594; The post Barracuda adds PAM and identity protection with Evo Security acquisition appeared first on Help Net Security .",
+          "action": null,
+          "image": "https://img.helpnetsecurity.com/wp-content/uploads/2024/11/28150559/hns-large_logo.webp",
+          "sources": [
+            {
+              "url": "https://www.helpnetsecurity.com/2026/07/07/barracuda-evo-security-acquisition/",
+              "label": "Help Net Security"
+            }
+          ],
+          "url": "https://www.helpnetsecurity.com/2026/07/07/barracuda-evo-security-acquisition/",
+          "pubDate": "2026-07-07T13:51:15.000Z"
+        }
+      ]
+    }
+  ]
+}
