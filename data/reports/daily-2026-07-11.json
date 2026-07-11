@@ -1,0 +1,1009 @@
+{
+  "id": "daily-2026-07-11",
+  "type": "daily",
+  "date": "2026-07-11",
+  "title": "Rapport quotidien - samedi 11 juillet 2026",
+  "summary": "Sur les dernières 24 heures, la veille recense 21 vulnérabilités critiques, 54 incidents ou compromissions et 25 signaux de fond. Acteurs et produits les plus exposés : Microsoft, github.com/siyuan-note/siyuan/kernel (go) et GitHub.",
+  "generatedAt": "2026-07-11T04:01:26.761Z",
+  "sections": [
+    {
+      "id": "vulns",
+      "items": [
+        {
+          "title": "CVE-2026-12761 — The miniOrange Social Login and Register (Discord, Google, Twitter, LinkedIn) plugin for W…",
+          "cve": "CVE-2026-12761",
+          "severity": "critical",
+          "score": 74,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Vulnérabilité critique CVE-2026-12761 (score CVSS 9.8).\n\nThe miniOrange Social Login and Register (Discord, Google, Twitter, LinkedIn) plugin for WordPress is vulnerable to authentication bypass leading to account takeover in versions up to and including 7.7.0. This is due to the Profile Completion flow accepting an arbitrary email address via the 'email_field' POST parameter without verifying that the email belongs to the identity returned by the OAuth provider, combined with send_otp_token() returning the SHA-…",
+          "detail": "Vulnérabilité critique CVE-2026-12761 (score CVSS 9.8).\n\nThe miniOrange Social Login and Register (Discord, Google, Twitter, LinkedIn) plugin for WordPress is vulnerable to authentication bypass leading to account takeover in versions up to and including 7.7.0. This is due to the Profile Completion flow accepting an arbitrary email address via the 'email_field' POST parameter without verifying that the email belongs to the identity returned by the OAuth provider, combined with send_otp_token() returning the SHA-512(customer_key || otp) transaction hash to the client where the OTP space is only 99,000 values (wp_rand(1000, 99999)) and the customer_key is a static option (empty on unregistered installs). This makes it possible for unauthenticated attackers to trigger an OTP email to an arbitrary admin's address, crack the OTP offline from the leaked hash in under a second, and submit the cracked OTP to mo_openid_social_login_validate_otp(), which logs the attacker in as the user whose email was supplied — granting full administrator access.\n\nScore CVSS : 9.8\n\nType de faiblesse (CWE) : CWE-287",
+          "action": "Vérifier l'exposition du parc et appliquer le correctif éditeur dès sa disponibilité.",
+          "image": null,
+          "sources": [
+            {
+              "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-12761",
+              "label": "NVD"
+            },
+            {
+              "url": "https://www.cvedetails.com/cve/CVE-2026-12761/",
+              "label": "CVE Details"
+            }
+          ],
+          "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-12761",
+          "pubDate": "2026-07-10T21:16:53.160Z"
+        },
+        {
+          "title": "CVE-2026-54159 — prestashop/ps_facetedsearch: PHP Object Injection in faceted search cache allows unauthenticated RCE",
+          "cve": "CVE-2026-54159",
+          "severity": "critical",
+          "score": 74,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Vulnérabilité critique CVE-2026-54159 affectant prestashop/ps_facetedsearch (composer) (score CVSS 10).\n\nprestashop/ps_facetedsearch: PHP Object Injection in faceted search cache allows unauthenticated RCE\n\n--> Name Query To see all available qualifiers, see our documentation .\n\nThe module rebuilds the selected search filters from the request URL.",
+          "detail": "Vulnérabilité critique CVE-2026-54159 affectant prestashop/ps_facetedsearch (composer) (score CVSS 10).\n\nprestashop/ps_facetedsearch: PHP Object Injection in faceted search cache allows unauthenticated RCE\n\n--> Name Query To see all available qualifiers, see our documentation .\n\nThe module rebuilds the selected search filters from the request URL. The value of a slider filter ( price or weight ) is taken from the URL without sufficient validation, then stored in an internal filter-block cache where it is serialized and later read back with a raw native unserialize() . By crafting that value, an attacker can smuggle a malicious serialized PHP object into the cache. When it is deserialized, a gadget chain writes an arbitrary PHP file inside the module directory, which is then used as a webshell to run commands on the server.\n\nAny shop using a vulnerable version of ps_facetedsearch that displays a filter template containing a slider filter (price or weight). Exploitation is remote and unauthenticated , a single crafted front-office request is enough, and leads to remote code execution and full compromise of the shop and its server.\n\nAffected versions: 3.0.0 through 4.0.3 (all versions since 3.0.0, including the latest release).\n\nUpgrade the ps_facetedsearch module to the patched version. Upgrading the module is the best action that removes the vulnerability.\n\nOtherwise, you can apply the fix manually in the file src/Filters/Block.php :",
+          "action": "Vérifier l'exposition du parc et appliquer le correctif éditeur dès sa disponibilité.",
+          "image": "https://github.githubassets.com/assets/advisory-database-show-f32c8207dfb2.png",
+          "sources": [
+            {
+              "url": "https://github.com/advisories/GHSA-m5f5-28qr-9g9r",
+              "label": "GitHub Advisory"
+            }
+          ],
+          "url": "https://github.com/advisories/GHSA-m5f5-28qr-9g9r",
+          "pubDate": "2026-07-10T20:36:56.000Z"
+        },
+        {
+          "title": "CVE-2026-61459 — MCP Server Kubernetes before 3.9.0 contains an argument injection vulnerability in structu…",
+          "cve": "CVE-2026-61459",
+          "severity": "critical",
+          "score": 74,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Vulnérabilité critique CVE-2026-61459 (score CVSS 9.8).\n\nMCP Server Kubernetes before 3.9.0 contains an argument injection vulnerability in structured tools (kubectl_get, kubectl_describe, kubectl_delete) that allows attackers to bypass the assertNoDangerousFlags security check by supplying resourceType and name parameters with leading dashes.",
+          "detail": "Vulnérabilité critique CVE-2026-61459 (score CVSS 9.8).\n\nMCP Server Kubernetes before 3.9.0 contains an argument injection vulnerability in structured tools (kubectl_get, kubectl_describe, kubectl_delete) that allows attackers to bypass the assertNoDangerousFlags security check by supplying resourceType and name parameters with leading dashes. Attackers can inject the --server flag to redirect kubectl commands to an attacker-controlled API server, causing the operator's bearer token to be transmitted externally and enabling full cluster compromise.\n\nScore CVSS : 9.8\n\nType de faiblesse (CWE) : CWE-88",
+          "action": "Vérifier l'exposition du parc et appliquer le correctif éditeur dès sa disponibilité.",
+          "image": null,
+          "sources": [
+            {
+              "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-61459",
+              "label": "NVD"
+            },
+            {
+              "url": "https://www.cvedetails.com/cve/CVE-2026-61459/",
+              "label": "CVE Details"
+            }
+          ],
+          "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-61459",
+          "pubDate": "2026-07-10T19:17:27.450Z"
+        },
+        {
+          "title": "CVE-2026-15282 — The Instant Appointment plugin for WordPress is vulnerable to arbitrary file uploads due t…",
+          "cve": "CVE-2026-15282",
+          "severity": "critical",
+          "score": 74,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Vulnérabilité critique CVE-2026-15282 (score CVSS 9.8).\n\nThe Instant Appointment plugin for WordPress is vulnerable to arbitrary file uploads due to missing file type validation in the 'insapp_upload_image_as_attachment' function in all versions up to, and including, 1.2. This makes it possible for unauthenticated attackers to upload arbitrary files on the affected site's server which may make remote code execution possible.",
+          "detail": "Vulnérabilité critique CVE-2026-15282 (score CVSS 9.8).\n\nThe Instant Appointment plugin for WordPress is vulnerable to arbitrary file uploads due to missing file type validation in the 'insapp_upload_image_as_attachment' function in all versions up to, and including, 1.2. This makes it possible for unauthenticated attackers to upload arbitrary files on the affected site's server which may make remote code execution possible.\n\nScore CVSS : 9.8\n\nType de faiblesse (CWE) : CWE-434",
+          "action": "Vérifier l'exposition du parc et appliquer le correctif éditeur dès sa disponibilité.",
+          "image": null,
+          "sources": [
+            {
+              "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-15282",
+              "label": "NVD"
+            },
+            {
+              "url": "https://www.cvedetails.com/cve/CVE-2026-15282/",
+              "label": "CVE Details"
+            }
+          ],
+          "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-15282",
+          "pubDate": "2026-07-10T05:16:30.820Z"
+        },
+        {
+          "title": "Hackers exploit critical auth bypass in Gitea Docker image",
+          "cve": null,
+          "severity": "critical",
+          "score": 61,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Vulnérabilité critique affectant Docker.\n\nHackers are actively exploiting a critical vulnerability in the official Docker image for the Gitea self-hosted Git service that allows attackers to impersonate any user, including administrators.\n\nProgress urges ShareFile admins to shut down servers over “credible” threat\n\nFormer ransomware negotiator gets 4 years for BlackCat attacks\n\nOpenMandriva Linux says contributor tried to sabotage the project\n\nMicrosoft expects more Windows security updates from A…",
+          "detail": "Vulnérabilité critique affectant Docker.\n\nHackers are actively exploiting a critical vulnerability in the official Docker image for the Gitea self-hosted Git service that allows attackers to impersonate any user, including administrators.\n\nProgress urges ShareFile admins to shut down servers over “credible” threat\n\nFormer ransomware negotiator gets 4 years for BlackCat attacks\n\nOpenMandriva Linux says contributor tried to sabotage the project\n\nMicrosoft expects more Windows security updates from AI-discovered flaws\n\nRyuk ransomware member pleads guilty in the US, faces 15 years in prison\n\nProgress urges ShareFile admins to shut down servers over “credible” threat",
+          "action": "Vérifier l'exposition du parc et appliquer le correctif éditeur dès sa disponibilité.",
+          "image": "https://www.bleepstatic.com/content/hl-images/2026/07/10/Gitea.jpg",
+          "sources": [
+            {
+              "url": "https://www.bleepingcomputer.com/news/security/hackers-exploit-critical-auth-bypass-in-gitea-docker-image/",
+              "label": "BleepingComputer"
+            }
+          ],
+          "url": "https://www.bleepingcomputer.com/news/security/hackers-exploit-critical-auth-bypass-in-gitea-docker-image/",
+          "pubDate": "2026-07-10T15:48:38.000Z"
+        },
+        {
+          "title": "CVE-2026-50551 — SiYuan: Stored XSS to RCE via Unsanitized Attribute View Asset Cell Content",
+          "cve": "CVE-2026-50551",
+          "severity": "critical",
+          "score": 59,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Vulnérabilité critique CVE-2026-50551 affectant github.com/siyuan-note/siyuan/kernel (go) (score CVSS 9.9).\n\nSiYuan: Stored XSS to RCE via Unsanitized Attribute View Asset Cell Content\n\n--> Name Query To see all available qualifiers, see our documentation .\n\nThe Electron renderer is configured with nodeIntegration: true and contextIsolation: false (app/electron/main.js:307), allowing any JavaScript executing in the renderer to directly access Node.js APIs including require('child_process') .\n\napp/src/protyle/render/av/blockAttr.ts:93 (even worse - completely unes…",
+          "detail": "Vulnérabilité critique CVE-2026-50551 affectant github.com/siyuan-note/siyuan/kernel (go) (score CVSS 9.9).\n\nSiYuan: Stored XSS to RCE via Unsanitized Attribute View Asset Cell Content\n\n--> Name Query To see all available qualifiers, see our documentation .\n\nThe Electron renderer is configured with nodeIntegration: true and contextIsolation: false (app/electron/main.js:307), allowing any JavaScript executing in the renderer to directly access Node.js APIs including require('child_process') .\n\napp/src/protyle/render/av/blockAttr.ts:93 (even worse - completely unescaped):\n\nhtml += ` `; Rendered via action.ts:860 : cellElement.innerHTML = renderCell(...) results in immediate XSS on page load.\n\nPayload (Direct XSS) — in an AV asset cell link field, enter:\n\nSteps to Reproduce Open SiYuan desktop app (v3.6.5). Create a new document. Insert an Attribute View (database): / then select \"Table\". Add a column of type \"Asset\". Click the asset cell, then \"Add Link\". In the \"Link\" textarea, paste: Leave \"Title\" empty or fill with benign text. Click outside the dialog to save. Observe: Alert fires immediately (Sink 1). Hovering over the cell also triggers (Sink 2). Impact Remote Code Execution on victim's system via malicious note sync/import. Data exfiltration: attacker can read all notes, access filesystem, steal credentials. Persistence: malicious payload stored in .sy files, executes on every open. Suggested Fix Replace escapeAttr() with escapeAriaLabel() for all aria-label attributes in AV cell renderers. Escape item.name and item.content with escapeHtml() before concatenating into element text content. Affected files: app/src/protyle/render/av/cell.ts , app/src/protyle/render/av/blockAttr.ts , app/src/protyle/render/av/asset.ts .",
+          "action": "Vérifier l'exposition du parc et appliquer le correctif éditeur dès sa disponibilité.",
+          "image": "https://github.githubassets.com/assets/advisory-database-show-f32c8207dfb2.png",
+          "sources": [
+            {
+              "url": "https://github.com/advisories/GHSA-56mp-4f3v-fgj2",
+              "label": "GitHub Advisory"
+            }
+          ],
+          "url": "https://github.com/advisories/GHSA-56mp-4f3v-fgj2",
+          "pubDate": "2026-07-10T20:37:04.000Z"
+        },
+        {
+          "title": "CVE-2026-54158 — SiYuan: Stored XSS to RCE via attribute-view cell rendering in genAVValueHTML()",
+          "cve": "CVE-2026-54158",
+          "severity": "critical",
+          "score": 59,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Vulnérabilité critique CVE-2026-54158 affectant github.com/siyuan-note/siyuan/kernel (go) (score CVSS 9.9).\n\nSiYuan: Stored XSS to RCE via attribute-view cell rendering in genAVValueHTML()\n\n--> Name Query To see all available qualifiers, see our documentation .\n\nThe kernel doesn't escape on the way in either, so the malicious cell persists byte-for-byte. There's no equivalent of the html.EscapeAttrVal call that protects block IAL attributes at kernel/model/blockial.go:261 .\n\nCompanion advisory: GHSA-mvjr-vv3c-w4qv .",
+          "detail": "Vulnérabilité critique CVE-2026-54158 affectant github.com/siyuan-note/siyuan/kernel (go) (score CVSS 9.9).\n\nSiYuan: Stored XSS to RCE via attribute-view cell rendering in genAVValueHTML()\n\n--> Name Query To see all available qualifiers, see our documentation .\n\nThe kernel doesn't escape on the way in either, so the malicious cell persists byte-for-byte. There's no equivalent of the html.EscapeAttrVal call that protects block IAL attributes at kernel/model/blockial.go:261 .\n\nCompanion advisory: GHSA-mvjr-vv3c-w4qv . Same workspace-sync to renderer-sink to Electron-RCE pattern in the CSS-snippet renderer, different sink file. Worth auditing for the same pattern in other renderers that pull from synced workspace data.\n\napp/src/protyle/render/av/blockAttr.ts:68 , with the unsafe branches highlighted:\n\nCallers assign the result to innerHTML . Example, app/src/protyle/render/av/select.ts:124 :\n\ngrep -n 'html.Escape\\|EscapeHTML\\|EscapeString' kernel/model/attribute_view.go # (no output) For comparison, the block-IAL write path at kernel/model/blockial.go:261 applies html.EscapeAttrVal(value) . The AV cell write path is missing the equivalent.",
+          "action": "Vérifier l'exposition du parc et appliquer le correctif éditeur dès sa disponibilité.",
+          "image": "https://github.githubassets.com/assets/advisory-database-show-f32c8207dfb2.png",
+          "sources": [
+            {
+              "url": "https://github.com/advisories/GHSA-5xfx-xj4h-5p7r",
+              "label": "GitHub Advisory"
+            }
+          ],
+          "url": "https://github.com/advisories/GHSA-5xfx-xj4h-5p7r",
+          "pubDate": "2026-07-10T19:34:53.000Z"
+        },
+        {
+          "title": "CVE-2026-54067 — SiYuan: Stored XSS to RCE via CSS-snippet <style> breakout in renderSnippet()",
+          "cve": "CVE-2026-54067",
+          "severity": "critical",
+          "score": 59,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Vulnérabilité critique CVE-2026-54067 affectant github.com/siyuan-note/siyuan/kernel (go) (score CVSS 9.9).\n\nSiYuan: Stored XSS to RCE via CSS-snippet <style> breakout in renderSnippet()\n\n--> Name Query To see all available qualifiers, see our documentation .\n\nThe bug also bypasses the user's enabledCSS / enabledJS separation. A user who turned enabledJS off was making a deliberate call not to run untrusted JavaScript; the CSS path runs it anyway.\n\nThe write path stores raw content.",
+          "detail": "Vulnérabilité critique CVE-2026-54067 affectant github.com/siyuan-note/siyuan/kernel (go) (score CVSS 9.9).\n\nSiYuan: Stored XSS to RCE via CSS-snippet <style> breakout in renderSnippet()\n\n--> Name Query To see all available qualifiers, see our documentation .\n\nThe bug also bypasses the user's enabledCSS / enabledJS separation. A user who turned enabledJS off was making a deliberate call not to run untrusted JavaScript; the CSS path runs it anyway.\n\nThe write path stores raw content. kernel/api/snippet.go:107-130 copies Content from the request straight into the snippet record with no HTML escape, no check, no type-specific validation:\n\nThe renderer reads the snippet back through /api/snippet/getSnippet and interpolates it into a tag, raw. app/src/config/util/snippets.ts:32 , called on app boot and on the reloadSnippet WebSocket event:\n\nThe cleanest fix mirrors what the JS branch already does. Build the element with createElement and set textContent :\n\nIf touching that line is undesirable, the smaller patch is to escape before interpolation:",
+          "action": "Vérifier l'exposition du parc et appliquer le correctif éditeur dès sa disponibilité.",
+          "image": "https://github.githubassets.com/assets/advisory-database-show-f32c8207dfb2.png",
+          "sources": [
+            {
+              "url": "https://github.com/advisories/GHSA-mvjr-vv3c-w4qv",
+              "label": "GitHub Advisory"
+            }
+          ],
+          "url": "https://github.com/advisories/GHSA-mvjr-vv3c-w4qv",
+          "pubDate": "2026-07-10T19:25:09.000Z"
+        },
+        {
+          "title": "CVE-2026-59792 — Jetbrains Intellij Idea",
+          "cve": "CVE-2026-59792",
+          "severity": "critical",
+          "score": 58,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Vulnérabilité critique CVE-2026-59792 affectant Jetbrains Intellij Idea (score CVSS 9.6).\n\nThis is a potential security issue, you are being redirected to https://nvd.nist.gov\n\nYou have JavaScript disabled. This site requires JavaScript to be enabled for complete site functionality.\n\nOfficial websites use .gov A .gov website belongs to an official government organization in the United States.\n\nSecure .gov websites use HTTPS A lock ( ) or https:// means you've safely connected to the .gov website.",
+          "detail": "Vulnérabilité critique CVE-2026-59792 affectant Jetbrains Intellij Idea (score CVSS 9.6).\n\nThis is a potential security issue, you are being redirected to https://nvd.nist.gov\n\nYou have JavaScript disabled. This site requires JavaScript to be enabled for complete site functionality.\n\nOfficial websites use .gov A .gov website belongs to an official government organization in the United States.\n\nSecure .gov websites use HTTPS A lock ( ) or https:// means you've safely connected to the .gov website. Share sensitive information only on official, secure websites.\n\nIn JetBrains IntelliJ IDEA before 2026.1.4, 2026.2 code execution via path traversal in project workspace ID handling was possible\n\nBy selecting these links, you will be leaving NIST webspace. We have provided these links to other web sites because they may have information that would be of interest to you. No inferences should be drawn on account of other sites being referenced, or not, from this page. There may be other web sites that are more appropriate for your purpose. NIST does not necessarily endorse the views expressed, or concur with the facts presented on these sites. Further, NIST does not endorse any commercial products that may be mentioned on these sites. Please address comments about this page to [email protected] .",
+          "action": "Vérifier l'exposition du parc et appliquer le correctif éditeur dès sa disponibilité.",
+          "image": null,
+          "sources": [
+            {
+              "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-59792",
+              "label": "NVD"
+            },
+            {
+              "url": "https://www.cvedetails.com/cve/CVE-2026-59792/",
+              "label": "CVE Details"
+            }
+          ],
+          "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-59792",
+          "pubDate": "2026-07-10T15:16:48.240Z"
+        },
+        {
+          "title": "TSDProxy: Internal proxy auth token forwarded to backend services enables management API escalation",
+          "cve": null,
+          "severity": "critical",
+          "score": 57,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Vulnérabilité critique affectant github.com/almeidapaulopt/tsdproxy (go) (score CVSS 9).\n\nTSDProxy: Internal proxy auth token forwarded to backend services enables management API escalation\n\n--> Name Query To see all available qualifiers, see our documentation .\n\nThe attack requires the backend to reach 127.0.0.1:8080 . This holds in: (1) non-Docker deployments where tsdproxy and a backend run on the same host, (2) Docker host-network-mode containers, (3) containers sharing tsdproxy's network namespace.\n\nThis audit is from an AI-assisted resear…",
+          "detail": "Vulnérabilité critique affectant github.com/almeidapaulopt/tsdproxy (go) (score CVSS 9).\n\nTSDProxy: Internal proxy auth token forwarded to backend services enables management API escalation\n\n--> Name Query To see all available qualifiers, see our documentation .\n\nThe attack requires the backend to reach 127.0.0.1:8080 . This holds in: (1) non-Docker deployments where tsdproxy and a backend run on the same host, (2) Docker host-network-mode containers, (3) containers sharing tsdproxy's network namespace.\n\nThis audit is from an AI-assisted research agent at sechub.dev . Running it on OSS projects is free for maintainers.\n\nalmeidapaulopt published to almeidapaulopt/tsdproxy Jun 3, 2026 Published to the GitHub Advisory Database Jul 10, 2026 Reviewed Jul 10, 2026 Last updated Jul 10, 2026 Severity Critical 9.0 CVSS overall score This score calculates overall vulnerability severity from 0 to 10 and is based on the Common Vulnerability Scoring System (CVSS). / 10 CVSS v3 base metrics Attack vector Network Attack complexity High Privileges required None User interaction None Scope Changed Confidentiality High Integrity High Availability High Learn more about base metrics CVSS v3 base metrics Attack vector: More severe the more the remote (logically and physically) an attacker can be in order to exploit the vulnerability. Attack complexity: More severe for the least complex attacks. Privileges required: More severe if no privileges are required. User interaction: More severe when no user interaction is required. Scope: More severe when a scope change occurs, e.g. one vulnerable component impacts resources in components beyond its security scope. Confidentiality: More severe when loss of data confidentiality is highest, measuring the level of data access available to an unauthori",
+          "action": "Vérifier l'exposition du parc et appliquer le correctif éditeur dès sa disponibilité.",
+          "image": "https://github.githubassets.com/assets/advisory-database-show-f32c8207dfb2.png",
+          "sources": [
+            {
+              "url": "https://github.com/advisories/GHSA-g936-7jqj-mwv8",
+              "label": "GitHub Advisory"
+            }
+          ],
+          "url": "https://github.com/advisories/GHSA-g936-7jqj-mwv8",
+          "pubDate": "2026-07-10T21:43:13.000Z"
+        },
+        {
+          "title": "CVE-2026-54089 — File Browser: Authentication Bypass via Proxy Auth Header Forgery",
+          "cve": "CVE-2026-54089",
+          "severity": "critical",
+          "score": 57,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Vulnérabilité critique CVE-2026-54089 affectant github.com/filebrowser/filebrowser/v2 (go) (score CVSS 9.1).\n\nFile Browser: Authentication Bypass via Proxy Auth Header Forgery\n\n--> Name Query To see all available qualifiers, see our documentation .\n\nThis is an already known issue that has been documented in the documentation for several years, but has not been documented as a vulnerability before.\n\nThis vulnerability is NOT exploitable on default configuration ( auth.method=json ). It requires the administrator to have configured proxy authentication mode.",
+          "detail": "Vulnérabilité critique CVE-2026-54089 affectant github.com/filebrowser/filebrowser/v2 (go) (score CVSS 9.1).\n\nFile Browser: Authentication Bypass via Proxy Auth Header Forgery\n\n--> Name Query To see all available qualifiers, see our documentation .\n\nThis is an already known issue that has been documented in the documentation for several years, but has not been documented as a vulnerability before.\n\nThis vulnerability is NOT exploitable on default configuration ( auth.method=json ). It requires the administrator to have configured proxy authentication mode. However, this is a common production deployment pattern - many organizations run FileBrowser behind a reverse proxy that handles SSO/LDAP/OAuth authentication:\n\nIn these setups, the proxy authenticates the user and passes the username via HTTP header (e.g., X-Remote-User ). FileBrowser trusts this header to identify the user.\n\nThe core issue is that the code itself has zero defensive checks — no trusted IP validation, no shared secret, no origin verification. The entire security model relies on network-level isolation, which is fragile and not documented as a hard requirement.\n\nThe ProxyAuth.Auth() function unconditionally trusts the value of an HTTP request header (configured via auth.header , e.g. X-Remote-User ) to determine the authenticated user's identity. There are three distinct problems in this code:",
+          "action": "Vérifier l'exposition du parc et appliquer le correctif éditeur dès sa disponibilité.",
+          "image": "https://github.githubassets.com/assets/advisory-database-show-f32c8207dfb2.png",
+          "sources": [
+            {
+              "url": "https://github.com/advisories/GHSA-xqp3-jq6g-x3qm",
+              "label": "GitHub Advisory"
+            }
+          ],
+          "url": "https://github.com/advisories/GHSA-xqp3-jq6g-x3qm",
+          "pubDate": "2026-07-10T19:27:13.000Z"
+        },
+        {
+          "title": "CVE-2026-54072 — Authorizer: Unvalidated redirect_uri in /authorize leaks OAuth2 tokens to attacker-controlled URL",
+          "cve": "CVE-2026-54072",
+          "severity": "critical",
+          "score": 57,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Vulnérabilité critique CVE-2026-54072 affectant github.com/authorizerdev/authorizer (go) (score CVSS 9.3).\n\nAuthorizer: Unvalidated redirect_uri in /authorize leaks OAuth2 tokens to attacker-controlled URL\n\n--> Name Query To see all available qualifiers, see our documentation .\n\nPartial fix was applied in v2.0.1 to other handlers ( oauth_login , verify_email , magic_link_login , forgot_password , invite_members , oauth_callback ) but /authorize was not included.\n\nAdd the same IsValidOrigin check that was applied to the other handlers in v2.0.1:",
+          "detail": "Vulnérabilité critique CVE-2026-54072 affectant github.com/authorizerdev/authorizer (go) (score CVSS 9.3).\n\nAuthorizer: Unvalidated redirect_uri in /authorize leaks OAuth2 tokens to attacker-controlled URL\n\n--> Name Query To see all available qualifiers, see our documentation .\n\nPartial fix was applied in v2.0.1 to other handlers ( oauth_login , verify_email , magic_link_login , forgot_password , invite_members , oauth_callback ) but /authorize was not included.\n\nAdd the same IsValidOrigin check that was applied to the other handlers in v2.0.1:",
+          "action": "Vérifier l'exposition du parc et appliquer le correctif éditeur dès sa disponibilité.",
+          "image": "https://github.githubassets.com/assets/advisory-database-show-f32c8207dfb2.png",
+          "sources": [
+            {
+              "url": "https://github.com/advisories/GHSA-h29v-hj44-q8cv",
+              "label": "GitHub Advisory"
+            }
+          ],
+          "url": "https://github.com/advisories/GHSA-h29v-hj44-q8cv",
+          "pubDate": "2026-07-10T19:25:15.000Z"
+        },
+        {
+          "title": "CVE-2026-15378 — A flaw was found in the `guardrails-detectors` component. This vulnerability allows a remo…",
+          "cve": "CVE-2026-15378",
+          "severity": "critical",
+          "score": 57,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Vulnérabilité critique CVE-2026-15378 (score CVSS 9.3).\n\nA flaw was found in the `guardrails-detectors` component. This vulnerability allows a remote attacker to perform a blind Server-Side Request Forgery (SSRF) by submitting a specially crafted XML Schema Definition (XSD) string. This can lead to unauthorized access to sensitive information, including credentials from cloud metadata services, Kubernetes API, internal MinIO, and other internal network endpoints.",
+          "detail": "Vulnérabilité critique CVE-2026-15378 (score CVSS 9.3).\n\nA flaw was found in the `guardrails-detectors` component. This vulnerability allows a remote attacker to perform a blind Server-Side Request Forgery (SSRF) by submitting a specially crafted XML Schema Definition (XSD) string. This can lead to unauthorized access to sensitive information, including credentials from cloud metadata services, Kubernetes API, internal MinIO, and other internal network endpoints. Additionally, it enables local file reads of critical data such as service account tokens and pod secrets.\n\nScore CVSS : 9.3\n\nType de faiblesse (CWE) : CWE-918",
+          "action": "Vérifier l'exposition du parc et appliquer le correctif éditeur dès sa disponibilité.",
+          "image": null,
+          "sources": [
+            {
+              "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-15378",
+              "label": "NVD"
+            },
+            {
+              "url": "https://www.cvedetails.com/cve/CVE-2026-15378/",
+              "label": "CVE Details"
+            }
+          ],
+          "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-15378",
+          "pubDate": "2026-07-10T10:16:23.553Z"
+        },
+        {
+          "title": "CVE-2026-54069 — SiYuan: Unauthenticated Admin API Access via Blanket chrome-extension:// Origin Allowlist",
+          "cve": "CVE-2026-54069",
+          "severity": "critical",
+          "score": 49,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Vulnérabilité critique CVE-2026-54069 affectant github.com/siyuan-note/siyuan/kernel (go).\n\nSiYuan: Unauthenticated Admin API Access via Blanket chrome-extension:// Origin Allowlist\n\n--> Name Query To see all available qualifiers, see our documentation .\n\nSiYuan 96dfe0bea474 ). The chrome-extension allowlist remains unfixed as of the latest commit on the fix branch ( d7b77d945e0d ).\n\nIn kernel/model/session.go:277 , the CheckAuth middleware exempts all chrome-extension:// origins from authentication:\n\nc . Set ( \"role\" , model .",
+          "detail": "Vulnérabilité critique CVE-2026-54069 affectant github.com/siyuan-note/siyuan/kernel (go).\n\nSiYuan: Unauthenticated Admin API Access via Blanket chrome-extension:// Origin Allowlist\n\n--> Name Query To see all available qualifiers, see our documentation .\n\nSiYuan 96dfe0bea474 ). The chrome-extension allowlist remains unfixed as of the latest commit on the fix branch ( d7b77d945e0d ).\n\nIn kernel/model/session.go:277 , the CheckAuth middleware exempts all chrome-extension:// origins from authentication:\n\nc . Set ( \"role\" , model . RoleAdministrator ) The AccessAuthCode field defaults to an empty string for desktop installs ( ContainerStd ). When empty, no token validation occurs. This means any Chrome/Chromium extension can make fully authenticated admin API calls to the SiYuan kernel.\n\nThe origin check trusts the entire chrome-extension:// scheme rather than validating a specific extension ID, so every installed extension (including those with no explicit host_permissions ) can access all admin endpoints.\n\n88250 published to siyuan-note/siyuan Jun 3, 2026 Published by the National Vulnerability Database Jun 24, 2026 Published to the GitHub Advisory Database Jul 10, 2026 Reviewed Jul 10, 2026 Last updated Jul 10, 2026 Severity Critical 9.2 CVSS overall score This score calculates overall vulnerability severity from 0 to 10 and is based on the Common Vulnerability Scoring System (CVSS). / 10 CVSS v4 base metrics Exploitability Metrics Attack Vector Network Attack Complexity High Attack Requirements None Privileges Required None User interaction None Vulnerable System Impact Metrics Confidentiality High Integrity High Availability High Subsequent System Impact Metrics Confidentiality None Integrity None Availability None Learn more about base metrics CVSS v4 base metrics Exp",
+          "action": "Vérifier l'exposition du parc et appliquer le correctif éditeur dès sa disponibilité.",
+          "image": "https://github.githubassets.com/assets/advisory-database-show-f32c8207dfb2.png",
+          "sources": [
+            {
+              "url": "https://github.com/advisories/GHSA-hvr9-72v2-fff3",
+              "label": "GitHub Advisory"
+            }
+          ],
+          "url": "https://github.com/advisories/GHSA-hvr9-72v2-fff3",
+          "pubDate": "2026-07-10T19:26:06.000Z"
+        },
+        {
+          "title": "Microsoft is rewriting Windows patch guidance because of AI",
+          "cve": null,
+          "severity": "critical",
+          "score": 49,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Vulnérabilité critique affectant Microsoft.\n\nMicrosoft is recommending that organizations shorten Windows update deployment timelines, warning that advances in AI are reducing the time attackers need to identify and exploit vulnerabilities after security updates are released. The company says organizations should reassess how quickly they roll out monthly security updates, particularly on devices where shorter deployment windows can be implemented without disrupting business operations.",
+          "detail": "Vulnérabilité critique affectant Microsoft.\n\nMicrosoft is recommending that organizations shorten Windows update deployment timelines, warning that advances in AI are reducing the time attackers need to identify and exploit vulnerabilities after security updates are released. The company says organizations should reassess how quickly they roll out monthly security updates, particularly on devices where shorter deployment windows can be implemented without disrupting business operations. “If you’re not delivering critical quality updates with security fixes until a couple of weeks after &#8230; More &#8594; The post Microsoft is rewriting Windows patch guidance because of AI appeared first on Help Net Security .",
+          "action": "Vérifier l'exposition du parc et appliquer le correctif éditeur dès sa disponibilité.",
+          "image": "https://img.helpnetsecurity.com/wp-content/uploads/2026/07/09133203/windows_intune-security_update_status.webp",
+          "sources": [
+            {
+              "url": "https://www.helpnetsecurity.com/2026/07/10/microsoft-windows-update-deployment-timelines/",
+              "label": "Help Net Security"
+            }
+          ],
+          "url": "https://www.helpnetsecurity.com/2026/07/10/microsoft-windows-update-deployment-timelines/",
+          "pubDate": "2026-07-10T06:00:26.000Z"
+        }
+      ]
+    },
+    {
+      "id": "attacks",
+      "items": [
+        {
+          "title": "No Manners Here: The Ruthless Rise of The Gentlemen Ransomware",
+          "cve": null,
+          "severity": "news",
+          "score": 87,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Incident de sécurité rapporté par Unit 42.\n\nUnit 42 explores The Gentlemen ransomware operations, revealing the affiliate model driving its rapid growth. Learn more here.\n\nThe Gentlemen (aka Storm-2697 ) is a Ransomware-as-a-Service (RaaS) program active since at least July 2025. Public reporting indicates that the operators were likely active months earlier as an affiliate (known as ArmCorp) of Qilin RaaS, which Unit 42 tracks as Spikey Scorpius.",
+          "detail": "Incident de sécurité rapporté par Unit 42.\n\nUnit 42 explores The Gentlemen ransomware operations, revealing the affiliate model driving its rapid growth. Learn more here.\n\nThe Gentlemen (aka Storm-2697 ) is a Ransomware-as-a-Service (RaaS) program active since at least July 2025. Public reporting indicates that the operators were likely active months earlier as an affiliate (known as ArmCorp) of Qilin RaaS, which Unit 42 tracks as Spikey Scorpius. Their ransomware variants are written in both C and Go programming languages , enabling the threat actors to spread their encryptors across different operating systems and virtual infrastructure. Figure 1 below illustrates the desktop wallpaper used by the ransomware after deployment.\n\nAdditional public reporting revealed that the operators (roughly 20 of them) likely morphed from a private entity into a RaaS model on or about September 2025. While traditional RaaS models typically offer affiliates a 70% to 80% cut of paid ransoms, The Gentlemen offer an unprecedented 90% payout.\n\nUnit 42 and other security researchers have observed The Gentlemen’s usage of a wide variety of initial access techniques similar to other RaaS operators since their inception, including the exploitation of vulnerabilities in edge devices (firewalls, VPNs), brute force attacks, obtaining leaked and/or stolen credentials and collaborating with initial access brokers (IABs).\n\nMore recently, researchers have identified The Gentlemen’s usage of a custom Go-based backdoor , an EDR killer framework dubbed “ GentleKiller ” and the suspected usage of an unspecified zero-day vulnerability exploit to amplify their defense evasion capabilities.\n\nIn May 2026, The Gentlemen announced a partnership with HasanBroker's BreachForums as a means to recruit affiliates,",
+          "action": "Surveiller les indicateurs de compromission associés et contrôler les actifs exposés.",
+          "image": "https://unit42.paloaltonetworks.com/wp-content/uploads/2025/09/05_Opinion_Overview_1920x900.jpg",
+          "sources": [
+            {
+              "url": "https://unit42.paloaltonetworks.com/the-gentlemen-ransomware/",
+              "label": "Unit 42"
+            }
+          ],
+          "url": "https://unit42.paloaltonetworks.com/the-gentlemen-ransomware/",
+          "pubDate": "2026-07-10T22:00:39.000Z"
+        },
+        {
+          "title": "‘HalluSquatting’ Turns AI Hallucinations Into Botnet Delivery Mechanism",
+          "cve": null,
+          "severity": "high",
+          "score": 73,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Incident de sécurité rapporté par SecurityWeek.\n\nA new attack technique dubbed HalluSquatting turns AI assistants’ tendency to hallucinate into a scalable infection vector.\n\nResearchers demonstrate adversarial hallucination squatting against popular AI assistants to achieve remote code execution.\n\nSubscribe to the SecurityWeek Email Briefing for the latest cybersecurity threats, trends, and expert insights.\n\nSubscribe to the SecurityWeek Email Briefing to stay informed on the latest threats, trends, and…",
+          "detail": "Incident de sécurité rapporté par SecurityWeek.\n\nA new attack technique dubbed HalluSquatting turns AI assistants’ tendency to hallucinate into a scalable infection vector.\n\nResearchers demonstrate adversarial hallucination squatting against popular AI assistants to achieve remote code execution.\n\nSubscribe to the SecurityWeek Email Briefing for the latest cybersecurity threats, trends, and expert insights.\n\nSubscribe to the SecurityWeek Email Briefing to stay informed on the latest threats, trends, and technology, along with insightful columns from industry experts.\n\nJoin this live webinar as we break down why email-layer defenses alone can't keep pace with the modern phishing ecosystem, how agentic AI is changing the capacity equation for security teams, and more.\n\nThis year's summit will help organizations learn how to utilize tools, controls, and design models needed to properly secure cloud environments. Interact with leading solution providers and other end users facing similar challenges in securing a variety of cloud deployments.\n\nBlueVoyant has appointed Ravi Subramanian as CFO and Jamie Coleman as CCO.",
+          "action": "Surveiller les indicateurs de compromission associés et contrôler les actifs exposés.",
+          "image": "https://www.securityweek.com/wp-content/uploads/2025/05/AI-Hallucinations.jpg",
+          "sources": [
+            {
+              "url": "https://www.securityweek.com/hallusquatting-turns-ai-hallucinations-into-botnet-delivery-mechanism/",
+              "label": "SecurityWeek"
+            }
+          ],
+          "url": "https://www.securityweek.com/hallusquatting-turns-ai-hallucinations-into-botnet-delivery-mechanism/",
+          "pubDate": "2026-07-10T08:32:33.000Z"
+        },
+        {
+          "title": "Ryuk operator pleads guilty; Blackcat/AlphV conspirator gets nearly 6-year sentence",
+          "cve": null,
+          "severity": "critical",
+          "score": 72,
+          "corroboration": 4,
+          "region": "intl",
+          "body": "Incident de sécurité rapporté par CyberScoop.\n\nKaren Vardanyan faces up to 15 years in federal prison and agreed to pay nearly $1.2 million in restitution.\n\nListen to this article 0:00 Learn more. This feature uses an automated voice, which may result in occasional errors in pronunciation, tone, or sentiment. The Department of Justice building in Washington, DC, on February 9, 2022.",
+          "detail": "Incident de sécurité rapporté par CyberScoop.\n\nKaren Vardanyan faces up to 15 years in federal prison and agreed to pay nearly $1.2 million in restitution.\n\nListen to this article 0:00 Learn more. This feature uses an automated voice, which may result in occasional errors in pronunciation, tone, or sentiment. The Department of Justice building in Washington, DC, on February 9, 2022. (Photo by STEFANI REYNOLDS/AFP via Getty Images) An Armenian national who was extradited from Ukraine to the United States last year pleaded guilty to participating in a series of attacks in 2019 and 2020 involving Ryuk ransomware, the Justice Department said Thursday.\n\nThe 34-year-old admitted to participating in cybercrime from November 2019 to April 2020 when he and his co-conspirators deployed Ryuk ransomware against three U.S.-based organizations while living in Ukraine and Russia.\n\nProsecutors previously accused Vardanyan and his co-conspirators &mdash; Ukrainian nationals Oleg Nikolayevich Lyulyava and Andrii Leonydovich Prykhodchenko, and Armenian national Levon Georgiyovych Avetisyan &mdash; of illegally accessing computer networks to deploy Ryuk ransomware on hundreds of compromised servers and workstations between March 2019 and September 2020.\n\nRyuk ransomware was prevalent in 2019 and 2020, infecting thousands of victims globally across the private sector, state and local municipalities, local school districts and critical infrastructure, including a wave of attacks on U.S. hospitals.\n\nVictims of Ryuk ransomware attacks include Hollywood Presbyterian Medical Center , Universal Health Services , Electronic Warfare Associates , a North Carolina water utility and multiple U.S. newspapers.\n\nVardanyan, as part of his guilty plea, also acknowledged that his conviction will have immigr",
+          "action": "Surveiller les indicateurs de compromission associés et contrôler les actifs exposés.",
+          "image": "https://cyberscoop.com/wp-content/uploads/sites/3/2022/07/GettyImages-1238326969.jpg",
+          "sources": [
+            {
+              "url": "https://cyberscoop.com/karen-vardanyan-armenian-ryuk-ransomware-guilty/",
+              "label": "CyberScoop"
+            },
+            {
+              "url": "https://www.bleepingcomputer.com/news/security/ryuk-ransomware-member-pleads-guilty-in-the-us-faces-15-years-in-prison/",
+              "label": "BleepingComputer"
+            },
+            {
+              "url": "https://therecord.media/ryuk-operator-pleads-guilty-alphv-conspirator-sentenced",
+              "label": "The Record"
+            },
+            {
+              "url": "https://thehackernews.com/2026/07/ransomware-negotiator-gets-70-months-in.html",
+              "label": "The Hacker News"
+            }
+          ],
+          "url": "https://cyberscoop.com/karen-vardanyan-armenian-ryuk-ransomware-guilty/",
+          "pubDate": "2026-07-10T20:13:27.000Z"
+        },
+        {
+          "title": "China, India ran separate spying campaigns against same Pakistani police force",
+          "cve": null,
+          "severity": "high",
+          "score": 70,
+          "corroboration": 2,
+          "region": "intl",
+          "body": "Incident de sécurité rapporté par The Record.\n\nThe activity, in some cases breaching the exact same systems, ran between February 2024 and April 2026 and centered on the force responsible for the country’s southwestern province that has been the site of a long-running separatist insurgency.\n\nHacking groups linked to China and India conducted parallel, unconnected espionage operations against Pakistani law enforcement over more than two years, according to research published Thursday.\n\nThe activity, in…",
+          "detail": "Incident de sécurité rapporté par The Record.\n\nThe activity, in some cases breaching the exact same systems, ran between February 2024 and April 2026 and centered on the force responsible for the country’s southwestern province that has been the site of a long-running separatist insurgency.\n\nHacking groups linked to China and India conducted parallel, unconnected espionage operations against Pakistani law enforcement over more than two years, according to research published Thursday.\n\nThe activity, in some cases breaching the exact same systems, ran between February 2024 and April 2026, cybersecurity firm SentinelOne said in a report. It centered on the Balochistan Police, the force responsible for the country’s southwestern province that has been the site of a long-running separatist insurgency.\n\nThe firm’s SentinelLabs research arm said police networks concentrate governments’ internal-security data in one place. The report states that the compromised systems held criminal records, biometric and fingerprint data, personnel files, hotel and tenant registrations linked to national identity records, and citizen complaints.\n\nThe researchers assess that the China-nexus interest was driven primarily by protecting Beijing’s nationals in Pakistan tied to the China-Pakistan Economic Corridor. The report cites a March 2024 suicide bombing and an October 2024 attack near Karachi's airport as incidents affecting Chinese workers.\n\nAccording to SentinelLabs, the intrusions reflect an effort to assess the threat independently rather than rely on Pakistani security guarantees. Its report assessed the India-linked activity was likely linked to the rivalry between the two countries.\n\nIslamabad accuses New Delhi of backing the Baloch insurgency and describes the Balochistan Liberation A",
+          "action": "Surveiller les indicateurs de compromission associés et contrôler les actifs exposés.",
+          "image": "https://cms.therecord.media/uploads/map_globe_asia_a459da988d.jpg",
+          "sources": [
+            {
+              "url": "https://therecord.media/china-india-ran-separate-spy-campaigns-against-same-police-force",
+              "label": "The Record"
+            },
+            {
+              "url": "https://www.securityweek.com/china-india-linked-hackers-both-targeted-same-pakistani-police-force/",
+              "label": "SecurityWeek"
+            }
+          ],
+          "url": "https://therecord.media/china-india-ran-separate-spy-campaigns-against-same-police-force",
+          "pubDate": "2026-07-10T13:20:00.000Z"
+        },
+        {
+          "title": "Ransomware Never Stopped: Over 9,000 Confirmed Attacks Since 2018",
+          "cve": null,
+          "severity": "high",
+          "score": 70,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Incident de sécurité rapporté par Security Affairs.\n\nRansomware remains above 1,400 attacks yearly since 2023. Qilin leads in 2026, while the U.S. remains the main target. Ransomnews has independently confirmed 9,291 ransomware attacks worldwide between January 2018 and July 2026, tracking incidents only when verified through victim disclosures, regulatory filings, official statements, or credible press reporting.",
+          "detail": "Incident de sécurité rapporté par Security Affairs.\n\nRansomware remains above 1,400 attacks yearly since 2023. Qilin leads in 2026, while the U.S. remains the main target. Ransomnews has independently confirmed 9,291 ransomware attacks worldwide between January 2018 and July 2026, tracking incidents only when verified through victim disclosures, regulatory filings, official statements, or credible press reporting. Leak-site listings alone don&#8217;t qualify, operators inflate, duplicate, and occasionally fabricate claims. The result is a dataset that&#8217;s smaller than what most ransomware statistics cite, and more defensible. &#8220;Confirmed ransomware attacks have run at roughly 1,400 to 1,550 per year since 2023, after a visible dip in 2022. The 2020 to 2021 surge, the 2022 trough (which coincided with the Conti shutdown and the Russia-Ukraine war reshuffling the ecosystem), and the post-2023 plateau are all visible in the yearly series. The current year always shows a partial count.&#8221; reads the Ransomnews &#8216;s report. The 2022 drop to 960 confirmed attacks is the most significant single-year shift in the dataset: when Conti imploded and threat actors reorganized around the war in Ukraine, the volume genuinely fell. It came back. By 2023 it had exceeded the 2021 peak, and it&#8217;s stayed there. &#8220; LockBit remains the all-time leader by confirmed victims, with more than 500 verified attacks attributed to the",
+          "action": "Surveiller les indicateurs de compromission associés et contrôler les actifs exposés.",
+          "image": "https://securityaffairs.com/wp-content/uploads/2026/07/image-32.png",
+          "sources": [
+            {
+              "url": "https://securityaffairs.com/195117/cyber-crime/ransomware-never-stopped-over-9000-confirmed-attacks-since-2018.html",
+              "label": "Security Affairs"
+            }
+          ],
+          "url": "https://securityaffairs.com/195117/cyber-crime/ransomware-never-stopped-over-9000-confirmed-attacks-since-2018.html",
+          "pubDate": "2026-07-10T12:37:05.000Z"
+        },
+        {
+          "title": "Study of 281 Free Android VPN Apps Finds Traffic Leaks, Unencrypted Data, and Tracking",
+          "cve": null,
+          "severity": "news",
+          "score": 70,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Incident de sécurité rapporté par The Hacker News.\n\nResearchers ran 281 of the most popular free VPN apps on the Google Play Store through a new testing system and found that many fail at the basics people install a VPN for, i.e., keeping their traffic private and secure. The apps flagged with at least one problem have been installed more than 2.4 billion times. The problems are basic, not sophisticated. 29 apps let user traffic leak outside",
+          "detail": "Incident de sécurité rapporté par The Hacker News.\n\nResearchers ran 281 of the most popular free VPN apps on the Google Play Store through a new testing system and found that many fail at the basics people install a VPN for, i.e., keeping their traffic private and secure. The apps flagged with at least one problem have been installed more than 2.4 billion times. The problems are basic, not sophisticated. 29 apps let user traffic leak outside",
+          "action": "Surveiller les indicateurs de compromission associés et contrôler les actifs exposés.",
+          "image": "https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEhGJR5fh4xv_X2JER6SMxM62unaK2pucigiJwiE69bCR9n3fgVMqlH2zWpTsmiy4d936R46czjNmkAjDpU7yZgPMl6KFp7phz3kQ9sO1XaE3JHMW0VCUtwN3_zOqOcUfKdbJTJjWjahA44NPMXMif0JqnO_kzJDfuHT0HJvtOlndAvheFqNrpviHXVQ_DIb/s1600/android-vpn-security.jpg",
+          "sources": [
+            {
+              "url": "https://thehackernews.com/2026/07/study-of-281-free-android-vpn-apps.html",
+              "label": "The Hacker News"
+            }
+          ],
+          "url": "https://thehackernews.com/2026/07/study-of-281-free-android-vpn-apps.html",
+          "pubDate": "2026-07-10T10:56:23.000Z"
+        },
+        {
+          "title": "GigaWiper Combines Multiple Malware for System-Level Sabotage",
+          "cve": null,
+          "severity": "news",
+          "score": 70,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Incident de sécurité rapporté par SecurityWeek.\n\nThe GigaWiper backdoor combines several malware families and can sabotage systems using a wiper, encryption, and wiping commands.\n\nThe backdoor’s destructive capabilities include a standalone wiper, ransomware encryption, and a multi-pass wiping command.\n\nSubscribe to the SecurityWeek Email Briefing for the latest cybersecurity threats, trends, and expert insights.\n\nSubscribe to the SecurityWeek Email Briefing to stay informed on the latest threats, trends…",
+          "detail": "Incident de sécurité rapporté par SecurityWeek.\n\nThe GigaWiper backdoor combines several malware families and can sabotage systems using a wiper, encryption, and wiping commands.\n\nThe backdoor’s destructive capabilities include a standalone wiper, ransomware encryption, and a multi-pass wiping command.\n\nSubscribe to the SecurityWeek Email Briefing for the latest cybersecurity threats, trends, and expert insights.\n\nSubscribe to the SecurityWeek Email Briefing to stay informed on the latest threats, trends, and technology, along with insightful columns from industry experts.\n\nJoin this live webinar as we break down why email-layer defenses alone can't keep pace with the modern phishing ecosystem, how agentic AI is changing the capacity equation for security teams, and more.\n\nThis year's summit will help organizations learn how to utilize tools, controls, and design models needed to properly secure cloud environments. Interact with leading solution providers and other end users facing similar challenges in securing a variety of cloud deployments.\n\nBlueVoyant has appointed Ravi Subramanian as CFO and Jamie Coleman as CCO.",
+          "action": "Surveiller les indicateurs de compromission associés et contrôler les actifs exposés.",
+          "image": "https://www.securityweek.com/wp-content/uploads/2025/11/malware.jpeg",
+          "sources": [
+            {
+              "url": "https://www.securityweek.com/gigawiper-combines-multiple-malware-for-system-level-sabotage/",
+              "label": "SecurityWeek"
+            }
+          ],
+          "url": "https://www.securityweek.com/gigawiper-combines-multiple-malware-for-system-level-sabotage/",
+          "pubDate": "2026-07-10T09:12:08.000Z"
+        },
+        {
+          "title": "Destructive Windows backdoor stuffs multiple wipers and ransomware code into a single package",
+          "cve": null,
+          "severity": "news",
+          "score": 66,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Incident de sécurité rapporté par The Register.\n\nA newly identified destructive Windows backdoor combines ransomware-like encryption with multiple data-wiping features, according to Microsoft. Last October, the Redmond threat-hunting team first spotted attacks using the Golang-based implant they've named GigaWiper.",
+          "detail": "Incident de sécurité rapporté par The Register.\n\nA newly identified destructive Windows backdoor combines ransomware-like encryption with multiple data-wiping features, according to Microsoft. Last October, the Redmond threat-hunting team first spotted attacks using the Golang-based implant they've named GigaWiper. Its developers stuffed multiple malware families into the software as on-demand commands, giving criminals a Swiss Army knife of command-and-control (C2) and destructive capabilities, including multiple wiping commands and file encryption without any possibility of decryption. “The consolidation of multiple destructive capabilities into a modular backdoor reflects a notable shift in wiper malware, which are typically designed purely to destroy rather than to extort and carry real-world consequences,” Microsoft Threat Intelligence wrote in a Thursday blog. Microsoft declined to answer The Register's questions about the scale and scope of GigaWiper attacks. In the blog, Redmond’s malware analysts said they uncovered two types of GigaWiper samples in victims’ environments, and both are unstripped portable executable files written in Golang. One is a standalone wiper that operates at the physical disk level, as opposed to deleting individual files. It overwrites raw disk content, removes partition metadata, and then reboots the system using Windows shutdown functionality with restart and zero-delay. The second sample i",
+          "action": "Surveiller les indicateurs de compromission associés et contrôler les actifs exposés.",
+          "image": null,
+          "sources": [
+            {
+              "url": "https://www.theregister.com/security/2026/07/10/destructive-windows-backdoor-stuffs-multiple-wipers-and-ransomware-code-into-a-single-package/5270053",
+              "label": "The Register"
+            }
+          ],
+          "url": "https://www.theregister.com/security/2026/07/10/destructive-windows-backdoor-stuffs-multiple-wipers-and-ransomware-code-into-a-single-package/5270053",
+          "pubDate": "2026-07-10T17:35:00.000Z"
+        },
+        {
+          "title": "My Stack Simulator, (Wed, Jul 8th)",
+          "cve": null,
+          "severity": "news",
+          "score": 66,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Incident de sécurité rapporté par SANS ISC.\n\nThe stack is a memory region where a program stores temporary data -&nbsp;like local variables and return addresses. Think of the stack as a pile of plates in your kitchen: you can only add a new plate to the top, and you can only take one away from the top too. Programs use this same &quot;last in, first out&quot; principle to keep track of what they&#39;re doing.",
+          "detail": "Incident de sécurité rapporté par SANS ISC.\n\nThe stack is a memory region where a program stores temporary data -&nbsp;like local variables and return addresses. Think of the stack as a pile of plates in your kitchen: you can only add a new plate to the top, and you can only take one away from the top too. Programs use this same &quot;last in, first out&quot; principle to keep track of what they&#39;re doing. Every time a function is called, the program pushes a new plate onto the stack containing things like local variables and the address to return to once the function finishes. When the function is done, that plate is popped off the top, and execution resumes exactly where it left off. This simple mechanism is what allows programs to call functions&nbsp;within functions, and always find their way back -&nbsp;but it&#39;s also precisely why a stack that grows too large, or gets overwritten with unexpected data, becomes a favorite target for attackers looking to hijack a program&#39;s execution flow. In the SANS class FOR610[ 1 ] (malware analysis), there is an introduction to assembly and, when students learn how functions work, they have to understand how the stack also works. If you&rsquo;ve no prior experience, it could be a bit challenging. To help students to vizualise how the stack works, I created a &ldquo;stack simulator&rdquo; that allows to &ldquo;see&rdquo; what&rsquo;s happening when code is executed. How do",
+          "action": "Surveiller les indicateurs de compromission associés et contrôler les actifs exposés.",
+          "image": "https://isc.sans.edu/diaryimages/images/isc-20260708-1.png",
+          "sources": [
+            {
+              "url": "https://isc.sans.edu/diary/rss/33138",
+              "label": "SANS ISC"
+            }
+          ],
+          "url": "https://isc.sans.edu/diary/rss/33138",
+          "pubDate": "2026-07-10T15:52:27.000Z"
+        },
+        {
+          "title": "Weinberg ''93 Építő Kft. — rançongiciel Deadlock (HU)",
+          "cve": null,
+          "severity": "news",
+          "score": 66,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Incident de sécurité rapporté par ransomware.live.\n\nVictime revendiquée par le groupe de rançongiciel Deadlock. Pays : HU. Secteur : Construction. Weinberg ''93 Építő Kft., a prominent Hungarian construction and steel fabrication company. Overview: Founded in 1993 and headquartered in Sбrospatak, it is a 100% privately owned Hungarian company. Core Services: The firm specializes in general contracting and the manufacture of complex steel structures.",
+          "detail": "Incident de sécurité rapporté par ransomware.live.\n\nVictime revendiquée par le groupe de rançongiciel Deadlock.\n\nPays : HU.\n\nSecteur : Construction.\n\nWeinberg ''93 Építő Kft., a prominent Hungarian construction and steel fabrication company. Overview: Founded in 1993 and headquartered in Sбrospatak, it is a 100% privately owned Hungarian company. Core Services: The firm specializes in general contracting and the manufacture of complex steel structures. Major Projects: They have handled significant industrial developments, including: - Volvo Trucks Hungary: Completed a 5,500 mІ advanced truck center in Ecser. - Continental Automotive: Construction of electronics manufacturing plants. - East Gate PRO Business Park: Developed BREEAM-certified sustainable warehouses. - Becton Dickinson: Expansion of a major syringe factory in Hungary. Recognitions: The company has received numerous awards, such as the Lechner Цdцn Award (2024) and the Steel Structure Award (2022). Over 650 gigabytes of sensitive internal data were stolen from this company: all commercial information about contractors, information about specialized construction technologies and metal structure production, internal financial transactions, and operations demonstrating corruption in construction projects. We invite all journalists, lawyers, and law enforcement agencies to review this information.",
+          "action": "Surveiller les indicateurs de compromission associés et contrôler les actifs exposés.",
+          "image": "https://images.ransomware.live/victims/3c8438e6e6199bda09bc8eac197ea405.png",
+          "sources": [
+            {
+              "url": "https://www.ransomware.live/id/V2VpbmJlcmcgJyc5MyDDiXDDrXTFkSBLZnQuQERlYWRsb2Nr",
+              "label": "ransomware.live"
+            }
+          ],
+          "url": "https://www.ransomware.live/id/V2VpbmJlcmcgJyc5MyDDiXDDrXTFkSBLZnQuQERlYWRsb2Nr",
+          "pubDate": "2026-07-10T13:14:48.947Z"
+        },
+        {
+          "title": "Eko-Flor Plus d.o.o. — rançongiciel Deadlock (HR)",
+          "cve": null,
+          "severity": "news",
+          "score": 65,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Incident de sécurité rapporté par ransomware.live.\n\nVictime revendiquée par le groupe de rançongiciel Deadlock. Pays : HR. Secteur : Agriculture and Food Production. Eko-Flor Plus d.o.o. is the largest private waste management company in Croatia. Headquartered in Oroslavje, the company specializes in collecting, sorting, and processing municipal and non-hazardous waste.",
+          "detail": "Incident de sécurité rapporté par ransomware.live.\n\nVictime revendiquée par le groupe de rançongiciel Deadlock.\n\nPays : HR.\n\nSecteur : Agriculture and Food Production.\n\nEko-Flor Plus d.o.o. is the largest private waste management company in Croatia. Headquartered in Oroslavje, the company specializes in collecting, sorting, and processing municipal and non-hazardous waste.",
+          "action": "Surveiller les indicateurs de compromission associés et contrôler les actifs exposés.",
+          "image": "https://images.ransomware.live/victims/a2e7f7aeab067cd8dabb51adbf256a38.png",
+          "sources": [
+            {
+              "url": "https://www.ransomware.live/id/RWtvLUZsb3IgUGx1cyBkLm8uby5ARGVhZGxvY2s=",
+              "label": "ransomware.live"
+            }
+          ],
+          "url": "https://www.ransomware.live/id/RWtvLUZsb3IgUGx1cyBkLm8uby5ARGVhZGxvY2s=",
+          "pubDate": "2026-07-10T13:06:48.574Z"
+        },
+        {
+          "title": "Former Ransomware Negotiator Sentenced to 70 Months in Prison for Secretly Helping BlackCat Gang",
+          "cve": null,
+          "severity": "high",
+          "score": 65,
+          "corroboration": 2,
+          "region": "intl",
+          "body": "Incident de sécurité rapporté par Security Affairs.\n\nA former ransomware negotiator was sentenced to nearly six years for secretly helping BlackCat extort victims while betraying his clients. A U.S. court sentenced former ransomware negotiator Angelo Martino , 41, to 70 months in prison for conspiring with the BlackCat ransomware gang. While negotiating on behalf of five victims, he secretly shared confidential information about their strategies and willingness to pay with the attackers.",
+          "detail": "Incident de sécurité rapporté par Security Affairs.\n\nA former ransomware negotiator was sentenced to nearly six years for secretly helping BlackCat extort victims while betraying his clients. A U.S. court sentenced former ransomware negotiator Angelo Martino , 41, to 70 months in prison for conspiring with the BlackCat ransomware gang. While negotiating on behalf of five victims, he secretly shared confidential information about their strategies and willingness to pay with the attackers. Prosecutors described him as a &#8220;double agent&#8221; who helped maximize ransom payments while profiting from the criminal operation. &#8220;Angelo Martino, 41, of Land O’Lakes, Florida, formerly employed as a ransomware negotiator, was sentenced today to 70 months for his role in conspiring with Blackcat/ALPHV (BlackCat) actors to extort multiple victims, as well as conspiring with other former cybersecurity professionals to attack additional victims in 2023.&#8221; reads the press release published by DoJ. In April, Martino admitted to helping the BlackCat ransomware group while working for a U.S. incident response firm. The man secretly shared sensitive client details with attackers, like insurance limits and negotiation strategies, while acting as a ransomware negotiator. This information came from five victim cases starting in April 2023 and helped the gang demand higher ransoms. In return, he was reportedly paid by the ransomware opera",
+          "action": "Surveiller les indicateurs de compromission associés et contrôler les actifs exposés.",
+          "image": "https://securityaffairs.com/wp-content/uploads/2015/03/DoJ.jpg",
+          "sources": [
+            {
+              "url": "https://securityaffairs.com/195081/cyber-crime/former-ransomware-negotiator-sentenced-to-70-months-in-prison-for-secretly-helping-blackcat-gang.html",
+              "label": "Security Affairs"
+            },
+            {
+              "url": "https://www.securityweek.com/third-us-security-expert-sentenced-to-prison-for-helping-ransomware-gang/",
+              "label": "SecurityWeek"
+            }
+          ],
+          "url": "https://securityaffairs.com/195081/cyber-crime/former-ransomware-negotiator-sentenced-to-70-months-in-prison-for-secretly-helping-blackcat-gang.html",
+          "pubDate": "2026-07-10T12:58:39.000Z"
+        },
+        {
+          "title": "AssuranceAmerica : 6,99 millions de clients exposés",
+          "cve": null,
+          "severity": "news",
+          "score": 64,
+          "corroboration": 1,
+          "region": "fr",
+          "body": "Incident de sécurité rapporté par Zataz.\n\nUn important assureur confirme une fuite touchant 6,99 millions de personnes et des permis de conduire exposés.\n\nFont Resizer Aa Actus cyber Darkweb Intelligence Artificielle ZATAZ Community Logiciels Vidéos Moteurs de recherche de fuites Actus cyber Justice Sécurité réseaux sociaux Vie privée OSINT News Darkweb Fuite de données Codes malveillants Espionnage Sécurité Ransomwares Piratage / Hack infiltration Intelligence Artificielle ZATAZ Community Userloc…",
+          "detail": "Incident de sécurité rapporté par Zataz.\n\nUn important assureur confirme une fuite touchant 6,99 millions de personnes et des permis de conduire exposés.\n\nFont Resizer Aa Actus cyber Darkweb Intelligence Artificielle ZATAZ Community Logiciels Vidéos Moteurs de recherche de fuites Actus cyber Justice Sécurité réseaux sociaux Vie privée OSINT News Darkweb Fuite de données Codes malveillants Espionnage Sécurité Ransomwares Piratage / Hack infiltration Intelligence Artificielle ZATAZ Community Userlock Community Réseaux sociaux ZATAZ News Letter ZATAZ – Chaque vendredi midi PROTOCOLE D&rsquo;ALERTE ZATAZ Logiciels Vidéos Vidéos Youtube ZATAZ Émission ZATAZ Twitch Moteurs de recherche de fuites Follow US Actus cyber Darkweb Intelligence Artificielle ZATAZ Community Logiciels Vidéos Moteurs de recherche de fuites ZATAZ.COM > Actualités > Actualités > Divers > AssuranceAmerica : 6,99 millions de clients exposés Actualités Divers Fuite de données Justice Piratage AssuranceAmerica : 6,99 millions de clients exposés dernière mise à jour : 10/07/2026 19:12 Par Damien Bancal - Chercheur / Journaliste / Conférencier / Enseignant Il y a 11 heures Il y a 11 heures Partager 7 minutes de lecture Partager AssuranceAmerica confirme une fuite massive : noms, contacts, permis de conduire et données d’assurance automobile ont été volés après compromission d’identifiants internes. L’assureur américain AssuranceAmerica a reconnu une intrusion ayant touché 6,99 millions de personnes auprès des procureurs généraux de l’Indiana et du Maine. Les pirates, repérés dans les systèmes le 17 mars 2026, ont obtenu des informations personnelles, des numéros de permis de conduire et des données liées aux contrats automobiles. L’enquête interne, achevée le 15 juin, a confirmé le vol de données. L’affaire il",
+          "action": "Surveiller les indicateurs de compromission associés et contrôler les actifs exposés.",
+          "image": "https://www.zataz.com/wp-content/uploads/AAp.jpg",
+          "sources": [
+            {
+              "url": "https://www.zataz.com/assuranceamerica-699-millions-de-clients-exposes/",
+              "label": "Zataz"
+            }
+          ],
+          "url": "https://www.zataz.com/assuranceamerica-699-millions-de-clients-exposes/",
+          "pubDate": "2026-07-10T17:12:06.000Z"
+        },
+        {
+          "title": "Injective Labs GitHub Compromise Pushes Wallet-Key-Stealing npm Packages",
+          "cve": null,
+          "severity": "news",
+          "score": 64,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Incident de sécurité rapporté par The Hacker News.\n\nUnknown threat actors compromised the Injective Labs SDK project's GitHub repository and leveraged it to publish a malicious package on the npm registry to steal cryptocurrency wallet private keys and mnemonic seed phrases. The compromised version, @injectivelabs/sdk-ts@1.20.21, came embedded with fake telemetry functionality that exfiltrated data from cryptocurrency wallets. The version was",
+          "detail": "Incident de sécurité rapporté par The Hacker News.\n\nUnknown threat actors compromised the Injective Labs SDK project's GitHub repository and leveraged it to publish a malicious package on the npm registry to steal cryptocurrency wallet private keys and mnemonic seed phrases. The compromised version, @injectivelabs/sdk-ts@1.20.21, came embedded with fake telemetry functionality that exfiltrated data from cryptocurrency wallets. The version was",
+          "action": "Surveiller les indicateurs de compromission associés et contrôler les actifs exposés.",
+          "image": "https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEhTNxzPo9jxkW3GuuZLBgtPOrG3vZ3va6E710jDJu_JF0jCpyQ1JTpymdVwdSH2VHL6-Ib6YLInvKsuNwgFJxna1nvDhwKMZ_hycTik5OgQniZei2FQ59-F3s80lsnPmhQ1aJsr7qIWWrf63V0AtHQxd_1Nlk6LkVEheoN5lRYH8aTeBoJ-kM1-bOjUgAwa/s1600/npm-malware-2.jpg",
+          "sources": [
+            {
+              "url": "https://thehackernews.com/2026/07/injective-labs-github-compromise-pushes.html",
+              "label": "The Hacker News"
+            }
+          ],
+          "url": "https://thehackernews.com/2026/07/injective-labs-github-compromise-pushes.html",
+          "pubDate": "2026-07-10T16:29:00.000Z"
+        },
+        {
+          "title": "GigaWiper Merges Three Malware Families Into One Destructive Backdoor",
+          "cve": null,
+          "severity": "critical",
+          "score": 64,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Incident de sécurité rapporté par Security Affairs.\n\nMicrosoft uncovered GigaWiper, a modular Go backdoor combining three malware families with espionage, remote control, and destructive wiping features. In October 2025, Microsoft&#8217;s threat intelligence team identified destructive wiping activity inside compromised environments and traced it to a previously unknown piece of malware they&#8217;re now calling GigaWiper.",
+          "detail": "Incident de sécurité rapporté par Security Affairs.\n\nMicrosoft uncovered GigaWiper, a modular Go backdoor combining three malware families with espionage, remote control, and destructive wiping features. In October 2025, Microsoft&#8217;s threat intelligence team identified destructive wiping activity inside compromised environments and traced it to a previously unknown piece of malware they&#8217;re now calling GigaWiper. The malicious code is written in Go, it combines a command-and-control backdoor with multiple built-in destruction capabilities, and it was assembled by taking code from at least three older malware families and merging them into one implant. Efficient, if attackers aim at destroying the target systems. &#8220;The consolidation of multiple destructive capabilities into a modular backdoor reflects a notable shift in wiper malware, which are typically designed purely to destroy rather than to extort and carry real-world consequences.&#8221; reads the report published by Microsoft. &#8220;GigaWiper exemplifies threat actors investing in operational efficiency, merging standalone tools into unified platforms that reduce their deployment footprint while expanding their destructive capabilities.&#8221; The backdoor communicates with its operators over RabbitMQ for receiving commands and Redis for sending back results. It persists through a scheduled task named &#8220;OneDrive Update&#8221; that runs every minute and",
+          "action": "Surveiller les indicateurs de compromission associés et contrôler les actifs exposés.",
+          "image": "https://securityaffairs.com/wp-content/uploads/2026/07/image-30.png",
+          "sources": [
+            {
+              "url": "https://securityaffairs.com/195068/malware/gigawiper-merges-three-malware-families-into-one-destructive-backdoor.html",
+              "label": "Security Affairs"
+            }
+          ],
+          "url": "https://securityaffairs.com/195068/malware/gigawiper-merges-three-malware-families-into-one-destructive-backdoor.html",
+          "pubDate": "2026-07-10T08:25:48.000Z"
+        }
+      ]
+    },
+    {
+      "id": "culture",
+      "items": [
+        {
+          "title": "AI Surveillance and Social Progress",
+          "cve": null,
+          "severity": "high",
+          "score": 73,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Signal de veille — Schneier on Sec..\n\nIn the near future, AI -powered surveillance systems will be able to track everything we do in public, and much of what we do in private. And if we do something wrong&#8212;shoplift, litter, jaywalk, you name it&#8212;the system will notice, retain it, tie it to your official government record, communicate that fact to you, and provide real-time alerts to any relevant authorities&#8230; and maybe also to the general public.",
+          "detail": "Signal de veille — Schneier on Sec..\n\nIn the near future, AI -powered surveillance systems will be able to track everything we do in public, and much of what we do in private. And if we do something wrong&#8212;shoplift, litter, jaywalk, you name it&#8212;the system will notice, retain it, tie it to your official government record, communicate that fact to you, and provide real-time alerts to any relevant authorities&#8230; and maybe also to the general public. Think of these systems as automated speed cameras, but on steroids. Only they&#8217;ll enforce not just speed limits, but any other rule you can imagine. And you won&#8217;t receive a ticket weeks later by mail; you&#8217;ll be informed about and fined for your violation immediately. These systems will combine powerful AI, public and private surveillance via real-time facial recognition technology and digital tracking, mass databases and highly personalized enforcement. If deployed at scale, they will have profound chilling effects not just on personal freedoms, but democracy and social progress itself. China has been developing its surveillance infrastructure for years . The country has over 600 million surveillance cameras, increasingly powered by AI and facial recognition to enforce legal and social rules. Take the case of Lao Duan, a Chinese citizen blacklisted by the system after he lost his job and was unable to repay a series of loans. When he visited",
+          "action": null,
+          "image": null,
+          "sources": [
+            {
+              "url": "https://www.schneier.com/blog/archives/2026/07/ai-surveillance-and-social-progress.html",
+              "label": "Schneier on Sec."
+            }
+          ],
+          "url": "https://www.schneier.com/blog/archives/2026/07/ai-surveillance-and-social-progress.html",
+          "pubDate": "2026-07-10T11:02:04.000Z"
+        },
+        {
+          "title": "Europe revives law allowing big tech to scan for CSAM",
+          "cve": null,
+          "severity": "culture",
+          "score": 70,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Signal de veille — The Record.\n\nThe law known as Chat Control 2.0 passed in the European Parliament, permitting companies like Google, Meta and Microsoft to scan users' messages to hunt for CSAM.\n\nThe European Parliament has voted to bring back a rule giving big tech permission to scan users’ messages to hunt for child sexual abuse material (CSAM), a process that critics call Chat Control.\n\nThursday’s vote occurred the day before summer recess and was the product of an unusual legislativ…",
+          "detail": "Signal de veille — The Record.\n\nThe law known as Chat Control 2.0 passed in the European Parliament, permitting companies like Google, Meta and Microsoft to scan users' messages to hunt for CSAM.\n\nThe European Parliament has voted to bring back a rule giving big tech permission to scan users’ messages to hunt for child sexual abuse material (CSAM), a process that critics call Chat Control.\n\nThursday’s vote occurred the day before summer recess and was the product of an unusual legislative procedure requiring an absolute majority to kill the provision. Because absolute majority votes count all lawmakers who are not present as yeses, the measure passed even though more present members opposed it than supported it.\n\nThe law allowing the voluntary scanning, which dates to 2021, expired in April after Parliament could not come to agreement about how to move forward amid a privacy outcry. Some lawmakers and other officials, including Parliament President Roberta Metsola, had urgently prioritized renewing the rule (which doesn’t allow scanning on encrypted platforms like Signal).\n\nBig tech continued the scans even after the law lapsed , but European officials cautioned against doing so without legal protection.\n\nNow that the ruling has given firms like Google, Microsoft and Meta clear direction and legal cover to continue the CSAM scans until 2028, critics say privacy in Europe is under siege.\n\nUse of the procedural move to require an absolute majority vote on the eve of summer recess is all the more disturbing, critics say, because Parliament rejected the same measure three months ago under normal circumstances.",
+          "action": null,
+          "image": "https://cms.therecord.media/uploads/european_parliament_plenary_july2026_2f568b1295.jpg",
+          "sources": [
+            {
+              "url": "https://therecord.media/chat-control-2-csam-scans-european-parliament-passage",
+              "label": "The Record"
+            }
+          ],
+          "url": "https://therecord.media/chat-control-2-csam-scans-european-parliament-passage",
+          "pubDate": "2026-07-10T19:30:00.000Z"
+        },
+        {
+          "title": "License plate cameras may be next target after Supreme Court reins in location tracking",
+          "cve": null,
+          "severity": "culture",
+          "score": 70,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Signal de veille — The Record.\n\nIf a warrant is ultimately needed for ALPR searches, experts say, it would radically limit how the networks of cameras can be used and would change modern policing.\n\nA recent Supreme Court ruling which found that cell phone location history searches require a warrant could have a ripple effect on the use of automated license plate readers (ALPRs), some legal scholars and ALPR opponents say.\n\nLast month’s Chatrie v.",
+          "detail": "Signal de veille — The Record.\n\nIf a warrant is ultimately needed for ALPR searches, experts say, it would radically limit how the networks of cameras can be used and would change modern policing.\n\nA recent Supreme Court ruling which found that cell phone location history searches require a warrant could have a ripple effect on the use of automated license plate readers (ALPRs), some legal scholars and ALPR opponents say.\n\nLast month’s Chatrie v. United States ruling — the first major Supreme Court Fourth Amendment case in eight years — addressed fundamental questions about law enforcement’s use of private data. Over the past several years, police have been pressuring big tech firms to turn over users’ location history data so that they can pinpoint which phones were in the area of a crime scene during a particular time period.\n\nThe Supreme Court ruling suggests these “geofence” searches are protected by the Fourth Amendment, and opens the door to a debate about potential parameters for how police can use them in the future.\n\nIf a warrant is ultimately needed for ALPR searches, experts say, it would radically limit how the networks of cameras can be used and would change modern policing.\n\nFlock Safety, the country’s leading ALPR vendor, has between 90,000 to 100,000 cameras installed on public roadways and collects data on about 20 billion license plates a month, it says. Police increasingly use the data collected by these cameras to identify suspects.\n\nAlthough the Chatrie case involved Google — which gave police a list of the phones inside the so-called geofence where a crime was committed — there are similarities with ALPR data.",
+          "action": null,
+          "image": "https://cms.therecord.media/uploads/flock_safety_license_plate_reader_d63cc3db49.jpg",
+          "sources": [
+            {
+              "url": "https://therecord.media/license-plate-cameras-may-be-next-target-after-supreme-court-reins-in-location-tracking",
+              "label": "The Record"
+            }
+          ],
+          "url": "https://therecord.media/license-plate-cameras-may-be-next-target-after-supreme-court-reins-in-location-tracking",
+          "pubDate": "2026-07-10T16:50:00.000Z"
+        },
+        {
+          "title": "Exposed Hacker Server Reveals WP-SHELLSTORM Backdooring Thousands of WordPress Sites",
+          "cve": null,
+          "severity": "culture",
+          "score": 69,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Signal de veille — The Hacker News.\n\nA cybercrime crew left one of its own servers wide open on the internet for three weeks, and it exposed the operation's inner workings: the hacking tools, the activity logs, and target lists naming more than 1.4 million websites. Far fewer were actually broken into, but the exposed files showed researchers how a mass site-hacking operation runs from the inside. The operation, now tracked as",
+          "detail": "Signal de veille — The Hacker News.\n\nA cybercrime crew left one of its own servers wide open on the internet for three weeks, and it exposed the operation's inner workings: the hacking tools, the activity logs, and target lists naming more than 1.4 million websites. Far fewer were actually broken into, but the exposed files showed researchers how a mass site-hacking operation runs from the inside. The operation, now tracked as",
+          "action": null,
+          "image": "https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEgruetcUTsay2-ledgCIdCPKK_bPRiTzuXzYeUiLR3xuazZgHTmxO4Gz6PyyuwdFUVoHHOCbq5PksEMW18dSsdzCJddBMr8vQ3TQO3PIqXExF_17RGVfKRD8cPltNjh6eV1fgXM-pYYlwZnWaZcf7oo50CahUBY5AWt8-IS1K7KxhlL9GFLDcAk1ruwMSI/s1600/hacker-server.jpg",
+          "sources": [
+            {
+              "url": "https://thehackernews.com/2026/07/exposed-hacker-server-reveals-wp.html",
+              "label": "The Hacker News"
+            }
+          ],
+          "url": "https://thehackernews.com/2026/07/exposed-hacker-server-reveals-wp.html",
+          "pubDate": "2026-07-10T11:30:02.000Z"
+        },
+        {
+          "title": "Money launderer accused of stealing seized crypto while in prison",
+          "cve": null,
+          "severity": "culture",
+          "score": 68,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Signal de veille — BleepingComputer.\n\nA Bulgarian national has been charged with stealing $290,000 in government-seized cryptocurrency while serving 121 months in prison for helping launder millions stolen from American fraud victims.\n\nProgress urges ShareFile admins to shut down servers over “credible” threat\n\nFormer ransomware negotiator gets 4 years for BlackCat attacks\n\nOpenMandriva Linux says contributor tried to sabotage the project\n\nMicrosoft expects more Windows security updates from A…",
+          "detail": "Signal de veille — BleepingComputer.\n\nA Bulgarian national has been charged with stealing $290,000 in government-seized cryptocurrency while serving 121 months in prison for helping launder millions stolen from American fraud victims.\n\nProgress urges ShareFile admins to shut down servers over “credible” threat\n\nFormer ransomware negotiator gets 4 years for BlackCat attacks\n\nOpenMandriva Linux says contributor tried to sabotage the project\n\nMicrosoft expects more Windows security updates from AI-discovered flaws\n\nRyuk ransomware member pleads guilty in the US, faces 15 years in prison\n\nProgress urges ShareFile admins to shut down servers over “credible” threat",
+          "action": null,
+          "image": "https://www.bleepstatic.com/content/hl-images/2026/07/10/Cryptocurrency-bitcoin-theft.jpg",
+          "sources": [
+            {
+              "url": "https://www.bleepingcomputer.com/news/security/money-launderer-accused-of-stealing-seized-crypto-while-in-prison/",
+              "label": "BleepingComputer"
+            }
+          ],
+          "url": "https://www.bleepingcomputer.com/news/security/money-launderer-accused-of-stealing-seized-crypto-while-in-prison/",
+          "pubDate": "2026-07-10T15:30:19.000Z"
+        },
+        {
+          "title": "From 17,000 to 1.1 Million Assets: How Lumen Technologies Rebuilt Exposure Management at Scale",
+          "cve": null,
+          "severity": "culture",
+          "score": 64,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Signal de veille — The Hacker News.\n\nMost enterprises assume their asset inventory is close enough to accurate. The evidence suggests otherwise. According to a survey of over 600 security leaders in the 2026 Axonius Actionability Report, only 45% of organizations consolidate their asset and exposure data into a single view, and every downstream security program inherits whatever the inventory gets wrong. Lumen Technologies, a",
+          "detail": "Signal de veille — The Hacker News.\n\nMost enterprises assume their asset inventory is close enough to accurate. The evidence suggests otherwise. According to a survey of over 600 security leaders in the 2026 Axonius Actionability Report, only 45% of organizations consolidate their asset and exposure data into a single view, and every downstream security program inherits whatever the inventory gets wrong. Lumen Technologies, a",
+          "action": null,
+          "image": "https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEgGplfQpPmwb3F3h_tdGW9-jNmpKBLd2DdhOw1nugXafk9rWwqxFwvD5xE1L1Qs0zvZvgi7Fx_jhj9kIn9PhOvWYuLMd9n7fOeXnfzujPanNBTqmMC4SKi__b_KFtpnmNkz-jtzB2tcjgO_ceckyR4Er4Gl3LASJKbyGvZVhkqP6m9Xdx12WO6xWROBzFk/s1600/million.jpg",
+          "sources": [
+            {
+              "url": "https://thehackernews.com/2026/07/from-17000-to-11-million-assets-how.html",
+              "label": "The Hacker News"
+            }
+          ],
+          "url": "https://thehackernews.com/2026/07/from-17000-to-11-million-assets-how.html",
+          "pubDate": "2026-07-10T11:39:40.000Z"
+        },
+        {
+          "title": "Progress urges ShareFile admins to shut down servers over “credible” threat",
+          "cve": null,
+          "severity": "culture",
+          "score": 63,
+          "corroboration": 2,
+          "region": "intl",
+          "body": "Signal de veille — The Hacker News.\n\nProgress ordered ShareFile customers to shut down their Storage Zone Controllers while it investigates a credible external security threat.\n\nProgress Software has told ShareFile customers to shut down the Windows servers running their Storage Zone Controllers, confirming to The Hacker News that it is responding to a \"credible external security threat.\"\n\nThe company has temporarily disabled access to the affected accounts, a step it says it took \"out of an…",
+          "detail": "Signal de veille — The Hacker News.\n\nProgress ordered ShareFile customers to shut down their Storage Zone Controllers while it investigates a credible external security threat.\n\nProgress Software has told ShareFile customers to shut down the Windows servers running their Storage Zone Controllers, confirming to The Hacker News that it is responding to a \"credible external security threat.\"\n\nThe company has temporarily disabled access to the affected accounts, a step it says it took \"out of an abundance of caution\" while it works with internal and external security experts.\n\nIt says it has no indication of unauthorized access to any ShareFile accounts or data, and that it notified customers after learning of the threat.\n\nWhat Progress has not said is what the threat is or who is behind it.\n\nThe order became public when a customer posted the company's email to Reddit's r/sysadmin on July 10. Progress confirmed the disruption on its status page, listing Storage Zone Controller customers as \"not operational\" and the incident as under investigation as of a 12:12 p.m. EDT update.\n\nOnly the Storage Zone Controller is affected, not standard cloud-only ShareFile accounts. The controller is a server that a company runs itself, so files can stay on its own storage while it still uses ShareFile's cloud to share and manage them.",
+          "action": null,
+          "image": "https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEgULXOG2_Ph1198nw2lOea2pYE9u1GkPHaaMlzhpO48pOmejpWKFuHbchUac5JIRQHGiIMMTefXq-LktA8AjsqqMIsBS54bLaludxIJbq7chYfo_Vsoqf9Xi7YomnSUL9wHAYa5InCST76k1aP10VMmNKK_MDLD3o5zNXyB4ODMRMl0DbLkz9f2mg2k2S8/s1600/progress.jpg",
+          "sources": [
+            {
+              "url": "https://thehackernews.com/2026/07/urgent-progress-tells-sharefile.html",
+              "label": "The Hacker News"
+            },
+            {
+              "url": "https://www.bleepingcomputer.com/news/security/progress-urges-sharefile-customers-to-shut-down-servers-over-credible-threat/",
+              "label": "BleepingComputer"
+            }
+          ],
+          "url": "https://thehackernews.com/2026/07/urgent-progress-tells-sharefile.html",
+          "pubDate": "2026-07-10T16:30:00.000Z"
+        },
+        {
+          "title": "Accusations de backdoor dans Claude Code : la Chine et Anthropic s’affrontent par médias interposés",
+          "cve": null,
+          "severity": "culture",
+          "score": 60,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Signal de veille — Numerama.\n\nAprès la découverte d'un mécanisme caché dans Claude Code visant à repérer les utilisateurs chinois, Pékin a exhorté les développeurs à désinstaller l'outil, évoquant une « porte dérobée ». Anthropic a répliqué en rappelant que la Chine n'avait de toute façon jamais été autorisée à utiliser son IA.",
+          "detail": "Signal de veille — Numerama.\n\nAprès la découverte d'un mécanisme caché dans Claude Code visant à repérer les utilisateurs chinois, Pékin a exhorté les développeurs à désinstaller l'outil, évoquant une « porte dérobée ». Anthropic a répliqué en rappelant que la Chine n'avait de toute façon jamais été autorisée à utiliser son IA. C'est une affaire\n\nAmine Baba Aissa Amine Baba Aissa 2 min 2 min Amine Baba Aissa Amine Baba Aissa Ne plus voir cette pub Lecture Zen Résumer l'article Résumé de l'article Résumé par IA, vérifié par Numerama\n\nNous générons pour vous un résumé de l’article grâce à une IA et nous le vérifions afin de nous assurer qu’il n’y ait aucune erreur, pour garantir l’authenticité de l’info.\n\nRecevez tous les soirs un résumé de l’actu importante avec Le Récap’\n\nC&rsquo;est une affaire en plusieurs temps qui prend racine toute fin juin 2026.\n\nUn développeur connu sous le pseudonyme « Thereallo » révèle alors un dispositif dissimulé dans Claude Code depuis mars. En s&rsquo;appuyant sur une forme de stéganographie intégrée à l&rsquo;invite système, ce code repérait discrètement des indices comme le fuseau horaire ou l&rsquo;usage d&rsquo;un proxy, afin de détecter une éventuelle connexion à des laboratoires d&rsquo;IA chinois.\n\nRapidement, Anthropic confirme les faits par la voix de son ingénieur Thariq Shihipar et justifie cette expérimentation par la volonté de lutter contre la revente non autorisée de comptes et, surtout, contre la « distillation » : cette pratique consistant à faire tourner massivement un modèle concurrent pour en entraîner un autre moins coûteux, qu&rsquo;Anthropic accuse plusieurs entreprises chinoises, dont Alibaba, DeepSeek et MiniMax, de pratiquer à ses dépens.",
+          "action": null,
+          "image": "https://c0.lestechnophiles.com/www.numerama.com/wp-content/uploads/2026/06/claude-x-chine.jpg?resize=1600,900&key=3367363b",
+          "sources": [
+            {
+              "url": "https://www.numerama.com/cyberguerre/2293621-accusations-de-backdoor-dans-claude-code-la-chine-et-anthropic-saffrontent-par-medias-interposes.html",
+              "label": "Numerama"
+            }
+          ],
+          "url": "https://www.numerama.com/cyberguerre/2293621-accusations-de-backdoor-dans-claude-code-la-chine-et-anthropic-saffrontent-par-medias-interposes.html",
+          "pubDate": "2026-07-10T08:25:10.000Z"
+        },
+        {
+          "title": "Monero tracé dans une opération menée contre le dark web",
+          "cve": null,
+          "severity": "culture",
+          "score": 59,
+          "corroboration": 1,
+          "region": "fr",
+          "body": "Signal de veille — Zataz.\n\nLa police relie des paiements Monero à 28 suspects arrêtés dans sept pays lors d’une opération internationale contre le dark web.\n\nFont Resizer Aa Actus cyber Darkweb Intelligence Artificielle ZATAZ Community Logiciels Vidéos Moteurs de recherche de fuites Actus cyber Justice Sécurité réseaux sociaux Vie privée OSINT News Darkweb Fuite de données Codes malveillants Espionnage Sécurité Ransomwares Piratage / Hack infiltration Intelligence Artificielle ZATAZ…",
+          "detail": "Signal de veille — Zataz.\n\nLa police relie des paiements Monero à 28 suspects arrêtés dans sept pays lors d’une opération internationale contre le dark web.\n\nFont Resizer Aa Actus cyber Darkweb Intelligence Artificielle ZATAZ Community Logiciels Vidéos Moteurs de recherche de fuites Actus cyber Justice Sécurité réseaux sociaux Vie privée OSINT News Darkweb Fuite de données Codes malveillants Espionnage Sécurité Ransomwares Piratage / Hack infiltration Intelligence Artificielle ZATAZ Community Userlock Community Réseaux sociaux ZATAZ News Letter ZATAZ – Chaque vendredi midi PROTOCOLE D&rsquo;ALERTE ZATAZ Logiciels Vidéos Vidéos Youtube ZATAZ Émission ZATAZ Twitch Moteurs de recherche de fuites Follow US Actus cyber Darkweb Intelligence Artificielle ZATAZ Community Logiciels Vidéos Moteurs de recherche de fuites ZATAZ.COM > Actualités > Actualités > Divers > Monero tracé dans une opération menée contre le dark web Actualités Divers Justice Monero tracé dans une opération menée contre le dark web dernière mise à jour : 10/07/2026 18:53 Par Damien Bancal - Chercheur / Journaliste / Conférencier / Enseignant Il y a 11 heures Il y a 11 heures Partager 6 minutes de lecture Partager Vingt-huit hommes ont été arrêtés dans sept pays après une enquête visant des paiements en Monero liés à des forums criminels du dark web. L’opération internationale coordonnée par la police norvégienne (Kripos), avec Europol et Eurojust, a conduit à vingt-huit arrestations en Norvège, Suède, Suisse, Canada, République tchèque, Pologne et Allemagne. Les suspects auraient payé en Monero pour accéder à des forums diffusant des contenus montrant des violences sur des enfants. L’enquête repose notamment sur une méthode développée en 2025 par la police norvégienne afin de retracer certains usages ciblés",
+          "action": null,
+          "image": "https://www.zataz.com/wp-content/uploads/Monero-police.jpg",
+          "sources": [
+            {
+              "url": "https://www.zataz.com/monero-trace-dans-une-operation-menee-contre-le-dark-web/",
+              "label": "Zataz"
+            }
+          ],
+          "url": "https://www.zataz.com/monero-trace-dans-une-operation-menee-contre-le-dark-web/",
+          "pubDate": "2026-07-10T16:53:24.000Z"
+        },
+        {
+          "title": "Un détenu accusé d’avoir détourné des cryptomonnaies saisies",
+          "cve": null,
+          "severity": "culture",
+          "score": 59,
+          "corroboration": 1,
+          "region": "fr",
+          "body": "Signal de veille — Zataz.\n\nUn détenu est accusé d’avoir blanchi 290 000 $ en cryptomonnaies déjà confisquées par la justice américaine.\n\nFont Resizer Aa Actus cyber Darkweb Intelligence Artificielle ZATAZ Community Logiciels Vidéos Moteurs de recherche de fuites Actus cyber Justice Sécurité réseaux sociaux Vie privée OSINT News Darkweb Fuite de données Codes malveillants Espionnage Sécurité Ransomwares Piratage / Hack infiltration Intelligence Artificielle ZATAZ Community Userlock C…",
+          "detail": "Signal de veille — Zataz.\n\nUn détenu est accusé d’avoir blanchi 290 000 $ en cryptomonnaies déjà confisquées par la justice américaine.\n\nFont Resizer Aa Actus cyber Darkweb Intelligence Artificielle ZATAZ Community Logiciels Vidéos Moteurs de recherche de fuites Actus cyber Justice Sécurité réseaux sociaux Vie privée OSINT News Darkweb Fuite de données Codes malveillants Espionnage Sécurité Ransomwares Piratage / Hack infiltration Intelligence Artificielle ZATAZ Community Userlock Community Réseaux sociaux ZATAZ News Letter ZATAZ – Chaque vendredi midi PROTOCOLE D&rsquo;ALERTE ZATAZ Logiciels Vidéos Vidéos Youtube ZATAZ Émission ZATAZ Twitch Moteurs de recherche de fuites Follow US Actus cyber Darkweb Intelligence Artificielle ZATAZ Community Logiciels Vidéos Moteurs de recherche de fuites ZATAZ.COM > Actualités > Actualités > Divers > Un détenu accusé d’avoir détourné des cryptomonnaies saisies Actualités Divers Justice Monnaie virtuelle Un détenu accusé d’avoir détourné des cryptomonnaies saisies dernière mise à jour : 10/07/2026 18:46 Par Damien Bancal - Chercheur / Journaliste / Conférencier / Enseignant Il y a 11 heures Il y a 11 heures Partager 5 minutes de lecture Partager Déjà incarcéré pour fraude, un pirate informatique est accusé d’avoir déplacé de sa celulle de prison 290 000 $ en cryptomonnaies pourtant confisquées par la justice américaine. Un ressortissant bulgare purgeant une peine fédérale comparaît dans une nouvelle affaire de blanchiment de cryptomonnaies. Selon la justice américaine, Rossen G. Iossifov aurait participé au retrait non autorisé de fonds numériques déjà saisis, puis définitivement attribués aux États-Unis. L’opération présumée porterait sur 290 000 $ (266 800 €). Les actifs auraient transité par plusieurs plateformes d’échange et des se",
+          "action": null,
+          "image": "https://www.zataz.com/wp-content/uploads/crypto_prison.jpg",
+          "sources": [
+            {
+              "url": "https://www.zataz.com/un-detenu-accuse-davoir-detourne-des-cryptomonnaies-saisies/",
+              "label": "Zataz"
+            }
+          ],
+          "url": "https://www.zataz.com/un-detenu-accuse-davoir-detourne-des-cryptomonnaies-saisies/",
+          "pubDate": "2026-07-10T16:46:52.000Z"
+        },
+        {
+          "title": "Most data brokers won’t tell you what happened to your deletion request",
+          "cve": null,
+          "severity": "culture",
+          "score": 57,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Signal de veille — Help Net Security.\n\nData brokers collect personal details on most adults in the United States and sell them to buyers that include employers, landlords, insurance companies, and government agencies. California gives residents a way to push back. You can ask a broker to delete your records, or to stop selling and sharing them. A team at UC Irvine decided to find out what happens when someone sends those requests to the whole California registry.",
+          "detail": "Signal de veille — Help Net Security.\n\nData brokers collect personal details on most adults in the United States and sell them to buyers that include employers, landlords, insurance companies, and government agencies. California gives residents a way to push back. You can ask a broker to delete your records, or to stop selling and sharing them. A team at UC Irvine decided to find out what happens when someone sends those requests to the whole California registry. The answer gives consumers &#8230; More &#8594; The post Most data brokers won&#8217;t tell you what happened to your deletion request appeared first on Help Net Security .",
+          "action": null,
+          "image": "https://img.helpnetsecurity.com/wp-content/uploads/2026/07/08151853/data_request-1500.webp",
+          "sources": [
+            {
+              "url": "https://www.helpnetsecurity.com/2026/07/10/trouble-with-data-broker-deletion-requests/",
+              "label": "Help Net Security"
+            }
+          ],
+          "url": "https://www.helpnetsecurity.com/2026/07/10/trouble-with-data-broker-deletion-requests/",
+          "pubDate": "2026-07-10T06:30:46.000Z"
+        },
+        {
+          "title": "NHS Warns Staff Over Unauthorized Access to Patient Data",
+          "cve": null,
+          "severity": "culture",
+          "score": 56,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Signal de veille — Infosecurity Mag.\n\nNHS tells staff they could face prison for “inappropriate” access to patients’ medical records\n\nBritain&rsquo;s health service has warned staff that they could face jail time if found guilty of accessing patient data without a legitimate reason.\n\nHead of the NHS, Jim Mackey, said inappropriate access of medical records was &ldquo;wholly unacceptable, a disgraceful breach of patient trust and against the law&rdquo;.\n\nThe comments came as the NHS launched a…",
+          "detail": "Signal de veille — Infosecurity Mag.\n\nNHS tells staff they could face prison for “inappropriate” access to patients’ medical records\n\nBritain&rsquo;s health service has warned staff that they could face jail time if found guilty of accessing patient data without a legitimate reason.\n\nHead of the NHS, Jim Mackey, said inappropriate access of medical records was &ldquo;wholly unacceptable, a disgraceful breach of patient trust and against the law&rdquo;.\n\nThe comments came as the NHS launched a new awareness-raising campaign for staff, in conjunction with new guidance for healthcare organizations on preventing, monitoring and reporting unauthorized access.\n\nThe campaign, which urges staff to &ldquo;not to let curiosity kill your career,&rdquo; has been prompted by several recent high-profile cases where NHS employees were found to have done just that.\n\nIn May, 11 staff were sacked and 14 given written warnings after unlawfully accessing the records of victims of the 2023 Nottingham knife attacks. A month later a Cambridgeshire hospital launched an investigation after around 40 staff accessed the records of a seriously injured child without good reason.\n\nRead more on healthcare data threats: Insider Cloud Data Theft Plagues Healthcare Sector.",
+          "action": null,
+          "image": "https://assets.infosecurity-magazine.com/webpage/og/8468a350-4477-4f21-a790-49719267f118.jpg",
+          "sources": [
+            {
+              "url": "https://www.infosecurity-magazine.com/news/nhs-warns-staff-unauthorized/",
+              "label": "Infosecurity Mag"
+            }
+          ],
+          "url": "https://www.infosecurity-magazine.com/news/nhs-warns-staff-unauthorized/",
+          "pubDate": "2026-07-10T09:00:00.000Z"
+        },
+        {
+          "title": "Jen Ellis: Connecting Cyber Community With Political Machinery",
+          "cve": null,
+          "severity": "culture",
+          "score": 55,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Signal de veille — Dark Reading.\n\nSecurity Pro File: On the heels of her recent honors as a Member of the Order of the British Empire (MBE), we take a look back at the events that shaped Jen Ellis' advocacy on behalf of security researchers.",
+          "detail": "Signal de veille — Dark Reading.\n\nSecurity Pro File: On the heels of her recent honors as a Member of the Order of the British Empire (MBE), we take a look back at the events that shaped Jen Ellis' advocacy on behalf of security researchers.",
+          "action": null,
+          "image": null,
+          "sources": [
+            {
+              "url": "https://www.darkreading.com/cybersecurity-operations/jen-ellis-connecting-cyber-community-political-machinery",
+              "label": "Dark Reading"
+            }
+          ],
+          "url": "https://www.darkreading.com/cybersecurity-operations/jen-ellis-connecting-cyber-community-political-machinery",
+          "pubDate": "2026-07-10T19:08:04.000Z"
+        },
+        {
+          "title": "More Countries Jump on the Social Media 'Ban Wagon'",
+          "cve": null,
+          "severity": "culture",
+          "score": 55,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Signal de veille — Dark Reading.\n\nAge restrictions on accounts may be more of a stopgap because industry compliance is already falling short. Tech giants are struggling to follow the laws without affecting users.",
+          "detail": "Signal de veille — Dark Reading.\n\nAge restrictions on accounts may be more of a stopgap because industry compliance is already falling short. Tech giants are struggling to follow the laws without affecting users.",
+          "action": null,
+          "image": null,
+          "sources": [
+            {
+              "url": "https://www.darkreading.com/cyber-risk/more-countries-jump-on-the-social-media-ban-wagon",
+              "label": "Dark Reading"
+            }
+          ],
+          "url": "https://www.darkreading.com/cyber-risk/more-countries-jump-on-the-social-media-ban-wagon",
+          "pubDate": "2026-07-10T13:50:24.000Z"
+        },
+        {
+          "title": "AI Coding: Do Security Risks Outweigh Productivity Gains?",
+          "cve": null,
+          "severity": "culture",
+          "score": 55,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Signal de veille — Dark Reading.\n\nAI coding tools cost $19-$200/month/user, but security scanning, remediation, and false positives add hidden costs. Are the productivity gains worth it?",
+          "detail": "Signal de veille — Dark Reading.\n\nAI coding tools cost $19-$200/month/user, but security scanning, remediation, and false positives add hidden costs. Are the productivity gains worth it?",
+          "action": null,
+          "image": null,
+          "sources": [
+            {
+              "url": "https://www.darkreading.com/application-security/ai-coding-security-risks-productivity-gains",
+              "label": "Dark Reading"
+            }
+          ],
+          "url": "https://www.darkreading.com/application-security/ai-coding-security-risks-productivity-gains",
+          "pubDate": "2026-07-10T13:00:00.000Z"
+        },
+        {
+          "title": "La French Tech signe son meilleur semestre depuis la sortie du Covid",
+          "cve": null,
+          "severity": "critical",
+          "score": 55,
+          "corroboration": 1,
+          "region": "fr",
+          "body": "Signal de veille — Silicon.fr.\n\nAprès un premier semestre 2025 poussif, la French Tech retrouve des couleurs. Selon le baromètre EY du capital-risque en France , les start-up hexagonales ont levé 4,6 milliards € entre janvier et juin 2026, soit une progression de 65 % en valeur par rapport à l&rsquo;an dernier. Un chiffre qui hisse ce premier semestre au troisième rang des meilleurs de la période post-Covid.",
+          "detail": "Signal de veille — Silicon.fr.\n\nAprès un premier semestre 2025 poussif, la French Tech retrouve des couleurs. Selon le baromètre EY du capital-risque en France , les start-up hexagonales ont levé 4,6 milliards € entre janvier et juin 2026, soit une progression de 65 % en valeur par rapport à l&rsquo;an dernier. Un chiffre qui hisse ce premier semestre au troisième rang des meilleurs de la période post-Covid. Mais attention à ne pas crier victoire trop vite : ce retour des gros montants ne rime pas avec un retour à l&rsquo;euphorie généralisée. Le nombre d&rsquo;opérations, lui, recule : 280 tours de table ont été bouclés, contre 311 un an plus tôt. Résultat, le ticket moyen explose, passant de moins de 9 millions € au S1 2025 à plus de 16 millions € cette année. L&rsquo;argent est toujours là mais il se fait plus difficile d&rsquo;accès et plus concentré. Un capital-risque « de conviction » La structure du marché confirme ce mouvement de fond. Les sept opérations dépassant les 100 millions € concentrent à elles seules près de la moitié des montants levés sur le semestre. À l&rsquo;inverse, les petits tours de table, sous les 10 millions € restent nombreux mais ne pèsent plus grand-chose dans la masse totale des capitaux investis. EY parle d&rsquo;un « capital-risque de conviction », prêt à miser massivement sur les entreprises jugées capables de devenir des leaders mondiaux. Preuve en est, les cinq plus gross",
+          "action": null,
+          "image": "https://www.silicon.fr/wp-content/uploads/2025/09/SAP-Startup-Forum-startups-selectionnees-autour-Hana-F.jpg",
+          "sources": [
+            {
+              "url": "https://www.silicon.fr/business-1367/la-french-tech-signe-son-meilleur-semestre-depuis-la-sortie-du-covid-228230",
+              "label": "Silicon.fr"
+            }
+          ],
+          "url": "https://www.silicon.fr/business-1367/la-french-tech-signe-son-meilleur-semestre-depuis-la-sortie-du-covid-228230",
+          "pubDate": "2026-07-10T12:55:42.000Z"
+        },
+        {
+          "title": "LLMD, un serveur d’inférence made in France qui se frotte à vLLM",
+          "cve": null,
+          "severity": "culture",
+          "score": 50,
+          "corroboration": 1,
+          "region": "fr",
+          "body": "Signal de veille — Silicon.fr.\n\n« Aujourd&rsquo;hui, déployer un modèle de fondation à l&rsquo;échelle exige une équipe infra dédiée. Demain, cela devra être aussi simple que d&rsquo;initialiser une base de données sans serveur. » Ce pitch, c&rsquo;est celui d&rsquo;Inferact. L&rsquo;entreprise a émergé début 2026 aux États-Unis, pour développer une activité commerciale autour du serveur d&rsquo;inférence vLLM. Elle a démarré avec un financement de 150 M$.",
+          "detail": "Signal de veille — Silicon.fr.\n\n« Aujourd&rsquo;hui, déployer un modèle de fondation à l&rsquo;échelle exige une équipe infra dédiée. Demain, cela devra être aussi simple que d&rsquo;initialiser une base de données sans serveur. » Ce pitch, c&rsquo;est celui d&rsquo;Inferact. L&rsquo;entreprise a émergé début 2026 aux États-Unis, pour développer une activité commerciale autour du serveur d&rsquo;inférence vLLM. Elle a démarré avec un financement de 150 M$. Depuis, un autre projet référent a suivi la même trajectoire : SGLang, intégré dans l&rsquo;offre commerciale de RadixArk. Une entreprise soutenue à hauteur de 100 M$, avec la participation, entre autres, d&rsquo;AMD, de MediaTek et de NVIDIA. vLLM et SGLang ont, entre autres concurrents, LLMD. On le doit à a start-up française ZML. Fondée fin 2023, elle a levé 20 M$ avec notamment Kima Ventures, et avec le soutien de personnalités de la tech telles que Yann Le Cun, Solomon Hykes (Docker) et le duo Clément Delangue &#8211; Julien Chaumond (Hugging Face). ZML a choisi le langage Zig LLMD vient de passer au stade alpha, après un an de preview technique. Pour le moment en accès gratuit, il est néanmoins sous licence fermée&#8230; au contraire du framework d&rsquo;inférence ZML, qui constitue son socle. Ce framework est écrit essentiellement en Zig , un langage voué à « moderniser » C sur des aspects comme le flux de contrôle, l&rsquo;appel de fonctions, l&rsqu",
+          "action": null,
+          "image": "https://www.silicon.fr/wp-content/uploads/2026/07/ZML.jpg",
+          "sources": [
+            {
+              "url": "https://www.silicon.fr/data-ia-1372/zml-228223",
+              "label": "Silicon.fr"
+            }
+          ],
+          "url": "https://www.silicon.fr/data-ia-1372/zml-228223",
+          "pubDate": "2026-07-10T13:44:23.000Z"
+        }
+      ]
+    }
+  ]
+}
