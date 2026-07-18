@@ -1,0 +1,993 @@
+{
+  "id": "daily-2026-07-18",
+  "type": "daily",
+  "date": "2026-07-18",
+  "title": "Rapport quotidien - samedi 18 juillet 2026",
+  "summary": "Sur les dernières 24 heures, la veille recense 11 vulnérabilités critiques, 40 incidents ou compromissions et 28 signaux de fond. Acteurs et produits les plus exposés : Microsoft, meta-ads-mcp (pip) et vllm (pip).",
+  "generatedAt": "2026-07-18T04:01:22.327Z",
+  "sections": [
+    {
+      "id": "vulns",
+      "items": [
+        {
+          "title": "Attackers target critical FortiSandbox flaws as CISA issues patch order",
+          "cve": "CVE-2026-39808",
+          "severity": "critical",
+          "score": 66,
+          "corroboration": 2,
+          "region": "intl",
+          "body": "Vulnérabilité critique CVE-2026-39808 affectant Fortinet.\n\nFortinet admins have two more reasons to clear their calendars after CISA confirmed a pair of critical FortiSandbox bugs are being actively exploited. The two bugs, tracked as CVE-2026-39808 and CVE-2026-25089, both carry CVSS scores of 9.1 and affect FortiSandbox, FortiSandbox Cloud, and FortiSandbox PaaS.",
+          "detail": "Vulnérabilité critique CVE-2026-39808 affectant Fortinet.\n\nFortinet admins have two more reasons to clear their calendars after CISA confirmed a pair of critical FortiSandbox bugs are being actively exploited. The two bugs, tracked as CVE-2026-39808 and CVE-2026-25089, both carry CVSS scores of 9.1 and affect FortiSandbox, FortiSandbox Cloud, and FortiSandbox PaaS. According to Fortinet, they are OS command injection flaws that allow unauthenticated attackers to execute arbitrary commands via specially crafted HTTP requests, requiring neither valid credentials nor user interaction. Fortinet released fixes for CVE-2026-39808 in April and CVE-2026-25089 in June, warning in advisories published at the time that successful exploitation could lead to remote code execution via low-complexity attacks. Fortinet has not publicly confirmed that either flaw is being exploited in the wild, but CISA has now added both bugs to its Known Exploited Vulnerabilities (KEV) catalog. Inclusion in the catalog means CISA has evidence that the vulnerabilities are being actively exploited, although the agency rarely attributes attacks or discloses how widespread they are. For federal civilian agencies, bugs landing in KEV come with homework. Binding Operational Directive 26-04 requires them to patch within CISA's deadlines or pull the plug on vulnerable products if they can't be adequately secured. Fortinet has not updated its advisories to mark either flaw as",
+          "action": "Vérifier l'exposition du parc et appliquer le correctif éditeur dès sa disponibilité.",
+          "image": null,
+          "sources": [
+            {
+              "url": "https://www.theregister.com/security/2026/07/17/attackers-target-critical-fortisandbox-flaws-as-cisa-issues-patch-order/5274287",
+              "label": "The Register"
+            },
+            {
+              "url": "https://gbhackers.com/cisa-warns-of-two-fortinet-fortisandbox-flaws/",
+              "label": "GBHackers"
+            }
+          ],
+          "url": "https://www.theregister.com/security/2026/07/17/attackers-target-critical-fortisandbox-flaws-as-cisa-issues-patch-order/5274287",
+          "pubDate": "2026-07-17T11:58:10.000Z"
+        },
+        {
+          "title": "Inc Ransomware Exploits SonicWall SMA Zero-Days",
+          "cve": null,
+          "severity": "critical",
+          "score": 61,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Vulnérabilité critique affectant SonicWall.\n\nWhen chained together, the two vulnerabilities allow threat actors to gain root-level capabilities on SonicWall's mobile access appliances.",
+          "detail": "Vulnérabilité critique affectant SonicWall.\n\nWhen chained together, the two vulnerabilities allow threat actors to gain root-level capabilities on SonicWall's mobile access appliances.",
+          "action": "Vérifier l'exposition du parc et appliquer le correctif éditeur dès sa disponibilité.",
+          "image": null,
+          "sources": [
+            {
+              "url": "https://www.darkreading.com/vulnerabilities-threats/inc-ransomware-exploits-sonicwall-sma-zero-days",
+              "label": "Dark Reading"
+            }
+          ],
+          "url": "https://www.darkreading.com/vulnerabilities-threats/inc-ransomware-exploits-sonicwall-sma-zero-days",
+          "pubDate": "2026-07-17T20:01:13.000Z"
+        },
+        {
+          "title": "New Windows LegacyHive zero-day gives hackers admin privileges",
+          "cve": null,
+          "severity": "critical",
+          "score": 61,
+          "corroboration": 2,
+          "region": "intl",
+          "body": "Vulnérabilité critique affectant Windows.\n\nA newly disclosed Windows local privilege-escalation vulnerability, dubbed LegacyHive, could allow a standard user to load and modify the per-user registry classes hive of an administrator account.\n\nThe proof-of-concept (PoC), published by researcher NightmareEclipse under the MSNightmare/LegacyHive GitHub repository, abuses Windows’ User Profile Service to mount a target user’s UsrClass.dat hive into a registry location accessible from a lower-privileged…",
+          "detail": "Vulnérabilité critique affectant Windows.\n\nA newly disclosed Windows local privilege-escalation vulnerability, dubbed LegacyHive, could allow a standard user to load and modify the per-user registry classes hive of an administrator account.\n\nThe proof-of-concept (PoC), published by researcher NightmareEclipse under the MSNightmare/LegacyHive GitHub repository, abuses Windows’ User Profile Service to mount a target user’s UsrClass.dat hive into a registry location accessible from a lower-privileged account.\n\nThe issue affects currently supported Windows desktop and Windows Server installations, including systems updated with Microsoft’s July 202620262026 security patches, according to the project’s README.\n\nAt the time of disclosure, the repository did not identify any assigned CVE, Microsoft advisory, or vendor-issued fix. The PoC is written in C++ and released under an MIT license. However, its author said the publicly available code was intentionally limited to reduce immediate abuse.\n\nLegacyHive requires local execution and access to credentials for a second standard Windows user, as well as the username of a target account, which may be an administrator.\n\nWhen successful, the tool causes the target account’s classes registry hive to be mounted under the current user’s classes root. The original research reportedly enabled arbitrary hive loading without requiring additional credentials; however, the public PoC has been restricted to loading UsrClass.dat, the hive used for user-specific file associations, COM registrations, shell settings, and related configuration.\n\nIndependent testing by vulnerability researcher Will Dormann confirmed the central behavior. Dormann observed new registry keys appearing under HKEY_USERS while LegacyHive was running and later determined",
+          "action": "Vérifier l'exposition du parc et appliquer le correctif éditeur dès sa disponibilité.",
+          "image": "https://gbhackers.com/wp-content/uploads/2026/07/ChatGPT-Image-Jul-17-2026-06_02_19-PM-1.webp",
+          "sources": [
+            {
+              "url": "https://gbhackers.com/legacyhive-windows-zero-day/",
+              "label": "GBHackers"
+            },
+            {
+              "url": "https://www.bleepingcomputer.com/news/security/new-windows-legacyhive-zero-day-exploit-grants-hackers-admin-access/",
+              "label": "BleepingComputer"
+            }
+          ],
+          "url": "https://gbhackers.com/legacyhive-windows-zero-day/",
+          "pubDate": "2026-07-17T12:36:05.000Z"
+        },
+        {
+          "title": "CISA urges immediate action on actively exploited Fortinet flaws",
+          "cve": null,
+          "severity": "critical",
+          "score": 61,
+          "corroboration": 2,
+          "region": "intl",
+          "body": "Vulnérabilité critique affectant Fortinet.\n\nUS government agencies have until July 19 to patch two critical Fortinet vulnerabilities\n\nTwo vulnerabilities affecting Fortinet&rsquo;s malware analysis and detection FortiSandbox have been exploited in the wild, the US Cybersecurity and Infrastructure Security Agency (CISA) has warned.\n\nThe vulnerabilities, tracked as CVE-2026-39808 and CVE-2026-25089 are both critical, with a severity rating (CVSS) of 9.1 each.\n\nCISA added both to its Known Exploited Vu…",
+          "detail": "Vulnérabilité critique affectant Fortinet.\n\nUS government agencies have until July 19 to patch two critical Fortinet vulnerabilities\n\nTwo vulnerabilities affecting Fortinet&rsquo;s malware analysis and detection FortiSandbox have been exploited in the wild, the US Cybersecurity and Infrastructure Security Agency (CISA) has warned.\n\nThe vulnerabilities, tracked as CVE-2026-39808 and CVE-2026-25089 are both critical, with a severity rating (CVSS) of 9.1 each.\n\nCISA added both to its Known Exploited Vulnerabilities (KEV) catalog on July 16, suggesting evidence of observed exploitation in the wild.\n\nThe agency urged rolling out patches across federal government by July 19.\n\nCVE-2026-39808 was detected by Samuel de Lucas Maroto, a security researcher at KPMG Spain, and disclosed by Fortinet on April 14.\n\nIt is an operating system (OS) command injection vulnerability affecting Fortinet&rsquo;s FortiSandbox versions 4.4.0 to 4.4.8.",
+          "action": "Vérifier l'exposition du parc et appliquer le correctif éditeur dès sa disponibilité.",
+          "image": "https://assets.infosecurity-magazine.com/webpage/og/6230c8d5-8285-4c91-be7b-196bd44ffc26.jpg",
+          "sources": [
+            {
+              "url": "https://www.infosecurity-magazine.com/news/cisa-urgent-patch-fortinet/",
+              "label": "Infosecurity Mag"
+            },
+            {
+              "url": "https://www.bleepingcomputer.com/news/security/cisa-warns-feds-to-patch-exploited-fortinet-fortisandbox-flaws-by-sunday/",
+              "label": "BleepingComputer"
+            }
+          ],
+          "url": "https://www.infosecurity-magazine.com/news/cisa-urgent-patch-fortinet/",
+          "pubDate": "2026-07-17T09:45:00.000Z"
+        },
+        {
+          "title": "Windows Server 2022 reach end of mainstream support in 90 days",
+          "cve": null,
+          "severity": "critical",
+          "score": 61,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Vulnérabilité critique affectant Microsoft.\n\nMicrosoft announced that Windows Server 2022 will reach the mainstream end date in October 2026, but will switch to extended support and continue receiving security updates for five more years.\n\nMicrosoft July 2026 Patch Tuesday fixes massive 570 flaws, 3 zero-days\n\nProgress confirms ShareFile zero-day flaw behind Storage Zone shutdown\n\nHollowByte DDoS flaw bloats OpenSSL server memory with 11-byte payload\n\nErnst & Young discloses data breach after support…",
+          "detail": "Vulnérabilité critique affectant Microsoft.\n\nMicrosoft announced that Windows Server 2022 will reach the mainstream end date in October 2026, but will switch to extended support and continue receiving security updates for five more years.\n\nMicrosoft July 2026 Patch Tuesday fixes massive 570 flaws, 3 zero-days\n\nProgress confirms ShareFile zero-day flaw behind Storage Zone shutdown\n\nHollowByte DDoS flaw bloats OpenSSL server memory with 11-byte payload\n\nErnst & Young discloses data breach after support system hack\n\nInside the Search for \"Clean\" Residential Proxies for Carding\n\nHow to enable Kernel-mode Hardware-enforced Stack Protection in Windows 11",
+          "action": "Vérifier l'exposition du parc et appliquer le correctif éditeur dès sa disponibilité.",
+          "image": "https://www.bleepstatic.com/content/hl-images/2026/04/15/Windows_Server.jpg",
+          "sources": [
+            {
+              "url": "https://www.bleepingcomputer.com/news/microsoft/windows-server-2022-reach-end-of-mainstream-support-in-90-days/",
+              "label": "BleepingComputer"
+            }
+          ],
+          "url": "https://www.bleepingcomputer.com/news/microsoft/windows-server-2022-reach-end-of-mainstream-support-in-90-days/",
+          "pubDate": "2026-07-17T09:10:15.000Z"
+        },
+        {
+          "title": "CVE-2026-27771 — Gitea has insufficient permission checks for Composer package source links",
+          "cve": "CVE-2026-27771",
+          "severity": "high",
+          "score": 53,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Vulnérabilité élevée CVE-2026-27771 affectant code.gitea.io/gitea (go) (score CVSS 8.2).\n\nGitea has insufficient permission checks for Composer package source links\n\n--> Name Query To see all available qualifiers, see our documentation .\n\nA critical vulnerability has been discovered in Gitea. It was already reported via ( security@gitea.io ) from ( dev@noscope.com ), and submitted an encrypted report.\n\nlunny published to go-gitea/gitea Jun 5, 2026 Published by the National Vulnerability Database Jul 3, 2026 Published to the GitHub Advisory Data…",
+          "detail": "Vulnérabilité élevée CVE-2026-27771 affectant code.gitea.io/gitea (go) (score CVSS 8.2).\n\nGitea has insufficient permission checks for Composer package source links\n\n--> Name Query To see all available qualifiers, see our documentation .\n\nA critical vulnerability has been discovered in Gitea. It was already reported via ( security@gitea.io ) from ( dev@noscope.com ), and submitted an encrypted report.\n\nlunny published to go-gitea/gitea Jun 5, 2026 Published by the National Vulnerability Database Jul 3, 2026 Published to the GitHub Advisory Database Jul 17, 2026 Reviewed Jul 17, 2026 Last updated Jul 17, 2026 Severity High 8.2 CVSS overall score This score calculates overall vulnerability severity from 0 to 10 and is based on the Common Vulnerability Scoring System (CVSS). / 10 CVSS v3 base metrics Attack vector Network Attack complexity Low Privileges required None User interaction None Scope Unchanged Confidentiality High Integrity Low Availability None Learn more about base metrics CVSS v3 base metrics Attack vector: More severe the more the remote (logically and physically) an attacker can be in order to exploit the vulnerability. Attack complexity: More severe for the least complex attacks. Privileges required: More severe if no privileges are required. User interaction: More severe when no user interaction is required. Scope: More severe when a scope change occurs, e.g. one vulnerable component impacts resources in components beyond its security scope. Confidentiality: More severe when loss of data confidentiality is highest, measuring the level of data access available to an unauthorized user. Integrity: More severe when loss of data integrity is the highest, measuring the consequence of data modification possible by an unauthorized user. Availability: More severe",
+          "action": "Vérifier l'exposition du parc et appliquer le correctif éditeur dès sa disponibilité.",
+          "image": "https://github.githubassets.com/assets/advisory-database-show-f32c8207dfb2.png",
+          "sources": [
+            {
+              "url": "https://github.com/advisories/GHSA-8qw8-rq86-9pc2",
+              "label": "GitHub Advisory"
+            }
+          ],
+          "url": "https://github.com/advisories/GHSA-8qw8-rq86-9pc2",
+          "pubDate": "2026-07-17T19:04:37.000Z"
+        },
+        {
+          "title": "Multiples vulnérabilités dans Secure Mobile Access (15 juillet 2026)",
+          "cve": "CVE-2026-15409",
+          "severity": "critical",
+          "score": 49,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Vulnérabilité critique CVE-2026-15409 affectant SonicWall.\n\nLe 14 juillet 2026, Sonicwall a publié un avis de sécurité concernant deux vulnérabilités affectant les Secure Mobile Access (SMA) 1000. La vulnérabilité critique CVE-2026-15409 permet une falsification de requêtes côté serveur (SSRF) de la part d'un attaquant non authentifié. La vulnérabilité... Voir en ligne : https://www.cert.ssi.gouv.fr/alerte...",
+          "detail": "Vulnérabilité critique CVE-2026-15409 affectant SonicWall.\n\nLe 14 juillet 2026, Sonicwall a publié un avis de sécurité concernant deux vulnérabilités affectant les Secure Mobile Access (SMA) 1000. La vulnérabilité critique CVE-2026-15409 permet une falsification de requêtes côté serveur (SSRF) de la part d'un attaquant non authentifié. La vulnérabilité... Voir en ligne : https://www.cert.ssi.gouv.fr/alerte...",
+          "action": "Vérifier l'exposition du parc et appliquer le correctif éditeur dès sa disponibilité.",
+          "image": "https://www.globalsecuritymag.fr/local/cache-vignettes/L40xH21/a3c0c28306689c72833bd0e5592942-00c4a.png",
+          "sources": [
+            {
+              "url": "https://www.globalsecuritymag.fr/multiples-vulnerabilites-dans-secure-mobile-access-15-juillet-2026.html",
+              "label": "Global Sec Mag"
+            }
+          ],
+          "url": "https://www.globalsecuritymag.fr/multiples-vulnerabilites-dans-secure-mobile-access-15-juillet-2026.html",
+          "pubDate": "2026-07-18T04:01:01.716Z"
+        },
+        {
+          "title": "U.S. CISA adds KNX Association KNX Protocol Connection Authorization Option 1 and Oracle flaws to its Known Exploited Vulnerabilities catalog",
+          "cve": "CVE-2023-4346",
+          "severity": "critical",
+          "score": 49,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Vulnérabilité critique CVE-2023-4346 affectant Microsoft.\n\nU.S. Cybersecurity and Infrastructure Security Agency (CISA) adds KNX Association KNX Protocol Connection Authorization Option 1 and Oracle flaws to its Known Exploited Vulnerabilities catalog. The U.S. Cybersecurity and Infrastructure Security Agency (CISA) added SonicWall and Microsoft flaws to its Known Exploited Vulnerabilities (KEV) catalog .",
+          "detail": "Vulnérabilité critique CVE-2023-4346 affectant Microsoft.\n\nU.S. Cybersecurity and Infrastructure Security Agency (CISA) adds KNX Association KNX Protocol Connection Authorization Option 1 and Oracle flaws to its Known Exploited Vulnerabilities catalog. The U.S. Cybersecurity and Infrastructure Security Agency (CISA) added SonicWall and Microsoft flaws to its Known Exploited Vulnerabilities (KEV) catalog . The flaws added to the catalog are: CVE-2023-4346 KNX Association KNX Protocol Connection Authorization Option 1 Overly Restrictive Account Lockout Mechanism Vulnerability CVE-2026-46817 Oracle E-Business Suite Improper Privilege Management Vulnerability The vulnerability CVE-2023-4346 (CVSS score of 7.5) is an improper account lockout mechanism flaw affecting KNX devices that use KNX Connection Authorization Option 1. An attacker with access to the KNX network, or physical access to the device, can set a BCU key and lock the device, preventing legitimate users from resetting access. The issue can cause device availability loss and disrupt KNX installations. KNX Connection Authorization Option 1 is a security mechanism in KNX building automation systems that controls access to devices by using a shared key (BCU key). It helps prevent unauthorized configuration changes, but weaker implementations can allow attackers to lock devices if they obtain network access. The flaw CVE-2026-46817 affects Oracle Payments versions 12.2.3 through 12",
+          "action": "Vérifier l'exposition du parc et appliquer le correctif éditeur dès sa disponibilité.",
+          "image": "https://securityaffairs.com/wp-content/uploads/2020/07/CISA.jpeg",
+          "sources": [
+            {
+              "url": "https://securityaffairs.com/195516/security/u-s-cisa-adds-knx-association-knx-protocol-connection-authorization-option-1-and-oracle-flaws-to-its-known-exploited-vulnerabilities-catalog.html",
+              "label": "Security Affairs"
+            }
+          ],
+          "url": "https://securityaffairs.com/195516/security/u-s-cisa-adds-knx-association-knx-protocol-connection-authorization-option-1-and-oracle-flaws-to-its-known-exploited-vulnerabilities-catalog.html",
+          "pubDate": "2026-07-17T08:13:15.000Z"
+        },
+        {
+          "title": "Fresh SharePoint Vulnerability Exploited Soon After Disclosure",
+          "cve": null,
+          "severity": "critical",
+          "score": 49,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Vulnérabilité critique affectant SharePoint.\n\nThreat actors are exploiting CVE-2026-58644, a Microsoft SharePoint RCE vulnerability patched on the July 2026 Patch Tuesday.\n\nThe critical-severity security defect allows remote, authenticated attackers to execute arbitrary code on the server.\n\nSubscribe to the SecurityWeek Email Briefing for the latest cybersecurity threats, trends, and expert insights.\n\nSubscribe to the SecurityWeek Email Briefing to stay informed on the latest threats, trends, and tech…",
+          "detail": "Vulnérabilité critique affectant SharePoint.\n\nThreat actors are exploiting CVE-2026-58644, a Microsoft SharePoint RCE vulnerability patched on the July 2026 Patch Tuesday.\n\nThe critical-severity security defect allows remote, authenticated attackers to execute arbitrary code on the server.\n\nSubscribe to the SecurityWeek Email Briefing for the latest cybersecurity threats, trends, and expert insights.\n\nSubscribe to the SecurityWeek Email Briefing to stay informed on the latest threats, trends, and technology, along with insightful columns from industry experts.\n\nJoin this live webinar as we break down why email-layer defenses alone can't keep pace with the modern phishing ecosystem, how agentic AI is changing the capacity equation for security teams, and more.\n\nThis year's summit will help organizations learn how to utilize tools, controls, and design models needed to properly secure cloud environments. Interact with leading solution providers and other end users facing similar challenges in securing a variety of cloud deployments.\n\nJazz has named Sean Robinson, Rickie Goyal, Danielle Guetta, Shani Nago, and Lior Magram as VPs and Michael Calev as COO.",
+          "action": "Vérifier l'exposition du parc et appliquer le correctif éditeur dès sa disponibilité.",
+          "image": "https://www.securityweek.com/wp-content/uploads/2025/07/CVE-2025-53770-SharePoint-Vulnerability.jpg",
+          "sources": [
+            {
+              "url": "https://www.securityweek.com/fresh-sharepoint-vulnerability-exploited-soon-after-disclosure/",
+              "label": "SecurityWeek"
+            }
+          ],
+          "url": "https://www.securityweek.com/fresh-sharepoint-vulnerability-exploited-soon-after-disclosure/",
+          "pubDate": "2026-07-17T07:15:59.000Z"
+        },
+        {
+          "title": "CISA Adds Exploited SharePoint RCE Zero-Day CVE-2026-58644 to KEV",
+          "cve": "CVE-2026-58644",
+          "severity": "critical",
+          "score": 49,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Vulnérabilité critique CVE-2026-58644 affectant Microsoft.\n\nThe U.S. Cybersecurity and Infrastructure Security Agency (CISA) on Thursday added a newly patched security flaw impacting Microsoft SharePoint Server to its Known Exploited Vulnerabilities (KEV) catalog, requiring Federal Civilian Executive Branch (FCEB) agencies to apply the fixes by July 19, 2026. The vulnerability in question is CVE-2026-58644 (CVSS score: 9.8), a critical deserialization",
+          "detail": "Vulnérabilité critique CVE-2026-58644 affectant Microsoft.\n\nThe U.S. Cybersecurity and Infrastructure Security Agency (CISA) on Thursday added a newly patched security flaw impacting Microsoft SharePoint Server to its Known Exploited Vulnerabilities (KEV) catalog, requiring Federal Civilian Executive Branch (FCEB) agencies to apply the fixes by July 19, 2026. The vulnerability in question is CVE-2026-58644 (CVSS score: 9.8), a critical deserialization",
+          "action": "Vérifier l'exposition du parc et appliquer le correctif éditeur dès sa disponibilité.",
+          "image": "https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEgH1X7ZnvKsW37BBvjNfEzT4Imh9ZIRL4_2W1JaNVe_MyO3Q5H1MPsET-SASqznhlfOExRrLj4-6NzhgvGi76w4U5tSmlM-pJLIqO5jF3g9G1DR_FNhuwcatBFb8ARvD4PPMiQvMCFiTlEOlc13nQbQqCn5ZHf1J2ZOqDeG3_pmBiQ92hTfMErJKcjKbNtZ/s1600/sharepoint-cisa.jpg",
+          "sources": [
+            {
+              "url": "https://thehackernews.com/2026/07/cisa-adds-exploited-sharepoint-rce-zero.html",
+              "label": "The Hacker News"
+            }
+          ],
+          "url": "https://thehackernews.com/2026/07/cisa-adds-exploited-sharepoint-rce-zero.html",
+          "pubDate": "2026-07-17T06:42:23.000Z"
+        },
+        {
+          "title": "Three Steps to the Terminal: A Siemens ROX II Zero-Day Trilogy",
+          "cve": null,
+          "severity": "critical",
+          "score": 46,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Vulnérabilité critique.\n\nA technical analysis of three chained zero-day vulnerabilities in Siemens ROX II OT switches that allow privilege escalation and persistent root access.\n\nWe conducted this research in close partnership with Siemens, reflecting our shared commitment to advancing the security and resilience of critical infrastructure.\n\nThis report details a critical, chained exploit comprising three zero-day vulnerabilities (CVE-2025-40948, CVE-2025-40947, and CVE-2025-40949…",
+          "detail": "Vulnérabilité critique.\n\nA technical analysis of three chained zero-day vulnerabilities in Siemens ROX II OT switches that allow privilege escalation and persistent root access.\n\nWe conducted this research in close partnership with Siemens, reflecting our shared commitment to advancing the security and resilience of critical infrastructure.\n\nThis report details a critical, chained exploit comprising three zero-day vulnerabilities (CVE-2025-40948, CVE-2025-40947, and CVE-2025-40949) discovered in Siemens ROX II operational technology (OT) switches. Successful exploitation of this chain would allow an attacker to achieve full privilege escalation and persistent root-level access on these devices, which are critical components of industrial control networks. The vulnerabilities range from Medium to Critical severity, with CVSS 3.1 scores of 6.8 (CVE-2025-40948), 7.5 (CVE-2025-40947), and 9.1 (CVE-2025-40949).\n\nThe attack vector proceeds in three stages, escalating from reconnaissance to complete system compromise:\n\nThese vulnerabilities could collectively transform a vital network security device into a platform for malicious activity, severely threatening the integrity and availability of the industrial network. Siemens has released security advisories SSA-973901 , SSA-078743 and SSA-081142 to address these issues, which recommend that customers update their affected ROX II devices to firmware version V2.17.1.\n\nPalo Alto Networks customers are better protected against these threats through the following products and services:\n\nIf you think you might have been compromised or have an urgent matter, contact the Unit 42 Incident Response team .",
+          "action": "Vérifier l'exposition du parc et appliquer le correctif éditeur dès sa disponibilité.",
+          "image": "https://unit42.paloaltonetworks.com/wp-content/uploads/2026/07/03_Vulnerabilities_1920x900.jpg",
+          "sources": [
+            {
+              "url": "https://unit42.paloaltonetworks.com/siemens-rox-ii-zero-day-vulnerabilities/",
+              "label": "Unit 42"
+            }
+          ],
+          "url": "https://unit42.paloaltonetworks.com/siemens-rox-ii-zero-day-vulnerabilities/",
+          "pubDate": "2026-07-17T10:00:24.000Z"
+        },
+        {
+          "title": "Skipper: Incomplete fix for CVE-2026-50197: an oversized body can bypass OPA deny-on-presence Rego policies",
+          "cve": null,
+          "severity": "high",
+          "score": 45,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Vulnérabilité élevée affectant github.com/zalando/skipper (go) (score CVSS 8.2).\n\nSkipper: Incomplete fix for CVE-2026-50197: an oversized body can bypass OPA deny-on-presence Rego policies\n\n--> Name Query To see all available qualifiers, see our documentation .\n\nIncomplete fix for CVE-2026-50197 : an oversized declared- Content-Length body still hands OPA an empty parsed_body , so deny-on-presence Rego policies fail OPEN while the full payload reaches upstream.\n\nThe CVE-2026-50197 fix (commit 3152f3b0 , PR #4041, v0.26.10) substituted…",
+          "detail": "Vulnérabilité élevée affectant github.com/zalando/skipper (go) (score CVSS 8.2).\n\nSkipper: Incomplete fix for CVE-2026-50197: an oversized body can bypass OPA deny-on-presence Rego policies\n\n--> Name Query To see all available qualifiers, see our documentation .\n\nIncomplete fix for CVE-2026-50197 : an oversized declared- Content-Length body still hands OPA an empty parsed_body , so deny-on-presence Rego policies fail OPEN while the full payload reaches upstream.\n\nThe CVE-2026-50197 fix (commit 3152f3b0 , PR #4041, v0.26.10) substituted expectedSize = maxBodyBytes only when req.ContentLength (chunked / HTTP/2 without content-length). But when a request declares a Content-Length larger than maxBodyBytes , expectedSize > maxBodyBytes , the body-extraction if is skipped entirely, and ExtractHttpBodyOptionally returns rawBodyBytes = nil — so OPA evaluates an empty parsed_body , while the full forbidden payload still flows to the upstream. A deny-on-presence policy ( default allow = true; allow = false if input.parsed_body. ) — the exact Rego shape the advisory describes — fails OPEN. The fix's own comment reasons only about ContentLength == -1 ; the oversized branch was never considered, and the added PoC test only covers small bodies.\n\nSee attached docker-compose.yml (official golang image) + setup.sh + exploit.sh , which run a real Skipper proxy ( proxytest ) with a real OPA control plane ( opasdktest ), WithMaxRequestBodyBytes(32) , policy allow = false if input.parsed_body.action == \"delete\" , route * -> opaAuthorizeRequestWithBody(\"test\") -> upstream :\n\n(Library-tier: validated via Skipper's real proxy test harness, not a deploy of the official image; benign oracle = status diff + upstream-received body; no RCE.)\n\nDeployments authorizing on request-body content via opaA",
+          "action": "Vérifier l'exposition du parc et appliquer le correctif éditeur dès sa disponibilité.",
+          "image": "https://github.githubassets.com/assets/advisory-database-show-f32c8207dfb2.png",
+          "sources": [
+            {
+              "url": "https://github.com/advisories/GHSA-8qqm-fp2q-v734",
+              "label": "GitHub Advisory"
+            }
+          ],
+          "url": "https://github.com/advisories/GHSA-8qqm-fp2q-v734",
+          "pubDate": "2026-07-17T21:49:48.000Z"
+        },
+        {
+          "title": "CVE-2026-54549 — meta-ads-mcp: Server-Side Request Forgery (SSRF) in `upload_ad_image` via Unrestricted `image_url` Fetch",
+          "cve": "CVE-2026-54549",
+          "severity": "high",
+          "score": 45,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Vulnérabilité élevée CVE-2026-54549 affectant meta-ads-mcp (pip) (score CVSS 8.3).\n\nmeta-ads-mcp: Server-Side Request Forgery (SSRF) in `upload_ad_image` via Unrestricted `image_url` Fetch\n\n--> Name Query To see all available qualifiers, see our documentation .\n\nmeta_ads_mcp/core/ads.py , line 1316–1322: The MCP tool upload_ad_image is registered with @mcp_server.tool() and exposes image_url: Optional[str] as a direct tool argument that is fully attacker-controlled over the network.\n\n# meta_ads_mcp/core/ads.py 1316 : @ mcp_server .",
+          "detail": "Vulnérabilité élevée CVE-2026-54549 affectant meta-ads-mcp (pip) (score CVSS 8.3).\n\nmeta-ads-mcp: Server-Side Request Forgery (SSRF) in `upload_ad_image` via Unrestricted `image_url` Fetch\n\n--> Name Query To see all available qualifiers, see our documentation .\n\nmeta_ads_mcp/core/ads.py , line 1316–1322: The MCP tool upload_ad_image is registered with @mcp_server.tool() and exposes image_url: Optional[str] as a direct tool argument that is fully attacker-controlled over the network.\n\n# meta_ads_mcp/core/ads.py 1316 : @ mcp_server . tool () 1318 : async def upload_ad_image ( 1322 : image_url : Optional [ str ] = None , Propagation\n\nmeta_ads_mcp/core/ads.py , line 1389: The value is forwarded to try_multiple_download_methods(image_url) without any sanitization or validation.\n\n# meta_ads_mcp/core/ads.py 1389 : image_bytes = await try_multiple_download_methods ( image_url ) Sinks\n\nmeta_ads_mcp/core/utils.py contains three independent HTTP fetch paths, all using httpx.AsyncClient with follow_redirects=True and no URL, host, or IP validation:",
+          "action": "Vérifier l'exposition du parc et appliquer le correctif éditeur dès sa disponibilité.",
+          "image": "https://github.githubassets.com/assets/advisory-database-show-f32c8207dfb2.png",
+          "sources": [
+            {
+              "url": "https://github.com/advisories/GHSA-45gf-fjxp-cjpq",
+              "label": "GitHub Advisory"
+            }
+          ],
+          "url": "https://github.com/advisories/GHSA-45gf-fjxp-cjpq",
+          "pubDate": "2026-07-17T18:47:31.000Z"
+        },
+        {
+          "title": "CVE-2026-54552 — sh _uid does not drop supplementary groups (incomplete privilege drop)",
+          "cve": "CVE-2026-54552",
+          "severity": "high",
+          "score": 44,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Vulnérabilité élevée CVE-2026-54552 affectant sh (pip) (score CVSS 7.9).\n\nsh _uid does not drop supplementary groups (incomplete privilege drop)\n\n--> Name Query To see all available qualifiers, see our documentation .\n\nWhen sh was run from a process with elevated privileges, such as root, and a command was launched with _uid= , the child process changed its UID and primary GID but did not reset its supplementary groups.",
+          "detail": "Vulnérabilité élevée CVE-2026-54552 affectant sh (pip) (score CVSS 7.9).\n\nsh _uid does not drop supplementary groups (incomplete privilege drop)\n\n--> Name Query To see all available qualifiers, see our documentation .\n\nWhen sh was run from a process with elevated privileges, such as root, and a command was launched with _uid= , the child process changed its UID and primary GID but did not reset its supplementary groups. As a result, the child process could retain the parent process’s supplementary groups, potentially including privileged groups such as root, docker, disk, shadow, or sudo.\n\nThis could allow a subprocess that was expected to run with reduced privileges to access files or resources available to the original process’s supplementary groups. Users are impacted if they rely on _uid as a privilege boundary when launching commands from a privileged parent process.\n\nAvoid using _uid when the user represents a less-privileged user.\n\namoffat published to amoffat/sh Jun 5, 2026 Published to the GitHub Advisory Database Jul 17, 2026 Reviewed Jul 17, 2026 Last updated Jul 17, 2026 Severity High 7.9 CVSS overall score This score calculates overall vulnerability severity from 0 to 10 and is based on the Common Vulnerability Scoring System (CVSS). / 10 CVSS v3 base metrics Attack vector Local Attack complexity Low Privileges required High User interaction None Scope Changed Confidentiality High Integrity High Availability None Learn more about base metrics CVSS v3 base metrics Attack vector: More severe the more the remote (logically and physically) an attacker can be in order to exploit the vulnerability. Attack complexity: More severe for the least complex attacks. Privileges required: More severe if no privileges are required. User interaction: More severe when no use",
+          "action": "Vérifier l'exposition du parc et appliquer le correctif éditeur dès sa disponibilité.",
+          "image": "https://github.githubassets.com/assets/advisory-database-show-f32c8207dfb2.png",
+          "sources": [
+            {
+              "url": "https://github.com/advisories/GHSA-q38v-wp89-2w55",
+              "label": "GitHub Advisory"
+            }
+          ],
+          "url": "https://github.com/advisories/GHSA-q38v-wp89-2w55",
+          "pubDate": "2026-07-17T18:41:38.000Z"
+        },
+        {
+          "title": "CVE-2026-11400 — AWS-JDBC Wrapper: Privilege Escalation in Aurora PostgreSQL instance",
+          "cve": "CVE-2026-11400",
+          "severity": "high",
+          "score": 44,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Vulnérabilité élevée CVE-2026-11400 affectant software.amazon.jdbc:aws-advanced-jdbc-wrapper (maven) (score CVSS 8).\n\nAWS-JDBC Wrapper: Privilege Escalation in Aurora PostgreSQL instance\n\n--> Name Query To see all available qualifiers, see our documentation .\n\nThe team has identified CVE-2026-11400 , an issue in Aurora PostgreSQL using the AWS Advanced JDBC Wrapper\n\nImpact An issue in AWS Wrappers for Amazon Aurora PostgreSQL will allow for privilege escalation to rds_superuser role.",
+          "detail": "Vulnérabilité élevée CVE-2026-11400 affectant software.amazon.jdbc:aws-advanced-jdbc-wrapper (maven) (score CVSS 8).\n\nAWS-JDBC Wrapper: Privilege Escalation in Aurora PostgreSQL instance\n\n--> Name Query To see all available qualifiers, see our documentation .\n\nThe team has identified CVE-2026-11400 , an issue in Aurora PostgreSQL using the AWS Advanced JDBC Wrapper\n\nImpact An issue in AWS Wrappers for Amazon Aurora PostgreSQL will allow for privilege escalation to rds_superuser role. A low privilege authenticated user can create a crafted function that could be executed with permissions of other Amazon Relational Database Service (RDS) users.\n\nImpacted versions: AWS Advanced JDBC Wrapper >= 3.0.0 and < 4.0.1\n\nPatches This issue has been addressed in AWS JDBC Wrapper v4.0.1. It is recommended to upgrade to the latest version and ensuring any forked or derivative code is patched to incorporate the new fixes.\n\nResources If there are any questions or comments about this advisory, contact [AWS/Amazon] Security via vulnerability reporting page or directly via email to aws-security@amazon.com . Please do not create a public GitHub issue.",
+          "action": "Vérifier l'exposition du parc et appliquer le correctif éditeur dès sa disponibilité.",
+          "image": "https://github.githubassets.com/assets/advisory-database-show-f32c8207dfb2.png",
+          "sources": [
+            {
+              "url": "https://github.com/advisories/GHSA-mhww-p97m-3368",
+              "label": "GitHub Advisory"
+            }
+          ],
+          "url": "https://github.com/advisories/GHSA-mhww-p97m-3368",
+          "pubDate": "2026-07-17T18:40:41.000Z"
+        }
+      ]
+    },
+    {
+      "id": "attacks",
+      "items": [
+        {
+          "title": "Dairy company Fairlife suspends production in US after cyber incident",
+          "cve": null,
+          "severity": "news",
+          "score": 76,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Incident de sécurité rapporté par The Record.\n\nFairlife’s U.S. operation includes plants in Michigan, New York and Arizona, and the company's retail sales passed $1 billion in 2022.\n\nA ransomware attack has forced Coca-Cola Company’s Fairlife dairy unit to temporarily halt production in the U.S.\n\nThe corporation announced in a filing that Fairlife detected the intrusion on Thursday, and that the full scope of the incident isn’t known yet.\n\n“Product quality and safety have not been impacted,” Coca-Cola…",
+          "detail": "Incident de sécurité rapporté par The Record.\n\nFairlife’s U.S. operation includes plants in Michigan, New York and Arizona, and the company's retail sales passed $1 billion in 2022.\n\nA ransomware attack has forced Coca-Cola Company’s Fairlife dairy unit to temporarily halt production in the U.S.\n\nThe corporation announced in a filing that Fairlife detected the intrusion on Thursday, and that the full scope of the incident isn’t known yet.\n\n“Product quality and safety have not been impacted,” Coca-Cola said, and Fairlife’s operations in Canada were not affected.\n\nAn internal investigation is ongoing, and law enforcement has been notified, the filing said. Coca-Cola did not specify the ransomware group behind the incident nor announce any breach of corporate or consumer information.\n\nFood and beverage companies worldwide have been prominent targets of cybercrime.\n\nJapanese brewer Sapporo reported unauthorized access on the networks of two subsidiaries in late June, and an attack on the country's largest refrigerated logistics company caused disruptions at Kentucky Fried Chicken restaurants this week. Russian dairy companies have also suffered recent intrusions.",
+          "action": "Surveiller les indicateurs de compromission associés et contrôler les actifs exposés.",
+          "image": "https://cms.therecord.media/uploads/milk_419eefab02.jpg",
+          "sources": [
+            {
+              "url": "https://therecord.media/dairy-company-fairlife-suspends-production-us-cyber-incident",
+              "label": "The Record"
+            }
+          ],
+          "url": "https://therecord.media/dairy-company-fairlife-suspends-production-us-cyber-incident",
+          "pubDate": "2026-07-17T13:40:00.000Z"
+        },
+        {
+          "title": "Seven Malicious Vite npm Packages Use Blockchain C2 to Deliver a RAT",
+          "cve": null,
+          "severity": "news",
+          "score": 72,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Incident de sécurité rapporté par The Hacker News.\n\nCybersecurity researchers have discovered a cluster of seven malicious npm packages targeting the Vite frontend tooling ecosystem as part of a software supply chain attack. The malicious package campaign, codenamed ViteVenom by Checkmarx, marks an expansion of ChainVeil, which was observed using an \"unprecedented\" four-tier blockchain-based command-and-control (C2) infrastructure spanning Tron,",
+          "detail": "Incident de sécurité rapporté par The Hacker News.\n\nCybersecurity researchers have discovered a cluster of seven malicious npm packages targeting the Vite frontend tooling ecosystem as part of a software supply chain attack. The malicious package campaign, codenamed ViteVenom by Checkmarx, marks an expansion of ChainVeil, which was observed using an \"unprecedented\" four-tier blockchain-based command-and-control (C2) infrastructure spanning Tron,",
+          "action": "Surveiller les indicateurs de compromission associés et contrôler les actifs exposés.",
+          "image": "https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEgA07xA1INXGKM7Z2LQ6zk2IFE_Hb_aDQNHmSfPtJkZY5Gzo2U2_cyflorBsU76hbXK8SwKXR5AmkK5dAAd9uw0wRh6gYaC-5ZPjT6kEdvE7rO-5G0TxXm8a-eytoygZOMuSG-aOnYkC_zTVbnxSq7zxaIFYyLcegbQ59WVztRO-y3MHmce7XuDz2SdVsKA/s1600/vite-npm.jpg",
+          "sources": [
+            {
+              "url": "https://thehackernews.com/2026/07/seven-malicious-vite-npm-packages-use.html",
+              "label": "The Hacker News"
+            }
+          ],
+          "url": "https://thehackernews.com/2026/07/seven-malicious-vite-npm-packages-use.html",
+          "pubDate": "2026-07-17T18:54:51.000Z"
+        },
+        {
+          "title": "FAST.COM.PH — rançongiciel incransom (PH)",
+          "cve": null,
+          "severity": "news",
+          "score": 70,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Incident de sécurité rapporté par ransomware.live.\n\nVictime revendiquée par le groupe de rançongiciel incransom. Pays : PH. Secteur : Technology. FAST Logistics Group is a leading provider of end-to-end logistics and supply chain solutions in the Philippines, offering a comprehensive network of transport, warehousing, distribution, and logistics services.",
+          "detail": "Incident de sécurité rapporté par ransomware.live.\n\nVictime revendiquée par le groupe de rançongiciel incransom.\n\nPays : PH.\n\nSecteur : Technology.\n\nFAST Logistics Group is a leading provider of end-to-end logistics and supply chain solutions in the Philippines, offering a comprehensive network of transport, warehousing, distribution, and logistics services. With over 50 years of experience, the company serves a diverse range of industries including FMCG, pharmaceuticals, and technology, enabling businesses of all sizes to expand their reach across the archipelago. Their innovative and sustainable solutions are designed to support business growth and ensure dependable operations at every stage of the supply chain. FAST Logistics Group is committed to helping clients navigate logistics challenges and achieve operational efficiency through tailored services and a strong nationwide presence.",
+          "action": "Surveiller les indicateurs de compromission associés et contrôler les actifs exposés.",
+          "image": "https://images.ransomware.live/victims/47b3790f29040da11c9c9e7bebbbbae2.png",
+          "sources": [
+            {
+              "url": "https://www.ransomware.live/id/RkFTVC5DT00uUEhAaW5jcmFuc29t",
+              "label": "ransomware.live"
+            }
+          ],
+          "url": "https://www.ransomware.live/id/RkFTVC5DT00uUEhAaW5jcmFuc29t",
+          "pubDate": "2026-07-18T01:23:26.893Z"
+        },
+        {
+          "title": "reatile.co.za — rançongiciel incransom (ZA)",
+          "cve": null,
+          "severity": "news",
+          "score": 69,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Incident de sécurité rapporté par ransomware.live.\n\nVictime revendiquée par le groupe de rançongiciel incransom. Pays : ZA. Reatile Group is an innovative, black-owned investment holding company established in 2003, focusing on the energy, petrochemical, and industrial sectors in South Africa. The company aims to leverage growth opportunities within these industrial sectors of the South African economy.",
+          "detail": "Incident de sécurité rapporté par ransomware.live.\n\nVictime revendiquée par le groupe de rançongiciel incransom.\n\nPays : ZA.\n\nReatile Group is an innovative, black-owned investment holding company established in 2003, focusing on the energy, petrochemical, and industrial sectors in South Africa. The company aims to leverage growth opportunities within these industrial sectors of the South African economy. Reatile Group is committed to improving the quality of life for disadvantaged communities through its foundation. Their strategic vision emphasizes growth and development in key sectors.",
+          "action": "Surveiller les indicateurs de compromission associés et contrôler les actifs exposés.",
+          "image": "https://images.ransomware.live/victims/d0ea20281b49f39e4c4b09def57a16b4.png",
+          "sources": [
+            {
+              "url": "https://www.ransomware.live/id/cmVhdGlsZS5jby56YUBpbmNyYW5zb20=",
+              "label": "ransomware.live"
+            }
+          ],
+          "url": "https://www.ransomware.live/id/cmVhdGlsZS5jby56YUBpbmNyYW5zb20=",
+          "pubDate": "2026-07-18T01:30:08.869Z"
+        },
+        {
+          "title": "arambol.co.uk — rançongiciel m3rx (Royaume-Uni)",
+          "cve": null,
+          "severity": "news",
+          "score": 69,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Incident de sécurité rapporté par ransomware.live.\n\nVictime revendiquée par le groupe de rançongiciel m3rx. Pays : Royaume-Uni. +44 2079276370 , Arambol LLP is a dynamic partnership of chartered surveyors and property consultants, recognized for their commitment to quality and professionalism in property services. They cater to a diverse clientele, including large property organizations, retailers, local authorities, and small residential developers.",
+          "detail": "Incident de sécurité rapporté par ransomware.live.\n\nVictime revendiquée par le groupe de rançongiciel m3rx.\n\nPays : Royaume-Uni.\n\n+44 2079276370 , Arambol LLP is a dynamic partnership of chartered surveyors and property consultants, recognized for their commitment to quality and professionalism in property services. They cater to a diverse clientele, including large property organizations, retailers, local authorities, and small residential developers. Their service offerings encompass property consultancy, project management, cost consultancy, building surveying, and construction management. Arambol operates across various sectors such as healthcare, industrial, commercial, public sector, education, and hospitality. Stolen: 922 GB 584,228 Files",
+          "action": "Surveiller les indicateurs de compromission associés et contrôler les actifs exposés.",
+          "image": "https://images.ransomware.live/victims/ea9a4d8ea394550f283a0c5be23be559.png",
+          "sources": [
+            {
+              "url": "https://www.ransomware.live/id/YXJhbWJvbC5jby51a0BtM3J4",
+              "label": "ransomware.live"
+            }
+          ],
+          "url": "https://www.ransomware.live/id/YXJhbWJvbC5jby51a0BtM3J4",
+          "pubDate": "2026-07-17T09:29:02.914Z"
+        },
+        {
+          "title": "Ernst & Young discloses data breach after support system hack",
+          "cve": null,
+          "severity": "high",
+          "score": 68,
+          "corroboration": 2,
+          "region": "intl",
+          "body": "Incident de sécurité rapporté par Security Affairs.\n\nErnst & Young (EY) disclosed a data breach after attackers compromised a third-party IT support system containing client docs and tax info\n\nErnst & Young (EY) Investigates Data Breach Involving Third-Party Support Tickets\n\nA cyberattack hit Nichirei, one of Japan's largest food companies\n\nNew Russian Campaign Uses Fake Webex and Zoom Installers to Deploy Starland RAT\n\nU.S.",
+          "detail": "Incident de sécurité rapporté par Security Affairs.\n\nErnst & Young (EY) disclosed a data breach after attackers compromised a third-party IT support system containing client docs and tax info\n\nErnst & Young (EY) Investigates Data Breach Involving Third-Party Support Tickets\n\nA cyberattack hit Nichirei, one of Japan's largest food companies\n\nNew Russian Campaign Uses Fake Webex and Zoom Installers to Deploy Starland RAT\n\nU.S. CISA adds KNX Association KNX Protocol Connection Authorization Option 1 and Oracle flaws to its Known Exploited Vulnerabilities catalog\n\nTwo Scattered Spider Members Sentenced to Prison Over £29 Million TfL Cyberattack\n\nTuxBot v3: The IoT Botnet Built With AI - Bugs, Disclaimers and All",
+          "action": "Surveiller les indicateurs de compromission associés et contrôler les actifs exposés.",
+          "image": "https://securityaffairs.com/wp-content/uploads/2026/07/image-55.png",
+          "sources": [
+            {
+              "url": "https://securityaffairs.com/195550/data-breach/ernst-young-ey-investigates-data-breach-involving-third-party-support-tickets.html",
+              "label": "Security Affairs"
+            },
+            {
+              "url": "https://www.bleepingcomputer.com/news/security/ernst-and-young-discloses-data-breach-after-support-system-hack/",
+              "label": "BleepingComputer"
+            }
+          ],
+          "url": "https://securityaffairs.com/195550/data-breach/ernst-young-ey-investigates-data-breach-involving-third-party-support-tickets.html",
+          "pubDate": "2026-07-17T21:34:26.000Z"
+        },
+        {
+          "title": "A cyberattack hit Nichirei, one of Japan’s largest food companies",
+          "cve": null,
+          "severity": "news",
+          "score": 67,
+          "corroboration": 2,
+          "region": "intl",
+          "body": "Incident de sécurité rapporté par Security Affairs.\n\nA cyberattack hit one of Japan&#8217;s largest food companies, Nichirei, disrupting logistics and shipments. The company is gradually restoring operations. Nichirei is one of Japan&#8217;s largest food companies, best known for its frozen food business. Founded in 1942 and headquartered in Tokyo, it operates globally through dozens of subsidiaries.",
+          "detail": "Incident de sécurité rapporté par Security Affairs.\n\nA cyberattack hit one of Japan&#8217;s largest food companies, Nichirei, disrupting logistics and shipments. The company is gradually restoring operations. Nichirei is one of Japan&#8217;s largest food companies, best known for its frozen food business. Founded in 1942 and headquartered in Tokyo, it operates globally through dozens of subsidiaries. The food giant confirmed that the system outage reported on July 13 resulted from a cyberattack targeting its servers. The company immediately set up an emergency response team to investigate the incident and coordinate recovery efforts. To reduce the risk of further attacks, Nichirei is withholding technical details about the breach while it continues to restore affected systems and assess the full impact. &#8220;Nichirei Corporation (the &#8220;Company&#8221;) experienced system failures on July 13, 2026, and has since been investigating its cause. The Company hereby announces the facts identified through the investigation to date and the measures it plans to take going forward.&#8221; reads the notice of incident published by the company. &#8220;Facts Identified through the Investigation On the day the incident occurred, the Company established an emergency response headquarters and has been conducting investigations and taking measures toward recovery. As a result of the investigation, the Company confirmed that its servers had b",
+          "action": "Surveiller les indicateurs de compromission associés et contrôler les actifs exposés.",
+          "image": "https://securityaffairs.com/wp-content/uploads/2026/07/image-53.png",
+          "sources": [
+            {
+              "url": "https://securityaffairs.com/195543/security/a-cyberattack-hit-nichirei-one-of-japans-largest-food-companies.html",
+              "label": "Security Affairs"
+            },
+            {
+              "url": "https://www.securityweek.com/cyberattack-disrupts-operations-of-japanese-frozen-food-giant-nichirei/",
+              "label": "SecurityWeek"
+            }
+          ],
+          "url": "https://securityaffairs.com/195543/security/a-cyberattack-hit-nichirei-one-of-japans-largest-food-companies.html",
+          "pubDate": "2026-07-17T17:52:06.000Z"
+        },
+        {
+          "title": "GoldenEyeDog Subgroup Linked to DigiCert Breach and Code-Signing Certificate Theft",
+          "cve": null,
+          "severity": "news",
+          "score": 67,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Incident de sécurité rapporté par The Hacker News.\n\nCybersecurity researchers have attributed the April 2026 DigiCert security incident to a threat activity cluster dubbed CylindricalCanine. Expel, which shared technical details of the event, described the threat actor as a sub-group of GoldenEyeDog (aka APT-Q-27, Dragon Breath, and Miuuti Group), a Chinese cybercrime group known for its targeting of the gambling and gaming sectors using",
+          "detail": "Incident de sécurité rapporté par The Hacker News.\n\nCybersecurity researchers have attributed the April 2026 DigiCert security incident to a threat activity cluster dubbed CylindricalCanine. Expel, which shared technical details of the event, described the threat actor as a sub-group of GoldenEyeDog (aka APT-Q-27, Dragon Breath, and Miuuti Group), a Chinese cybercrime group known for its targeting of the gambling and gaming sectors using",
+          "action": "Surveiller les indicateurs de compromission associés et contrôler les actifs exposés.",
+          "image": "https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEixZDZh8TkRVQHu6QNFvHOayTdDxLn-JWDRkPmvVCNkvEL9vhyphenhyphensADIyUB0uXlhXmBhACxMotz-lU1B61HGsRPee80GkLfk-mypQd6Ba4Hr4K-2QCz7BtyRKFCiUYuiUlmPw71Wdn6YnNTjncnGDPQBJV-P0MyS7CjTmPd-p_aHKBCQJr0JA396lL-Yxd3A9/s1600/digicert-hack.jpg",
+          "sources": [
+            {
+              "url": "https://thehackernews.com/2026/07/goldeneyedog-subgroup-linked-to.html",
+              "label": "The Hacker News"
+            }
+          ],
+          "url": "https://thehackernews.com/2026/07/goldeneyedog-subgroup-linked-to.html",
+          "pubDate": "2026-07-17T16:39:16.000Z"
+        },
+        {
+          "title": "Military Sealift Command — rançongiciel thegentlemen (États-Unis)",
+          "cve": null,
+          "severity": "news",
+          "score": 66,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Incident de sécurité rapporté par ransomware.live.\n\nVictime revendiquée par le groupe de rançongiciel thegentlemen. Pays : États-Unis. Secteur : Transportation/Logistics. ***.com zoominfo.com/c/military-sealift-command/149045906 We attempted to contact the managers regarding the leaked documents (ITAR documentation, personal data, cargo manifests—including ESSM shipments—vessel blueprints, and both disclosed and undisclosed information)/ We managed to reach only Jennifer Miller , Todd Phillips and Dain Cost…",
+          "detail": "Incident de sécurité rapporté par ransomware.live.\n\nVictime revendiquée par le groupe de rançongiciel thegentlemen.\n\nPays : États-Unis.\n\nSecteur : Transportation/Logistics.\n\n***.com zoominfo.com/c/military-sealift-command/149045906 We attempted to contact the managers regarding the leaked documents (ITAR documentation, personal data, cargo manifests—including ESSM shipments—vessel blueprints, and both disclosed and undisclosed information)/ We managed to reach only Jennifer Miller , Todd Phillips and Dain Costlow However, these individuals dismissed the entire matter as a joke, ignoring all warnings about leaks and the importance of internal documents, and refused to provide any contact details for anyone authorized to handle such issues or to pass the information on to management, despite the availability of conclusive evidence. If you do not get in touch in the near future, the data will be published.",
+          "action": "Surveiller les indicateurs de compromission associés et contrôler les actifs exposés.",
+          "image": "https://images.ransomware.live/victims/5b42deadb0fa719144171fb737e29dd0.png",
+          "sources": [
+            {
+              "url": "https://www.ransomware.live/id/ViZQIE51cnNlcmllc0BpbmNyYW5zb20=",
+              "label": "ransomware.live"
+            }
+          ],
+          "url": "https://www.ransomware.live/id/ViZQIE51cnNlcmllc0BpbmNyYW5zb20=",
+          "pubDate": "2026-07-18T01:32:16.865Z"
+        },
+        {
+          "title": "Croqvacances : 72 916 personnes exposées ?",
+          "cve": null,
+          "severity": "news",
+          "score": 66,
+          "corroboration": 1,
+          "region": "fr",
+          "body": "Incident de sécurité rapporté par Zataz.\n\nUn pirate aurait exposé plus de 70 000 données personnelles aprés l'exfiltration d'informations volées à Croqvacances.\n\nFont Resizer Aa Actus cyber Darkweb Intelligence Artificielle ZATAZ Community Logiciels Vidéos Moteurs de recherche de fuites Actus cyber Justice Sécurité réseaux sociaux Vie privée OSINT News Darkweb Fuite de données Codes malveillants Espionnage Sécurité Ransomwares Piratage / Hack infiltration Intelligence Artificielle ZATAZ Community…",
+          "detail": "Incident de sécurité rapporté par Zataz.\n\nUn pirate aurait exposé plus de 70 000 données personnelles aprés l'exfiltration d'informations volées à Croqvacances.\n\nFont Resizer Aa Actus cyber Darkweb Intelligence Artificielle ZATAZ Community Logiciels Vidéos Moteurs de recherche de fuites Actus cyber Justice Sécurité réseaux sociaux Vie privée OSINT News Darkweb Fuite de données Codes malveillants Espionnage Sécurité Ransomwares Piratage / Hack infiltration Intelligence Artificielle ZATAZ Community Userlock Community Réseaux sociaux ZATAZ News Letter ZATAZ – Chaque vendredi midi PROTOCOLE D&rsquo;ALERTE ZATAZ Logiciels Vidéos Vidéos Youtube ZATAZ Émission ZATAZ Twitch Moteurs de recherche de fuites Follow US Actus cyber Darkweb Intelligence Artificielle ZATAZ Community Logiciels Vidéos Moteurs de recherche de fuites ZATAZ.COM > Actualités > Actualités > Divers > Croqvacances : 72 916 personnes exposées ? Actualités Divers Internet Clandestin (darknet) Piratage RGPD Croqvacances : 72 916 personnes exposées ? dernière mise à jour : 17/07/2026 15:32 Par Damien Bancal - Chercheur / Journaliste / Conférencier / Enseignant Il y a 15 heures Il y a 14 heures Partager 9 minutes de lecture Partager Nouvelle entreprise dédiée aux vacances impactée par un piratage informatique ? Un hacker malveillant revendique des données attribuées à la société Croqvacances, dont des dossiers médicaux, pièces d’identité et candidatures, nouvelle alerte majeure pour le tourisme ? Le piratage présumé de Croqvacances concernerait 72 916 personnes distinctes. Le pirate affirme avoir récupéré 72 639 comptes utilisateurs, 71 181 contacts et 9 021 candidatures. Il présente également 17 356 documents téléversés, représentant 24 Go, parmi lesquels figureraient des CV, diplômes, pièces d’identité, certificat",
+          "action": "Surveiller les indicateurs de compromission associés et contrôler les actifs exposés.",
+          "image": "https://www.zataz.com/wp-content/uploads/tourisme-data-leak.jpg",
+          "sources": [
+            {
+              "url": "https://www.zataz.com/croqvacances-72-916-personnes-exposees/",
+              "label": "Zataz"
+            }
+          ],
+          "url": "https://www.zataz.com/croqvacances-72-916-personnes-exposees/",
+          "pubDate": "2026-07-17T13:18:06.000Z"
+        },
+        {
+          "title": "Armenia Detains Russian Tourist on U.S. Warrant for REvil Hacker, Lawyers Say Wrong Man",
+          "cve": null,
+          "severity": "news",
+          "score": 65,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Incident de sécurité rapporté par The Hacker News.\n\nArmenia has held a Russian tourist named Aleksandr Ermakov in a detention center since June 28, on a U.S. extradition request for a REvil ransomware suspect named Aleksandr Ermakov. His wife, Maria Yurova, told REN TV that border officers pulled him out of the departure hall at Yerevan's Zvartnots airport, held up a phone with a photo of him off his VKontakte page, and walked him into a side",
+          "detail": "Incident de sécurité rapporté par The Hacker News.\n\nArmenia has held a Russian tourist named Aleksandr Ermakov in a detention center since June 28, on a U.S. extradition request for a REvil ransomware suspect named Aleksandr Ermakov. His wife, Maria Yurova, told REN TV that border officers pulled him out of the departure hall at Yerevan's Zvartnots airport, held up a phone with a photo of him off his VKontakte page, and walked him into a side",
+          "action": "Surveiller les indicateurs de compromission associés et contrôler les actifs exposés.",
+          "image": "https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEjMuThPnDJrVLJe0_WqKVz_AE9vh2H5NFoGoYlcbqF99J6sjNeWxhrrAEZKsctTKWp4TaEQKQcsdejihH7wBzgS0eaiwJ9bp04rAo2H2d2C-aydo2wrPvhAQgRsP351HM-l0P3JBoHQkwwQPqKOSIaYLKQ4Dpb_F54BjqErS5AUa5Q9RAZttEZmK0Yvqwk/s1600/REvil-hacker.jpg",
+          "sources": [
+            {
+              "url": "https://thehackernews.com/2026/07/armenia-detains-russian-tourist-on-us.html",
+              "label": "The Hacker News"
+            }
+          ],
+          "url": "https://thehackernews.com/2026/07/armenia-detains-russian-tourist-on-us.html",
+          "pubDate": "2026-07-17T10:53:31.000Z"
+        },
+        {
+          "title": "Coca-Cola Suspends US Fairlife Production Due to Ransomware Attack",
+          "cve": null,
+          "severity": "high",
+          "score": 65,
+          "corroboration": 2,
+          "region": "intl",
+          "body": "Incident de sécurité rapporté par Help Net Security.\n\nA ransomware attack has stopped milk production at Fairlife, the Coca-Cola dairy brand known for its high-protein milk and protein shakes.\n\nCoca-Cola disclosed the incident on July 16, 2026, in a Form 8-K filed with the U.S. Securities and Exchange Commission (SEC).\n\n“Product quality and safety have not been impacted. However, as a result of the incident, production operations at fairlife in the United States are temporarily suspended.",
+          "detail": "Incident de sécurité rapporté par Help Net Security.\n\nA ransomware attack has stopped milk production at Fairlife, the Coca-Cola dairy brand known for its high-protein milk and protein shakes.\n\nCoca-Cola disclosed the incident on July 16, 2026, in a Form 8-K filed with the U.S. Securities and Exchange Commission (SEC).\n\n“Product quality and safety have not been impacted. However, as a result of the incident, production operations at fairlife in the United States are temporarily suspended. fairlife’s Canada production operations are not currently impacted,” the company said.\n\nCoca-Cola said it activated its incident response and business continuity plans right away, brought in outside advisors and cybersecurity experts, and notified law enforcement.\n\n“The full scope, nature and impacts of the incident are not yet known,” the company added . “Accordingly, the Company has not yet determined whether the incident is reasonably likely to materially affect the Company.”\n\nNo ransomware group had claimed responsibility at the time of this writing, and Coca-Cola has not disclosed whether attackers stole data or made an extortion demand.",
+          "action": "Surveiller les indicateurs de compromission associés et contrôler les actifs exposés.",
+          "image": "https://img.helpnetsecurity.com/wp-content/uploads/2024/11/27173842/biohazard-1500-white.webp",
+          "sources": [
+            {
+              "url": "https://www.helpnetsecurity.com/2026/07/17/coca-cola-fairlife-ransomware-attack/",
+              "label": "Help Net Security"
+            },
+            {
+              "url": "https://www.securityweek.com/coca-cola-suspends-us-fairlife-production-due-to-ransomware-attack/",
+              "label": "SecurityWeek"
+            }
+          ],
+          "url": "https://www.helpnetsecurity.com/2026/07/17/coca-cola-fairlife-ransomware-attack/",
+          "pubDate": "2026-07-17T08:04:22.000Z"
+        },
+        {
+          "title": "New NadMesh Botnet Hunts Exposed AI Services for Cloud Keys and Kubernetes Tokens",
+          "cve": null,
+          "severity": "news",
+          "score": 64,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Incident de sécurité rapporté par The Hacker News.\n\nA Go botnet called NadMesh turned up in early July hunting exposed AI services, and the operator's own dashboard claims 3,811 unique AWS keys. A Shodan harvester keeps the scan queue stocked with ComfyUI, Ollama, n8n, Open WebUI, Langflow, and Gradio: the image generators, local model runners, and workflow builders that teams stand up fast and firewall late. The intel feed behind that counter",
+          "detail": "Incident de sécurité rapporté par The Hacker News.\n\nA Go botnet called NadMesh turned up in early July hunting exposed AI services, and the operator's own dashboard claims 3,811 unique AWS keys. A Shodan harvester keeps the scan queue stocked with ComfyUI, Ollama, n8n, Open WebUI, Langflow, and Gradio: the image generators, local model runners, and workflow builders that teams stand up fast and firewall late. The intel feed behind that counter",
+          "action": "Surveiller les indicateurs de compromission associés et contrôler les actifs exposés.",
+          "image": "https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEhm0yasBDyeN2fn4q4y7Zs2Y6FvTDTIrI3xi4iN2ZBBUIBoCxLshnVvYc8OPDOrpSuHiyUNO0MLi-50Kf05SxJSo3m1n-PDfKnM3ztP48lWYBz_2IDzR2gNQ0D3-AzQcR6ZJC9qvBgM5wX3RCIaw6mAA7zDh3xAWFFoHScqZuqKSifh-FUr8Qum5dYGQPw/s1600/botnet-malware.jpg",
+          "sources": [
+            {
+              "url": "https://thehackernews.com/2026/07/new-nadmesh-botnet-hunts-exposed-ai.html",
+              "label": "The Hacker News"
+            }
+          ],
+          "url": "https://thehackernews.com/2026/07/new-nadmesh-botnet-hunts-exposed-ai.html",
+          "pubDate": "2026-07-17T17:12:23.000Z"
+        },
+        {
+          "title": "NEBBIA visée par une fuite de données clients",
+          "cve": null,
+          "severity": "news",
+          "score": 64,
+          "corroboration": 1,
+          "region": "fr",
+          "body": "Incident de sécurité rapporté par Zataz.\n\nUn pro du fitness et de la musculation touché par une fuite pirate de 318 002 documents clients.\n\nFont Resizer Aa Actus cyber Darkweb Intelligence Artificielle ZATAZ Community Logiciels Vidéos Moteurs de recherche de fuites Actus cyber Justice Sécurité réseaux sociaux Vie privée OSINT News Darkweb Fuite de données Codes malveillants Espionnage Sécurité Ransomwares Piratage / Hack infiltration Intelligence Artificielle ZATAZ Community Userlock Community Rés…",
+          "detail": "Incident de sécurité rapporté par Zataz.\n\nUn pro du fitness et de la musculation touché par une fuite pirate de 318 002 documents clients.\n\nFont Resizer Aa Actus cyber Darkweb Intelligence Artificielle ZATAZ Community Logiciels Vidéos Moteurs de recherche de fuites Actus cyber Justice Sécurité réseaux sociaux Vie privée OSINT News Darkweb Fuite de données Codes malveillants Espionnage Sécurité Ransomwares Piratage / Hack infiltration Intelligence Artificielle ZATAZ Community Userlock Community Réseaux sociaux ZATAZ News Letter ZATAZ – Chaque vendredi midi PROTOCOLE D&rsquo;ALERTE ZATAZ Logiciels Vidéos Vidéos Youtube ZATAZ Émission ZATAZ Twitch Moteurs de recherche de fuites Follow US Actus cyber Darkweb Intelligence Artificielle ZATAZ Community Logiciels Vidéos Moteurs de recherche de fuites ZATAZ.COM > Actualités > Actualités > Divers > NEBBIA visée par une fuite de données clients Actualités Divers Internet Clandestin (darknet) Piratage NEBBIA visée par une fuite de données clients dernière mise à jour : 17/07/2026 17:52 Par Damien Bancal - Chercheur / Journaliste / Conférencier / Enseignant Il y a 12 heures Il y a 12 heures Partager 7 minutes de lecture Partager Un pirate affirme détenir plus de 318 000 documents liés à NEBBIA, spécialiste des vêtements de sport et de fitness, exposant des clients européens à des risques de fraude ciblée. Un message pirate intercepté par le service de veille et d’investigation de zataz revendique une intrusion visant NEBBIA, marque de vêtements de sport, connue chez les amateurs de musculation et de fitness. L’auteur annonce la diffusion immédiate de 32 340 documents, puis la publication prochaine de 285 662 fichiers supplémentaires. Les données décrites couvrent l’identité des clients, leurs coordonnées, leurs commandes, les montan",
+          "action": "Surveiller les indicateurs de compromission associés et contrôler les actifs exposés.",
+          "image": "https://www.zataz.com/wp-content/uploads/NB_leak_muscu.jpg",
+          "sources": [
+            {
+              "url": "https://www.zataz.com/nebbia-visee-par-une-fuite-de-donnees-clients/",
+              "label": "Zataz"
+            }
+          ],
+          "url": "https://www.zataz.com/nebbia-visee-par-une-fuite-de-donnees-clients/",
+          "pubDate": "2026-07-17T15:49:47.000Z"
+        },
+        {
+          "title": "Leading members of Scattered Spider sentenced in UK to 66 months in jail",
+          "cve": null,
+          "severity": "critical",
+          "score": 64,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Incident de sécurité rapporté par CyberScoop.\n\nA pair of young men were sentenced to 66 months in jail for committing a cyberattack on the Transport for London that brought the network’s operations to a standstill in 2024, the United Kingdom’s National Crime Agency said Thursday. Thalha Jubair and Owen Flowers were arrested at their homes in September 2025, barely a year after the attack, and pleaded guilty last month just as their trials were set to begin.",
+          "detail": "Incident de sécurité rapporté par CyberScoop.\n\nA pair of young men were sentenced to 66 months in jail for committing a cyberattack on the Transport for London that brought the network’s operations to a standstill in 2024, the United Kingdom’s National Crime Agency said Thursday. Thalha Jubair and Owen Flowers were arrested at their homes in September 2025, barely a year after the attack, and pleaded guilty last month just as their trials were set to begin. Flowers was previously arrested in connection with the attack in September, but was released after questioning by officers. Jubair and Flowers were leading members and highly involved in Scattered Spider , a nebulous hacker subset of The Com , according to researchers. The 20-year-old Jubair was a prolific cybercriminal and core member of the unbound collective .&nbsp; U.S. authorities last year accused Jubair of direct, prominent involvement in at least 120 cyberattacks, including extortion of 47 U.S.-based organizations and the January 2025 attack on the federal court system.&nbsp; Officials said they traced a combined total of at least $89.5 million in cryptocurrency, at the time of payments, to Bitcoin addresses and servers controlled by Jubair. Two financial services firms paid Jubair $25 million and $36.2 million, respectively, in Bitcoin between June and November 2023, according to an unsealed criminal complaint against Jubair.&nbsp; At the time of Jubair’s arrest",
+          "action": "Surveiller les indicateurs de compromission associés et contrôler les actifs exposés.",
+          "image": "https://cyberscoop.com/wp-content/uploads/sites/3/2025/09/GettyImages-1234689200.jpg",
+          "sources": [
+            {
+              "url": "https://cyberscoop.com/scattered-spider-leaders-sentenced-united-kingdom/",
+              "label": "CyberScoop"
+            }
+          ],
+          "url": "https://cyberscoop.com/scattered-spider-leaders-sentenced-united-kingdom/",
+          "pubDate": "2026-07-17T14:12:59.000Z"
+        },
+        {
+          "title": "Des pirates prorusses ciblent encore la France en ligne",
+          "cve": null,
+          "severity": "news",
+          "score": 59,
+          "corroboration": 1,
+          "region": "fr",
+          "body": "Incident de sécurité rapporté par Zataz.\n\nPirates prorusses : caméras exposées et DDoS contre la France servent une stratégie de propagande numérique.\n\nFont Resizer Aa Actus cyber Darkweb Intelligence Artificielle ZATAZ Community Logiciels Vidéos Moteurs de recherche de fuites Actus cyber Justice Sécurité réseaux sociaux Vie privée OSINT News Darkweb Fuite de données Codes malveillants Espionnage Sécurité Ransomwares Piratage / Hack infiltration Intelligence Artificielle ZATAZ Community Userlock C…",
+          "detail": "Incident de sécurité rapporté par Zataz.\n\nPirates prorusses : caméras exposées et DDoS contre la France servent une stratégie de propagande numérique.\n\nFont Resizer Aa Actus cyber Darkweb Intelligence Artificielle ZATAZ Community Logiciels Vidéos Moteurs de recherche de fuites Actus cyber Justice Sécurité réseaux sociaux Vie privée OSINT News Darkweb Fuite de données Codes malveillants Espionnage Sécurité Ransomwares Piratage / Hack infiltration Intelligence Artificielle ZATAZ Community Userlock Community Réseaux sociaux ZATAZ News Letter ZATAZ – Chaque vendredi midi PROTOCOLE D&rsquo;ALERTE ZATAZ Logiciels Vidéos Vidéos Youtube ZATAZ Émission ZATAZ Twitch Moteurs de recherche de fuites Follow US Actus cyber Darkweb Intelligence Artificielle ZATAZ Community Logiciels Vidéos Moteurs de recherche de fuites ZATAZ.COM > Actualités > Actualités > Divers > Des pirates prorusses ciblent encore la France en ligne Actualités Divers Internet Clandestin (darknet) Piratage warcyber Des pirates prorusses ciblent encore la France en ligne dernière mise à jour : 17/07/2026 16:47 Par Damien Bancal - Chercheur / Journaliste / Conférencier / Enseignant Il y a 13 heures Il y a 13 heures Partager 16 minutes de lecture Partager Des pirates informatiques prorusses revendiquent deux campagnes distinctes contre la France : l’accès à des caméras de surveillance et l’indisponibilité temporaire de services Internet. Les opérations revendiquées associent deux techniques sans rapport direct. La première concerne l’accès à des systèmes de vidéosurveillance installés dans plusieurs sites français, dont un musée automobile et des concessions. La seconde repose sur des attaques par déni de service distribué, ou DDoS, visant des sites institutionnels, énergétiques, financiers et commerciaux. Les pirates",
+          "action": "Surveiller les indicateurs de compromission associés et contrôler les actifs exposés.",
+          "image": "https://www.zataz.com/wp-content/uploads/pirate-manif-russe.jpg",
+          "sources": [
+            {
+              "url": "https://www.zataz.com/des-pirates-prorusses-ciblent-encore-la-france-en-ligne/",
+              "label": "Zataz"
+            }
+          ],
+          "url": "https://www.zataz.com/des-pirates-prorusses-ciblent-encore-la-france-en-ligne/",
+          "pubDate": "2026-07-17T14:43:47.000Z"
+        },
+        {
+          "title": "Europ-Camera informe ses clients d’une fuite de données après une cyberattaque",
+          "cve": null,
+          "severity": "news",
+          "score": 57,
+          "corroboration": 1,
+          "region": "fr",
+          "body": "Incident de sécurité rapporté par Cyberattaque.org.\n\nUne fuite de données attribuée à SFR a été revendiquée le 17 juillet 2026. L’auteur affirme avoir accédé à un outil interne de l’opérateur nommé NOVA et\n\nAttaque Mis à jour le 17 juillet 2026 à 20h16 SFR : 2,1 millions de clients fibre en fuite après l’accès à un outil interne Une fuite de données attribuée à SFR a été revendiquée le 17 juillet 2026 .",
+          "detail": "Incident de sécurité rapporté par Cyberattaque.org.\n\nUne fuite de données attribuée à SFR a été revendiquée le 17 juillet 2026. L’auteur affirme avoir accédé à un outil interne de l’opérateur nommé NOVA et\n\nAttaque Mis à jour le 17 juillet 2026 à 20h16 SFR : 2,1 millions de clients fibre en fuite après l’accès à un outil interne Une fuite de données attribuée à SFR a été revendiquée le 17 juillet 2026 . L’auteur affirme avoir accédé à un outil interne de l’opérateur nommé NOVA et extrait une base partielle contenant 2 104 093 lignes .\n\nLes données concerneraient principalement des clients disposant d’un abonnement Internet fixe, avec pour certains les informations du compte mobile associé. L’extraction aurait débuté le 30 juin 2026 avant d’être détectée et interrompue par les systèmes de surveillance de SFR.\n\nÀ ce stade, il s’agit d’une revendication non confirmée officiellement . Le volume annoncé et l’authenticité complète des données doivent encore être vérifiés.\n\nL’auteur affirme avoir obtenu un accès à plusieurs outils internes de SFR, dont une interface appelée NOVA. Il aurait ensuite automatisé la consultation des dossiers clients afin de récupérer les informations associées aux abonnements fibre.\n\nL’opération aurait été repérée avant la fin de l’extraction. La base de 2,1 millions de lignes serait donc partielle, tandis que l’auteur affirme que l’environnement accessible contenait des données sur un nombre beaucoup plus important de clients.\n\nL’échantillon publié montre des fiches particulièrement détaillées, reliant l’identité d’un abonné à son adresse, son offre Internet et aux équipements techniques de sa ligne.",
+          "action": "Surveiller les indicateurs de compromission associés et contrôler les actifs exposés.",
+          "image": "https://www.cyberattaque.org/wp-content/uploads/2026/05/cyberattaque_hacker1.jpg",
+          "sources": [
+            {
+              "url": "https://www.cyberattaque.org/sfr-21-millions-de-clients-fibre-en-fuite-apres-lacces-a-un-outil-interne/",
+              "label": "Cyberattaque.org"
+            }
+          ],
+          "url": "https://www.cyberattaque.org/sfr-21-millions-de-clients-fibre-en-fuite-apres-lacces-a-un-outil-interne/",
+          "pubDate": "2026-07-17T18:16:47.000Z"
+        }
+      ]
+    },
+    {
+      "id": "culture",
+      "items": [
+        {
+          "title": "Zelensky appoints Ukraine's acting security service chief as acting defense minister",
+          "cve": null,
+          "severity": "culture",
+          "score": 75,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Signal de veille — The Record.\n\nYevhenii Khmara, a major general with deep experience in intelligence, counterterrorism and long-range strikes against Russia, is Ukraine's new acting defense minister.\n\nUkrainian President Volodymyr Zelensky on Thursday named intelligence and counterterrorism official Yevhenii Khmara as acting defense minister after a controversial government reshuffle sparked protests across Ukraine.\n\nZelensky said in a social media post that he would formally ask parlia…",
+          "detail": "Signal de veille — The Record.\n\nYevhenii Khmara, a major general with deep experience in intelligence, counterterrorism and long-range strikes against Russia, is Ukraine's new acting defense minister.\n\nUkrainian President Volodymyr Zelensky on Thursday named intelligence and counterterrorism official Yevhenii Khmara as acting defense minister after a controversial government reshuffle sparked protests across Ukraine.\n\nZelensky said in a social media post that he would formally ask parliament to approve Khmara as defense minister once the required legal procedures had been completed.\n\nThe appointment follows widespread public anger over Zelensky's dismissal of Defense Minister Mykhailo Fedorov earlier this week, a move that prompted demonstrations in Kyiv and other cities that continued on Friday.\n\nParliament on Thursday approved most members of Zelensky's new cabinet, but the defense and foreign minister posts remained vacant because, under Ukrainian law, candidates for those positions must be nominated separately by the president.\n\nKhmara, a major general, has served as acting head of the Security Service of Ukraine (SBU) since January, following the dismissal of his predecessor, Vasyl Malyuk. Before that, he led the SBU's Alpha Special Operations Center, an elite unit responsible for counterterrorism operations and intelligence support, as well as some of Ukraine's long-range strikes against Russian targets.\n\nAt the start of Russia's full-scale invasion in 2022, Khmara took part in operations to drive Russian forces out of the Kyiv region.",
+          "action": null,
+          "image": "https://cms.therecord.media/uploads/Yevhenii_Khmara_Ukraine_3f611ba324.jpg",
+          "sources": [
+            {
+              "url": "https://therecord.media/ukraine-acting-defense-minister-yevhenii-khmara",
+              "label": "The Record"
+            }
+          ],
+          "url": "https://therecord.media/ukraine-acting-defense-minister-yevhenii-khmara",
+          "pubDate": "2026-07-17T12:50:00.000Z"
+        },
+        {
+          "title": "Risk Ledger Raises $32 Million in Series B Funding",
+          "cve": null,
+          "severity": "culture",
+          "score": 73,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Signal de veille — SecurityWeek.\n\nBritish supply chain security firm Risk Ledger has raised $32 Million in Series B funding to develop AI-powered tools and expand to the US.\n\nThe British firm has built a collaborative platform to help organizations address supply chain security risks.\n\nSubscribe to the SecurityWeek Email Briefing for the latest cybersecurity threats, trends, and expert insights.\n\nSubscribe to the SecurityWeek Email Briefing to stay informed on the latest threats, trends, a…",
+          "detail": "Signal de veille — SecurityWeek.\n\nBritish supply chain security firm Risk Ledger has raised $32 Million in Series B funding to develop AI-powered tools and expand to the US.\n\nThe British firm has built a collaborative platform to help organizations address supply chain security risks.\n\nSubscribe to the SecurityWeek Email Briefing for the latest cybersecurity threats, trends, and expert insights.\n\nSubscribe to the SecurityWeek Email Briefing to stay informed on the latest threats, trends, and technology, along with insightful columns from industry experts.\n\nJoin this live webinar as we break down why email-layer defenses alone can't keep pace with the modern phishing ecosystem, how agentic AI is changing the capacity equation for security teams, and more.\n\nThis year's summit will help organizations learn how to utilize tools, controls, and design models needed to properly secure cloud environments. Interact with leading solution providers and other end users facing similar challenges in securing a variety of cloud deployments.\n\nJazz has named Sean Robinson, Rickie Goyal, Danielle Guetta, Shani Nago, and Lior Magram as VPs and Michael Calev as COO.",
+          "action": null,
+          "image": "https://www.securityweek.com/wp-content/uploads/2025/11/funding-investment-market-3.jpeg",
+          "sources": [
+            {
+              "url": "https://www.securityweek.com/risk-ledger-raises-32-million-in-series-b-funding/",
+              "label": "SecurityWeek"
+            }
+          ],
+          "url": "https://www.securityweek.com/risk-ledger-raises-32-million-in-series-b-funding/",
+          "pubDate": "2026-07-17T08:31:00.000Z"
+        },
+        {
+          "title": "16 millions de CV exposés en ligne",
+          "cve": null,
+          "severity": "culture",
+          "score": 68,
+          "corroboration": 1,
+          "region": "fr",
+          "body": "Signal de veille — Zataz.\n\nUne annonce pirate revendique 16 millions de CV, avec coordonnées, adresses et historiques professionnels.\n\nFont Resizer Aa Actus cyber Darkweb Intelligence Artificielle ZATAZ Community Logiciels Vidéos Moteurs de recherche de fuites Actus cyber Justice Sécurité réseaux sociaux Vie privée OSINT News Darkweb Fuite de données Codes malveillants Espionnage Sécurité Ransomwares Piratage / Hack infiltration Intelligence Artificielle ZATAZ Community Userlock Com…",
+          "detail": "Signal de veille — Zataz.\n\nUne annonce pirate revendique 16 millions de CV, avec coordonnées, adresses et historiques professionnels.\n\nFont Resizer Aa Actus cyber Darkweb Intelligence Artificielle ZATAZ Community Logiciels Vidéos Moteurs de recherche de fuites Actus cyber Justice Sécurité réseaux sociaux Vie privée OSINT News Darkweb Fuite de données Codes malveillants Espionnage Sécurité Ransomwares Piratage / Hack infiltration Intelligence Artificielle ZATAZ Community Userlock Community Réseaux sociaux ZATAZ News Letter ZATAZ – Chaque vendredi midi PROTOCOLE D&rsquo;ALERTE ZATAZ Logiciels Vidéos Vidéos Youtube ZATAZ Émission ZATAZ Twitch Moteurs de recherche de fuites Follow US Actus cyber Darkweb Intelligence Artificielle ZATAZ Community Logiciels Vidéos Moteurs de recherche de fuites ZATAZ.COM > Actualités > Actualités > Divers > 16 millions de CV exposés en ligne Actualités Divers Internet Clandestin (darknet) Piratage RGPD 16 millions de CV exposés en ligne dernière mise à jour : 17/07/2026 12:28 Par Damien Bancal - Chercheur / Journaliste / Conférencier / Enseignant Il y a 18 heures Il y a 18 heures Partager 7 minutes de lecture Partager Une annonce publiée sur un forum clandestin revendique la détention d’un téraoctet de CV, avec coordonnées, adresses et historiques professionnels détaillés. Un membre récemment inscrit sur un forum pirate analysé par le Service de Veille et d’Investigation de ZATAZ affirme proposer une base contenant les données de 16 millions de demandeurs d’emploi. L’ensemble représenterait 1 To, couvrirait plus de vingt ans et intégrerait 11 millions de CV dans leur format d’origine. Les fichiers annoncés comprendraient des identités, des adresses électroniques, des numéros de téléphone, des domiciles complets ainsi que plusieurs métadonnées",
+          "action": null,
+          "image": "https://www.zataz.com/wp-content/uploads/cv_leak_16.jpg",
+          "sources": [
+            {
+              "url": "https://www.zataz.com/16-millions-de-cv-exposes-en-ligne/",
+              "label": "Zataz"
+            }
+          ],
+          "url": "https://www.zataz.com/16-millions-de-cv-exposes-en-ligne/",
+          "pubDate": "2026-07-17T10:27:57.000Z"
+        },
+        {
+          "title": "US charges two over laundering $43 million from investment fraud",
+          "cve": null,
+          "severity": "culture",
+          "score": 68,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Signal de veille — BleepingComputer.\n\nU.S. prosecutors on Thursday charged a New York man and woman for their roles in a large-scale crime ring that laundered money stolen in cyber investment fraud scams.\n\nMicrosoft July 2026 Patch Tuesday fixes massive 570 flaws, 3 zero-days\n\nProgress confirms ShareFile zero-day flaw behind Storage Zone shutdown\n\nHollowByte DDoS flaw bloats OpenSSL server memory with 11-byte payload\n\nErnst & Young discloses data breach after support system hack\n\nInside the Se…",
+          "detail": "Signal de veille — BleepingComputer.\n\nU.S. prosecutors on Thursday charged a New York man and woman for their roles in a large-scale crime ring that laundered money stolen in cyber investment fraud scams.\n\nMicrosoft July 2026 Patch Tuesday fixes massive 570 flaws, 3 zero-days\n\nProgress confirms ShareFile zero-day flaw behind Storage Zone shutdown\n\nHollowByte DDoS flaw bloats OpenSSL server memory with 11-byte payload\n\nErnst & Young discloses data breach after support system hack\n\nInside the Search for \"Clean\" Residential Proxies for Carding\n\nHow to enable Kernel-mode Hardware-enforced Stack Protection in Windows 11",
+          "action": null,
+          "image": "https://www.bleepstatic.com/content/hl-images/2026/07/17/money-laundering_hackers.jpg",
+          "sources": [
+            {
+              "url": "https://www.bleepingcomputer.com/news/security/us-charges-two-over-laundering-43-million-from-investment-fraud/",
+              "label": "BleepingComputer"
+            }
+          ],
+          "url": "https://www.bleepingcomputer.com/news/security/us-charges-two-over-laundering-43-million-from-investment-fraud/",
+          "pubDate": "2026-07-17T08:13:37.000Z"
+        },
+        {
+          "title": "Beacon Security Raises $13 Million for Security Data Platform",
+          "cve": null,
+          "severity": "culture",
+          "score": 64,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Signal de veille — SecurityWeek.\n\nBeacon Security has raised $13 million in seed funding for an agentic security platform that defenders can build and run on.\n\nThe startup helps organizations detect, hunt, and protect their assets across environments at machine speed.\n\nSubscribe to the SecurityWeek Email Briefing for the latest cybersecurity threats, trends, and expert insights.\n\nSubscribe to the SecurityWeek Email Briefing to stay informed on the latest threats, trends, and technology, al…",
+          "detail": "Signal de veille — SecurityWeek.\n\nBeacon Security has raised $13 million in seed funding for an agentic security platform that defenders can build and run on.\n\nThe startup helps organizations detect, hunt, and protect their assets across environments at machine speed.\n\nSubscribe to the SecurityWeek Email Briefing for the latest cybersecurity threats, trends, and expert insights.\n\nSubscribe to the SecurityWeek Email Briefing to stay informed on the latest threats, trends, and technology, along with insightful columns from industry experts.\n\nJoin this live webinar as we break down why email-layer defenses alone can't keep pace with the modern phishing ecosystem, how agentic AI is changing the capacity equation for security teams, and more.\n\nThis year's summit will help organizations learn how to utilize tools, controls, and design models needed to properly secure cloud environments. Interact with leading solution providers and other end users facing similar challenges in securing a variety of cloud deployments.\n\nJazz has named Sean Robinson, Rickie Goyal, Danielle Guetta, Shani Nago, and Lior Magram as VPs and Michael Calev as COO.",
+          "action": null,
+          "image": "https://www.securityweek.com/wp-content/uploads/2025/12/funding-round.jpeg",
+          "sources": [
+            {
+              "url": "https://www.securityweek.com/beacon-security-raises-13-million-for-security-data-platform/",
+              "label": "SecurityWeek"
+            }
+          ],
+          "url": "https://www.securityweek.com/beacon-security-raises-13-million-for-security-data-platform/",
+          "pubDate": "2026-07-17T11:43:36.000Z"
+        },
+        {
+          "title": "The Race to Field Military Autonomy Is On, Can Trusted Information Infrastructure Keep Pace?",
+          "cve": null,
+          "severity": "high",
+          "score": 64,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Signal de veille — The Hacker News.\n\nMilitary forces are under increasing pressure to field autonomous capabilities faster than ever before. Across the U.S., UK, and NATO, new investment, evolving defense strategies, and accelerated acquisition pathways are transforming how capability is delivered, rewarding programs that can move from concept to operational deployment at commercial speed. Now the focus shifts to the trusted",
+          "detail": "Signal de veille — The Hacker News.\n\nMilitary forces are under increasing pressure to field autonomous capabilities faster than ever before. Across the U.S., UK, and NATO, new investment, evolving defense strategies, and accelerated acquisition pathways are transforming how capability is delivered, rewarding programs that can move from concept to operational deployment at commercial speed. Now the focus shifts to the trusted",
+          "action": null,
+          "image": null,
+          "sources": [
+            {
+              "url": "https://thehackernews.com/2026/07/the-race-to-field-military-autonomy-is.html",
+              "label": "The Hacker News"
+            }
+          ],
+          "url": "https://thehackernews.com/2026/07/the-race-to-field-military-autonomy-is.html",
+          "pubDate": "2026-07-17T11:30:00.000Z"
+        },
+        {
+          "title": "Inside the Search for \"Clean\" Residential Proxies for Carding",
+          "cve": null,
+          "severity": "culture",
+          "score": 63,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Signal de veille — BleepingComputer.\n\nResidential proxies are no longer the silver bullet they once were for carding. Flare explains why cybercriminals increasingly seek \"clean\" residential proxies and combine them with browser fingerprints, device profiles, and other identity signals to evade modern fraud detection.\n\nMicrosoft July 2026 Patch Tuesday fixes massive 570 flaws, 3 zero-days\n\nProgress confirms ShareFile zero-day flaw behind Storage Zone shutdown\n\nHollowByte DDoS flaw bloats OpenSS…",
+          "detail": "Signal de veille — BleepingComputer.\n\nResidential proxies are no longer the silver bullet they once were for carding. Flare explains why cybercriminals increasingly seek \"clean\" residential proxies and combine them with browser fingerprints, device profiles, and other identity signals to evade modern fraud detection.\n\nMicrosoft July 2026 Patch Tuesday fixes massive 570 flaws, 3 zero-days\n\nProgress confirms ShareFile zero-day flaw behind Storage Zone shutdown\n\nHollowByte DDoS flaw bloats OpenSSL server memory with 11-byte payload\n\nErnst & Young discloses data breach after support system hack\n\nInside the Search for \"Clean\" Residential Proxies for Carding\n\nHow to enable Kernel-mode Hardware-enforced Stack Protection in Windows 11",
+          "action": null,
+          "image": "https://www.bleepstatic.com/content/posts/2026/07/16/credit-cards-cyber-header.jpg",
+          "sources": [
+            {
+              "url": "https://www.bleepingcomputer.com/news/security/inside-the-search-for-clean-residential-proxies-for-carding/",
+              "label": "BleepingComputer"
+            }
+          ],
+          "url": "https://www.bleepingcomputer.com/news/security/inside-the-search-for-clean-residential-proxies-for-carding/",
+          "pubDate": "2026-07-17T14:00:10.000Z"
+        },
+        {
+          "title": "Friday Squid Blogging: Squid Washing Up on Cape Cod Beach",
+          "cve": null,
+          "severity": "culture",
+          "score": 59,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Signal de veille — Schneier on Sec..\n\nLots of articles about this. As usual, you can also use this squid post to talk about the security stories in the news that I haven’t covered. Blog moderation policy.\n\nAs usual, you can also use this squid post to talk about the security stories in the news that I haven’t covered.\n\nhttps://www.npr.org/2026/07/17/g-s1-134179/is-smoke-in-your-home-heres-how-to-make-an-air-purifier-using-a-box-fan\n\npersonally, to me a little wildfire smoke isn’t a big deal.",
+          "detail": "Signal de veille — Schneier on Sec..\n\nLots of articles about this. As usual, you can also use this squid post to talk about the security stories in the news that I haven’t covered. Blog moderation policy.\n\nAs usual, you can also use this squid post to talk about the security stories in the news that I haven’t covered.\n\nhttps://www.npr.org/2026/07/17/g-s1-134179/is-smoke-in-your-home-heres-how-to-make-an-air-purifier-using-a-box-fan\n\npersonally, to me a little wildfire smoke isn’t a big deal. we used to cook with charcoal in caves, but i can’t discredit if this was happening to you in the chernobyl exclusion zone and i happen to live in an area with a high amount of house fires.\n\nIrish Times investigation of”European” password management software, Passwords, is licensed for the FSB.\n\nhttps://www.irishtimes.com/video/video/2026/07/17/how-russian-password-technology-made-its-way-into-irish-state-agencies-2/\n\nSoftware name is Passwork, not Password. Apologies for the spellwreck.",
+          "action": null,
+          "image": null,
+          "sources": [
+            {
+              "url": "https://www.schneier.com/blog/archives/2026/07/friday-squid-blogging-squid-washing-up-on-cape-cod-beach.html",
+              "label": "Schneier on Sec."
+            }
+          ],
+          "url": "https://www.schneier.com/blog/archives/2026/07/friday-squid-blogging-squid-washing-up-on-cape-cod-beach.html",
+          "pubDate": "2026-07-17T21:01:37.000Z"
+        },
+        {
+          "title": "Royaume-Uni : couvre-feu numérique pour les adolescents",
+          "cve": null,
+          "severity": "high",
+          "score": 59,
+          "corroboration": 1,
+          "region": "fr",
+          "body": "Signal de veille — Zataz.\n\nLondres prépare un couvre-feu numérique et renforce le contrôle d’âge pour protéger les adolescents en ligne.\n\nFont Resizer Aa Actus cyber Darkweb Intelligence Artificielle ZATAZ Community Logiciels Vidéos Moteurs de recherche de fuites Actus cyber Justice Sécurité réseaux sociaux Vie privée OSINT News Darkweb Fuite de données Codes malveillants Espionnage Sécurité Ransomwares Piratage / Hack infiltration Intelligence Artificielle ZATAZ Community Userlock…",
+          "detail": "Signal de veille — Zataz.\n\nLondres prépare un couvre-feu numérique et renforce le contrôle d’âge pour protéger les adolescents en ligne.\n\nFont Resizer Aa Actus cyber Darkweb Intelligence Artificielle ZATAZ Community Logiciels Vidéos Moteurs de recherche de fuites Actus cyber Justice Sécurité réseaux sociaux Vie privée OSINT News Darkweb Fuite de données Codes malveillants Espionnage Sécurité Ransomwares Piratage / Hack infiltration Intelligence Artificielle ZATAZ Community Userlock Community Réseaux sociaux ZATAZ News Letter ZATAZ – Chaque vendredi midi PROTOCOLE D&rsquo;ALERTE ZATAZ Logiciels Vidéos Vidéos Youtube ZATAZ Émission ZATAZ Twitch Moteurs de recherche de fuites Follow US Actus cyber Darkweb Intelligence Artificielle ZATAZ Community Logiciels Vidéos Moteurs de recherche de fuites ZATAZ.COM > Actualités > Actualités > Divers > Royaume-Uni : couvre-feu numérique pour les adolescents Actualités Divers Royaume-Uni : couvre-feu numérique pour les adolescents dernière mise à jour : 17/07/2026 18:07 Par Damien Bancal - Chercheur / Journaliste / Conférencier / Enseignant Il y a 12 heures Il y a 12 heures Partager 7 minutes de lecture Partager Londres prépare un couvre-feu nocturne sur certains réseaux sociaux, nouvelle étape d’un dispositif mêlant contrôle d’âge, restrictions algorithmiques et protection du sommeil. Aprés le – de 16 ans, voici le contrôle des 16/17 ans. Le Royaume-Uni veut limiter l’exposition nocturne des adolescents aux plateformes sociales. Dès le printemps 2027, les moins de 16 ans ne devraient plus pouvoir accéder aux principaux réseaux concernés. Pour les 16 et 17 ans, un blocage automatique entre minuit et 6 heures serait activé sur certaines applications, tout en restant désactivable. Le gouvernement prévoit aussi de neutraliser par défaut la",
+          "action": null,
+          "image": "https://www.zataz.com/wp-content/uploads/ado_controle.jpg",
+          "sources": [
+            {
+              "url": "https://www.zataz.com/royaume-uni-couvre-feu-numerique-pour-les-adolescents/",
+              "label": "Zataz"
+            }
+          ],
+          "url": "https://www.zataz.com/royaume-uni-couvre-feu-numerique-pour-les-adolescents/",
+          "pubDate": "2026-07-17T16:07:09.000Z"
+        },
+        {
+          "title": "NoName057(16) revendique un piège contre Madame X",
+          "cve": null,
+          "severity": "culture",
+          "score": 59,
+          "corroboration": 1,
+          "region": "fr",
+          "body": "Signal de veille — Zataz.\n\nDes pirates affirment avoir piégé une journaliste dans une opération mêlant infiltration, cybermenace et propagande.\n\nFont Resizer Aa Actus cyber Darkweb Intelligence Artificielle ZATAZ Community Logiciels Vidéos Moteurs de recherche de fuites Actus cyber Justice Sécurité réseaux sociaux Vie privée OSINT News Darkweb Fuite de données Codes malveillants Espionnage Sécurité Ransomwares Piratage / Hack infiltration Intelligence Artificielle ZATAZ Community Us…",
+          "detail": "Signal de veille — Zataz.\n\nDes pirates affirment avoir piégé une journaliste dans une opération mêlant infiltration, cybermenace et propagande.\n\nFont Resizer Aa Actus cyber Darkweb Intelligence Artificielle ZATAZ Community Logiciels Vidéos Moteurs de recherche de fuites Actus cyber Justice Sécurité réseaux sociaux Vie privée OSINT News Darkweb Fuite de données Codes malveillants Espionnage Sécurité Ransomwares Piratage / Hack infiltration Intelligence Artificielle ZATAZ Community Userlock Community Réseaux sociaux ZATAZ News Letter ZATAZ – Chaque vendredi midi PROTOCOLE D&rsquo;ALERTE ZATAZ Logiciels Vidéos Vidéos Youtube ZATAZ Émission ZATAZ Twitch Moteurs de recherche de fuites Follow US Actus cyber Darkweb Intelligence Artificielle ZATAZ Community Logiciels Vidéos Moteurs de recherche de fuites ZATAZ.COM > Actualités > Actualités > Divers > NoName057(16) revendique un piège contre Madame X Actualités Divers Internet Clandestin (darknet) Piratage warcyber NoName057(16) revendique un piège contre Madame X dernière mise à jour : 17/07/2026 17:34 Par Damien Bancal - Chercheur / Journaliste / Conférencier / Enseignant Il y a 13 heures Il y a 12 heures Partager 7 minutes de lecture Partager Le groupe russe affirme avoir manipulé Madame X, journaliste allemande, dans une opération d’influence mêlant infiltration, faux recrutement, logiciel malveillant et intimidation numérique. NoName057(16) assure avoir attiré Madame X (nous avons caché son identité) dans un scénario conçu pour tester les méthodes du renseignement allemand. Selon son récit, Madame X serait journaliste. Elle aurait accepté plusieurs missions, dont une infiltration politique et la remise supposée de clés USB infectées. Le groupe présente cette séquence comme une revanche symbolique, un an après l’opération E",
+          "action": null,
+          "image": "https://www.zataz.com/wp-content/uploads/NNM_manipulation.jpg",
+          "sources": [
+            {
+              "url": "https://www.zataz.com/noname05716-revendique-un-piege-contre-madame-x/",
+              "label": "Zataz"
+            }
+          ],
+          "url": "https://www.zataz.com/noname05716-revendique-un-piege-contre-madame-x/",
+          "pubDate": "2026-07-17T15:16:58.000Z"
+        },
+        {
+          "title": "Podcast: Broken Governance, Agentic AI, and the MindStone Agent Exclusive",
+          "cve": null,
+          "severity": "culture",
+          "score": 59,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Signal de veille — SecurityWeek.\n\nBrian Schleifer interviews Clint Bodungen, Director of AI/ML Engineering at Arcovo and one of the industry’s leading voices in OT and industrial cybersecurity\n\n(Video) Artificial intelligence is transforming cybersecurity, but are governance, compliance, and security practices evolving fast enough to keep up?\n\nIn this exclusive SecurityWeek interview, Brian “SchleiF” Schleifer sits down with Clint Bodungen, Director of AI/ML Engineering at Arcovo, founder…",
+          "detail": "Signal de veille — SecurityWeek.\n\nBrian Schleifer interviews Clint Bodungen, Director of AI/ML Engineering at Arcovo and one of the industry’s leading voices in OT and industrial cybersecurity\n\n(Video) Artificial intelligence is transforming cybersecurity, but are governance, compliance, and security practices evolving fast enough to keep up?\n\nIn this exclusive SecurityWeek interview, Brian “SchleiF” Schleifer sits down with Clint Bodungen, Director of AI/ML Engineering at Arcovo, founder of ThreatGen, and one of the industry’s leading voices in industrial cybersecurity.\n\nTogether they tackle why traditional governance often fails practitioners, how cybersecurity has evolved over the past two decades, and why the biggest vulnerability is still people not technology. Clint also shares, for the first time publicly, the story behind the MindStone Agent, his open-source agentic AI project designed to bring persistent memory, identity, and continuity to AI assistants. The conversation concludes with a real-world ransomware response where autonomous AI agents coordinated incident response, forensic analysis, recovery, and infrastructure migration with minimal human intervention. ( SecurityWeek TV )\n\nSubscribe to the SecurityWeek Email Briefing for the latest cybersecurity threats, trends, and expert insights.\n\nSubscribe to the SecurityWeek Email Briefing to stay informed on the latest threats, trends, and technology, along with insightful columns from industry experts.\n\nJoin this live webinar as we break down why email-layer defenses alone can't keep pace with the modern phishing ecosystem, how agentic AI is changing the capacity equation for security teams, and more.",
+          "action": null,
+          "image": "https://www.securityweek.com/wp-content/uploads/2023/01/Cybersecurity_News-SecurityWeek.jpg",
+          "sources": [
+            {
+              "url": "https://www.securityweek.com/podcast-broken-governance-agentic-ai-and-the-mindstone-agent-exclusive/",
+              "label": "SecurityWeek"
+            }
+          ],
+          "url": "https://www.securityweek.com/podcast-broken-governance-agentic-ai-and-the-mindstone-agent-exclusive/",
+          "pubDate": "2026-07-17T12:11:22.000Z"
+        },
+        {
+          "title": "E.U. Orders Google to Open Android Mic, Camera and Screen to Rival AI Assistants",
+          "cve": null,
+          "severity": "high",
+          "score": 59,
+          "corroboration": 2,
+          "region": "intl",
+          "body": "Signal de veille — The Register.\n\nThe European Commission on Thursday ordered Google to give rival AI assistants the same reach into Android that Gemini already has: the camera, the microphone, whatever is on screen, a wake word that fires with the display off, and the ability to drive other apps in the background by imitating taps and typing. Google has to ship it in the next major release, Android 18, and by 1 August 2027 at",
+          "detail": "Signal de veille — The Register.\n\nThe European Commission on Thursday ordered Google to give rival AI assistants the same reach into Android that Gemini already has: the camera, the microphone, whatever is on screen, a wake word that fires with the display off, and the ability to drive other apps in the background by imitating taps and typing. Google has to ship it in the next major release, Android 18, and by 1 August 2027 at",
+          "action": null,
+          "image": null,
+          "sources": [
+            {
+              "url": "https://www.theregister.com/security/2026/07/17/google-fixing-android-lock-screen-bug-that-lets-gemini-send-sms-without-a-pin/5273027",
+              "label": "The Register"
+            },
+            {
+              "url": "https://thehackernews.com/2026/07/eu-orders-google-to-open-android-mic.html",
+              "label": "The Hacker News"
+            }
+          ],
+          "url": "https://www.theregister.com/security/2026/07/17/google-fixing-android-lock-screen-bug-that-lets-gemini-send-sms-without-a-pin/5273027",
+          "pubDate": "2026-07-17T11:44:41.000Z"
+        },
+        {
+          "title": "Industry Reactions to Pentagon Suspending CMMC Phase 2: Feedback Friday",
+          "cve": null,
+          "severity": "culture",
+          "score": 59,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Signal de veille — SecurityWeek.\n\nCybersecurity industry experts comment on the Pentagon suspending phase 2 of the CMMC until a review is completed.\n\nIndustry professionals broadly agree that the suspension pauses third-party CMMC audits but not the underlying legal obligation to protect CUI.\n\nSubscribe to the SecurityWeek Email Briefing for the latest cybersecurity threats, trends, and expert insights.\n\nSubscribe to the SecurityWeek Email Briefing to stay informed on the latest threats, t…",
+          "detail": "Signal de veille — SecurityWeek.\n\nCybersecurity industry experts comment on the Pentagon suspending phase 2 of the CMMC until a review is completed.\n\nIndustry professionals broadly agree that the suspension pauses third-party CMMC audits but not the underlying legal obligation to protect CUI.\n\nSubscribe to the SecurityWeek Email Briefing for the latest cybersecurity threats, trends, and expert insights.\n\nSubscribe to the SecurityWeek Email Briefing to stay informed on the latest threats, trends, and technology, along with insightful columns from industry experts.\n\nJoin this live webinar as we break down why email-layer defenses alone can't keep pace with the modern phishing ecosystem, how agentic AI is changing the capacity equation for security teams, and more.\n\nThis year's summit will help organizations learn how to utilize tools, controls, and design models needed to properly secure cloud environments. Interact with leading solution providers and other end users facing similar challenges in securing a variety of cloud deployments.\n\nJazz has named Sean Robinson, Rickie Goyal, Danielle Guetta, Shani Nago, and Lior Magram as VPs and Michael Calev as COO.",
+          "action": null,
+          "image": "https://www.securityweek.com/wp-content/uploads/2026/06/Feedback-Friday.jpeg",
+          "sources": [
+            {
+              "url": "https://www.securityweek.com/industry-reactions-to-pentagon-suspending-cmmc-phase-2-feedback-friday/",
+              "label": "SecurityWeek"
+            }
+          ],
+          "url": "https://www.securityweek.com/industry-reactions-to-pentagon-suspending-cmmc-phase-2-feedback-friday/",
+          "pubDate": "2026-07-17T11:08:04.000Z"
+        },
+        {
+          "title": "Details of Alan Turing’s Voice Encryption System",
+          "cve": null,
+          "severity": "culture",
+          "score": 59,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Signal de veille — Schneier on Sec..\n\nReally interesting piece of cryptographic history : In November 2023, a large cache of his wartime papers&#8212;nicknamed the &#8220;Bayley papers&#8221;&#8212;was auctioned in London for almost half a million U.S. dollars. The previously unknown cache contains many sheets in Turing&#8217;s own handwriting, telling of his top-secret &#8220;Delilah&#8221; engineering project from 1943 to 1945.",
+          "detail": "Signal de veille — Schneier on Sec..\n\nReally interesting piece of cryptographic history : In November 2023, a large cache of his wartime papers&#8212;nicknamed the &#8220;Bayley papers&#8221;&#8212;was auctioned in London for almost half a million U.S. dollars. The previously unknown cache contains many sheets in Turing&#8217;s own handwriting, telling of his top-secret &#8220;Delilah&#8221; engineering project from 1943 to 1945. Delilah was Turing&#8217;s portable voice-encryption system, named after the biblical deceiver of men. There is also material written by Bayley, often in the form of notes he took while Turing was speaking. It is thanks to Bayley that the papers survived: He kept them until he died in 2020, 66 years after Turing passed away.",
+          "action": null,
+          "image": null,
+          "sources": [
+            {
+              "url": "https://www.schneier.com/blog/archives/2026/07/details-of-alan-turings-voice-encryption-system.html",
+              "label": "Schneier on Sec."
+            }
+          ],
+          "url": "https://www.schneier.com/blog/archives/2026/07/details-of-alan-turings-voice-encryption-system.html",
+          "pubDate": "2026-07-17T11:02:21.000Z"
+        },
+        {
+          "title": "Meta débauche un poids lourd d’AWS pour préparer son entrée dans le cloud",
+          "cve": null,
+          "severity": "culture",
+          "score": 57,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Signal de veille — Silicon.fr.\n\nC&rsquo;est une nouvelle opération de débauchage comme Mark Zuckerberg sait les mener. Selon le Wall Street Journal , David Brown, l&rsquo;un des dirigeants les plus gradés d&rsquo;AWS, s&rsquo;apprête à rejoindre Meta dans les prochaines semaines.",
+          "detail": "Signal de veille — Silicon.fr.\n\nC&rsquo;est une nouvelle opération de débauchage comme Mark Zuckerberg sait les mener. Selon le Wall Street Journal , David Brown, l&rsquo;un des dirigeants les plus gradés d&rsquo;AWS, s&rsquo;apprête à rejoindre Meta dans les prochaines semaines. Cette arrivée est un bon indicateur des ambitions grandissantes de Meta dans la construction de datacenters et de capacités de calcul Fort de près de deux décennies passées chez le leader des CSP, David Brown a pour mission de piloter le gigantesque chantier de construction de datacenters dans lequel Meta s&rsquo;est lancée. Il sera rattaché à Santosh Janardhan, le responsable de l&rsquo;infrastructure du groupe. David Brown pilotait ces derniers temps les services de calcul et de machine learning d&rsquo;AWS. Il appartenait surtout à la fameuse « S-team », le cercle restreint de 28 dirigeants qui conseillent directement le PDG d&rsquo;Amazon Andy Jassy. Promu vice-président senior en avril, il était aussi l&rsquo;un des visages publics d&rsquo;AWS, prenant régulièrement la parole lors des keynotes du grand raout client du groupe à Las Vegas. Son départ, après dix-neuf ans, n&rsquo;est évidemment pas passé inaperçu en interne. Un vétéran d&rsquo;AWS aux commandes de l&rsquo;infrastructure Dans une note adressée aux équipes et relayée par Reuters , Matt Garman, le patron d&rsquo;AWS, a assuré que l&rsquo;activité et les équipes n&rsqu",
+          "action": null,
+          "image": "https://www.silicon.fr/wp-content/uploads/2025/09/projets-open-source-made-Meta-plutot-Facebook-F.jpg",
+          "sources": [
+            {
+              "url": "https://www.silicon.fr/cloud-1370/meta-debauche-un-poids-lourd-daws-pour-preparer-son-entree-dans-le-cloud-228327",
+              "label": "Silicon.fr"
+            }
+          ],
+          "url": "https://www.silicon.fr/cloud-1370/meta-debauche-un-poids-lourd-daws-pour-preparer-son-entree-dans-le-cloud-228327",
+          "pubDate": "2026-07-17T11:37:30.000Z"
+        }
+      ]
+    }
+  ]
+}
