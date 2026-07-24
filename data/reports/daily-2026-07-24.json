@@ -1,0 +1,1017 @@
+{
+  "id": "daily-2026-07-24",
+  "type": "daily",
+  "date": "2026-07-24",
+  "title": "Rapport quotidien - vendredi 24 juillet 2026",
+  "summary": "Sur les dernières 24 heures, la veille recense 22 vulnérabilités critiques, 43 incidents ou compromissions et 26 signaux de fond. Acteurs et produits les plus exposés : Microsoft, Linux et Google.",
+  "generatedAt": "2026-07-24T04:00:49.751Z",
+  "sections": [
+    {
+      "id": "vulns",
+      "items": [
+        {
+          "title": "CVE-2026-59933 — PHPSpreadsheet: XLS/OLE sector-chain self-loop causes memory exhaustion",
+          "cve": "CVE-2026-59933",
+          "severity": "high",
+          "score": 58,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Vulnérabilité élevée CVE-2026-59933 affectant phpoffice/phpspreadsheet (composer) (score CVSS 7.5).\n\nPHPSpreadsheet: XLS/OLE sector-chain self-loop causes memory exhaustion\n\n--> Name Query To see all available qualifiers, see our documentation .\n\nThis is reachable from Reader\\Xls::canRead() and therefore from automatic spreadsheet type detection.",
+          "detail": "Vulnérabilité élevée CVE-2026-59933 affectant phpoffice/phpspreadsheet (composer) (score CVSS 7.5).\n\nPHPSpreadsheet: XLS/OLE sector-chain self-loop causes memory exhaustion\n\n--> Name Query To see all available qualifiers, see our documentation .\n\nThis is reachable from Reader\\Xls::canRead() and therefore from automatic spreadsheet type detection. Applications that accept attacker-controlled spreadsheet uploads can suffer denial of service from a very small file.\n\nOLERead::read() loads the input and builds sector chains from attacker-controlled OLE header and allocation-table values:\n\nThe issue is reachable during normal reader detection/loading:\n\nSimilar unbounded sector-chain walks exist later in stream reading:\n\nThe proof of concept below confirms the small-block depot chain loop; the same remediation pattern should be applied to all sector-chain walks.",
+          "action": "Vérifier l'exposition du parc et appliquer le correctif éditeur dès sa disponibilité.",
+          "image": "https://github.githubassets.com/assets/advisory-database-show-f32c8207dfb2.png",
+          "sources": [
+            {
+              "url": "https://github.com/advisories/GHSA-xh5m-36r6-47m3",
+              "label": "GitHub Advisory"
+            }
+          ],
+          "url": "https://github.com/advisories/GHSA-xh5m-36r6-47m3",
+          "pubDate": "2026-07-23T15:01:50.000Z"
+        },
+        {
+          "title": "CVE-2026-59932 — PHPSpreadsheet: Gnumeric reader unbounded gzip expansion causes memory exhaustion",
+          "cve": "CVE-2026-59932",
+          "severity": "high",
+          "score": 58,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Vulnérabilité élevée CVE-2026-59932 affectant phpoffice/phpspreadsheet (composer) (score CVSS 7.5).\n\nPHPSpreadsheet: Gnumeric reader unbounded gzip expansion causes memory exhaustion\n\n--> Name Query To see all available qualifiers, see our documentation .\n\nThis is reachable through normal file-type detection and Gnumeric loading paths, so applications that accept attacker-controlled spreadsheet uploads can suffer denial of service.\n\nGnumeric::canRead() invokes gzfileGetContents() before deciding whether the file is a valid Gnumeric spreadsheet:\n\nBecause d…",
+          "detail": "Vulnérabilité élevée CVE-2026-59932 affectant phpoffice/phpspreadsheet (composer) (score CVSS 7.5).\n\nPHPSpreadsheet: Gnumeric reader unbounded gzip expansion causes memory exhaustion\n\n--> Name Query To see all available qualifiers, see our documentation .\n\nThis is reachable through normal file-type detection and Gnumeric loading paths, so applications that accept attacker-controlled spreadsheet uploads can suffer denial of service.\n\nGnumeric::canRead() invokes gzfileGetContents() before deciding whether the file is a valid Gnumeric spreadsheet:\n\nBecause decompression occurs before XML scanning or structural validation, a tiny gzip payload can force large memory allocation even if the resulting XML is meaningless or invalid.\n\nA small .gnumeric upload can crash a PHP worker during spreadsheet type detection or import. This can cause denial of service in web applications, queue workers, preview services, document converters, or any service that runs PhpSpreadsheet against untrusted spreadsheet files.\n\nIn the local reproduction below, a 97,811-byte file expands to about 96 MiB and crashes Gnumeric::canRead() under memory_limit=64M at Reader/Gnumeric.php:195 .",
+          "action": "Vérifier l'exposition du parc et appliquer le correctif éditeur dès sa disponibilité.",
+          "image": "https://github.githubassets.com/assets/advisory-database-show-f32c8207dfb2.png",
+          "sources": [
+            {
+              "url": "https://github.com/advisories/GHSA-2mrg-gjxq-2gvr",
+              "label": "GitHub Advisory"
+            }
+          ],
+          "url": "https://github.com/advisories/GHSA-2mrg-gjxq-2gvr",
+          "pubDate": "2026-07-23T15:00:17.000Z"
+        },
+        {
+          "title": "CVE-2026-59931 — PHPSpreadsheet: SSRF bypass via HTTP redirect in WEBSERVICE() domain whitelist",
+          "cve": "CVE-2026-59931",
+          "severity": "high",
+          "score": 58,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Vulnérabilité élevée CVE-2026-59931 affectant phpoffice/phpspreadsheet (composer) (score CVSS 7.7).\n\nPHPSpreadsheet: SSRF bypass via HTTP redirect in WEBSERVICE() domain whitelist\n\n--> Name Query To see all available qualifiers, see our documentation .\n\nIdentify or control a URL on a whitelisted domain that returns an HTTP 302 redirect (e.g., an open redirect endpoint, or a domain the attacker controls).\n\nCraft an XLSX file with a WEBSERVICE formula targeting the redirect URL:\n\nc r = \" A1 \" > f >_xlfn.WEBSERVICE(\"http://whitelisted-domain.com/redirect?url…",
+          "detail": "Vulnérabilité élevée CVE-2026-59931 affectant phpoffice/phpspreadsheet (composer) (score CVSS 7.7).\n\nPHPSpreadsheet: SSRF bypass via HTTP redirect in WEBSERVICE() domain whitelist\n\n--> Name Query To see all available qualifiers, see our documentation .\n\nIdentify or control a URL on a whitelisted domain that returns an HTTP 302 redirect (e.g., an open redirect endpoint, or a domain the attacker controls).\n\nCraft an XLSX file with a WEBSERVICE formula targeting the redirect URL:\n\nc r = \" A1 \" > f >_xlfn.WEBSERVICE(\"http://whitelisted-domain.com/redirect?url=http://169.254.169.254/latest/meta-data/\") f > c > Upload the XLSX to the target application. The calculation engine: Validates whitelisted-domain.com against the whitelist — passes Calls file_get_contents(\"http://whitelisted-domain.com/redirect?url=...\") file_get_contents follows the 302 redirect to http://169.254.169.254/latest/meta-data/ — no re-validation Returns the cloud metadata response as the cell's calculated value Lab reproduction:\n\nAn attacker who can upload XLSX files to an application that uses setDomainWhiteList() and getCalculatedValue() can:\n\nThis is a full-read SSRF — the complete HTTP response body (up to 32,767 bytes) is returned to the attacker as the cell's calculated value.",
+          "action": "Vérifier l'exposition du parc et appliquer le correctif éditeur dès sa disponibilité.",
+          "image": "https://github.githubassets.com/assets/advisory-database-show-f32c8207dfb2.png",
+          "sources": [
+            {
+              "url": "https://github.com/advisories/GHSA-6hq5-7373-42rg",
+              "label": "GitHub Advisory"
+            }
+          ],
+          "url": "https://github.com/advisories/GHSA-6hq5-7373-42rg",
+          "pubDate": "2026-07-23T14:55:48.000Z"
+        },
+        {
+          "title": "Multiples vulnérabilités dans Microsoft Sharepoint (22 juillet 2026)",
+          "cve": "CVE-2026-50522",
+          "severity": "critical",
+          "score": 53,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Vulnérabilité critique CVE-2026-50522 affectant Microsoft.\n\nLe 14 juillet 2026, à l'occasion de sa mise à jour mensuelle, Microsoft a publié, entre autres, des correctifs pour deux vulnérabilités critiques affectant SharePoint. Les vulnérabilités CVE-2026-50522 et CVE-2026-58644 permettent à un attaquant non authentifié d'exécuter du code arbitraire à... Voir en ligne : https://www.cert.ssi.gouv.fr/alerte...",
+          "detail": "Vulnérabilité critique CVE-2026-50522 affectant Microsoft.\n\nLe 14 juillet 2026, à l'occasion de sa mise à jour mensuelle, Microsoft a publié, entre autres, des correctifs pour deux vulnérabilités critiques affectant SharePoint. Les vulnérabilités CVE-2026-50522 et CVE-2026-58644 permettent à un attaquant non authentifié d'exécuter du code arbitraire à... Voir en ligne : https://www.cert.ssi.gouv.fr/alerte...",
+          "action": "Vérifier l'exposition du parc et appliquer le correctif éditeur dès sa disponibilité.",
+          "image": "https://www.globalsecuritymag.fr/local/cache-vignettes/L40xH21/a3c0c28306689c72833bd0e5592942-00c4a.png",
+          "sources": [
+            {
+              "url": "https://www.globalsecuritymag.fr/multiples-vulnerabilites-dans-microsoft-sharepoint-22-juillet-2026.html",
+              "label": "Global Sec Mag"
+            }
+          ],
+          "url": "https://www.globalsecuritymag.fr/multiples-vulnerabilites-dans-microsoft-sharepoint-22-juillet-2026.html",
+          "pubDate": "2026-07-24T04:00:47.529Z"
+        },
+        {
+          "title": "Russian State-Supported Cyber Actors Conduct Phishing Campaign Targeting Users of Zimbra Collaboration Suite",
+          "cve": "CVE-2025-66376",
+          "severity": "critical",
+          "score": 51,
+          "corroboration": 3,
+          "region": "intl",
+          "body": "Vulnérabilité critique CVE-2025-66376 affectant Linux.\n\nRussian State-Supported Cyber Actors Conduct Phishing Campaign Targeting Users of Zimbra Collaboration Suite Executive summary &nbsp; A group of Russian state-supported cyber actors has been targeting and compromising various Western government and commercial organizations using the Zimbra Collaboration Suite (ZCS) software since at least July 2025.",
+          "detail": "Vulnérabilité critique CVE-2025-66376 affectant Linux.\n\nRussian State-Supported Cyber Actors Conduct Phishing Campaign Targeting Users of Zimbra Collaboration Suite Executive summary &nbsp; A group of Russian state-supported cyber actors has been targeting and compromising various Western government and commercial organizations using the Zimbra Collaboration Suite (ZCS) software since at least July 2025. The Russian state-supported advanced persistent threat (APT) group’s activity is tracked in the cybersecurity community under several names (see Cybersecurity industry tracking ), primarily as “LAUNDRY BEAR,” a name initially coined by the Netherlands General Intelligence and Security Service (AIVD) and Defence Intelligence and Security Service (MIVD) [ 1 ]. LAUNDRY BEAR’s targeting is almost certainly to gather sensitive information for the Russian Federation, with these actors primarily focusing on the covert acquisition of email data. Previous campaigns indicated LAUNDRY BEAR relied on unsophisticated initial access techniques—including password spraying, phishing, and pass-the-cookie—allowing the group to successfully run high-volume operations. The latest campaign targeting ZCS uses a novel exploit that was a zero-day vulnerability when first exploited and continues to be successfully exploited. The vulnerability, Common Vulnerabilities and Exposures (CVE) CVE-2025-66376 , was patched in November 2025. This demonstrates LAUNDRY",
+          "action": "Vérifier l'exposition du parc et appliquer le correctif éditeur dès sa disponibilité.",
+          "image": "https://cyberscoop.com/wp-content/uploads/sites/3/2026/07/GettyImages-1175179614.jpg",
+          "sources": [
+            {
+              "url": "https://cyberscoop.com/russian-laundry-bear-zimbra-exploit/",
+              "label": "CyberScoop"
+            },
+            {
+              "url": "https://www.theregister.com/patches/2026/07/23/year-long-russian-attacks-infect-users-as-soon-as-they-look-at-an-email/5277358",
+              "label": "The Register"
+            },
+            {
+              "url": "https://www.cisa.gov/news-events/cybersecurity-advisories/aa26-204a",
+              "label": "CISA Advisories"
+            }
+          ],
+          "url": "https://cyberscoop.com/russian-laundry-bear-zimbra-exploit/",
+          "pubDate": "2026-07-23T17:33:37.000Z"
+        },
+        {
+          "title": "WordPress : une faille critique permet de prendre le contrôle de sites web",
+          "cve": null,
+          "severity": "critical",
+          "score": 49,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Vulnérabilité critique affectant WordPress.\n\nLe 20 juillet, WordPress a publié une mise à jour de sécurité d'urgence pour corriger « wp2shell », une vulnérabilité critique affectant le cœur de son CMS. Cette faille permet à un attaquant de prendre le contrôle d'un site web vulnérable sans avoir besoin de s'authentifier.",
+          "detail": "Vulnérabilité critique affectant WordPress.\n\nLe 20 juillet, WordPress a publié une mise à jour de sécurité d'urgence pour corriger « wp2shell », une vulnérabilité critique affectant le cœur de son CMS. Cette faille permet à un attaquant de prendre le contrôle d'un site web vulnérable sans avoir besoin de s'authentifier. Des codes d'exploitation étant déjà disponibles publiquement et les premières campagnes de recherche de sites vulnérables ayant été observées, il est recommandé aux organisations de déployer les correctifs sans attendre. Commentaire de Bernard Montel, Field CTO EMEA chez le spécialiste de la gestion de l'exposition Tenable, à ce sujet : Bernard Montel Field CTO EMEA, Tenable « Les vulnérabilités touchant WordPress sont particulièrement sensibles, car elles concernent un écosystème très largement déployé, souvent composé de sites web principaux, de sites secondaires, de pages événementielles ou d'anciens environnements encore accessibles en ligne. Dans ce cas, le danger est d'autant plus important qu'un attaquant n'a pas besoin de disposer d'un compte ou d'identifiants pour agir. En exploitant ces failles, il peut envoyer des requêtes spécialement conçues au site vulnérable afin de lui faire exécuter du code à distance. Cela peut ensuite permettre de modifier des contenus, d'ajouter une porte dérobée, de voler des données, d'héberger des campagnes de phishing ou d'utiliser le site compromis comme point d'ap",
+          "action": "Vérifier l'exposition du parc et appliquer le correctif éditeur dès sa disponibilité.",
+          "image": "https://www.globalsecuritymag.fr/local/cache-vignettes/L40xH21/35a39c9a1121d920b1115d047a3f78-9f9cf.png",
+          "sources": [
+            {
+              "url": "https://www.globalsecuritymag.fr/wordpress-une-faille-critique-permet-de-prendre-le-controle-de-sites-web.html",
+              "label": "Global Sec Mag"
+            }
+          ],
+          "url": "https://www.globalsecuritymag.fr/wordpress-une-faille-critique-permet-de-prendre-le-controle-de-sites-web.html",
+          "pubDate": "2026-07-24T04:00:47.530Z"
+        },
+        {
+          "title": "U.S. CISA adds Microsoft SharePoint and Check Point SmartConsole flaws to its Known Exploited Vulnerabilities catalog",
+          "cve": "CVE-2026-16232",
+          "severity": "critical",
+          "score": 49,
+          "corroboration": 5,
+          "region": "intl",
+          "body": "Vulnérabilité critique CVE-2026-16232 affectant Microsoft.\n\nU.S. Cybersecurity and Infrastructure Security Agency (CISA) adds SharePoint and Check Point flaws to its Known Exploited Vulnerabilities catalog. The U.S. Cybersecurity and Infrastructure Security Agency (CISA)&nbsp; added DD-WRT, Langflow, and WordPress flaws to its Known Exploited Vulnerabilities (KEV) catalog .",
+          "detail": "Vulnérabilité critique CVE-2026-16232 affectant Microsoft.\n\nU.S. Cybersecurity and Infrastructure Security Agency (CISA) adds SharePoint and Check Point flaws to its Known Exploited Vulnerabilities catalog. The U.S. Cybersecurity and Infrastructure Security Agency (CISA)&nbsp; added DD-WRT, Langflow, and WordPress flaws to its Known Exploited Vulnerabilities (KEV) catalog . Below are the flaws added to the KeV catalog: CVE-2026-16232 (CVSS score of 9.3) Check Point SmartConsole Improper Authentication Vulnerability CVE-2026-50522 (CVSS score of 9.8) Microsoft SharePoint Deserialization of Untrusted Data Vulnerability The first flaw added to the KeV catalog is a critical authentication bypass flaw, tracked as CVE-2026-16232 , affecting Security Management and Multi-Domain Management (MDSM). The vulnerability, which is under active exploitation, allows unauthenticated remote attackers to obtain a SmartConsole login token and gain full administrative access. “An unauthenticated attacker can obtain an application login token and use it to login via SmartConsole with full admin privileges and apply changes to the security policy and security configuration. Check Point is aware that this vulnerability is being exploited, impacting a very small number of customers.”&nbsp; reads the advisory . “Successful remote exploit requires&nbsp;internet access&nbsp;to the Management Server IP address and&nbsp;no restrictions&nbsp;on&nbsp;Trusted Clients&n",
+          "action": "Vérifier l'exposition du parc et appliquer le correctif éditeur dès sa disponibilité.",
+          "image": "https://securityaffairs.com/wp-content/uploads/2020/07/CISA.jpeg",
+          "sources": [
+            {
+              "url": "https://securityaffairs.com/195889/security/u-s-cisa-adds-microsoft-sharepoint-and-check-point-smartconsole-flaws-to-its-known-exploited-vulnerabilities-catalog.html",
+              "label": "Security Affairs"
+            },
+            {
+              "url": "https://www.helpnetsecurity.com/2026/07/23/check-point-vulnerability-cve-2026-16232/",
+              "label": "Help Net Security"
+            },
+            {
+              "url": "https://www.securityweek.com/new-check-point-zero-day-vulnerability-exploited-in-the-wild/",
+              "label": "SecurityWeek"
+            },
+            {
+              "url": "https://thehackernews.com/2026/07/check-point-patches-exploited.html",
+              "label": "The Hacker News"
+            },
+            {
+              "url": "https://www.globalsecuritymag.fr/multiples-vulnerabilites-dans-les-produits-check-point-23-juillet-2026.html",
+              "label": "Global Sec Mag"
+            }
+          ],
+          "url": "https://securityaffairs.com/195889/security/u-s-cisa-adds-microsoft-sharepoint-and-check-point-smartconsole-flaws-to-its-known-exploited-vulnerabilities-catalog.html",
+          "pubDate": "2026-07-24T04:00:47.527Z"
+        },
+        {
+          "title": "Oracle drops 1,449 security patches like it's the new normal",
+          "cve": "CVE-2026-47056",
+          "severity": "critical",
+          "score": 49,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Vulnérabilité critique CVE-2026-47056 affectant Oracle.\n\nIt's a bad day to be an Oracle admin: Big Red has just released 1,449 security patches ready to be applied. The patches were released as part of the company's quarterly security fixes, and the record number may partly reflect Oracle's internal push to harness AI for vulnerability detection, which it announced in April.",
+          "detail": "Vulnérabilité critique CVE-2026-47056 affectant Oracle.\n\nIt's a bad day to be an Oracle admin: Big Red has just released 1,449 security patches ready to be applied. The patches were released as part of the company's quarterly security fixes, and the record number may partly reflect Oracle's internal push to harness AI for vulnerability detection, which it announced in April. Oracle also manages a huge product portfolio, and the patches span numerous products, so the total shouldn't come as too much of a surprise. Instead, experts speaking to The Register unanimously agreed that any concerns over the number of patches should be reserved for the admins responsible for applying them, rather than for Oracle's code quality. \"While a record 1,449 patches sounds alarming, it mostly reflects the massive scale of modern software ecosystems and the industry's shift toward aggressive, automated security scanning,\" said Dray Agha, senior manager of security operations at Huntress. \"Frankly, the real story isn't the sheer volume of bugs, but rather the immense operational strain this puts on enterprise IT teams who must now race to separate the critical threats from the routine fixes without breaking business operations.\" Others, like Matei Badanoiu, lead security researcher at Pentest-Tools.com, say these bumper batches of security updates are likely to become the norm, owing mainly to AI-assisted bug hunting. Microsoft's monthly Patch Tuesday u",
+          "action": "Vérifier l'exposition du parc et appliquer le correctif éditeur dès sa disponibilité.",
+          "image": "https://image.theregister.com/5254010.jpg?imageId=5254010&x=0&y=0&cropw=100&croph=100&panox=0&panoy=0&panow=100&panoh=100&width=1200&height=683",
+          "sources": [
+            {
+              "url": "https://www.theregister.com/security/2026/07/23/oracle-drops-1449-security-patches-like-its-the-new-normal/5277114",
+              "label": "The Register"
+            }
+          ],
+          "url": "https://www.theregister.com/security/2026/07/23/oracle-drops-1449-security-patches-like-its-the-new-normal/5277114",
+          "pubDate": "2026-07-23T15:31:00.000Z"
+        },
+        {
+          "title": "Johnson Controls XAAP Android",
+          "cve": "CVE-2026-34490",
+          "severity": "critical",
+          "score": 49,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Vulnérabilité critique CVE-2026-34490 affectant Android.\n\nView CSAF Summary Successful exploitation of this vulnerability could result in an attacker obtaining confidential information from the device. The following versions of Johnson Controls XAAP Android are affected: XAAP Android &lt;1.53 CVSS Vendor Equipment Vulnerabilities v3 3.3 Johnson Controls Johnson Controls XAAP Android Cleartext Storage of Sensitive Information Background Critical Infrastructure Sectors: Critical Manufacturing Countries/Areas Deploy…",
+          "detail": "Vulnérabilité critique CVE-2026-34490 affectant Android.\n\nView CSAF Summary Successful exploitation of this vulnerability could result in an attacker obtaining confidential information from the device. The following versions of Johnson Controls XAAP Android are affected: XAAP Android &lt;1.53 CVSS Vendor Equipment Vulnerabilities v3 3.3 Johnson Controls Johnson Controls XAAP Android Cleartext Storage of Sensitive Information Background Critical Infrastructure Sectors: Critical Manufacturing Countries/Areas Deployed: Worldwide Company Headquarters Location: Ireland Vulnerabilities Expand All + CVE-2026-34490 A cleartext storage weakness exists in the Fire Solutions Android application, which stores application data locally on the device without encryption. An attacker with physical access to the device and one able to compromise the device through a separate, unrelated flaw, could potentially read this data in plaintext. Exploitation does not require network access and is limited to the local device environment. View CVE Details Affected Products Johnson Controls XAAP Android Vendor: Johnson Controls Product Version: Johnson Controls XAAP Android: &lt;1.53 Product Status: known_affected Remediations Vendor fix Johnson Controls recommends users update the XAAP Android application to version 1.53 or later, which contains the fix for this vulnerability. Mitigation Johnson Controls recommends users restrict physical access to devices runni",
+          "action": "Vérifier l'exposition du parc et appliquer le correctif éditeur dès sa disponibilité.",
+          "image": null,
+          "sources": [
+            {
+              "url": "https://www.cisa.gov/news-events/ics-advisories/icsa-26-204-02",
+              "label": "CISA Advisories"
+            }
+          ],
+          "url": "https://www.cisa.gov/news-events/ics-advisories/icsa-26-204-02",
+          "pubDate": "2026-07-23T12:00:00.000Z"
+        },
+        {
+          "title": "Google Released Gemini 3.5 Flash Cyber AI, a Specialized AI Model for Vulnerability Hunting",
+          "cve": null,
+          "severity": "critical",
+          "score": 49,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Vulnérabilité critique affectant Google.\n\nGoogle DeepMind unveiled Gemini 3.5 Flash Cyber, an AI model for vulnerability discovery and patching, available only to governments and trusted partners. Google DeepMind announced Gemini 3.5 Flash Cyber on Tuesday, a security-focused AI model built on top of the existing 3.5 Flash architecture and designed specifically to find, validate, and patch software vulnerabilities. It won&#8217;t be available to the general public.",
+          "detail": "Vulnérabilité critique affectant Google.\n\nGoogle DeepMind unveiled Gemini 3.5 Flash Cyber, an AI model for vulnerability discovery and patching, available only to governments and trusted partners. Google DeepMind announced Gemini 3.5 Flash Cyber on Tuesday, a security-focused AI model built on top of the existing 3.5 Flash architecture and designed specifically to find, validate, and patch software vulnerabilities. It won&#8217;t be available to the general public. &#8220;Given the dual-use nature of this technology, we have taken an intentional approach to deploying 3.5 Flash Cyber. The model will be exclusively available to governments and trusted partners via CodeMender soon as part of a limited-access pilot program.&#8221; reads the announcement . &#8220;This will give frontline defenders a head start in finding and fixing critical vulnerabilities before they can be exploited, while mitigating against broader misuse.&#8221; The access restriction is deliberate and explicitly tied to the dual-use risk of a model this capable at offensive security work. The model is designed to be fast and cheap to run, not just accurate. &#8220;Flash’s performance and efficiency makes it an ideal foundation to detect, validate, and patch code security issues at scale.&#8221; continues the announcement. &#8220; Gemini 3.5 Flash Cyber is built on top of 3.5 Flash, and fine-tuned for finding and fixing cybersecurity vulnerabilities at",
+          "action": "Vérifier l'exposition du parc et appliquer le correctif éditeur dès sa disponibilité.",
+          "image": "https://securityaffairs.com/wp-content/uploads/2026/07/image-64.png",
+          "sources": [
+            {
+              "url": "https://securityaffairs.com/195869/security/google-released-gemini-3-5-flash-cyber-ai-a-specialized-ai-model-for-vulnerability-hunting.html",
+              "label": "Security Affairs"
+            }
+          ],
+          "url": "https://securityaffairs.com/195869/security/google-released-gemini-3-5-flash-cyber-ai-a-specialized-ai-model-for-vulnerability-hunting.html",
+          "pubDate": "2026-07-23T11:44:54.000Z"
+        },
+        {
+          "title": "RefluXFS : la faille Linux qui contourne toutes vos protections dort depuis 2017, et Claude Mythos l’a trouvée",
+          "cve": null,
+          "severity": "critical",
+          "score": 49,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Vulnérabilité critique affectant Linux.\n\nUne nouvelle vulnérabilité critique touche le noyau Linux, cette fois via le système de fichiers XFS. Elle permet à n'importe quel utilisateur local, sans le moindre privilège, de prendre le contrôle total de la machine, sans laisser de trace.",
+          "detail": "Vulnérabilité critique affectant Linux.\n\nUne nouvelle vulnérabilité critique touche le noyau Linux, cette fois via le système de fichiers XFS. Elle permet à n'importe quel utilisateur local, sans le moindre privilège, de prendre le contrôle total de la machine, sans laisser de trace. Les modèles d'IA les plus avancés avaient promis de devenir un outil\n\nWatt Else, ToujoursPlus, Artificielles, Le Récap : votre dose hebdo d’infos exclusives et d’éditos endiablés !\n\nFrandroid Clubic Lemon Humanoid Mon compte Thème Clair Sombre Système 39,90 € /an\n\nAmine Baba Aissa Amine Baba Aissa 2 min 2 min Amine Baba Aissa Amine Baba Aissa Ne plus voir cette pub Lecture Zen Résumer l'article Résumé de l'article Résumé par IA, vérifié par Numerama\n\nNous générons pour vous un résumé de l’article grâce à une IA et nous le vérifions afin de nous assurer qu’il n’y ait aucune erreur, pour garantir l’authenticité de l’info.\n\nRecevez tous les soirs un résumé de l’actu importante avec Le Récap’\n\nLes modèles d&rsquo;IA les plus avancés avaient promis de devenir un outil déterminant dans la quête de failles . Pour l&rsquo;heure, la réalité du terrain leur donne en partie raison.",
+          "action": "Vérifier l'exposition du parc et appliquer le correctif éditeur dès sa disponibilité.",
+          "image": "https://c0.lestechnophiles.com/www.numerama.com/wp-content/uploads/2026/07/design-sans-titre-2026-07-23t105144059.jpg?resize=1600,900&key=f66680b1",
+          "sources": [
+            {
+              "url": "https://www.numerama.com/cyberguerre/2299983-refluxfs-la-faille-linux-qui-contourne-toutes-vos-protections-dort-depuis-2017-et-claude-mythos-la-trouvee.html",
+              "label": "Numerama"
+            }
+          ],
+          "url": "https://www.numerama.com/cyberguerre/2299983-refluxfs-la-faille-linux-qui-contourne-toutes-vos-protections-dort-depuis-2017-et-claude-mythos-la-trouvee.html",
+          "pubDate": "2026-07-23T09:17:16.000Z"
+        },
+        {
+          "title": "Check Point warns of SmartConsole zero-day exploited in attacks",
+          "cve": null,
+          "severity": "critical",
+          "score": 46,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Vulnérabilité critique.\n\nIsraeli cybersecurity firm Check Point Software has addressed an actively exploited zero-day flaw in the company's SmartConsole graphical user interface (GUI) admin panel.\n\nCritical wp2shell WordPress flaws exploited to install webshells\n\nMicrosoft shares manual fix for WSUS sync delays and timeouts\n\nWindows LegacyHive zero-day flaw gets free, unofficial patches\n\nSonicWall SMA1000 flaws exploited as zero-days to push custom malware\n\nAustralian energy provi…",
+          "detail": "Vulnérabilité critique.\n\nIsraeli cybersecurity firm Check Point Software has addressed an actively exploited zero-day flaw in the company's SmartConsole graphical user interface (GUI) admin panel.\n\nCritical wp2shell WordPress flaws exploited to install webshells\n\nMicrosoft shares manual fix for WSUS sync delays and timeouts\n\nWindows LegacyHive zero-day flaw gets free, unofficial patches\n\nSonicWall SMA1000 flaws exploited as zero-days to push custom malware\n\nAustralian energy provider Origin says data breach exposes client data\n\nFake Claude app promoted by Bing ads pushes SectopRAT malware",
+          "action": "Vérifier l'exposition du parc et appliquer le correctif éditeur dès sa disponibilité.",
+          "image": "https://www.bleepstatic.com/content/hl-images/2026/07/23/Check-Point-headpic.jpg",
+          "sources": [
+            {
+              "url": "https://www.bleepingcomputer.com/news/security/check-point-patches-smartconsole-zero-day-exploited-in-attacks/",
+              "label": "BleepingComputer"
+            }
+          ],
+          "url": "https://www.bleepingcomputer.com/news/security/check-point-patches-smartconsole-zero-day-exploited-in-attacks/",
+          "pubDate": "2026-07-23T08:13:07.000Z"
+        },
+        {
+          "title": "CVE-2026-47219 — find-my-way: DDoS with HTTP2",
+          "cve": "CVE-2026-47219",
+          "severity": "high",
+          "score": 43,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Vulnérabilité élevée CVE-2026-47219 affectant find-my-way (npm) (score CVSS 7.5).\n\nfind-my-way: DDoS with HTTP2\n\n--> Name Query To see all available qualifiers, see our documentation .\n\nDo not use find-my-way with HTTP/2 servers, or validate that the http method is valid beforehand.\n\ndelvedor published to delvedor/find-my-way Jul 22, 2026 Published to the GitHub Advisory Database Jul 23, 2026 Reviewed Jul 23, 2026 Severity High 7.5 CVSS overall score This score calculates overall vulnerability severity from 0 to 10 and is based on the Co…",
+          "detail": "Vulnérabilité élevée CVE-2026-47219 affectant find-my-way (npm) (score CVSS 7.5).\n\nfind-my-way: DDoS with HTTP2\n\n--> Name Query To see all available qualifiers, see our documentation .\n\nDo not use find-my-way with HTTP/2 servers, or validate that the http method is valid beforehand.\n\ndelvedor published to delvedor/find-my-way Jul 22, 2026 Published to the GitHub Advisory Database Jul 23, 2026 Reviewed Jul 23, 2026 Severity High 7.5 CVSS overall score This score calculates overall vulnerability severity from 0 to 10 and is based on the Common Vulnerability Scoring System (CVSS). / 10 CVSS v3 base metrics Attack vector Network Attack complexity Low Privileges required None User interaction None Scope Unchanged Confidentiality None Integrity None Availability High Learn more about base metrics CVSS v3 base metrics Attack vector: More severe the more the remote (logically and physically) an attacker can be in order to exploit the vulnerability. Attack complexity: More severe for the least complex attacks. Privileges required: More severe if no privileges are required. User interaction: More severe when no user interaction is required. Scope: More severe when a scope change occurs, e.g. one vulnerable component impacts resources in components beyond its security scope. Confidentiality: More severe when loss of data confidentiality is highest, measuring the level of data access available to an unauthorized user. Integrity: More severe when loss of data integrity is the highest, measuring the consequence of data modification possible by an unauthorized user. Availability: More severe when the loss of impacted component availability is highest. CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H EPSS score Weaknesses Weakness CWE-1321 Improperly Controlled Modification of Object Proto",
+          "action": "Vérifier l'exposition du parc et appliquer le correctif éditeur dès sa disponibilité.",
+          "image": "https://github.githubassets.com/assets/advisory-database-show-f32c8207dfb2.png",
+          "sources": [
+            {
+              "url": "https://github.com/advisories/GHSA-c96f-x56v-gq3h",
+              "label": "GitHub Advisory"
+            }
+          ],
+          "url": "https://github.com/advisories/GHSA-c96f-x56v-gq3h",
+          "pubDate": "2026-07-23T19:33:15.000Z"
+        },
+        {
+          "title": "CVE-2026-45623 — PostCSS: Arbitrary file read and information disclosure via attacker-controlled sourceMappingURL in CSS comments",
+          "cve": "CVE-2026-45623",
+          "severity": "high",
+          "score": 43,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Vulnérabilité élevée CVE-2026-45623 affectant postcss (npm) (score CVSS 7.5).\n\nPostCSS: Arbitrary file read and information disclosure via attacker-controlled sourceMappingURL in CSS comments\n\n--> Name Query To see all available qualifiers, see our documentation .\n\nThe dangerous chain lives in lib/previous-map.js and is wired into every Input construction at lib/input.js:70-77 .\n\nloadAnnotation ( lib/previous-map.js:72-84 ) extracts the URL without sanitisation :\n\nloadMap ( lib/previous-map.js:124-128 ) — when prev is absent and the…",
+          "detail": "Vulnérabilité élevée CVE-2026-45623 affectant postcss (npm) (score CVSS 7.5).\n\nPostCSS: Arbitrary file read and information disclosure via attacker-controlled sourceMappingURL in CSS comments\n\n--> Name Query To see all available qualifiers, see our documentation .\n\nThe dangerous chain lives in lib/previous-map.js and is wired into every Input construction at lib/input.js:70-77 .\n\nloadAnnotation ( lib/previous-map.js:72-84 ) extracts the URL without sanitisation :\n\nloadMap ( lib/previous-map.js:124-128 ) — when prev is absent and the annotation is not an inline data: URI:\n\nUnexpected token 'r', \"root:x:0:0\"... is not valid JSON This error is propagated back to the caller. Any application that surfaces PostCSS errors (logs, HTTP 500 responses, build-tool output, debug pages) discloses those bytes to the attacker.\n\nAll commands executed against this repository's HEAD (postcss 8.5.10) on Node v22.12.0.",
+          "action": "Vérifier l'exposition du parc et appliquer le correctif éditeur dès sa disponibilité.",
+          "image": "https://github.githubassets.com/assets/advisory-database-show-f32c8207dfb2.png",
+          "sources": [
+            {
+              "url": "https://github.com/advisories/GHSA-6g55-p6wh-862q",
+              "label": "GitHub Advisory"
+            }
+          ],
+          "url": "https://github.com/advisories/GHSA-6g55-p6wh-862q",
+          "pubDate": "2026-07-23T15:06:16.000Z"
+        },
+        {
+          "title": "Auth.js: getToken() throws an uncaught exception on malformed Bearer authorization headers",
+          "cve": null,
+          "severity": "high",
+          "score": 43,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Vulnérabilité élevée affectant @auth/core (npm) (score CVSS 7.5).\n\nAuth.js: getToken() throws an uncaught exception on malformed Bearer authorization headers\n\n--> Name Query To see all available qualifiers, see our documentation .\n\nYou are not affected if you only use the framework's auth() helper and never call getToken() yourself, or if every getToken() call site already has its own exception handling.\n\nThe fix makes getToken() treat a malformed Bearer value as an invalid token and return null , matching how other undec…",
+          "detail": "Vulnérabilité élevée affectant @auth/core (npm) (score CVSS 7.5).\n\nAuth.js: getToken() throws an uncaught exception on malformed Bearer authorization headers\n\n--> Name Query To see all available qualifiers, see our documentation .\n\nYou are not affected if you only use the framework's auth() helper and never call getToken() yourself, or if every getToken() call site already has its own exception handling.\n\nThe fix makes getToken() treat a malformed Bearer value as an invalid token and return null , matching how other undecodable tokens are already handled. Upgrade to the first release containing this fix (to be published; this advisory will be updated with the exact patched version before publication) and no code changes are required.\n\nConfig/code-level: wrap your getToken() calls so a thrown error is treated as \"no token\", e.g.\n\nReported by @deprrous . Thank you for the responsible disclosure.\n\ngustavovalverde published to nextauthjs/next-auth Jul 20, 2026 Published to the GitHub Advisory Database Jul 23, 2026 Reviewed Jul 23, 2026 Last updated Jul 23, 2026 Severity High 7.5 CVSS overall score This score calculates overall vulnerability severity from 0 to 10 and is based on the Common Vulnerability Scoring System (CVSS). / 10 CVSS v3 base metrics Attack vector Network Attack complexity Low Privileges required None User interaction None Scope Unchanged Confidentiality None Integrity None Availability High Learn more about base metrics CVSS v3 base metrics Attack vector: More severe the more the remote (logically and physically) an attacker can be in order to exploit the vulnerability. Attack complexity: More severe for the least complex attacks. Privileges required: More severe if no privileges are required. User interaction: More severe when no user interaction is requi",
+          "action": "Vérifier l'exposition du parc et appliquer le correctif éditeur dès sa disponibilité.",
+          "image": "https://github.githubassets.com/assets/advisory-database-show-f32c8207dfb2.png",
+          "sources": [
+            {
+              "url": "https://github.com/advisories/GHSA-xmf8-cvqr-rfgj",
+              "label": "GitHub Advisory"
+            }
+          ],
+          "url": "https://github.com/advisories/GHSA-xmf8-cvqr-rfgj",
+          "pubDate": "2026-07-23T14:42:55.000Z"
+        }
+      ]
+    },
+    {
+      "id": "attacks",
+      "items": [
+        {
+          "title": "Major Australian energy supplier confirms customer data compromised",
+          "cve": null,
+          "severity": "news",
+          "score": 83,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Incident de sécurité rapporté par The Record.\n\nOrigin Energy said it was working to figure out how many Australians were affected by a recent data breach.\n\nAn Australian energy company serving nearly 5 million customers announced Thursday that it suffered a data breach and that it is working with federal agencies to investigate.\n\nOn Wednesday, Sydney-based Origin Energy had said in a brief announcement that it was “investigating a potential security incident” after the news outlet The Australian report…",
+          "detail": "Incident de sécurité rapporté par The Record.\n\nOrigin Energy said it was working to figure out how many Australians were affected by a recent data breach.\n\nAn Australian energy company serving nearly 5 million customers announced Thursday that it suffered a data breach and that it is working with federal agencies to investigate.\n\nOn Wednesday, Sydney-based Origin Energy had said in a brief announcement that it was “investigating a potential security incident” after the news outlet The Australian reported that a purported hacker had sent what they claimed to be a sample of stolen records from the company.\n\nIn a second update , Origin confirmed that customer data had been compromised and that it is “working to understand the total number of impacted customers.” The data may include account information, the last four digits of credit card numbers and last three digits of bank account numbers, as well as names, addresses and dates of birth.\n\n“One of our key priorities is taking action to secure our systems and ensure no further unauthorised access,” he said. “We are working with independent cyber experts to support Origin, and that work is continuing alongside the work of authorities.”\n\nThe breach of Australia’s largest electricity and gas retailer follows the recent compromise of sensitive medical data belonging to a major Australian network of healthcare clinics. Partnered Health confirmed that patients who visited at least 21 clinics may have had medical records stolen in a cyberattack.\n\nhas worked as a journalist around the world, including in Lebanon and in Cambodia, where he was Deputy Managing Editor of The Phnom Penh Post. He is also a radio and podcast producer for outlets like Snap Judgment.",
+          "action": "Surveiller les indicateurs de compromission associés et contrôler les actifs exposés.",
+          "image": "https://cms.therecord.media/uploads/australia_electric_infrastructure_cameron_raynes_unsplash_b84b4166d6.jpg",
+          "sources": [
+            {
+              "url": "https://therecord.media/australia-origin-energy-data-breach",
+              "label": "The Record"
+            }
+          ],
+          "url": "https://therecord.media/australia-origin-energy-data-breach",
+          "pubDate": "2026-07-23T13:20:00.000Z"
+        },
+        {
+          "title": "Australian energy provider Origin says data breach exposes client data",
+          "cve": null,
+          "severity": "news",
+          "score": 76,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Incident de sécurité rapporté par BleepingComputer.\n\nOrigin Energy has confirmed that an unauthorized party accessed and subsequently leaked customer data online, exposing sensitive personally identifiable information (PII), among others.\n\nCritical wp2shell WordPress flaws exploited to install webshells\n\nMicrosoft shares manual fix for WSUS sync delays and timeouts\n\nWindows LegacyHive zero-day flaw gets free, unofficial patches\n\nSonicWall SMA1000 flaws exploited as zero-days to push custom malware\n\nAustralia…",
+          "detail": "Incident de sécurité rapporté par BleepingComputer.\n\nOrigin Energy has confirmed that an unauthorized party accessed and subsequently leaked customer data online, exposing sensitive personally identifiable information (PII), among others.\n\nCritical wp2shell WordPress flaws exploited to install webshells\n\nMicrosoft shares manual fix for WSUS sync delays and timeouts\n\nWindows LegacyHive zero-day flaw gets free, unofficial patches\n\nSonicWall SMA1000 flaws exploited as zero-days to push custom malware\n\nAustralian energy provider Origin says data breach exposes client data\n\nFake Claude app promoted by Bing ads pushes SectopRAT malware",
+          "action": "Surveiller les indicateurs de compromission associés et contrôler les actifs exposés.",
+          "image": "https://www.bleepstatic.com/content/hl-images/2026/07/23/origin.jpg",
+          "sources": [
+            {
+              "url": "https://www.bleepingcomputer.com/news/security/australian-energy-provider-origin-says-data-breach-exposes-client-data/",
+              "label": "BleepingComputer"
+            }
+          ],
+          "url": "https://www.bleepingcomputer.com/news/security/australian-energy-provider-origin-says-data-breach-exposes-client-data/",
+          "pubDate": "2026-07-23T20:14:35.000Z"
+        },
+        {
+          "title": "Record Go Alquiler — rançongiciel play (Espagne)",
+          "cve": null,
+          "severity": "news",
+          "score": 73,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Incident de sécurité rapporté par ransomware.live.\n\nRansomware.live discovered on 2026-07-23 that Record Go Alquiler has been claimed by Play ransomware group\n\nSponsored by Hudson Rock – Use Hudson Rock's free cybercrime intelligence tools to learn how Infostealer infections are leading to ransomware attacks\n\nThe following DNS records were found for the victim's domain.\n\nLegal Disclaimer: Ransomware.live does not engage in the acquisition, exfiltration, downloading, possession, hosting, access, consultation…",
+          "detail": "Incident de sécurité rapporté par ransomware.live.\n\nRansomware.live discovered on 2026-07-23 that Record Go Alquiler has been claimed by Play ransomware group\n\nSponsored by Hudson Rock – Use Hudson Rock's free cybercrime intelligence tools to learn how Infostealer infections are leading to ransomware attacks\n\nThe following DNS records were found for the victim's domain.\n\nLegal Disclaimer: Ransomware.live does not engage in the acquisition, exfiltration, downloading, possession, hosting, access, consultation, redistribution, or disclosure of unlawfully obtained data. This platform indexes only publicly visible information posted by ransomware operators and open web sources without accessing or obtaining the underlying stolen content . The service is provided to support public awareness, legitimate research, and cyber-resilience. No stolen personal or confidential data is collected or distributed via this site.\n\nSession: 057726c909af65969646b040bbbfa5c4df67f5166a33cbac6cd9e1302b0b3ca148",
+          "action": "Surveiller les indicateurs de compromission associés et contrôler les actifs exposés.",
+          "image": "https://images.ransomware.live/victims/c093421efde6849e07ff58c701ce6edf.png",
+          "sources": [
+            {
+              "url": "https://www.ransomware.live/id/UmVjb3JkIEdvIEFscXVpbGVyQHBsYXk=",
+              "label": "ransomware.live"
+            }
+          ],
+          "url": "https://www.ransomware.live/id/UmVjb3JkIEdvIEFscXVpbGVyQHBsYXk=",
+          "pubDate": "2026-07-23T20:29:40.967Z"
+        },
+        {
+          "title": "Iran-linked crews are probing more flavors of US industrial kit",
+          "cve": null,
+          "severity": "critical",
+          "score": 71,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Incident de sécurité rapporté par The Register.\n\nThe US Cybersecurity and Infrastructure Security Agency (CISA) has expanded the scope of its alert on Iranian-affiliated hackers attacking critical infrastructure, including water and energy facilities. The original advisory focused on programmable logic controllers (PLCs) manufactured by Rockwell Automation/Allen-Bradley.",
+          "detail": "Incident de sécurité rapporté par The Register.\n\nThe US Cybersecurity and Infrastructure Security Agency (CISA) has expanded the scope of its alert on Iranian-affiliated hackers attacking critical infrastructure, including water and energy facilities. The original advisory focused on programmable logic controllers (PLCs) manufactured by Rockwell Automation/Allen-Bradley. The update warns that the activity may also target devices from Schneider Electric, Siemens, \"and potentially other branded/manufactured PLCs.\" The conflict between the US and Iran is well into its fourth month, and authorities have noticed Iranian-affiliated advanced persistent threat (APT) crews targeting PLCs to cause disruption since March. PLCs are used to control and monitor industrial processes. Authorities said the activity resembled earlier attacks on PLCs by CyberAv3ngers (aka the Shahid Kaveh Group) - hackers affiliated with Iran's Islamic Revolutionary Guard Corps (IRGC) Cyber Electronic Command (CEC). The focus is principally related to internet-facing PLCs. CISA noted attackers targeting devices through open ports: \"The targeting of ports associated with other OT vendors' protocols suggests these actors are opportunistically targeting devices manufactured by companies other than Rockwell Automation/Allen-Bradley, including Schneider Electric and Siemens. \"In one reported instance, the actors utilized Dropbear Secure Shell (SSH) software on victi",
+          "action": "Surveiller les indicateurs de compromission associés et contrôler les actifs exposés.",
+          "image": null,
+          "sources": [
+            {
+              "url": "https://www.theregister.com/security/2026/07/23/iran-linked-crews-are-probing-more-flavors-of-us-industrial-kit/5277003",
+              "label": "The Register"
+            }
+          ],
+          "url": "https://www.theregister.com/security/2026/07/23/iran-linked-crews-are-probing-more-flavors-of-us-industrial-kit/5277003",
+          "pubDate": "2026-07-23T14:30:00.000Z"
+        },
+        {
+          "title": "Swiss train maker tells ransomware crooks to get off at the next stop",
+          "cve": null,
+          "severity": "news",
+          "score": 71,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Incident de sécurité rapporté par The Register.\n\nSwiss rail manufacturer Stadler Rail says it refused a CHF 10 million ($12.3 million) ransom demand after the Everest ransomware gang compromised one of its suppliers. Stadler will not pay, and based on its account of events, the company appears to have got off lightly.",
+          "detail": "Incident de sécurité rapporté par The Register.\n\nSwiss rail manufacturer Stadler Rail says it refused a CHF 10 million ($12.3 million) ransom demand after the Everest ransomware gang compromised one of its suppliers. Stadler will not pay, and based on its account of events, the company appears to have got off lightly. It stated that \"no security-relevant data [was] affected\" in the breach, which was limited to \"technical information from a supplier.\" According to its announcement, \"no relevant personal data was stolen,\" and the incident had no impact on the functioning of its rolling stock (train and tram carriages) or its global production lines. The attackers accessed the technical data through a \"data exchange platform\" Stadler used with the unnamed supplier, authenticating with compromised login credentials. \"Stadler's IT systems were not compromised and remained intact,\" the company said. At the time of writing, Stadler does not appear on Everest's data leak site (DLS), nor has the swiped technical data been leaked. Stadler's absence from the extortion group's website is unusual. The typical cyber extortion playbook involves the crooks first notifying victims that data has been stolen and/ or encrypted, then issuing their demand and threat to leak data if the ransom is unpaid. Failure to meet the deadline - or refuse outright, as Stadler did - typically lands the victim organization a spot on the extortionist's DLS. That",
+          "action": "Surveiller les indicateurs de compromission associés et contrôler les actifs exposés.",
+          "image": null,
+          "sources": [
+            {
+              "url": "https://www.theregister.com/security/2026/07/23/stadler-rail-scoffs-at-eversts-123m-extortion-attempts/5276922",
+              "label": "The Register"
+            }
+          ],
+          "url": "https://www.theregister.com/security/2026/07/23/stadler-rail-scoffs-at-eversts-123m-extortion-attempts/5276922",
+          "pubDate": "2026-07-23T11:58:00.000Z"
+        },
+        {
+          "title": "International alert spotlights Russia-linked attacks on Zimbra webmail",
+          "cve": null,
+          "severity": "news",
+          "score": 70,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Incident de sécurité rapporté par The Record.\n\nA Kremlin-backed group known as Laundry Bear has been using a zero-click phishing technique to break into Zimbra webmail accounts worldwide, the U.S. and other nations said.\n\nRussian state-aligned hackers have been compromising governmental and commercial organizations throughout the West through zero-click phishing emails, federal agencies in the U.S., U.K., Europe, Australia and New Zealand warned on Thursday.\n\nThe campaign, carried out by the advanced p…",
+          "detail": "Incident de sécurité rapporté par The Record.\n\nA Kremlin-backed group known as Laundry Bear has been using a zero-click phishing technique to break into Zimbra webmail accounts worldwide, the U.S. and other nations said.\n\nRussian state-aligned hackers have been compromising governmental and commercial organizations throughout the West through zero-click phishing emails, federal agencies in the U.S., U.K., Europe, Australia and New Zealand warned on Thursday.\n\nThe campaign, carried out by the advanced persistent threat (APT) group Laundry Bear, targets Zimbra Collaboration Suite’s webmail platform and exploits a vulnerability that was patched in November 2025.\n\nAccording to the advisory , the hackers carried out “extensive” targeting of Ukrainian entities before training their sights on U.S. and NATO organizations — evidence of “an increasing trend within Russian cyber threat groups to target Ukrainian users first—both as a priority target and as a testbench for malicious cyber techniques before broader global deployment.”\n\n“The covert and persistent nature of this activity, along with the absence of any known financial extortion, almost certainly indicates this group’s involvement in espionage activities with Russian government backing,” the agencies concluded.\n\nPalo Alto Networks’ Unit 42, which also published a report Thursday on the campaign, said the hackers targeted the defense and transportation sectors, as well as financial organizations in NATO member states, Ukraine, Commonwealth of Independent States countries and Africa. In its own advisory , Proofpoint said the group had compromised “government, high science, and defense industrial base targets in the United States.”\n\nLaundry Bear was first identified in May 2025 by Dutch intelligence agencies, which blamed",
+          "action": "Surveiller les indicateurs de compromission associés et contrôler les actifs exposés.",
+          "image": "https://cms.therecord.media/uploads/le_vu_v_Sl_C_Nm_Zdj_HQ_unsplash_cc4419db58.jpg",
+          "sources": [
+            {
+              "url": "https://therecord.media/zimbra-webmail-zero-click-phishing-russia-laundry-bear",
+              "label": "The Record"
+            }
+          ],
+          "url": "https://therecord.media/zimbra-webmail-zero-click-phishing-russia-laundry-bear",
+          "pubDate": "2026-07-23T16:58:00.000Z"
+        },
+        {
+          "title": "Wunschkind Klinik Dr Brunbauer — rançongiciel thegentlemen (AT)",
+          "cve": null,
+          "severity": "news",
+          "score": 70,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Incident de sécurité rapporté par ransomware.live.\n\nVictime revendiquée par le groupe de rançongiciel thegentlemen. Pays : AT. Secteur : Healthcare. ***.at zoominfo.com/c/wunschkind-klinik-dr-brunbauer/1320140781 We have hundreds of gigabytes of your files, including database projects, client contracts, personal data and documents, medical data, medical histories, treatment records, medical reports, and more—all of which constitute critically important information.",
+          "detail": "Incident de sécurité rapporté par ransomware.live.\n\nVictime revendiquée par le groupe de rançongiciel thegentlemen.\n\nPays : AT.\n\nSecteur : Healthcare.\n\n***.at zoominfo.com/c/wunschkind-klinik-dr-brunbauer/1320140781 We have hundreds of gigabytes of your files, including database projects, client contracts, \npersonal data and documents, medical data, medical histories, treatment records, medical reports, and more—all of which constitute critically important information. \nIf you do not want to face the consequences of a data breach, please contact us; otherwise, everything will be published. fertility clinic in Vienna, Austria, led by Dr. Brunbauer. Located in the city center, the clinic specializes in fertility treatments including IVF, insemination, diagnostics, hormone therapy, egg donation, and cryopreservation. It is a recognized partner clinic of Austria's IVF-Fonds program.",
+          "action": "Surveiller les indicateurs de compromission associés et contrôler les actifs exposés.",
+          "image": "https://images.ransomware.live/ransomware.png",
+          "sources": [
+            {
+              "url": "https://www.ransomware.live/id/V3Vuc2Noa2luZCBLbGluaWsgRHIgQnJ1bmJhdWVyQHRoZWdlbnRsZW1lbg==",
+              "label": "ransomware.live"
+            }
+          ],
+          "url": "https://www.ransomware.live/id/V3Vuc2Noa2luZCBLbGluaWsgRHIgQnJ1bmJhdWVyQHRoZWdlbnRsZW1lbg==",
+          "pubDate": "2026-07-23T10:26:25.000Z"
+        },
+        {
+          "title": "Raben Group — rançongiciel thegentlemen (PL)",
+          "cve": null,
+          "severity": "news",
+          "score": 70,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Incident de sécurité rapporté par ransomware.live.\n\nVictime revendiquée par le groupe de rançongiciel thegentlemen. Pays : PL. Secteur : Transportation. ***.com zoominfo.com/c/raben-group/350966506 Raben Group is a leading European logistics provider with Dutch roots, founded in 1931 and currently headquartered in Poznań, Poland. The company offers comprehensive transport and warehousing solutions, including road transport, contract logistics, and supply chain management across 17 European countries.",
+          "detail": "Incident de sécurité rapporté par ransomware.live.\n\nVictime revendiquée par le groupe de rançongiciel thegentlemen.\n\nPays : PL.\n\nSecteur : Transportation.\n\n***.com zoominfo.com/c/raben-group/350966506 Raben Group is a leading European logistics provider with Dutch roots, founded in 1931 and currently headquartered in Poznań, Poland. The company offers comprehensive transport and warehousing solutions, including road transport, contract logistics, and supply chain management across 17 European countries. With over 90 years of experience and a workforce of approximately 12,200 employees, Raben Group is recognized as a market leader focused on sustainable and efficient logistics operations",
+          "action": "Surveiller les indicateurs de compromission associés et contrôler les actifs exposés.",
+          "image": "https://images.ransomware.live/ransomware.png",
+          "sources": [
+            {
+              "url": "https://www.ransomware.live/id/UmFiZW4gR3JvdXBAdGhlZ2VudGxlbWVu",
+              "label": "ransomware.live"
+            }
+          ],
+          "url": "https://www.ransomware.live/id/UmFiZW4gR3JvdXBAdGhlZ2VudGxlbWVu",
+          "pubDate": "2026-07-23T09:05:13.000Z"
+        },
+        {
+          "title": "Upbound Group Says Data Breach Led to $13 Million in Fraudulent Contract Losses",
+          "cve": null,
+          "severity": "news",
+          "score": 69,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Incident de sécurité rapporté par SecurityWeek.\n\nUpbound Group disclosed a data breach that enabled fraudsters to create roughly $13 million in fake Acima deals using stolen information.\n\nHackers recently obtained non-sensitive customer information and other documents from the company.\n\nSubscribe to the SecurityWeek Email Briefing for the latest cybersecurity threats, trends, and expert insights.\n\nSubscribe to the SecurityWeek Email Briefing to stay informed on the latest threats, trends, and technology,…",
+          "detail": "Incident de sécurité rapporté par SecurityWeek.\n\nUpbound Group disclosed a data breach that enabled fraudsters to create roughly $13 million in fake Acima deals using stolen information.\n\nHackers recently obtained non-sensitive customer information and other documents from the company.\n\nSubscribe to the SecurityWeek Email Briefing for the latest cybersecurity threats, trends, and expert insights.\n\nSubscribe to the SecurityWeek Email Briefing to stay informed on the latest threats, trends, and technology, along with insightful columns from industry experts.\n\nJoin this live webinar as we explore why exploitation is outpacing remediation, where risk is growing fastest, and what security leaders can do to close the gap before attackers take advantage.\n\nCodeSecCon bridges the gap between dev and security. Discover best practices for secure coding, innovative risk-reduction tools, and safe AI integration to cultivate a true DevSecOps culture. Safely secure your apps!\n\nJohn DeSimone, the former CEO of Nightwing, has been named Chief Operating Officer at Everfox.",
+          "action": "Surveiller les indicateurs de compromission associés et contrôler les actifs exposés.",
+          "image": "https://www.securityweek.com/wp-content/uploads/2026/07/corporate-bank-fraud.jpeg",
+          "sources": [
+            {
+              "url": "https://www.securityweek.com/upbound-group-says-data-breach-led-to-13-million-in-fraudulent-contract-losses/",
+              "label": "SecurityWeek"
+            }
+          ],
+          "url": "https://www.securityweek.com/upbound-group-says-data-breach-led-to-13-million-in-fraudulent-contract-losses/",
+          "pubDate": "2026-07-23T10:49:10.000Z"
+        },
+        {
+          "title": "Talking smack about a doctor got him access to private medical files",
+          "cve": null,
+          "severity": "news",
+          "score": 67,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Incident de sécurité rapporté par The Register.\n\nPWNED Welcome back to PWNED, the weekly column where we focus on security own-goals so you can avoid them. This week’s topic involves serious problems in the healthcare sector, specifically the very human problem of compromised gatekeepers. Have a story about someone leaving a gaping hole in their network? Share it with us at pwned@sitpub.com. Anonymity is available upon request.",
+          "detail": "Incident de sécurité rapporté par The Register.\n\nPWNED Welcome back to PWNED, the weekly column where we focus on security own-goals so you can avoid them. This week’s topic involves serious problems in the healthcare sector, specifically the very human problem of compromised gatekeepers. Have a story about someone leaving a gaping hole in their network? Share it with us at pwned@sitpub.com. Anonymity is available upon request. Our legend of lameness comes courtesy of red teamer Dahvid Schloss, who shared so many great stories with us that we’ve featured his tales a couple of times before. Schloss has made a career out of testing not only network security but also physical security at a wide variety of places. He has learned that if you act as you belong, people will usually treat you like you belong. At one hospital, Schloss was hired to test security by getting access to the records room and trying to steal a specific physical file that his client left there for him to pilfer. The challenge was that the records room had both an electronic lock and a nurse gatekeeper guarding it. Schloss told us that he considered several approaches to get into the records room. He could try picking the lock, cloning a badge, or even stealing the badge of someone who had access. Instead, he decided to try social engineering. Schloss did research on the hospital and he put on a pair of appropriate scrubs and made himself a fake security badge",
+          "action": "Surveiller les indicateurs de compromission associés et contrôler les actifs exposés.",
+          "image": null,
+          "sources": [
+            {
+              "url": "https://www.theregister.com/security/2026/07/23/talking-smack-about-a-doctor-got-him-access-to-private-medical-files/5276604",
+              "label": "The Register"
+            }
+          ],
+          "url": "https://www.theregister.com/security/2026/07/23/talking-smack-about-a-doctor-got-him-access-to-private-medical-files/5276604",
+          "pubDate": "2026-07-23T07:00:00.000Z"
+        },
+        {
+          "title": "Velum — rançongiciel thegentlemen",
+          "cve": null,
+          "severity": "news",
+          "score": 66,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Incident de sécurité rapporté par ransomware.live.\n\nVictime revendiquée par le groupe de rançongiciel thegentlemen. Secteur : Technology. ***.biz zoominfo.com/c/velum-inc/372599932 We are making some files publicly available. We have hundreds of gigabytes of your files, including database projects, client contracts, personal data, and documents. If you do not want to face the consequences of a data breach, please contact us; otherwise, everything will be published.",
+          "detail": "Incident de sécurité rapporté par ransomware.live.\n\nVictime revendiquée par le groupe de rançongiciel thegentlemen.\n\nSecteur : Technology.\n\n***.biz zoominfo.com/c/velum-inc/372599932 We are making some files publicly available. We have hundreds of gigabytes of your files, including database projects, client contracts, personal data, and documents. If you do not want to face the consequences of a data breach, please contact us; otherwise, everything will be published. VELUM is a French manufacturer of professional lighting solutions based in Bischoffsheim, Alsace, operating since 1975. The company specializes in designing, developing, and manufacturing custom LED lighting fixtures for both indoor and outdoor environments. As a family-owned business, VELUM provides comprehensive support, including lighting studies, technical advice, and tailored solutions for professionals across various sectors",
+          "action": "Surveiller les indicateurs de compromission associés et contrôler les actifs exposés.",
+          "image": "https://images.ransomware.live/ransomware.png",
+          "sources": [
+            {
+              "url": "https://www.ransomware.live/id/VmVsdW1AdGhlZ2VudGxlbWVu",
+              "label": "ransomware.live"
+            }
+          ],
+          "url": "https://www.ransomware.live/id/VmVsdW1AdGhlZ2VudGxlbWVu",
+          "pubDate": "2026-07-23T09:18:11.000Z"
+        },
+        {
+          "title": "Digital Edge — rançongiciel nova (SG)",
+          "cve": null,
+          "severity": "news",
+          "score": 65,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Incident de sécurité rapporté par ransomware.live.\n\nVictime revendiquée par le groupe de rançongiciel nova. Pays : SG. Secteur : Technology. Digital Edge is a Managed Services Provider, skilled and accredited with a proven track record for over 20 years, operating exclusively within prime data center facilities enabling Digital Edges Information Security Management System to deliver Enterprise level IT Services conforming with ISO 27001 Information Technology Security Management System Requirements, certifi…",
+          "detail": "Incident de sécurité rapporté par ransomware.live.\n\nVictime revendiquée par le groupe de rançongiciel nova.\n\nPays : SG.\n\nSecteur : Technology.\n\nDigital Edge is a Managed Services Provider, skilled and accredited with a proven track record for over 20 years, operating exclusively within prime data center facilities enabling Digital Edges Information Security Management System to deliver Enterprise level IT Services conforming with ISO 27001 Information Technology Security Management System Requirements, certified since May 1, 1996. In addition, the company troubleshoot, consult, prepare the company's clients for NIST CSF 800, ISO 27001, SSAE16/SOC2, PCI DDS compliant frameworks and/or legal regulations such as NYS DFS 500, HIPPA, GDPR, PIPEDA or Californias Data Privacy Act, as well as other frameworks, regulations, or contractual requirements. Cloud Engineering services including design, implementation and support for Dedicated Private and Hybrid Cloud environment, Full spectrum IT Support and Outsourcing, 24/7 NOC and SOC Operation, Security Incident Response Team Operation, Business Continuity and Disaster Recovery. Digital - sensitive reports and clients data in risk, reach us, we left note in encrypted devices - Nova Provide tree and samples from stolen data and decrypt sample to the company when its get in touch with support department.",
+          "action": "Surveiller les indicateurs de compromission associés et contrôler les actifs exposés.",
+          "image": "https://images.ransomware.live/victims/13759b1938450c5e98840d977d845d74.png",
+          "sources": [
+            {
+              "url": "https://www.ransomware.live/id/RGlnaXRhbCBFZGdlQG5vdmE=",
+              "label": "ransomware.live"
+            }
+          ],
+          "url": "https://www.ransomware.live/id/RGlnaXRhbCBFZGdlQG5vdmE=",
+          "pubDate": "2026-07-24T01:29:46.843Z"
+        },
+        {
+          "title": "Agapit — rançongiciel thegentlemen (PL)",
+          "cve": null,
+          "severity": "news",
+          "score": 65,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Incident de sécurité rapporté par ransomware.live.\n\nVictime revendiquée par le groupe de rançongiciel thegentlemen. Pays : PL. Secteur : Other. ***.pl zoominfo.com/c/agapit-sp-z-oo-spk/372573662 Agapit is one of the largest suppliers of professional cleaning technology and equipment in Poland, with over 26 years of experience. The company provides comprehensive solutions, including industrial cleaning machines, robotic scrubbers, high-pressure washers, and specialized cleaning chemicals.",
+          "detail": "Incident de sécurité rapporté par ransomware.live.\n\nVictime revendiquée par le groupe de rançongiciel thegentlemen.\n\nPays : PL.\n\nSecteur : Other.\n\n***.pl zoominfo.com/c/agapit-sp-z-oo-spk/372573662 Agapit is one of the largest suppliers of professional cleaning technology and equipment in Poland, with over 26 years of experience. The company provides comprehensive solutions, including industrial cleaning machines, robotic scrubbers, high-pressure washers, and specialized cleaning chemicals. They operate their own nationwide distribution, rental, and service network, with key locations in cities like Olsztyn, Wroclaw, and Gdynia",
+          "action": "Surveiller les indicateurs de compromission associés et contrôler les actifs exposés.",
+          "image": "https://images.ransomware.live/ransomware.png",
+          "sources": [
+            {
+              "url": "https://www.ransomware.live/id/QWdhcGl0QHRoZWdlbnRsZW1lbg==",
+              "label": "ransomware.live"
+            }
+          ],
+          "url": "https://www.ransomware.live/id/QWdhcGl0QHRoZWdlbnRsZW1lbg==",
+          "pubDate": "2026-07-23T09:00:51.000Z"
+        },
+        {
+          "title": "China-Nexus JadeProx Uses New TriBack Loader in Government and Healthcare Attacks",
+          "cve": null,
+          "severity": "news",
+          "score": 64,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Incident de sécurité rapporté par The Hacker News.\n\nAn exposed Alibaba Cloud server has revealed a China-nexus operation that Group-IB tracks as JadeProx. The cluster has targeted government, healthcare, and education organizations across Asia and Latin America with a previously undocumented Windows loader called TriBack Loader. Group-IB found the server in mid-April 2026 in Alibaba Cloud's Singapore region; it was offline by the time the report",
+          "detail": "Incident de sécurité rapporté par The Hacker News.\n\nAn exposed Alibaba Cloud server has revealed a China-nexus operation that Group-IB tracks as JadeProx. The cluster has targeted government, healthcare, and education organizations across Asia and Latin America with a previously undocumented Windows loader called TriBack Loader. Group-IB found the server in mid-April 2026 in Alibaba Cloud's Singapore region; it was offline by the time the report",
+          "action": "Surveiller les indicateurs de compromission associés et contrôler les actifs exposés.",
+          "image": "https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEh-rvCSGHVd2nngnpcdcc8Eh-QFaxQrcyegoSIPhUeTpr5qrGHcHYIstDAj08yLDeYcNZkZ26Ta53fdYefY8NjW8MprrOL4lQ4VnDCMpBrsrSQccyUipoC3VvFtMNUxUpUzOYra58WqjRwn952-fvzZLpXtgeY8Ao660YY49FaqcTTjBrDN_DsFFnsftJ8/s1600/malware-attack.jpg",
+          "sources": [
+            {
+              "url": "https://thehackernews.com/2026/07/china-nexus-jadeprox-uses-new-triback.html",
+              "label": "The Hacker News"
+            }
+          ],
+          "url": "https://thehackernews.com/2026/07/china-nexus-jadeprox-uses-new-triback.html",
+          "pubDate": "2026-07-23T12:20:23.000Z"
+        },
+        {
+          "title": "New Dolphin X malware uses AI to rank high-value targets",
+          "cve": null,
+          "severity": "high",
+          "score": 63,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Incident de sécurité rapporté par BleepingComputer.\n\nA new Dolphin X remote access trojan claims to use an AI-powered profiling feature to score and rank infected users, helping cybercriminals identify which victims should be targeted first.\n\nCritical wp2shell WordPress flaws exploited to install webshells\n\nMicrosoft shares manual fix for WSUS sync delays and timeouts\n\nWindows LegacyHive zero-day flaw gets free, unofficial patches\n\nSonicWall SMA1000 flaws exploited as zero-days to push custom malware\n\nAustra…",
+          "detail": "Incident de sécurité rapporté par BleepingComputer.\n\nA new Dolphin X remote access trojan claims to use an AI-powered profiling feature to score and rank infected users, helping cybercriminals identify which victims should be targeted first.\n\nCritical wp2shell WordPress flaws exploited to install webshells\n\nMicrosoft shares manual fix for WSUS sync delays and timeouts\n\nWindows LegacyHive zero-day flaw gets free, unofficial patches\n\nSonicWall SMA1000 flaws exploited as zero-days to push custom malware\n\nAustralian energy provider Origin says data breach exposes client data\n\nFake Claude app promoted by Bing ads pushes SectopRAT malware",
+          "action": "Surveiller les indicateurs de compromission associés et contrôler les actifs exposés.",
+          "image": "https://www.bleepstatic.com/content/hl-images/2026/07/23/cyber-dolphin.jpg",
+          "sources": [
+            {
+              "url": "https://www.bleepingcomputer.com/news/security/new-dolphin-x-malware-uses-ai-to-rank-high-value-targets/",
+              "label": "BleepingComputer"
+            }
+          ],
+          "url": "https://www.bleepingcomputer.com/news/security/new-dolphin-x-malware-uses-ai-to-rank-high-value-targets/",
+          "pubDate": "2026-07-23T21:20:34.000Z"
+        },
+        {
+          "title": "Decoupe Laser Services — rançongiciel thegentlemen (France)",
+          "cve": null,
+          "severity": "news",
+          "score": 61,
+          "corroboration": 1,
+          "region": "fr",
+          "body": "Incident de sécurité rapporté par ransomware.live.\n\nVictime revendiquée par le groupe de rançongiciel thegentlemen. Pays : France. Secteur : Manufacturing. ***.com DLS (Découpe Laser Services) is a French laser cutting specialist based in La Ravoire, specializing in precision laser cutting of steel, stainless steel, and aluminum. The company offers comprehensive metal finishing services including deburring, bending, surface treatment, tapping, and milling.",
+          "detail": "Incident de sécurité rapporté par ransomware.live.\n\nVictime revendiquée par le groupe de rançongiciel thegentlemen.\n\nPays : France.\n\nSecteur : Manufacturing.\n\n***.com DLS (Découpe Laser Services) is a French laser cutting specialist based in La Ravoire, specializing in precision laser cutting of steel, stainless steel, and aluminum. The company offers comprehensive metal finishing services including deburring, bending, surface treatment, tapping, and milling. With large-format cutting capabilities (6000mm x 2000mm) and over 200 tons of material stock, DLS handles everything from prototypes to very large industrial production runs. They pride themselves on reactivity and flexibility, providing quotes within 24 hours.",
+          "action": "Surveiller les indicateurs de compromission associés et contrôler les actifs exposés.",
+          "image": "https://images.ransomware.live/ransomware.png",
+          "sources": [
+            {
+              "url": "https://www.ransomware.live/id/R2xvcmlhIE1hcmlzIEdyb3VwZUB0aGVnZW50bGVtZW4=",
+              "label": "ransomware.live"
+            }
+          ],
+          "url": "https://www.ransomware.live/id/R2xvcmlhIE1hcmlzIEdyb3VwZUB0aGVnZW50bGVtZW4=",
+          "pubDate": "2026-07-23T08:53:33.000Z"
+        }
+      ]
+    },
+    {
+      "id": "culture",
+      "items": [
+        {
+          "title": "State Department imposes visa restrictions on foreign cyber scammers",
+          "cve": null,
+          "severity": "culture",
+          "score": 70,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Signal de veille — The Record.\n\nIndividuals connected to transnational cyber-scam operations face U.S. visa restrictions under a new policy announced by Secretary of State Marco Rubio.\n\nThe State Department on Thursday announced new visa restrictions for individuals linked to foreign cybercrime networks and their immediate family members.\n\nSecretary of State Marco Rubio’s statement on the policy came on his final day of a trip to the Philippines for general meetings of the Association of…",
+          "detail": "Signal de veille — The Record.\n\nIndividuals connected to transnational cyber-scam operations face U.S. visa restrictions under a new policy announced by Secretary of State Marco Rubio.\n\nThe State Department on Thursday announced new visa restrictions for individuals linked to foreign cybercrime networks and their immediate family members.\n\nSecretary of State Marco Rubio’s statement on the policy came on his final day of a trip to the Philippines for general meetings of the Association of Southeast Asian Nations (ASEAN). The region is known as a hotbed for industrial-scale scam centers.\n\nFBI Director Kash Patel met separately this week with leaders in the region to discuss combatting those operations. Rubio also discussed scam centers with the Cambodia’s foreign minister on Thursday, the State Department said.\n\nThe new visa restrictions target individuals “responsible for, or complicit in, cybercrime and cyber-enabled crime, such as those involved in cyberscams, and sextortion,” Rubio said Thursday.\n\nThe policy change follows President Donald Trump’s March executive order on fighting cybercrime, fraud and predatory schemes.\n\nA report published this week by the U.N. Office on Drugs and Crime said the region’s syndicates have only grown more sophisticated and interconnected in recent years, “integrating drug production and distribution, cyber-enabled fraud, trafficking in persons, underground banking, and real estate investment within shared operational and financial infrastructure.”",
+          "action": null,
+          "image": "https://cms.therecord.media/uploads/55410025857_9acb18d523_o_e2762dc7c7.jpg",
+          "sources": [
+            {
+              "url": "https://therecord.media/visa-restrictions-cyber-scammers",
+              "label": "The Record"
+            }
+          ],
+          "url": "https://therecord.media/visa-restrictions-cyber-scammers",
+          "pubDate": "2026-07-23T16:29:00.000Z"
+        },
+        {
+          "title": "EU fines Google $1 billion for search, app store antitrust violations",
+          "cve": null,
+          "severity": "culture",
+          "score": 69,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Signal de veille — BleepingComputer.\n\nThe European Commission fined Google &euro;890 million ($1 billion) on Thursday after finding the company had violated the European Union's Digital Markets Act (DMA), which ensures fair online competition.\n\nCritical wp2shell WordPress flaws exploited to install webshells\n\nMicrosoft shares manual fix for WSUS sync delays and timeouts\n\nWindows LegacyHive zero-day flaw gets free, unofficial patches\n\nSonicWall SMA1000 flaws exploited as zero-days to push custo…",
+          "detail": "Signal de veille — BleepingComputer.\n\nThe European Commission fined Google &euro;890 million ($1 billion) on Thursday after finding the company had violated the European Union's Digital Markets Act (DMA), which ensures fair online competition.\n\nCritical wp2shell WordPress flaws exploited to install webshells\n\nMicrosoft shares manual fix for WSUS sync delays and timeouts\n\nWindows LegacyHive zero-day flaw gets free, unofficial patches\n\nSonicWall SMA1000 flaws exploited as zero-days to push custom malware\n\nAustralian energy provider Origin says data breach exposes client data\n\nFake Claude app promoted by Bing ads pushes SectopRAT malware",
+          "action": null,
+          "image": "https://www.bleepstatic.com/content/hl-images/2025/03/10/Google.jpg",
+          "sources": [
+            {
+              "url": "https://www.bleepingcomputer.com/news/google/eu-fines-google-1-billion-for-digital-markets-act-breaches-in-search-and-play-store/",
+              "label": "BleepingComputer"
+            }
+          ],
+          "url": "https://www.bleepingcomputer.com/news/google/eu-fines-google-1-billion-for-digital-markets-act-breaches-in-search-and-play-store/",
+          "pubDate": "2026-07-23T12:33:19.000Z"
+        },
+        {
+          "title": "Microsoft 365 outage affects Teams, SharePoint and other services",
+          "cve": null,
+          "severity": "culture",
+          "score": 67,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Signal de veille — BleepingComputer.\n\nMicrosoft is impacted by a massive outage affecting Teams and Microsoft 365 services, primarily affecting users in North America.\n\nCritical wp2shell WordPress flaws exploited to install webshells\n\nMicrosoft shares manual fix for WSUS sync delays and timeouts\n\nWindows LegacyHive zero-day flaw gets free, unofficial patches\n\nSonicWall SMA1000 flaws exploited as zero-days to push custom malware\n\nAustralian energy provider Origin says data breach exposes client…",
+          "detail": "Signal de veille — BleepingComputer.\n\nMicrosoft is impacted by a massive outage affecting Teams and Microsoft 365 services, primarily affecting users in North America.\n\nCritical wp2shell WordPress flaws exploited to install webshells\n\nMicrosoft shares manual fix for WSUS sync delays and timeouts\n\nWindows LegacyHive zero-day flaw gets free, unofficial patches\n\nSonicWall SMA1000 flaws exploited as zero-days to push custom malware\n\nAustralian energy provider Origin says data breach exposes client data\n\nFake Claude app promoted by Bing ads pushes SectopRAT malware",
+          "action": null,
+          "image": "https://www.bleepstatic.com/content/hl-images/2026/05/19/Microsoft365.jpg",
+          "sources": [
+            {
+              "url": "https://www.bleepingcomputer.com/news/microsoft/microsoft-365-outage-affects-teams-sharepoint-and-other-services/",
+              "label": "BleepingComputer"
+            }
+          ],
+          "url": "https://www.bleepingcomputer.com/news/microsoft/microsoft-365-outage-affects-teams-sharepoint-and-other-services/",
+          "pubDate": "2026-07-23T15:34:43.000Z"
+        },
+        {
+          "title": "US Warns of Iranian Hackers Targeting Siemens, Schneider, and Rockwell ICS Devices",
+          "cve": null,
+          "severity": "culture",
+          "score": 67,
+          "corroboration": 2,
+          "region": "intl",
+          "body": "Signal de veille — Infosecurity Mag.\n\nUS government agencies have warned that Iranian cyber actors are targeting US-based Siemens and Schneider industrial equipment\n\nIranian cyber adversaries are actively targeting internet-exposed industrial systems across brands like Rockwell Automation, Allen-Bradley, Schneider Electric and Siemens.\n\nIn an advisory update published on July 22, the US Cybersecurity and Infrastructure Security Agency (CISA) said the FBI had observed Iran-affiliated cyber thre…",
+          "detail": "Signal de veille — Infosecurity Mag.\n\nUS government agencies have warned that Iranian cyber actors are targeting US-based Siemens and Schneider industrial equipment\n\nIranian cyber adversaries are actively targeting internet-exposed industrial systems across brands like Rockwell Automation, Allen-Bradley, Schneider Electric and Siemens.\n\nIn an advisory update published on July 22, the US Cybersecurity and Infrastructure Security Agency (CISA) said the FBI had observed Iran-affiliated cyber threat actors download a malicious project file to a targeted programmable logic controller (PLC) at a US-based critical infrastructure organization using configuration software.\n\nThe Bureau also saw the manipulation of data on human machine interface (HMI) and supervisory control and data acquisition (SCADA) displays, resulting in operational disruption and financial loss.\n\nFurther analysis indicated the project file retained ladder logic for downstream function but added logic that overrode specific instruction sets responsible for maintaining safe operating parameters in the victim&rsquo;s environment.\n\nThis follows an April advisory warning of an ongoing cyber campaign from Iranian actors against US critical infrastructure.\n\nAccording to CISA, these actions disrupted PLCs across several US critical infrastructure sectors, notably government services and facilities, water and wastewater systems and energy.",
+          "action": null,
+          "image": "https://assets.infosecurity-magazine.com/webpage/og/c113c385-b052-4062-a564-6b959b6dfbf0.jpg",
+          "sources": [
+            {
+              "url": "https://www.infosecurity-magazine.com/news/iran-hackers-siemen-schneider-ics/",
+              "label": "Infosecurity Mag"
+            },
+            {
+              "url": "https://www.securityweek.com/us-warns-of-iranian-hackers-targeting-siemens-schneider-and-rockwell-ics-devices/",
+              "label": "SecurityWeek"
+            }
+          ],
+          "url": "https://www.infosecurity-magazine.com/news/iran-hackers-siemen-schneider-ics/",
+          "pubDate": "2026-07-23T13:30:00.000Z"
+        },
+        {
+          "title": "Abstract Raises $25 Million to Expand Composable Security Operations Platform",
+          "cve": null,
+          "severity": "culture",
+          "score": 64,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Signal de veille — SecurityWeek.\n\nComposable security operations firm Abstract Security raised $25 million in a new funding round to accelerate development of its platform.\n\nSubscribe to the SecurityWeek Email Briefing for the latest cybersecurity threats, trends, and expert insights.\n\nSubscribe to the SecurityWeek Email Briefing to stay informed on the latest threats, trends, and technology, along with insightful columns from industry experts.\n\nJoin this live webinar as we explore why exp…",
+          "detail": "Signal de veille — SecurityWeek.\n\nComposable security operations firm Abstract Security raised $25 million in a new funding round to accelerate development of its platform.\n\nSubscribe to the SecurityWeek Email Briefing for the latest cybersecurity threats, trends, and expert insights.\n\nSubscribe to the SecurityWeek Email Briefing to stay informed on the latest threats, trends, and technology, along with insightful columns from industry experts.\n\nJoin this live webinar as we explore why exploitation is outpacing remediation, where risk is growing fastest, and what security leaders can do to close the gap before attackers take advantage.\n\nCodeSecCon bridges the gap between dev and security. Discover best practices for secure coding, innovative risk-reduction tools, and safe AI integration to cultivate a true DevSecOps culture. Safely secure your apps!\n\nJohn DeSimone, the former CEO of Nightwing, has been named Chief Operating Officer at Everfox.\n\nSectigo has appointed Prem Hareesh as Corporate Chief Technology Officer.",
+          "action": null,
+          "image": "https://www.securityweek.com/wp-content/uploads/2025/11/funding-investment-market-3.jpeg",
+          "sources": [
+            {
+              "url": "https://www.securityweek.com/abstract-raises-25-million-to-expand-composable-security-operations-platform/",
+              "label": "SecurityWeek"
+            }
+          ],
+          "url": "https://www.securityweek.com/abstract-raises-25-million-to-expand-composable-security-operations-platform/",
+          "pubDate": "2026-07-23T13:54:56.000Z"
+        },
+        {
+          "title": "End-to-End Encryption and “Going Dark”",
+          "cve": null,
+          "severity": "critical",
+          "score": 64,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Signal de veille — Schneier on Sec..\n\nNew paper: &#8220; Encryption and Globalization 15 Years Later: End-to-End Encryption and the Third Round of the &#8216;Going Dark&#8217; Debate &#8220;: Abstract : This Article updates and expands on 2012 research on encryption and globalization, analyzing what the authors call &#8220;Round 3&#8221; of the Going Dark Debate: the current controversies over end-to-end encryption (E2EE).",
+          "detail": "Signal de veille — Schneier on Sec..\n\nNew paper: &#8220; Encryption and Globalization 15 Years Later: End-to-End Encryption and the Third Round of the &#8216;Going Dark&#8217; Debate &#8220;: Abstract : This Article updates and expands on 2012 research on encryption and globalization, analyzing what the authors call &#8220;Round 3&#8221; of the Going Dark Debate: the current controversies over end-to-end encryption (E2EE). Governments around the world have proposed, and in some cases enacted, laws limiting E2EE for law enforcement and national security purposes. This Article explains the underlying technologies and market developments for a law and policy audience to assess those proposals critically. The Article proceeds in three parts tracking three rounds of the Going Dark Debate. Round 1 covers the Crypto Wars of the 1990s, when U.S. export controls on strong encryption ultimately fell in 1999. Round 2 covers the period roughly 2010 to 2015, when encryption-in-transit became widespread but lawful access remained available through cloud providers, giving rise to what the authors called a &#8220;golden age of surveillance&#8221; rather than a period of going dark. Round 3 addresses the current debate over E2EE, where no entity between sender and recipient can read the plaintext. The Article&#8217;s first major contribution is identifying five technically distinct scenarios for how E2EE operates in practice, each",
+          "action": null,
+          "image": null,
+          "sources": [
+            {
+              "url": "https://www.schneier.com/blog/archives/2026/07/end-to-end-encryption-and-going-dark.html",
+              "label": "Schneier on Sec."
+            }
+          ],
+          "url": "https://www.schneier.com/blog/archives/2026/07/end-to-end-encryption-and-going-dark.html",
+          "pubDate": "2026-07-23T11:03:50.000Z"
+        },
+        {
+          "title": "FedRAMP Rev5 Is Ending: What the 20x Transition Really Requires",
+          "cve": null,
+          "severity": "culture",
+          "score": 63,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Signal de veille — BleepingComputer.\n\nFedRAMP 20X replaces point-in-time assessments with continuous, machine-readable evidence that demonstrates security controls are working. Anecdotes explains what the transition from Rev5 to FedRAMP 20X means and how organizations can prepare for continuous, evidence-based assurance.\n\nCritical wp2shell WordPress flaws exploited to install webshells\n\nMicrosoft shares manual fix for WSUS sync delays and timeouts\n\nWindows LegacyHive zero-day flaw gets free, u…",
+          "detail": "Signal de veille — BleepingComputer.\n\nFedRAMP 20X replaces point-in-time assessments with continuous, machine-readable evidence that demonstrates security controls are working. Anecdotes explains what the transition from Rev5 to FedRAMP 20X means and how organizations can prepare for continuous, evidence-based assurance.\n\nCritical wp2shell WordPress flaws exploited to install webshells\n\nMicrosoft shares manual fix for WSUS sync delays and timeouts\n\nWindows LegacyHive zero-day flaw gets free, unofficial patches\n\nSonicWall SMA1000 flaws exploited as zero-days to push custom malware\n\nAustralian energy provider Origin says data breach exposes client data\n\nFake Claude app promoted by Bing ads pushes SectopRAT malware",
+          "action": null,
+          "image": "https://www.bleepstatic.com/content/posts/2026/07/19/anecdotes-rev5.jpg",
+          "sources": [
+            {
+              "url": "https://www.bleepingcomputer.com/news/security/fedramp-rev5-is-ending-what-the-20x-transition-really-requires/",
+              "label": "BleepingComputer"
+            }
+          ],
+          "url": "https://www.bleepingcomputer.com/news/security/fedramp-rev5-is-ending-what-the-20x-transition-really-requires/",
+          "pubDate": "2026-07-23T14:00:10.000Z"
+        },
+        {
+          "title": "Microsoft working to fix Exchange Online mailbox quarantine issue",
+          "cve": null,
+          "severity": "culture",
+          "score": 63,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Signal de veille — BleepingComputer.\n\nMicrosoft is working to resolve an ongoing Exchange Online issue that has been mistakenly quarantining customers' mailboxes since Sunday.\n\nCritical wp2shell WordPress flaws exploited to install webshells\n\nMicrosoft shares manual fix for WSUS sync delays and timeouts\n\nWindows LegacyHive zero-day flaw gets free, unofficial patches\n\nSonicWall SMA1000 flaws exploited as zero-days to push custom malware\n\nAustralian energy provider Origin says data breach expose…",
+          "detail": "Signal de veille — BleepingComputer.\n\nMicrosoft is working to resolve an ongoing Exchange Online issue that has been mistakenly quarantining customers' mailboxes since Sunday.\n\nCritical wp2shell WordPress flaws exploited to install webshells\n\nMicrosoft shares manual fix for WSUS sync delays and timeouts\n\nWindows LegacyHive zero-day flaw gets free, unofficial patches\n\nSonicWall SMA1000 flaws exploited as zero-days to push custom malware\n\nAustralian energy provider Origin says data breach exposes client data\n\nFake Claude app promoted by Bing ads pushes SectopRAT malware",
+          "action": null,
+          "image": "https://www.bleepstatic.com/content/hl-images/2025/04/15/Exchange.jpg",
+          "sources": [
+            {
+              "url": "https://www.bleepingcomputer.com/news/microsoft/microsoft-working-to-fix-exchange-online-mailbox-quarantine-issue/",
+              "label": "BleepingComputer"
+            }
+          ],
+          "url": "https://www.bleepingcomputer.com/news/microsoft/microsoft-working-to-fix-exchange-online-mailbox-quarantine-issue/",
+          "pubDate": "2026-07-23T09:20:10.000Z"
+        },
+        {
+          "title": "Google Adds Selfie Video Recovery for Users Locked Out of Their Accounts",
+          "cve": null,
+          "severity": "culture",
+          "score": 59,
+          "corroboration": 2,
+          "region": "intl",
+          "body": "Signal de veille — Numerama.\n\nGoogle on Thursday announced a new way for users to sign-in to their accounts by letting them take a selfie video. The selfie for sign-in, per the tech giant, is another option on top of existing recovery methods to log in to an account, including an email address or a phone number. The idea is to use a video selfie as a way to regain access if a user ever gets locked out or doesn't have access",
+          "detail": "Signal de veille — Numerama.\n\nGoogle on Thursday announced a new way for users to sign-in to their accounts by letting them take a selfie video. The selfie for sign-in, per the tech giant, is another option on top of existing recovery methods to log in to an account, including an email address or a phone number. The idea is to use a video selfie as a way to regain access if a user ever gets locked out or doesn't have access",
+          "action": null,
+          "image": "https://c0.lestechnophiles.com/www.numerama.com/wp-content/uploads/2026/07/design-sans-titre-2026-07-23t145319115.jpg?resize=1600,900&key=0bc08794",
+          "sources": [
+            {
+              "url": "https://www.numerama.com/cyberguerre/2300251-votre-visage-comme-mot-de-passe-en-cas-de-coup-dur-google-lance-la-connexion-par-selfie-video.html",
+              "label": "Numerama"
+            },
+            {
+              "url": "https://thehackernews.com/2026/07/google-adds-selfie-video-recovery-for.html",
+              "label": "The Hacker News"
+            }
+          ],
+          "url": "https://www.numerama.com/cyberguerre/2300251-votre-visage-comme-mot-de-passe-en-cas-de-coup-dur-google-lance-la-connexion-par-selfie-video.html",
+          "pubDate": "2026-07-23T12:59:54.000Z"
+        },
+        {
+          "title": "Assaf Keren Appointed New CISO of Meta",
+          "cve": null,
+          "severity": "culture",
+          "score": 59,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Signal de veille — SecurityWeek.\n\nAssaf Keren announced on Wednesday that he is the new Chief Information Security Officer (CISO) of social media giant Meta.\n\nHe replaces Guy Rosen, who announced his retirement from the company after 13 years.\n\nSubscribe to the SecurityWeek Email Briefing for the latest cybersecurity threats, trends, and expert insights.\n\nSubscribe to the SecurityWeek Email Briefing to stay informed on the latest threats, trends, and technology, along with insightful colum…",
+          "detail": "Signal de veille — SecurityWeek.\n\nAssaf Keren announced on Wednesday that he is the new Chief Information Security Officer (CISO) of social media giant Meta.\n\nHe replaces Guy Rosen, who announced his retirement from the company after 13 years.\n\nSubscribe to the SecurityWeek Email Briefing for the latest cybersecurity threats, trends, and expert insights.\n\nSubscribe to the SecurityWeek Email Briefing to stay informed on the latest threats, trends, and technology, along with insightful columns from industry experts.\n\nJoin this live webinar as we explore why exploitation is outpacing remediation, where risk is growing fastest, and what security leaders can do to close the gap before attackers take advantage.\n\nCodeSecCon bridges the gap between dev and security. Discover best practices for secure coding, innovative risk-reduction tools, and safe AI integration to cultivate a true DevSecOps culture. Safely secure your apps!\n\nJohn DeSimone, the former CEO of Nightwing, has been named Chief Operating Officer at Everfox.",
+          "action": null,
+          "image": "https://www.securityweek.com/wp-content/uploads/2023/03/Meta-Facebook-e1739539212391.jpg",
+          "sources": [
+            {
+              "url": "https://www.securityweek.com/assaf-keren-appointed-new-ciso-of-meta/",
+              "label": "SecurityWeek"
+            }
+          ],
+          "url": "https://www.securityweek.com/assaf-keren-appointed-new-ciso-of-meta/",
+          "pubDate": "2026-07-23T09:53:51.000Z"
+        },
+        {
+          "title": "Agentic AI Challenges Progress in Confidential Computing",
+          "cve": null,
+          "severity": "culture",
+          "score": 55,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Signal de veille — Dark Reading.\n\nCore issues that slowed down adoption of secure data vaults are being resolved by technology, but artificial intelligence poses new ones. Experts have some answers.",
+          "detail": "Signal de veille — Dark Reading.\n\nCore issues that slowed down adoption of secure data vaults are being resolved by technology, but artificial intelligence poses new ones. Experts have some answers.",
+          "action": null,
+          "image": null,
+          "sources": [
+            {
+              "url": "https://www.darkreading.com/endpoint-security/agentic-ai-challenges-progress-in-confidential-computing",
+              "label": "Dark Reading"
+            }
+          ],
+          "url": "https://www.darkreading.com/endpoint-security/agentic-ai-challenges-progress-in-confidential-computing",
+          "pubDate": "2026-07-23T11:17:51.000Z"
+        },
+        {
+          "title": "Brazilian Banking Trojan Actively Spreading in Portugal",
+          "cve": null,
+          "severity": "culture",
+          "score": 55,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Signal de veille — Dark Reading.\n\nPortuguese businesses operate in the same native language as Brazilian hackers, making those businesses easy targets.",
+          "detail": "Signal de veille — Dark Reading.\n\nPortuguese businesses operate in the same native language as Brazilian hackers, making those businesses easy targets.",
+          "action": null,
+          "image": null,
+          "sources": [
+            {
+              "url": "https://www.darkreading.com/cyberattacks-data-breaches/brazilian-banking-trojan-spreading-portugal",
+              "label": "Dark Reading"
+            }
+          ],
+          "url": "https://www.darkreading.com/cyberattacks-data-breaches/brazilian-banking-trojan-spreading-portugal",
+          "pubDate": "2026-07-23T07:00:00.000Z"
+        },
+        {
+          "title": "Microsoft Copilot Deployments Delayed Over Security Concerns",
+          "cve": null,
+          "severity": "culture",
+          "score": 52,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Signal de veille — Infosecurity Mag.\n\nCoreView research finds that security leadership is concerned about AI Assistant exposing confidential data\n\nTwo-thirds of organizations have delayed or cancelled deployment of Microsoft Copilot over concerns that the AI-powered assistant could expose confidential data, a survey of security leaders has revealed.\n\nCoreView&rsquo;s State of Microsoft 365 Security and Governance 2026 report , published on 21 July, suggested that there are widespread security…",
+          "detail": "Signal de veille — Infosecurity Mag.\n\nCoreView research finds that security leadership is concerned about AI Assistant exposing confidential data\n\nTwo-thirds of organizations have delayed or cancelled deployment of Microsoft Copilot over concerns that the AI-powered assistant could expose confidential data, a survey of security leaders has revealed.\n\nCoreView&rsquo;s State of Microsoft 365 Security and Governance 2026 report , published on 21 July, suggested that there are widespread security concerns around deployment of Copilot.\n\nOne worry is that deploying Microsoft Copilot AI could expose confidential SharePoint data. Much of this revolves around a data governance problem in organizations, particularly when it comes to SharePoint.\n\nRespondents suggested that there is confusion around the access and permissions which Microsoft Copilot has, with concerns around data leakage or SharePoint sharing links outside the organization.\n\nThe people most likely to cancel or delay the deployment of Microsoft Copilot over organizational security concerns are C-level executives. According to the survey, three quarters of executives at this level have issued instructions to delay a rollout of Copilot across their organization. 60% of Managers have also taken this decision.\n\n\"It is the most senior leaders who are pausing, because they can see exactly what AI will surface - a decade of sharing links and permissions nobody cleaned up. The risk was always there but AI has made it visible and urgent,&rdquo; said Simon Azzopardi, CEO of CoreView.",
+          "action": null,
+          "image": "https://assets.infosecurity-magazine.com/webpage/og/3c6b8be5-3851-4eca-8ed1-5455f384527d.jpg",
+          "sources": [
+            {
+              "url": "https://www.infosecurity-magazine.com/news/microsoft-copilot-delayed-over/",
+              "label": "Infosecurity Mag"
+            }
+          ],
+          "url": "https://www.infosecurity-magazine.com/news/microsoft-copilot-delayed-over/",
+          "pubDate": "2026-07-23T14:00:00.000Z"
+        },
+        {
+          "title": "Shadow AI is becoming enterprise security’s biggest blind spot",
+          "cve": null,
+          "severity": "culture",
+          "score": 52,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Signal de veille — Help Net Security.\n\nArtificial intelligence has moved from experimentation to everyday business operations with remarkable speed. Employees are using it to summarize documents, draft communications, analyze spreadsheets, write code, build automations, and create AI-powered workflows across nearly every business function. Microsoft&#8217;s 2026 Work Trend Index found that employees often adopt AI faster than their organizations can adapt to it.",
+          "detail": "Signal de veille — Help Net Security.\n\nArtificial intelligence has moved from experimentation to everyday business operations with remarkable speed. Employees are using it to summarize documents, draft communications, analyze spreadsheets, write code, build automations, and create AI-powered workflows across nearly every business function. Microsoft&#8217;s 2026 Work Trend Index found that employees often adopt AI faster than their organizations can adapt to it. As AI is integrated into team members’ daily jobs, businesses are struggling to keep pace with governance, management practices, &#8230; More &#8594; The post Shadow AI is becoming enterprise security&#8217;s biggest blind spot appeared first on Help Net Security .",
+          "action": null,
+          "image": "https://img.helpnetsecurity.com/wp-content/uploads/2025/10/31095821/shadow-ai-3d.webp",
+          "sources": [
+            {
+              "url": "https://www.helpnetsecurity.com/2026/07/23/shadow-ai-security-risks/",
+              "label": "Help Net Security"
+            }
+          ],
+          "url": "https://www.helpnetsecurity.com/2026/07/23/shadow-ai-security-risks/",
+          "pubDate": "2026-07-23T06:00:09.000Z"
+        },
+        {
+          "title": "Dassault Systèmes rachète ArisGlobal pour 1,8 milliard $",
+          "cve": null,
+          "severity": "culture",
+          "score": 51,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Signal de veille — Silicon.fr.\n\nDassault Systèmes annonce le rachat d&rsquo;ArisGlobal, éditeur d&rsquo;une plateforme de conformité réglementaire et d&rsquo;intelligence artificielle destinée à l&rsquo;industrie des sciences de la vie. L&rsquo;opération est valorisée à environ 1,8 milliard $ en numéraire. Un complément de prix pouvant atteindre 200 millions $ est également prévu.",
+          "detail": "Signal de veille — Silicon.fr.\n\nDassault Systèmes annonce le rachat d&rsquo;ArisGlobal, éditeur d&rsquo;une plateforme de conformité réglementaire et d&rsquo;intelligence artificielle destinée à l&rsquo;industrie des sciences de la vie. L&rsquo;opération est valorisée à environ 1,8 milliard $ en numéraire. Un complément de prix pouvant atteindre 200 millions $ est également prévu. Son versement dépendra d&rsquo;objectifs de chiffre d&rsquo;affaires liés à l&rsquo;IA sur plusieurs années. ArisGlobal compte plus de 200 clients. Parmi eux figurent la moitié des cinquante premiers groupes biopharmaceutiques mondiaux. L&rsquo;entreprise travaille aussi avec des sociétés de biotechnologie, des fabricants de technologies médicales, des organismes de recherche sous contrat (CRO) et des autorités sanitaires. Sa plateforme traite plus de 12 millions de rapports liés à la sécurité des patients chaque année. ArisGlobal emploie plus de 1 300 personnes dans le monde. L&rsquo;entreprise vise un chiffre d&rsquo;affaires de 175 millions $ en 2026. Un marché porté par l&rsquo;IA et les exigences réglementaires Dassault Systèmes estime que le marché de la conformité réglementaire atteindra 7,5 milliards $ d&rsquo;ici 2030. Le groupe anticipe une croissance à deux chiffres, soutenue notamment par la montée en puissance des logiciels et de l&rsquo;intelligence artificielle. Selon Dassault Systèmes , la solution NavaX d&rsquo;Aris",
+          "action": null,
+          "image": "https://www.silicon.fr/wp-content/uploads/2025/09/Data-Science-Game-Moscou-devant-Rome-ParisTech-F.jpg",
+          "sources": [
+            {
+              "url": "https://www.silicon.fr/business-1367/dassault-systemes-rachete-arisglobal-pour-18-milliard-228462",
+              "label": "Silicon.fr"
+            }
+          ],
+          "url": "https://www.silicon.fr/business-1367/dassault-systemes-rachete-arisglobal-pour-18-milliard-228462",
+          "pubDate": "2026-07-23T09:05:18.000Z"
+        },
+        {
+          "title": "Coupe du monde 2026 : comment Cloudflare a vu le Mondial redessiner le trafic Internet",
+          "cve": null,
+          "severity": "culture",
+          "score": 48,
+          "corroboration": 1,
+          "region": "fr",
+          "body": "Signal de veille — IT-Connect.\n\nCloudflare a analysé le trafic HTTP mondial pendant la Coupe du monde 2026. Décalage horaire, streaming, paris en ligne : voici ce que révèlent ses données.\n\nActualités IT & Tech, tutoriels en administration système, réseau et cybersécurité.\n\nArchitecture Réseau Cybersécurité Linux & Logiciels Libres Microsoft (On-Premise) Microsoft 365 & Azure Self-Hosting & Open Source Stockage & NAS Cours IT Actualités Entreprise Actu Cybersécurité Web Logiciel – OS Mat…",
+          "detail": "Signal de veille — IT-Connect.\n\nCloudflare a analysé le trafic HTTP mondial pendant la Coupe du monde 2026. Décalage horaire, streaming, paris en ligne : voici ce que révèlent ses données.\n\nActualités IT & Tech, tutoriels en administration système, réseau et cybersécurité.\n\nArchitecture Réseau Cybersécurité Linux & Logiciels Libres Microsoft (On-Premise) Microsoft 365 & Azure Self-Hosting & Open Source Stockage & NAS Cours IT Actualités Entreprise Actu Cybersécurité Web Logiciel – OS Matériel Réseaux sociaux Mobile Bons Plans Tests Débutants Livres Vidéos IT-Connect » Actualités » Web » Coupe du monde 2026 : comment Cloudflare a vu le Mondial redessiner le trafic Internet Web Coupe du monde 2026 : comment Cloudflare a vu le Mondial redessiner le trafic Internet 23/07/2026 Florian BURNEL 0 commentaire cloudflare , Web Et si le match qui a le plus secoué Internet n'était ni la finale, ni une demi-finale ? C'est l'un des enseignements de l'analyse publiée par Cloudflare, qui a passé au crible le trafic HTTP mondial pendant toute la Coupe du monde 2026. Décalage horaire, mi-temps, pauses fraîcheur, streaming et paris en ligne : les données de Cloudflare Radar dessinent une cartographie inédite de la façon dont la planète s'est connectée, ou déconnectée, au rythme des matchs. Voici ce que l'on peut en retenir.\n\nAvec un réseau réparti sur plus de 330 points de présence et une empreinte dans plus de 120 pays, Cloudflare est très bien placé pour mesurer les grands mouvements du trafic Web mondial. Une position centrale qui permet des analyses inédites et qui explique aussi l'onde de choc provoquée dès qu'il y a une panne (on se rappelle encore de la panne mondiale du 18 novembre 2025 ).\n\nPour rendre les comparaisons possibles d'un pays à l'autre, Cloudflare explique avoir défin",
+          "action": null,
+          "image": "https://www.it-connect.fr/wp-content-itc/uploads/2026/07/Coupe-du-monde-2026-comment-Cloudflare-a-vu-le-Mondial-redessiner-le-trafic-Internet.jpg",
+          "sources": [
+            {
+              "url": "https://www.it-connect.fr/cloudflare-coupe-du-monde-2026-trafic-internet/",
+              "label": "IT-Connect"
+            }
+          ],
+          "url": "https://www.it-connect.fr/cloudflare-coupe-du-monde-2026-trafic-internet/",
+          "pubDate": "2026-07-23T08:50:14.000Z"
+        },
+        {
+          "title": "AI Act : qui représente la France au comité scientifique de l’UE",
+          "cve": null,
+          "severity": "culture",
+          "score": 45,
+          "corroboration": 1,
+          "region": "fr",
+          "body": "Signal de veille — Silicon.fr.\n\nLa Commission européenne et les autorités nationales compétentes ont désormais un comité scientifique pour les assister dans la mise en application de l&rsquo;AI Act. Sur ses 60 membres nommés pour un mandat de deux ans renouvelable, trois représentent la France : Céline Castets-Renard, Raja Chatila et Tom David.",
+          "detail": "Signal de veille — Silicon.fr.\n\nLa Commission européenne et les autorités nationales compétentes ont désormais un comité scientifique pour les assister dans la mise en application de l&rsquo;AI Act. Sur ses 60 membres nommés pour un mandat de deux ans renouvelable, trois représentent la France : Céline Castets-Renard, Raja Chatila et Tom David. Céline Castets-Renard Parallèlement à sa nomination au comité scientifique*, Céline Castets-Renard prend un nouveau départ à la faculté de droit, d&rsquo;économie et de finances de l&rsquo;Université du Luxembourg. Elle aura auparavant passé 7 ans à l&rsquo;Université d&rsquo;Ottawa (Canada) comme professeure titulaire à la section de droit civil de la faculté de droit. L&rsquo;intéressée reste titulaire de la Chaire de recherche du Canada sur le droit international et comparé de l&rsquo;intelligence artificielle. Ainsi que de celle dite « AI Laws and Governance in a Global Economy », en partenariat avec Airbus, au sein d&rsquo;ANITI (Artificial and Natural Intelligence Toulouse Institute, labellisé institut 3IA dans le cadre de la première phase de la stratégie nationale pour l&rsquo;intelligence artificielle). Céline Castets-Renard fut, entre 2020 et 2024, titulaire d&rsquo;une autre chaire à l&rsquo;institut ANITI : « AI Law, Accountability and Social Trust in AI ». Elle fut par ailleurs membre experte à la Commission européenne auprès de l&rsquo; Observatoire sur l",
+          "action": null,
+          "image": "https://www.silicon.fr/wp-content/uploads/2026/07/AI-Act-comite-scientifique-France.jpg",
+          "sources": [
+            {
+              "url": "https://www.silicon.fr/data-ia-1372/ai-act-france-comite-scientifique-ue-228464",
+              "label": "Silicon.fr"
+            }
+          ],
+          "url": "https://www.silicon.fr/data-ia-1372/ai-act-france-comite-scientifique-ue-228464",
+          "pubDate": "2026-07-23T12:38:44.000Z"
+        }
+      ]
+    }
+  ]
+}
