@@ -1,0 +1,993 @@
+{
+  "id": "daily-2026-08-01",
+  "type": "daily",
+  "date": "2026-08-01",
+  "title": "Rapport quotidien - samedi 1 août 2026",
+  "summary": "Sur les dernières 24 heures, la veille recense 16 vulnérabilités critiques, 45 incidents ou compromissions et 23 signaux de fond. Acteurs et produits les plus exposés : thumbor (pip), nltk (pip) et Google.",
+  "generatedAt": "2026-08-01T04:01:03.169Z",
+  "sections": [
+    {
+      "id": "vulns",
+      "items": [
+        {
+          "title": "CVE-2026-53608 — @apostrophecms/seo Vulnerable to Stored XSS via Unsanitized Google Analytics / GTM ID Injected into Script Tag",
+          "cve": "CVE-2026-53608",
+          "severity": "high",
+          "score": 61,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Vulnérabilité élevée CVE-2026-53608 affectant @apostrophecms/seo (npm) (score CVSS 8.7).\n\n@apostrophecms/seo Vulnerable to Stored XSS via Unsanitized Google Analytics / GTM ID Injected into Script Tag\n\n--> Name Query To see all available qualifiers, see our documentation .\n\nThe @apostrophecms/seo package injects the Google Analytics Tracking ID ( seoGoogleTrackingId ) and Google Tag Manager ID ( seoGoogleTagManager ) directly into tag bodies using JavaScript template literals without any sanitization or validation.\n\nAny user with editor-level a…",
+          "detail": "Vulnérabilité élevée CVE-2026-53608 affectant @apostrophecms/seo (npm) (score CVSS 8.7).\n\n@apostrophecms/seo Vulnerable to Stored XSS via Unsanitized Google Analytics / GTM ID Injected into Script Tag\n\n--> Name Query To see all available qualifiers, see our documentation .\n\nThe @apostrophecms/seo package injects the Google Analytics Tracking ID ( seoGoogleTrackingId ) and Google Tag Manager ID ( seoGoogleTagManager ) directly into tag bodies using JavaScript template literals without any sanitization or validation.\n\nAny user with editor-level access (the default role for content managers) can set these fields to a malicious value, resulting in stored XSS that executes on every page for every visitor of the site.\n\nThe vulnerable code is in node_modules/@apostrophecms/seo/lib/nodes.js .\n\nApostropheCMS's permission model ( @apostrophecms/permission/index.js line 121) grants editor-level users the ability to edit and publish the global singleton, meaning a contributor does not need administrator access to exploit this issue.\n\nPrerequisites: ApostropheCMS with @apostrophecms/seo installed and seoGoogleAnalytics: true enabled in module options. An editor-level account.",
+          "action": "Vérifier l'exposition du parc et appliquer le correctif éditeur dès sa disponibilité.",
+          "image": "https://github.githubassets.com/assets/advisory-database-show-f32c8207dfb2.png",
+          "sources": [
+            {
+              "url": "https://github.com/advisories/GHSA-wf43-fpp3-cf65",
+              "label": "GitHub Advisory"
+            }
+          ],
+          "url": "https://github.com/advisories/GHSA-wf43-fpp3-cf65",
+          "pubDate": "2026-07-31T21:53:56.000Z"
+        },
+        {
+          "title": "CVE-2026-68771 — ComfyUI v0.23.0 contains an unsafe deserialization vulnerability in the LoadTrainingDatase…",
+          "cve": "CVE-2026-68771",
+          "severity": "critical",
+          "score": 59,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Vulnérabilité critique CVE-2026-68771 (score CVSS 9.8).\n\nComfyUI v0.23.0 contains an unsafe deserialization vulnerability in the LoadTrainingDataset node that allows unauthenticated remote attackers to execute arbitrary Python code by uploading a crafted pickle file and triggering its deserialization.",
+          "detail": "Vulnérabilité critique CVE-2026-68771 (score CVSS 9.8).\n\nComfyUI v0.23.0 contains an unsafe deserialization vulnerability in the LoadTrainingDataset node that allows unauthenticated remote attackers to execute arbitrary Python code by uploading a crafted pickle file and triggering its deserialization. Attackers can upload a malicious shard_*.pkl file via the unauthenticated POST /upload/image endpoint and then queue a workflow graph via POST /prompt referencing the uploaded file, causing torch.load to deserialize the attacker-controlled pickle payload using __reduce__ and execute arbitrary commands as the ComfyUI process user.\n\nScore CVSS : 9.8\n\nType de faiblesse (CWE) : CWE-502",
+          "action": "Vérifier l'exposition du parc et appliquer le correctif éditeur dès sa disponibilité.",
+          "image": null,
+          "sources": [
+            {
+              "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-68771",
+              "label": "NVD"
+            },
+            {
+              "url": "https://www.cvedetails.com/cve/CVE-2026-68771/",
+              "label": "CVE Details"
+            }
+          ],
+          "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-68771",
+          "pubDate": "2026-07-31T22:17:03.630Z"
+        },
+        {
+          "title": "CVE-2026-68770 — sentence-transformers contains a security control bypass vulnerability that allows attacke…",
+          "cve": "CVE-2026-68770",
+          "severity": "critical",
+          "score": 59,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Vulnérabilité critique CVE-2026-68770 (score CVSS 9.8).\n\nsentence-transformers contains a security control bypass vulnerability that allows attackers to achieve arbitrary code execution by exploiting a logic flaw in the import_module_class helper within sentence_transformers/util/misc.py, where the guard condition includes an 'or os.path.exists(model_name_or_path)' clause that satisfies the trust gate whenever the supplied path exists on the local filesystem, regardless of the trust_remote_code=False argument.",
+          "detail": "Vulnérabilité critique CVE-2026-68770 (score CVSS 9.8).\n\nsentence-transformers contains a security control bypass vulnerability that allows attackers to achieve arbitrary code execution by exploiting a logic flaw in the import_module_class helper within sentence_transformers/util/misc.py, where the guard condition includes an 'or os.path.exists(model_name_or_path)' clause that satisfies the trust gate whenever the supplied path exists on the local filesystem, regardless of the trust_remote_code=False argument. Attackers who can control or influence the contents of a model directory on disk can place malicious Python files such as modeling_*.py referenced via modules.json, causing the code to execute at import time when an application loads the model with SentenceTransformer(path, trust_remote_code=False), bypassing the documented security contract and achieving code execution within the loading process.\n\nScore CVSS : 9.8\n\nType de faiblesse (CWE) : CWE-94",
+          "action": "Vérifier l'exposition du parc et appliquer le correctif éditeur dès sa disponibilité.",
+          "image": null,
+          "sources": [
+            {
+              "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-68770",
+              "label": "NVD"
+            },
+            {
+              "url": "https://www.cvedetails.com/cve/CVE-2026-68770/",
+              "label": "CVE Details"
+            }
+          ],
+          "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-68770",
+          "pubDate": "2026-07-31T21:17:32.440Z"
+        },
+        {
+          "title": "CVE-2026-52887 — NocoBase: SQL injection in /api/myInAppChannels:list filter to PG-superuser RCE",
+          "cve": "CVE-2026-52887",
+          "severity": "critical",
+          "score": 59,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Vulnérabilité critique CVE-2026-52887 affectant @nocobase/plugin-notification-in-app-message (npm) (score CVSS 10).\n\nNocoBase: SQL injection in /api/myInAppChannels:list filter to PG-superuser RCE\n\n--> Name Query To see all available qualifiers, see our documentation .\n\nThe shipped docker-compose.yml creates the DB role nocobase on a stock postgres:16 image, which assigns the rolsuper attribute by default. COPY ...",
+          "detail": "Vulnérabilité critique CVE-2026-52887 affectant @nocobase/plugin-notification-in-app-message (npm) (score CVSS 10).\n\nNocoBase: SQL injection in /api/myInAppChannels:list filter to PG-superuser RCE\n\n--> Name Query To see all available qualifiers, see our documentation .\n\nThe shipped docker-compose.yml creates the DB role nocobase on a stock postgres:16 image, which assigns the rolsuper attribute by default. COPY ... TO PROGRAM '...' therefore runs shell commands as uid=999(postgres) inside the database container.\n\nResult: any anonymous visitor signs up, signs in, and exfiltrates arbitrary rows or executes shell commands inside the database container with one HTTP GET after the sign-in.\n\nNocoBase server, @nocobase/plugin-notification-in-app-message . Confirmed live-exploitable on the official nocobase/nocobase:2.0.57 Docker image (HEAD e35a2737d9df139cacecae0151c3326746e2339a ).\n\n@nocobase/plugin-notification-in-app-message is enabled by default in @nocobase/preset-nocobase . The default auth-basic ships allowSignUp: true . The shipped docker/app-postgres/docker-compose.yml uses POSTGRES_USER=nocobase against postgres:16 , which makes the role a PostgreSQL superuser; COPY ... TO PROGRAM runs from this role.\n\npackages/plugins/@nocobase/plugin-notification-in-app-message/src/server/InAppNotificationChannel.ts:200 : app.acl.allow('myInAppChannels', '*', 'loggedIn') exposes every action on the resource to every authenticated role, including the seeded member .",
+          "action": "Vérifier l'exposition du parc et appliquer le correctif éditeur dès sa disponibilité.",
+          "image": "https://github.githubassets.com/assets/advisory-database-show-f32c8207dfb2.png",
+          "sources": [
+            {
+              "url": "https://github.com/advisories/GHSA-p849-8hwh-84j9",
+              "label": "GitHub Advisory"
+            }
+          ],
+          "url": "https://github.com/advisories/GHSA-p849-8hwh-84j9",
+          "pubDate": "2026-07-31T19:44:59.000Z"
+        },
+        {
+          "title": "CVE-2026-52855 — Wings exposes node configuration secrets through egg configuration-file templating",
+          "cve": "CVE-2026-52855",
+          "severity": "critical",
+          "score": 59,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Vulnérabilité critique CVE-2026-52855 affectant github.com/pterodactyl/wings (go) (score CVSS 9.9).\n\nWings exposes node configuration secrets through egg configuration-file templating\n\n--> Name Query To see all available qualifiers, see our documentation .\n\nResulting impact: Disclosure of the node daemon token lets the attacker forge authentication tokens and act against every server on that node , a full-node compromise reachable from a low-privileged account.\n\nYes.",
+          "detail": "Vulnérabilité critique CVE-2026-52855 affectant github.com/pterodactyl/wings (go) (score CVSS 9.9).\n\nWings exposes node configuration secrets through egg configuration-file templating\n\n--> Name Query To see all available qualifiers, see our documentation .\n\nResulting impact: Disclosure of the node daemon token lets the attacker forge authentication tokens and act against every server on that node , a full-node compromise reachable from a low-privileged account.\n\nYes. Fixed in Wings v1.12.3 (Panel is unaffected; the fix is Wings-only).\n\nAfter upgrading, rotate the affected nodes' daemon tokens , since a previously exfiltrated token remains valid until rotated (Admin → Nodes → Configuration → reset the token, then re-deploy config.yml to the node).\n\nThese reduce exposure but are not a complete fix; upgrading Wings is the recommended action.\n\nanthonyphysgun published to pterodactyl/wings Jun 12, 2026 Published to the GitHub Advisory Database Jul 31, 2026 Reviewed Jul 31, 2026 Last updated Jul 31, 2026 Severity Critical 9.9 CVSS overall score This score calculates overall vulnerability severity from 0 to 10 and is based on the Common Vulnerability Scoring System (CVSS). / 10 CVSS v3 base metrics Attack vector Network Attack complexity Low Privileges required Low User interaction None Scope Changed Confidentiality High Integrity High Availability High Learn more about base metrics CVSS v3 base metrics Attack vector: More severe the more the remote (logically and physically) an attacker can be in order to exploit the vulnerability. Attack complexity: More severe for the least complex attacks. Privileges required: More severe if no privileges are required. User interaction: More severe when no user interaction is required. Scope: More severe when a scope change occurs, e.g. on",
+          "action": "Vérifier l'exposition du parc et appliquer le correctif éditeur dès sa disponibilité.",
+          "image": "https://github.githubassets.com/assets/advisory-database-show-f32c8207dfb2.png",
+          "sources": [
+            {
+              "url": "https://github.com/advisories/GHSA-pfvc-3p5h-x7h6",
+              "label": "GitHub Advisory"
+            }
+          ],
+          "url": "https://github.com/advisories/GHSA-pfvc-3p5h-x7h6",
+          "pubDate": "2026-07-31T16:16:46.000Z"
+        },
+        {
+          "title": "CVE-2026-53599 — Redaxo has a Mediapool isAllowedExtension bypass via multi-segment filename that leads to authenticated RCE on Apache mod_php multi-extension handlers",
+          "cve": "CVE-2026-53599",
+          "severity": "high",
+          "score": 58,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Vulnérabilité élevée CVE-2026-53599 affectant redaxo/source (composer) (score CVSS 7.5).\n\nRedaxo has a Mediapool isAllowedExtension bypass via multi-segment filename that leads to authenticated RCE on Apache mod_php multi-extension handlers\n\n--> Name Query To see all available qualifiers, see our documentation .\n\nThe vulnerable check is a regression introduced in commit 9d008697d (PR #6213, Feb 7 2025), which weakened a previously correct str_contains check into a pair of str_ends_with checks.",
+          "detail": "Vulnérabilité élevée CVE-2026-53599 affectant redaxo/source (composer) (score CVSS 7.5).\n\nRedaxo has a Mediapool isAllowedExtension bypass via multi-segment filename that leads to authenticated RCE on Apache mod_php multi-extension handlers\n\n--> Name Query To see all available qualifiers, see our documentation .\n\nThe vulnerable check is a regression introduced in commit 9d008697d (PR #6213, Feb 7 2025), which weakened a previously correct str_contains check into a pair of str_ends_with checks. The earlier check, in place since 2018 specifically to defend against double-extension attacks, would have blocked this payload.\n\nThe regression has shipped in every release from 5.18.2 through 5.21.0.\n\nAt the audited commit 6e0de42 , isAllowedExtension performs three checks against the blocked-extension list:\n\nPrior to commit 9d008697d (PR #6213, Feb 7 2025) the check was:\n\nReproduced end-to-end on Apache 2.4.58 + PHP 8.3.6 on Ubuntu 24.04, using the exact validator code from commit 6e0de42 and a JPEG/PHP polyglot served from the same docroot under two different Apache PHP-handler configurations.",
+          "action": "Vérifier l'exposition du parc et appliquer le correctif éditeur dès sa disponibilité.",
+          "image": "https://github.githubassets.com/assets/advisory-database-show-f32c8207dfb2.png",
+          "sources": [
+            {
+              "url": "https://github.com/advisories/GHSA-98pp-vccm-qm25",
+              "label": "GitHub Advisory"
+            }
+          ],
+          "url": "https://github.com/advisories/GHSA-98pp-vccm-qm25",
+          "pubDate": "2026-07-31T19:43:51.000Z"
+        },
+        {
+          "title": "CVE-2026-54725 — vault-addr annotation SSRF -- webhook makes outbound HTTP call to attacker URL during admission; vault-serviceaccount enables cluster-wide SA token theft via TokenRequest API",
+          "cve": "CVE-2026-54725",
+          "severity": "critical",
+          "score": 58,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Vulnérabilité critique CVE-2026-54725 affectant github.com/bank-vaults/vault-secrets-webhook (go) (score CVSS 9.6).\n\nvault-addr annotation SSRF -- webhook makes outbound HTTP call to attacker URL during admission; vault-serviceaccount enables cluster-wide SA token theft via TokenRequest API",
+          "detail": "Vulnérabilité critique CVE-2026-54725 affectant github.com/bank-vaults/vault-secrets-webhook (go) (score CVSS 9.6).\n\nvault-addr annotation SSRF -- webhook makes outbound HTTP call to attacker URL during admission; vault-serviceaccount enables cluster-wide SA token theft via TokenRequest API\n\nPaquet affecté : github.com/bank-vaults/vault-secrets-webhook (go).",
+          "action": "Vérifier l'exposition du parc et appliquer le correctif éditeur dès sa disponibilité.",
+          "image": "https://github.githubassets.com/assets/advisory-database-show-f32c8207dfb2.png",
+          "sources": [
+            {
+              "url": "https://github.com/advisories/GHSA-r2v3-8gwf-7ghm",
+              "label": "GitHub Advisory"
+            }
+          ],
+          "url": "https://github.com/advisories/GHSA-r2v3-8gwf-7ghm",
+          "pubDate": "2026-07-31T17:45:02.000Z"
+        },
+        {
+          "title": "CVE-2026-41695 — Spring Data: Unbounded property-path cache keyed by externally-supplied path string",
+          "cve": "CVE-2026-41695",
+          "severity": "high",
+          "score": 58,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Vulnérabilité élevée CVE-2026-41695 affectant org.springframework.data:spring-data-commons (maven) (score CVSS 7.5).\n\nSpring Data: Unbounded property-path cache keyed by externally-supplied path string\n\n--> Name Query To see all available qualifiers, see our documentation .\n\nWhen a consuming module routes user-supplied dot-paths (sort parameters, projection paths, PATCH paths) through MappingContext.getPersistentPropertyPath(String, Class) , each distinct string — including invalid ones — is cached forever.",
+          "detail": "Vulnérabilité élevée CVE-2026-41695 affectant org.springframework.data:spring-data-commons (maven) (score CVSS 7.5).\n\nSpring Data: Unbounded property-path cache keyed by externally-supplied path string\n\n--> Name Query To see all available qualifiers, see our documentation .\n\nWhen a consuming module routes user-supplied dot-paths (sort parameters, projection paths, PATCH paths) through MappingContext.getPersistentPropertyPath(String, Class) , each distinct string — including invalid ones — is cached forever. A remote attacker can send millions of requests with unique ?sort=aaaa values and grow the heap until the service OOMs.\n\nPersistentPropertyPathFactory.propertyPaths (line 53) is a ConcurrentHashMap populated by getPotentiallyCachedPath() (line 174-177) via computeIfAbsent . The key is (TypeInformation, rawPathString) . Crucially, unresolvable paths are also cached (as PathResolution.unresolved , line 204) so that the same InvalidPersistentPropertyPath can be re-thrown — meaning every distinct garbage string an attacker sends creates a permanent entry. There is no eviction. This is reachable from AbstractMappingContext.getPersistentPropertyPath(String, Class) ( AbstractMappingContext.java:345 ), which Spring Data REST and several store query mappers call with HTTP-request-derived sort/filter property names.\n\nBy contrast, the sibling SimplePropertyPath.cache was already hardened to use ConcurrentReferenceHashMap (soft refs); this cache was not given the same treatment.\n\nAgainst a Spring Data REST endpoint, an attacker scripts GET /things?sort= in a loop. Each request fails fast with InvalidPersistentPropertyPath , but each distinct random string leaves behind a TypeAndPath key, a PathResolution object holding the split segments list, and the source string in the map. A",
+          "action": "Vérifier l'exposition du parc et appliquer le correctif éditeur dès sa disponibilité.",
+          "image": "https://github.githubassets.com/assets/advisory-database-show-f32c8207dfb2.png",
+          "sources": [
+            {
+              "url": "https://github.com/advisories/GHSA-88fw-v6x4-3f58",
+              "label": "GitHub Advisory"
+            }
+          ],
+          "url": "https://github.com/advisories/GHSA-88fw-v6x4-3f58",
+          "pubDate": "2026-07-31T16:44:15.000Z"
+        },
+        {
+          "title": "CVE-2026-53609 — Apostrophe has Server-Side Prototype Pollution in apos.util.set via patch operators that leads to process-wide authorization bypass",
+          "cve": "CVE-2026-53609",
+          "severity": "critical",
+          "score": 57,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Vulnérabilité critique CVE-2026-53609 affectant apostrophe (npm) (score CVSS 9.1).\n\nApostrophe has Server-Side Prototype Pollution in apos.util.set via patch operators that leads to process-wide authorization bypass\n\n--> Name Query To see all available qualifiers, see our documentation .\n\nA confirmed gadget in publicApiCheck() causes this to bypass authorization on all piece-type REST API endpoints for every subsequent unauthenticated request, for the lifetime of the Node.js process.\n\nThe function splits a dot-notation path and traverses…",
+          "detail": "Vulnérabilité critique CVE-2026-53609 affectant apostrophe (npm) (score CVSS 9.1).\n\nApostrophe has Server-Side Prototype Pollution in apos.util.set via patch operators that leads to process-wide authorization bypass\n\n--> Name Query To see all available qualifiers, see our documentation .\n\nA confirmed gadget in publicApiCheck() causes this to bypass authorization on all piece-type REST API endpoints for every subsequent unauthenticated request, for the lifetime of the Node.js process.\n\nThe function splits a dot-notation path and traverses properties without rejecting __proto__ , constructor , or prototype :\n\nThe same unsanitized call also appears for direct dot-notation keys in the PATCH body (~line 1811), providing a second independent entry point.\n\nBecause JavaScript property lookup resolves inherited properties from Object.prototype , the condition:\n\n! self . options . publicApiProjection evaluates to false for all modules.",
+          "action": "Vérifier l'exposition du parc et appliquer le correctif éditeur dès sa disponibilité.",
+          "image": "https://github.githubassets.com/assets/advisory-database-show-f32c8207dfb2.png",
+          "sources": [
+            {
+              "url": "https://github.com/advisories/GHSA-6h5j-32cf-4253",
+              "label": "GitHub Advisory"
+            }
+          ],
+          "url": "https://github.com/advisories/GHSA-6h5j-32cf-4253",
+          "pubDate": "2026-07-31T21:49:25.000Z"
+        },
+        {
+          "title": "Google AI Supercharges Chrome Security, Fixing 1,072 Bugs",
+          "cve": null,
+          "severity": "critical",
+          "score": 49,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Vulnérabilité critique affectant Google.\n\nGoogle says AI found and helped fix 1,072 Chrome security bugs in two releases, dramatically accelerating vulnerability detection and patching Google&#8217;s Chrome Security team published a detailed account of how AI models have transformed their vulnerability management pipeline, and the headline figure is difficult to dismiss: in the last two Chrome releases alone, the team fixed 1,072 security bugs, more than the total fixed across the prior 23 milesto…",
+          "detail": "Vulnérabilité critique affectant Google.\n\nGoogle says AI found and helped fix 1,072 Chrome security bugs in two releases, dramatically accelerating vulnerability detection and patching Google&#8217;s Chrome Security team published a detailed account of how AI models have transformed their vulnerability management pipeline, and the headline figure is difficult to dismiss: in the last two Chrome releases alone, the team fixed 1,072 security bugs, more than the total fixed across the prior 23 milestones combined. That&#8217;s not a marginal improvement. That&#8217;s a different category of operation. &#8220;In early 2026, we built an agent harness that used Gemini to find vulnerabilities across the broader Chrome codebase with higher efficiency and lower false positives. One of the bugs we found was a sandbox escape that would allow a compromised renderer to trick the browser into reading local files — a bug that quietly survived in our codebase for more than 13 years!&#8221; states Google . &#8220;For many of us, this moment cemented the potential of AI-powered vulnerability detection.&#8221; The same tools that find bugs are now also triaging them. Historically, triaging a single security report took between 5 and 30 minutes of human time. The automated system now handles filtering duplicates, reproducing the bug, assigning severity, and routing it to the right team — the Chrome team estimates this is saving hundreds of",
+          "action": "Vérifier l'exposition du parc et appliquer le correctif éditeur dès sa disponibilité.",
+          "image": "https://securityaffairs.com/wp-content/uploads/2026/07/image-93.png",
+          "sources": [
+            {
+              "url": "https://securityaffairs.com/196408/ai/google-ai-supercharges-chrome-security-fixing-1072-bugs.html",
+              "label": "Security Affairs"
+            }
+          ],
+          "url": "https://securityaffairs.com/196408/ai/google-ai-supercharges-chrome-security-fixing-1072-bugs.html",
+          "pubDate": "2026-07-31T13:46:45.000Z"
+        },
+        {
+          "title": "Critical Flaw Allowed to Azure Cosmos DB Pwnage",
+          "cve": null,
+          "severity": "critical",
+          "score": 49,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Vulnérabilité critique affectant Azure.\n\nCosmosEscape, a critical vulnerability in Azure, could have allowed attackers to compromise any database on the Cosmos DB service.\n\nNamed CosmosEscape, the vulnerability exposed the primary key for Cosmos DB accounts, granting full read and write access.\n\nSubscribe to the SecurityWeek Email Briefing for the latest cybersecurity threats, trends, and expert insights.\n\nSubscribe to the SecurityWeek Email Briefing to stay informed on the latest threats, trends…",
+          "detail": "Vulnérabilité critique affectant Azure.\n\nCosmosEscape, a critical vulnerability in Azure, could have allowed attackers to compromise any database on the Cosmos DB service.\n\nNamed CosmosEscape, the vulnerability exposed the primary key for Cosmos DB accounts, granting full read and write access.\n\nSubscribe to the SecurityWeek Email Briefing for the latest cybersecurity threats, trends, and expert insights.\n\nSubscribe to the SecurityWeek Email Briefing to stay informed on the latest threats, trends, and technology, along with insightful columns from industry experts.\n\nJoin this live webinar as we explore if detection-first security operations can keep pace with AI, or if it’s time to rethink prevention as the strongest default.\n\nCodeSecCon bridges the gap between dev and security. Discover best practices for secure coding, innovative risk-reduction tools, and safe AI integration to cultivate a true DevSecOps culture. Safely secure your apps!\n\nPNC Financial Services Group has appointed Christian Winward as CISO.",
+          "action": "Vérifier l'exposition du parc et appliquer le correctif éditeur dès sa disponibilité.",
+          "image": "https://www.securityweek.com/wp-content/uploads/2024/08/Microsoft-Azure.jpeg",
+          "sources": [
+            {
+              "url": "https://www.securityweek.com/critical-flaw-led-to-azure-cosmos-db-pwnage/",
+              "label": "SecurityWeek"
+            }
+          ],
+          "url": "https://www.securityweek.com/critical-flaw-led-to-azure-cosmos-db-pwnage/",
+          "pubDate": "2026-07-31T09:04:02.000Z"
+        },
+        {
+          "title": "CVE-2026-12075 — Natural Language Toolkit (NLTK): DNS-rebinding SSRF filter bypass in nltk.pathsec.urlopen (nltk.download / nltk.data.load) defeats ENFORCE mode",
+          "cve": "CVE-2026-12075",
+          "severity": "high",
+          "score": 46,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Vulnérabilité élevée CVE-2026-12075 affectant nltk (pip) (score CVSS 8.6).\n\nNatural Language Toolkit (NLTK): DNS-rebinding SSRF filter bypass in nltk.pathsec.urlopen (nltk.download / nltk.data.load) defeats ENFORCE mode\n\n--> Name Query To see all available qualifiers, see our documentation .\n\nurlopen() validates, then hands the raw hostname to urllib , which performs a second name resolution deep in the connection layer ( http.client.HTTPConnection.connect → socket.create_connection → socket.getaddrinfo ).",
+          "detail": "Vulnérabilité élevée CVE-2026-12075 affectant nltk (pip) (score CVSS 8.6).\n\nNatural Language Toolkit (NLTK): DNS-rebinding SSRF filter bypass in nltk.pathsec.urlopen (nltk.download / nltk.data.load) defeats ENFORCE mode\n\n--> Name Query To see all available qualifiers, see our documentation .\n\nurlopen() validates, then hands the raw hostname to urllib , which performs a second name resolution deep in the connection layer ( http.client.HTTPConnection.connect → socket.create_connection → socket.getaddrinfo ). The validation-side and connection-side resolutions are fully independent code paths with independent caches:\n\n_resolve_hostname is decorated with lru_cache and its docstring claims to mitigate DNS rebinding, but the cache only memoizes the validation-side lookup. The connection layer's getaddrinfo does not consult that cache, so it provides no protection. The annotation is a false assurance: an operator reading it may believe rebinding is handled when it is not.",
+          "action": "Vérifier l'exposition du parc et appliquer le correctif éditeur dès sa disponibilité.",
+          "image": "https://github.githubassets.com/assets/advisory-database-show-f32c8207dfb2.png",
+          "sources": [
+            {
+              "url": "https://github.com/advisories/GHSA-qvv7-cg9c-w4x3",
+              "label": "GitHub Advisory"
+            }
+          ],
+          "url": "https://github.com/advisories/GHSA-qvv7-cg9c-w4x3",
+          "pubDate": "2026-07-31T16:51:29.000Z"
+        },
+        {
+          "title": "Anthropic and OpenAI are competing to see whose agents can go rogue harder",
+          "cve": null,
+          "severity": "critical",
+          "score": 46,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Vulnérabilité critique.\n\nOne company's inventive campaign for an unreleased product has become a contest between Anthropic and OpenAI to see which can shout the loudest about its own failures. Readers who tuned in earlier today saw the latest episode in the drama – or sitcom – as Anthropic tried to outdo OpenAI's appropriation of the Mythos marketing playbook and made itself the punchline.",
+          "detail": "Vulnérabilité critique.\n\nOne company's inventive campaign for an unreleased product has become a contest between Anthropic and OpenAI to see which can shout the loudest about its own failures. Readers who tuned in earlier today saw the latest episode in the drama – or sitcom – as Anthropic tried to outdo OpenAI's appropriation of the Mythos marketing playbook and made itself the punchline. Since first teasing Mythos in April, Anthropic has marketed the model through fear – declaring its cybersecurity models too dangerous for public release and offering access only to a select few trusted organizations via Project Glasswing. To its credit, the strategy has paid off. Anthropic has closely associated the Mythos name with cybersecurity, which may explain why OpenAI appeared to borrow its competitor's proven PR strategy last week. OpenAI agents exploited a zero-day to escape their sandbox, leading to the autonomous cyberattack on Hugging Face. The episode duly secured sensational headlines playing on the long-held fear that AI will one day go rogue and take over the world. Anthropic responded this week by lathering on even more clown makeup, squandering an opportunity in the process. The Claude maker sent its models into a testing environment to capture a flag. Their prompts said they had no internet access, but because of what Anthropic called \"a misunderstanding\" with evaluation partner Irregular, the con",
+          "action": "Vérifier l'exposition du parc et appliquer le correctif éditeur dès sa disponibilité.",
+          "image": null,
+          "sources": [
+            {
+              "url": "https://www.theregister.com/security/2026/07/31/anthropic-and-openai-are-competing-to-see-whose-agents-can-go-rogue-harder/5281797",
+              "label": "The Register"
+            }
+          ],
+          "url": "https://www.theregister.com/security/2026/07/31/anthropic-and-openai-are-competing-to-see-whose-agents-can-go-rogue-harder/5281797",
+          "pubDate": "2026-07-31T15:04:04.000Z"
+        },
+        {
+          "title": "What the Hugging Face breach reveals about defense in the age of agentic AI",
+          "cve": null,
+          "severity": "critical",
+          "score": 46,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Vulnérabilité critique.\n\nWe almost never get both sides of an intrusion. This time we did. Last month, Hugging Face disclosed a breach into part of its production infrastructure, saying an autonomous AI agent system ran the attack from start to finish. Five days later, OpenAI revealed that its own models, including GPT-5.6 Sol along with an unreleased one, were responsible for the breach. OpenAI called it an unprecedented cyber incident.",
+          "detail": "Vulnérabilité critique.\n\nWe almost never get both sides of an intrusion. This time we did. Last month, Hugging Face disclosed a breach into part of its production infrastructure, saying an autonomous AI agent system ran the attack from start to finish. Five days later, OpenAI revealed that its own models, including GPT-5.6 Sol along with an unreleased one, were responsible for the breach. OpenAI called it an unprecedented cyber incident. Most of the commentary since has been about AI capability. That is the least useful part of the story, because the capability was doing what it was destined to do. Security teams should look at a simpler truth: in both systems, the key defenses sat behind untrusted code that was already running. What the two disclosures actually describe Together, the report shows one connected attack across two firms. Code running on a low-level employee’s machine led to stolen passwords, privilege escalation and lateral moves, then out to the web to hit other targets. No step in that chain is novel. The speed and the number of attempts are what changed. OpenAI&#8217;s evaluation ran in what it calls a highly isolated environment, with network access constrained to a single path: an internally hosted third-party proxy and cache for package registries. The models spent vast computer power searching for an exit. They exploited a zero-day flaw in that proxy, gained higher rights, and mov",
+          "action": "Vérifier l'exposition du parc et appliquer le correctif éditeur dès sa disponibilité.",
+          "image": "https://cyberscoop.com/wp-content/uploads/sites/3/2026/07/GettyImages-2275331393.jpg",
+          "sources": [
+            {
+              "url": "https://cyberscoop.com/hugging-face-breach-agentic-ai-security-op-ed/",
+              "label": "CyberScoop"
+            }
+          ],
+          "url": "https://cyberscoop.com/hugging-face-breach-agentic-ai-security-op-ed/",
+          "pubDate": "2026-07-31T10:00:00.000Z"
+        },
+        {
+          "title": "CVE-2026-53501 — Thumbor has HMAC validation bypass via multiple .replace() calls when removing URL signature",
+          "cve": "CVE-2026-53501",
+          "severity": "high",
+          "score": 45,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Vulnérabilité élevée CVE-2026-53501 affectant thumbor (pip) (score CVSS 8.2).\n\nThumbor has HMAC validation bypass via multiple .replace() calls when removing URL signature\n\n--> Name Query To see all available qualifiers, see our documentation .\n\nThis allows crafting URLs where the validated string differs from the actual requested resource, enabling loading images from unintended domains or paths.\n\nThumbor signs URLs using HMAC-SHA1 to prevent abuse such as loading arbitrary external images or invoking filters without authorization.…",
+          "detail": "Vulnérabilité élevée CVE-2026-53501 affectant thumbor (pip) (score CVSS 8.2).\n\nThumbor has HMAC validation bypass via multiple .replace() calls when removing URL signature\n\n--> Name Query To see all available qualifiers, see our documentation .\n\nThis allows crafting URLs where the validated string differs from the actual requested resource, enabling loading images from unintended domains or paths.\n\nThumbor signs URLs using HMAC-SHA1 to prevent abuse such as loading arbitrary external images or invoking filters without authorization.\n\nDuring request validation, Thumbor removes the signature from the request URL before recalculating the HMAC. The relevant code:\n\nBecause the signature itself appears in the URL, an attacker can inject additional copies of the signature elsewhere in the path. When Thumbor performs .replace() , these extra occurrences are also removed, resulting in a different url_to_validate than the original request.\n\n/ddoyYVYUbDf6Po_dzOrBhCDrXLc=/300x200/s3.glbimg.com/v1/.../image.jpg By injecting the same hash inside the URL:",
+          "action": "Vérifier l'exposition du parc et appliquer le correctif éditeur dès sa disponibilité.",
+          "image": "https://github.githubassets.com/assets/advisory-database-show-f32c8207dfb2.png",
+          "sources": [
+            {
+              "url": "https://github.com/advisories/GHSA-mw3h-qjxj-6xg9",
+              "label": "GitHub Advisory"
+            }
+          ],
+          "url": "https://github.com/advisories/GHSA-mw3h-qjxj-6xg9",
+          "pubDate": "2026-07-31T18:51:54.000Z"
+        }
+      ]
+    },
+    {
+      "id": "attacks",
+      "items": [
+        {
+          "title": "The Xcode Assassin Returns: A Deep Dive Into the Latest XCSSET Version",
+          "cve": null,
+          "severity": "news",
+          "score": 81,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Incident de sécurité rapporté par Unit 42.\n\nAnalysis of XCSSET v40 reveals a macOS malware targeting developers via Xcode. Unit 42 used advanced pattern matching and AI to decode its logic.\n\nAfter months of dormancy, the attackers behind the XCSSET malware released version 40 (v40), targeting the macOS ecosystem.",
+          "detail": "Incident de sécurité rapporté par Unit 42.\n\nAnalysis of XCSSET v40 reveals a macOS malware targeting developers via Xcode. Unit 42 used advanced pattern matching and AI to decode its logic.\n\nAfter months of dormancy, the attackers behind the XCSSET malware released version 40 (v40), targeting the macOS ecosystem. This version’s advanced architecture hides its core logic in memory space, reducing its digital footprint.\n\nV40 further enhances its detection evasion capabilities by combining polymorphic payload generation with fileless persistence and dynamic in-memory execution, while weakening a number of security mechanisms on the affected machine.\n\nSince early April 2026, the malware has spread through supply chain attacks by hiding itself in the Xcode projects of dozens of legitimate applications with thousands of active users. Xcode is Apple’s integrated development environment (IDE) for building apps for its various operating systems.\n\nXCSSET’s author enhanced the threat’s ability to spread through open-source projects on GitHub and upgraded its worming capabilities. It can now infect all existing Xcode projects on a compromised system for maximum impact.\n\nThe author used a multi-layered cipher shift to conceal the threat’s internal functions. In response, our researchers leveraged advanced AI and pattern-matching algorithms to de-obfuscate the malware's logic.\n\nPalo Alto Networks customers are better protected from the threats discussed above through the following products and services:",
+          "action": "Surveiller les indicateurs de compromission associés et contrôler les actifs exposés.",
+          "image": "https://unit42.paloaltonetworks.com/wp-content/uploads/2026/07/06_Malware_Category_1920x900-6.jpg",
+          "sources": [
+            {
+              "url": "https://unit42.paloaltonetworks.com/xcsset-v40-malware-analysis/",
+              "label": "Unit 42"
+            }
+          ],
+          "url": "https://unit42.paloaltonetworks.com/xcsset-v40-malware-analysis/",
+          "pubDate": "2026-07-31T10:00:18.000Z"
+        },
+        {
+          "title": "The most famous brand in physical security got pwned by ShinyHunters",
+          "cve": null,
+          "severity": "high",
+          "score": 75,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Incident de sécurité rapporté par The Register.\n\nA leading name in home and business physical security, Brinks Home, recently said it identified unauthorized access to a portion of its IT systems, an intrusion ShinyHunters claims it carried out to steal millions of records from the security provider's Salesforce instance. Brinks Home hasn’t named the intruder or identified the affected system, but said the responsible party has threatened to leak information it claims to have taken.",
+          "detail": "Incident de sécurité rapporté par The Register.\n\nA leading name in home and business physical security, Brinks Home, recently said it identified unauthorized access to a portion of its IT systems, an intrusion ShinyHunters claims it carried out to steal millions of records from the security provider's Salesforce instance. Brinks Home hasn’t named the intruder or identified the affected system, but said the responsible party has threatened to leak information it claims to have taken. “Brinks Home is working diligently to determine what information was involved and who may be affected,” the company statement said. “If the Company determines that personal information has been affected, it will notify those individuals as required and as appropriate.” An FAQ page for the incident said that Brinks Home products and services weren’t affected, as far as the company knows at this point, so alarms and other security tools should be working without issue. While Brinks may not have been very forthcoming with information, and lacks any sort of official way for media to communicate with it outside of sending a LinkedIn message it didn’t answer, the party that’s claimed responsibility has gone public with some details, and it’s none other than ShinyHunters with another claimed Salesforce breach. According to leak site monitoring outfit Ransomware.live, ShinyHunters claimed to have obtained more than 4.9 million Salesforce records from Brin",
+          "action": "Surveiller les indicateurs de compromission associés et contrôler les actifs exposés.",
+          "image": "https://image.theregister.com/5241973.jpg?imageId=5241973&x=0&y=0&cropw=100&croph=100&panox=0&panoy=0&panow=100&panoh=100&width=1200&height=683",
+          "sources": [
+            {
+              "url": "https://www.theregister.com/security/2026/07/31/the-most-famous-brand-in-physical-security-got-pwned-by-shinyhunters/5281924",
+              "label": "The Register"
+            }
+          ],
+          "url": "https://www.theregister.com/security/2026/07/31/the-most-famous-brand-in-physical-security-got-pwned-by-shinyhunters/5281924",
+          "pubDate": "2026-07-31T16:27:27.000Z"
+        },
+        {
+          "title": "Amicell — rançongiciel thegentlemen (IL)",
+          "cve": null,
+          "severity": "news",
+          "score": 74,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Incident de sécurité rapporté par ransomware.live.\n\nVictime revendiquée par le groupe de rançongiciel thegentlemen. Pays : IL. Secteur : Healthcare. amicell.co.il zoominfo.com/c/amicell/426539109 Amicell (Amit Industries Ltd.) is a leading Israeli manufacturer founded in 1989, specializing in custom-designed battery packs, chargers, and Battery Management Systems (BMS).",
+          "detail": "Incident de sécurité rapporté par ransomware.live.\n\nVictime revendiquée par le groupe de rançongiciel thegentlemen.\n\nPays : IL.\n\nSecteur : Healthcare.\n\namicell.co.il zoominfo.com/c/amicell/426539109 Amicell (Amit Industries Ltd.) is a leading Israeli manufacturer founded in 1989, specializing in custom-designed battery packs, chargers, and Battery Management Systems (BMS). Headquartered in Ashdod, the company provides advanced energy solutions for demanding sectors, including defense, medical, UAVs, robotics, and industrial applications. With over 35 years of experience, Amicell is recognized for delivering reliable, high-tech power systems tailored to complex operational requirements",
+          "action": "Surveiller les indicateurs de compromission associés et contrôler les actifs exposés.",
+          "image": "https://images.ransomware.live/ransomware.png",
+          "sources": [
+            {
+              "url": "https://www.ransomware.live/id/QW1pY2VsbEB0aGVnZW50bGVtZW4=",
+              "label": "ransomware.live"
+            }
+          ],
+          "url": "https://www.ransomware.live/id/QW1pY2VsbEB0aGVnZW50bGVtZW4=",
+          "pubDate": "2026-07-31T12:26:35.000Z"
+        },
+        {
+          "title": "ESET tracks rise in malicious AI skills and adaptable malware",
+          "cve": null,
+          "severity": "news",
+          "score": 73,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Incident de sécurité rapporté par BleepingComputer.\n\nAttackers are adapting established techniques to AI platforms, emerging technologies, and changing user behavior. ESET's new threat report examines the rise of malicious AI skills, AI-assisted malware, ClickFix attacks, record quishing activity, and ransomware tools designed to disable security software. [...]",
+          "detail": "Incident de sécurité rapporté par BleepingComputer.\n\nAttackers are adapting established techniques to AI platforms, emerging technologies, and changing user behavior. ESET's new threat report examines the rise of malicious AI skills, AI-assisted malware, ClickFix attacks, record quishing activity, and ransomware tools designed to disable security software. [...]",
+          "action": "Surveiller les indicateurs de compromission associés et contrôler les actifs exposés.",
+          "image": "https://www.bleepstatic.com/content/posts/2026/07/31/eset-motherboard.jpg",
+          "sources": [
+            {
+              "url": "https://www.bleepingcomputer.com/news/security/eset-tracks-rise-in-malicious-ai-skills-and-adaptable-malware/",
+              "label": "BleepingComputer"
+            }
+          ],
+          "url": "https://www.bleepingcomputer.com/news/security/eset-tracks-rise-in-malicious-ai-skills-and-adaptable-malware/",
+          "pubDate": "2026-07-31T14:01:11.000Z"
+        },
+        {
+          "title": "Online ad firm Adform’s script compromised to steal cryptocurrency",
+          "cve": null,
+          "severity": "news",
+          "score": 72,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Incident de sécurité rapporté par BleepingComputer.\n\nOnline advertising firm Adform suffered a supply-chain attack that delivered cryptocurrency-stealing scripts to websites using its ad platform, replacing wallet addresses copied to visitors' clipboards with ones controlled by an attacker.\n\nAmazon links Debug, Chalk NPM supply-chain attacks to North Korean hackers\n\nAnthropic's Claude breached 3 orgs, uploaded PyPI malware during tests\n\nVMware fixes three critical flaws allowing auth bypass, VM escapes\n\nAmge…",
+          "detail": "Incident de sécurité rapporté par BleepingComputer.\n\nOnline advertising firm Adform suffered a supply-chain attack that delivered cryptocurrency-stealing scripts to websites using its ad platform, replacing wallet addresses copied to visitors' clipboards with ones controlled by an attacker.\n\nAmazon links Debug, Chalk NPM supply-chain attacks to North Korean hackers\n\nAnthropic's Claude breached 3 orgs, uploaded PyPI malware during tests\n\nVMware fixes three critical flaws allowing auth bypass, VM escapes\n\nAmgen says cloud data breach exposed patient health, proprietary info\n\nArch Linux disables AUR package adoption to stop malware flood\n\nOnline ad firm Adform’s script compromised to steal cryptocurrency",
+          "action": "Surveiller les indicateurs de compromission associés et contrôler les actifs exposés.",
+          "image": "https://www.bleepstatic.com/content/hl-images/2023/11/15/Hacker_cryptocurrency_bitcoin.jpg",
+          "sources": [
+            {
+              "url": "https://www.bleepingcomputer.com/news/security/online-ad-firm-adforms-script-compromised-to-steal-cryptocurrency/",
+              "label": "BleepingComputer"
+            }
+          ],
+          "url": "https://www.bleepingcomputer.com/news/security/online-ad-firm-adforms-script-compromised-to-steal-cryptocurrency/",
+          "pubDate": "2026-07-31T21:09:25.000Z"
+        },
+        {
+          "title": "CISA warns of spike in attacks on water systems as Minnesota incidents probed",
+          "cve": null,
+          "severity": "news",
+          "score": 70,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Incident de sécurité rapporté par The Record.\n\nThe Cybersecurity and Infrastructure Security Agency said in a public alert on Thursday that facilities should “remove publicly exposed PLCs and other operational technology (OT) from the internet as soon as possible.\"\n\nThe federal cybersecurity agency is reporting a “significant increase” in malicious activity aimed at water utilities, as investigators are reportedly trying to determine whether recent incidents in Minnesota might be the work of Iran-linke…",
+          "detail": "Incident de sécurité rapporté par The Record.\n\nThe Cybersecurity and Infrastructure Security Agency said in a public alert on Thursday that facilities should “remove publicly exposed PLCs and other operational technology (OT) from the internet as soon as possible.\"\n\nThe federal cybersecurity agency is reporting a “significant increase” in malicious activity aimed at water utilities, as investigators are reportedly trying to determine whether recent incidents in Minnesota might be the work of Iran-linked hackers.\n\nThe Cybersecurity and Infrastructure Security Agency said in a public alert on Thursday that facilities should “remove publicly exposed PLCs and other operational technology (OT) from the internet as soon as possible.” PLCs — programmable logic controllers — are at the core of processes in multiple industries.\n\nMultiple news outlets reported that state and federal investigators were working to determine whether disruptions to water systems in Minnesota earlier this month were connected to Iran. Wired magazine reported that a memo from the WaterISAC, the industry’s cybersecurity information-sharing body, said the attacks were tied to Iran.\n\nMinnesota’s state IT agency said earlier this week that “more than 30 Minnesota community water systems” were affected by a coordinated cyberattack beginning July 26. The threat actor is “targeting water entities of all sizes,” CISA said.\n\nThe intruders “have modified passwords to lock out operators and disconnected the PLCs by changing their IP addresses,” CISA said. “This activity has resulted in boil water notices and sustained manual operations.”\n\nCISA, the FBI and the Environmental Protection Agency are all involved in the response. The FBI said “utility companies in at least seven states” have reported incidents involvi",
+          "action": "Surveiller les indicateurs de compromission associés et contrôler les actifs exposés.",
+          "image": "https://cms.therecord.media/uploads/water_utility_pexels_r9media_44309d2e1e.jpg",
+          "sources": [
+            {
+              "url": "https://therecord.media/cisa-warns-of-spike-in-water-system-attacks",
+              "label": "The Record"
+            }
+          ],
+          "url": "https://therecord.media/cisa-warns-of-spike-in-water-system-attacks",
+          "pubDate": "2026-07-31T17:47:00.000Z"
+        },
+        {
+          "title": "Paula Fish — rançongiciel thegentlemen (PL)",
+          "cve": null,
+          "severity": "news",
+          "score": 70,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Incident de sécurité rapporté par ransomware.live.\n\nVictime revendiquée par le groupe de rançongiciel thegentlemen. Pays : PL. Secteur : Other. paulafish.pl zoominfo.com/c/paula-fish/448451882 Paula Fish is a market leader in fish processing in Central Europe, headquartered in Słupsk, Poland. Founded in 1998, the company specializes in the catching, production, freezing, and storage of Baltic fish and Atlantic salmon.",
+          "detail": "Incident de sécurité rapporté par ransomware.live.\n\nVictime revendiquée par le groupe de rançongiciel thegentlemen.\n\nPays : PL.\n\nSecteur : Other.\n\npaulafish.pl zoominfo.com/c/paula-fish/448451882 Paula Fish is a market leader in fish processing in Central Europe, headquartered in Słupsk, Poland. Founded in 1998, the company specializes in the catching, production, freezing, and storage of Baltic fish and Atlantic salmon. With a workforce of over 500 employees, it operates globally, emphasizing high-quality products, innovation, and strict environmental responsibility throughout its supply chain",
+          "action": "Surveiller les indicateurs de compromission associés et contrôler les actifs exposés.",
+          "image": "https://images.ransomware.live/ransomware.png",
+          "sources": [
+            {
+              "url": "https://www.ransomware.live/id/UGF1bGEgRmlzaEB0aGVnZW50bGVtZW4=",
+              "label": "ransomware.live"
+            }
+          ],
+          "url": "https://www.ransomware.live/id/UGF1bGEgRmlzaEB0aGVnZW50bGVtZW4=",
+          "pubDate": "2026-07-31T12:28:33.000Z"
+        },
+        {
+          "title": "The Municipal Chamber of Serra — rançongiciel thegentlemen (BR)",
+          "cve": null,
+          "severity": "news",
+          "score": 70,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Incident de sécurité rapporté par ransomware.live.\n\nVictime revendiquée par le groupe de rançongiciel thegentlemen. Pays : BR. Secteur : Government & Defense. camaraserra.es.gov.br The Municipal Chamber of Serra (Câmara Municipal da Serra) is the legislative body of the city of Serra, located in the state of Espírito Santo, Brazil.",
+          "detail": "Incident de sécurité rapporté par ransomware.live.\n\nVictime revendiquée par le groupe de rançongiciel thegentlemen.\n\nPays : BR.\n\nSecteur : Government & Defense.\n\ncamaraserra.es.gov.br The Municipal Chamber of Serra (Câmara Municipal da Serra) is the legislative body of the city of Serra, located in the state of Espírito Santo, Brazil. As the largest legislative house in the state, it is composed of elected councilors responsible for creating local laws, overseeing the executive branch, and representing the citizens' interests. The institution is committed to transparency, active public participation, and the sustainable development of the municipality through its plenary sessions and specialized committees.",
+          "action": "Surveiller les indicateurs de compromission associés et contrôler les actifs exposés.",
+          "image": "https://images.ransomware.live/ransomware.png",
+          "sources": [
+            {
+              "url": "https://www.ransomware.live/id/VGhlIE11bmljaXBhbCBDaGFtYmVyIG9mIFNlcnJhQHRoZWdlbnRsZW1lbg==",
+              "label": "ransomware.live"
+            }
+          ],
+          "url": "https://www.ransomware.live/id/VGhlIE11bmljaXBhbCBDaGFtYmVyIG9mIFNlcnJhQHRoZWdlbnRsZW1lbg==",
+          "pubDate": "2026-07-31T12:16:38.000Z"
+        },
+        {
+          "title": "DOĞAN HOLDİNG — rançongiciel CRPxO (TR)",
+          "cve": null,
+          "severity": "news",
+          "score": 69,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Incident de sécurité rapporté par ransomware.live.\n\nRansomware.live discovered on 2026-07-31 that DOĞAN HOLDİNG has been claimed by Crpxo ransomware group\n\nSponsored by Hudson Rock – Use Hudson Rock's free cybercrime intelligence tools to learn how Infostealer infections are leading to ransomware attacks\n\nLegal Disclaimer: Ransomware.live does not engage in the acquisition, exfiltration, downloading, possession, hosting, access, consultation, redistribution, or disclosure of unlawfully obtained data.",
+          "detail": "Incident de sécurité rapporté par ransomware.live.\n\nRansomware.live discovered on 2026-07-31 that DOĞAN HOLDİNG has been claimed by Crpxo ransomware group\n\nSponsored by Hudson Rock – Use Hudson Rock's free cybercrime intelligence tools to learn how Infostealer infections are leading to ransomware attacks\n\nLegal Disclaimer: Ransomware.live does not engage in the acquisition, exfiltration, downloading, possession, hosting, access, consultation, redistribution, or disclosure of unlawfully obtained data. This platform indexes only publicly visible information posted by ransomware operators and open web sources without accessing or obtaining the underlying stolen content . The service is provided to support public awareness, legitimate research, and cyber-resilience. No stolen personal or confidential data is collected or distributed via this site.\n\nSession: 057726c909af65969646b040bbbfa5c4df67f5166a33cbac6cd9e1302b0b3ca148\n\nTox: 50DADDED26D859469371938B793456D8210A5AE02DD3C42979F5E52411BCB648F1CA68A5EDE5",
+          "action": "Surveiller les indicateurs de compromission associés et contrôler les actifs exposés.",
+          "image": "https://images.ransomware.live/ransomware.png",
+          "sources": [
+            {
+              "url": "https://www.ransomware.live/id/RE/EnkFOIEhPTETEsE5HQENSUHhP",
+              "label": "ransomware.live"
+            }
+          ],
+          "url": "https://www.ransomware.live/id/RE/EnkFOIEhPTETEsE5HQENSUHhP",
+          "pubDate": "2026-07-31T23:51:12.928Z"
+        },
+        {
+          "title": "Okovolt Solartechnik — rançongiciel thegentlemen (Allemagne)",
+          "cve": null,
+          "severity": "news",
+          "score": 69,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Incident de sécurité rapporté par ransomware.live.\n\nVictime revendiquée par le groupe de rançongiciel thegentlemen. Pays : Allemagne. Secteur : Energy & Utilities. oekovolt.com Ökovolt Solartechnik GmbH is an Austrian company specializing in the planning, installation, and maintenance of photovoltaic systems for private, commercial, and industrial clients.",
+          "detail": "Incident de sécurité rapporté par ransomware.live.\n\nVictime revendiquée par le groupe de rançongiciel thegentlemen.\n\nPays : Allemagne.\n\nSecteur : Energy & Utilities.\n\noekovolt.com Ökovolt Solartechnik GmbH is an Austrian company specializing in the planning, installation, and maintenance of photovoltaic systems for private, commercial, and industrial clients. Based in Upper Austria with over 15 years of experience, the firm provides comprehensive, customized solar energy solutions to promote sustainability and energy independence. They focus on high-quality components, expert consulting, and reliable service to maximize the efficiency and lifespan of every solar project",
+          "action": "Surveiller les indicateurs de compromission associés et contrôler les actifs exposés.",
+          "image": "https://images.ransomware.live/ransomware.png",
+          "sources": [
+            {
+              "url": "https://www.ransomware.live/id/T2tvdm9sdCBTb2xhcnRlY2huaWtAdGhlZ2VudGxlbWVu",
+              "label": "ransomware.live"
+            }
+          ],
+          "url": "https://www.ransomware.live/id/T2tvdm9sdCBTb2xhcnRlY2huaWtAdGhlZ2VudGxlbWVu",
+          "pubDate": "2026-07-31T12:45:50.000Z"
+        },
+        {
+          "title": "Bater — rançongiciel thegentlemen (PL)",
+          "cve": null,
+          "severity": "news",
+          "score": 69,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Incident de sécurité rapporté par ransomware.live.\n\nVictime revendiquée par le groupe de rançongiciel thegentlemen. Pays : PL. Secteur : Other. bater.pl zoominfo.com/c/bater-ltd/429692403 Bater is a leading Polish manufacturer of traction and stationary batteries, founded in 1990 with production facilities in Warsaw and Gliwice.",
+          "detail": "Incident de sécurité rapporté par ransomware.live.\n\nVictime revendiquée par le groupe de rançongiciel thegentlemen.\n\nPays : PL.\n\nSecteur : Other.\n\nbater.pl zoominfo.com/c/bater-ltd/429692403 Bater is a leading Polish manufacturer of traction and stationary batteries, founded in 1990 with production facilities in Warsaw and Gliwice. The company specializes in producing high-quality battery systems for electric forklifts, reserve power, and renewable energy applications, along with recombination plugs and protective battery racks. Holding ISO 9001 and ISO 14001 certifications, Bater also provides comprehensive nationwide services, including battery assembly, maintenance, room renovation, and recycling",
+          "action": "Surveiller les indicateurs de compromission associés et contrôler les actifs exposés.",
+          "image": "https://images.ransomware.live/ransomware.png",
+          "sources": [
+            {
+              "url": "https://www.ransomware.live/id/QmF0ZXJAdGhlZ2VudGxlbWVu",
+              "label": "ransomware.live"
+            }
+          ],
+          "url": "https://www.ransomware.live/id/QmF0ZXJAdGhlZ2VudGxlbWVu",
+          "pubDate": "2026-07-31T12:09:50.000Z"
+        },
+        {
+          "title": "Amgen says cloud data breach exposed patient health, proprietary info",
+          "cve": null,
+          "severity": "news",
+          "score": 68,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Incident de sécurité rapporté par BleepingComputer.\n\nPharmaceutical company Amgen says it suffered a data breach after threat actors stole corporate data and patient information stored in multiple cloud systems operated by third-party service providers.\n\nAmazon links Debug, Chalk NPM supply-chain attacks to North Korean hackers\n\nAnthropic's Claude breached 3 orgs, uploaded PyPI malware during tests\n\nVMware fixes three critical flaws allowing auth bypass, VM escapes\n\nAmgen says cloud data breach exposed patie…",
+          "detail": "Incident de sécurité rapporté par BleepingComputer.\n\nPharmaceutical company Amgen says it suffered a data breach after threat actors stole corporate data and patient information stored in multiple cloud systems operated by third-party service providers.\n\nAmazon links Debug, Chalk NPM supply-chain attacks to North Korean hackers\n\nAnthropic's Claude breached 3 orgs, uploaded PyPI malware during tests\n\nVMware fixes three critical flaws allowing auth bypass, VM escapes\n\nAmgen says cloud data breach exposed patient health, proprietary info\n\nArch Linux disables AUR package adoption to stop malware flood\n\nOnline ad firm Adform’s script compromised to steal cryptocurrency",
+          "action": "Surveiller les indicateurs de compromission associés et contrôler les actifs exposés.",
+          "image": "https://www.bleepstatic.com/content/hl-images/2026/07/31/amgen-flag.jpg",
+          "sources": [
+            {
+              "url": "https://www.bleepingcomputer.com/news/security/amgen-says-cloud-data-breach-exposed-patient-health-proprietary-info/",
+              "label": "BleepingComputer"
+            }
+          ],
+          "url": "https://www.bleepingcomputer.com/news/security/amgen-says-cloud-data-breach-exposed-patient-health-proprietary-info/",
+          "pubDate": "2026-07-31T22:16:42.000Z"
+        },
+        {
+          "title": "ASELSAN — rançongiciel CRPxO (TR)",
+          "cve": null,
+          "severity": "news",
+          "score": 66,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Incident de sécurité rapporté par ransomware.live.\n\nRansomware.live discovered on 2026-07-31 that ASELSAN has been claimed by Crpxo ransomware group\n\nSponsored by Hudson Rock – Use Hudson Rock's free cybercrime intelligence tools to learn how Infostealer infections are leading to ransomware attacks\n\nLegal Disclaimer: Ransomware.live does not engage in the acquisition, exfiltration, downloading, possession, hosting, access, consultation, redistribution, or disclosure of unlawfully obtained data.",
+          "detail": "Incident de sécurité rapporté par ransomware.live.\n\nRansomware.live discovered on 2026-07-31 that ASELSAN has been claimed by Crpxo ransomware group\n\nSponsored by Hudson Rock – Use Hudson Rock's free cybercrime intelligence tools to learn how Infostealer infections are leading to ransomware attacks\n\nLegal Disclaimer: Ransomware.live does not engage in the acquisition, exfiltration, downloading, possession, hosting, access, consultation, redistribution, or disclosure of unlawfully obtained data. This platform indexes only publicly visible information posted by ransomware operators and open web sources without accessing or obtaining the underlying stolen content . The service is provided to support public awareness, legitimate research, and cyber-resilience. No stolen personal or confidential data is collected or distributed via this site.\n\nSession: 057726c909af65969646b040bbbfa5c4df67f5166a33cbac6cd9e1302b0b3ca148\n\nTox: 50DADDED26D859469371938B793456D8210A5AE02DD3C42979F5E52411BCB648F1CA68A5EDE5",
+          "action": "Surveiller les indicateurs de compromission associés et contrôler les actifs exposés.",
+          "image": "https://images.ransomware.live/ransomware.png",
+          "sources": [
+            {
+              "url": "https://www.ransomware.live/id/QVNFTFNBTkBDUlB4Tw==",
+              "label": "ransomware.live"
+            }
+          ],
+          "url": "https://www.ransomware.live/id/QVNFTFNBTkBDUlB4Tw==",
+          "pubDate": "2026-07-31T23:50:32.347Z"
+        },
+        {
+          "title": "World Wide Fittings — rançongiciel thegentlemen (Royaume-Uni)",
+          "cve": null,
+          "severity": "news",
+          "score": 66,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Incident de sécurité rapporté par ransomware.live.\n\nVictime revendiquée par le groupe de rançongiciel thegentlemen. Pays : Royaume-Uni. Secteur : Manufacturing. worldwidefittings.com zoominfo.com/c/world-wide-fittings-inc/42729844 World Wide Fittings, Inc. is a global manufacturer of precision-engineered steel and stainless steel hydraulic tube and pipe fittings, founded in 1950 and headquartered in Vernon Hills, Illinois.",
+          "detail": "Incident de sécurité rapporté par ransomware.live.\n\nVictime revendiquée par le groupe de rançongiciel thegentlemen.\n\nPays : Royaume-Uni.\n\nSecteur : Manufacturing.\n\nworldwidefittings.com zoominfo.com/c/world-wide-fittings-inc/42729844 World Wide Fittings, Inc. is a global manufacturer of precision-engineered steel and stainless steel hydraulic tube and pipe fittings, founded in 1950 and headquartered in Vernon Hills, Illinois. Operating from nine facilities across three continents, the company supplies over 150 million components annually to OEMs and distributors in industries like automation, manufacturing, and fluid power. With a strong focus on in-house manufacturing, strict quality control, and vast in-stock inventory, they ensure reliable, on-time delivery of specialized fittings worldwide",
+          "action": "Surveiller les indicateurs de compromission associés et contrôler les actifs exposés.",
+          "image": "https://images.ransomware.live/ransomware.png",
+          "sources": [
+            {
+              "url": "https://www.ransomware.live/id/V29ybGQgV2lkZSBGaXR0aW5nc0B0aGVnZW50bGVtZW4=",
+              "label": "ransomware.live"
+            }
+          ],
+          "url": "https://www.ransomware.live/id/V29ybGQgV2lkZSBGaXR0aW5nc0B0aGVnZW50bGVtZW4=",
+          "pubDate": "2026-07-31T12:38:12.000Z"
+        },
+        {
+          "title": "Municipalidad de San Luis — rançongiciel thegentlemen (PE)",
+          "cve": null,
+          "severity": "news",
+          "score": 66,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Incident de sécurité rapporté par ransomware.live.\n\nVictime revendiquée par le groupe de rançongiciel thegentlemen. Pays : PE. Secteur : Government & Defense. munisanluis.gob.pe zoominfo.com/c/municipalidad-de-san-luis/1322909314 The District Municipality of San Luis is the local government body for the San Luis district in Lima, Peru, dedicated to promoting the integral development and well-being of its residents.",
+          "detail": "Incident de sécurité rapporté par ransomware.live.\n\nVictime revendiquée par le groupe de rançongiciel thegentlemen.\n\nPays : PE.\n\nSecteur : Government & Defense.\n\nmunisanluis.gob.pe zoominfo.com/c/municipalidad-de-san-luis/1322909314 The District Municipality of San Luis is the local government body for the San Luis district in Lima, Peru, dedicated to promoting the integral development and well-being of its residents. Its core mission is to lead, regulate, and provide essential public services while fostering community engagement through cultural, sports, and safety programs. The municipality actively modernizes its operations, offering digital platforms for online procedures and payments to ensure efficient, accessible, and transparent governance",
+          "action": "Surveiller les indicateurs de compromission associés et contrôler les actifs exposés.",
+          "image": "https://images.ransomware.live/ransomware.png",
+          "sources": [
+            {
+              "url": "https://www.ransomware.live/id/TXVuaWNpcGFsaWRhZCBkZSBTYW4gTHVpc0B0aGVnZW50bGVtZW4=",
+              "label": "ransomware.live"
+            }
+          ],
+          "url": "https://www.ransomware.live/id/TXVuaWNpcGFsaWRhZCBkZSBTYW4gTHVpc0B0aGVnZW50bGVtZW4=",
+          "pubDate": "2026-07-31T12:34:50.000Z"
+        },
+        {
+          "title": "Hacktivisme : une fuite « Macronleak » de 2017 contre Chat Control ressort du darkweb !",
+          "cve": null,
+          "severity": "news",
+          "score": 59,
+          "corroboration": 1,
+          "region": "fr",
+          "body": "Incident de sécurité rapporté par Zataz.\n\nUn hacktiviste exhume des données de 2017 pour attaquer Chat Control et justifier une fuite politique controversée.\n\nFont Resizer Aa Actus cyber Darkweb Intelligence Artificielle ZATAZ Community Logiciels Vidéos Moteurs de recherche de fuites Actus cyber Justice Sécurité réseaux sociaux Vie privée OSINT News Darkweb Fuite de données Codes malveillants Espionnage Sécurité Ransomwares Piratage / Hack infiltration Intelligence Artificielle ZATAZ Community Use…",
+          "detail": "Incident de sécurité rapporté par Zataz.\n\nUn hacktiviste exhume des données de 2017 pour attaquer Chat Control et justifier une fuite politique controversée.\n\nFont Resizer Aa Actus cyber Darkweb Intelligence Artificielle ZATAZ Community Logiciels Vidéos Moteurs de recherche de fuites Actus cyber Justice Sécurité réseaux sociaux Vie privée OSINT News Darkweb Fuite de données Codes malveillants Espionnage Sécurité Ransomwares Piratage / Hack infiltration Intelligence Artificielle ZATAZ Community Userlock Community Réseaux sociaux ZATAZ News Letter ZATAZ – Chaque vendredi midi PROTOCOLE D&rsquo;ALERTE ZATAZ Logiciels Vidéos Vidéos Youtube ZATAZ Émission ZATAZ Twitch Moteurs de recherche de fuites Follow US Actus cyber Darkweb Intelligence Artificielle ZATAZ Community Logiciels Vidéos Moteurs de recherche de fuites ZATAZ.COM > Actualités > Actualités > Divers > Hacktivisme : une fuite « Macronleak » de 2017 contre Chat Control ressort du darkweb ! Actualités Divers Internet Clandestin (darknet) Justice Piratage Présidentielles Hacktivisme : une fuite « Macronleak » de 2017 contre Chat Control ressort du darkweb ! dernière mise à jour : 31/07/2026 16:31 Par Damien Bancal - Chercheur / Journaliste / Conférencier / Enseignant Il y a 14 heures Il y a 13 heures Partager 15 minutes de lecture Partager Un pirate militant exhume des données politiques de 2017 pour dénoncer Chat Control, transformant une ancienne intrusion en démonstration controversée contre la surveillance numérique européenne. Le nouveau document signé de l’ hactiviste ayant mis en avant les données d’un ancien Député-Maire PS revendique la publication de 85 fichiers attribués à un autre ancien député, ancien cadre du mouvement présidentiel. Le pirate affirme les avoir obtenus pendant la campagne (présidentielle",
+          "action": "Surveiller les indicateurs de compromission associés et contrôler les actifs exposés.",
+          "image": "https://www.zataz.com/wp-content/uploads/hacktiviste_leak-2017.jpg",
+          "sources": [
+            {
+              "url": "https://www.zataz.com/hacktivisme-une-fuite-macronleak-de-2017-contre-chat-control-ressort-du-darkweb/",
+              "label": "Zataz"
+            }
+          ],
+          "url": "https://www.zataz.com/hacktivisme-une-fuite-macronleak-de-2017-contre-chat-control-ressort-du-darkweb/",
+          "pubDate": "2026-07-31T13:41:31.000Z"
+        },
+        {
+          "title": "Éducation nationale : 25 ans de données d’agents potentiellement exposées après une cyberattaque",
+          "cve": null,
+          "severity": "news",
+          "score": 57,
+          "corroboration": 1,
+          "region": "fr",
+          "body": "Incident de sécurité rapporté par Cyberattaque.org.\n\nLe ministère de l’Éducation nationale confirme une nouvelle intrusion informatique visant, cette fois, ses propres personnels. Dans la nuit du 25 juillet\n\nAttaque Mis à jour le 31 juillet 2026 à 20h40 Éducation nationale : 25 ans de données d’agents potentiellement exposées après une cyberattaque Le ministère de l’Éducation nationale confirme une nouvelle intrusion informatique visant, cette fois, ses propres personnels.",
+          "detail": "Incident de sécurité rapporté par Cyberattaque.org.\n\nLe ministère de l’Éducation nationale confirme une nouvelle intrusion informatique visant, cette fois, ses propres personnels. Dans la nuit du 25 juillet\n\nAttaque Mis à jour le 31 juillet 2026 à 20h40 Éducation nationale : 25 ans de données d’agents potentiellement exposées après une cyberattaque Le ministère de l’Éducation nationale confirme une nouvelle intrusion informatique visant, cette fois, ses propres personnels. Dans la nuit du 25 juillet 2026 , un compte professionnel compromis a permis à un attaquant d’accéder au système d’information consacré à la formation des agents.\n\nLe périmètre potentiel est considérable : les données d’identité et les informations professionnelles de tous les agents ayant exercé en académie depuis 2001 étaient présentes dans l’environnement concerné. Pour une partie d’entre eux, des adresses postales, numéros de téléphone et numéros de Sécurité sociale peuvent également avoir été accessibles.\n\nL’Éducation nationale emploie des enseignants, personnels administratifs, accompagnants, agents d’encadrement et professionnels répartis dans les académies françaises. Le système visé sert à la gestion de la formation de ces personnels.\n\nL’attaque ne concerne donc pas directement un établissement scolaire isolé, mais un environnement ministériel centralisant des informations sur des agents en activité ou ayant travaillé dans une académie au cours des vingt-cinq dernières années.\n\nL’intrusion aurait débuté après la compromission d’un compte professionnel. L’attaquant aurait ensuite utilisé cet accès légitime pour pénétrer dans l’application, sans avoir nécessairement besoin d’exploiter une vulnérabilité technique complexe.\n\nCe scénario peut résulter d’un mot de passe dérobé par hameçonnage, réut",
+          "action": "Surveiller les indicateurs de compromission associés et contrôler les actifs exposés.",
+          "image": "https://www.cyberattaque.org/wp-content/uploads/2026/07/eed79e00-a386-497b-b3e7-a34c0e8ebe19.jpeg",
+          "sources": [
+            {
+              "url": "https://www.cyberattaque.org/education-nationale-25-ans-de-donnees-dagents-potentiellement-exposees-apres-une-cyberattaque/",
+              "label": "Cyberattaque.org"
+            }
+          ],
+          "url": "https://www.cyberattaque.org/education-nationale-25-ans-de-donnees-dagents-potentiellement-exposees-apres-une-cyberattaque/",
+          "pubDate": "2026-07-31T18:22:25.000Z"
+        }
+      ]
+    },
+    {
+      "id": "culture",
+      "items": [
+        {
+          "title": "Cyber Command plans Silicon Valley office to drive innovation",
+          "cve": null,
+          "severity": "culture",
+          "score": 70,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Signal de veille — The Record.\n\nThe outpost will have its own director, though no one has yet been named for the post, and support the command’s nascent Cyber Warfare Innovation Center (CIWC).\n\nU.S. Cyber Command is looking to open an outpost in Silicon Valley as a way to build new relationships with the tech sector and bolster a major pillar of its internal modernization overhaul.\n\nOfficials hope to establish the satellite office, dubbed Cyber Command-West (CC-W), as soon as possible, a…",
+          "detail": "Signal de veille — The Record.\n\nThe outpost will have its own director, though no one has yet been named for the post, and support the command’s nascent Cyber Warfare Innovation Center (CIWC).\n\nU.S. Cyber Command is looking to open an outpost in Silicon Valley as a way to build new relationships with the tech sector and bolster a major pillar of its internal modernization overhaul.\n\nOfficials hope to establish the satellite office, dubbed Cyber Command-West (CC-W), as soon as possible, according to three people familiar with the planning. It will initially be co-located at the existing Defense Innovation Unit — the Pentagon’s high-profile innovation arm — and feature a handful of personnel before expanding, these people, who spoke on the condition of anonymity, said.\n\nIt will have its own director, though no one has yet been named for the post, and support the command’s nascent Cyber Innovation Warfare Center (CIWC), one of three entities created under the recent “CYBERCOM 2.0” initiative. The revamp of the military’s top digital warfighting unit’s structure and forces, which began under the Biden administration, was fast-tracked by Defense Secretary Pete Hegseth last year.\n\nThe innovation hub’s goal is to accelerate the command’s cyber weapons and online tactics and bridge the so-called “valley of death” — the time between the demonstration of a new technology and when the federal government buys it — so that such tools can be used in digital operations in a timely fashion. The two other organizations are a Cyber Talent Management Organization and an Advanced Cyber Training and Education Center.\n\nThe center “will be our proving ground, a collaborative environment where operators and industry will sit side by side to test new concepts against realistic threats and opera",
+          "action": null,
+          "image": "https://cms.therecord.media/uploads/silicon_valley_b56eb3a3e3.jpg",
+          "sources": [
+            {
+              "url": "https://therecord.media/cyber-command-plans-silicon-valley-office-to-drive-innovation",
+              "label": "The Record"
+            }
+          ],
+          "url": "https://therecord.media/cyber-command-plans-silicon-valley-office-to-drive-innovation",
+          "pubDate": "2026-07-31T17:35:00.000Z"
+        },
+        {
+          "title": "zipdump.py: Metadata Encoding, (Fri, Jul 31st)",
+          "cve": null,
+          "severity": "culture",
+          "score": 70,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Signal de veille — SANS ISC.\n\nI was asked for help with a problem similar to the following. Here is a ZIP file, analyzed with zipdump.py : The filename you see, is in Simplified Chinese: zipdump.py relies on the zipfile or pyzipper Python modules to parse the given ZIP file, and have the metadata (filenames and comments) decoded correctly.",
+          "detail": "Signal de veille — SANS ISC.\n\nI was asked for help with a problem similar to the following. Here is a ZIP file, analyzed with zipdump.py : The filename you see, is in Simplified Chinese: zipdump.py relies on the zipfile or pyzipper Python modules to parse the given ZIP file, and have the metadata (filenames and comments) decoded correctly. If this ZIP file would be corrupt or malformed, so that it can not be parsed by these Python modules, then you can still try to use zipdump -f option to locate individual ZIP records: As I don&#39;t know which encoding has been used for the metadata (filenames and comments), I display the filename as a Python byte string and not as a string. If the filename is simple ASCII, it will be readable (like the extension .vir here), but if it is utf-8, for example Simplified Chinese, then you&#39;ll just see hexadecimal values. And that is why I added a new option: --metadata_encoding. With this new option, you can specify a codec, that will be used to convert bytes into strings when option -f is used. Like this: So here I use codec utf-8, because the filename is encoded in utf-8. How do I know this? Well, in the ZIP specification, the metadata is either ASCII (CP437 to be precise) or UTF-8 encoded. So when you check the flags, you&#39;ll know which encoding to use: &nbsp; Flag 0x0800 means that encoding utf-8 is used. I&#39;ve also added a feature that decodes the flag bits into",
+          "action": null,
+          "image": "https://isc.sans.edu/diaryimages/images/2026-07-30_15-12-13.png",
+          "sources": [
+            {
+              "url": "https://isc.sans.edu/diary/rss/33202",
+              "label": "SANS ISC"
+            }
+          ],
+          "url": "https://isc.sans.edu/diary/rss/33202",
+          "pubDate": "2026-07-31T09:22:19.000Z"
+        },
+        {
+          "title": "OpenAI says its new GPT 5.6 models are becoming more cost-efficient",
+          "cve": null,
+          "severity": "culture",
+          "score": 63,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Signal de veille — BleepingComputer.\n\nOpenAI says it has reduced the price of two GPT-5.6 models, cutting Luna's API price by 80% and Terra's by 20% as it works to make its models more efficient.\n\nAmazon links Debug, Chalk NPM supply-chain attacks to North Korean hackers\n\nAnthropic's Claude breached 3 orgs, uploaded PyPI malware during tests\n\nVMware fixes three critical flaws allowing auth bypass, VM escapes\n\nAmgen says cloud data breach exposed patient health, proprietary info\n\nArch Linux dis…",
+          "detail": "Signal de veille — BleepingComputer.\n\nOpenAI says it has reduced the price of two GPT-5.6 models, cutting Luna's API price by 80% and Terra's by 20% as it works to make its models more efficient.\n\nAmazon links Debug, Chalk NPM supply-chain attacks to North Korean hackers\n\nAnthropic's Claude breached 3 orgs, uploaded PyPI malware during tests\n\nVMware fixes three critical flaws allowing auth bypass, VM escapes\n\nAmgen says cloud data breach exposed patient health, proprietary info\n\nArch Linux disables AUR package adoption to stop malware flood\n\nOnline ad firm Adform’s script compromised to steal cryptocurrency",
+          "action": null,
+          "image": "https://www.bleepstatic.com/content/hl-images/2023/11/08/ChatGPT.jpg",
+          "sources": [
+            {
+              "url": "https://www.bleepingcomputer.com/news/artificial-intelligence/openai-says-its-new-gpt-56-models-are-becoming-more-cost-efficient/",
+              "label": "BleepingComputer"
+            }
+          ],
+          "url": "https://www.bleepingcomputer.com/news/artificial-intelligence/openai-says-its-new-gpt-56-models-are-becoming-more-cost-efficient/",
+          "pubDate": "2026-07-31T18:52:44.000Z"
+        },
+        {
+          "title": "Cyber actualités ZATAZ de la semaine du 27 juillet au 2 août 2026",
+          "cve": null,
+          "severity": "culture",
+          "score": 63,
+          "corroboration": 1,
+          "region": "fr",
+          "body": "Signal de veille — Zataz.\n\nCette semaine, les données personnelles restent au cœur des alertes cyber. L'Hacktivisme politique semble faire son retour en France... ou pas !\n\nFont Resizer Aa Actus cyber Darkweb Intelligence Artificielle ZATAZ Community Logiciels Vidéos Moteurs de recherche de fuites Actus cyber Justice Sécurité réseaux sociaux Vie privée OSINT News Darkweb Fuite de données Codes malveillants Espionnage Sécurité Ransomwares Piratage / Hack infiltration Intelligence Art…",
+          "detail": "Signal de veille — Zataz.\n\nCette semaine, les données personnelles restent au cœur des alertes cyber. L'Hacktivisme politique semble faire son retour en France... ou pas !\n\nFont Resizer Aa Actus cyber Darkweb Intelligence Artificielle ZATAZ Community Logiciels Vidéos Moteurs de recherche de fuites Actus cyber Justice Sécurité réseaux sociaux Vie privée OSINT News Darkweb Fuite de données Codes malveillants Espionnage Sécurité Ransomwares Piratage / Hack infiltration Intelligence Artificielle ZATAZ Community Userlock Community Réseaux sociaux ZATAZ News Letter ZATAZ – Chaque vendredi midi PROTOCOLE D&rsquo;ALERTE ZATAZ Logiciels Vidéos Vidéos Youtube ZATAZ Émission ZATAZ Twitch Moteurs de recherche de fuites Follow US Actus cyber Darkweb Intelligence Artificielle ZATAZ Community Logiciels Vidéos Moteurs de recherche de fuites ZATAZ.COM > Actualités > Actualités > cyber actualité > Cyber actualités ZATAZ de la semaine du 27 juillet au 2 août 2026 Actualités cyber actualité Divers zataz watch Cyber actualités ZATAZ de la semaine du 27 juillet au 2 août 2026 dernière mise à jour : 31/07/2026 16:41 Par Damien Bancal - Chercheur / Journaliste / Conférencier / Enseignant Il y a 13 heures Il y a 13 heures Partager 5 minutes de lecture Partager Bonjour à toutes et tous, Cette semaine, les données personnelles restent au cœur des alertes cyber. Planity, Mercor, Suitable AI, KomikoAI, Click To Pray, plusieurs SDIS, ENI et des CRM municipaux sont visés par des fuites, des accès revendiqués ou des ventes présumées. En France, 240 bases circulent en ligne, tandis qu’un pirate cible 24 responsables politiques et un ancien député-maire pour dénoncer Chat Control. Une ancienne fuite baptisée « Macroleak » réapparaît également dans cette campagne hacktiviste. Les opérations d’influence s",
+          "action": null,
+          "image": "https://www.zataz.com/wp-content/uploads/actu_semaine_ete.jpg",
+          "sources": [
+            {
+              "url": "https://www.zataz.com/cyber-actualites-zataz-de-la-semaine-du-27-juillet-au-2-aout-2026/",
+              "label": "Zataz"
+            }
+          ],
+          "url": "https://www.zataz.com/cyber-actualites-zataz-de-la-semaine-du-27-juillet-au-2-aout-2026/",
+          "pubDate": "2026-07-31T14:39:48.000Z"
+        },
+        {
+          "title": "Friday Squid Blogging: Squid Helps Discover New Marine Species",
+          "cve": null,
+          "severity": "culture",
+          "score": 59,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Signal de veille — Schneier on Sec..\n\nThe Squid is a new scientific machine : One of the technological breakthroughs was the onboard use of a spinning wheel confocal microscope, nicknamed the Squid, which uses lasers to scan microscopic details of how organisms are put together. &#8220;That opens up a whole new world of exploring. We could see cells interacting with each other, exchanging material and building skeletons.",
+          "detail": "Signal de veille — Schneier on Sec..\n\nThe Squid is a new scientific machine : One of the technological breakthroughs was the onboard use of a spinning wheel confocal microscope, nicknamed the Squid, which uses lasers to scan microscopic details of how organisms are put together. &#8220;That opens up a whole new world of exploring. We could see cells interacting with each other, exchanging material and building skeletons. And we could do that live on the ship, when usually it takes a couple of weeks of staining and mounting to see anything,&#8221; Osborn said. The expedition discovered thirty-one new marine species in two weeks. The article doesn&#8217;t say if any of them were new species of squid. As usual, you can also use this squid post to talk about the security stories in the news that I haven&#8217;t covered. Blog moderation policy.",
+          "action": null,
+          "image": null,
+          "sources": [
+            {
+              "url": "https://www.schneier.com/blog/archives/2026/07/friday-squid-blogging-squid-helps-discover-new-marine-species.html",
+              "label": "Schneier on Sec."
+            }
+          ],
+          "url": "https://www.schneier.com/blog/archives/2026/07/friday-squid-blogging-squid-helps-discover-new-marine-species.html",
+          "pubDate": "2026-07-31T21:06:46.000Z"
+        },
+        {
+          "title": "Cheap Android TV Boxes Pose as Phones and Turn Owners’ Broadband Into Proxies",
+          "cve": null,
+          "severity": "culture",
+          "score": 59,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Signal de veille — The Hacker News.\n\nBitsight says some cheap Android TV boxes have shipped with apps that rewrite their hardware identity to mimic Samsung, Huawei, Xiaomi, or Vivo phones, then click ads on websites run by the same operators. Researchers named the operation Fuyao and attributed it to Zhejiang Fengwo IoT Technology Co., Ltd., a mainland China company founded in 2019. The same apps have a second job. When a box",
+          "detail": "Signal de veille — The Hacker News.\n\nBitsight says some cheap Android TV boxes have shipped with apps that rewrite their hardware identity to mimic Samsung, Huawei, Xiaomi, or Vivo phones, then click ads on websites run by the same operators. Researchers named the operation Fuyao and attributed it to Zhejiang Fengwo IoT Technology Co., Ltd., a mainland China company founded in 2019. The same apps have a second job. When a box",
+          "action": null,
+          "image": "https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEjhxfc7_NuArKSujgjgzPzENagYVTlBxcvnFBXSbptnFs_TI1o-Zt5SINHtPEO5MNkJ3vwkKUTX68vwmCzVxRQVFcgnb9eXwAsLKayCtzMLVRuqwV3RDaWTgQNOm0CVXcV_jX1v4x4mgEthTDjAsZdF4BSPSuTTRqKnM6qbIhPVjZP38dHmpptNurSmXRM/s1600/android-tv.jpg",
+          "sources": [
+            {
+              "url": "https://thehackernews.com/2026/07/cheap-android-tv-boxes-pose-as-phones.html",
+              "label": "The Hacker News"
+            }
+          ],
+          "url": "https://thehackernews.com/2026/07/cheap-android-tv-boxes-pose-as-phones.html",
+          "pubDate": "2026-07-31T14:45:01.000Z"
+        },
+        {
+          "title": "Un pirate revendique un accès au CRM d’ENI",
+          "cve": null,
+          "severity": "culture",
+          "score": 59,
+          "corroboration": 1,
+          "region": "fr",
+          "body": "Signal de veille — Zataz.\n\nUn pirate revendique un accès au CRM français d’ENI et diffuse des factures de professionnels et grands comptes.\n\nFont Resizer Aa Actus cyber Darkweb Intelligence Artificielle ZATAZ Community Logiciels Vidéos Moteurs de recherche de fuites Actus cyber Justice Sécurité réseaux sociaux Vie privée OSINT News Darkweb Fuite de données Codes malveillants Espionnage Sécurité Ransomwares Piratage / Hack infiltration Intelligence Artificielle ZATAZ Community Userlo…",
+          "detail": "Signal de veille — Zataz.\n\nUn pirate revendique un accès au CRM français d’ENI et diffuse des factures de professionnels et grands comptes.\n\nFont Resizer Aa Actus cyber Darkweb Intelligence Artificielle ZATAZ Community Logiciels Vidéos Moteurs de recherche de fuites Actus cyber Justice Sécurité réseaux sociaux Vie privée OSINT News Darkweb Fuite de données Codes malveillants Espionnage Sécurité Ransomwares Piratage / Hack infiltration Intelligence Artificielle ZATAZ Community Userlock Community Réseaux sociaux ZATAZ News Letter ZATAZ – Chaque vendredi midi PROTOCOLE D&rsquo;ALERTE ZATAZ Logiciels Vidéos Vidéos Youtube ZATAZ Émission ZATAZ Twitch Moteurs de recherche de fuites Follow US Actus cyber Darkweb Intelligence Artificielle ZATAZ Community Logiciels Vidéos Moteurs de recherche de fuites ZATAZ.COM > Actualités > Actualités > Divers > Un pirate revendique un accès au CRM d’ENI Actualités Divers Internet Clandestin (darknet) Piratage Un pirate revendique un accès au CRM d’ENI dernière mise à jour : 31/07/2026 16:30 Par Damien Bancal - Chercheur / Journaliste / Conférencier / Enseignant Il y a 14 heures Il y a 14 heures Partager 7 minutes de lecture Partager Décidément, c’est de nouveau la sortie de vielle fuite et vieux accés piratés. Aprés les 240 bases de données d’entreprises françaises découvertes par ZATAZ, voici qu’un pirate récemment apparu affirme avoir compromis l’espace professionnel français d’ENI, exposant factures, données clients et fonctions sensibles de gestion des comptes. La revendication émane d’un acteur jusqu’ici inconnu sur les forums cybercriminels. Il assure avoir accédé, en octobre 2025, au panneau d’administration d’ENI grâce à des identifiants obtenus par hameçonnage. Une capture d’écran présentée comme issue du CRM de l’entreprise montrer",
+          "action": null,
+          "image": "https://www.zataz.com/wp-content/uploads/Eni_leak_fk.jpg",
+          "sources": [
+            {
+              "url": "https://www.zataz.com/un-pirate-revendique-un-acces-au-crm-deni/",
+              "label": "Zataz"
+            }
+          ],
+          "url": "https://www.zataz.com/un-pirate-revendique-un-acces-au-crm-deni/",
+          "pubDate": "2026-07-31T14:11:01.000Z"
+        },
+        {
+          "title": "EU to Crack Down on AI Deepfakes, Illicit Imagery and Hacking With New Team in Brussels",
+          "cve": null,
+          "severity": "high",
+          "score": 59,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Signal de veille — SecurityWeek.\n\nThe European Union rolled out a new team to rein in AI companies across the world and aims to track use of AI models for violations of its regulations.\n\nWhen the AI Act comes into force, AI companies will be required to make clear to consumers with labels or digital watermarks that chatbots or imagery are generated with AI.\n\nSubscribe to the SecurityWeek Email Briefing for the latest cybersecurity threats, trends, and expert insights.\n\nSubscribe to the Sec…",
+          "detail": "Signal de veille — SecurityWeek.\n\nThe European Union rolled out a new team to rein in AI companies across the world and aims to track use of AI models for violations of its regulations.\n\nWhen the AI Act comes into force, AI companies will be required to make clear to consumers with labels or digital watermarks that chatbots or imagery are generated with AI.\n\nSubscribe to the SecurityWeek Email Briefing for the latest cybersecurity threats, trends, and expert insights.\n\nSubscribe to the SecurityWeek Email Briefing to stay informed on the latest threats, trends, and technology, along with insightful columns from industry experts.\n\nJoin this live webinar as we explore if detection-first security operations can keep pace with AI, or if it’s time to rethink prevention as the strongest default.\n\nCodeSecCon bridges the gap between dev and security. Discover best practices for secure coding, innovative risk-reduction tools, and safe AI integration to cultivate a true DevSecOps culture. Safely secure your apps!\n\nPNC Financial Services Group has appointed Christian Winward as CISO.",
+          "action": null,
+          "image": "https://www.securityweek.com/wp-content/uploads/2023/12/AI_regulations-Europe.jpg",
+          "sources": [
+            {
+              "url": "https://www.securityweek.com/eu-to-crack-down-on-ai-deepfakes-illicit-imagery-and-hacking-with-new-team-in-brussels/",
+              "label": "SecurityWeek"
+            }
+          ],
+          "url": "https://www.securityweek.com/eu-to-crack-down-on-ai-deepfakes-illicit-imagery-and-hacking-with-new-team-in-brussels/",
+          "pubDate": "2026-07-31T10:00:00.000Z"
+        },
+        {
+          "title": "Saviynt a lancé sa plateforme de sécurité des identités IA, Zuma, et dépasse les 300 millions de dollars d'ARR",
+          "cve": null,
+          "severity": "high",
+          "score": 58,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Signal de veille — Global Sec Mag.\n\nFace à la multiplication des agents IA et des identités non humaines, Saviynt lance une plateforme dédiée à leur gouvernance et à leur sécurisation. Les acquisitions de nouveaux clients de l'un des principaux éditeurs de solutions de sécurité des identités ont progressé de plus de 80 %, alors que les organisations adoptent de plus en plus de nouvelles solutions de sécurité des identités conçues pour l'ère de l'IA.",
+          "detail": "Signal de veille — Global Sec Mag.\n\nFace à la multiplication des agents IA et des identités non humaines, Saviynt lance une plateforme dédiée à leur gouvernance et à leur sécurisation. Les acquisitions de nouveaux clients de l'un des principaux éditeurs de solutions de sécurité des identités ont progressé de plus de 80 %, alors que les organisations adoptent de plus en plus de nouvelles solutions de sécurité des identités conçues pour l'ère de l'IA. Saviynt , un spécialiste de la sécurité des identités, a annoncé le lancement de Zuma, une plateforme de sécurité des identités conçue pour aider les entreprises à découvrir, gouverner et contrôler les agents IA ainsi que les autres identités non humaines. Ce lancement intervient alors que l'éditeur annonce avoir dépassé les 300 millions de dollars de revenus annuels récurrents (ARR), avoir enregistré une croissance de plus de 80 % de ses prises de commandes et maintenu un taux de fidélisation client de 96 %. Ces résultats reflètent la demande croissante des entreprises pour des solutions modernes de sécurité des identités, alors que les agents IA et les identités non humaines se multiplient au sein des organisations. Développée en collaboration avec certaines des plus grandes entreprises mondiales, Zuma répond au besoin de mieux identifier, contrôler et gouverner ces nouvelles identités, souvent déployées sans supervision adaptée. La plateforme fournit une couche de",
+          "action": null,
+          "image": "https://www.globalsecuritymag.fr/local/cache-vignettes/L40xH21/0410e0504c8596688d91f7d1f6f481-d5d11.png",
+          "sources": [
+            {
+              "url": "https://www.globalsecuritymag.fr/saviynt-a-lance-sa-plateforme-de-securite-des-identites-ia-zuma-et-depasse-les.html",
+              "label": "Global Sec Mag"
+            }
+          ],
+          "url": "https://www.globalsecuritymag.fr/saviynt-a-lance-sa-plateforme-de-securite-des-identites-ia-zuma-et-depasse-les.html",
+          "pubDate": "2026-08-01T04:00:56.348Z"
+        },
+        {
+          "title": "CISA Issues Fresh SBOM Guidance. Did They Get It Right?",
+          "cve": null,
+          "severity": "culture",
+          "score": 55,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Signal de veille — Dark Reading.\n\nA couple-dozen changes to SBOM fields will make them more comprehensive, but some argue that the framework lacks real risk-management improvements.",
+          "detail": "Signal de veille — Dark Reading.\n\nA couple-dozen changes to SBOM fields will make them more comprehensive, but some argue that the framework lacks real risk-management improvements.",
+          "action": null,
+          "image": null,
+          "sources": [
+            {
+              "url": "https://www.darkreading.com/cybersecurity-operations/cisa-issues-fresh-sbom-guidance",
+              "label": "Dark Reading"
+            }
+          ],
+          "url": "https://www.darkreading.com/cybersecurity-operations/cisa-issues-fresh-sbom-guidance",
+          "pubDate": "2026-07-31T18:13:11.000Z"
+        },
+        {
+          "title": "The Morning After We Pull a Root of Trust, Nobody Owns It",
+          "cve": null,
+          "severity": "culture",
+          "score": 55,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Signal de veille — Dark Reading.\n\nThe most valuable move any security team can make is building a certificate and key inventory.",
+          "detail": "Signal de veille — Dark Reading.\n\nThe most valuable move any security team can make is building a certificate and key inventory.",
+          "action": null,
+          "image": null,
+          "sources": [
+            {
+              "url": "https://www.darkreading.com/cyber-risk/morning-after-we-pull-root-of-trust-nobody-owns-it",
+              "label": "Dark Reading"
+            }
+          ],
+          "url": "https://www.darkreading.com/cyber-risk/morning-after-we-pull-root-of-trust-nobody-owns-it",
+          "pubDate": "2026-07-31T14:00:00.000Z"
+        },
+        {
+          "title": "Interpol Leverages Global System to Curtail Fraud Payments",
+          "cve": null,
+          "severity": "high",
+          "score": 55,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Signal de veille — Dark Reading.\n\nWhen a fraudulent transaction occurs, law enforcement agencies must work quickly to halt payments before cybercriminals cash out.",
+          "detail": "Signal de veille — Dark Reading.\n\nWhen a fraudulent transaction occurs, law enforcement agencies must work quickly to halt payments before cybercriminals cash out.",
+          "action": null,
+          "image": null,
+          "sources": [
+            {
+              "url": "https://www.darkreading.com/cybersecurity-operations/interpol-leverages-global-system-curtail-fraud-payments",
+              "label": "Dark Reading"
+            }
+          ],
+          "url": "https://www.darkreading.com/cybersecurity-operations/interpol-leverages-global-system-curtail-fraud-payments",
+          "pubDate": "2026-07-31T13:30:00.000Z"
+        },
+        {
+          "title": "DROP Platform Lets Californians Reduce Digital Footprint",
+          "cve": null,
+          "severity": "culture",
+          "score": 55,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Signal de veille — Dark Reading.\n\nHundreds of thousands of California residents have already registered for the Delete Request and Opt-out Platform (DROP), which launches Aug. 1. Other states could follow if the process goes smoothly.",
+          "detail": "Signal de veille — Dark Reading.\n\nHundreds of thousands of California residents have already registered for the Delete Request and Opt-out Platform (DROP), which launches Aug. 1. Other states could follow if the process goes smoothly.",
+          "action": null,
+          "image": null,
+          "sources": [
+            {
+              "url": "https://www.darkreading.com/data-privacy/drop-platform-lets-californians-ditch-their-data",
+              "label": "Dark Reading"
+            }
+          ],
+          "url": "https://www.darkreading.com/data-privacy/drop-platform-lets-californians-ditch-their-data",
+          "pubDate": "2026-07-31T13:19:36.000Z"
+        },
+        {
+          "title": "USA Fencing Lunges Into the Hidden Identity Challenge in Amateur Sports",
+          "cve": null,
+          "severity": "culture",
+          "score": 55,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Signal de veille — Dark Reading.\n\nThe organization behind Team USA's Olympic/Paralympic fencing teams has automated identity verification to handle growing membership, cutting manual review time while ensuring athletes compete in the correct categories.",
+          "detail": "Signal de veille — Dark Reading.\n\nThe organization behind Team USA's Olympic/Paralympic fencing teams has automated identity verification to handle growing membership, cutting manual review time while ensuring athletes compete in the correct categories.",
+          "action": null,
+          "image": null,
+          "sources": [
+            {
+              "url": "https://www.darkreading.com/identity-access-management-security/usa-fencing-hidden-identity-challenge-amateur-sports",
+              "label": "Dark Reading"
+            }
+          ],
+          "url": "https://www.darkreading.com/identity-access-management-security/usa-fencing-hidden-identity-challenge-amateur-sports",
+          "pubDate": "2026-07-31T13:00:00.000Z"
+        },
+        {
+          "title": "Pourquoi Microsoft prend ses distances avec OpenAI",
+          "cve": null,
+          "severity": "high",
+          "score": 51,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Signal de veille — Silicon.fr.\n\nLe divorce n&rsquo;est pas à l&rsquo;ordre du jour, mais le couple bat de l&rsquo;aile. Le temps où Microsoft et OpenAI donnaient l&rsquo;image d&rsquo;un mariage parfait semble révolu. Sans jamais parler ouvertement de rupture, Satya Nadella a changé de discours ces derniers mois.",
+          "detail": "Signal de veille — Silicon.fr.\n\nLe divorce n&rsquo;est pas à l&rsquo;ordre du jour, mais le couple bat de l&rsquo;aile. Le temps où Microsoft et OpenAI donnaient l&rsquo;image d&rsquo;un mariage parfait semble révolu. Sans jamais parler ouvertement de rupture, Satya Nadella a changé de discours ces derniers mois. Le patron de Microsoft défend désormais une approche « multi-modèles » pour son entreprise comme pour ses clients, et met en scène ses propres capacités technologiques avec la famille de modèles MAI et les puces Maya. Un partenariat toujours solide, sur le papier Rien, officiellement, ne remet en cause l&rsquo;alliance entre les deux groupes. Microsoft demeure l&rsquo;actionnaire de référence d&rsquo;OpenAI avec environ 27 % du capital et les deux entreprises sont liées par un accord courant jusqu&rsquo;en 2032 qui garantit à la firme de Redmond un accès privilégié aux modèles et aux « agents » développés par le l&rsquo;inventeur de ChatGPT, sans surcoût de licence. En parallèle, OpenAI s&rsquo;est engagé sur des achats massifs de capacité Azure. Un contrat évalué à plus de 250 milliards $ tandis que Microsoft continuerait de percevoir environ 20 % des revenus d&rsquo;OpenAI jusqu&rsquo;à la même échéance, selon plusieurs sources concordantes. Mais l&rsquo;exclusivité, elle, a vécu. OpenAI n&rsquo;est plus tenu de faire tourner exclusivement ses modèles sur l&rsquo;infrastructure cloud de Microsoft.",
+          "action": null,
+          "image": "https://www.silicon.fr/wp-content/uploads/2025/09/openai-microsoft-relations-tension-face-interets-divergents-F.jpg",
+          "sources": [
+            {
+              "url": "https://www.silicon.fr/business-1367/pourquoi-microsoft-prend-ses-distances-avec-openai-228622",
+              "label": "Silicon.fr"
+            }
+          ],
+          "url": "https://www.silicon.fr/business-1367/pourquoi-microsoft-prend-ses-distances-avec-openai-228622",
+          "pubDate": "2026-07-31T13:18:55.000Z"
+        },
+        {
+          "title": "Le groupe inherent a annoncé l'acquisition de Skyloud",
+          "cve": null,
+          "severity": "high",
+          "score": 45,
+          "corroboration": 1,
+          "region": "fr",
+          "body": "Signal de veille — Global Sec Mag.\n\nLe groupe inherent, expert des services telecom, cloud et cyber en France, a annoncé l'acquisition de Skyloud, pure player cloud et partenaire AWS, basé à Lyon et spécialisé dans la construction et la maintenance d'architectures cloud. Cette opération s'inscrit dans la stratégie de renforcement des expertises IT et cloud du groupe et confirme son ambition d'accélérer sur le cloud public, en particulier auprès des éditeurs de logiciels.",
+          "detail": "Signal de veille — Global Sec Mag.\n\nLe groupe inherent, expert des services telecom, cloud et cyber en France, a annoncé l'acquisition de Skyloud, pure player cloud et partenaire AWS, basé à Lyon et spécialisé dans la construction et la maintenance d'architectures cloud. Cette opération s'inscrit dans la stratégie de renforcement des expertises IT et cloud du groupe et confirme son ambition d'accélérer sur le cloud public, en particulier auprès des éditeurs de logiciels. Fondé en 2020 par Dimitri Crochet et Etienne Fachaux , Skyloud accompagne ses clients dans la conception, l'audit, la construction et l'infogérance de leurs infrastructures cloud. Son activité s'articule autour de l'infogérance, de projets d'audit ou de construction d'architectures cloud, de prestations devops couvrant l'intégration et le déploiement continus (CI/CD), le monitoring et la supervision des infrastructures, ainsi que des démarches finops visant à optimiser les coûts cloud, complétées par la revente de consommations cloud AWS et des missions ponctuelles à forte valeur ajoutée. Skyloud s'est imposée comme un acteur reconnu de l'écosystème AWS Partenaire AWS depuis 2023, elle dispose des certifications AWS Partner Select Tier Services et AWS Partner Public Sector. La société intervient principalement auprès d'éditeurs de logiciels, pour lesquels elle conçoit, opère et optimise des architectures cloud adaptées à leurs enjeux de performan",
+          "action": null,
+          "image": "https://www.globalsecuritymag.fr/local/cache-vignettes/L40xH21/42186c90dc0b61e03d36ecbefcc348-87ed8.png",
+          "sources": [
+            {
+              "url": "https://www.globalsecuritymag.fr/le-groupe-inherent-a-annonce-l-acquisition-de-skyloud.html",
+              "label": "Global Sec Mag"
+            }
+          ],
+          "url": "https://www.globalsecuritymag.fr/le-groupe-inherent-a-annonce-l-acquisition-de-skyloud.html",
+          "pubDate": "2026-08-01T04:00:56.349Z"
+        }
+      ]
+    }
+  ]
+}
