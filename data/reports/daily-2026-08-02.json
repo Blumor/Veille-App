@@ -1,0 +1,873 @@
+{
+  "id": "daily-2026-08-02",
+  "type": "daily",
+  "date": "2026-08-02",
+  "title": "Rapport quotidien - dimanche 2 août 2026",
+  "summary": "Sur les dernières 24 heures, la veille recense 14 vulnérabilités critiques, 18 incidents ou compromissions et 9 signaux de fond. Acteurs et produits les plus exposés : Linux, Microsoft et macOS.",
+  "generatedAt": "2026-08-02T04:00:56.064Z",
+  "sections": [
+    {
+      "id": "vulns",
+      "items": [
+        {
+          "title": "CVE-2026-8457 — The WooCommerce - Social Login plugin for WordPress is vulnerable to Authentication Bypass…",
+          "cve": "CVE-2026-8457",
+          "severity": "critical",
+          "score": 74,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Vulnérabilité critique CVE-2026-8457 (score CVSS 9.8).\n\nThe WooCommerce - Social Login plugin for WordPress is vulnerable to Authentication Bypass in all versions up to and including 2.8.7. This is due to the plugin's Apple login handler accepting the Apple id_token and decoding only its base64 payload without verifying the JWT signature against Apple's public keys or validating the issuer, audience, or expiry claims, combined with the security nonce required to invoke the login flow being publicly exposed to u…",
+          "detail": "Vulnérabilité critique CVE-2026-8457 (score CVSS 9.8).\n\nThe WooCommerce - Social Login plugin for WordPress is vulnerable to Authentication Bypass in all versions up to and including 2.8.7. This is due to the plugin's Apple login handler accepting the Apple id_token and decoding only its base64 payload without verifying the JWT signature against Apple's public keys or validating the issuer, audience, or expiry claims, combined with the security nonce required to invoke the login flow being publicly exposed to unauthenticated users via a localized JavaScript object on the login page. This makes it possible for unauthenticated attackers to log in as any existing WordPress user — including administrators — by supplying a forged id_token whose payload contains the target user's email address, as that email is used without any role exclusion to resolve a WordPress account and immediately issue an authenticated session for it.\n\nScore CVSS : 9.8\n\nType de faiblesse (CWE) : CWE-289",
+          "action": "Vérifier l'exposition du parc et appliquer le correctif éditeur dès sa disponibilité.",
+          "image": null,
+          "sources": [
+            {
+              "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-8457",
+              "label": "NVD"
+            },
+            {
+              "url": "https://www.cvedetails.com/cve/CVE-2026-8457/",
+              "label": "CVE Details"
+            }
+          ],
+          "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-8457",
+          "pubDate": "2026-08-02T00:16:23.047Z"
+        },
+        {
+          "title": "CVE-2026-15964 — The Single Sign On For TNG plugin for WordPress is vulnerable to Authentication Bypass via…",
+          "cve": "CVE-2026-15964",
+          "severity": "critical",
+          "score": 74,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Vulnérabilité critique CVE-2026-15964 (score CVSS 9.8).\n\nThe Single Sign On For TNG plugin for WordPress is vulnerable to Authentication Bypass via unauthenticated password reset in all versions up to, and including, 2.0.0. This is due to the `ssoprocess_ajax()` function — registered on `wp_ajax_nopriv_ssoprocess_ajax` and therefore reachable without authentication — accepting an attacker-supplied `email` parameter with the `setnewpassword` operation and calling `reset_password()` on the resolved account without…",
+          "detail": "Vulnérabilité critique CVE-2026-15964 (score CVSS 9.8).\n\nThe Single Sign On For TNG plugin for WordPress is vulnerable to Authentication Bypass via unauthenticated password reset in all versions up to, and including, 2.0.0. This is due to the `ssoprocess_ajax()` function — registered on `wp_ajax_nopriv_ssoprocess_ajax` and therefore reachable without authentication — accepting an attacker-supplied `email` parameter with the `setnewpassword` operation and calling `reset_password()` on the resolved account without any ownership token, email confirmation link, or capability check. The sole guard is a call to `check_ajax_referer()`, which provides no authorization barrier because the `ssoajaxnonce` nonce is publicly broadcast on every front-end page via `wp_localize_script()` into the `SSOPWDREQUIREMENT` JavaScript object; since WordPress computes nonces for logged-out visitors against a shared anonymous session context, any unauthenticated visitor can scrape a valid nonce from the homepage and use it to authenticate the request. This makes it possible for unauthenticated attackers to change the password of any WordPress account, including administrator accounts, enabling complete site takeover.\n\nScore CVSS : 9.8\n\nType de faiblesse (CWE) : CWE-620",
+          "action": "Vérifier l'exposition du parc et appliquer le correctif éditeur dès sa disponibilité.",
+          "image": null,
+          "sources": [
+            {
+              "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-15964",
+              "label": "NVD"
+            },
+            {
+              "url": "https://www.cvedetails.com/cve/CVE-2026-15964/",
+              "label": "CVE Details"
+            }
+          ],
+          "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-15964",
+          "pubDate": "2026-08-01T09:17:00.137Z"
+        },
+        {
+          "title": "CVE-2026-3141 — The FormGent plugin for WordPress is vulnerable to unauthorized arbitrary file deletion du…",
+          "cve": "CVE-2026-3141",
+          "severity": "critical",
+          "score": 72,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Vulnérabilité critique CVE-2026-3141 (score CVSS 9.1).\n\nThe FormGent plugin for WordPress is vulnerable to unauthorized arbitrary file deletion due to a missing capability check on the /wp-json/formgent/responses/attachments REST API endpoint in all versions up to, and including, 1.9.2 This is due to the REST API route being registered without any authentication middleware in routes/rest/api.php.",
+          "detail": "Vulnérabilité critique CVE-2026-3141 (score CVSS 9.1).\n\nThe FormGent plugin for WordPress is vulnerable to unauthorized arbitrary file deletion due to a missing capability check on the /wp-json/formgent/responses/attachments REST API endpoint in all versions up to, and including, 1.9.2 This is due to the REST API route being registered without any authentication middleware in routes/rest/api.php. This makes it possible for unauthenticated attackers to delete arbitrary files within the formgent uploads directory. Additionally, on Linux servers where the wp-content/uploads/formgent directory does not yet exist (the default state after plugin installation), the path traversal protection can be bypassed, enabling deletion of arbitrary files including wp-config.php which can lead to complete site takeover via a fresh WordPress installation.\n\nScore CVSS : 9.1\n\nType de faiblesse (CWE) : CWE-862",
+          "action": "Vérifier l'exposition du parc et appliquer le correctif éditeur dès sa disponibilité.",
+          "image": null,
+          "sources": [
+            {
+              "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-3141",
+              "label": "NVD"
+            },
+            {
+              "url": "https://www.cvedetails.com/cve/CVE-2026-3141/",
+              "label": "CVE Details"
+            }
+          ],
+          "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-3141",
+          "pubDate": "2026-08-01T06:16:26.030Z"
+        },
+        {
+          "title": "CVE-2026-67342 — ArcadeDB versions before 26.7.2 contain an authorization bypass vulnerability in HTTP hand…",
+          "cve": "CVE-2026-67342",
+          "severity": "critical",
+          "score": 59,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Vulnérabilité critique CVE-2026-67342 (score CVSS 9.8).\n\nArcadeDB versions before 26.7.2 contain an authorization bypass vulnerability in HTTP handlers for time series, batch, Prometheus, and Grafana endpoints that fail to validate database access permissions. Attackers can access and modify databases they are not authorized to use by directly calling affected endpoints with arbitrary database parameters.",
+          "detail": "Vulnérabilité critique CVE-2026-67342 (score CVSS 9.8).\n\nArcadeDB versions before 26.7.2 contain an authorization bypass vulnerability in HTTP handlers for time series, batch, Prometheus, and Grafana endpoints that fail to validate database access permissions. Attackers can access and modify databases they are not authorized to use by directly calling affected endpoints with arbitrary database parameters.\n\nScore CVSS : 9.8\n\nType de faiblesse (CWE) : CWE-639",
+          "action": "Vérifier l'exposition du parc et appliquer le correctif éditeur dès sa disponibilité.",
+          "image": null,
+          "sources": [
+            {
+              "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-67342",
+              "label": "NVD"
+            },
+            {
+              "url": "https://www.cvedetails.com/cve/CVE-2026-67342/",
+              "label": "CVE Details"
+            }
+          ],
+          "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-67342",
+          "pubDate": "2026-08-01T13:17:05.417Z"
+        },
+        {
+          "title": "CVE-2026-67341 — ArcadeDB versions before 26.7.2 fail to enforce scripting authorization checks on the SQL …",
+          "cve": "CVE-2026-67341",
+          "severity": "critical",
+          "score": 59,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Vulnérabilité critique CVE-2026-67341 (score CVSS 9.8).\n\nArcadeDB versions before 26.7.2 fail to enforce scripting authorization checks on the SQL DEFINE FUNCTION statement with LANGUAGE js. Attackers with database access can execute arbitrary JavaScript code by submitting DEFINE FUNCTION statements, bypassing security controls intended to restrict scripting to administrators.",
+          "detail": "Vulnérabilité critique CVE-2026-67341 (score CVSS 9.8).\n\nArcadeDB versions before 26.7.2 fail to enforce scripting authorization checks on the SQL DEFINE FUNCTION statement with LANGUAGE js. Attackers with database access can execute arbitrary JavaScript code by submitting DEFINE FUNCTION statements, bypassing security controls intended to restrict scripting to administrators.\n\nScore CVSS : 9.8\n\nType de faiblesse (CWE) : CWE-863",
+          "action": "Vérifier l'exposition du parc et appliquer le correctif éditeur dès sa disponibilité.",
+          "image": null,
+          "sources": [
+            {
+              "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-67341",
+              "label": "NVD"
+            },
+            {
+              "url": "https://www.cvedetails.com/cve/CVE-2026-67341/",
+              "label": "CVE Details"
+            }
+          ],
+          "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-67341",
+          "pubDate": "2026-08-01T13:17:05.273Z"
+        },
+        {
+          "title": "CVE-2026-67340 — ArcadeDB before 26.7.2 (arcadedb-engine) allows trigger scripts to look up host classes in…",
+          "cve": "CVE-2026-67340",
+          "severity": "critical",
+          "score": 59,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Vulnérabilité critique CVE-2026-67340 (score CVSS 9.8).\n\nArcadeDB before 26.7.2 (arcadedb-engine) allows trigger scripts to look up host classes in java.lang.* (via Java.type) because ScriptTriggerExecutor adds java.lang.* to the allowed packages. An authenticated user with UPDATE_SCHEMA permission can create a JavaScript trigger that invokes java.lang.Runtime.getRuntime().exec() (or ProcessBuilder), achieving OS command execution when the trigger fires.",
+          "detail": "Vulnérabilité critique CVE-2026-67340 (score CVSS 9.8).\n\nArcadeDB before 26.7.2 (arcadedb-engine) allows trigger scripts to look up host classes in java.lang.* (via Java.type) because ScriptTriggerExecutor adds java.lang.* to the allowed packages. An authenticated user with UPDATE_SCHEMA permission can create a JavaScript trigger that invokes java.lang.Runtime.getRuntime().exec() (or ProcessBuilder), achieving OS command execution when the trigger fires.\n\nScore CVSS : 9.8\n\nType de faiblesse (CWE) : CWE-94",
+          "action": "Vérifier l'exposition du parc et appliquer le correctif éditeur dès sa disponibilité.",
+          "image": null,
+          "sources": [
+            {
+              "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-67340",
+              "label": "NVD"
+            },
+            {
+              "url": "https://www.cvedetails.com/cve/CVE-2026-67340/",
+              "label": "CVE Details"
+            }
+          ],
+          "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-67340",
+          "pubDate": "2026-08-01T13:17:05.127Z"
+        },
+        {
+          "title": "CVE-2026-67330 — @better-auth/scim (a better-auth plugin) versions >= 1.4.0-beta.27 through <= 1.6.21 and >…",
+          "cve": "CVE-2026-67330",
+          "severity": "critical",
+          "score": 59,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Vulnérabilité critique CVE-2026-67330 (score CVSS 9.9).\n\n@better-auth/scim (a better-auth plugin) versions >= 1.4.0-beta.27 through <= 1.6.21 and >= 1.7.0-beta.0 through <= 1.7.0-beta.9 contain an authorization bypass. SCIM token issuance did not reject provider IDs already used by existing SSO, SAML, OIDC, generic OAuth, or social account providers, and the same logical provider ID was used for both SCIM provider configuration and account ownership.",
+          "detail": "Vulnérabilité critique CVE-2026-67330 (score CVSS 9.9).\n\n@better-auth/scim (a better-auth plugin) versions >= 1.4.0-beta.27 through <= 1.6.21 and >= 1.7.0-beta.0 through <= 1.7.0-beta.9 contain an authorization bypass. SCIM token issuance did not reject provider IDs already used by existing SSO, SAML, OIDC, generic OAuth, or social account providers, and the same logical provider ID was used for both SCIM provider configuration and account ownership. An authenticated user could mint a SCIM token whose provider ID collided with an existing provider namespace, causing SCIM user routes to resolve account rows the token never provisioned. This allowed listing, reading, updating (including rewriting global profile/email fields without uniqueness checks), and deleting global user accounts and sessions, resulting in account takeover and unauthorized deprovisioning. Fixed in 1.6.22 and 1.7.0-beta.10 (1.7.0-rc.0).\n\nScore CVSS : 9.9\n\nType de faiblesse (CWE) : CWE-20",
+          "action": "Vérifier l'exposition du parc et appliquer le correctif éditeur dès sa disponibilité.",
+          "image": null,
+          "sources": [
+            {
+              "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-67330",
+              "label": "NVD"
+            },
+            {
+              "url": "https://www.cvedetails.com/cve/CVE-2026-67330/",
+              "label": "CVE Details"
+            }
+          ],
+          "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-67330",
+          "pubDate": "2026-08-01T13:17:03.677Z"
+        },
+        {
+          "title": "CVE-2026-67324 — GitPython 3.1.50 fails to recognize joined short-option forms such as -u<value> (the short…",
+          "cve": "CVE-2026-67324",
+          "severity": "critical",
+          "score": 59,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Vulnérabilité critique CVE-2026-67324 (score CVSS 9.8).\n\nGitPython 3.1.50 fails to recognize joined short-option forms such as -u<value> (the short form of --upload-pack=<value>) when enforcing its default unsafe-option gate. When an application passes attacker-influenced clone options into Repo.clone_from(..., multi_options=..., allow_unsafe_options=False), an attacker can supply -u<helper> to bypass the gate that blocks --upload-pack/-u, causing Git to execute the specified helper command during clone.",
+          "detail": "Vulnérabilité critique CVE-2026-67324 (score CVSS 9.8).\n\nGitPython 3.1.50 fails to recognize joined short-option forms such as -u<value> (the short form of --upload-pack=<value>) when enforcing its default unsafe-option gate. When an application passes attacker-influenced clone options into Repo.clone_from(..., multi_options=..., allow_unsafe_options=False), an attacker can supply -u<helper> to bypass the gate that blocks --upload-pack/-u, causing Git to execute the specified helper command during clone. Fixed in 3.1.51.\n\nScore CVSS : 9.8\n\nType de faiblesse (CWE) : CWE-78",
+          "action": "Vérifier l'exposition du parc et appliquer le correctif éditeur dès sa disponibilité.",
+          "image": null,
+          "sources": [
+            {
+              "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-67324",
+              "label": "NVD"
+            },
+            {
+              "url": "https://www.cvedetails.com/cve/CVE-2026-67324/",
+              "label": "CVE Details"
+            }
+          ],
+          "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-67324",
+          "pubDate": "2026-08-01T13:17:02.770Z"
+        },
+        {
+          "title": "CVE-2026-67308 — Wazuh workflows before 44bf114 contain a shell injection vulnerability in GitHub Actions t…",
+          "cve": "CVE-2026-67308",
+          "severity": "critical",
+          "score": 59,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Vulnérabilité critique CVE-2026-67308 (score CVSS 10).\n\nWazuh workflows before 44bf114 contain a shell injection vulnerability in GitHub Actions that allows attackers to execute arbitrary commands by submitting pull requests with crafted VERSION.json files. Attackers can inject shell metacharacters into environment variables that are directly interpolated into run steps, enabling command execution and exfiltration of secrets including GITHUB_TOKEN and AWS credentials on self-hosted runners.",
+          "detail": "Vulnérabilité critique CVE-2026-67308 (score CVSS 10).\n\nWazuh workflows before 44bf114 contain a shell injection vulnerability in GitHub Actions that allows attackers to execute arbitrary commands by submitting pull requests with crafted VERSION.json files. Attackers can inject shell metacharacters into environment variables that are directly interpolated into run steps, enabling command execution and exfiltration of secrets including GITHUB_TOKEN and AWS credentials on self-hosted runners.\n\nScore CVSS : 10\n\nType de faiblesse (CWE) : CWE-78",
+          "action": "Vérifier l'exposition du parc et appliquer le correctif éditeur dès sa disponibilité.",
+          "image": null,
+          "sources": [
+            {
+              "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-67308",
+              "label": "NVD"
+            },
+            {
+              "url": "https://www.cvedetails.com/cve/CVE-2026-67308/",
+              "label": "CVE Details"
+            }
+          ],
+          "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-67308",
+          "pubDate": "2026-08-01T13:17:00.553Z"
+        },
+        {
+          "title": "CVE-2026-67289 — FreeRDP before 3.29.0 (affected versions <= 3.28.0) does not validate CRLF and control cha…",
+          "cve": "CVE-2026-67289",
+          "severity": "critical",
+          "score": 59,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Vulnérabilité critique CVE-2026-67289 (score CVSS 9.8).\n\nFreeRDP before 3.29.0 (affected versions <= 3.28.0) does not validate CRLF and control characters in the server-controlled RDP redirection TargetNetAddress field. This value is copied into the client's ServerHostname and, when the client connects through an HTTP proxy, is written directly into the proxy CONNECT request line and Host header by http_proxy_connect() without filtering.",
+          "detail": "Vulnérabilité critique CVE-2026-67289 (score CVSS 9.8).\n\nFreeRDP before 3.29.0 (affected versions <= 3.28.0) does not validate CRLF and control characters in the server-controlled RDP redirection TargetNetAddress field. This value is copied into the client's ServerHostname and, when the client connects through an HTTP proxy, is written directly into the proxy CONNECT request line and Host header by http_proxy_connect() without filtering. A malicious or compromised RDP server can send a crafted redirection PDU containing embedded control characters to inject arbitrary headers/requests into the HTTP proxy CONNECT request.\n\nScore CVSS : 9.8\n\nType de faiblesse (CWE) : CWE-113",
+          "action": "Vérifier l'exposition du parc et appliquer le correctif éditeur dès sa disponibilité.",
+          "image": null,
+          "sources": [
+            {
+              "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-67289",
+              "label": "NVD"
+            },
+            {
+              "url": "https://www.cvedetails.com/cve/CVE-2026-67289/",
+              "label": "CVE Details"
+            }
+          ],
+          "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-67289",
+          "pubDate": "2026-08-01T13:16:57.803Z"
+        },
+        {
+          "title": "CVE-2026-66402 — FreeRDP before 3.29.0 (affected versions <= 3.28.0) contains multiple TLS certificate iden…",
+          "cve": "CVE-2026-66402",
+          "severity": "critical",
+          "score": 59,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Vulnérabilité critique CVE-2026-66402 (score CVSS 9.8).\n\nFreeRDP before 3.29.0 (affected versions <= 3.28.0) contains multiple TLS certificate identity validation weaknesses in tls_verify_certificate(), tls_match_hostname(), and x509_utils_get_dns_names(). Because FreeRDP performs custom Common Name and DNS SAN string matching instead of using OpenSSL's length-aware identity validation APIs, it (1) truncates DNS SAN values at embedded NUL bytes (accepting e.g.",
+          "detail": "Vulnérabilité critique CVE-2026-66402 (score CVSS 9.8).\n\nFreeRDP before 3.29.0 (affected versions <= 3.28.0) contains multiple TLS certificate identity validation weaknesses in tls_verify_certificate(), tls_match_hostname(), and x509_utils_get_dns_names(). Because FreeRDP performs custom Common Name and DNS SAN string matching instead of using OpenSSL's length-aware identity validation APIs, it (1) truncates DNS SAN values at embedded NUL bytes (accepting e.g. 'victim.example\\0.attacker.example' as 'victim.example'), (2) accepts a matching Common Name even when non-matching DNS SAN entries are present, and (3) accepts IP-literal targets via DNS/CN matching without comparing iPAddress SANs. Under a trusted or misissued certificate chain, an attacker positioned to present such a certificate can bypass server identity verification, weakening TLS server authentication.\n\nScore CVSS : 9.8\n\nType de faiblesse (CWE) : CWE-295",
+          "action": "Vérifier l'exposition du parc et appliquer le correctif éditeur dès sa disponibilité.",
+          "image": null,
+          "sources": [
+            {
+              "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-66402",
+              "label": "NVD"
+            },
+            {
+              "url": "https://www.cvedetails.com/cve/CVE-2026-66402/",
+              "label": "CVE Details"
+            }
+          ],
+          "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-66402",
+          "pubDate": "2026-08-01T13:16:57.487Z"
+        },
+        {
+          "title": "Adobe fixed a maximum-severity vulnerability flaw in Campaign Classic",
+          "cve": "CVE-2026-48449",
+          "severity": "critical",
+          "score": 49,
+          "corroboration": 2,
+          "region": "intl",
+          "body": "Vulnérabilité critique CVE-2026-48449 affectant Adobe.\n\nAdobe fixed a maximum severity vulnerability in Campaign Classic that could let attackers run code remotely without user interaction. Adobe has addressed a critical vulnerability, tracked as CVE-2026-48449 (CVSS score of 10.0), in Adobe Campaign Classic, the company&#8217;s enterprise marketing automation platform.",
+          "detail": "Vulnérabilité critique CVE-2026-48449 affectant Adobe.\n\nAdobe fixed a maximum severity vulnerability in Campaign Classic that could let attackers run code remotely without user interaction. Adobe has addressed a critical vulnerability, tracked as CVE-2026-48449 (CVSS score of 10.0), in Adobe Campaign Classic, the company&#8217;s enterprise marketing automation platform. The flaw is caused by incorrect authorization and could allow attackers to execute arbitrary code in the context of the current user without requiring any user interaction. &#8220;Adobe has released a security update for Adobe Campaign Classic. This update addresses critical vulnerabilities that could result in arbitrary code execution and arbitrary file system read.&#8221; reads the advisory . &#8220;Adobe is not aware of any exploits in the wild for any of the issues addressed in these updates.&#8221; Organizations using Adobe Campaign Classic should apply the available security updates as soon as possible to reduce the risk of exploitation. Adobe also fixed CVE-2026-48448 (CVSS score 8.6), a high-severity SQL injection flaw that could allow arbitrary file reads. Both vulnerabilities are patched in Adobe Campaign Classic v7.4.3 build 9398 for Windows and Linux. Adobe also released updates for Adobe Bridge, fixing eight critical vulnerabilities that could allow attackers to execute arbitrary code or escalate privileges. The flaws include incorrect authorization, unt",
+          "action": "Vérifier l'exposition du parc et appliquer le correctif éditeur dès sa disponibilité.",
+          "image": "https://securityaffairs.com/wp-content/uploads/2020/08/Stringlifier-Adobe.png",
+          "sources": [
+            {
+              "url": "https://securityaffairs.com/196429/security/adobe-fixed-a-maximum-severity-vulnerability-flaw-in-campaign-classic.html",
+              "label": "Security Affairs"
+            },
+            {
+              "url": "https://thehackernews.com/2026/08/adobe-campaign-classic-cvss-100-flaw.html",
+              "label": "The Hacker News"
+            }
+          ],
+          "url": "https://securityaffairs.com/196429/security/adobe-fixed-a-maximum-severity-vulnerability-flaw-in-campaign-classic.html",
+          "pubDate": "2026-08-01T12:31:34.000Z"
+        },
+        {
+          "title": "Autonomous AI Agent Exploits Zero-Day to Breach Hugging Face Infrastructure",
+          "cve": null,
+          "severity": "critical",
+          "score": 46,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Vulnérabilité critique.\n\nAn autonomous AI agent powered by OpenAI models breached Hugging Face&#8217;s production infrastructure in July 2026 after escaping its evaluation sandbox via a zero-day vulnerability. Documented by HiddenLayer&#8217;s Research Team on July 31, the agent was undergoing an internal cyber capability evaluation on ExploitGym, a benchmark designed to test an AI&#8217;s ability to discover and [&#8230;] The post Autonomous AI Agent Exploits Zero-Day to Breach H…",
+          "detail": "Vulnérabilité critique.\n\nAn autonomous AI agent powered by OpenAI models breached Hugging Face&#8217;s production infrastructure in July 2026 after escaping its evaluation sandbox via a zero-day vulnerability. Documented by HiddenLayer&#8217;s Research Team on July 31, the agent was undergoing an internal cyber capability evaluation on ExploitGym, a benchmark designed to test an AI&#8217;s ability to discover and [&#8230;] The post Autonomous AI Agent Exploits Zero-Day to Breach Hugging Face Infrastructure appeared first on GBHackers Security | #1 Globally Trusted Cyber Security News Platform .",
+          "action": "Vérifier l'exposition du parc et appliquer le correctif éditeur dès sa disponibilité.",
+          "image": "https://gbhackers.com/wp-content/uploads/2026/08/autonomous-ai-agent-exploits-zero-day-to-breach-hugging-face-infrastructure1-6a6dbae416e11.webp",
+          "sources": [
+            {
+              "url": "https://gbhackers.com/autonomous-ai-agent-exploits-zero-day/",
+              "label": "GBHackers"
+            }
+          ],
+          "url": "https://gbhackers.com/autonomous-ai-agent-exploits-zero-day/",
+          "pubDate": "2026-08-01T08:32:42.000Z"
+        },
+        {
+          "title": "Multiples vulnérabilités dans le noyau Linux de SUSE (31 juillet 2026)",
+          "cve": null,
+          "severity": "high",
+          "score": 39,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Vulnérabilité élevée affectant Linux.\n\nDe multiples vulnérabilités ont été découvertes dans le noyau Linux de SUSE. Certaines d'entre elles permettent à un attaquant de provoquer une atteinte à la confidentialité des données, une atteinte à l'intégrité des données et un contournement de la politique de sécurité. Voir en ligne : https://www.cert.ssi.gouv.fr/avis/C...",
+          "detail": "Vulnérabilité élevée affectant Linux.\n\nDe multiples vulnérabilités ont été découvertes dans le noyau Linux de SUSE. Certaines d'entre elles permettent à un attaquant de provoquer une atteinte à la confidentialité des données, une atteinte à l'intégrité des données et un contournement de la politique de sécurité. Voir en ligne : https://www.cert.ssi.gouv.fr/avis/C...",
+          "action": "Vérifier l'exposition du parc et appliquer le correctif éditeur dès sa disponibilité.",
+          "image": "https://www.globalsecuritymag.fr/local/cache-vignettes/L40xH21/a3c0c28306689c72833bd0e5592942-00c4a.png",
+          "sources": [
+            {
+              "url": "https://www.globalsecuritymag.fr/multiples-vulnerabilites-dans-gitlab-30-juillet-2026.html",
+              "label": "Global Sec Mag"
+            }
+          ],
+          "url": "https://www.globalsecuritymag.fr/multiples-vulnerabilites-dans-gitlab-30-juillet-2026.html",
+          "pubDate": "2026-08-02T04:00:48.277Z"
+        },
+        {
+          "title": "Vulnérabilité dans Cisco Firewall Management Center (30 juillet 2026)",
+          "cve": "CVE-2026-20316",
+          "severity": "high",
+          "score": 39,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Vulnérabilité élevée CVE-2026-20316 affectant Cisco.\n\nUne vulnérabilité a été découverte dans Cisco Firewall Management Center. Elle permet à un attaquant de provoquer une atteinte à la confidentialité des données et un contournement de la politique de sécurité. Cisco indique que la vulnérabilité CVE-2026-20316 est activement exploitée. Voir en ligne : https://www.cert.ssi.gouv.fr/avis/C...",
+          "detail": "Vulnérabilité élevée CVE-2026-20316 affectant Cisco.\n\nUne vulnérabilité a été découverte dans Cisco Firewall Management Center. Elle permet à un attaquant de provoquer une atteinte à la confidentialité des données et un contournement de la politique de sécurité. Cisco indique que la vulnérabilité CVE-2026-20316 est activement exploitée. Voir en ligne : https://www.cert.ssi.gouv.fr/avis/C...",
+          "action": "Vérifier l'exposition du parc et appliquer le correctif éditeur dès sa disponibilité.",
+          "image": "https://www.globalsecuritymag.fr/local/cache-vignettes/L40xH21/a3c0c28306689c72833bd0e5592942-00c4a.png",
+          "sources": [
+            {
+              "url": "https://www.globalsecuritymag.fr/vulnerabilite-dans-cisco-firewall-management-center-30-juillet-2026.html",
+              "label": "Global Sec Mag"
+            }
+          ],
+          "url": "https://www.globalsecuritymag.fr/vulnerabilite-dans-cisco-firewall-management-center-30-juillet-2026.html",
+          "pubDate": "2026-08-02T04:00:48.276Z"
+        }
+      ]
+    },
+    {
+      "id": "attacks",
+      "items": [
+        {
+          "title": "CEN and Cenelec — rançongiciel coinbasecartel (Belgique)",
+          "cve": null,
+          "severity": "news",
+          "score": 69,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Incident de sécurité rapporté par ransomware.live.\n\nVictime revendiquée par le groupe de rançongiciel coinbasecartel. Pays : Belgique. Secteur : Other. CEN (European Committee for Standardization) and CENELEC (European Committee for Electrotechnical Standardization) are European standardization organizations headquartered in Brussels, Belgium. They develop and publish voluntary technical standards across industries including engineering, manufacturing, energy, and electrotechnical sectors.",
+          "detail": "Incident de sécurité rapporté par ransomware.live.\n\nVictime revendiquée par le groupe de rançongiciel coinbasecartel.\n\nPays : Belgique.\n\nSecteur : Other.\n\nCEN (European Committee for Standardization) and CENELEC (European Committee for Electrotechnical Standardization) are European standardization organizations headquartered in Brussels, Belgium. They develop and publish voluntary technical standards across industries including engineering, manufacturing, energy, and electrotechnical sectors. Their standards facilitate trade, safety, and interoperability across European Union and European Economic Area member states.",
+          "action": "Surveiller les indicateurs de compromission associés et contrôler les actifs exposés.",
+          "image": "https://images.ransomware.live/victims/d74912d9eb0e5508845fbee8638b816b.png",
+          "sources": [
+            {
+              "url": "https://www.ransomware.live/id/Q0VOIGFuZCBDZW5lbGVjQGNvaW5iYXNlY2FydGVs",
+              "label": "ransomware.live"
+            }
+          ],
+          "url": "https://www.ransomware.live/id/Q0VOIGFuZCBDZW5lbGVjQGNvaW5iYXNlY2FydGVs",
+          "pubDate": "2026-08-01T05:30:06.912Z"
+        },
+        {
+          "title": "quantinuum.com — rançongiciel incransom (États-Unis)",
+          "cve": null,
+          "severity": "news",
+          "score": 66,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Incident de sécurité rapporté par ransomware.live.\n\nVictime revendiquée par le groupe de rançongiciel incransom. Pays : États-Unis. Secteur : Technology. Quantinuum is a quantum computing company that develops advanced quantum computers, software, and cybersecurity solutions to solve complex scientific and industrial challenges.",
+          "detail": "Incident de sécurité rapporté par ransomware.live.\n\nVictime revendiquée par le groupe de rançongiciel incransom.\n\nPays : États-Unis.\n\nSecteur : Technology.\n\nQuantinuum is a quantum computing company that develops advanced quantum computers, software, and cybersecurity solutions to solve complex scientific and industrial challenges. The company provides full-stack quantum technologies for areas such as materials science, drug discovery, encryption, artificial intelligence, and optimization, helping enterprises and researchers accelerate innovation through quantum computing.\r \r \r The leak dates back to pre-IPO. \r \r QUANTINUUM deliberately withheld this information from investors.\r \r The exact amount of stolen data will be revealed after publishing.",
+          "action": "Surveiller les indicateurs de compromission associés et contrôler les actifs exposés.",
+          "image": "https://images.ransomware.live/victims/4c994907cbc30e508e33addbbe1611ae.png",
+          "sources": [
+            {
+              "url": "https://www.ransomware.live/id/RW5jb3JlIEVudGVycHJpc2VzLCBJbmMuQENSUHhP",
+              "label": "ransomware.live"
+            }
+          ],
+          "url": "https://www.ransomware.live/id/RW5jb3JlIEVudGVycHJpc2VzLCBJbmMuQENSUHhP",
+          "pubDate": "2026-08-02T03:50:22.093Z"
+        },
+        {
+          "title": "Atomic MacOS (AMOS) stealer infection, (Sun, Aug 2nd)",
+          "cve": null,
+          "severity": "news",
+          "score": 66,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Incident de sécurité rapporté par SANS ISC.\n\nIntroduction This diary provides indicators from an Atomic MacOS (AMOS) stealer infection that I generated in my lab on July 31st, 2026.&nbsp; This was distributed through a web page from getmacouscloud[.]com with instructions to paste text into a macOS Terminal window, supposedly for &quot;macOS toolkit,&quot; but instead the text is a command to retrieve and install AMOS stealer malware.",
+          "detail": "Incident de sécurité rapporté par SANS ISC.\n\nIntroduction This diary provides indicators from an Atomic MacOS (AMOS) stealer infection that I generated in my lab on July 31st, 2026.&nbsp; This was distributed through a web page from getmacouscloud[.]com with instructions to paste text into a macOS Terminal window, supposedly for &quot;macOS toolkit,&quot; but instead the text is a command to retrieve and install AMOS stealer malware. Of note, I ran the text in the Terminal window twice, because I wanted to make sure I retrieved copies of files in the host&#39;s /tmp directory before entering the user account password.&nbsp; This is why the initial infection traffic is repeated, and also likely why there are two different directories with the AMOS stealer malware persistent on my infected lab host. Images from the Infection Shown above: Website with instructions to copy and paste text into a Terminal window, supposedly for a &quot;macOS toolkit&quot; but actually for malware. Shown above: The malicious text pasted into a Terminal Window on a macOS host. Shown above: Files from my infected host&#39;s /tmp directory, showing data stolen and other info for AMOS stealer. Shown above: Examples of AMOS stealer persistent on my infected macOS host. Shown above: Traffic from the AMOS stealer infection filtered in Wireshark. Indicators of Compromise Traffic leading to the getmacouscloud[.]com page on Friday 2026-07-31: hxxps[:]//ma",
+          "action": "Surveiller les indicateurs de compromission associés et contrôler les actifs exposés.",
+          "image": "https://isc.sans.edu/diaryimages/images/2026-08-02-ISC-diary-image-01b.jpg",
+          "sources": [
+            {
+              "url": "https://isc.sans.edu/diary/rss/33208",
+              "label": "SANS ISC"
+            }
+          ],
+          "url": "https://isc.sans.edu/diary/rss/33208",
+          "pubDate": "2026-08-02T03:21:28.000Z"
+        },
+        {
+          "title": "Phishing Campaigns Targeting AI Solutions Providers, (Sat, Aug 1st)",
+          "cve": null,
+          "severity": "news",
+          "score": 66,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Incident de sécurité rapporté par SANS ISC.\n\nMost phishing campaigns rely on the fact that the victim is afraid to loose &quot;something&quot;: money, access to information, ... Many brands have been impersonated by campaigns but I spotted some phishing emails that focus on AI services like ChatGPT.",
+          "detail": "Incident de sécurité rapporté par SANS ISC.\n\nMost phishing campaigns rely on the fact that the victim is afraid to loose &quot;something&quot;: money, access to information, ... Many brands have been impersonated by campaigns but I spotted some phishing emails that focus on AI services like ChatGPT. Yesterday, I found this email that was properly designed but also sent with a very good timing: the end of the month when your classic billing process is restarted! The threat actor is just trying to grab your payment details: Seeing the importance of AI used by most companies but also residential users, this is a clever move from threat actors! Many people will be afraid to loose their access to ChatGPT. Xavier Mertens (@xme) Senior ISC Handler | SANS Principal Instructor | Freelance Consultant Xameco | PGP Key (c) SANS Internet Storm Center. https://isc.sans.edu Creative Commons Attribution-Noncommercial 3.0 United States License.",
+          "action": "Surveiller les indicateurs de compromission associés et contrôler les actifs exposés.",
+          "image": "https://isc.sans.edu/diaryimages/images/isc-20260801-1.png",
+          "sources": [
+            {
+              "url": "https://isc.sans.edu/diary/rss/33206",
+              "label": "SANS ISC"
+            }
+          ],
+          "url": "https://isc.sans.edu/diary/rss/33206",
+          "pubDate": "2026-08-01T07:22:32.000Z"
+        },
+        {
+          "title": "Coldcard Hardware Wallet Flaw Linked to $70 Million Bitcoin Theft in 41 Minutes",
+          "cve": null,
+          "severity": "news",
+          "score": 64,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Incident de sécurité rapporté par The Hacker News.\n\nAn attacker drained 1,196 Bitcoin addresses in 41 minutes on July 30, taking 1,082.65 BTC worth about $70.2 million at the time. Galaxy Research mapped the sweep and tied it to a firmware flaw in Coldcard, the Bitcoin-only hardware wallet made by Canadian firm Coinkite. A March 2021 firmware integration error routed seed generation to a deterministic software pseudorandom number generator (PRNG",
+          "detail": "Incident de sécurité rapporté par The Hacker News.\n\nAn attacker drained 1,196 Bitcoin addresses in 41 minutes on July 30, taking 1,082.65 BTC worth about $70.2 million at the time. Galaxy Research mapped the sweep and tied it to a firmware flaw in Coldcard, the Bitcoin-only hardware wallet made by Canadian firm Coinkite. A March 2021 firmware integration error routed seed generation to a deterministic software pseudorandom number generator (PRNG",
+          "action": "Surveiller les indicateurs de compromission associés et contrôler les actifs exposés.",
+          "image": "https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEiea5Kw_2TLtPI4Ts3s3anmPIQr3S8VxO0G9yL-UV1dSlRrW1Z_L41XoHcSFuk2ThCBDKLFy-xZl_y7DnA0FM2nWHk4G1TpV2iMx6-X6EDT3gK7s0pJu6e1wMUoEsuPifcXseXuqOIHL3W9voWoD_se5gKJPyii4X0mJY7sxJ3uOPlTWVfAyrKs4ixa-18/s1600/coldcard.jpg",
+          "sources": [
+            {
+              "url": "https://thehackernews.com/2026/08/coldcard-hardware-wallet-flaw-linked-to.html",
+              "label": "The Hacker News"
+            }
+          ],
+          "url": "https://thehackernews.com/2026/08/coldcard-hardware-wallet-flaw-linked-to.html",
+          "pubDate": "2026-08-01T17:17:22.000Z"
+        },
+        {
+          "title": "Dienst Pack Systems — rançongiciel qilin (Allemagne)",
+          "cve": null,
+          "severity": "news",
+          "score": 61,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Incident de sécurité rapporté par ransomware.live.\n\nRansomware.live discovered on 2026-08-01 that Dienst Pack Systems has been claimed by Qilin ransomware group\n\nSponsored by Hudson Rock – Use Hudson Rock's free cybercrime intelligence tools to learn how Infostealer infections are leading to ransomware attacks\n\nThe following DNS records were found for the victim's domain.\n\nLegal Disclaimer: Ransomware.live does not engage in the acquisition, exfiltration, downloading, possession, hosting, access, consultati…",
+          "detail": "Incident de sécurité rapporté par ransomware.live.\n\nRansomware.live discovered on 2026-08-01 that Dienst Pack Systems has been claimed by Qilin ransomware group\n\nSponsored by Hudson Rock – Use Hudson Rock's free cybercrime intelligence tools to learn how Infostealer infections are leading to ransomware attacks\n\nThe following DNS records were found for the victim's domain.\n\nLegal Disclaimer: Ransomware.live does not engage in the acquisition, exfiltration, downloading, possession, hosting, access, consultation, redistribution, or disclosure of unlawfully obtained data. This platform indexes only publicly visible information posted by ransomware operators and open web sources without accessing or obtaining the underlying stolen content . The service is provided to support public awareness, legitimate research, and cyber-resilience. No stolen personal or confidential data is collected or distributed via this site.\n\nSession: 057726c909af65969646b040bbbfa5c4df67f5166a33cbac6cd9e1302b0b3ca148\n\nTox: 50DADDED26D859469371938B793456D8210A5AE02DD3C42979F5E52411BCB648F1CA68A5EDE5",
+          "action": "Surveiller les indicateurs de compromission associés et contrôler les actifs exposés.",
+          "image": "https://images.ransomware.live/victims/211729fc9551931a420e027a3fbb94b0.png",
+          "sources": [
+            {
+              "url": "https://www.ransomware.live/id/RGllbnN0IFBhY2sgU3lzdGVtc0BxaWxpbg==",
+              "label": "ransomware.live"
+            }
+          ],
+          "url": "https://www.ransomware.live/id/RGllbnN0IFBhY2sgU3lzdGVtc0BxaWxpbg==",
+          "pubDate": "2026-08-01T13:51:48.791Z"
+        },
+        {
+          "title": "Ceragres — rançongiciel qilin (Canada)",
+          "cve": null,
+          "severity": "news",
+          "score": 61,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Incident de sécurité rapporté par ransomware.live.\n\nRansomware.live discovered on 2026-08-01 that Ceragres has been claimed by Qilin ransomware group\n\nSponsored by Hudson Rock – Use Hudson Rock's free cybercrime intelligence tools to learn how Infostealer infections are leading to ransomware attacks\n\nThe following DNS records were found for the victim's domain.\n\nLegal Disclaimer: Ransomware.live does not engage in the acquisition, exfiltration, downloading, possession, hosting, access, consultation, redistr…",
+          "detail": "Incident de sécurité rapporté par ransomware.live.\n\nRansomware.live discovered on 2026-08-01 that Ceragres has been claimed by Qilin ransomware group\n\nSponsored by Hudson Rock – Use Hudson Rock's free cybercrime intelligence tools to learn how Infostealer infections are leading to ransomware attacks\n\nThe following DNS records were found for the victim's domain.\n\nLegal Disclaimer: Ransomware.live does not engage in the acquisition, exfiltration, downloading, possession, hosting, access, consultation, redistribution, or disclosure of unlawfully obtained data. This platform indexes only publicly visible information posted by ransomware operators and open web sources without accessing or obtaining the underlying stolen content . The service is provided to support public awareness, legitimate research, and cyber-resilience. No stolen personal or confidential data is collected or distributed via this site.\n\nSession: 057726c909af65969646b040bbbfa5c4df67f5166a33cbac6cd9e1302b0b3ca148\n\nTox: 50DADDED26D859469371938B793456D8210A5AE02DD3C42979F5E52411BCB648F1CA68A5EDE5",
+          "action": "Surveiller les indicateurs de compromission associés et contrôler les actifs exposés.",
+          "image": "https://images.ransomware.live/victims/843dac653f2fa385f42258408a558bef.png",
+          "sources": [
+            {
+              "url": "https://www.ransomware.live/id/Q2VyYWdyZXNAcWlsaW4=",
+              "label": "ransomware.live"
+            }
+          ],
+          "url": "https://www.ransomware.live/id/Q2VyYWdyZXNAcWlsaW4=",
+          "pubDate": "2026-08-01T13:51:07.061Z"
+        },
+        {
+          "title": "Philippine Savings Bank — rançongiciel thegentlemen (PH)",
+          "cve": null,
+          "severity": "news",
+          "score": 61,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Incident de sécurité rapporté par ransomware.live.\n\nVictime revendiquée par le groupe de rançongiciel thegentlemen. Pays : PH. Secteur : Financial Services. psbank.com.ph zoominfo.com/c/philippine-savings-bank/83461899 SBank is widely recognized across the Philippines for its highly accessible Auto and Home Loan programs that make vehicle and property ownership easier for everyday consumers.",
+          "detail": "Incident de sécurité rapporté par ransomware.live.\n\nVictime revendiquée par le groupe de rançongiciel thegentlemen.\n\nPays : PH.\n\nSecteur : Financial Services.\n\npsbank.com.ph zoominfo.com/c/philippine-savings-bank/83461899 SBank is widely recognized across the Philippines for its highly accessible Auto and Home Loan programs that make vehicle and property ownership easier for everyday consumers.\nOne of its most unique financial products is the Flexi Personal Loan, a revolving credit line that allows clients to withdraw, repay, and reuse funds flexibly",
+          "action": "Surveiller les indicateurs de compromission associés et contrôler les actifs exposés.",
+          "image": "https://images.ransomware.live/ransomware.png",
+          "sources": [
+            {
+              "url": "https://www.ransomware.live/id/UGhpbGlwcGluZSBTYXZpbmdzIEJhbmtAdGhlZ2VudGxlbWVu",
+              "label": "ransomware.live"
+            }
+          ],
+          "url": "https://www.ransomware.live/id/UGhpbGlwcGluZSBTYXZpbmdzIEJhbmtAdGhlZ2VudGxlbWVu",
+          "pubDate": "2026-08-01T13:09:53.000Z"
+        },
+        {
+          "title": "MIM Fertility — rançongiciel coinbasecartel (Royaume-Uni)",
+          "cve": null,
+          "severity": "news",
+          "score": 61,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Incident de sécurité rapporté par ransomware.live.\n\nVictime revendiquée par le groupe de rançongiciel coinbasecartel. Pays : Royaume-Uni. Secteur : Healthcare. MIM Fertility is a US-based fertility clinic network specializing in reproductive medicine and assisted reproductive technologies. The company provides services such as in vitro fertilization, egg freezing, preimplantation genetic testing, and fertility preservation.",
+          "detail": "Incident de sécurité rapporté par ransomware.live.\n\nVictime revendiquée par le groupe de rançongiciel coinbasecartel.\n\nPays : Royaume-Uni.\n\nSecteur : Healthcare.\n\nMIM Fertility is a US-based fertility clinic network specializing in reproductive medicine and assisted reproductive technologies. The company provides services such as in vitro fertilization, egg freezing, preimplantation genetic testing, and fertility preservation. Operating within the healthcare and reproductive medicine industry, MIM Fertility focuses on personalized patient care and works with fertility specialists to help individuals and couples achieve pregnancy.",
+          "action": "Surveiller les indicateurs de compromission associés et contrôler les actifs exposés.",
+          "image": "https://images.ransomware.live/victims/e48a6e2c612d5678e5f2e853b864c085.png",
+          "sources": [
+            {
+              "url": "https://www.ransomware.live/id/TUlNIEZlcnRpbGl0eUBjb2luYmFzZWNhcnRlbA==",
+              "label": "ransomware.live"
+            }
+          ],
+          "url": "https://www.ransomware.live/id/TUlNIEZlcnRpbGl0eUBjb2luYmFzZWNhcnRlbA==",
+          "pubDate": "2026-08-01T05:29:29.374Z"
+        },
+        {
+          "title": "Xs Cad — rançongiciel coinbasecartel",
+          "cve": null,
+          "severity": "news",
+          "score": 61,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Incident de sécurité rapporté par ransomware.live.\n\nRansomware.live discovered on 2026-08-01 that Xs Cad has been claimed by Coinbasecartel ransomware group\n\nSponsored by Hudson Rock – Use Hudson Rock's free cybercrime intelligence tools to learn how Infostealer infections are leading to ransomware attacks\n\nLegal Disclaimer: Ransomware.live does not engage in the acquisition, exfiltration, downloading, possession, hosting, access, consultation, redistribution, or disclosure of unlawfully obtained data.",
+          "detail": "Incident de sécurité rapporté par ransomware.live.\n\nRansomware.live discovered on 2026-08-01 that Xs Cad has been claimed by Coinbasecartel ransomware group\n\nSponsored by Hudson Rock – Use Hudson Rock's free cybercrime intelligence tools to learn how Infostealer infections are leading to ransomware attacks\n\nLegal Disclaimer: Ransomware.live does not engage in the acquisition, exfiltration, downloading, possession, hosting, access, consultation, redistribution, or disclosure of unlawfully obtained data. This platform indexes only publicly visible information posted by ransomware operators and open web sources without accessing or obtaining the underlying stolen content . The service is provided to support public awareness, legitimate research, and cyber-resilience. No stolen personal or confidential data is collected or distributed via this site.\n\nSession: 057726c909af65969646b040bbbfa5c4df67f5166a33cbac6cd9e1302b0b3ca148\n\nTox: 50DADDED26D859469371938B793456D8210A5AE02DD3C42979F5E52411BCB648F1CA68A5EDE5",
+          "action": "Surveiller les indicateurs de compromission associés et contrôler les actifs exposés.",
+          "image": "https://images.ransomware.live/victims/ec4da8a4b42b189b9a2cc68059626758.png",
+          "sources": [
+            {
+              "url": "https://www.ransomware.live/id/WHMgQ2FkQGNvaW5iYXNlY2FydGVs",
+              "label": "ransomware.live"
+            }
+          ],
+          "url": "https://www.ransomware.live/id/WHMgQ2FkQGNvaW5iYXNlY2FydGVs",
+          "pubDate": "2026-08-01T05:28:15.944Z"
+        },
+        {
+          "title": "Bloctel tire sa révérence, Claude pirate trois entreprises par erreur et Google rebaptise ses hackers : on vous raconte la semaine Cyberguerre",
+          "cve": null,
+          "severity": "news",
+          "score": 60,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Incident de sécurité rapporté par Numerama.\n\nTrois actualités à retenir cette semaine : Bloctel ferme ses portes le 11 août, Anthropic reconnaît à son tour des cas de piratage involontaire par Claude, et Google harmonise en interne le nom de ses groupes de hackers. Démarchage téléphonique : que va-t-il se passer avec l’arrêt de Bloctel le 11 août 2026 ? À\n\nWatt Else, ToujoursPlus, Artificielles, Le Récap : votre dose hebdo d’infos exclusives et d’éditos endiablés !\n\nFrandroid Clubic Lemon Humanoid Mo…",
+          "detail": "Incident de sécurité rapporté par Numerama.\n\nTrois actualités à retenir cette semaine : Bloctel ferme ses portes le 11 août, Anthropic reconnaît à son tour des cas de piratage involontaire par Claude, et Google harmonise en interne le nom de ses groupes de hackers. Démarchage téléphonique : que va-t-il se passer avec l’arrêt de Bloctel le 11 août 2026 ? À\n\nWatt Else, ToujoursPlus, Artificielles, Le Récap : votre dose hebdo d’infos exclusives et d’éditos endiablés !\n\nFrandroid Clubic Lemon Humanoid Mon compte Thème Clair Sombre Système 39,90 € /an\n\nZéro publicité, fonctions avancées de lecture, articles résumés par l'I.A, contenus exclusifs et plus encore.\n\nTout le monde n'a pas les moyens de payer pour l'information. C'est pourquoi nous maintenons notre journalisme ouvert à tous.\n\nMais si vous le pouvez, voici trois bonnes raisons de soutenir notre travail :\n\nSi vous croyez en un web gratuit et à une information de qualité accessible au plus grand nombre, rejoignez Numerama+.",
+          "action": "Surveiller les indicateurs de compromission associés et contrôler les actifs exposés.",
+          "image": "https://c0.lestechnophiles.com/www.numerama.com/wp-content/uploads/2026/07/design-sans-titre-2026-07-31t174950303.jpg?resize=1600,900&key=48f8f9cc",
+          "sources": [
+            {
+              "url": "https://www.numerama.com/tech/2305275-bloctel-tire-sa-reverence-claude-pirate-trois-entreprises-par-erreur-et-google-rebaptise-ses-hackers-on-vous-raconte-la-semaine-cyberguerre.html",
+              "label": "Numerama"
+            }
+          ],
+          "url": "https://www.numerama.com/tech/2305275-bloctel-tire-sa-reverence-claude-pirate-trois-entreprises-par-erreur-et-google-rebaptise-ses-hackers-on-vous-raconte-la-semaine-cyberguerre.html",
+          "pubDate": "2026-08-01T14:00:00.000Z"
+        },
+        {
+          "title": "Hackers Poison Adform Script to Swap Crypto Wallet Addresses Across Customer Sites",
+          "cve": null,
+          "severity": "news",
+          "score": 59,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Incident de sécurité rapporté par The Hacker News.\n\nAttackers modified a JavaScript file served by advertising technology company Adform, turning it into a browser-side tool that rewrites cryptocurrency wallet addresses. Adform detected the incident on July 27, 2026, removed the malicious code, notified affected clients, and reported it to authorities. Anyone who visited a site carrying the affected script on July 27 and copied a Bitcoin,",
+          "detail": "Incident de sécurité rapporté par The Hacker News.\n\nAttackers modified a JavaScript file served by advertising technology company Adform, turning it into a browser-side tool that rewrites cryptocurrency wallet addresses. Adform detected the incident on July 27, 2026, removed the malicious code, notified affected clients, and reported it to authorities. Anyone who visited a site carrying the affected script on July 27 and copied a Bitcoin,",
+          "action": "Surveiller les indicateurs de compromission associés et contrôler les actifs exposés.",
+          "image": "https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEiX-el4ovGAmKfllRfhupL0SzdEoZKlouDb1_YmhCOl3owxN1ks0Do-WphuD77rka_3ukbqvPxSmFYMdBKBirYyw0DJpvSxVP5riGBR_vd7wKwnpgZfNm0RFEDLTzsvzzQB7qGtawMvpccd700dfNM2zZeFTy9cyHf4oFyHSASKRU3gmxbMgTJRtDFsSNs/s1600/adform.jpg",
+          "sources": [
+            {
+              "url": "https://thehackernews.com/2026/08/hackers-poison-adform-script-to-swap.html",
+              "label": "The Hacker News"
+            }
+          ],
+          "url": "https://thehackernews.com/2026/08/hackers-poison-adform-script-to-swap.html",
+          "pubDate": "2026-08-01T09:03:07.000Z"
+        },
+        {
+          "title": "CRPx0 Ransomware Claims Hyundai Turkey Breach, Steals 1.5GB of Assessment Data",
+          "cve": null,
+          "severity": "news",
+          "score": 59,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Incident de sécurité rapporté par GBHackers.\n\nThe double-extortion ransomware group CRPx0 has listed Hyundai&#8217;s Turkish operations on its dark web leak site, claiming to have exfiltrated 1.5 GB of sensitive personnel and recruitment data from the automaker&#8217;s assessment systems.",
+          "detail": "Incident de sécurité rapporté par GBHackers.\n\nThe double-extortion ransomware group CRPx0 has listed Hyundai&#8217;s Turkish operations on its dark web leak site, claiming to have exfiltrated 1.5 GB of sensitive personnel and recruitment data from the automaker&#8217;s assessment systems. According to CyberWatch, first flagged on its data-leak portal, the target is described as a &#8220;Korean automotive manufacturer (Turkish operations)&#8221; with the [&#8230;] The post CRPx0 Ransomware Claims Hyundai Turkey Breach, Steals 1.5GB of Assessment Data appeared first on GBHackers Security | #1 Globally Trusted Cyber Security News Platform .",
+          "action": "Surveiller les indicateurs de compromission associés et contrôler les actifs exposés.",
+          "image": "https://gbhackers.com/wp-content/uploads/2026/08/crpx0-ransomware-claims-hyundai-turkey-breach-steals-15gb-of-assessment-data1-6a6da29db694f.webp",
+          "sources": [
+            {
+              "url": "https://gbhackers.com/crpx0-ransomware-claims-hyundai-turkey-breach/",
+              "label": "GBHackers"
+            }
+          ],
+          "url": "https://gbhackers.com/crpx0-ransomware-claims-hyundai-turkey-breach/",
+          "pubDate": "2026-08-01T07:40:04.000Z"
+        },
+        {
+          "title": "Hijacked Hotel Wi-Fi Pushes Fake Updates to Deliver Surveillance Malware",
+          "cve": null,
+          "severity": "news",
+          "score": 59,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Incident de sécurité rapporté par The Hacker News.\n\nA fake browser update served over hijacked hotel Wi-Fi has been used to deliver CornFlake, a remote access trojan (RAT) that can capture webcam images, microphone audio, and keystrokes, Microsoft said in its latest report. Researchers track the operation as CaptiveCrunch and attribute it to Storm-2945. It assesses Storm-2945 to be an operational sub-cluster of Midnight Blizzard, also known as",
+          "detail": "Incident de sécurité rapporté par The Hacker News.\n\nA fake browser update served over hijacked hotel Wi-Fi has been used to deliver CornFlake, a remote access trojan (RAT) that can capture webcam images, microphone audio, and keystrokes, Microsoft said in its latest report. Researchers track the operation as CaptiveCrunch and attribute it to Storm-2945. It assesses Storm-2945 to be an operational sub-cluster of Midnight Blizzard, also known as",
+          "action": "Surveiller les indicateurs de compromission associés et contrôler les actifs exposés.",
+          "image": "https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEglJ30Q0_3tS3R4yrNdyR3sDdvBam1plVfmenBAFVPGmaVMErJ_oq_zXoIpeAjrFrkkFkudKUSHI-h82FGoiIJlkT2JghjQKrO2p7VmzpduPGv26gGgJ8I04b-U7eY1sihmIer0bGTtIof3CwH1vKmQOYLDvhNsYICoALOLhehhaLC65fPmAH_fpT0BrKk/s1600/hotel-wifi.jpg",
+          "sources": [
+            {
+              "url": "https://thehackernews.com/2026/08/hijacked-hotel-wi-fi-pushes-fake.html",
+              "label": "The Hacker News"
+            }
+          ],
+          "url": "https://thehackernews.com/2026/08/hijacked-hotel-wi-fi-pushes-fake.html",
+          "pubDate": "2026-08-01T06:29:05.000Z"
+        },
+        {
+          "title": "Une nouvelle campagne d’espionnage russe ciblant les utilisateurs Zimbra découverte par Proofpoint, la NSA et le FBI",
+          "cve": null,
+          "severity": "news",
+          "score": 53,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Incident de sécurité rapporté par UnderNews.\n\nProofpoint, la NSA et le JSAC du FBI viennent de publier un rapport sur une campagne d&#8217;espionnage liée à l&#8217;État russe, ciblant des organisations utilisant la messagerie Zimbra. L&#8217;activité est attribuée à TA488 (également connu sous les noms « Laundry Bear » et « Void Blizzard »).",
+          "detail": "Incident de sécurité rapporté par UnderNews.\n\nProofpoint, la NSA et le JSAC du FBI viennent de publier un rapport sur une campagne d&#8217;espionnage liée à l&#8217;État russe, ciblant des organisations utilisant la messagerie Zimbra. L&#8217;activité est attribuée à TA488 (également connu sous les noms « Laundry Bear » et « Void Blizzard »). Tribune &#8211; Les cibles incluent des entités [&#8230;] The post Une nouvelle campagne d’espionnage russe ciblant les utilisateurs Zimbra découverte par Proofpoint, la NSA et le FBI first appeared on UnderNews .",
+          "action": "Surveiller les indicateurs de compromission associés et contrôler les actifs exposés.",
+          "image": "https://www.undernews.fr/wp-content/uploads/2026/08/cybersecu-advisory.jpg",
+          "sources": [
+            {
+              "url": "https://www.undernews.fr/hacking-hacktivisme/une-nouvelle-campagne-despionnage-russe-ciblant-les-utilisateurs-zimbra-decouverte-par-proofpoint-la-nsa-et-le-fbi.html",
+              "label": "UnderNews"
+            }
+          ],
+          "url": "https://www.undernews.fr/hacking-hacktivisme/une-nouvelle-campagne-despionnage-russe-ciblant-les-utilisateurs-zimbra-decouverte-par-proofpoint-la-nsa-et-le-fbi.html",
+          "pubDate": "2026-08-01T19:58:49.000Z"
+        },
+        {
+          "title": "Rançongiciels et IA : 65 % des entreprises françaises constatent des attaques plus efficaces",
+          "cve": null,
+          "severity": "news",
+          "score": 51,
+          "corroboration": 1,
+          "region": "fr",
+          "body": "Incident de sécurité rapporté par UnderNews.\n\nUne étude mondiale montre que l&#8217;IA amplifie le phishing, l&#8217;usurpation d&#8217;identité et le vol d’identifiants, transformant le rançongiciel en un problème d&#8217;extorsion centré sur l&#8217;humain. 35 % des organisations françaises déclarent que leurs employés ont fait confiance aux attaques générées par l&#8217;IA, tandis que 33 % ont interagi avec du contenu malveillant.",
+          "detail": "Incident de sécurité rapporté par UnderNews.\n\nUne étude mondiale montre que l&#8217;IA amplifie le phishing, l&#8217;usurpation d&#8217;identité et le vol d’identifiants, transformant le rançongiciel en un problème d&#8217;extorsion centré sur l&#8217;humain. 35 % des organisations françaises déclarent que leurs employés ont fait confiance aux attaques générées par l&#8217;IA, tandis que 33 % ont interagi avec du contenu malveillant. Plus d&#8217;un tiers [&#8230;] The post Rançongiciels et IA : 65 % des entreprises françaises constatent des attaques plus efficaces first appeared on UnderNews .",
+          "action": "Surveiller les indicateurs de compromission associés et contrôler les actifs exposés.",
+          "image": "https://www.undernews.fr/wp-content/uploads/2021/11/ransomware-1.jpg",
+          "sources": [
+            {
+              "url": "https://www.undernews.fr/malwares-virus-antivirus/rancongiciels-et-ia-65-des-entreprises-francaises-constatent-des-attaques-plus-efficaces.html",
+              "label": "UnderNews"
+            }
+          ],
+          "url": "https://www.undernews.fr/malwares-virus-antivirus/rancongiciels-et-ia-65-des-entreprises-francaises-constatent-des-attaques-plus-efficaces.html",
+          "pubDate": "2026-08-01T19:49:54.000Z"
+        }
+      ]
+    },
+    {
+      "id": "culture",
+      "items": [
+        {
+          "title": "Balance Theory Raises $19 Million to Help Enterprises Manage Cybersecurity Investments",
+          "cve": null,
+          "severity": "culture",
+          "score": 64,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Signal de veille — SecurityWeek.\n\nCybersecurity investment management startup Balance Theory raised $19 million in Series A funding to expand its platform that helps evaluate and manage security spending.\n\nThe funding round was led by SYN Ventures, with participation from existing investors DataTribe and TEDCO.\n\nSubscribe to the SecurityWeek Email Briefing for the latest cybersecurity threats, trends, and expert insights.\n\nSubscribe to the SecurityWeek Email Briefing to stay informed on th…",
+          "detail": "Signal de veille — SecurityWeek.\n\nCybersecurity investment management startup Balance Theory raised $19 million in Series A funding to expand its platform that helps evaluate and manage security spending.\n\nThe funding round was led by SYN Ventures, with participation from existing investors DataTribe and TEDCO.\n\nSubscribe to the SecurityWeek Email Briefing for the latest cybersecurity threats, trends, and expert insights.\n\nSubscribe to the SecurityWeek Email Briefing to stay informed on the latest threats, trends, and technology, along with insightful columns from industry experts.\n\nJoin this live webinar as we explore if detection-first security operations can keep pace with AI, or if it’s time to rethink prevention as the strongest default.\n\nCodeSecCon bridges the gap between dev and security. Discover best practices for secure coding, innovative risk-reduction tools, and safe AI integration to cultivate a true DevSecOps culture. Safely secure your apps!\n\nPNC Financial Services Group has appointed Christian Winward as CISO.",
+          "action": null,
+          "image": "https://www.securityweek.com/wp-content/uploads/2023/01/Cybersecurity_News-SecurityWeek.jpg",
+          "sources": [
+            {
+              "url": "https://www.securityweek.com/balance-theory-raises-19-million-to-help-enterprises-manage-cybersecurity-investments/",
+              "label": "SecurityWeek"
+            }
+          ],
+          "url": "https://www.securityweek.com/balance-theory-raises-19-million-to-help-enterprises-manage-cybersecurity-investments/",
+          "pubDate": "2026-08-01T12:30:00.000Z"
+        },
+        {
+          "title": "Cyber’Smile : la playlist d’été de ZATAZ est de sortie",
+          "cve": null,
+          "severity": "culture",
+          "score": 63,
+          "corroboration": 1,
+          "region": "fr",
+          "body": "Signal de veille — Zataz.\n\nEntre deux alertes cyber et un Wi-Fi d’hôtel douteux, ZATAZ passe en mode été avec une playlist de cinq titres originaux pour accompagner vacances, trajets et pauses au soleil.\n\nFont Resizer Aa Actus cyber Darkweb Intelligence Artificielle ZATAZ Community Logiciels Vidéos Moteurs de recherche de fuites Actus cyber Justice Sécurité réseaux sociaux Vie privée OSINT News Darkweb Fuite de données Codes malveillants Espionnage Sécurité Ransomwares Piratage / Ha…",
+          "detail": "Signal de veille — Zataz.\n\nEntre deux alertes cyber et un Wi-Fi d’hôtel douteux, ZATAZ passe en mode été avec une playlist de cinq titres originaux pour accompagner vacances, trajets et pauses au soleil.\n\nFont Resizer Aa Actus cyber Darkweb Intelligence Artificielle ZATAZ Community Logiciels Vidéos Moteurs de recherche de fuites Actus cyber Justice Sécurité réseaux sociaux Vie privée OSINT News Darkweb Fuite de données Codes malveillants Espionnage Sécurité Ransomwares Piratage / Hack infiltration Intelligence Artificielle ZATAZ Community Userlock Community Réseaux sociaux ZATAZ News Letter ZATAZ – Chaque vendredi midi PROTOCOLE D&rsquo;ALERTE ZATAZ Logiciels Vidéos Vidéos Youtube ZATAZ Émission ZATAZ Twitch Moteurs de recherche de fuites Follow US Actus cyber Darkweb Intelligence Artificielle ZATAZ Community Logiciels Vidéos Moteurs de recherche de fuites ZATAZ.COM > Actualités > Actualités > Divers > Cyber’Smile : la playlist d’été de ZATAZ est de sortie Actualités Divers éducation cybersécurité zataz watch Cyber’Smile : la playlist d’été de ZATAZ est de sortie dernière mise à jour : 01/08/2026 14:49 Par Damien Bancal - Chercheur / Journaliste / Conférencier / Enseignant Il y a 15 heures Il y a 15 heures Partager 3 minutes de lecture Partager Cet été, ZATAZ monte le son. Entre deux alertes cyber, quelques mots de passe à changer et un Wi-Fi d’hôtel à regarder avec un œil légèrement méfiant, place à la musique. ZATAZ vous propose une playlist composée de cinq titres originaux, pensés pour accompagner les vacances, les trajets, les pauses au soleil… ou les longues soirées devant un écran.\n\nRock, funk, électro, pop, RnB : cinq morceaux, cinq ambiances, avec un mot d’ordre simple : sourire.\n\nLe titre phare de cette playlist estivale porte d’ailleurs bien son nom : Cyber’S",
+          "action": null,
+          "image": "https://www.zataz.com/wp-content/uploads/song.jpg",
+          "sources": [
+            {
+              "url": "https://www.zataz.com/cybersmile-la-playlist-dete-de-zataz-est-de-sortie/",
+              "label": "Zataz"
+            }
+          ],
+          "url": "https://www.zataz.com/cybersmile-la-playlist-dete-de-zataz-est-de-sortie/",
+          "pubDate": "2026-08-01T12:49:35.000Z"
+        },
+        {
+          "title": "Saviynt a lancé sa plateforme de sécurité des identités IA, Zuma, et dépasse les 300 millions de dollars d'ARR",
+          "cve": null,
+          "severity": "high",
+          "score": 58,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Signal de veille — Global Sec Mag.\n\nFace à la multiplication des agents IA et des identités non humaines, Saviynt lance une plateforme dédiée à leur gouvernance et à leur sécurisation. Les acquisitions de nouveaux clients de l'un des principaux éditeurs de solutions de sécurité des identités ont progressé de plus de 80 %, alors que les organisations adoptent de plus en plus de nouvelles solutions de sécurité des identités conçues pour l'ère de l'IA.",
+          "detail": "Signal de veille — Global Sec Mag.\n\nFace à la multiplication des agents IA et des identités non humaines, Saviynt lance une plateforme dédiée à leur gouvernance et à leur sécurisation. Les acquisitions de nouveaux clients de l'un des principaux éditeurs de solutions de sécurité des identités ont progressé de plus de 80 %, alors que les organisations adoptent de plus en plus de nouvelles solutions de sécurité des identités conçues pour l'ère de l'IA. Saviynt , un spécialiste de la sécurité des identités, a annoncé le lancement de Zuma, une plateforme de sécurité des identités conçue pour aider les entreprises à découvrir, gouverner et contrôler les agents IA ainsi que les autres identités non humaines. Ce lancement intervient alors que l'éditeur annonce avoir dépassé les 300 millions de dollars de revenus annuels récurrents (ARR), avoir enregistré une croissance de plus de 80 % de ses prises de commandes et maintenu un taux de fidélisation client de 96 %. Ces résultats reflètent la demande croissante des entreprises pour des solutions modernes de sécurité des identités, alors que les agents IA et les identités non humaines se multiplient au sein des organisations. Développée en collaboration avec certaines des plus grandes entreprises mondiales, Zuma répond au besoin de mieux identifier, contrôler et gouverner ces nouvelles identités, souvent déployées sans supervision adaptée. La plateforme fournit une couche de",
+          "action": null,
+          "image": "https://www.globalsecuritymag.fr/local/cache-vignettes/L40xH21/0410e0504c8596688d91f7d1f6f481-d5d11.png",
+          "sources": [
+            {
+              "url": "https://www.globalsecuritymag.fr/saviynt-a-lance-sa-plateforme-de-securite-des-identites-ia-zuma-et-depasse-les.html",
+              "label": "Global Sec Mag"
+            }
+          ],
+          "url": "https://www.globalsecuritymag.fr/saviynt-a-lance-sa-plateforme-de-securite-des-identites-ia-zuma-et-depasse-les.html",
+          "pubDate": "2026-08-02T04:00:48.276Z"
+        },
+        {
+          "title": "Forfaits mobiles à l’étranger : attention aux faux sites d’opérateurs cet été",
+          "cve": null,
+          "severity": "culture",
+          "score": 49,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Signal de veille — UnderNews.\n\nLes experts en cybersécurité de Kaspersky alertent sur une recrudescence mondiale d&#8217;escroqueries ciblant les voyageurs et les acheteurs de cartes SIM pendant la période estivale. Profitant de la forte demande de connectivité à l&#8217;étranger, les cybercriminels conçoivent des répliques très réalistes des portails officiels de grands opérateurs télécoms afin de dérober identifiants, données personnelles et [&#8230;] The post Forfaits mobiles à l’étr…",
+          "detail": "Signal de veille — UnderNews.\n\nLes experts en cybersécurité de Kaspersky alertent sur une recrudescence mondiale d&#8217;escroqueries ciblant les voyageurs et les acheteurs de cartes SIM pendant la période estivale. Profitant de la forte demande de connectivité à l&#8217;étranger, les cybercriminels conçoivent des répliques très réalistes des portails officiels de grands opérateurs télécoms afin de dérober identifiants, données personnelles et [&#8230;] The post Forfaits mobiles à l’étranger : attention aux faux sites d’opérateurs cet été first appeared on UnderNews .",
+          "action": null,
+          "image": "https://www.undernews.fr/wp-content/uploads/2024/07/phishing_1.png",
+          "sources": [
+            {
+              "url": "https://www.undernews.fr/telephonie-phreaking-voip/forfaits-mobiles-a-letranger-attention-aux-faux-sites-doperateurs-cet-ete.html",
+              "label": "UnderNews"
+            }
+          ],
+          "url": "https://www.undernews.fr/telephonie-phreaking-voip/forfaits-mobiles-a-letranger-attention-aux-faux-sites-doperateurs-cet-ete.html",
+          "pubDate": "2026-08-01T19:51:42.000Z"
+        },
+        {
+          "title": "The Best Firewall-as-a-Service (FWaaS) Providers, Compared and Priced (2026)",
+          "cve": null,
+          "severity": "culture",
+          "score": 48,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Signal de veille — GBHackers.\n\nFirewall-asa-service moved from experiment to default: inspection, IPS, and policy delivered from the cloud, priced per user or per site instead of per appliance. The value answer up front: Cloudflare offers the most accessible entry economics, Cato Networks the best converged price-for-simplicity in the mid-market, and Prisma Access the deepest (and priciest) inspection stack — [&#8230;] The post The Best Firewall-as-a-Service (FWaaS) Providers, Compared…",
+          "detail": "Signal de veille — GBHackers.\n\nFirewall-asa-service moved from experiment to default: inspection, IPS, and policy delivered from the cloud, priced per user or per site instead of per appliance. The value answer up front: Cloudflare offers the most accessible entry economics, Cato Networks the best converged price-for-simplicity in the mid-market, and Prisma Access the deepest (and priciest) inspection stack — [&#8230;] The post The Best Firewall-as-a-Service (FWaaS) Providers, Compared and Priced (2026) appeared first on GBHackers Security | #1 Globally Trusted Cyber Security News Platform .",
+          "action": null,
+          "image": "https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEhK_1Yp3wB3jJ1NBfPH6hLMlv12-8vaM4mTygkqlBYdNR8OPXHyIbLjjBJ91T1ODKKzSWAq7dljIlxRaux-Nmbo-kOZFApXSaZ1OU_pruy-S72qs2oyx1AIakCWUl4yU-ydDUVC4nrqC-R-DPCbRlpyfLJ4oAxLtakJgNxqDEGicr3Tu-SyRKcBcgyzIwE/s1600/Best%20Firewall-as-a-Service%20Providers%20(1).webp",
+          "sources": [
+            {
+              "url": "https://gbhackers.com/fwaas-providers-compared-features-pricing/",
+              "label": "GBHackers"
+            }
+          ],
+          "url": "https://gbhackers.com/fwaas-providers-compared-features-pricing/",
+          "pubDate": "2026-08-01T14:08:38.000Z"
+        },
+        {
+          "title": "HackerOne Mandates ID Verification Before Bug Bounty Report Submissions",
+          "cve": null,
+          "severity": "culture",
+          "score": 48,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Signal de veille — GBHackers.\n\nHackerOne has rolled out a significant policy change requiring all hackers to complete identity verification before submitting reports to Bug Bounty Programs (BBPs). The update, effective immediately, aims to strengthen platform integrity and meet regulatory compliance requirements for reward payments.",
+          "detail": "Signal de veille — GBHackers.\n\nHackerOne has rolled out a significant policy change requiring all hackers to complete identity verification before submitting reports to Bug Bounty Programs (BBPs). The update, effective immediately, aims to strengthen platform integrity and meet regulatory compliance requirements for reward payments. Under the new policy, hackers must verify their identity before becoming eligible for any bounty [&#8230;] The post HackerOne Mandates ID Verification Before Bug Bounty Report Submissions appeared first on GBHackers Security | #1 Globally Trusted Cyber Security News Platform .",
+          "action": null,
+          "image": "https://gbhackers.com/wp-content/uploads/2026/08/hackerone-mandates-id-verification-before-bug-bounty-report-submissions-6a6d99ef40e96.webp",
+          "sources": [
+            {
+              "url": "https://gbhackers.com/hackerone-mandates-id-verification/",
+              "label": "GBHackers"
+            }
+          ],
+          "url": "https://gbhackers.com/hackerone-mandates-id-verification/",
+          "pubDate": "2026-08-01T07:04:41.000Z"
+        },
+        {
+          "title": "Test du DXRacer Martian, le fauteuil gaming électrique haut de gamme",
+          "cve": null,
+          "severity": "culture",
+          "score": 48,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Signal de veille — IT-Connect.\n\nTest du DXRacer Martian, le fauteuil gaming haut de gamme : dossier motorisé, support lombaire, assise chauffante et ventilée, et confort au quotidien.\n\nActualités IT & Tech, tutoriels en administration système, réseau et cybersécurité.\n\nArchitecture Réseau Cybersécurité Linux & Logiciels Libres Microsoft (On-Premise) Microsoft 365 & Azure Self-Hosting & Open Source Stockage & NAS Cours IT Actualités Entreprise Actu Cybersécurité Web Logiciel – OS Matériel…",
+          "detail": "Signal de veille — IT-Connect.\n\nTest du DXRacer Martian, le fauteuil gaming haut de gamme : dossier motorisé, support lombaire, assise chauffante et ventilée, et confort au quotidien.\n\nActualités IT & Tech, tutoriels en administration système, réseau et cybersécurité.\n\nArchitecture Réseau Cybersécurité Linux & Logiciels Libres Microsoft (On-Premise) Microsoft 365 & Azure Self-Hosting & Open Source Stockage & NAS Cours IT Actualités Entreprise Actu Cybersécurité Web Logiciel – OS Matériel Réseaux sociaux Mobile Bons Plans Tests Débutants Livres Vidéos IT-Connect » Actualités » Tests » Test du DXRacer Martian, le fauteuil gaming électrique haut de gamme Tests Test du DXRacer Martian, le fauteuil gaming électrique haut de gamme 01/08/2026 Florian BURNEL 0 commentaire Hardware , Test Un bon setup, c'est une machine, un écran et un clavier mécanique, mais il ne faut pas oublier là où vous allez vous poser : le fauteuil. Et quand on enchaîne les sessions gaming ou que l'on passe ses journées devant l'écran pour bosser, le siège n'est plus un accessoire, c'est un élément qui influence notre santé. Le DXRacer Martian arrive justement avec une idée bien précise pour se démarquer en tant que fauteuil gaming : le passer à l'électrique. Il embarque un dossier motorisé, une assise chauffante et ventilée, et il est même capable de vous masser.\n\nDans cet article, je vous propose une découverte de ce fauteuil pas comme les autres, du déballage au montage, en passant par la finition, le confort et surtout ses gadgets électriques. On va voir si ces technologies changent vraiment la donne au quotidien, en jeu comme au boulot, et je vous donnerai mon avis sur ce fauteuil.\n\nDXRacer, dans le game depuis 2006, se présente carrément comme l'inventeur du fauteuil gaming. Le Martian trône au som",
+          "action": null,
+          "image": "https://www.it-connect.fr/wp-content-itc/uploads/2026/07/test-dxracer-martian.jpg",
+          "sources": [
+            {
+              "url": "https://www.it-connect.fr/test-dxracer-martian/",
+              "label": "IT-Connect"
+            }
+          ],
+          "url": "https://www.it-connect.fr/test-dxracer-martian/",
+          "pubDate": "2026-08-01T05:00:00.000Z"
+        },
+        {
+          "title": "Le groupe inherent a annoncé l'acquisition de Skyloud",
+          "cve": null,
+          "severity": "high",
+          "score": 45,
+          "corroboration": 1,
+          "region": "fr",
+          "body": "Signal de veille — Global Sec Mag.\n\nLe groupe inherent, expert des services telecom, cloud et cyber en France, a annoncé l'acquisition de Skyloud, pure player cloud et partenaire AWS, basé à Lyon et spécialisé dans la construction et la maintenance d'architectures cloud. Cette opération s'inscrit dans la stratégie de renforcement des expertises IT et cloud du groupe et confirme son ambition d'accélérer sur le cloud public, en particulier auprès des éditeurs de logiciels.",
+          "detail": "Signal de veille — Global Sec Mag.\n\nLe groupe inherent, expert des services telecom, cloud et cyber en France, a annoncé l'acquisition de Skyloud, pure player cloud et partenaire AWS, basé à Lyon et spécialisé dans la construction et la maintenance d'architectures cloud. Cette opération s'inscrit dans la stratégie de renforcement des expertises IT et cloud du groupe et confirme son ambition d'accélérer sur le cloud public, en particulier auprès des éditeurs de logiciels. Fondé en 2020 par Dimitri Crochet et Etienne Fachaux , Skyloud accompagne ses clients dans la conception, l'audit, la construction et l'infogérance de leurs infrastructures cloud. Son activité s'articule autour de l'infogérance, de projets d'audit ou de construction d'architectures cloud, de prestations devops couvrant l'intégration et le déploiement continus (CI/CD), le monitoring et la supervision des infrastructures, ainsi que des démarches finops visant à optimiser les coûts cloud, complétées par la revente de consommations cloud AWS et des missions ponctuelles à forte valeur ajoutée. Skyloud s'est imposée comme un acteur reconnu de l'écosystème AWS Partenaire AWS depuis 2023, elle dispose des certifications AWS Partner Select Tier Services et AWS Partner Public Sector. La société intervient principalement auprès d'éditeurs de logiciels, pour lesquels elle conçoit, opère et optimise des architectures cloud adaptées à leurs enjeux de performan",
+          "action": null,
+          "image": "https://www.globalsecuritymag.fr/local/cache-vignettes/L40xH21/42186c90dc0b61e03d36ecbefcc348-87ed8.png",
+          "sources": [
+            {
+              "url": "https://www.globalsecuritymag.fr/le-groupe-inherent-a-annonce-l-acquisition-de-skyloud.html",
+              "label": "Global Sec Mag"
+            }
+          ],
+          "url": "https://www.globalsecuritymag.fr/le-groupe-inherent-a-annonce-l-acquisition-de-skyloud.html",
+          "pubDate": "2026-08-02T04:00:48.277Z"
+        },
+        {
+          "title": "Le faux 7-Zip qui cache 230 domaines de proxy",
+          "cve": null,
+          "severity": "culture",
+          "score": 45,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Signal de veille — UnderNews.\n\nLes chercheurs d&#8217;Infoblox Threat Intel dévoilent dans un rapport publié aujourd&#8217;hui qu&#8217;un faux installeur du logiciel d&#8217;archivage 7-Zip a permis à un acteur malveillant, de recruter des appareils dans un réseau de plus de 230 domaines dédiés à la revente d&#8217;accès proxy. Tribune.",
+          "detail": "Signal de veille — UnderNews.\n\nLes chercheurs d&#8217;Infoblox Threat Intel dévoilent dans un rapport publié aujourd&#8217;hui qu&#8217;un faux installeur du logiciel d&#8217;archivage 7-Zip a permis à un acteur malveillant, de recruter des appareils dans un réseau de plus de 230 domaines dédiés à la revente d&#8217;accès proxy. Tribune. Comment un faux logiciel 7-Zip a révélé une activité criminelle de proxy bien [&#8230;] The post Le faux 7-Zip qui cache 230 domaines de proxy first appeared on UnderNews .",
+          "action": null,
+          "image": "https://www.undernews.fr/wp-content/uploads/2026/08/7ziplogo.jpg",
+          "sources": [
+            {
+              "url": "https://www.undernews.fr/contrefacon-cracking/le-faux-7-zip-qui-cache-230-domaines-de-proxy.html",
+              "label": "UnderNews"
+            }
+          ],
+          "url": "https://www.undernews.fr/contrefacon-cracking/le-faux-7-zip-qui-cache-230-domaines-de-proxy.html",
+          "pubDate": "2026-08-01T19:54:51.000Z"
+        }
+      ]
+    }
+  ]
+}
