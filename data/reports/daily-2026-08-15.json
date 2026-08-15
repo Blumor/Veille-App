@@ -1,0 +1,1069 @@
+{
+  "id": "daily-2026-08-15",
+  "type": "daily",
+  "date": "2026-08-15",
+  "title": "Rapport quotidien - samedi 15 août 2026",
+  "summary": "Sur les dernières 24 heures, la veille recense 18 vulnérabilités critiques, 48 incidents ou compromissions et 20 signaux de fond. Acteurs et produits les plus exposés : macOS, Google et Office.",
+  "generatedAt": "2026-08-15T04:00:55.850Z",
+  "sections": [
+    {
+      "id": "vulns",
+      "items": [
+        {
+          "title": "CVE-2026-15341 — The User Session Synchronizer plugin for WordPress is vulnerable to Authentication Bypass …",
+          "cve": "CVE-2026-15341",
+          "severity": "critical",
+          "score": 74,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Vulnérabilité critique CVE-2026-15341 (score CVSS 9.8).\n\nThe User Session Synchronizer plugin for WordPress is vulnerable to Authentication Bypass leading to Account Takeover in all versions up to, and including, 1.4.0. The `synchronize_session()` function, hooked on `init` and therefore executed on every request, performs no nonce, capability, or shared-secret validation against the attacker-supplied `ussync-key`, `ussync-token`, and `ussync-ref` parameters; when `ussync-key` references an unregistered slot, `g…",
+          "detail": "Vulnérabilité critique CVE-2026-15341 (score CVSS 9.8).\n\nThe User Session Synchronizer plugin for WordPress is vulnerable to Authentication Bypass leading to Account Takeover in all versions up to, and including, 1.4.0. The `synchronize_session()` function, hooked on `init` and therefore executed on every request, performs no nonce, capability, or shared-secret validation against the attacker-supplied `ussync-key`, `ussync-token`, and `ussync-ref` parameters; when `ussync-key` references an unregistered slot, `get_option()` returns `false` for both the secret key and the domain list, causing the AES-256-CBC encryption key to degrade to the fully predictable `md5('')` and the referer allowlist to collapse to an empty-string match, while the AES IV is unconditionally hard-coded as `md5('another-secret')`. This makes it possible for unauthenticated attackers to supply a crafted request encrypting any known or guessable user email address in the `ussync-ref` parameter, causing the handler to call `wp_set_auth_cookie()` for the matched user and granting full authentication as that user — including administrators — with no prior knowledge of site secrets.\n\nScore CVSS : 9.8\n\nType de faiblesse (CWE) : CWE-287",
+          "action": "Vérifier l'exposition du parc et appliquer le correctif éditeur dès sa disponibilité.",
+          "image": null,
+          "sources": [
+            {
+              "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-15341",
+              "label": "NVD"
+            },
+            {
+              "url": "https://www.cvedetails.com/cve/CVE-2026-15341/",
+              "label": "CVE Details"
+            }
+          ],
+          "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-15341",
+          "pubDate": "2026-08-15T03:16:47.943Z"
+        },
+        {
+          "title": "CVE-2026-15303 — The 6Storage Rentals plugin for WordPress is vulnerable to authentication bypass in versio…",
+          "cve": "CVE-2026-15303",
+          "severity": "critical",
+          "score": 74,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Vulnérabilité critique CVE-2026-15303 (score CVSS 9.8).\n\nThe 6Storage Rentals plugin for WordPress is vulnerable to authentication bypass in versions up to, and including, 2.27.0. This is due to the six_storage_create_wp_user() AJAX handler being registered on wp_ajax_nopriv_six_storage_create_wp_user without any nonce, capability, credential, or ownership verification, while calling wp_set_current_user() and wp_set_auth_cookie() for any WordPress user resolved by the attacker-supplied email address.",
+          "detail": "Vulnérabilité critique CVE-2026-15303 (score CVSS 9.8).\n\nThe 6Storage Rentals plugin for WordPress is vulnerable to authentication bypass in versions up to, and including, 2.27.0. This is due to the six_storage_create_wp_user() AJAX handler being registered on wp_ajax_nopriv_six_storage_create_wp_user without any nonce, capability, credential, or ownership verification, while calling wp_set_current_user() and wp_set_auth_cookie() for any WordPress user resolved by the attacker-supplied email address. This makes it possible for unauthenticated attackers to log in as any existing WordPress user, including administrators, by submitting that user's email address.\n\nScore CVSS : 9.8\n\nType de faiblesse (CWE) : CWE-287",
+          "action": "Vérifier l'exposition du parc et appliquer le correctif éditeur dès sa disponibilité.",
+          "image": null,
+          "sources": [
+            {
+              "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-15303",
+              "label": "NVD"
+            },
+            {
+              "url": "https://www.cvedetails.com/cve/CVE-2026-15303/",
+              "label": "CVE Details"
+            }
+          ],
+          "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-15303",
+          "pubDate": "2026-08-15T03:16:47.670Z"
+        },
+        {
+          "title": "CVE-2026-14484 — The RapiSafe – Secure Multi File Upload for Contact Form 7 plugin for WordPress is vulnera…",
+          "cve": "CVE-2026-14484",
+          "severity": "critical",
+          "score": 72,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Vulnérabilité critique CVE-2026-14484 (score CVSS 9.1).\n\nThe RapiSafe – Secure Multi File Upload for Contact Form 7 plugin for WordPress is vulnerable to arbitrary file deletion due to insufficient file path validation in the handleAjaxRemoveUpload function in all versions up to, and including, 1.0.4. This makes it possible for unauthenticated attackers to delete arbitrary files on the server, which can easily lead to remote code execution when the right file is deleted (such as wp-config.php).",
+          "detail": "Vulnérabilité critique CVE-2026-14484 (score CVSS 9.1).\n\nThe RapiSafe – Secure Multi File Upload for Contact Form 7 plugin for WordPress is vulnerable to arbitrary file deletion due to insufficient file path validation in the handleAjaxRemoveUpload function in all versions up to, and including, 1.0.4. This makes it possible for unauthenticated attackers to delete arbitrary files on the server, which can easily lead to remote code execution when the right file is deleted (such as wp-config.php). The nonce required to invoke the removal handler is exposed in public-facing JavaScript as RSMFCF7Vars.nonce on every Contact Form 7 page rendering a RapiSafe upload field, making it obtainable by any unauthenticated visitor.\n\nScore CVSS : 9.1\n\nType de faiblesse (CWE) : CWE-22",
+          "action": "Vérifier l'exposition du parc et appliquer le correctif éditeur dès sa disponibilité.",
+          "image": null,
+          "sources": [
+            {
+              "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-14484",
+              "label": "NVD"
+            },
+            {
+              "url": "https://www.cvedetails.com/cve/CVE-2026-14484/",
+              "label": "CVE Details"
+            }
+          ],
+          "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-14484",
+          "pubDate": "2026-08-15T03:16:47.263Z"
+        },
+        {
+          "title": "Hackers exploit macOS Screen Sharing flaw to deploy Monero miner",
+          "cve": null,
+          "severity": "critical",
+          "score": 61,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Vulnérabilité critique affectant macOS.\n\nThe Netherlands' National Cyber Security Centre (NCSC) is warning that hackers are actively exploiting a macOS authentication bypass vulnerability after public exploit code emerged.\n\nPlug and Pwn attack uses fake USB devices for Windows SYSTEM access\n\nLazarus hackers exploited Windows zero-day to target defense firms\n\nNew Microsoft Defender 'ShieldBreak' zero-day grants SYSTEM privileges\n\nHackers arrested over €30M bank fraud exploiting service provider fl…",
+          "detail": "Vulnérabilité critique affectant macOS.\n\nThe Netherlands' National Cyber Security Centre (NCSC) is warning that hackers are actively exploiting a macOS authentication bypass vulnerability after public exploit code emerged.\n\nPlug and Pwn attack uses fake USB devices for Windows SYSTEM access\n\nLazarus hackers exploited Windows zero-day to target defense firms\n\nNew Microsoft Defender 'ShieldBreak' zero-day grants SYSTEM privileges\n\nHackers arrested over €30M bank fraud exploiting service provider flaw\n\nHackers exploit macOS Screen Sharing flaw to deploy Monero miner\n\nThe Modern Attack Chain: Rethinking Google Workspace Security in the Age of AI",
+          "action": "Vérifier l'exposition du parc et appliquer le correctif éditeur dès sa disponibilité.",
+          "image": "https://www.bleepstatic.com/content/hl-images/2026/05/18/Apple.jpg",
+          "sources": [
+            {
+              "url": "https://www.bleepingcomputer.com/news/security/hackers-exploit-macos-screen-sharing-flaw-to-deploy-monero-miner/",
+              "label": "BleepingComputer"
+            }
+          ],
+          "url": "https://www.bleepingcomputer.com/news/security/hackers-exploit-macos-screen-sharing-flaw-to-deploy-monero-miner/",
+          "pubDate": "2026-08-14T14:59:55.000Z"
+        },
+        {
+          "title": "CVE-2026-17186 — IBM Db2 Mirror for i 7.4, 7.5, and 7.6 could allow a remote attacker to execute arbitrary …",
+          "cve": "CVE-2026-17186",
+          "severity": "critical",
+          "score": 59,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Vulnérabilité critique CVE-2026-17186 (score CVSS 9.9).\n\nThis is a potential security issue, you are being redirected to https://nvd.nist.gov\n\nYou have JavaScript disabled. This site requires JavaScript to be enabled for complete site functionality.\n\nOfficial websites use .gov A .gov website belongs to an official government organization in the United States.\n\nSecure .gov websites use HTTPS A lock ( ) or https:// means you've safely connected to the .gov website.",
+          "detail": "Vulnérabilité critique CVE-2026-17186 (score CVSS 9.9).\n\nThis is a potential security issue, you are being redirected to https://nvd.nist.gov\n\nYou have JavaScript disabled. This site requires JavaScript to be enabled for complete site functionality.\n\nOfficial websites use .gov A .gov website belongs to an official government organization in the United States.\n\nSecure .gov websites use HTTPS A lock ( ) or https:// means you've safely connected to the .gov website. Share sensitive information only on official, secure websites.\n\nThis CVE record has recently been published to the CVE List and has been included within the NVD dataset.\n\nIBM Db2 Mirror for i 7.4, 7.5, and 7.6 could allow a remote attacker to execute arbitrary CL commands due to improper neutralization of special elements in a command.",
+          "action": "Vérifier l'exposition du parc et appliquer le correctif éditeur dès sa disponibilité.",
+          "image": null,
+          "sources": [
+            {
+              "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-17186",
+              "label": "NVD"
+            },
+            {
+              "url": "https://www.cvedetails.com/cve/CVE-2026-17186/",
+              "label": "CVE Details"
+            }
+          ],
+          "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-17186",
+          "pubDate": "2026-08-14T20:16:51.127Z"
+        },
+        {
+          "title": "CVE-2026-17184 — IBM Db2 Mirror for i 7.4, 7.5, and 7.6 could allow a remote attacker to execute arbitrary …",
+          "cve": "CVE-2026-17184",
+          "severity": "critical",
+          "score": 59,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Vulnérabilité critique CVE-2026-17184 (score CVSS 9.8).\n\nThis is a potential security issue, you are being redirected to https://nvd.nist.gov\n\nYou have JavaScript disabled. This site requires JavaScript to be enabled for complete site functionality.\n\nOfficial websites use .gov A .gov website belongs to an official government organization in the United States.\n\nSecure .gov websites use HTTPS A lock ( ) or https:// means you've safely connected to the .gov website.",
+          "detail": "Vulnérabilité critique CVE-2026-17184 (score CVSS 9.8).\n\nThis is a potential security issue, you are being redirected to https://nvd.nist.gov\n\nYou have JavaScript disabled. This site requires JavaScript to be enabled for complete site functionality.\n\nOfficial websites use .gov A .gov website belongs to an official government organization in the United States.\n\nSecure .gov websites use HTTPS A lock ( ) or https:// means you've safely connected to the .gov website. Share sensitive information only on official, secure websites.\n\nThis CVE record has recently been published to the CVE List and has been included within the NVD dataset.\n\nIBM Db2 Mirror for i 7.4, 7.5, and 7.6 could allow a remote attacker to execute arbitrary code due to external control of file name or path.",
+          "action": "Vérifier l'exposition du parc et appliquer le correctif éditeur dès sa disponibilité.",
+          "image": null,
+          "sources": [
+            {
+              "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-17184",
+              "label": "NVD"
+            },
+            {
+              "url": "https://www.cvedetails.com/cve/CVE-2026-17184/",
+              "label": "CVE Details"
+            }
+          ],
+          "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-17184",
+          "pubDate": "2026-08-14T20:16:51.010Z"
+        },
+        {
+          "title": "CVE-2026-17182 — IBM Db2 Mirror for i 7.4, 7.5, and 7.6 could allow a remote attacker to bypass authenticat…",
+          "cve": "CVE-2026-17182",
+          "severity": "critical",
+          "score": 59,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Vulnérabilité critique CVE-2026-17182 (score CVSS 9.8).\n\nThis is a potential security issue, you are being redirected to https://nvd.nist.gov\n\nYou have JavaScript disabled. This site requires JavaScript to be enabled for complete site functionality.\n\nOfficial websites use .gov A .gov website belongs to an official government organization in the United States.\n\nSecure .gov websites use HTTPS A lock ( ) or https:// means you've safely connected to the .gov website.",
+          "detail": "Vulnérabilité critique CVE-2026-17182 (score CVSS 9.8).\n\nThis is a potential security issue, you are being redirected to https://nvd.nist.gov\n\nYou have JavaScript disabled. This site requires JavaScript to be enabled for complete site functionality.\n\nOfficial websites use .gov A .gov website belongs to an official government organization in the United States.\n\nSecure .gov websites use HTTPS A lock ( ) or https:// means you've safely connected to the .gov website. Share sensitive information only on official, secure websites.\n\nThis CVE record has recently been published to the CVE List and has been included within the NVD dataset.\n\nIBM Db2 Mirror for i 7.4, 7.5, and 7.6 could allow a remote attacker to bypass authentication and obtain or alter sensitive information due to improper validation of request URI path segments.",
+          "action": "Vérifier l'exposition du parc et appliquer le correctif éditeur dès sa disponibilité.",
+          "image": null,
+          "sources": [
+            {
+              "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-17182",
+              "label": "NVD"
+            },
+            {
+              "url": "https://www.cvedetails.com/cve/CVE-2026-17182/",
+              "label": "CVE Details"
+            }
+          ],
+          "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-17182",
+          "pubDate": "2026-08-14T20:16:50.893Z"
+        },
+        {
+          "title": "CVE-2026-73678 — MindsDB Minds Platform version 26.1.0 and earlier contains an unauthenticated remote code …",
+          "cve": "CVE-2026-73678",
+          "severity": "critical",
+          "score": 59,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Vulnérabilité critique CVE-2026-73678 (score CVSS 10).\n\nMindsDB Minds Platform version 26.1.0 and earlier contains an unauthenticated remote code execution vulnerability that allows unauthenticated attackers to execute arbitrary OS commands by submitting crafted prompts to the unprotected POST /api/v1/responses/ endpoint, which reaches the Anton agent's scratchpad tool that calls exec() on attacker-influenced Python source without sandboxing.",
+          "detail": "Vulnérabilité critique CVE-2026-73678 (score CVSS 10).\n\nMindsDB Minds Platform version 26.1.0 and earlier contains an unauthenticated remote code execution vulnerability that allows unauthenticated attackers to execute arbitrary OS commands by submitting crafted prompts to the unprotected POST /api/v1/responses/ endpoint, which reaches the Anton agent's scratchpad tool that calls exec() on attacker-influenced Python source without sandboxing. Attackers can first configure their own LLM API key through the unauthenticated PUT /api/v1/settings/ endpoint, then POST a prompt directing the agent to invoke the scratchpad tool with arbitrary Python code, achieving full OS command execution as the user running the desktop application and enabling access to SSH keys, stored credentials, and environment secrets.\n\nScore CVSS : 10\n\nType de faiblesse (CWE) : CWE-94",
+          "action": "Vérifier l'exposition du parc et appliquer le correctif éditeur dès sa disponibilité.",
+          "image": null,
+          "sources": [
+            {
+              "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-73678",
+              "label": "NVD"
+            },
+            {
+              "url": "https://www.cvedetails.com/cve/CVE-2026-73678/",
+              "label": "CVE Details"
+            }
+          ],
+          "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-73678",
+          "pubDate": "2026-08-14T19:18:01.457Z"
+        },
+        {
+          "title": "CVE-2026-72826 — The getgrav/grav-plugin-api plugin before 1.0.13 fails to validate that the scopes of a ne…",
+          "cve": "CVE-2026-72826",
+          "severity": "critical",
+          "score": 59,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Vulnérabilité critique CVE-2026-72826 (score CVSS 9.8).\n\nThe getgrav/grav-plugin-api plugin before 1.0.13 fails to validate that the scopes of a newly created API key are a subset of the caller's scopes in createApiKey. The self-target path of requireApiKeyPermission() requires only the baseline api.access scope, and the new key's scopes are read directly from the request body with no subset check.",
+          "detail": "Vulnérabilité critique CVE-2026-72826 (score CVSS 9.8).\n\nThe getgrav/grav-plugin-api plugin before 1.0.13 fails to validate that the scopes of a newly created API key are a subset of the caller's scopes in createApiKey. The self-target path of requireApiKeyPermission() requires only the baseline api.access scope, and the new key's scopes are read directly from the request body with no subset check. An attacker holding a minimal-scope API key on a super account can submit an empty scopes array to mint an unscoped, full-access super key, bypassing scope restrictions (and enabling further chains such as configuration write to RCE).\n\nScore CVSS : 9.8\n\nType de faiblesse (CWE) : CWE-266",
+          "action": "Vérifier l'exposition du parc et appliquer le correctif éditeur dès sa disponibilité.",
+          "image": null,
+          "sources": [
+            {
+              "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-72826",
+              "label": "NVD"
+            },
+            {
+              "url": "https://www.cvedetails.com/cve/CVE-2026-72826/",
+              "label": "CVE Details"
+            }
+          ],
+          "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-72826",
+          "pubDate": "2026-08-14T12:16:45.780Z"
+        },
+        {
+          "title": "CVE-2026-17181 — IBM Db2 Mirror for i 7.4, 7.5, and 7.6 could allow a remote attacker to write files to arb…",
+          "cve": "CVE-2026-17181",
+          "severity": "critical",
+          "score": 57,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Vulnérabilité critique CVE-2026-17181 (score CVSS 9.3).\n\nThis is a potential security issue, you are being redirected to https://nvd.nist.gov\n\nYou have JavaScript disabled. This site requires JavaScript to be enabled for complete site functionality.\n\nOfficial websites use .gov A .gov website belongs to an official government organization in the United States.\n\nSecure .gov websites use HTTPS A lock ( ) or https:// means you've safely connected to the .gov website.",
+          "detail": "Vulnérabilité critique CVE-2026-17181 (score CVSS 9.3).\n\nThis is a potential security issue, you are being redirected to https://nvd.nist.gov\n\nYou have JavaScript disabled. This site requires JavaScript to be enabled for complete site functionality.\n\nOfficial websites use .gov A .gov website belongs to an official government organization in the United States.\n\nSecure .gov websites use HTTPS A lock ( ) or https:// means you've safely connected to the .gov website. Share sensitive information only on official, secure websites.\n\nThis CVE record has recently been published to the CVE List and has been included within the NVD dataset.\n\nIBM Db2 Mirror for i 7.4, 7.5, and 7.6 could allow a remote attacker to write files to arbitrary locations due to path traversal.",
+          "action": "Vérifier l'exposition du parc et appliquer le correctif éditeur dès sa disponibilité.",
+          "image": null,
+          "sources": [
+            {
+              "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-17181",
+              "label": "NVD"
+            },
+            {
+              "url": "https://www.cvedetails.com/cve/CVE-2026-17181/",
+              "label": "CVE Details"
+            }
+          ],
+          "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-17181",
+          "pubDate": "2026-08-14T20:16:50.777Z"
+        },
+        {
+          "title": "CVE-2026-55153 — mchange-commons-java contains elements susceptible to abuse via JNDI injection and \"deserialization gadgets\"",
+          "cve": "CVE-2026-55153",
+          "severity": "high",
+          "score": 57,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Vulnérabilité élevée CVE-2026-55153 affectant com.mchange:mchange-commons-java (maven) (score CVSS 7.1).\n\nmchange-commons-java contains elements susceptible to abuse via JNDI injection and \"deserialization gadgets\"\n\nPrior to version 0.5.0, the same mchange-commons-java ObjectFactory would interpret BinaryRefAddress elements as Java-serialized objects, and deserialize unexpected objects that potentially execute malicious behavior on initialization.",
+          "detail": "Vulnérabilité élevée CVE-2026-55153 affectant com.mchange:mchange-commons-java (maven) (score CVSS 7.1).\n\nmchange-commons-java contains elements susceptible to abuse via JNDI injection and \"deserialization gadgets\"\n\nPrior to version 0.5.0, the same mchange-commons-java ObjectFactory would interpret BinaryRefAddress elements as Java-serialized objects, and deserialize unexpected objects that potentially execute malicious behavior on initialization. Although this author is unaware of any code within mchange-commons-java itself that can be abused to execute code on deserialization, this mechanism can be used to trigger well-known \"deserialization gadget chains\" involving other libraries. For example, in JVMs prior to Java 16 with Apache libraries commons-beanutils and commons-collections on the application CLASSPATH , objects can be crafted that will execute arbitrary commands on deserialization. (Thanks to Valerio Mulas for a proof-of-concept.)\n\nmchange-commons-java v0.5.0 eliminates all support for deserializing Java objects in com.mchange.v2.naming.JavaBeanObjectFactory , unless an application explicitly extends that class to restore it. This prevents mchange-commons-java from enabling JNDI injection to trigger common \"deserialization gadgets\".\n\nmchange-commons-java v0.6.0 disables the ReferenceIndirector mechanism by default. This mechanism has been abused by attackers to inject dangerous JNDI Reference objects by causing an application to deserialize a malicious Java-serialized object. (The functionality remains for applications that need it, gated behind a restrictive configuration parameter. This is \"defense-in-depth\"; the hardening of JavaBeanObjectFactory on its own should be sufficient to prevent known Reference -based attacks. But perhaps there are other insecur",
+          "action": "Vérifier l'exposition du parc et appliquer le correctif éditeur dès sa disponibilité.",
+          "image": "https://github.githubassets.com/assets/advisory-database-show-f32c8207dfb2.png",
+          "sources": [
+            {
+              "url": "https://github.com/advisories/GHSA-h84g-69h7-mw6v",
+              "label": "GitHub Advisory"
+            }
+          ],
+          "url": "https://github.com/advisories/GHSA-h84g-69h7-mw6v",
+          "pubDate": "2026-08-14T19:29:20.000Z"
+        },
+        {
+          "title": "Patch Tuesday : Microsoft corrige près de 400 failles de sécurité, dont une déjà exploitée – Analyse Tenable",
+          "cve": "CVE-2026-68820",
+          "severity": "critical",
+          "score": 49,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Vulnérabilité critique CVE-2026-68820 affectant Microsoft.\n\nÀ l'occasion du Patch Tuesday d'août, Microsoft a publié une nouvelle série particulièrement importante de correctifs de sécurité, avec 398 CVE traitées, dont trois vulnérabilités zero-day. Parmi elles figure notamment une faille déjà activement exploitée et susceptible d'avoir été utilisée par des acteurs étatiques.",
+          "detail": "Vulnérabilité critique CVE-2026-68820 affectant Microsoft.\n\nÀ l'occasion du Patch Tuesday d'août, Microsoft a publié une nouvelle série particulièrement importante de correctifs de sécurité, avec 398 CVE traitées, dont trois vulnérabilités zero-day. Parmi elles figure notamment une faille déjà activement exploitée et susceptible d'avoir été utilisée par des acteurs étatiques. Commentaire de Satnam Narang, Senior Staff Research Engineer chez le spécialiste de la gestion de l'exposition Tenable, qui livre son analyse sur le sujet : Satnam Narang Senior Staff Research Engineer,Tenable « Comme prévu après le Patch Tuesday de juillet, qui avait constitué la plus importante publication à ce jour, la nouvelle norme semble désormais établie, avec 398 CVE corrigées en août. Dans la publication de ce mois-ci, 41 % de l'ensemble des CVE corrigées concernaient des vulnérabilités d'élévation de privilèges. Cette proportion s'inscrit dans la tendance générale observée en 2026, les failles d'élévation de privilèges représentant 46 % de toutes les CVE recensées cette année. Trois vulnérabilités zero-day ont été corrigées ce mois-ci, dont CVE-2026-68820 , une faille d'élévation de privilèges affectant le pilote Windows Ancillary Function Driver (afd.sys) pour WinSock, qui gère les commandes liées aux sockets. Non seulement cette vulnérabilité a déjà été activement exploitée, mais elle pourrait également avoir été utilisée par des acteurs étatiques. Depu",
+          "action": "Vérifier l'exposition du parc et appliquer le correctif éditeur dès sa disponibilité.",
+          "image": "https://www.globalsecuritymag.fr/local/cache-vignettes/L40xH21/35a39c9a1121d920b1115d047a3f78-9f9cf.png",
+          "sources": [
+            {
+              "url": "https://www.globalsecuritymag.fr/patch-tuesday-microsoft-corrige-pres-de-400-failles-de-securite-dont-une-deja.html",
+              "label": "Global Sec Mag"
+            }
+          ],
+          "url": "https://www.globalsecuritymag.fr/patch-tuesday-microsoft-corrige-pres-de-400-failles-de-securite-dont-une-deja.html",
+          "pubDate": "2026-08-15T04:00:51.144Z"
+        },
+        {
+          "title": "Scottish prosecutors cast eye over leaky supplier after staff data exposed",
+          "cve": null,
+          "severity": "critical",
+          "score": 49,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Vulnérabilité critique affectant Office.\n\nScotland's public prosecution service has warned 300 staff that their personal information may have been caught up in a cyberattack on one of its suppliers. The Crown Office and Procurator Fiscal Service (COPFS) disclosed the incident on Thursday, saying an unnamed third-party supplier detected suspicious activity on August 5 and subsequently launched an investigation.",
+          "detail": "Vulnérabilité critique affectant Office.\n\nScotland's public prosecution service has warned 300 staff that their personal information may have been caught up in a cyberattack on one of its suppliers. The Crown Office and Procurator Fiscal Service (COPFS) disclosed the incident on Thursday, saying an unnamed third-party supplier detected suspicious activity on August 5 and subsequently launched an investigation. COPFS said its own systems were not compromised and that the incident involves information provided for an online data maturity assessment completed by the prosecution service last year. The Scottish government organized the assessment, which was managed by the affected supplier. COPFS said the potentially exposed information is limited to employment-related data submitted for the exercise, including staff names, roles, and work email addresses. In a statement to The Register, a COPFS spokesperson said: \"COPFS is aware that a Scottish Government partner has been subject to a data security breach. We understand that this has affected around 300 COPFS colleagues who participated in a public sector data maturity survey. \"This is unconnected to casework and did not involve sensitive or confidential case information. There is no impact on the work of the prosecution service. \"Colleagues have been reminded of guidance on responding to any phishing or scam attempts which may arise from this third-party breach.\" Accordin",
+          "action": "Vérifier l'exposition du parc et appliquer le correctif éditeur dès sa disponibilité.",
+          "image": "https://image.theregister.com/255884.jpg?imageId=255884&x=0&y=0&cropw=100&croph=100&panox=0&panoy=0&panow=100&panoh=100&width=1200&height=683",
+          "sources": [
+            {
+              "url": "https://www.theregister.com/security/2026/08/14/scottish-prosecutors-cast-eye-over-leaky-supplier-after-staff-data-exposed/5287479",
+              "label": "The Register"
+            }
+          ],
+          "url": "https://www.theregister.com/security/2026/08/14/scottish-prosecutors-cast-eye-over-leaky-supplier-after-staff-data-exposed/5287479",
+          "pubDate": "2026-08-14T08:46:00.000Z"
+        },
+        {
+          "title": "WH authorizes private orgs to conduct offensive cyber ops against foreign criminals – Expert Comments",
+          "cve": null,
+          "severity": "critical",
+          "score": 46,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Vulnérabilité critique.\n\nThe President signed a National Security Presidential Memorandum creating a federal program that will allow vetted U.S. companies to conduct cyber surveillance and offensive cyber operations against foreign transnational criminal organizations under federal direction and oversight. The operations can target groups engaged in ransomware, fraud and other cyber-enabled crimes and may include actions to manipulate, disrupt or destroy information systems.",
+          "detail": "Vulnérabilité critique.\n\nThe President signed a National Security Presidential Memorandum creating a federal program that will allow vetted U.S. companies to conduct cyber surveillance and offensive cyber operations against foreign transnational criminal organizations under federal direction and oversight. The operations can target groups engaged in ransomware, fraud and other cyber-enabled crimes and may include actions to manipulate, disrupt or destroy information systems. The program will be jointly overseen by the Justice Department and Department of Homeland Security, with participating companies required to undergo vetting and enter into federal contracts. The administration has 60 days to establish operating procedures, and private companies will also be able to receive threat intelligence from businesses and federal, state and local agencies to propose cyber operations against identified criminal groups. John Strand, Owner, Black Hills Information Security, Inc.: “This article is both exciting and concerning at the exact same time. It genuinely feels like the cyber equivalent of letters of marque, where private industry is authorized to conduct specific, targeted operations on behalf of the United States government. There are a number of questions that immediately come to mind. How will oversight work? What are the limits of these authorities? Who is responsible for ensuring those limits aren't",
+          "action": "Vérifier l'exposition du parc et appliquer le correctif éditeur dès sa disponibilité.",
+          "image": "https://www.globalsecuritymag.fr/local/cache-vignettes/L40xH21/4b18a91cf5d3e97c2343e846be6951-99a58.png",
+          "sources": [
+            {
+              "url": "https://www.globalsecuritymag.fr/wh-authorizes-private-orgs-to-conduct-offensive-cyber-ops-against-foreign.html",
+              "label": "Global Sec Mag"
+            }
+          ],
+          "url": "https://www.globalsecuritymag.fr/wh-authorizes-private-orgs-to-conduct-offensive-cyber-ops-against-foreign.html",
+          "pubDate": "2026-08-15T04:00:51.143Z"
+        },
+        {
+          "title": "Crypto wallet maker Trezor confirms 13,000 customers' details exposed in logistics breach",
+          "cve": null,
+          "severity": "critical",
+          "score": 46,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Vulnérabilité critique.\n\nCryptocurrency hardware wallet maker Trezor has confirmed that a breach at one of its shipping partners exposed the personal data of more than 13,000 customers. The company's initial findings suggested the breach was limited to orders placed in certain countries during the previous 90 days. New information indicates that earlier orders may also be affected.",
+          "detail": "Vulnérabilité critique.\n\nCryptocurrency hardware wallet maker Trezor has confirmed that a breach at one of its shipping partners exposed the personal data of more than 13,000 customers. The company's initial findings suggested the breach was limited to orders placed in certain countries during the previous 90 days. New information indicates that earlier orders may also be affected. The breach exposed the names, email addresses, phone numbers, and shipping addresses of 11,742 customers in the US, UK, Sweden, Colombia, Brazil, Italy, and Portugal who ordered Trezor products between May 10 and August 8. An additional 1,947 customers had their names, home cities, and email addresses exposed. Some members of this group may have placed their orders before May 10. \"We are verifying this information and the timeframe with ShipMonk,\" said Trezor. ShipMonk is Trezor's logistics partner. It stores and ships products on the company's behalf and collects the information needed to fulfill orders. ShipMonk is subject to Trezor's 90-day retention policy, which requires partners to delete or anonymize customer data within 90 days of collecting it for an order. ShipMonk did not immediately respond to a request for comment. Trezor markets itself as a purveyor of secure, offline, hardware-based cryptocurrency wallets. With its products, it aims to shield customers from cyberattacks and malicious apps. While it assured cus",
+          "action": "Vérifier l'exposition du parc et appliquer le correctif éditeur dès sa disponibilité.",
+          "image": "https://image.theregister.com/5287758.jpg?imageId=5287758&x=0&y=0&cropw=100&croph=100&panox=0&panoy=0&panow=100&panoh=100&width=1200&height=683",
+          "sources": [
+            {
+              "url": "https://www.theregister.com/security/2026/08/14/crypto-wallet-maker-trezor-confirms-13000-customers-details-exposed-in-logistics-breach/5287734",
+              "label": "The Register"
+            }
+          ],
+          "url": "https://www.theregister.com/security/2026/08/14/crypto-wallet-maker-trezor-confirms-13000-customers-details-exposed-in-logistics-breach/5287734",
+          "pubDate": "2026-08-14T10:29:00.000Z"
+        },
+        {
+          "title": "Fuite de données aux impôts : Benoit Grünemwald - Expert en Cybersécurité chez ESET France réagit :",
+          "cve": null,
+          "severity": "high",
+          "score": 24,
+          "corroboration": 1,
+          "region": "fr",
+          "body": "Vulnérabilité élevée.\n\nL'exposition de données liées à l'administration, et en particulier de données fiscales, suscite légitimement des interrogations tant leur sensibilité est élevée. En France, les informations financières, fiscales ou patrimoniales relèvent souvent de la sphère la plus intime de la vie privée.",
+          "detail": "Vulnérabilité élevée.\n\nL'exposition de données liées à l'administration, et en particulier de données fiscales, suscite légitimement des interrogations tant leur sensibilité est élevée. En France, les informations financières, fiscales ou patrimoniales relèvent souvent de la sphère la plus intime de la vie privée. Le risque n'est donc pas seulement lié aux informations potentiellement compromises aujourd'hui, mais à leur réutilisation demain dans des campagnes d'hameçonnage, d'usurpation d'identité ou de fraude financière. Ces informations peuvent également être exploitées à des fins de divulgation d'informations personnelles, de harcèlement ou de doxxing, c'est-à-dire la publication malveillante de données permettant d'identifier ou de localiser une personne. Les cybercriminels savent parfaitement exploiter ce type d'actualité pour diffuser de faux e-mails demandant un changement de mot de passe ou une mise à jour d'informations personnelles. Benoit Grünemwald Expert en Cybersécurité chez ESET France Les premiers éléments communiqués indiquent que l'accès frauduleux aurait été obtenu à la suite d'une usurpation d'identité. Cet élément rappelle que les attaquants cherchent souvent à exploiter une identité légitime pour contourner les mécanismes de sécurité, que cette compromission trouve son origine dans un vol d'identifiants, un logiciel malveillant ou d'autres techniques utilisées pour se faire pas",
+          "action": "Vérifier l'exposition du parc et appliquer le correctif éditeur dès sa disponibilité.",
+          "image": "https://www.globalsecuritymag.fr/local/cache-vignettes/L40xH21/35a39c9a1121d920b1115d047a3f78-9f9cf.png",
+          "sources": [
+            {
+              "url": "https://www.globalsecuritymag.fr/fuite-de-donnees-aux-impots-benoit-grunemwald-expert-en-cybersecurite-chez-eset.html",
+              "label": "Global Sec Mag"
+            }
+          ],
+          "url": "https://www.globalsecuritymag.fr/fuite-de-donnees-aux-impots-benoit-grunemwald-expert-en-cybersecurite-chez-eset.html",
+          "pubDate": "2026-08-15T04:00:51.142Z"
+        },
+        {
+          "title": "French tax authority admits data heist after crook touts 2M records",
+          "cve": null,
+          "severity": "high",
+          "score": 24,
+          "corroboration": 1,
+          "region": "fr",
+          "body": "Vulnérabilité élevée.\n\nFrance's tax authority has confirmed that an intruder accessed its systems and extracted data in June after an alleged cybercriminal advertised a purported database of 2 million taxpayers. Using the alias \"ZeroBytes,\" the alleged crook behind the attack on the General Directorate of Public Finances (DGFiP) advertised the stolen database on a cybercrime forum on Wednesday.",
+          "detail": "Vulnérabilité élevée.\n\nFrance's tax authority has confirmed that an intruder accessed its systems and extracted data in June after an alleged cybercriminal advertised a purported database of 2 million taxpayers. Using the alias \"ZeroBytes,\" the alleged crook behind the attack on the General Directorate of Public Finances (DGFiP) advertised the stolen database on a cybercrime forum on Wednesday. They claimed the database contained details of more than 2 million French taxpayers and that they gained access using stolen credentials and an MFA bypass technique. ZeroBytes also claimed to retain access to DGFiP's systems and offered to sell it alongside the database. DGFiP did not immediately answer our questions about the attacker's claims. However, in a statement released Thursday, it disputed the claim that ZeroBytes retained access. \"On Wednesday, August 12, 2026, a malicious actor claimed unauthorized access to the information system of the French Public Finances Directorate, which occurred at the end of June 2026 following identity theft,\" it said. \"Initial investigations confirm that this access, which had been severed at the end of June as part of an audit, nevertheless allowed the consultation and extraction of data concerning individuals and professionals. \"Following this complaint, the French Public Finances Directorate immediately implemented new restrictions to stop the unauthorized access and",
+          "action": "Vérifier l'exposition du parc et appliquer le correctif éditeur dès sa disponibilité.",
+          "image": "https://image.theregister.com/253198.jpg?imageId=253198&x=0&y=0&cropw=100&croph=100&panox=0&panoy=0&panow=100&panoh=100&width=1200&height=683",
+          "sources": [
+            {
+              "url": "https://www.theregister.com/security/2026/08/14/french-tax-authority-admits-data-heist-after-crook-touts-2m-records/5287885",
+              "label": "The Register"
+            }
+          ],
+          "url": "https://www.theregister.com/security/2026/08/14/french-tax-authority-admits-data-heist-after-crook-touts-2m-records/5287885",
+          "pubDate": "2026-08-14T14:27:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "attacks",
+      "items": [
+        {
+          "title": "France investigates tax authority breach after hacker claims 600,000 victims",
+          "cve": null,
+          "severity": "news",
+          "score": 74,
+          "corroboration": 1,
+          "region": "fr",
+          "body": "Incident de sécurité rapporté par The Record.\n\nFrench authorities confirmed that someone gained unauthorized access to systems at the Directorate General of Public Finances in late June after stealing or misusing someone’s identity.\n\nFrance’s tax authority has confirmed that hackers breached its information systems and extracted data on individuals and businesses.\n\nFrance’s Economy Ministry said late Thursday that an attacker gained unauthorized access to systems at the Directorate General of Public Fi…",
+          "detail": "Incident de sécurité rapporté par The Record.\n\nFrench authorities confirmed that someone gained unauthorized access to systems at the Directorate General of Public Finances in late June after stealing or misusing someone’s identity.\n\nFrance’s tax authority has confirmed that hackers breached its information systems and extracted data on individuals and businesses.\n\nFrance’s Economy Ministry said late Thursday that an attacker gained unauthorized access to systems at the Directorate General of Public Finances, or DGFiP, in late June after stealing or misusing someone’s identity.\n\nThe intrusion allowed the attacker “to view and extract data belonging to individuals and businesses,” according to the ministry.\n\nOfficials said the unauthorized access was detected and cut off in late June. The incident became public after a hacker claimed responsibility earlier this week, prompting the tax authority to impose additional restrictions to prevent further unauthorized access.\n\nAuthorities are now working to determine precisely what information was accessed or stolen and how many individuals and businesses were affected. The DGFiP said people whose data was compromised will be contacted individually and told what information may have been exposed and what precautions they should take.\n\nThe agency said it would also notify France’s data protection authority, file a criminal complaint and provide further information as the investigation progresses.",
+          "action": "Surveiller les indicateurs de compromission associés et contrôler les actifs exposés.",
+          "image": "https://cms.therecord.media/uploads/france_centre_de_fnances_publiques_413445d2f9.jpg",
+          "sources": [
+            {
+              "url": "https://therecord.media/french-tax-authority-dgfip-confirms-data-breach",
+              "label": "The Record"
+            }
+          ],
+          "url": "https://therecord.media/french-tax-authority-dgfip-confirms-data-breach",
+          "pubDate": "2026-08-14T13:14:15.000Z"
+        },
+        {
+          "title": "Chess.com Leak Exposes 7.3 Million Users – Evidence Points to Scraping",
+          "cve": null,
+          "severity": "high",
+          "score": 74,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Incident de sécurité rapporté par Security Affairs.\n\n7.3 million Chess.com profiles leaked online: the data is genuine, but evidence points to large-scale scraping, not a server breach. Free is a strange price for stolen data, and that&#8217;s exactly what makes this listing worth a second look. A 15.5 GB file containing over 7.3 million chess.com user records showed up on two data-leak forums this week, no cost, no ransom demand, just handed out.",
+          "detail": "Incident de sécurité rapporté par Security Affairs.\n\n7.3 million Chess.com profiles leaked online: the data is genuine, but evidence points to large-scale scraping, not a server breach. Free is a strange price for stolen data, and that&#8217;s exactly what makes this listing worth a second look. A 15.5 GB file containing over 7.3 million chess.com user records showed up on two data-leak forums this week, no cost, no ransom demand, just handed out. Ransomnews&#8217;s technical analysis confirms the data is real and recent. What it isn&#8217;t, on the evidence, is a hack. &#8220;The archive is a single 744 MB 7-Zip file that expands to a 15.5 GB tab-separated table: one header row and 7,337,395 records, each with 38 fields. The schema is chess.com-specific throughout. Alongside the obvious identifiers, email, partial email, username, user ID, UUID, first and last name, country, location and locale, it carries platform state: chess title, points, skill level, premium status and label, verification and activation flags, best rating and rating type, official rating, member-since and last-login timestamps.&#8221; reads the report published by Ransomnew. &#8220;Two fields at the end are the interesting ones. Every record has gam_audiences and audiences_member_of populated, Google Ad Manager audience segments, with values like coach-nudge experiment groups, trial eligibility, lapsed-user cohorts and rating-band targeting. Those are marke",
+          "action": "Surveiller les indicateurs de compromission associés et contrôler les actifs exposés.",
+          "image": "https://securityaffairs.com/wp-content/uploads/2026/08/image-36.png",
+          "sources": [
+            {
+              "url": "https://securityaffairs.com/197174/breaking-news/chess-com-leak-exposes-7-3-million-users-evidence-points-to-scraping.html",
+              "label": "Security Affairs"
+            }
+          ],
+          "url": "https://securityaffairs.com/197174/breaking-news/chess-com-leak-exposes-7-3-million-users-evidence-points-to-scraping.html",
+          "pubDate": "2026-08-14T08:24:21.000Z"
+        },
+        {
+          "title": "RingCentral data breach exposed info of 1.6 million accounts",
+          "cve": null,
+          "severity": "news",
+          "score": 73,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Incident de sécurité rapporté par BleepingComputer.\n\nThe ShinyHunters extortion group stole personal information from 1.6 million RingCentral accounts after hacking the company in July, according to the data breach notification service Have I Been Pwned.\n\nPlug and Pwn attack uses fake USB devices for Windows SYSTEM access\n\nLazarus hackers exploited Windows zero-day to target defense firms\n\nNew Microsoft Defender 'ShieldBreak' zero-day grants SYSTEM privileges\n\nHackers arrested over €30M bank fraud exploiting…",
+          "detail": "Incident de sécurité rapporté par BleepingComputer.\n\nThe ShinyHunters extortion group stole personal information from 1.6 million RingCentral accounts after hacking the company in July, according to the data breach notification service Have I Been Pwned.\n\nPlug and Pwn attack uses fake USB devices for Windows SYSTEM access\n\nLazarus hackers exploited Windows zero-day to target defense firms\n\nNew Microsoft Defender 'ShieldBreak' zero-day grants SYSTEM privileges\n\nHackers arrested over €30M bank fraud exploiting service provider flaw\n\nHackers exploit macOS Screen Sharing flaw to deploy Monero miner\n\nThe Modern Attack Chain: Rethinking Google Workspace Security in the Age of AI",
+          "action": "Surveiller les indicateurs de compromission associés et contrôler les actifs exposés.",
+          "image": "https://www.bleepstatic.com/content/hl-images/2026/08/14/RingCentral-headpic.jpg",
+          "sources": [
+            {
+              "url": "https://www.bleepingcomputer.com/news/security/ringcentral-data-breach-exposed-info-of-16-million-accounts/",
+              "label": "BleepingComputer"
+            }
+          ],
+          "url": "https://www.bleepingcomputer.com/news/security/ringcentral-data-breach-exposed-info-of-16-million-accounts/",
+          "pubDate": "2026-08-14T10:52:05.000Z"
+        },
+        {
+          "title": "Who’s Tracking You? Use This New Service to Find Out",
+          "cve": null,
+          "severity": "high",
+          "score": 70,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Incident de sécurité rapporté par Krebs on Security.\n\nIt can be daunting to determine who&#8217;s responsible for showing ads on the websites we visit, or who&#8217;s harvesting data from the mobile apps we use every day. That information is already semi-public, but it is not easily parsed and traditionally much of it has remained walled away in the hands of large advertising platforms.",
+          "detail": "Incident de sécurité rapporté par Krebs on Security.\n\nIt can be daunting to determine who&#8217;s responsible for showing ads on the websites we visit, or who&#8217;s harvesting data from the mobile apps we use every day. That information is already semi-public, but it is not easily parsed and traditionally much of it has remained walled away in the hands of large advertising platforms. Not anymore: A powerful and free new service called DecryptAds scrapes and correlates this adtech data and makes it simple to quickly learn a great deal about the entities that are tracking you. A Decryptads summary of the advertising partnerships declared by espn.com. The newly launched decryptads.com says it is constantly scraping the files that websites and apps make publicly available to disclose the companies that are permitted to run ads or collect user data. These files include: &#8211; ads.txt : all of the adtech companies and data brokers that may run ads or harvest data from the site; &#8211; app-ads.txt : entities that can harvest data from or display ads on mobile and smart TV apps; &#8211; buyers.json/sellers.json : the entities buying, selling or reselling ad inventory for a given site or app. Zach Edwards is chief research officer for DecryptAds and a threat researcher at the security company Infoblox . Edwards said he and two other founders decided the service was needed because the adtech data in these files is generally only usefu",
+          "action": "Surveiller les indicateurs de compromission associés et contrôler les actifs exposés.",
+          "image": "https://krebsonsecurity.com/wp-content/uploads/2026/08/quietremovalsfeed.png",
+          "sources": [
+            {
+              "url": "https://krebsonsecurity.com/2026/08/whos-tracking-you-use-this-new-service-to-find-out/",
+              "label": "Krebs on Security"
+            }
+          ],
+          "url": "https://krebsonsecurity.com/2026/08/whos-tracking-you-use-this-new-service-to-find-out/",
+          "pubDate": "2026-08-14T11:24:35.000Z"
+        },
+        {
+          "title": "Shell investigates 'potential incident' after Clop data theft claims",
+          "cve": null,
+          "severity": "news",
+          "score": 69,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Incident de sécurité rapporté par BleepingComputer.\n\nOil giant Shell has confirmed it is investigating a potential security incident after the Clop ransomware gang claimed it stole 89GB of data.\n\nPlug and Pwn attack uses fake USB devices for Windows SYSTEM access\n\nLazarus hackers exploited Windows zero-day to target defense firms\n\nNew Microsoft Defender 'ShieldBreak' zero-day grants SYSTEM privileges\n\nHackers arrested over €30M bank fraud exploiting service provider flaw\n\nHackers exploit macOS Screen Sharing…",
+          "detail": "Incident de sécurité rapporté par BleepingComputer.\n\nOil giant Shell has confirmed it is investigating a potential security incident after the Clop ransomware gang claimed it stole 89GB of data.\n\nPlug and Pwn attack uses fake USB devices for Windows SYSTEM access\n\nLazarus hackers exploited Windows zero-day to target defense firms\n\nNew Microsoft Defender 'ShieldBreak' zero-day grants SYSTEM privileges\n\nHackers arrested over €30M bank fraud exploiting service provider flaw\n\nHackers exploit macOS Screen Sharing flaw to deploy Monero miner\n\nThe Modern Attack Chain: Rethinking Google Workspace Security in the Age of AI",
+          "action": "Surveiller les indicateurs de compromission associés et contrôler les actifs exposés.",
+          "image": "https://www.bleepstatic.com/content/hl-images/2026/08/14/Shell_headpic.jpg",
+          "sources": [
+            {
+              "url": "https://www.bleepingcomputer.com/news/security/shell-investigates-potential-incident-after-clop-data-theft-claims/",
+              "label": "BleepingComputer"
+            }
+          ],
+          "url": "https://www.bleepingcomputer.com/news/security/shell-investigates-potential-incident-after-clop-data-theft-claims/",
+          "pubDate": "2026-08-14T11:55:45.000Z"
+        },
+        {
+          "title": "1.6 Million Likely Impacted by RingCentral Data Breach",
+          "cve": null,
+          "severity": "news",
+          "score": 69,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Incident de sécurité rapporté par SecurityWeek.\n\nShinyHunters stole the names, addresses, email addresses, and phone numbers of 1.6 million RingCentral customers.\n\nThe hackers published the allegedly stolen information, including names, addresses, email addresses, and phone numbers.\n\nSubscribe to the SecurityWeek Email Briefing for the latest cybersecurity threats, trends, and expert insights.\n\nSubscribe to the SecurityWeek Email Briefing to stay informed on the latest threats, trends, and technology, al…",
+          "detail": "Incident de sécurité rapporté par SecurityWeek.\n\nShinyHunters stole the names, addresses, email addresses, and phone numbers of 1.6 million RingCentral customers.\n\nThe hackers published the allegedly stolen information, including names, addresses, email addresses, and phone numbers.\n\nSubscribe to the SecurityWeek Email Briefing for the latest cybersecurity threats, trends, and expert insights.\n\nSubscribe to the SecurityWeek Email Briefing to stay informed on the latest threats, trends, and technology, along with insightful columns from industry experts.\n\nJoin this live webinar as we explore if detection-first security operations can keep pace with AI, or if it’s time to rethink prevention as the strongest default.\n\nCodeSecCon bridges the gap between dev and security. Discover best practices for secure coding, innovative risk-reduction tools, and safe AI integration to cultivate a true DevSecOps culture. Safely secure your apps!\n\nErika Dean has been appointed Chief Information Security Officer at Tricentis.",
+          "action": "Surveiller les indicateurs de compromission associés et contrôler les actifs exposés.",
+          "image": "https://www.securityweek.com/wp-content/uploads/2026/08/RingCentral.jpeg",
+          "sources": [
+            {
+              "url": "https://www.securityweek.com/1-6-million-likely-impacted-by-ringcentral-data-breach/",
+              "label": "SecurityWeek"
+            }
+          ],
+          "url": "https://www.securityweek.com/1-6-million-likely-impacted-by-ringcentral-data-breach/",
+          "pubDate": "2026-08-14T10:24:03.000Z"
+        },
+        {
+          "title": "EVA visée par une nouvelle fuite de données, le pirate génére 1 million d’euros de cartes cadeaux !",
+          "cve": null,
+          "severity": "news",
+          "score": 69,
+          "corroboration": 1,
+          "region": "fr",
+          "body": "Incident de sécurité rapporté par Zataz.\n\nUne nouvelle base attribuée à un professionnel des jeux VR expose clients et plusieurs catégories de données sensibles.\n\nFont Resizer Aa Actus cyber Darkweb Intelligence Artificielle ZATAZ Community Logiciels Vidéos Moteurs de recherche de fuites Actus cyber Justice Sécurité réseaux sociaux Vie privée OSINT News Darkweb Fuite de données Codes malveillants Espionnage Sécurité Ransomwares Piratage / Hack infiltration Intelligence Artificielle ZATAZ Community…",
+          "detail": "Incident de sécurité rapporté par Zataz.\n\nUne nouvelle base attribuée à un professionnel des jeux VR expose clients et plusieurs catégories de données sensibles.\n\nFont Resizer Aa Actus cyber Darkweb Intelligence Artificielle ZATAZ Community Logiciels Vidéos Moteurs de recherche de fuites Actus cyber Justice Sécurité réseaux sociaux Vie privée OSINT News Darkweb Fuite de données Codes malveillants Espionnage Sécurité Ransomwares Piratage / Hack infiltration Intelligence Artificielle ZATAZ Community Userlock Community Réseaux sociaux ZATAZ News Letter ZATAZ – Chaque vendredi midi PROTOCOLE D&rsquo;ALERTE ZATAZ Logiciels Vidéos Vidéos Youtube ZATAZ Émission ZATAZ sur Twitch Moteurs de recherche de fuites Follow US Actus cyber Darkweb Intelligence Artificielle ZATAZ Community Logiciels Vidéos Moteurs de recherche de fuites ZATAZ.COM > Actualités > Actualités > Divers > EVA visée par une nouvelle fuite de données, le pirate génére 1 million d&rsquo;euros de cartes cadeaux ! Actualités Divers Internet Clandestin (darknet) Piratage EVA visée par une nouvelle fuite de données, le pirate génére 1 million d&rsquo;euros de cartes cadeaux ! dernière mise à jour : 14/08/2026 11:49 Par Damien Bancal - Chercheur / Journaliste / Conférencier / Enseignant Il y a 18 heures Il y a 18 heures Partager 6 minutes de lecture Partager Une base attribuée à EVA, leader des jeux VR en équipe, est diffusée sur un forum de pirates informatiques. Elle contient des données clients, des informations commerciales et des codes de cartes cadeaux potentiellement exploitables. Le pirate affirme avoir généré pour 1 million d’euros de cartes cadeaux. Un pirate informatique affirme avoir volé une base associée à la société EVA, Esports Virtual Arenas, et plus précisément à sa filiale de Nantes Sud. L’auteur ma",
+          "action": "Surveiller les indicateurs de compromission associés et contrôler les actifs exposés.",
+          "image": "https://www.zataz.com/wp-content/uploads/gift_hack_card.jpg",
+          "sources": [
+            {
+              "url": "https://www.zataz.com/eva-visee-par-une-nouvelle-fuite-de-donnees/",
+              "label": "Zataz"
+            }
+          ],
+          "url": "https://www.zataz.com/eva-visee-par-une-nouvelle-fuite-de-donnees/",
+          "pubDate": "2026-08-14T09:41:26.000Z"
+        },
+        {
+          "title": "Megalaser Industria Metalurgica LTDA — rançongiciel thegentlemen (BR)",
+          "cve": null,
+          "severity": "news",
+          "score": 69,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Incident de sécurité rapporté par ransomware.live.\n\nVictime revendiquée par le groupe de rançongiciel thegentlemen. Pays : BR. Secteur : Manufacturing. megalaser.com.br zoominfo.com/c/megalaser-industria-metalúrgica-ltda/1315472404 Megalaser is a Brazilian metallurgical company based in São Paulo, specializing in advanced metalworking services like laser cutting, CNC bending, and robotic welding.",
+          "detail": "Incident de sécurité rapporté par ransomware.live.\n\nVictime revendiquée par le groupe de rançongiciel thegentlemen.\n\nPays : BR.\n\nSecteur : Manufacturing.\n\nmegalaser.com.br zoominfo.com/c/megalaser-industria-metalúrgica-ltda/1315472404 \nMegalaser is a Brazilian metallurgical company based in São Paulo, specializing in advanced metalworking services like laser cutting, CNC bending, and robotic welding. Founded in 2006, the manufacturer provides high-quality machined components and assemblies for diverse industries, including renewable energy, mining, automotive, and oil and gas. Their platform highlights a strong commitment to precision engineering, integrated manufacturing solutions, and sustainable industrial practices.",
+          "action": "Surveiller les indicateurs de compromission associés et contrôler les actifs exposés.",
+          "image": "https://images.ransomware.live/ransomware.png",
+          "sources": [
+            {
+              "url": "https://www.ransomware.live/id/TWVnYWxhc2VyIEluZHVzdHJpYSBNZXRhbHVyZ2ljYSBMVERBQHRoZWdlbnRsZW1lbg==",
+              "label": "ransomware.live"
+            }
+          ],
+          "url": "https://www.ransomware.live/id/TWVnYWxhc2VyIEluZHVzdHJpYSBNZXRhbHVyZ2ljYSBMVERBQHRoZWdlbnRsZW1lbg==",
+          "pubDate": "2026-08-14T05:19:11.000Z"
+        },
+        {
+          "title": "Tempel — rançongiciel thegentlemen (Allemagne)",
+          "cve": null,
+          "severity": "news",
+          "score": 69,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Incident de sécurité rapporté par ransomware.live.\n\nVictime revendiquée par le groupe de rançongiciel thegentlemen. Pays : Allemagne. Secteur : Other. tempel.com zoominfo.com/c/tempel/87867666 Tempel Steel Company, a division of Worthington Steel, is a leading global manufacturer of high-precision electrical steel laminations. Established in 1945, the company provides essential components for motors, generators, and transformers used across the automotive, eMobility, and energy sectors.",
+          "detail": "Incident de sécurité rapporté par ransomware.live.\n\nVictime revendiquée par le groupe de rançongiciel thegentlemen.\n\nPays : Allemagne.\n\nSecteur : Other.\n\ntempel.com zoominfo.com/c/tempel/87867666 Tempel Steel Company, a division of Worthington Steel, is a leading global manufacturer of high-precision electrical steel laminations. Established in 1945, the company provides essential components for motors, generators, and transformers used across the automotive, eMobility, and energy sectors. Their platform showcases advanced precision metal stamping and overmolding services designed to improve product performance and efficiency.",
+          "action": "Surveiller les indicateurs de compromission associés et contrôler les actifs exposés.",
+          "image": "https://images.ransomware.live/ransomware.png",
+          "sources": [
+            {
+              "url": "https://www.ransomware.live/id/VGVtcGVsQHRoZWdlbnRsZW1lbg==",
+              "label": "ransomware.live"
+            }
+          ],
+          "url": "https://www.ransomware.live/id/VGVtcGVsQHRoZWdlbnRsZW1lbg==",
+          "pubDate": "2026-08-14T05:03:25.000Z"
+        },
+        {
+          "title": "KFC Kosova — rançongiciel thegentlemen",
+          "cve": null,
+          "severity": "news",
+          "score": 69,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Incident de sécurité rapporté par ransomware.live.\n\nVictime revendiquée par le groupe de rançongiciel thegentlemen. Secteur : Hospitality. kfckosova.com zoominfo.com/c/kfc-kosova/401225793 KFC Kosova is the official regional branch of the global fast-food chain, operating multiple restaurants across Kosovo, including a prominent location at the Albi Mall in Pristina. Their website serves as a central hub for customers to find nearby branches, check out menu options, and access delivery services.",
+          "detail": "Incident de sécurité rapporté par ransomware.live.\n\nVictime revendiquée par le groupe de rançongiciel thegentlemen.\n\nSecteur : Hospitality.\n\nkfckosova.com zoominfo.com/c/kfc-kosova/401225793 KFC Kosova is the official regional branch of the global fast-food chain, operating multiple restaurants across Kosovo, including a prominent location at the Albi Mall in Pristina. Their website serves as a central hub for customers to find nearby branches, check out menu options, and access delivery services. Additionally, the platform acts as a primary career portal for local job seekers to apply for various corporate and restaurant positions.",
+          "action": "Surveiller les indicateurs de compromission associés et contrôler les actifs exposés.",
+          "image": "https://images.ransomware.live/ransomware.png",
+          "sources": [
+            {
+              "url": "https://www.ransomware.live/id/S0ZDIEtvc292YUB0aGVnZW50bGVtZW4=",
+              "label": "ransomware.live"
+            }
+          ],
+          "url": "https://www.ransomware.live/id/S0ZDIEtvc292YUB0aGVnZW50bGVtZW4=",
+          "pubDate": "2026-08-14T04:55:11.000Z"
+        },
+        {
+          "title": "The Modern Attack Chain: Rethinking Google Workspace Security in the Age of AI",
+          "cve": null,
+          "severity": "news",
+          "score": 68,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Incident de sécurité rapporté par BleepingComputer.\n\nGoogle Workspace attacks do not always begin with phishing. Stolen OAuth tokens can provide another path into Gmail, Drive, and connected systems. Material Security explains why organizations need defenses that cover the entire Workspace attack chain.\n\nPlug and Pwn attack uses fake USB devices for Windows SYSTEM access\n\nLazarus hackers exploited Windows zero-day to target defense firms\n\nNew Microsoft Defender 'ShieldBreak' zero-day grants SYSTEM privileges…",
+          "detail": "Incident de sécurité rapporté par BleepingComputer.\n\nGoogle Workspace attacks do not always begin with phishing. Stolen OAuth tokens can provide another path into Gmail, Drive, and connected systems. Material Security explains why organizations need defenses that cover the entire Workspace attack chain.\n\nPlug and Pwn attack uses fake USB devices for Windows SYSTEM access\n\nLazarus hackers exploited Windows zero-day to target defense firms\n\nNew Microsoft Defender 'ShieldBreak' zero-day grants SYSTEM privileges\n\nHackers arrested over €30M bank fraud exploiting service provider flaw\n\nHackers exploit macOS Screen Sharing flaw to deploy Monero miner\n\nThe Modern Attack Chain: Rethinking Google Workspace Security in the Age of AI",
+          "action": "Surveiller les indicateurs de compromission associés et contrôler les actifs exposés.",
+          "image": "https://www.bleepstatic.com/content/posts/2026/08/11/material-g-chains.jpg",
+          "sources": [
+            {
+              "url": "https://www.bleepingcomputer.com/news/security/the-modern-attack-chain-rethinking-google-workspace-security-in-the-age-of-ai/",
+              "label": "BleepingComputer"
+            }
+          ],
+          "url": "https://www.bleepingcomputer.com/news/security/the-modern-attack-chain-rethinking-google-workspace-security-in-the-age-of-ai/",
+          "pubDate": "2026-08-14T14:00:10.000Z"
+        },
+        {
+          "title": "Data analyst sent to prison for stealing data, extorting employer",
+          "cve": null,
+          "severity": "news",
+          "score": 68,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Incident de sécurité rapporté par BleepingComputer.\n\nA former data analyst contractor for Brightly Software has been sentenced to two years in prison for targeting his employer in a $2.5 million extortion scheme.\n\nPlug and Pwn attack uses fake USB devices for Windows SYSTEM access\n\nLazarus hackers exploited Windows zero-day to target defense firms\n\nNew Microsoft Defender 'ShieldBreak' zero-day grants SYSTEM privileges\n\nHackers arrested over €30M bank fraud exploiting service provider flaw\n\nHackers exploit ma…",
+          "detail": "Incident de sécurité rapporté par BleepingComputer.\n\nA former data analyst contractor for Brightly Software has been sentenced to two years in prison for targeting his employer in a $2.5 million extortion scheme.\n\nPlug and Pwn attack uses fake USB devices for Windows SYSTEM access\n\nLazarus hackers exploited Windows zero-day to target defense firms\n\nNew Microsoft Defender 'ShieldBreak' zero-day grants SYSTEM privileges\n\nHackers arrested over €30M bank fraud exploiting service provider flaw\n\nHackers exploit macOS Screen Sharing flaw to deploy Monero miner\n\nThe Modern Attack Chain: Rethinking Google Workspace Security in the Age of AI",
+          "action": "Surveiller les indicateurs de compromission associés et contrôler les actifs exposés.",
+          "image": "https://www.bleepstatic.com/content/hl-images/2022/07/07/man-in-hood-typing.jpg",
+          "sources": [
+            {
+              "url": "https://www.bleepingcomputer.com/news/security/data-analyst-sent-to-prison-for-stealing-data-extorting-employer/",
+              "label": "BleepingComputer"
+            }
+          ],
+          "url": "https://www.bleepingcomputer.com/news/security/data-analyst-sent-to-prison-for-stealing-data-extorting-employer/",
+          "pubDate": "2026-08-14T08:27:18.000Z"
+        },
+        {
+          "title": "Apple warned hundreds of users of mercenary spyware attacks",
+          "cve": null,
+          "severity": "high",
+          "score": 67,
+          "corroboration": 2,
+          "region": "intl",
+          "body": "Incident de sécurité rapporté par Security Affairs.\n\nApple warns users of credible, targeted attacks and urges immediate verification, stronger protections, and expert assistance. Apple has sent a new round of threat notifications to users it believes may have been singled out by mercenary spyware . The company told TechCrunch the latest alerts reached people in 110 countries, adding to notifications it has already issued in more than 150 countries since the programme began in 2021.",
+          "detail": "Incident de sécurité rapporté par Security Affairs.\n\nApple warns users of credible, targeted attacks and urges immediate verification, stronger protections, and expert assistance. Apple has sent a new round of threat notifications to users it believes may have been singled out by mercenary spyware . The company told TechCrunch the latest alerts reached people in 110 countries, adding to notifications it has already issued in more than 150 countries since the programme began in 2021. &#8220;Apple threat notifications are designed to inform and assist users who may have been individually targeted by mercenary spyware attacks, likely because of who they are or what they do. Such attacks are vastly more sophisticated than regular cybercriminal activity, as mercenary spyware attackers apply exceptional resources to target a very small number of specific individuals and their devices.&#8221; reads the alert. &#8220;Mercenary spyware attacks cost millions of dollars and often have a short shelf life, making them much harder to detect and prevent. The vast majority of users will never be targeted by such attacks.&#8221; That alone should reset the usual mental model. This isn’t about a suspicious app, a recycled phishing email, or the kind of opportunistic malware that lands wherever it can. Apple’s alerts concern highly targeted attacks against particular people, often because of their role, their work, or the people they know. The peop",
+          "action": "Surveiller les indicateurs de compromission associés et contrôler les actifs exposés.",
+          "image": "https://securityaffairs.com/wp-content/uploads/2026/08/image-40.png",
+          "sources": [
+            {
+              "url": "https://securityaffairs.com/197208/malware/apple-warned-hundreds-of-users-of-mercenary-spyware-attacks.html",
+              "label": "Security Affairs"
+            },
+            {
+              "url": "https://gbhackers.com/apple-warns-iphone-users-in-110-countries/",
+              "label": "GBHackers"
+            }
+          ],
+          "url": "https://securityaffairs.com/197208/malware/apple-warned-hundreds-of-users-of-mercenary-spyware-attacks.html",
+          "pubDate": "2026-08-14T17:09:46.000Z"
+        },
+        {
+          "title": "EKEPIS — rançongiciel thegentlemen (GR)",
+          "cve": null,
+          "severity": "news",
+          "score": 66,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Incident de sécurité rapporté par ransomware.live.\n\nVictime revendiquée par le groupe de rançongiciel thegentlemen. Pays : GR. ekepis.gr rocketreach.co/ekepis-ethniko-kentro-pistopoiisis-domon-profile_b6d46b6ac7408ffe EKEPIS was Greece's National Centre for the Accreditation of Continuing Vocational Training, responsible for certifying adult educators and lifelong learning providers.",
+          "detail": "Incident de sécurité rapporté par ransomware.live.\n\nVictime revendiquée par le groupe de rançongiciel thegentlemen.\n\nPays : GR.\n\nekepis.gr rocketreach.co/ekepis-ethniko-kentro-pistopoiisis-domon-profile_b6d46b6ac7408ffe EKEPIS was Greece's National Centre for the Accreditation of Continuing Vocational Training, responsible for certifying adult educators and lifelong learning providers. The organization no longer exists, as its accreditation and certification duties were absorbed by EOPPEP (ΕΟΠΠΕΠ), the National Organisation for the Certification of Qualifications and Vocational Guidance. Today, anyone looking for their services must go through EOPPEP or the official Greek government portal, since the old ekepis.gr domain is no longer an official resource.",
+          "action": "Surveiller les indicateurs de compromission associés et contrôler les actifs exposés.",
+          "image": "https://images.ransomware.live/ransomware.png",
+          "sources": [
+            {
+              "url": "https://www.ransomware.live/id/RUtFUElTQHRoZWdlbnRsZW1lbg==",
+              "label": "ransomware.live"
+            }
+          ],
+          "url": "https://www.ransomware.live/id/RUtFUElTQHRoZWdlbnRsZW1lbg==",
+          "pubDate": "2026-08-14T05:17:23.000Z"
+        },
+        {
+          "title": "1.6M RingCentral accounts' data dumped after ShinyHunters extortion attack",
+          "cve": null,
+          "severity": "news",
+          "score": 65,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Incident de sécurité rapporté par The Register.\n\nSome 1.6 million unique email addresses tied to RingCentral have been leaked online, alongside names, physical addresses, and phone numbers, according to Have I Been Pwned. RingCentral disclosed the breach on July 28 and said “it was the target of a sophisticated social engineering campaign” affecting a “limited portion of RingCentral customers.” The comms platform said that it promptly responded to the intrusion upon detecting it, “took steps to stop the…",
+          "detail": "Incident de sécurité rapporté par The Register.\n\nSome 1.6 million unique email addresses tied to RingCentral have been leaked online, alongside names, physical addresses, and phone numbers, according to Have I Been Pwned. RingCentral disclosed the breach on July 28 and said “it was the target of a sophisticated social engineering campaign” affecting a “limited portion of RingCentral customers.” The comms platform said that it promptly responded to the intrusion upon detecting it, “took steps to stop the unauthorized activity,” and immediately launched an investigation into the security incident with help from a “leading third-party forensic firm.” “We have not seen any new unauthorized activity since taking these remediation efforts,” the company added. RingCentral did not immediately respond to The Register’s request for comment on this story. We will update it as needed. While the company hasn’t named its attacker, notorious data theft and extortion gang ShinyHunters previously claimed it compromised the collaboration platform, according to a post on its data leak site, viewed by The Register. Screenshots of the post also circulated on social media. The crooks claimed they stole more than 623 GB of data, and set a July 30 deadline for RingCentral to pay up - or else the crew would dump the stolen information online. RingCentral apparently didn’t pay the extortion demand, and ShinyHunters followed through on its threat, post",
+          "action": "Surveiller les indicateurs de compromission associés et contrôler les actifs exposés.",
+          "image": "https://image.theregister.com/5288059.jpg?imageId=5288059&x=0&y=0&cropw=100&croph=100&panox=0&panoy=0&panow=100&panoh=100&width=1200&height=683",
+          "sources": [
+            {
+              "url": "https://www.theregister.com/cyber-crime/2026/08/14/16m-ringcentral-accounts-data-dumped-after-shinyhunters-extortion-attack/5288003",
+              "label": "The Register"
+            }
+          ],
+          "url": "https://www.theregister.com/cyber-crime/2026/08/14/16m-ringcentral-accounts-data-dumped-after-shinyhunters-extortion-attack/5288003",
+          "pubDate": "2026-08-14T17:34:57.000Z"
+        },
+        {
+          "title": "Lebonmateriel.fr : 13,8 Go et 48 290 fichiers diffusés après le piratage de son compte BlgCloud",
+          "cve": null,
+          "severity": "news",
+          "score": 57,
+          "corroboration": 1,
+          "region": "fr",
+          "body": "Incident de sécurité rapporté par Cyberattaque.org.\n\nLa série de fuites liée à la compromission revendiquée de BlgCloud continue. ChimeraZ publie désormais les données associées à Lebonmateriel.fr, présenté\n\nAttaque Mis à jour le 15 août 2026 à 0h02 Lebonmateriel.fr : 13,8 Go et 48 290 fichiers diffusés après le piratage de son compte BlgCloud La série de fuites liée à la compromission revendiquée de BlgCloud continue.",
+          "detail": "Incident de sécurité rapporté par Cyberattaque.org.\n\nLa série de fuites liée à la compromission revendiquée de BlgCloud continue. ChimeraZ publie désormais les données associées à Lebonmateriel.fr, présenté\n\nAttaque Mis à jour le 15 août 2026 à 0h02 Lebonmateriel.fr : 13,8 Go et 48 290 fichiers diffusés après le piratage de son compte BlgCloud La série de fuites liée à la compromission revendiquée de BlgCloud continue. ChimeraZ publie désormais les données associées à Lebonmateriel.fr , présenté comme le « BlgCloud Leak #7 » .\n\nLe hacker annoncent 13,8 Go de données et 48 290 fichiers . Comme pour les précédentes victimes, les informations auraient été récupérées à travers le compte ou l’instance BlgCloud utilisée par l’entreprise , sans preuve d’une compromission directe de l’ensemble de son système informatique.\n\nLebonmateriel.fr est une entreprise française spécialisée dans la vente de matériels agricoles, machines, pièces détachées et équipements professionnels . Son environnement BlgCloud semble notamment servir à gérer les contacts, devis, échanges commerciaux et documents associés à son activité.\n\nCette publication constitue le septième ensemble de données diffusé depuis le début de l’affaire BlgCloud. Les attaquants publient progressivement les données de différents clients dont ils affirment avoir compromis les environnements.\n\nIls annoncent déjà que Motoculture Cravero devrait être la prochaine entreprise concernée.\n\nLes éléments diffusés montrent plusieurs catégories de données présentes dans l’environnement BlgCloud de Lebonmateriel.fr :",
+          "action": "Surveiller les indicateurs de compromission associés et contrôler les actifs exposés.",
+          "image": "https://www.cyberattaque.org/wp-content/uploads/2026/08/tracteur-cyberattaque-2.jpg",
+          "sources": [
+            {
+              "url": "https://www.cyberattaque.org/lebonmateriel-fr-138-go-et-48-290-fichiers-diffuses-apres-le-piratage-de-son-compte-blgcloud/",
+              "label": "Cyberattaque.org"
+            }
+          ],
+          "url": "https://www.cyberattaque.org/lebonmateriel-fr-138-go-et-48-290-fichiers-diffuses-apres-le-piratage-de-son-compte-blgcloud/",
+          "pubDate": "2026-08-14T22:02:35.000Z"
+        },
+        {
+          "title": "DGFiP : une 2ème cyberattaque revendiquée, plus de 2 millions de personnes concernées",
+          "cve": null,
+          "severity": "news",
+          "score": 57,
+          "corroboration": 1,
+          "region": "fr",
+          "body": "Incident de sécurité rapporté par Cyberattaque.org.\n\nLa Direction générale des Finances publiques (DGFiP) fait face à une nouvelle revendication de cyberattaque. Quelques heures après la confirmation\n\nAttaque Mis à jour le 14 août 2026 à 6h43 DGFiP : une 2ème cyberattaque revendiquée, plus de 2 millions de personnes concernées La Direction générale des Finances publiques (DGFiP) fait face à une nouvelle revendication de cyberattaque.",
+          "detail": "Incident de sécurité rapporté par Cyberattaque.org.\n\nLa Direction générale des Finances publiques (DGFiP) fait face à une nouvelle revendication de cyberattaque. Quelques heures après la confirmation\n\nAttaque Mis à jour le 14 août 2026 à 6h43 DGFiP : une 2ème cyberattaque revendiquée, plus de 2 millions de personnes concernées La Direction générale des Finances publiques (DGFiP) fait face à une nouvelle revendication de cyberattaque. Quelques heures après la confirmation officielle d’un premier accès illégitime ayant permis l’extraction de données fiscales , ZeroBytes affirme avoir compromis un deuxième service de l’administration contenant cette fois des données cadastrales.\n\nCette nouvelle intrusion aurait eu lieu le 29 juillet 2026 et viserait le domaine apexappliext.dgfip.finances.gouv.fr , associé au Serveur Professionnel de Données Cadastrales (SPDC) . Les attaquants annoncent avoir extrait 252 149 lignes avant de mettre la base partielle en vente.\n\nLa chronologie est particulièrement préoccupante. La première compromission confirmée par la DGFiP remonte à fin juin 2026 . Si les nouvelles affirmations sont exactes, un autre accès aurait donc été obtenu environ un mois plus tard, le 29 juillet, avant même que la première affaire ne soit rendue publique.\n\nLes deux incidents semblent également différents. ZeroBytes affirme que cette fois, un compte valide et un contournement de l’authentification multifacteur auraient suffi pour accéder au service cadastral. Cette méthode et le point d’entrée exact restent toutefois non confirmés par la DGFiP.\n\nLa base partiellement récupérée compterait 252 149 lignes . Mais chaque enregistrement peut contenir plusieurs personnes liées à une même parcelle. Les cybercriminels avancent ainsi un total de 2 041 778 titulaires présents da",
+          "action": "Surveiller les indicateurs de compromission associés et contrôler les actifs exposés.",
+          "image": "https://www.cyberattaque.org/wp-content/uploads/2026/08/preview-impot-cyberattaque-2.jpg",
+          "sources": [
+            {
+              "url": "https://www.cyberattaque.org/dgfip-2-cyberattaque-cadastre/",
+              "label": "Cyberattaque.org"
+            }
+          ],
+          "url": "https://www.cyberattaque.org/dgfip-2-cyberattaque-cadastre/",
+          "pubDate": "2026-08-14T04:26:16.000Z"
+        }
+      ]
+    },
+    {
+      "id": "culture",
+      "items": [
+        {
+          "title": "Investigation of banking hack leads to arrests in Germany, Brazil",
+          "cve": null,
+          "severity": "culture",
+          "score": 70,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Signal de veille — The Record.\n\nGermany’s federal police agency, the BKA, said three suspects were picked up in Europe and charged with fraud, and Brazil’s federal police said four others were arrested on similar charges.",
+          "detail": "Signal de veille — The Record.\n\nGermany’s federal police agency, the BKA, said three suspects were picked up in Europe and charged with fraud, and Brazil’s federal police said four others were arrested on similar charges.",
+          "action": null,
+          "image": "https://cms.therecord.media/uploads/F26sw19_XEAE_8utu_8295845b86.jpg",
+          "sources": [
+            {
+              "url": "https://therecord.media/investigation-into-banking-hack-leads-to-arrests-germany-brazil",
+              "label": "The Record"
+            }
+          ],
+          "url": "https://therecord.media/investigation-into-banking-hack-leads-to-arrests-germany-brazil",
+          "pubDate": "2026-08-14T20:31:00.000Z"
+        },
+        {
+          "title": "If the Markets Reject OpenAI and Anthropic, the US Should Nationalize Them",
+          "cve": null,
+          "severity": "high",
+          "score": 64,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Signal de veille — Schneier on Sec..\n\nThis essay was written with Nathan E. Sanders, and originally appeared in The Guardian . OpenAI, and then Anthropic , were each formed by AI developers who feared unrestrained corporate AI development&#8212;specifically, that companies like Google and Meta would steer the technology towards deleterious, maybe even catastrophically unsafe, outcomes for society.",
+          "detail": "Signal de veille — Schneier on Sec..\n\nThis essay was written with Nathan E. Sanders, and originally appeared in The Guardian . OpenAI, and then Anthropic , were each formed by AI developers who feared unrestrained corporate AI development&#8212;specifically, that companies like Google and Meta would steer the technology towards deleterious, maybe even catastrophically unsafe, outcomes for society. Their founders proclaimed that their new labs, uniquely, could be trusted to develop the technology in humanity&#8217;s best interest. But each, in turn, were themselves co-opted by the same market incentives, themselves becoming corporate behemoths zealously guarding future investor value rather than the public interest. It was only a few weeks ago, in June, when OpenAI and Anthropic each filed for their IPOs and were met with buzz about trillion-dollar valuations. The hype around their valuations is so extreme that many worry about their potential for concentrating wealth on a global scale. In an effort to leave something for the rest of us, some observers have proposed that the federal government seize a share of these companies&#8217; stock to create a US sovereign wealth fund , or redistribute their revenues to produce a dividend for taxpayers. Now the headlines are about public backlash to AI datacenters and the AI chip giant Nvidia&#8217;s slumping stock. The tech and AI giant SpaceX&#8217;s newly minted stock pric",
+          "action": null,
+          "image": null,
+          "sources": [
+            {
+              "url": "https://www.schneier.com/blog/archives/2026/08/if-the-markets-reject-openai-and-anthropic-the-us-should-nationalize-them.html",
+              "label": "Schneier on Sec."
+            }
+          ],
+          "url": "https://www.schneier.com/blog/archives/2026/08/if-the-markets-reject-openai-and-anthropic-the-us-should-nationalize-them.html",
+          "pubDate": "2026-08-14T11:03:50.000Z"
+        },
+        {
+          "title": "How Anthropic plans to watermark Claude's AI-generated text",
+          "cve": null,
+          "severity": "culture",
+          "score": 63,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Signal de veille — BleepingComputer.\n\nIt could soon become easier to identify AI-generated content, even if it's not the usual \"It's Not X, it's Y\" type of post you'd come across on LinkedIn and other socials.\n\nPlug and Pwn attack uses fake USB devices for Windows SYSTEM access\n\nLazarus hackers exploited Windows zero-day to target defense firms\n\nNew Microsoft Defender 'ShieldBreak' zero-day grants SYSTEM privileges\n\nHackers arrested over €30M bank fraud exploiting service provider flaw\n\nHacker…",
+          "detail": "Signal de veille — BleepingComputer.\n\nIt could soon become easier to identify AI-generated content, even if it's not the usual \"It's Not X, it's Y\" type of post you'd come across on LinkedIn and other socials.\n\nPlug and Pwn attack uses fake USB devices for Windows SYSTEM access\n\nLazarus hackers exploited Windows zero-day to target defense firms\n\nNew Microsoft Defender 'ShieldBreak' zero-day grants SYSTEM privileges\n\nHackers arrested over €30M bank fraud exploiting service provider flaw\n\nHackers exploit macOS Screen Sharing flaw to deploy Monero miner\n\nThe Modern Attack Chain: Rethinking Google Workspace Security in the Age of AI",
+          "action": null,
+          "image": "https://www.bleepstatic.com/content/hl-images/2025/10/23/AI-2.jpg",
+          "sources": [
+            {
+              "url": "https://www.bleepingcomputer.com/news/artificial-intelligence/how-anthropic-plans-to-watermark-claudes-ai-generated-text/",
+              "label": "BleepingComputer"
+            }
+          ],
+          "url": "https://www.bleepingcomputer.com/news/artificial-intelligence/how-anthropic-plans-to-watermark-claudes-ai-generated-text/",
+          "pubDate": "2026-08-14T23:24:17.000Z"
+        },
+        {
+          "title": "Cyera's Oasis Security Buy Is All About AI Agent Control",
+          "cve": null,
+          "severity": "culture",
+          "score": 61,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Signal de veille — Dark Reading.\n\nThe $1 billion deal aims to converge data security and identity into a single control plane for agents, with privileged access redefined around business context rather than static roles.",
+          "detail": "Signal de veille — Dark Reading.\n\nThe $1 billion deal aims to converge data security and identity into a single control plane for agents, with privileged access redefined around business context rather than static roles.",
+          "action": null,
+          "image": null,
+          "sources": [
+            {
+              "url": "https://www.darkreading.com/identity-access-management-security/cyera-oasis-security-acquisition-ai-agent-control",
+              "label": "Dark Reading"
+            }
+          ],
+          "url": "https://www.darkreading.com/identity-access-management-security/cyera-oasis-security-acquisition-ai-agent-control",
+          "pubDate": "2026-08-14T12:17:21.000Z"
+        },
+        {
+          "title": "Mission-Driven Security: Inside a Global Bank's Defense",
+          "cve": null,
+          "severity": "culture",
+          "score": 60,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Signal de veille — Dark Reading.\n\nIn this video interview, Standard Chartered's group CISO shares insights on transitioning from technical roles to strategic leadership, the importance of business-savvy security executives, and how AI is reshaping both defensive capabilities and adversarial tactics in banking.",
+          "detail": "Signal de veille — Dark Reading.\n\nIn this video interview, Standard Chartered's group CISO shares insights on transitioning from technical roles to strategic leadership, the importance of business-savvy security executives, and how AI is reshaping both defensive capabilities and adversarial tactics in banking.",
+          "action": null,
+          "image": null,
+          "sources": [
+            {
+              "url": "https://www.darkreading.com/cybersecurity-operations/mission-driven-security-inside-global-bank-defense",
+              "label": "Dark Reading"
+            }
+          ],
+          "url": "https://www.darkreading.com/cybersecurity-operations/mission-driven-security-inside-global-bank-defense",
+          "pubDate": "2026-08-14T19:24:18.000Z"
+        },
+        {
+          "title": "Researchers Link 'Jewelbug' Chinese APT to Hack-for-Hire Operations",
+          "cve": null,
+          "severity": "culture",
+          "score": 60,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Signal de veille — Infosecurity Mag.\n\nThreat intelligence researchers from Broadcom revealed that a known Chinese APT group may be linked to a lucrative crypto fraud operation\n\nSecurity researchers from Broadcom’s Threat Hunter Team have revealed that Jewelbug, a threat group associated with Chinese-sponsored cyber espionage operations, may be a hacker-for-hire group that also runs profitable crypto fraud campaigns.\n\nIn a new report published on August 13, the threat intelligence team – which…",
+          "detail": "Signal de veille — Infosecurity Mag.\n\nThreat intelligence researchers from Broadcom revealed that a known Chinese APT group may be linked to a lucrative crypto fraud operation\n\nSecurity researchers from Broadcom’s Threat Hunter Team have revealed that Jewelbug, a threat group associated with Chinese-sponsored cyber espionage operations, may be a hacker-for-hire group that also runs profitable crypto fraud campaigns.\n\nIn a new report published on August 13, the threat intelligence team – which brought together experts from Symantec and Carbon Black – shed new light on the advanced persistent threat (APT) group, also known as Ink Dragon , Earth Alux, REF770 and CL-STA-0049.\n\nThe researchers revealed that Jewelbug uses the same infrastructure to conduct espionage against governments and militaries across the Middle East, Southeast Asia and South Asia as well as a financially motivated operation targeting Chinese-speaking cryptocurrency users through fake exchange-download portals.\n\n“The two are not separate ventures that happen to share a name: our investigation revealed they are run by the same small team, on shared infrastructure, from one control panel,” the Broadcom report noted.\n\nAt least one of the operators, likely running what Broadcom described as “the commercial arm of the business,” identified as ‘ople500’ in the group’s control panel, has been identified as using the ‘paopaodada’ (‘bubble boss’) persona.\n\nThis individual has been advertised on Telegram as the contact for a “website ranking rental” service. Broadcom associated the individual “with high confidence” to a company, described as an SEO business, registered in Changsha, the capital of the Hunan province.",
+          "action": null,
+          "image": "https://assets.infosecurity-magazine.com/webpage/og/e9eccae1-72ed-4f99-b0c1-696e9568f3a9.jpg",
+          "sources": [
+            {
+              "url": "https://www.infosecurity-magazine.com/news/researchers-link-chinese-apt-hack/",
+              "label": "Infosecurity Mag"
+            }
+          ],
+          "url": "https://www.infosecurity-magazine.com/news/researchers-link-chinese-apt-hack/",
+          "pubDate": "2026-08-14T07:30:00.000Z"
+        },
+        {
+          "title": "Friday Squid Blogging: Searching for the Colossal Squid",
+          "cve": null,
+          "severity": "culture",
+          "score": 59,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Signal de veille — Schneier on Sec..\n\nFascinating video about searching for life undersea. The video basically makes the point that our bright white searchlights are scaring everything away, and that red light is more neutral. That, plus bait to attract sea creatures, is teaching us a lot about what&#8217;s going on down there. Lots of footage of giant squid, and speculation about the colossal squid. Worth watching.",
+          "detail": "Signal de veille — Schneier on Sec..\n\nFascinating video about searching for life undersea. The video basically makes the point that our bright white searchlights are scaring everything away, and that red light is more neutral. That, plus bait to attract sea creatures, is teaching us a lot about what&#8217;s going on down there. Lots of footage of giant squid, and speculation about the colossal squid. Worth watching. As usual, you can also use this squid post to talk about the security stories in the news that I haven&#8217;t covered. Blog moderation policy.",
+          "action": null,
+          "image": null,
+          "sources": [
+            {
+              "url": "https://www.schneier.com/blog/archives/2026/08/friday-squid-blogging-searching-for-the-colossal-squid-2.html",
+              "label": "Schneier on Sec."
+            }
+          ],
+          "url": "https://www.schneier.com/blog/archives/2026/08/friday-squid-blogging-searching-for-the-colossal-squid-2.html",
+          "pubDate": "2026-08-14T21:01:49.000Z"
+        },
+        {
+          "title": "Upcoming Speaking Engagements",
+          "cve": null,
+          "severity": "culture",
+          "score": 59,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Signal de veille — Schneier on Sec..\n\nThis is a current list of where and when I am scheduled to speak: I’m speaking, signing books, and participating in panel discussions at LAcon V in Anaheim, California, USA. My full schedule is here . I&#8217;m speaking online (via Zoom) at a League of Women Voters event on Tuesday, September 22, 2026, at 5 PM ET. I’m speaking at Elevate Festival in Toronto, Canada. The conference runs September 22–24, 2026; my talk is on Wednesday, September 23.",
+          "detail": "Signal de veille — Schneier on Sec..\n\nThis is a current list of where and when I am scheduled to speak: I’m speaking, signing books, and participating in panel discussions at LAcon V in Anaheim, California, USA. My full schedule is here . I&#8217;m speaking online (via Zoom) at a League of Women Voters event on Tuesday, September 22, 2026, at 5 PM ET. I’m speaking at Elevate Festival in Toronto, Canada. The conference runs September 22–24, 2026; my talk is on Wednesday, September 23. I’m speaking at CanSecWest 2026 in Vancouver, Canada. The conference runs September 30–October 1, 2026; the time of my talk is TBD. I’m speaking at ATTENTION: Democracy, Rebuilt in Montreal, Canada. The event runs October 21–23, 2026, and my talk is on Wednesday, October 21. The list is maintained on this page .",
+          "action": null,
+          "image": null,
+          "sources": [
+            {
+              "url": "https://www.schneier.com/blog/archives/2026/08/upcoming-speaking-engagements-59.html",
+              "label": "Schneier on Sec."
+            }
+          ],
+          "url": "https://www.schneier.com/blog/archives/2026/08/upcoming-speaking-engagements-59.html",
+          "pubDate": "2026-08-14T16:01:59.000Z"
+        },
+        {
+          "title": "Cyberharcèlement : la Belgique prépare un bannissement numérique",
+          "cve": null,
+          "severity": "culture",
+          "score": 59,
+          "corroboration": 1,
+          "region": "fr",
+          "body": "Signal de veille — Zataz.\n\nLa Belgique prépare un bannissement numérique contre le cyberharcèlement, avec identification judiciaire et contrôle des comptes.\n\nVanessa Matz veut donner aux juges belges un nouvel outil face aux infractions pénales commises sur les réseaux sociaux .",
+          "detail": "Signal de veille — Zataz.\n\nLa Belgique prépare un bannissement numérique contre le cyberharcèlement, avec identification judiciaire et contrôle des comptes.\n\nVanessa Matz veut donner aux juges belges un nouvel outil face aux infractions pénales commises sur les réseaux sociaux . Dans un communiqué publié mercredi, la ministre du Numérique a annoncé travailler à l’instauration d’un bannissement temporaire des plateformes pour les personnes condamnées.\n\nDans le journal « La Dernière Heure », elle indique qu’un projet de loi est actuellement en rédaction. Son objectif est de pouvoir ouvrir les discussions sur ce texte en septembre 2026.\n\nLe principe repose sur une sanction supplémentaire décidée par la justice. Une personne condamnée pourrait ainsi se voir interdire temporairement l’accès aux services numériques utilisés pour commettre les faits.\n\nVanessa Matz compare cette mesure à un retrait de permis. Lorsqu’un conducteur commet une infraction routière grave, notamment sous l’influence de l’alcool ou à une vitesse excessive, le juge peut suspendre son droit de conduire. Selon la ministre, la même logique pourrait s’appliquer lorsqu’un réseau social devient l’instrument d’une infraction grave.\n\n« Les cyberharceleurs doivent pouvoir être bannis des réseaux sociaux. L’objectif est de mettre fin au sentiment d’impunité en ligne et de prévenir la récidive « , affirme-t-elle.\n\nCette initiative belge intervient après une première application du dispositif en France. Le mercredi 5 août 2026, les streamers Naruto et Safine ont été condamnés à des peines de prison avec sursis ainsi qu’à six mois de bannissement des plateformes concernées.",
+          "action": null,
+          "image": "https://www.zataz.com/wp-content/uploads/cyberharcelement_belgique.jpg",
+          "sources": [
+            {
+              "url": "https://www.zataz.com/cyberharcelement-la-belgique-prepare-un-bannissement-numerique/",
+              "label": "Zataz"
+            }
+          ],
+          "url": "https://www.zataz.com/cyberharcelement-la-belgique-prepare-un-bannissement-numerique/",
+          "pubDate": "2026-08-14T11:54:50.000Z"
+        },
+        {
+          "title": "Google Cloud Sets Out Post-Quantum Roadmap With 2029 Readiness Goal",
+          "cve": null,
+          "severity": "culture",
+          "score": 59,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Signal de veille — SecurityWeek.\n\nGoogle Cloud outlines its roadmap to full post-quantum cryptography readiness, with key milestones targeted for 2027 and 2028. The post Google Cloud Sets Out Post-Quantum Roadmap With 2029 Readiness Goal appeared first on SecurityWeek .",
+          "detail": "Signal de veille — SecurityWeek.\n\nGoogle Cloud outlines its roadmap to full post-quantum cryptography readiness, with key milestones targeted for 2027 and 2028. The post Google Cloud Sets Out Post-Quantum Roadmap With 2029 Readiness Goal appeared first on SecurityWeek .",
+          "action": null,
+          "image": "https://www.securityweek.com/wp-content/uploads/2026/08/PQC-post-quantum-cryptography.jpeg",
+          "sources": [
+            {
+              "url": "https://www.securityweek.com/google-cloud-sets-out-post-quantum-roadmap-with-2029-readiness-goal/",
+              "label": "SecurityWeek"
+            }
+          ],
+          "url": "https://www.securityweek.com/google-cloud-sets-out-post-quantum-roadmap-with-2029-readiness-goal/",
+          "pubDate": "2026-08-14T11:00:00.000Z"
+        },
+        {
+          "title": "Ce mini-dispositif à 100 dollars pourrait permettre de pirater un Boeing 737",
+          "cve": null,
+          "severity": "culture",
+          "score": 55,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Signal de veille — Numerama.\n\nUne équipe de l’Université de Californie à San Diego et de l’Oberlin College, dans l’Ohio, a conçu un implant capable de manipuler certains systèmes d’un Boeing 737, révèle une enquête de WIRED. Minuscule et peu coûteux, le dispositif nécessite néanmoins un accès physique à l’avion et une expertise considérable.",
+          "detail": "Signal de veille — Numerama.\n\nUne équipe de l’Université de Californie à San Diego et de l’Oberlin College, dans l’Ohio, a conçu un implant capable de manipuler certains systèmes d’un Boeing 737, révèle une enquête de WIRED. Minuscule et peu coûteux, le dispositif nécessite néanmoins un accès physique à l’avion et une expertise considérable. Il\n\nWatt Else, ToujoursPlus, Artificielles, Le Récap : votre dose hebdo d’infos exclusives et d’éditos endiablés !\n\nFrandroid Clubic Lemon Humanoid Mon compte Thème Clair Sombre Système 39,90 € /an\n\nNous générons pour vous un résumé de l’article grâce à une IA et nous le vérifions afin de nous assurer qu’il n’y ait aucune erreur, pour garantir l’authenticité de l’info.\n\nRecevez tous les soirs un résumé de l’actu importante avec Le Récap’\n\nIl est à peine plus grand qu’une pièce de monnaie, coûte moins de 100 dollars et pourrait pourtant tromper certains systèmes informatiques d’un Boeing 737. Comme le rapporte le journaliste Andy Greenberg dans WIRED, des chercheurs de l’ Université de Californie à San Diego et de l’Oberlin College, dans l&rsquo;Ohio, ont développé un implant capable de modifier le plan de vol utilisé par le pilote automatique.\n\nLe dispositif pourrait également falsifier certaines informations affichées dans le cockpit, notamment le poids de l’appareil ou la température extérieure. Des données essentielles pour calculer les paramètres du décollage.",
+          "action": null,
+          "image": "https://c0.lestechnophiles.com/www.numerama.com/wp-content/uploads/2026/08/1-18.png?resize=1600,900&key=5e8b6ef9",
+          "sources": [
+            {
+              "url": "https://www.numerama.com/cyberguerre/2311893-ce-mini-dispositif-a-100-dollars-pourrait-permettre-de-pirater-un-boeing-737.html",
+              "label": "Numerama"
+            }
+          ],
+          "url": "https://www.numerama.com/cyberguerre/2311893-ce-mini-dispositif-a-100-dollars-pourrait-permettre-de-pirater-un-boeing-737.html",
+          "pubDate": "2026-08-14T17:01:00.000Z"
+        },
+        {
+          "title": "What Boards Need to Know About Tech Risk",
+          "cve": null,
+          "severity": "culture",
+          "score": 55,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Signal de veille — Dark Reading.\n\nWhy do so many boards underestimate technology risk until it becomes a crisis?",
+          "detail": "Signal de veille — Dark Reading.\n\nWhy do so many boards underestimate technology risk until it becomes a crisis?",
+          "action": null,
+          "image": null,
+          "sources": [
+            {
+              "url": "https://www.darkreading.com/cyber-risk/what-boards-must-know-tech-risk",
+              "label": "Dark Reading"
+            }
+          ],
+          "url": "https://www.darkreading.com/cyber-risk/what-boards-must-know-tech-risk",
+          "pubDate": "2026-08-14T14:00:00.000Z"
+        },
+        {
+          "title": "Ukrainian police raid 94 fraudulent call centers, seize $2 million",
+          "cve": null,
+          "severity": "high",
+          "score": 53,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Signal de veille — Help Net Security.\n\nUkrainian police have disrupted 94 fraudulent call centers during a nationwide operation that involved more than 400 searches and the seizure of thousands of computers, phones, and SIM cards. Ukrainian police raid at a fraudulent call center (Source: Cyberpolice Ukraine) The call centers were linked to schemes involving callers impersonating bank employees, fraudulent investment services, cryptocurrency platforms, and attempts to gain remote access to vict…",
+          "detail": "Signal de veille — Help Net Security.\n\nUkrainian police have disrupted 94 fraudulent call centers during a nationwide operation that involved more than 400 searches and the seizure of thousands of computers, phones, and SIM cards. Ukrainian police raid at a fraudulent call center (Source: Cyberpolice Ukraine) The call centers were linked to schemes involving callers impersonating bank employees, fraudulent investment services, cryptocurrency platforms, and attempts to gain remote access to victims’ devices. Some groups collected personal information about prospective victims and &#8230; More &#8594; The post Ukrainian police raid 94 fraudulent call centers, seize $2 million appeared first on Help Net Security .",
+          "action": null,
+          "image": "https://img.helpnetsecurity.com/wp-content/uploads/2023/09/21085235/scammers-1400.jpg",
+          "sources": [
+            {
+              "url": "https://www.helpnetsecurity.com/2026/08/14/ukraine-fraudulent-call-centers-shut-down/",
+              "label": "Help Net Security"
+            }
+          ],
+          "url": "https://www.helpnetsecurity.com/2026/08/14/ukraine-fraudulent-call-centers-shut-down/",
+          "pubDate": "2026-08-14T07:56:15.000Z"
+        },
+        {
+          "title": "OpenAI’s GPT-5.6 Sol runs up to 14× faster with Ultrafast mode",
+          "cve": null,
+          "severity": "culture",
+          "score": 48,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Signal de veille — Help Net Security.\n\nOpenAI’s GPT-5.6 Sol on Ultrafast mode is available in limited preview to a select group of customers, launching first through the OpenAI API. The company says the service runs up to 14 times faster than Standard processing and generates up to 750 output tokens per second. Ultrafast is powered by Cerebras as part of the companies’ partnership on ultra-low-latency inference.",
+          "detail": "Signal de veille — Help Net Security.\n\nOpenAI’s GPT-5.6 Sol on Ultrafast mode is available in limited preview to a select group of customers, launching first through the OpenAI API. The company says the service runs up to 14 times faster than Standard processing and generates up to 750 output tokens per second. Ultrafast is powered by Cerebras as part of the companies’ partnership on ultra-low-latency inference. GPT-5.6 Sol Ultrafast and standard build a working 3D warehouse simulator from the same text &#8230; More &#8594; The post OpenAI’s GPT-5.6 Sol runs up to 14× faster with Ultrafast mode appeared first on Help Net Security .",
+          "action": null,
+          "image": "https://img.helpnetsecurity.com/wp-content/uploads/2026/08/11065308/openai-build-1500.webp",
+          "sources": [
+            {
+              "url": "https://www.helpnetsecurity.com/2026/08/14/openais-gpt-5-6-sol-runs-up-to-14x-faster-with-ultrafast-mode/",
+              "label": "Help Net Security"
+            }
+          ],
+          "url": "https://www.helpnetsecurity.com/2026/08/14/openais-gpt-5-6-sol-runs-up-to-14x-faster-with-ultrafast-mode/",
+          "pubDate": "2026-08-14T10:55:58.000Z"
+        },
+        {
+          "title": "AWS Certificate Manager sets 2027 end date for email-validated certificate renewals",
+          "cve": null,
+          "severity": "culture",
+          "score": 48,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Signal de veille — Help Net Security.\n\nAWS Certificate Manager (ACM) will phase out email validation for public certificates throughout 2027, ahead of the Certification Authority/Browser (CA/B) Forum’s March 15, 2028 deadline for ending email-based domain validation. The CA/B Forum sets standards that browsers and certificate authorities follow for publicly trusted certificates.",
+          "detail": "Signal de veille — Help Net Security.\n\nAWS Certificate Manager (ACM) will phase out email validation for public certificates throughout 2027, ahead of the Certification Authority/Browser (CA/B) Forum’s March 15, 2028 deadline for ending email-based domain validation. The CA/B Forum sets standards that browsers and certificate authorities follow for publicly trusted certificates. From March 15, 2028, public certificate authorities will no longer be able to use email-based domain validation to issue or renew publicly trusted certificates. Certificates issued before that date will &#8230; More &#8594; The post AWS Certificate Manager sets 2027 end date for email-validated certificate renewals appeared first on Help Net Security .",
+          "action": null,
+          "image": "https://img.helpnetsecurity.com/wp-content/uploads/2024/06/12155825/aws-1500-cloud.webp",
+          "sources": [
+            {
+              "url": "https://www.helpnetsecurity.com/2026/08/14/aws-certificate-manager-email-validation/",
+              "label": "Help Net Security"
+            }
+          ],
+          "url": "https://www.helpnetsecurity.com/2026/08/14/aws-certificate-manager-email-validation/",
+          "pubDate": "2026-08-14T08:25:31.000Z"
+        },
+        {
+          "title": "France's tax authority had data stolen on 680k taxpayers",
+          "cve": null,
+          "severity": "culture",
+          "score": 41,
+          "corroboration": 2,
+          "region": "fr",
+          "body": "Signal de veille — Hacker News.\n\n680,000 rows of data stolen from the DGFiP in late June: names, addresses, and cadastral data belonging to 390,000 individuals and 285,000 businesses.\n\nThe attack is not recent, however. It dates back to late June - the 26th, to be precise, according to the hacker - and the administration had detected and stopped it at the time, without ever saying a word about it publicly.\n\nThe stolen data includes names, dates of birth, addresses, and land registry infor…",
+          "detail": "Signal de veille — Hacker News.\n\n680,000 rows of data stolen from the DGFiP in late June: names, addresses, and cadastral data belonging to 390,000 individuals and 285,000 businesses.\n\nThe attack is not recent, however. It dates back to late June - the 26th, to be precise, according to the hacker - and the administration had detected and stopped it at the time, without ever saying a word about it publicly.\n\nThe stolen data includes names, dates of birth, addresses, and land registry information, covering around 390,000 individuals and 285,000 businesses. Passwords and bank details are not among the data mentioned.\n\nZeroBytes claims to have hopped from server to server before gaining VPN access - the remote entry point to the network - which then opened up several internal tax authority tools. The official account puts it more dryly, describing an identity theft that enabled illegitimate access.\n\nA second leak is also circulating on the same forums and is said to affect around 2 million property owners, though this one has not been officially confirmed yet.\n\nANSSI, the government's cybersecurity fire brigade, is investigating, and the CNIL has been notified as required by law.\n\nThis isn't the tax authority's first rodeo, though. Between late January and mid-February, hackers had already fraudulently accessed 1.2 million bank accounts in the FICOBA database, using the compromised credentials of a government employee. Two breaches in one year is starting to be a lot.",
+          "action": null,
+          "image": "https://korben.info/les-impots-se-sont-fait-voler-les-donnees-de-680-000-contribuables/les-impots-se-sont-fait-voler-les-donnees-de-680-000-contribuables-1.jpg",
+          "sources": [
+            {
+              "url": "https://korben.info/en/france-tax-authority-data-breach-680000-taxpayers.html",
+              "label": "Hacker News"
+            },
+            {
+              "url": "https://news.ycombinator.com/item?id=49298303",
+              "label": "Discussion HN"
+            }
+          ],
+          "url": "https://korben.info/en/france-tax-authority-data-breach-680000-taxpayers.html",
+          "pubDate": "2026-08-14T13:18:53.000Z"
+        }
+      ]
+    }
+  ]
+}
