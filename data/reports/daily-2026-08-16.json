@@ -1,0 +1,637 @@
+{
+  "id": "daily-2026-08-16",
+  "type": "daily",
+  "date": "2026-08-16",
+  "title": "Rapport quotidien - dimanche 16 août 2026",
+  "summary": "Sur les dernières 24 heures, la veille recense 19 vulnérabilités critiques, 10 incidents ou compromissions et 2 signaux de fond. Acteurs et produits les plus exposés : Microsoft, macOS et MOVEit.",
+  "generatedAt": "2026-08-16T04:00:52.482Z",
+  "sections": [
+    {
+      "id": "vulns",
+      "items": [
+        {
+          "title": "CVE-2026-19598 — The Pods – Custom Content Types and Fields plugin for WordPress is vulnerable to Privilege…",
+          "cve": "CVE-2026-19598",
+          "severity": "critical",
+          "score": 74,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Vulnérabilité critique CVE-2026-19598 (score CVSS 9.8).\n\nThe Pods – Custom Content Types and Fields plugin for WordPress is vulnerable to Privilege Escalation via Authorization Bypass in all versions up to, and including, 3.3.9. The vulnerability exists because the pods_admin AJAX router funnels every access check — including the method allowlist, nonce verification, login enforcement, and capability gate — through pods_error(), which under the JSON meta-box-loader compatibility path only writes failures to the…",
+          "detail": "Vulnérabilité critique CVE-2026-19598 (score CVSS 9.8).\n\nThe Pods – Custom Content Types and Fields plugin for WordPress is vulnerable to Privilege Escalation via Authorization Bypass in all versions up to, and including, 3.3.9. The vulnerability exists because the pods_admin AJAX router funnels every access check — including the method allowlist, nonce verification, login enforcement, and capability gate — through pods_error(), which under the JSON meta-box-loader compatibility path only writes failures to the PHP error log and returns false instead of terminating the request, rendering all guards ineffective.  This makes it possible for unauthenticated attackers to escalate their privileges to Administrator or overwrite the password of any user account, including the site owner's, enabling complete site takeover, or perform another administrator action.\n\nScore CVSS : 9.8\n\nType de faiblesse (CWE) : CWE-863",
+          "action": "Vérifier l'exposition du parc et appliquer le correctif éditeur dès sa disponibilité.",
+          "image": null,
+          "sources": [
+            {
+              "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-19598",
+              "label": "NVD"
+            },
+            {
+              "url": "https://www.cvedetails.com/cve/CVE-2026-19598/",
+              "label": "CVE Details"
+            }
+          ],
+          "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-19598",
+          "pubDate": "2026-08-15T18:16:23.860Z"
+        },
+        {
+          "title": "CVE-2026-16142 — The TrueBooker plugin for WordPress is vulnerable to Account Takeover in all versions up t…",
+          "cve": "CVE-2026-16142",
+          "severity": "critical",
+          "score": 74,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Vulnérabilité critique CVE-2026-16142 (score CVSS 9.8).\n\nThe TrueBooker plugin for WordPress is vulnerable to Account Takeover in all versions up to, and including, 1.2.6. This is due to the add_front_user_update() AJAX handler being registered for unauthenticated users and accepting an arbitrary truebooker_wp_user_id value, which is passed directly to wp_update_user() without verifying authentication or ownership.",
+          "detail": "Vulnérabilité critique CVE-2026-16142 (score CVSS 9.8).\n\nThe TrueBooker plugin for WordPress is vulnerable to Account Takeover in all versions up to, and including, 1.2.6. This is due to the add_front_user_update() AJAX handler being registered for unauthenticated users and accepting an arbitrary truebooker_wp_user_id value, which is passed directly to wp_update_user() without verifying authentication or ownership. This makes it possible for unauthenticated attackers to change any WordPress user account email address, including an administrator, by submitting the target user ID and an attacker-controlled email address. An attacker can then use the native WordPress password reset flow to receive the reset link at the attacker-controlled email address and take over the account.\n\nScore CVSS : 9.8\n\nType de faiblesse (CWE) : CWE-639",
+          "action": "Vérifier l'exposition du parc et appliquer le correctif éditeur dès sa disponibilité.",
+          "image": null,
+          "sources": [
+            {
+              "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-16142",
+              "label": "NVD"
+            },
+            {
+              "url": "https://www.cvedetails.com/cve/CVE-2026-16142/",
+              "label": "CVE Details"
+            }
+          ],
+          "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-16142",
+          "pubDate": "2026-08-15T09:16:29.560Z"
+        },
+        {
+          "title": "CVE-2026-15826 — The User Profile Builder plugin for WordPress is vulnerable to Authentication Bypass via T…",
+          "cve": "CVE-2026-15826",
+          "severity": "critical",
+          "score": 74,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Vulnérabilité critique CVE-2026-15826 (score CVSS 9.8).\n\nThe User Profile Builder plugin for WordPress is vulnerable to Authentication Bypass via Type Confusion in versions up to, and including, 3.16.4. This is due to the wppb_log_in_user() function calling absint() on the return value of wp_insert_user() before performing an is_wp_error() check — when a registration is submitted with a 61–70 character username, WordPress core rejects it with a WP_Error object, but absint() coerces that object to the integer 1 b…",
+          "detail": "Vulnérabilité critique CVE-2026-15826 (score CVSS 9.8).\n\nThe User Profile Builder plugin for WordPress is vulnerable to Authentication Bypass via Type Confusion in versions up to, and including, 3.16.4. This is due to the wppb_log_in_user() function calling absint() on the return value of wp_insert_user() before performing an is_wp_error() check — when a registration is submitted with a 61–70 character username, WordPress core rejects it with a WP_Error object, but absint() coerces that object to the integer 1 before the error check can short-circuit execution, causing the plugin to bind and return a transient-backed autologin nonce tied to user ID 1. This makes it possible for unauthenticated attackers to log in as the site's Administrator account (user ID 1), resulting in full administrative takeover of the site.\n\nScore CVSS : 9.8\n\nType de faiblesse (CWE) : CWE-704",
+          "action": "Vérifier l'exposition du parc et appliquer le correctif éditeur dès sa disponibilité.",
+          "image": null,
+          "sources": [
+            {
+              "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-15826",
+              "label": "NVD"
+            },
+            {
+              "url": "https://www.cvedetails.com/cve/CVE-2026-15826/",
+              "label": "CVE Details"
+            }
+          ],
+          "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-15826",
+          "pubDate": "2026-08-15T07:16:19.280Z"
+        },
+        {
+          "title": "CVE-2026-18855 — The Link Library plugin for WordPress is vulnerable to arbitrary file deletion due to insu…",
+          "cve": "CVE-2026-18855",
+          "severity": "critical",
+          "score": 72,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Vulnérabilité critique CVE-2026-18855 (score CVSS 9.1).\n\nThe Link Library plugin for WordPress is vulnerable to arbitrary file deletion due to insufficient file path validation in the ll_delete_link_fields function in all versions up to, and including, 7.9.4 This makes it possible for unauthenticated attackers to delete arbitrary files on the server, which can easily lead to remote code execution when the right file is deleted (such as wp-config.php).",
+          "detail": "Vulnérabilité critique CVE-2026-18855 (score CVSS 9.1).\n\nThe Link Library plugin for WordPress is vulnerable to arbitrary file deletion due to insufficient file path validation in the ll_delete_link_fields function in all versions up to, and including, 7.9.4 This makes it possible for unauthenticated attackers to delete arbitrary files on the server, which can easily lead to remote code execution when the right file is deleted (such as wp-config.php). Exploitation requires the administrator to have enabled the 'Delete local file on link deletion' plugin option (disabled by default) and to subsequently permanently delete the attacker-submitted link, which is a routine moderation action.\n\nScore CVSS : 9.1\n\nType de faiblesse (CWE) : CWE-22",
+          "action": "Vérifier l'exposition du parc et appliquer le correctif éditeur dès sa disponibilité.",
+          "image": null,
+          "sources": [
+            {
+              "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-18855",
+              "label": "NVD"
+            },
+            {
+              "url": "https://www.cvedetails.com/cve/CVE-2026-18855/",
+              "label": "CVE Details"
+            }
+          ],
+          "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-18855",
+          "pubDate": "2026-08-15T19:16:32.160Z"
+        },
+        {
+          "title": "CVE-2026-19924 — A security vulnerability has been detected in Tenda AC10 16.03.10.09_multi_TDE01. This vul…",
+          "cve": "CVE-2026-19924",
+          "severity": "critical",
+          "score": 59,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Vulnérabilité critique CVE-2026-19924 (score CVSS 9.8).\n\nA security vulnerability has been detected in Tenda AC10 16.03.10.09_multi_TDE01. This vulnerability affects the function R7WebsSecurityHandler of the component httpd. The manipulation leads to improper authentication. The attack may be initiated remotely. The exploit has been disclosed publicly and may be used.",
+          "detail": "Vulnérabilité critique CVE-2026-19924 (score CVSS 9.8).\n\nA security vulnerability has been detected in Tenda AC10 16.03.10.09_multi_TDE01. This vulnerability affects the function R7WebsSecurityHandler of the component httpd. The manipulation leads to improper authentication. The attack may be initiated remotely. The exploit has been disclosed publicly and may be used.\n\nScore CVSS : 9.8\n\nType de faiblesse (CWE) : CWE-287",
+          "action": "Vérifier l'exposition du parc et appliquer le correctif éditeur dès sa disponibilité.",
+          "image": null,
+          "sources": [
+            {
+              "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-19924",
+              "label": "NVD"
+            },
+            {
+              "url": "https://www.cvedetails.com/cve/CVE-2026-19924/",
+              "label": "CVE Details"
+            }
+          ],
+          "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-19924",
+          "pubDate": "2026-08-16T02:16:47.247Z"
+        },
+        {
+          "title": "CVE-2026-73046 — SiYuan before v3.7.4 improperly restricts excessive authentication attempts in the CheckAu…",
+          "cve": "CVE-2026-73046",
+          "severity": "critical",
+          "score": 59,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Vulnérabilité critique CVE-2026-73046 (score CVSS 9.8).\n\nSiYuan before v3.7.4 improperly restricts excessive authentication attempts in the CheckAuth() middleware. The HTTP Basic Authentication branch, which guards nearly the entire /api/* surface, accepts the workspace access code (Conf.AccessAuthCode) as the Basic Auth password but never consults the CAPTCHA/lockout gate or increments the failure counter used by the cookie/session login path.",
+          "detail": "Vulnérabilité critique CVE-2026-73046 (score CVSS 9.8).\n\nSiYuan before v3.7.4 improperly restricts excessive authentication attempts in the CheckAuth() middleware. The HTTP Basic Authentication branch, which guards nearly the entire /api/* surface, accepts the workspace access code (Conf.AccessAuthCode) as the Basic Auth password but never consults the CAPTCHA/lockout gate or increments the failure counter used by the cookie/session login path. This allows unauthenticated remote attackers to brute-force the admin access code with unlimited automated requests and obtain full RoleAdministrator access to the kernel. A secondary weakness exists because the access code is compared using a non-constant-time string comparison.\n\nScore CVSS : 9.8\n\nType de faiblesse (CWE) : CWE-307",
+          "action": "Vérifier l'exposition du parc et appliquer le correctif éditeur dès sa disponibilité.",
+          "image": null,
+          "sources": [
+            {
+              "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-73046",
+              "label": "NVD"
+            },
+            {
+              "url": "https://www.cvedetails.com/cve/CVE-2026-73046/",
+              "label": "CVE Details"
+            }
+          ],
+          "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-73046",
+          "pubDate": "2026-08-15T22:16:54.600Z"
+        },
+        {
+          "title": "CVE-2026-73053 — SiYuan versions before v3.7.4 contain a cross-site scripting vulnerability in the unicode2…",
+          "cve": "CVE-2026-73053",
+          "severity": "critical",
+          "score": 57,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Vulnérabilité critique CVE-2026-73053 (score CVSS 9).\n\nSiYuan versions before v3.7.4 contain a cross-site scripting vulnerability in the unicode2Emoji function that fails to sanitize codepoint branch output. Attackers can craft document icons with hex-encoded markup that executes in the renderer with Node integration enabled, achieving arbitrary code execution on the host system.",
+          "detail": "Vulnérabilité critique CVE-2026-73053 (score CVSS 9).\n\nSiYuan versions before v3.7.4 contain a cross-site scripting vulnerability in the unicode2Emoji function that fails to sanitize codepoint branch output. Attackers can craft document icons with hex-encoded markup that executes in the renderer with Node integration enabled, achieving arbitrary code execution on the host system.\n\nScore CVSS : 9\n\nType de faiblesse (CWE) : CWE-79",
+          "action": "Vérifier l'exposition du parc et appliquer le correctif éditeur dès sa disponibilité.",
+          "image": null,
+          "sources": [
+            {
+              "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-73053",
+              "label": "NVD"
+            },
+            {
+              "url": "https://www.cvedetails.com/cve/CVE-2026-73053/",
+              "label": "CVE Details"
+            }
+          ],
+          "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-73053",
+          "pubDate": "2026-08-15T22:16:55.157Z"
+        },
+        {
+          "title": "CVE-2026-73052 — SiYuan before v3.7.4 stores attribute-view field names without HTML escaping and interpola…",
+          "cve": "CVE-2026-73052",
+          "severity": "critical",
+          "score": 57,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Vulnérabilité critique CVE-2026-73052 (score CVSS 9).\n\nSiYuan before v3.7.4 stores attribute-view field names without HTML escaping and interpolates them directly into option elements via innerHTML in the sort menu. Attackers can inject markup by renaming a database field to execute arbitrary JavaScript when users open the sort menu, with Node integration enabled in the desktop client enabling code execution.",
+          "detail": "Vulnérabilité critique CVE-2026-73052 (score CVSS 9).\n\nSiYuan before v3.7.4 stores attribute-view field names without HTML escaping and interpolates them directly into option elements via innerHTML in the sort menu. Attackers can inject markup by renaming a database field to execute arbitrary JavaScript when users open the sort menu, with Node integration enabled in the desktop client enabling code execution.\n\nScore CVSS : 9\n\nType de faiblesse (CWE) : CWE-79",
+          "action": "Vérifier l'exposition du parc et appliquer le correctif éditeur dès sa disponibilité.",
+          "image": null,
+          "sources": [
+            {
+              "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-73052",
+              "label": "NVD"
+            },
+            {
+              "url": "https://www.cvedetails.com/cve/CVE-2026-73052/",
+              "label": "CVE Details"
+            }
+          ],
+          "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-73052",
+          "pubDate": "2026-08-15T22:16:55.017Z"
+        },
+        {
+          "title": "CVE-2026-73050 — SiYuan versions before v3.7.4 fail to validate or escape the color field in attribute-view…",
+          "cve": "CVE-2026-73050",
+          "severity": "critical",
+          "score": 57,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Vulnérabilité critique CVE-2026-73050 (score CVSS 9).\n\nSiYuan versions before v3.7.4 fail to validate or escape the color field in attribute-view select options, allowing stored cross-site scripting through eight unescaped render sites. Attackers can inject event-handler attributes by including quotation marks in the color value, executing arbitrary JavaScript when viewing databases containing the malicious select field.",
+          "detail": "Vulnérabilité critique CVE-2026-73050 (score CVSS 9).\n\nSiYuan versions before v3.7.4 fail to validate or escape the color field in attribute-view select options, allowing stored cross-site scripting through eight unescaped render sites. Attackers can inject event-handler attributes by including quotation marks in the color value, executing arbitrary JavaScript when viewing databases containing the malicious select field.\n\nScore CVSS : 9\n\nType de faiblesse (CWE) : CWE-79",
+          "action": "Vérifier l'exposition du parc et appliquer le correctif éditeur dès sa disponibilité.",
+          "image": null,
+          "sources": [
+            {
+              "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-73050",
+              "label": "NVD"
+            },
+            {
+              "url": "https://www.cvedetails.com/cve/CVE-2026-73050/",
+              "label": "CVE Details"
+            }
+          ],
+          "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-73050",
+          "pubDate": "2026-08-15T22:16:54.870Z"
+        },
+        {
+          "title": "CVE-2026-73044 — SiYuan versions before v3.7.4 fail to validate or escape table column width values, allowi…",
+          "cve": "CVE-2026-73044",
+          "severity": "critical",
+          "score": 57,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Vulnérabilité critique CVE-2026-73044 (score CVSS 9).\n\nSiYuan versions before v3.7.4 fail to validate or escape table column width values, allowing stored cross-site scripting injection into style attributes. Attackers can inject malicious payloads through the setAttrViewColWidth API that break out of style attributes and inject event handlers on every table cell, executing arbitrary code in the Electron renderer with Node integration enabled.",
+          "detail": "Vulnérabilité critique CVE-2026-73044 (score CVSS 9).\n\nSiYuan versions before v3.7.4 fail to validate or escape table column width values, allowing stored cross-site scripting injection into style attributes. Attackers can inject malicious payloads through the setAttrViewColWidth API that break out of style attributes and inject event handlers on every table cell, executing arbitrary code in the Electron renderer with Node integration enabled.\n\nScore CVSS : 9\n\nType de faiblesse (CWE) : CWE-79",
+          "action": "Vérifier l'exposition du parc et appliquer le correctif éditeur dès sa disponibilité.",
+          "image": null,
+          "sources": [
+            {
+              "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-73044",
+              "label": "NVD"
+            },
+            {
+              "url": "https://www.cvedetails.com/cve/CVE-2026-73044/",
+              "label": "CVE Details"
+            }
+          ],
+          "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-73044",
+          "pubDate": "2026-08-15T22:16:54.330Z"
+        },
+        {
+          "title": "CVE-2026-73043 — SiYuan versions before v3.7.4 contain a remote code execution vulnerability in the Templat…",
+          "cve": "CVE-2026-73043",
+          "severity": "critical",
+          "score": 57,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Vulnérabilité critique CVE-2026-73043 (score CVSS 9).\n\nSiYuan versions before v3.7.4 contain a remote code execution vulnerability in the Template calculation operator, which renders user-authored Go templates and stores output verbatim without sanitization. Attackers can inject malicious HTML and JavaScript into template calculations that execute in the desktop client renderer with Node integration enabled, allowing arbitrary code execution when the database is opened.",
+          "detail": "Vulnérabilité critique CVE-2026-73043 (score CVSS 9).\n\nSiYuan versions before v3.7.4 contain a remote code execution vulnerability in the Template calculation operator, which renders user-authored Go templates and stores output verbatim without sanitization. Attackers can inject malicious HTML and JavaScript into template calculations that execute in the desktop client renderer with Node integration enabled, allowing arbitrary code execution when the database is opened.\n\nScore CVSS : 9\n\nType de faiblesse (CWE) : CWE-79",
+          "action": "Vérifier l'exposition du parc et appliquer le correctif éditeur dès sa disponibilité.",
+          "image": null,
+          "sources": [
+            {
+              "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-73043",
+              "label": "NVD"
+            },
+            {
+              "url": "https://www.cvedetails.com/cve/CVE-2026-73043/",
+              "label": "CVE Details"
+            }
+          ],
+          "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-73043",
+          "pubDate": "2026-08-15T22:16:54.200Z"
+        },
+        {
+          "title": "CVE-2026-73042 — SiYuan before v3.7.4 fails to properly escape database menu metadata in HTML interpolation…",
+          "cve": "CVE-2026-73042",
+          "severity": "critical",
+          "score": 57,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Vulnérabilité critique CVE-2026-73042 (score CVSS 9).\n\nSiYuan before v3.7.4 fails to properly escape database menu metadata in HTML interpolation, allowing stored values to execute script when users open group, view, or field-edit menus. Attackers can inject markup through field descriptions or names that close containing elements and execute arbitrary code via event handlers, reaching Node built-ins due to Electron's insecure configuration.",
+          "detail": "Vulnérabilité critique CVE-2026-73042 (score CVSS 9).\n\nSiYuan before v3.7.4 fails to properly escape database menu metadata in HTML interpolation, allowing stored values to execute script when users open group, view, or field-edit menus. Attackers can inject markup through field descriptions or names that close containing elements and execute arbitrary code via event handlers, reaching Node built-ins due to Electron's insecure configuration.\n\nScore CVSS : 9\n\nType de faiblesse (CWE) : CWE-79",
+          "action": "Vérifier l'exposition du parc et appliquer le correctif éditeur dès sa disponibilité.",
+          "image": null,
+          "sources": [
+            {
+              "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-73042",
+              "label": "NVD"
+            },
+            {
+              "url": "https://www.cvedetails.com/cve/CVE-2026-73042/",
+              "label": "CVE Details"
+            }
+          ],
+          "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-73042",
+          "pubDate": "2026-08-15T22:16:54.030Z"
+        },
+        {
+          "title": "CVE-2026-73041 — SiYuan versions before v3.7.4 fail to validate or escape annotation fields written to disk…",
+          "cve": "CVE-2026-73041",
+          "severity": "critical",
+          "score": 57,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Vulnérabilité critique CVE-2026-73041 (score CVSS 9).\n\nSiYuan versions before v3.7.4 fail to validate or escape annotation fields written to disk by the setFileAnnotation endpoint. Attackers can inject malicious markup into annotation fields that execute as script in the PDF renderer with full Node.js access when a user opens an annotated PDF.",
+          "detail": "Vulnérabilité critique CVE-2026-73041 (score CVSS 9).\n\nSiYuan versions before v3.7.4 fail to validate or escape annotation fields written to disk by the setFileAnnotation endpoint. Attackers can inject malicious markup into annotation fields that execute as script in the PDF renderer with full Node.js access when a user opens an annotated PDF.\n\nScore CVSS : 9\n\nType de faiblesse (CWE) : CWE-79",
+          "action": "Vérifier l'exposition du parc et appliquer le correctif éditeur dès sa disponibilité.",
+          "image": null,
+          "sources": [
+            {
+              "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-73041",
+              "label": "NVD"
+            },
+            {
+              "url": "https://www.cvedetails.com/cve/CVE-2026-73041/",
+              "label": "CVE Details"
+            }
+          ],
+          "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-73041",
+          "pubDate": "2026-08-15T22:16:53.883Z"
+        },
+        {
+          "title": "GeoServer Zero-Day Is Already Being Probed. That’s the Problem",
+          "cve": "CVE-2024-36401",
+          "severity": "critical",
+          "score": 54,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Vulnérabilité critique CVE-2024-36401.\n\nGeoServer faces an unpatched zero-day enabling SQL injection and potentially RCE, with attackers already probing exposed systems. A newly disclosed GeoServer zero-day is already attracting active exploitation attempts, and there is no patch available yet. Organisations running the open-source geospatial platform should check their exposure.",
+          "detail": "Vulnérabilité critique CVE-2024-36401.\n\nGeoServer faces an unpatched zero-day enabling SQL injection and potentially RCE, with attackers already probing exposed systems. A newly disclosed GeoServer zero-day is already attracting active exploitation attempts, and there is no patch available yet. Organisations running the open-source geospatial platform should check their exposure. A security researcher with the handler q1uf3ng discloded the vulnerability that has yet to be assigned a CVE identifier. 实话说今天是非常不开心的一天 实际上最近一段时间我都非常沮丧 各种事情 所以我公布一个0day 希望让你们心情变的开心 GeoServer jsonArrayContains 未授权 SQL 注入 数据库sa的情况下理所当然的可以rce pic.twitter.com/0uTUyMNYU4 &mdash; 秋风 (@q1uf3ng) August 12, 2026 The flaw lies in the jsonArrayContains functionality and allows unauthorised SQL injection. Under some configurations, especially where the service can reach a privileged database account, that path may lead to remote code execution The vulnerability has yet to be assigned a CVE identifier. The issue was publicly disclosed on 12 August 2026. Within hours, watchTowr said it had begun seeing exploitation attempts, with hundreds of probes coming from a small number of IP addresses. “Within hours of public disclosure, we began observing exploitation attempts and have since recorded hundreds of attempts originating from a small number of source IP addresses. Yet another example of how quickly attackers move once a vulnerability enters the public d",
+          "action": "Vérifier l'exposition du parc et appliquer le correctif éditeur dès sa disponibilité.",
+          "image": "https://securityaffairs.com/wp-content/uploads/2026/08/image-41.png",
+          "sources": [
+            {
+              "url": "https://securityaffairs.com/197216/hacking/geoserver-zero-day-is-already-being-probed-thats-the-problem.html",
+              "label": "Security Affairs"
+            }
+          ],
+          "url": "https://securityaffairs.com/197216/hacking/geoserver-zero-day-is-already-being-probed-thats-the-problem.html",
+          "pubDate": "2026-08-15T07:18:21.000Z"
+        },
+        {
+          "title": "Patch Tuesday : Microsoft corrige près de 400 failles de sécurité, dont une déjà exploitée – Analyse Tenable",
+          "cve": "CVE-2026-68820",
+          "severity": "critical",
+          "score": 49,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Vulnérabilité critique CVE-2026-68820 affectant Microsoft.\n\nÀ l'occasion du Patch Tuesday d'août, Microsoft a publié une nouvelle série particulièrement importante de correctifs de sécurité, avec 398 CVE traitées, dont trois vulnérabilités zero-day. Parmi elles figure notamment une faille déjà activement exploitée et susceptible d'avoir été utilisée par des acteurs étatiques.",
+          "detail": "Vulnérabilité critique CVE-2026-68820 affectant Microsoft.\n\nÀ l'occasion du Patch Tuesday d'août, Microsoft a publié une nouvelle série particulièrement importante de correctifs de sécurité, avec 398 CVE traitées, dont trois vulnérabilités zero-day. Parmi elles figure notamment une faille déjà activement exploitée et susceptible d'avoir été utilisée par des acteurs étatiques. Commentaire de Satnam Narang, Senior Staff Research Engineer chez le spécialiste de la gestion de l'exposition Tenable, qui livre son analyse sur le sujet : Satnam Narang Senior Staff Research Engineer,Tenable « Comme prévu après le Patch Tuesday de juillet, qui avait constitué la plus importante publication à ce jour, la nouvelle norme semble désormais établie, avec 398 CVE corrigées en août. Dans la publication de ce mois-ci, 41 % de l'ensemble des CVE corrigées concernaient des vulnérabilités d'élévation de privilèges. Cette proportion s'inscrit dans la tendance générale observée en 2026, les failles d'élévation de privilèges représentant 46 % de toutes les CVE recensées cette année. Trois vulnérabilités zero-day ont été corrigées ce mois-ci, dont CVE-2026-68820 , une faille d'élévation de privilèges affectant le pilote Windows Ancillary Function Driver (afd.sys) pour WinSock, qui gère les commandes liées aux sockets. Non seulement cette vulnérabilité a déjà été activement exploitée, mais elle pourrait également avoir été utilisée par des acteurs étatiques. Depu",
+          "action": "Vérifier l'exposition du parc et appliquer le correctif éditeur dès sa disponibilité.",
+          "image": "https://www.globalsecuritymag.fr/local/cache-vignettes/L40xH21/35a39c9a1121d920b1115d047a3f78-9f9cf.png",
+          "sources": [
+            {
+              "url": "https://www.globalsecuritymag.fr/patch-tuesday-microsoft-corrige-pres-de-400-failles-de-securite-dont-une-deja.html",
+              "label": "Global Sec Mag"
+            }
+          ],
+          "url": "https://www.globalsecuritymag.fr/patch-tuesday-microsoft-corrige-pres-de-400-failles-de-securite-dont-une-deja.html",
+          "pubDate": "2026-08-16T04:00:49.216Z"
+        },
+        {
+          "title": "Fuite de données aux impôts : Benoit Grünemwald - Expert en Cybersécurité chez ESET France réagit :",
+          "cve": null,
+          "severity": "high",
+          "score": 24,
+          "corroboration": 1,
+          "region": "fr",
+          "body": "Vulnérabilité élevée.\n\nL'exposition de données liées à l'administration, et en particulier de données fiscales, suscite légitimement des interrogations tant leur sensibilité est élevée. En France, les informations financières, fiscales ou patrimoniales relèvent souvent de la sphère la plus intime de la vie privée.",
+          "detail": "Vulnérabilité élevée.\n\nL'exposition de données liées à l'administration, et en particulier de données fiscales, suscite légitimement des interrogations tant leur sensibilité est élevée. En France, les informations financières, fiscales ou patrimoniales relèvent souvent de la sphère la plus intime de la vie privée. Le risque n'est donc pas seulement lié aux informations potentiellement compromises aujourd'hui, mais à leur réutilisation demain dans des campagnes d'hameçonnage, d'usurpation d'identité ou de fraude financière. Ces informations peuvent également être exploitées à des fins de divulgation d'informations personnelles, de harcèlement ou de doxxing, c'est-à-dire la publication malveillante de données permettant d'identifier ou de localiser une personne. Les cybercriminels savent parfaitement exploiter ce type d'actualité pour diffuser de faux e-mails demandant un changement de mot de passe ou une mise à jour d'informations personnelles. Benoit Grünemwald Expert en Cybersécurité chez ESET France Les premiers éléments communiqués indiquent que l'accès frauduleux aurait été obtenu à la suite d'une usurpation d'identité. Cet élément rappelle que les attaquants cherchent souvent à exploiter une identité légitime pour contourner les mécanismes de sécurité, que cette compromission trouve son origine dans un vol d'identifiants, un logiciel malveillant ou d'autres techniques utilisées pour se faire pas",
+          "action": "Vérifier l'exposition du parc et appliquer le correctif éditeur dès sa disponibilité.",
+          "image": "https://www.globalsecuritymag.fr/local/cache-vignettes/L40xH21/35a39c9a1121d920b1115d047a3f78-9f9cf.png",
+          "sources": [
+            {
+              "url": "https://www.globalsecuritymag.fr/fuite-de-donnees-aux-impots-benoit-grunemwald-expert-en-cybersecurite-chez-eset.html",
+              "label": "Global Sec Mag"
+            }
+          ],
+          "url": "https://www.globalsecuritymag.fr/fuite-de-donnees-aux-impots-benoit-grunemwald-expert-en-cybersecurite-chez-eset.html",
+          "pubDate": "2026-08-16T04:00:49.211Z"
+        }
+      ]
+    },
+    {
+      "id": "attacks",
+      "items": [
+        {
+          "title": "New Evooo1Bot Linux botnet turns routers into traffic relay nodes",
+          "cve": null,
+          "severity": "news",
+          "score": 68,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Incident de sécurité rapporté par BleepingComputer.\n\nA new Mirai-based modular Linux botnet malware called Evooo1Bot has been targeting internet-facing gateway devices, turning them into SOCKS5 traffic relay nodes.\n\nPlug and Pwn attack uses fake USB devices for Windows SYSTEM access\n\nLazarus hackers exploited Windows zero-day to target defense firms\n\nNew Microsoft Defender 'ShieldBreak' zero-day grants SYSTEM privileges\n\nNew Evooo1Bot Linux botnet turns routers into traffic relay nodes\n\nHackers arrested over…",
+          "detail": "Incident de sécurité rapporté par BleepingComputer.\n\nA new Mirai-based modular Linux botnet malware called Evooo1Bot has been targeting internet-facing gateway devices, turning them into SOCKS5 traffic relay nodes.\n\nPlug and Pwn attack uses fake USB devices for Windows SYSTEM access\n\nLazarus hackers exploited Windows zero-day to target defense firms\n\nNew Microsoft Defender 'ShieldBreak' zero-day grants SYSTEM privileges\n\nNew Evooo1Bot Linux botnet turns routers into traffic relay nodes\n\nHackers arrested over €30M bank fraud exploiting service provider flaw\n\nHow to enable Kernel-mode Hardware-enforced Stack Protection in Windows 11",
+          "action": "Surveiller les indicateurs de compromission associés et contrôler les actifs exposés.",
+          "image": "https://www.bleepstatic.com/content/hl-images/2023/11/01/botnet-kill-switch.jpg",
+          "sources": [
+            {
+              "url": "https://www.bleepingcomputer.com/news/security/new-evooo1bot-linux-botnet-turns-routers-into-traffic-relay-nodes/",
+              "label": "BleepingComputer"
+            }
+          ],
+          "url": "https://www.bleepingcomputer.com/news/security/new-evooo1bot-linux-botnet-turns-routers-into-traffic-relay-nodes/",
+          "pubDate": "2026-08-15T14:14:38.000Z"
+        },
+        {
+          "title": "Oz Hair & Beauty — rançongiciel xpl0itrs (AU)",
+          "cve": null,
+          "severity": "news",
+          "score": 61,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Incident de sécurité rapporté par ransomware.live.\n\nRansomware.live discovered on 2026-08-15 that Oz Hair & Beauty has been claimed by Xpl0itrs ransomware group\n\nSponsored by Hudson Rock – Use Hudson Rock's free cybercrime intelligence tools to learn how Infostealer infections are leading to ransomware attacks\n\nThe following DNS records were found for the victim's domain.\n\nLegal Disclaimer: Ransomware.live does not engage in the acquisition, exfiltration, downloading, possession, hosting, access, consultati…",
+          "detail": "Incident de sécurité rapporté par ransomware.live.\n\nRansomware.live discovered on 2026-08-15 that Oz Hair & Beauty has been claimed by Xpl0itrs ransomware group\n\nSponsored by Hudson Rock – Use Hudson Rock's free cybercrime intelligence tools to learn how Infostealer infections are leading to ransomware attacks\n\nThe following DNS records were found for the victim's domain.\n\nLegal Disclaimer: Ransomware.live does not engage in the acquisition, exfiltration, downloading, possession, hosting, access, consultation, redistribution, or disclosure of unlawfully obtained data. This platform indexes only publicly visible information posted by ransomware operators and open web sources without accessing or obtaining the underlying stolen content . The service is provided to support public awareness, legitimate research, and cyber-resilience. No stolen personal or confidential data is collected or distributed via this site.\n\nSession: 057726c909af65969646b040bbbfa5c4df67f5166a33cbac6cd9e1302b0b3ca148\n\nTox: 50DADDED26D859469371938B793456D8210A5AE02DD3C42979F5E52411BCB648F1CA68A5EDE5",
+          "action": "Surveiller les indicateurs de compromission associés et contrôler les actifs exposés.",
+          "image": "https://images.ransomware.live/victims/fb6e6520dbdba8add384d832e8df5889.png",
+          "sources": [
+            {
+              "url": "https://www.ransomware.live/id/T3ogSGFpciAmIEJlYXV0eUB4cGwwaXRycw==",
+              "label": "ransomware.live"
+            }
+          ],
+          "url": "https://www.ransomware.live/id/T3ogSGFpciAmIEJlYXV0eUB4cGwwaXRycw==",
+          "pubDate": "2026-08-15T21:43:22.720Z"
+        },
+        {
+          "title": "********* — rançongiciel xpl0itrs",
+          "cve": null,
+          "severity": "news",
+          "score": 61,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Incident de sécurité rapporté par ransomware.live.\n\nRansomware.live discovered on 2026-08-15 that ********* has been claimed by Xpl0itrs ransomware group\n\nSponsored by Hudson Rock – Use Hudson Rock's free cybercrime intelligence tools to learn how Infostealer infections are leading to ransomware attacks\n\nLegal Disclaimer: Ransomware.live does not engage in the acquisition, exfiltration, downloading, possession, hosting, access, consultation, redistribution, or disclosure of unlawfully obtained data.",
+          "detail": "Incident de sécurité rapporté par ransomware.live.\n\nRansomware.live discovered on 2026-08-15 that ********* has been claimed by Xpl0itrs ransomware group\n\nSponsored by Hudson Rock – Use Hudson Rock's free cybercrime intelligence tools to learn how Infostealer infections are leading to ransomware attacks\n\nLegal Disclaimer: Ransomware.live does not engage in the acquisition, exfiltration, downloading, possession, hosting, access, consultation, redistribution, or disclosure of unlawfully obtained data. This platform indexes only publicly visible information posted by ransomware operators and open web sources without accessing or obtaining the underlying stolen content . The service is provided to support public awareness, legitimate research, and cyber-resilience. No stolen personal or confidential data is collected or distributed via this site.\n\nSession: 057726c909af65969646b040bbbfa5c4df67f5166a33cbac6cd9e1302b0b3ca148\n\nTox: 50DADDED26D859469371938B793456D8210A5AE02DD3C42979F5E52411BCB648F1CA68A5EDE5",
+          "action": "Surveiller les indicateurs de compromission associés et contrôler les actifs exposés.",
+          "image": "https://images.ransomware.live/victims/aeb189980cad3d4198d069a082e3029e.png",
+          "sources": [
+            {
+              "url": "https://www.ransomware.live/id/KioqKioqKioqQHhwbDBpdHJz",
+              "label": "ransomware.live"
+            }
+          ],
+          "url": "https://www.ransomware.live/id/KioqKioqKioqQHhwbDBpdHJz",
+          "pubDate": "2026-08-15T21:42:46.794Z"
+        },
+        {
+          "title": "Interim HealthCare — rançongiciel anubis (États-Unis)",
+          "cve": null,
+          "severity": "news",
+          "score": 61,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Incident de sécurité rapporté par ransomware.live.\n\nRansomware.live discovered on 2026-08-15 that RapidFort has been claimed by Xpl0itrs ransomware group\n\nSponsored by Hudson Rock – Use Hudson Rock's free cybercrime intelligence tools to learn how Infostealer infections are leading to ransomware attacks\n\nThe following DNS records were found for the victim's domain.\n\nLegal Disclaimer: Ransomware.live does not engage in the acquisition, exfiltration, downloading, possession, hosting, access, consultation, red…",
+          "detail": "Incident de sécurité rapporté par ransomware.live.\n\nRansomware.live discovered on 2026-08-15 that RapidFort has been claimed by Xpl0itrs ransomware group\n\nSponsored by Hudson Rock – Use Hudson Rock's free cybercrime intelligence tools to learn how Infostealer infections are leading to ransomware attacks\n\nThe following DNS records were found for the victim's domain.\n\nLegal Disclaimer: Ransomware.live does not engage in the acquisition, exfiltration, downloading, possession, hosting, access, consultation, redistribution, or disclosure of unlawfully obtained data. This platform indexes only publicly visible information posted by ransomware operators and open web sources without accessing or obtaining the underlying stolen content . The service is provided to support public awareness, legitimate research, and cyber-resilience. No stolen personal or confidential data is collected or distributed via this site.\n\nSession: 057726c909af65969646b040bbbfa5c4df67f5166a33cbac6cd9e1302b0b3ca148\n\nTox: 50DADDED26D859469371938B793456D8210A5AE02DD3C42979F5E52411BCB648F1CA68A5EDE5",
+          "action": "Surveiller les indicateurs de compromission associés et contrôler les actifs exposés.",
+          "image": "https://images.ransomware.live/victims/8cdc6254a5bbf3ba65c6e48f85e32e81.png",
+          "sources": [
+            {
+              "url": "https://www.ransomware.live/id/UmFwaWRGb3J0QHhwbDBpdHJz",
+              "label": "ransomware.live"
+            }
+          ],
+          "url": "https://www.ransomware.live/id/UmFwaWRGb3J0QHhwbDBpdHJz",
+          "pubDate": "2026-08-15T21:42:10.706Z"
+        },
+        {
+          "title": "servmarmg.cl — rançongiciel ms13089 (CL)",
+          "cve": null,
+          "severity": "news",
+          "score": 61,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Incident de sécurité rapporté par ransomware.live.\n\nRansomware.live discovered on 2026-08-15 that servmarmg.cl has been claimed by Ms13089 ransomware group\n\nSponsored by Hudson Rock – Use Hudson Rock's free cybercrime intelligence tools to learn how Infostealer infections are leading to ransomware attacks\n\nThe following DNS records were found for the victim's domain.\n\nLegal Disclaimer: Ransomware.live does not engage in the acquisition, exfiltration, downloading, possession, hosting, access, consultation, r…",
+          "detail": "Incident de sécurité rapporté par ransomware.live.\n\nRansomware.live discovered on 2026-08-15 that servmarmg.cl has been claimed by Ms13089 ransomware group\n\nSponsored by Hudson Rock – Use Hudson Rock's free cybercrime intelligence tools to learn how Infostealer infections are leading to ransomware attacks\n\nThe following DNS records were found for the victim's domain.\n\nLegal Disclaimer: Ransomware.live does not engage in the acquisition, exfiltration, downloading, possession, hosting, access, consultation, redistribution, or disclosure of unlawfully obtained data. This platform indexes only publicly visible information posted by ransomware operators and open web sources without accessing or obtaining the underlying stolen content . The service is provided to support public awareness, legitimate research, and cyber-resilience. No stolen personal or confidential data is collected or distributed via this site.\n\nSession: 057726c909af65969646b040bbbfa5c4df67f5166a33cbac6cd9e1302b0b3ca148\n\nTox: 50DADDED26D859469371938B793456D8210A5AE02DD3C42979F5E52411BCB648F1CA68A5EDE5",
+          "action": "Surveiller les indicateurs de compromission associés et contrôler les actifs exposés.",
+          "image": "https://images.ransomware.live/victims/b20279f09435219d7dda9d427859b3bd.png",
+          "sources": [
+            {
+              "url": "https://www.ransomware.live/id/c2Vydm1hcm1nLmNsQG1zMTMwODk=",
+              "label": "ransomware.live"
+            }
+          ],
+          "url": "https://www.ransomware.live/id/c2Vydm1hcm1nLmNsQG1zMTMwODk=",
+          "pubDate": "2026-08-15T19:00:37.501Z"
+        },
+        {
+          "title": "SEARS (Grupo Sanborns) — rançongiciel spacebears (MX)",
+          "cve": null,
+          "severity": "news",
+          "score": 61,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Incident de sécurité rapporté par ransomware.live.\n\nVictime revendiquée par le groupe de rançongiciel spacebears. Pays : MX. Secteur : Retail & E-Commerce. SEARS (Grupo Sanborns, S.A. de C.V.) is a leading Mexican retail company and a key subsidiary of Grupo Carso, owned by the Slim family.Founded in 1903 by the Sanborn brothers, the company has grown into one of the country’s most iconic and successful retail groups.It owns and operates two of Mexico’s most famous brands: Sears (mid-range department stores…",
+          "detail": "Incident de sécurité rapporté par ransomware.live.\n\nVictime revendiquée par le groupe de rançongiciel spacebears.\n\nPays : MX.\n\nSecteur : Retail & E-Commerce.\n\nSEARS (Grupo Sanborns, S.A. de C.V.) is a leading Mexican retail company and a key subsidiary of Grupo Carso, owned by the Slim family.Founded in 1903 by the Sanborn brothers, the company has grown into one of the country’s most iconic and successful retail groups.It owns and operates two of Mexico’s most famous brands: Sears (mid-range department stores) and Sanborns (the signature “store + restaurant/cafe” format).Today, Grupo Sanborns manages more than 41,000 employees and hundreds of stores nationwide, with a strong focus on e-commerce and digital transformation.Website: www.sears.com.mx and www.sanborns.com.mx.AttentionDemo files will appear here in the coming days, ahead of the full-scale release. https://www.sears.com.mx/",
+          "action": "Surveiller les indicateurs de compromission associés et contrôler les actifs exposés.",
+          "image": "https://images.ransomware.live/victims/be530d4bfa0ed7103e08b3c0aab50a6a.png",
+          "sources": [
+            {
+              "url": "https://www.ransomware.live/id/U0VBUlMgKEdydXBvIFNhbmJvcm5zKUBzcGFjZWJlYXJz",
+              "label": "ransomware.live"
+            }
+          ],
+          "url": "https://www.ransomware.live/id/U0VBUlMgKEdydXBvIFNhbmJvcm5zKUBzcGFjZWJlYXJz",
+          "pubDate": "2026-08-15T15:30:03.885Z"
+        },
+        {
+          "title": "VR Advogados — rançongiciel Barracuda (BR)",
+          "cve": null,
+          "severity": "news",
+          "score": 61,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Incident de sécurité rapporté par ransomware.live.\n\nVictime revendiquée par le groupe de rançongiciel Barracuda. Pays : BR. Secteur : Professional Services. VR Advogados, a Brazilian law firm, neglected its clients’ personal data, violating laws regarding data storage and confidentiality—they posted and shared all of their clients’ documents, passport information, and powers of attorney via a Discord server. We hacked it.",
+          "detail": "Incident de sécurité rapporté par ransomware.live.\n\nVictime revendiquée par le groupe de rançongiciel Barracuda.\n\nPays : BR.\n\nSecteur : Professional Services.\n\nVR Advogados, a Brazilian law firm, neglected its clients’ personal data, violating laws regarding data storage and confidentiality—they posted and shared all of their clients’ documents, passport information, and powers of attorney via a Discord server. We hacked it. Now we have 3,000 documents belonging to all of their clients—passports, powers of attorney, declarations, personal and work-related correspondence, and more. The firm hasn’t responded to us for three days; if this continues, we’ll start selling the data. | Status: upcoming | Size: 10 GB | Starts at $30000.00",
+          "action": "Surveiller les indicateurs de compromission associés et contrôler les actifs exposés.",
+          "image": "https://images.ransomware.live/victims/473dddb1f209305b811e4ffb59c624d5.png",
+          "sources": [
+            {
+              "url": "https://www.ransomware.live/id/VlIgQWR2b2dhZG9zQEJhcnJhY3VkYQ==",
+              "label": "ransomware.live"
+            }
+          ],
+          "url": "https://www.ransomware.live/id/VlIgQWR2b2dhZG9zQEJhcnJhY3VkYQ==",
+          "pubDate": "2026-08-15T12:50:11.612Z"
+        },
+        {
+          "title": "www.shalina.com — rançongiciel blackwater (IN)",
+          "cve": null,
+          "severity": "news",
+          "score": 61,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Incident de sécurité rapporté par ransomware.live.\n\nRansomware.live discovered on 2026-08-15 that www.shalina.com has been claimed by Blackwater ransomware group\n\nSponsored by Hudson Rock – Use Hudson Rock's free cybercrime intelligence tools to learn how Infostealer infections are leading to ransomware attacks\n\nThis domain's FortiOS SSL-VPN credentials were exposed via the \"FortiBleed\" leak ( CVE-2022-40684 ).\n\nThe following DNS records were found for the victim's domain.\n\nLegal Disclaimer: Ransomware.live…",
+          "detail": "Incident de sécurité rapporté par ransomware.live.\n\nRansomware.live discovered on 2026-08-15 that www.shalina.com has been claimed by Blackwater ransomware group\n\nSponsored by Hudson Rock – Use Hudson Rock's free cybercrime intelligence tools to learn how Infostealer infections are leading to ransomware attacks\n\nThis domain's FortiOS SSL-VPN credentials were exposed via the \"FortiBleed\" leak ( CVE-2022-40684 ).\n\nThe following DNS records were found for the victim's domain.\n\nLegal Disclaimer: Ransomware.live does not engage in the acquisition, exfiltration, downloading, possession, hosting, access, consultation, redistribution, or disclosure of unlawfully obtained data. This platform indexes only publicly visible information posted by ransomware operators and open web sources without accessing or obtaining the underlying stolen content . The service is provided to support public awareness, legitimate research, and cyber-resilience. No stolen personal or confidential data is collected or distributed via this site.\n\nSession: 057726c909af65969646b040bbbfa5c4df67f5166a33cbac6cd9e1302b0b3ca148\n\nTox: 50DADDED26D859469371938B793456D8210A5AE02DD3C42979F5E52411BCB648F1CA68A5EDE5",
+          "action": "Surveiller les indicateurs de compromission associés et contrôler les actifs exposés.",
+          "image": "https://images.ransomware.live/victims/e0e227ff507591f8d614ec9e439cd28d.png",
+          "sources": [
+            {
+              "url": "https://www.ransomware.live/id/d3d3LnNoYWxpbmEuY29tQGJsYWNrd2F0ZXI=",
+              "label": "ransomware.live"
+            }
+          ],
+          "url": "https://www.ransomware.live/id/d3d3LnNoYWxpbmEuY29tQGJsYWNrd2F0ZXI=",
+          "pubDate": "2026-08-15T08:42:26.000Z"
+        },
+        {
+          "title": "www.amca.org.ar — rançongiciel blackwater (AR)",
+          "cve": null,
+          "severity": "news",
+          "score": 61,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Incident de sécurité rapporté par ransomware.live.\n\nRansomware.live discovered on 2026-08-15 that www.amca.org.ar has been claimed by Blackwater ransomware group\n\nSponsored by Hudson Rock – Use Hudson Rock's free cybercrime intelligence tools to learn how Infostealer infections are leading to ransomware attacks\n\nThis domain's FortiOS SSL-VPN credentials were exposed via the \"FortiBleed\" leak ( CVE-2022-40684 ).\n\nThe following DNS records were found for the victim's domain.\n\nLegal Disclaimer: Ransomware.live…",
+          "detail": "Incident de sécurité rapporté par ransomware.live.\n\nRansomware.live discovered on 2026-08-15 that www.amca.org.ar has been claimed by Blackwater ransomware group\n\nSponsored by Hudson Rock – Use Hudson Rock's free cybercrime intelligence tools to learn how Infostealer infections are leading to ransomware attacks\n\nThis domain's FortiOS SSL-VPN credentials were exposed via the \"FortiBleed\" leak ( CVE-2022-40684 ).\n\nThe following DNS records were found for the victim's domain.\n\nLegal Disclaimer: Ransomware.live does not engage in the acquisition, exfiltration, downloading, possession, hosting, access, consultation, redistribution, or disclosure of unlawfully obtained data. This platform indexes only publicly visible information posted by ransomware operators and open web sources without accessing or obtaining the underlying stolen content . The service is provided to support public awareness, legitimate research, and cyber-resilience. No stolen personal or confidential data is collected or distributed via this site.\n\nSession: 057726c909af65969646b040bbbfa5c4df67f5166a33cbac6cd9e1302b0b3ca148\n\nTox: 50DADDED26D859469371938B793456D8210A5AE02DD3C42979F5E52411BCB648F1CA68A5EDE5",
+          "action": "Surveiller les indicateurs de compromission associés et contrôler les actifs exposés.",
+          "image": "https://images.ransomware.live/victims/96eb000a84aae57f921655abf7cf0678.png",
+          "sources": [
+            {
+              "url": "https://www.ransomware.live/id/d3d3LmFtY2Eub3JnLmFyQGJsYWNrd2F0ZXI=",
+              "label": "ransomware.live"
+            }
+          ],
+          "url": "https://www.ransomware.live/id/d3d3LmFtY2Eub3JnLmFyQGJsYWNrd2F0ZXI=",
+          "pubDate": "2026-08-15T08:38:01.000Z"
+        },
+        {
+          "title": "Commentaire de Filigran à propos de la révélation de Meta sur un incident de sécurité IA",
+          "cve": null,
+          "severity": "high",
+          "score": 45,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Incident de sécurité rapporté par Global Sec Mag.\n\nMeta a confirmé la semaine dernière que l'un de ses modèles d'IA, Muse Spark 1.1, avait accédé à Internet et piraté les systèmes d'une entreprise tierce non identifiée lors d'un test de sécurité mené par le prestataire indépendant Irregular. Meta attribue l'incident à une mauvaise configuration de son testeur, qui aurait accidentellement donné au modèle un accès Internet non prévu.",
+          "detail": "Incident de sécurité rapporté par Global Sec Mag.\n\nMeta a confirmé la semaine dernière que l'un de ses modèles d'IA, Muse Spark 1.1, avait accédé à Internet et piraté les systèmes d'une entreprise tierce non identifiée lors d'un test de sécurité mené par le prestataire indépendant Irregular. Meta attribue l'incident à une mauvaise configuration de son testeur, qui aurait accidentellement donné au modèle un accès Internet non prévu. C'est le troisième épisode du genre en quelques semaines, après des incidents similaires révélés par OpenAI (Hugging Face) puis par Anthropic fin juillet. Ci-dessous les commentaires de Neena Sharma, Head of Product and Customer Marketing chez Filigran : \"Troisième révélation suivant exactement le même schéma en deux semaines, toutes rattachées à la même cause profonde : une mauvaise configuration de l'environnement d'évaluation, et non un modèle qui déciderait de lui-même d'attaquer. L'histoire n'est pas que 'l'IA veut vous pirater'. C'est que l'IA agentique est désormais suffisamment capable pour qu'une simple erreur de périmètre dans un environnement de test se transforme en véritable brèche. C'est un problème d'infrastructure et de gouvernance, et c'est précisément pour cela que les permissions restreintes et les pistes d'audit doivent être pensées dès la conception des scénarios d'attaque, avant que ces agents ne touchent quoi que ce soit en production. Les pratiques de test des agents IA doiven",
+          "action": "Surveiller les indicateurs de compromission associés et contrôler les actifs exposés.",
+          "image": "https://www.globalsecuritymag.fr/local/cache-vignettes/L40xH21/35a39c9a1121d920b1115d047a3f78-9f9cf.png",
+          "sources": [
+            {
+              "url": "https://www.globalsecuritymag.fr/commentaire-de-filigran-a-propos-de-la-revelation-de-meta-sur-un-incident-de.html",
+              "label": "Global Sec Mag"
+            }
+          ],
+          "url": "https://www.globalsecuritymag.fr/commentaire-de-filigran-a-propos-de-la-revelation-de-meta-sur-un-incident-de.html",
+          "pubDate": "2026-08-16T04:00:49.214Z"
+        }
+      ]
+    },
+    {
+      "id": "culture",
+      "items": [
+        {
+          "title": "Microsoft Makes Passkeys Default in Entra ID, Retires SMS and Voice Authentication",
+          "cve": null,
+          "severity": "culture",
+          "score": 48,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Signal de veille — GBHackers.\n\nMicrosoft will make passkeys the default authentication experience in Entra ID beginning September 1, 2026, and will fully retire its native SMS and voice multifactor authentication (MFA) delivery services on February 1, 2027. According to Microsoft, the transition is part of Microsoft’s broader effort to eliminate phishable credentials as enterprises expand cloud usage, remote access, [&#8230;] The post Microsoft Makes Passkeys Default in Entra ID, Retire…",
+          "detail": "Signal de veille — GBHackers.\n\nMicrosoft will make passkeys the default authentication experience in Entra ID beginning September 1, 2026, and will fully retire its native SMS and voice multifactor authentication (MFA) delivery services on February 1, 2027. According to Microsoft, the transition is part of Microsoft’s broader effort to eliminate phishable credentials as enterprises expand cloud usage, remote access, [&#8230;] The post Microsoft Makes Passkeys Default in Entra ID, Retires SMS and Voice Authentication appeared first on GBHackers Security | #1 Globally Trusted Cyber Security News Platform .",
+          "action": null,
+          "image": "https://gbhackers.com/wp-content/uploads/2026/08/microsoft-entra-id-makes-passkeys-default-retires-sms-and-voice-mfa-in-2027-for-better-security-6a8021c593205-1.webp",
+          "sources": [
+            {
+              "url": "https://gbhackers.com/microsoft-entra-id-makes-passkeys-default/",
+              "label": "GBHackers"
+            }
+          ],
+          "url": "https://gbhackers.com/microsoft-entra-id-makes-passkeys-default/",
+          "pubDate": "2026-08-15T08:31:17.000Z"
+        },
+        {
+          "title": "Microsoft Copilot App Overhaul Merges Personal Chats and Ends Podcasts, Deep Research",
+          "cve": null,
+          "severity": "culture",
+          "score": 48,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Signal de veille — GBHackers.\n\nMicrosoft is reshaping its consumer and productivity AI strategy with a major update to its Copilot application, merging personal chat histories and generated content while discontinuing several prominent capabilities. The changes affect consumer users of Copilot and coincide with the broader transition of the Microsoft 365 (Office) app into the Microsoft 365 Copilot app.",
+          "detail": "Signal de veille — GBHackers.\n\nMicrosoft is reshaping its consumer and productivity AI strategy with a major update to its Copilot application, merging personal chat histories and generated content while discontinuing several prominent capabilities. The changes affect consumer users of Copilot and coincide with the broader transition of the Microsoft 365 (Office) app into the Microsoft 365 Copilot app. The [&#8230;] The post Microsoft Copilot App Overhaul Merges Personal Chats and Ends Podcasts, Deep Research appeared first on GBHackers Security | #1 Globally Trusted Cyber Security News Platform .",
+          "action": null,
+          "image": "https://gbhackers.com/wp-content/uploads/2026/08/microsoft-copilot-app-overhaul-merges-personal-chats-and-ends-podcasts-deep-research-6a80133a219f3.webp",
+          "sources": [
+            {
+              "url": "https://gbhackers.com/microsoft-copilot-update-merges-chats-retires-podcast/",
+              "label": "GBHackers"
+            }
+          ],
+          "url": "https://gbhackers.com/microsoft-copilot-update-merges-chats-retires-podcast/",
+          "pubDate": "2026-08-15T07:20:59.000Z"
+        }
+      ]
+    }
+  ]
+}
