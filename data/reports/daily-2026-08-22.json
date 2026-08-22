@@ -1,0 +1,1177 @@
+{
+  "id": "daily-2026-08-22",
+  "type": "daily",
+  "date": "2026-08-22",
+  "title": "Rapport quotidien - samedi 22 août 2026",
+  "summary": "Sur les dernières 24 heures, la veille recense 27 vulnérabilités critiques, 55 incidents ou compromissions et 30 signaux de fond. Acteurs et produits les plus exposés : Microsoft, jsonata (npm) et Cisco.",
+  "generatedAt": "2026-08-22T04:01:04.859Z",
+  "sections": [
+    {
+      "id": "vulns",
+      "items": [
+        {
+          "title": "CVE-2026-61539 — Xinference vulnerable to remote code execution via unsafe `eval()` in Llama3 tool-call parsing",
+          "cve": "CVE-2026-61539",
+          "severity": "critical",
+          "score": 59,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Vulnérabilité critique CVE-2026-61539 affectant xinference (pip) (score CVSS 10).\n\nXinference vulnerable to remote code execution via unsafe `eval()` in Llama3 tool-call parsing\n\nUsers can interact with deployed models through Xinference's OpenAI-compatible /v1/chat/completions API. The request entry point is implemented in xinference/api/restful_api.py ; non-streaming requests call the model instance's chat() method and return the inference result.\n\nWhen the Transformers backend is used, inference results flow through the batching logic…",
+          "detail": "Vulnérabilité critique CVE-2026-61539 affectant xinference (pip) (score CVSS 10).\n\nXinference vulnerable to remote code execution via unsafe `eval()` in Llama3 tool-call parsing\n\nUsers can interact with deployed models through Xinference's OpenAI-compatible /v1/chat/completions API. The request entry point is implemented in xinference/api/restful_api.py ; non-streaming requests call the model instance's chat() method and return the inference result.\n\nWhen the Transformers backend is used, inference results flow through the batching logic in xinference/model/llm/transformers/core.py . Non-streaming chat results are handled by handle_chat_result_non_streaming() . If the request contains a tools field, Xinference calls _post_process_completion() to parse tool-call output from the model response.\n\nThe Llama3 tool-call parser is implemented in xinference/model/llm/tool_parsers/llama3_tool_parser.py . In affected versions, extract_tool_calls() parsed model output with eval() :\n\n__import__ ( 'os' ). system ( 'touch /tmp/hacked' ) When the expression reaches eval() , it is executed in the Xinference server process context. The harmless touch /tmp/hacked command can be replaced with other payloads, such as a reverse shell, malware download, sensitive file read, or lateral-movement payload.\n\nqinxuye published to xorbitsai/inference Jul 13, 2026 Published to the GitHub Advisory Database Aug 21, 2026 Reviewed Aug 21, 2026 Last updated Aug 21, 2026 Severity Critical 10.0 CVSS overall score This score calculates overall vulnerability severity from 0 to 10 and is based on the Common Vulnerability Scoring System (CVSS). / 10 CVSS v3 base metrics Attack vector Network Attack complexity Low Privileges required None User interaction None Scope Changed Confidentiality High Integrity High A",
+          "action": "Vérifier l'exposition du parc et appliquer le correctif éditeur dès sa disponibilité.",
+          "image": "https://github.githubassets.com/assets/advisory-database-show-f32c8207dfb2.png",
+          "sources": [
+            {
+              "url": "https://github.com/advisories/GHSA-x2rj-828p-hx9m",
+              "label": "GitHub Advisory"
+            }
+          ],
+          "url": "https://github.com/advisories/GHSA-x2rj-828p-hx9m",
+          "pubDate": "2026-08-21T20:56:37.000Z"
+        },
+        {
+          "title": "CVE-2026-76904 — GeoTools has unauthenticated SQL injection in the jsonArrayContains filter function against PostGIS layers",
+          "cve": "CVE-2026-76904",
+          "severity": "critical",
+          "score": 59,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Vulnérabilité critique CVE-2026-76904 affectant org.geotools.jdbc:gt-jdbc-postgis (maven) (score CVSS 9.8).\n\nGeoTools has unauthenticated SQL injection in the jsonArrayContains filter function against PostGIS layers\n\nFor PostGIS 12 and greater jsonArrayContains( , , ) function writes into generated SQL without escaping.\n\nThis vulnerability can lead to execution of arbitrary SQL expressions in the database.\n\njodygarnett published to geotools/geotools Aug 15, 2026 Published to the GitHub Advisory Database Aug 21, 2026 Reviewed Aug 21, 2026 Last updated Aug 21, 2026…",
+          "detail": "Vulnérabilité critique CVE-2026-76904 affectant org.geotools.jdbc:gt-jdbc-postgis (maven) (score CVSS 9.8).\n\nGeoTools has unauthenticated SQL injection in the jsonArrayContains filter function against PostGIS layers\n\nFor PostGIS 12 and greater jsonArrayContains( , , ) function writes into generated SQL without escaping.\n\nThis vulnerability can lead to execution of arbitrary SQL expressions in the database.\n\njodygarnett published to geotools/geotools Aug 15, 2026 Published to the GitHub Advisory Database Aug 21, 2026 Reviewed Aug 21, 2026 Last updated Aug 21, 2026 Severity Critical 9.8 CVSS overall score This score calculates overall vulnerability severity from 0 to 10 and is based on the Common Vulnerability Scoring System (CVSS). / 10 CVSS v3 base metrics Attack vector Network Attack complexity Low Privileges required None User interaction None Scope Unchanged Confidentiality High Integrity High Availability High Learn more about base metrics CVSS v3 base metrics Attack vector: More severe the more the remote (logically and physically) an attacker can be in order to exploit the vulnerability. Attack complexity: More severe for the least complex attacks. Privileges required: More severe if no privileges are required. User interaction: More severe when no user interaction is required. Scope: More severe when a scope change occurs, e.g. one vulnerable component impacts resources in components beyond its security scope. Confidentiality: More severe when loss of data confidentiality is highest, measuring the level of data access available to an unauthorized user. Integrity: More severe when loss of data integrity is the highest, measuring the consequence of data modification possible by an unauthorized user. Availability: More severe when the loss of impacted component avai",
+          "action": "Vérifier l'exposition du parc et appliquer le correctif éditeur dès sa disponibilité.",
+          "image": "https://github.githubassets.com/assets/advisory-database-show-f32c8207dfb2.png",
+          "sources": [
+            {
+              "url": "https://github.com/advisories/GHSA-mqjf-5f49-2fjh",
+              "label": "GitHub Advisory"
+            }
+          ],
+          "url": "https://github.com/advisories/GHSA-mqjf-5f49-2fjh",
+          "pubDate": "2026-08-21T20:25:41.000Z"
+        },
+        {
+          "title": "Microsoft warns of max severity Entra ID flaw exploited in attacks",
+          "cve": null,
+          "severity": "high",
+          "score": 51,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Vulnérabilité élevée affectant Microsoft.\n\nMicrosoft has patched a maximum-severity vulnerability in the Entra ID identity and access management (IAM) platform that has been exploited in attacks.\n\nRogue ransomware affiliate poses as recovery firm to steal payments\n\nMicrosoft says August Windows updates may cause gaming issues\n\nCitrix urges admins to patch new NetScaler flaws as soon as possible\n\nNew SynkLoader malware pushed in Microsoft Teams phishing campaign\n\nHundreds of leaked AWS keys give ful…",
+          "detail": "Vulnérabilité élevée affectant Microsoft.\n\nMicrosoft has patched a maximum-severity vulnerability in the Entra ID identity and access management (IAM) platform that has been exploited in attacks.\n\nRogue ransomware affiliate poses as recovery firm to steal payments\n\nMicrosoft says August Windows updates may cause gaming issues\n\nCitrix urges admins to patch new NetScaler flaws as soon as possible\n\nNew SynkLoader malware pushed in Microsoft Teams phishing campaign\n\nHundreds of leaked AWS keys give full control over corporate accounts\n\nMicrosoft blames Windows gaming issues on RGB lighting devices",
+          "action": "Vérifier l'exposition du parc et appliquer le correctif éditeur dès sa disponibilité.",
+          "image": "https://www.bleepstatic.com/content/hl-images/2026/08/21/Microsoft.jpg",
+          "sources": [
+            {
+              "url": "https://www.bleepingcomputer.com/news/microsoft/microsoft-warns-of-max-severity-entra-id-flaw-exploited-in-attacks/",
+              "label": "BleepingComputer"
+            }
+          ],
+          "url": "https://www.bleepingcomputer.com/news/microsoft/microsoft-warns-of-max-severity-entra-id-flaw-exploited-in-attacks/",
+          "pubDate": "2026-08-21T11:04:10.000Z"
+        },
+        {
+          "title": "Hacker claims 3.6 million records stolen from major companies' Azure environments – Expert Comments",
+          "cve": null,
+          "severity": "critical",
+          "score": 49,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Vulnérabilité critique affectant Microsoft.\n\nA threat actor known as TheHatman is selling databases allegedly stolen from the Microsoft Azure environments of major companies after gaining access with compromised credentials. Cybercrime intelligence company Hudson Rock investigated the leaks and said they contain \"foundational corporate directory attributes,\" \"active domains, and tenant-specific .onmicrosoft.com structures\" and are \"highly likely authentic.\" The attacker claims to have obtained 3.64 m…",
+          "detail": "Vulnérabilité critique affectant Microsoft.\n\nA threat actor known as TheHatman is selling databases allegedly stolen from the Microsoft Azure environments of major companies after gaining access with compromised credentials. Cybercrime intelligence company Hudson Rock investigated the leaks and said they contain \"foundational corporate directory attributes,\" \"active domains, and tenant-specific .onmicrosoft.com structures\" and are \"highly likely authentic.\" The attacker claims to have obtained 3.64 million records from organizations including McDonald's, Vodafone, Tata Consultancy Services, HCL Technologies, InterContinental Hotels, Gap, Wyndham Hotels, Hexaware and Kyndryl. The largest alleged dataset contains more than 1.7 million McDonald's employee records, followed by more than 800,000 from Tata Consultancy Services and 425,000 from Vodafone. The data reportedly includes names, employee IDs, email addresses, job titles, phone numbers, addresses, service accounts and other Azure tenant information. Seemant Sehgal, Founder & CEO, BreachLock: “This is a reminder that the perimeter most organizations are defending is not where the adversary is operating. A valid credential, once stolen, moves through an environment the same way a legitimate user does. The attacker does not need to break anything. What makes this particularly significant is the nature of the data itself. Directory attributes, tenant structures, and employ",
+          "action": "Vérifier l'exposition du parc et appliquer le correctif éditeur dès sa disponibilité.",
+          "image": "https://www.globalsecuritymag.fr/local/cache-vignettes/L40xH21/4b18a91cf5d3e97c2343e846be6951-99a58.png",
+          "sources": [
+            {
+              "url": "https://www.globalsecuritymag.fr/hacker-claims-3-6-million-records-stolen-from-major-companies-azure.html",
+              "label": "Global Sec Mag"
+            }
+          ],
+          "url": "https://www.globalsecuritymag.fr/hacker-claims-3-6-million-records-stolen-from-major-companies-azure.html",
+          "pubDate": "2026-08-22T04:00:59.327Z"
+        },
+        {
+          "title": "Tenable associe visibilité sur l'IA et défense agentique ouverte",
+          "cve": null,
+          "severity": "critical",
+          "score": 49,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Vulnérabilité critique affectant Exchange.\n\nL'éditeur étend Tenable One aux principales plateformes d'IA et lance CyberAgents Exchange, un registre open source consacré aux composants de cybersécurité agentique. Les modèles de langage, les agents IA et le Model Context Protocol élargissent la surface d'attaque plus rapidement que les équipes de sécurité ne peuvent la cartographier.",
+          "detail": "Vulnérabilité critique affectant Exchange.\n\nL'éditeur étend Tenable One aux principales plateformes d'IA et lance CyberAgents Exchange, un registre open source consacré aux composants de cybersécurité agentique. Les modèles de langage, les agents IA et le Model Context Protocol élargissent la surface d'attaque plus rapidement que les équipes de sécurité ne peuvent la cartographier. Les outils autorisés côtoient des usages déployés sans validation, tandis que les défenseurs conçoivent souvent leurs automatisations de manière isolée. Avec deux annonces liées à Black Hat USA 2026, Tenable veut améliorer la visibilité sur ces risques et favoriser la mise en commun des défenses. Une couverture étendue aux environnements IA Tenable One AI Exposure prend désormais en charge Google Gemini, aux côtés d'Anthropic Claude, d'OpenAI ChatGPT Enterprise et de Microsoft Copilot. La plateforme étend aussi sa détection aux déploiements MCP, aux environnements de développement IA comme Cursor, Windsurf et Trae, ainsi qu'aux extensions de navigateur intégrant des fonctions d'IA. La solution inventorie les usages autorisés et l'IA fantôme sur les terminaux, dans le cloud et au sein des applications. Exposure Graph relie les actifs, les identités, les données et les vulnérabilités pour aider les équipes à identifier les chemins d'attaque critiques. Selon Tenable, 457 millions de problèmes de sécurité liés à l'IA ont été détectés dans plus de",
+          "action": "Vérifier l'exposition du parc et appliquer le correctif éditeur dès sa disponibilité.",
+          "image": "https://www.globalsecuritymag.fr/local/cache-vignettes/L40xH21/0410e0504c8596688d91f7d1f6f481-d5d11.png",
+          "sources": [
+            {
+              "url": "https://www.globalsecuritymag.fr/tenable-associe-visibilite-sur-l-ia-et-defense-agentique-ouverte.html",
+              "label": "Global Sec Mag"
+            }
+          ],
+          "url": "https://www.globalsecuritymag.fr/tenable-associe-visibilite-sur-l-ia-et-defense-agentique-ouverte.html",
+          "pubDate": "2026-08-22T04:00:59.324Z"
+        },
+        {
+          "title": "Critical Microsoft Entra ID vulnerability exploited in the wild (CVE-2026-69836)",
+          "cve": "CVE-2026-69836",
+          "severity": "critical",
+          "score": 49,
+          "corroboration": 3,
+          "region": "intl",
+          "body": "Vulnérabilité critique CVE-2026-69836 affectant Microsoft.\n\nMicrosoft has patched a critical remote code execution vulnerability (CVE-2026-69836) in Entra ID, reportedly exploited in the wild. Entra ID is Microsoft&#8217;s cloud identity service, formerly Azure Active Directory, that verifies logins and controls access to Microsoft 365, Azure, and connected third-party apps.",
+          "detail": "Vulnérabilité critique CVE-2026-69836 affectant Microsoft.\n\nMicrosoft has patched a critical remote code execution vulnerability (CVE-2026-69836) in Entra ID, reportedly exploited in the wild. Entra ID is Microsoft&#8217;s cloud identity service, formerly Azure Active Directory, that verifies logins and controls access to Microsoft 365, Azure, and connected third-party apps. Tracked as CVE-2026-69836, with the maximum CVSS score of 10.0, the vulnerability was discovered by Microsoft Principal Security Engineer Robert Fitzpatrick and could allow an unauthenticated attacker to remotely execute code in &#8230; More &#8594; The post Critical Microsoft Entra ID vulnerability exploited in the wild (CVE-2026-69836) appeared first on Help Net Security .",
+          "action": "Vérifier l'exposition du parc et appliquer le correctif éditeur dès sa disponibilité.",
+          "image": "https://www.it-connect.fr/wp-content-itc/uploads/2026/08/Faille-entra-ID-CVE-2026-69836.jpg",
+          "sources": [
+            {
+              "url": "https://www.it-connect.fr/entra-id-cve-2026-69836-faille-cvss-10-exploitee/",
+              "label": "IT-Connect"
+            },
+            {
+              "url": "https://www.helpnetsecurity.com/2026/08/21/microsoft-entra-id-vulnerability-cve-2026-69836/",
+              "label": "Help Net Security"
+            },
+            {
+              "url": "https://www.globalsecuritymag.fr/vulnerabilite-dans-microsoft-entra-id-21-aout-2026.html",
+              "label": "Global Sec Mag"
+            }
+          ],
+          "url": "https://www.it-connect.fr/entra-id-cve-2026-69836-faille-cvss-10-exploitee/",
+          "pubDate": "2026-08-22T04:00:59.324Z"
+        },
+        {
+          "title": "CVE-2026-59989 — Phalcon Volt compiler `join` filter compile-time PHP code injection (SSTI leads to RCE)",
+          "cve": "CVE-2026-59989",
+          "severity": "critical",
+          "score": 49,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Vulnérabilité critique CVE-2026-59989 affectant phalcon/cphalcon (composer).\n\nPhalcon Volt compiler `join` filter compile-time PHP code injection (SSTI leads to RCE)\n\ncase \" join \" : return \" join(' \" . funcArguments[ 1 ][ \" expr \" ][ \" value \" ] . \" ', \" . funcArguments[ 0 ][ \" expr \" ][ \" value \" ] . \" ) \" ; funcArguments[1][\"expr\"][\"value\"] (the separator) and funcArguments[0][\"expr\"][\"value\"] (the piped array) are the raw values of the parsed template tokens.",
+          "detail": "Vulnérabilité critique CVE-2026-59989 affectant phalcon/cphalcon (composer).\n\nPhalcon Volt compiler `join` filter compile-time PHP code injection (SSTI leads to RCE)\n\ncase \" join \" : return \" join(' \" . funcArguments[ 1 ][ \" expr \" ][ \" value \" ] . \" ', \" . funcArguments[ 0 ][ \" expr \" ][ \" value \" ] . \" ) \" ; funcArguments[1][\"expr\"][\"value\"] (the separator) and funcArguments[0][\"expr\"][\"value\"] (the piped array) are the raw values of the parsed template tokens. Unlike every other expression in the compiler, they are not routed through expression() and receive no escaping: the separator value is spliced verbatim inside the join(' … ' quotes with no neutralisation of ' , and the array value is emitted with no quoting at all. Volt's scanner stores string-literal bytes verbatim (escape sequences are not decoded), so attacker bytes survive intact into the generated PHP.\n\nGenerated-C ground truth -> build/phalcon/phalcon.zep.c (Phalcon 5.15.0):\n\nThe compiled output is then written to a cache file and require d by Phalcon\\Mvc\\View\\Engine\\Volt::render() , so any PHP spliced in by the attacker runs at render time.\n\nWhere an application compiles Volt source that is wholly or partly attacker-controlled, this yields remote code execution in the web-server process.\n\nniden published to phalcon/cphalcon Jul 10, 2026 Published to the GitHub Advisory Database Aug 21, 2026 Reviewed Aug 21, 2026 Last updated Aug 21, 2026 Severity Critical EPSS score Weaknesses Weakness CWE-94 Improper Control of Generation of Code ('Code Injection') The product constructs all or part of a code segment using externally-influenced input from an upstream component, but it does not neutralize or incorrectly neutralizes special elements that could modify the syntax or behavior of the intended code segment. L",
+          "action": "Vérifier l'exposition du parc et appliquer le correctif éditeur dès sa disponibilité.",
+          "image": "https://github.githubassets.com/assets/advisory-database-show-f32c8207dfb2.png",
+          "sources": [
+            {
+              "url": "https://github.com/advisories/GHSA-hrwp-4hh9-c8r8",
+              "label": "GitHub Advisory"
+            }
+          ],
+          "url": "https://github.com/advisories/GHSA-hrwp-4hh9-c8r8",
+          "pubDate": "2026-08-21T20:55:56.000Z"
+        },
+        {
+          "title": "U.S. CISA adds TrueConf Server flaws to its Known Exploited Vulnerabilities catalog",
+          "cve": "CVE-2026-72529",
+          "severity": "critical",
+          "score": 49,
+          "corroboration": 2,
+          "region": "intl",
+          "body": "Vulnérabilité critique CVE-2026-72529 affectant Zoom.\n\nU.S. Cybersecurity and Infrastructure Security Agency (CISA) adds TrueConf Server flaws to its Known Exploited Vulnerabilities catalog. The U.S. Cybersecurity and Infrastructure Security Agency (CISA) added the following vulnerabilities to its Known Exploited Vulnerabilities (KEV) catalog : CVE-2026-72529 (CVSS score of 9.3) TrueConf Server Missing Authentication for Critical Function Vulnerability CVE-2026-72530 (CVSS score of 9.5) TrueConf Server Code In…",
+          "detail": "Vulnérabilité critique CVE-2026-72529 affectant Zoom.\n\nU.S. Cybersecurity and Infrastructure Security Agency (CISA) adds TrueConf Server flaws to its Known Exploited Vulnerabilities catalog. The U.S. Cybersecurity and Infrastructure Security Agency (CISA) added the following vulnerabilities to its Known Exploited Vulnerabilities (KEV) catalog : CVE-2026-72529 (CVSS score of 9.3) TrueConf Server Missing Authentication for Critical Function Vulnerability CVE-2026-72530 (CVSS score of 9.5) TrueConf Server Code Injection Vulnerability TrueConf Server is an on-premises video conferencing and unified communications platform developed by TrueConf. Organizations can deploy it on their own infrastructure to provide secure video meetings, voice calls, messaging and collaboration without relying entirely on a cloud service. It is typically used by businesses, government organizations and other institutions that want to keep communications and related data under their own control. CVE-2026-72529 is a remote code execution vulnerability in TrueConf Server that allows an unauthenticated remote attacker with network access to TCP port 4307 to execute arbitrary scripts by calling an undocumented function. The flaw affects TrueConf Server 5.3.x through 5.3.9, 5.4.x through 5.4.9, 5.5.x through 5.5.5, and earlier versions. An attacker who can reach the vulnerable service could potentially compromise the server and use it as an entry point into the a",
+          "action": "Vérifier l'exposition du parc et appliquer le correctif éditeur dès sa disponibilité.",
+          "image": "https://securityaffairs.com/wp-content/uploads/2020/07/CISA.jpeg",
+          "sources": [
+            {
+              "url": "https://securityaffairs.com/197602/security/u-s-cisa-adds-trueconf-server-flaws-to-its-known-exploited-vulnerabilities-catalog.html",
+              "label": "Security Affairs"
+            },
+            {
+              "url": "https://www.theregister.com/patches/2026/08/21/homeland-security-cybercops-say-patch-trueconf-russias-zoom-if-youre-using-it/5291156",
+              "label": "The Register"
+            }
+          ],
+          "url": "https://securityaffairs.com/197602/security/u-s-cisa-adds-trueconf-server-flaws-to-its-known-exploited-vulnerabilities-catalog.html",
+          "pubDate": "2026-08-21T16:29:00.000Z"
+        },
+        {
+          "title": "Citrix urges customers to fix critical NetScaler authentication bypass (CVE-2026-19490)",
+          "cve": "CVE-2026-19490",
+          "severity": "critical",
+          "score": 49,
+          "corroboration": 2,
+          "region": "intl",
+          "body": "Vulnérabilité critique CVE-2026-19490 affectant Citrix.\n\nCitrix has patched two vulnerabilities in NetScaler ADC and NetScaler Gateway, including a critical authentication bypass flaw tracked as CVE-2026-19490, and is urging customers to upgrade affected appliances as soon as possible. &#8220;We strongly recommend that customers review the official NetScaler ADC and NetScaler Gateway security bulletin, assess whether their deployments are affected, and upgrade impacted appliances to the recommended builds as soo…",
+          "detail": "Vulnérabilité critique CVE-2026-19490 affectant Citrix.\n\nCitrix has patched two vulnerabilities in NetScaler ADC and NetScaler Gateway, including a critical authentication bypass flaw tracked as CVE-2026-19490, and is urging customers to upgrade affected appliances as soon as possible. &#8220;We strongly recommend that customers review the official NetScaler ADC and NetScaler Gateway security bulletin, assess whether their deployments are affected, and upgrade impacted appliances to the recommended builds as soon as possible,&#8221; Anil Shetty, senior VP of Engineering with Cloud Software Group &#8230; More &#8594; The post Citrix urges customers to fix critical NetScaler authentication bypass (CVE-2026-19490) appeared first on Help Net Security .",
+          "action": "Vérifier l'exposition du parc et appliquer le correctif éditeur dès sa disponibilité.",
+          "image": "https://www.it-connect.fr/wp-content-itc/uploads/2026/08/faille-Citrix-NetScaler-CVE-2026-19490.jpg",
+          "sources": [
+            {
+              "url": "https://www.it-connect.fr/citrix-netscaler-cve-2026-19490-contournement-authentification/",
+              "label": "IT-Connect"
+            },
+            {
+              "url": "https://www.helpnetsecurity.com/2026/08/21/citrix-netscaler-gateway-cve-2026-19490/",
+              "label": "Help Net Security"
+            }
+          ],
+          "url": "https://www.it-connect.fr/citrix-netscaler-cve-2026-19490-contournement-authentification/",
+          "pubDate": "2026-08-21T15:47:18.000Z"
+        },
+        {
+          "title": "Six Maximum-Severity Flaws Found in Cisco Products",
+          "cve": "CVE-2026-20030",
+          "severity": "critical",
+          "score": 49,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Vulnérabilité critique CVE-2026-20030 affectant Cisco.\n\nCisco patched nine critical flaws, including six rated CVSS 10.0, found during internal testing. None are known to be exploited. Cisco released another batch of security fixes for its Crosswork platforms and Secure Workload software, part of what it&#8217;s calling an ongoing internal security review, and the CVSS scores in this round are unusually severe.",
+          "detail": "Vulnérabilité critique CVE-2026-20030 affectant Cisco.\n\nCisco patched nine critical flaws, including six rated CVSS 10.0, found during internal testing. None are known to be exploited. Cisco released another batch of security fixes for its Crosswork platforms and Secure Workload software, part of what it&#8217;s calling an ongoing internal security review, and the CVSS scores in this round are unusually severe. &#8220;As part of Cisco&#8217;s ongoing commitment to proactive security and product quality, the Cisco Crosswork engineering team has conducted a comprehensive internal security review. This review resulted in a software hardening release that addresses multiple internally discovered vulnerabilities.&#8221; reads the advisory . &#8220;These vulnerabilities were found during internal testing and are not known to be actively exploited. To assist customers in patching and to streamline the disclosure process, Cisco has grouped these issues by their underlying vulnerability class &#8211; Common Weakness Enumeration (CWE) &#8211; and assigned a single Common Vulnerabilities and Exposures Identifier (CVE ID) to each CWE grouping.&#8221; Four vulnerabilities affect Crosswork Data Gateway, Crosswork Network Controller, and Crosswork Planning, all impacting these products regardless of how they&#8217;re configured: CVE-2026-20030 (CVSS score: 10.0) &#8211; an SQL injection vulnerability that lets an attacker manipulate database queri",
+          "action": "Vérifier l'exposition du parc et appliquer le correctif éditeur dès sa disponibilité.",
+          "image": "https://securityaffairs.com/wp-content/uploads/2014/07/cisco-building.jpg",
+          "sources": [
+            {
+              "url": "https://securityaffairs.com/197640/security/six-maximum-severity-flaws-found-in-cisco-products.html",
+              "label": "Security Affairs"
+            }
+          ],
+          "url": "https://securityaffairs.com/197640/security/six-maximum-severity-flaws-found-in-cisco-products.html",
+          "pubDate": "2026-08-21T12:30:16.000Z"
+        },
+        {
+          "title": "Cisco Patches Nine Crosswork and Secure Workload Flaws, Five Scoring CVSS 10.0",
+          "cve": null,
+          "severity": "critical",
+          "score": 49,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Vulnérabilité critique affectant Cisco.\n\nCisco has published another round of security updates for Crosswork platforms and Secure Workload Software as part of a continued comprehensive internal security review. Four of the security vulnerabilities affect Crosswork Data Gateway, Crosswork Network Controller, and Crosswork Planning, regardless of the device configuration. A brief description of each of the flaws is below -",
+          "detail": "Vulnérabilité critique affectant Cisco.\n\nCisco has published another round of security updates for Crosswork platforms and Secure Workload Software as part of a continued comprehensive internal security review. Four of the security vulnerabilities affect Crosswork Data Gateway, Crosswork Network Controller, and Crosswork Planning, regardless of the device configuration. A brief description of each of the flaws is below -",
+          "action": "Vérifier l'exposition du parc et appliquer le correctif éditeur dès sa disponibilité.",
+          "image": "https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEis5Ujhq79PHPVr7VjuOjS0fOAyYm0aDTCJi9c5ieu-uya3FUM4Dh58yAT5U5J3VaXaGfNb4XowkyJ1lj3UTy8bOoF-u0O-5qdl-O7leomQjQw5jAI3m8WpZvC3se70f8mRP_KKIcScS0Nf9wJcsq4TWgiS_li3K6CSUbbG643IMhZBVGzW5XflwAbz0d1M/s1600/cisco.jpg",
+          "sources": [
+            {
+              "url": "https://thehackernews.com/2026/08/cisco-patches-nine-crosswork-and-secure.html",
+              "label": "The Hacker News"
+            }
+          ],
+          "url": "https://thehackernews.com/2026/08/cisco-patches-nine-crosswork-and-secure.html",
+          "pubDate": "2026-08-21T10:03:11.000Z"
+        },
+        {
+          "title": "GitLab Warns of Active Exploitation of Critical GraphQL Flaw",
+          "cve": "CVE-2026-19478",
+          "severity": "critical",
+          "score": 49,
+          "corroboration": 3,
+          "region": "intl",
+          "body": "Vulnérabilité critique CVE-2026-19478 affectant GitLab.\n\nGitLab flaw CVE-2026-19478 is now under active exploitation, allowing unauthenticated attackers to modify or delete public projects. WatchTowr researchers warn of active exploitation of critical GitLab flaw CVE-2026-19478 (CVSS score of 9.4). This week, GitLab pushed out an emergency patch to address this flaw, which could let an attacker with zero credentials remotely modify or delete public projects and user data.",
+          "detail": "Vulnérabilité critique CVE-2026-19478 affectant GitLab.\n\nGitLab flaw CVE-2026-19478 is now under active exploitation, allowing unauthenticated attackers to modify or delete public projects. WatchTowr researchers warn of active exploitation of critical GitLab flaw CVE-2026-19478 (CVSS score of 9.4). This week, GitLab pushed out an emergency patch to address this flaw, which could let an attacker with zero credentials remotely modify or delete public projects and user data. “GitLab has remediated an issue that under certain conditions could allow an unauthenticated user to remotely modify or delete public projects and user data via a GraphQL directive.”&nbsp; reads the advisory . GitLab issued an&nbsp; emergency patch &nbsp;on August 17, five days after its regular update. The vulnerability impacts only self-managed installations, users should upgrade to versions &nbsp; 19.2.4, 19.1.6, 19.0.8, and 18.11.11 . There’s a gap worth flagging for anyone still sitting on an older release. The available patches don’t cover the 18.2 through 18.10 branches, even though those versions technically fall inside the affected range. If you’re running anything in that window, staying put isn’t really an option; you’ll need to upgrade to a patched branch entirely rather than waiting for a fix that isn’t coming for your current one. hiimguardian &nbsp;reported the flaw through the company HackerOne bug bounty program. Organizations should urgently patch",
+          "action": "Vérifier l'exposition du parc et appliquer le correctif éditeur dès sa disponibilité.",
+          "image": "https://securityaffairs.com/wp-content/uploads/2019/11/gitlab.jpg",
+          "sources": [
+            {
+              "url": "https://securityaffairs.com/197622/uncategorized/gitlab-warns-of-active-exploitation-of-critical-graphql-flaw.html",
+              "label": "Security Affairs"
+            },
+            {
+              "url": "https://www.it-connect.fr/gitlab-cve-2026-19478-faille-critique-exploitee/",
+              "label": "IT-Connect"
+            },
+            {
+              "url": "https://thehackernews.com/2026/08/gitlab-cve-2026-19478-comes-under.html",
+              "label": "The Hacker News"
+            }
+          ],
+          "url": "https://securityaffairs.com/197622/uncategorized/gitlab-warns-of-active-exploitation-of-critical-graphql-flaw.html",
+          "pubDate": "2026-08-21T09:49:02.000Z"
+        },
+        {
+          "title": "Elementor Pro : une faille critique permet de prendre le contrôle d’un site WordPress",
+          "cve": "CVE-2026-32475",
+          "severity": "critical",
+          "score": 49,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Vulnérabilité critique CVE-2026-32475 affectant WordPress.\n\nCVE-2026-32475 : un visiteur anonyme peut déposer et exécuter un fichier PHP via un formulaire Elementor Pro. Voici comment protéger votre site WordPress.\n\nActualités IT & Tech, tutoriels en administration système, réseau et cybersécurité.\n\nArchitecture Réseau Cybersécurité Linux & Logiciels Libres Microsoft (On-Premise) Microsoft 365 & Azure Self-Hosting & Open Source Stockage & NAS Cours IT Actualités Entreprise Actu Cybersécurité Web Logiciel – OS Matér…",
+          "detail": "Vulnérabilité critique CVE-2026-32475 affectant WordPress.\n\nCVE-2026-32475 : un visiteur anonyme peut déposer et exécuter un fichier PHP via un formulaire Elementor Pro. Voici comment protéger votre site WordPress.\n\nActualités IT & Tech, tutoriels en administration système, réseau et cybersécurité.\n\nArchitecture Réseau Cybersécurité Linux & Logiciels Libres Microsoft (On-Premise) Microsoft 365 & Azure Self-Hosting & Open Source Stockage & NAS Cours IT Actualités Entreprise Actu Cybersécurité Web Logiciel – OS Matériel Réseaux sociaux Mobile Bons Plans Tests Débutants Livres Vidéos IT-Connect » Actualités » Actu Cybersécurité » Elementor Pro : une faille critique permet de prendre le contrôle d’un site WordPress Actu Cybersécurité Elementor Pro : une faille critique permet de prendre le contrôle d’un site WordPress 21/08/2026 Florian BURNEL 0 commentaire Cybersécurité , Vulnérabilité , Wordpress Nouvelle alerte à destination de tous les administrateurs de sites WordPress : la faille CVE-2026-32475, corrigée le 19 août 2026 dans Elementor Pro, permet à un visiteur anonyme de déposer un fichier PHP sur un site WordPress, puis de l'exécuter. Aucun compte, aucune interaction avec un administrateur. Il suffit que le site publie un formulaire Elementor avec un champ permettant de charger un fichier. Voici ce que l'on sait sur cette menace potentielle.\n\nPour rappel : Elementor Pro est la version payante d'Elementor, l'un des constructeurs de pages les plus répandus de l'écosystème WordPress. La version gratuite dépasse les 10 millions d'installations actives d'après WordPress.org. Pour la déclinaison Pro, il y aurait au moins 6 millions d'installations. C'est l'un des plugins les plus utilisés par les sites WordPress.\n\nLa faille de sécurité se situe dans le module Forms, plus p",
+          "action": "Vérifier l'exposition du parc et appliquer le correctif éditeur dès sa disponibilité.",
+          "image": "https://www.it-connect.fr/wp-content-itc/uploads/2026/08/Elementor-Pro-une-faille-critique-permet-de-prendre-le-controle-dun-site-WordPress.jpg",
+          "sources": [
+            {
+              "url": "https://www.it-connect.fr/elementor-pro-cve-2026-32475-rce-non-authentifiee/",
+              "label": "IT-Connect"
+            }
+          ],
+          "url": "https://www.it-connect.fr/elementor-pro-cve-2026-32475-rce-non-authentifiee/",
+          "pubDate": "2026-08-21T09:08:00.000Z"
+        },
+        {
+          "title": "Microsoft Patches Severe Entra ID Flaw (CVSS 10.0) Allowing Remote Code Execution",
+          "cve": null,
+          "severity": "critical",
+          "score": 49,
+          "corroboration": 2,
+          "region": "intl",
+          "body": "Vulnérabilité critique affectant Microsoft.\n\nUpdate: The story was updated after publication to note that the vulnerability has not been exploited. Although the security bulletin originally marked the \"Exploited\" field under the Exploitability Assessment table as \"Yes,\" on August 21, 2026, Microsoft corrected the \"Exploited\" status to \"No\" after The Hacker News contacted the company for comment. It also noted, \"this vulnerability was not",
+          "detail": "Vulnérabilité critique affectant Microsoft.\n\nUpdate: The story was updated after publication to note that the vulnerability has not been exploited. Although the security bulletin originally marked the \"Exploited\" field under the Exploitability Assessment table as \"Yes,\" on August 21, 2026, Microsoft corrected the \"Exploited\" status to \"No\" after The Hacker News contacted the company for comment. It also noted, \"this vulnerability was not",
+          "action": "Vérifier l'exposition du parc et appliquer le correctif éditeur dès sa disponibilité.",
+          "image": "https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEid22xatm4tPGWO1VA9heA8p7i0iK4au3br36QORRasXlUO2uY5836xkZe6gywLOId9oHICopC6jZ8J-di4JI9O3CPOSOGsqoOR4Ps4DrEbKCXSXwMxX_wOGo0fY3zaTW4By4nzbY6jldD58kLAlBYfFxMOEeZOglaQu8R0TtT23Q2jLbQjHwJSoS21pqu5/s1600/entraid.jpg",
+          "sources": [
+            {
+              "url": "https://thehackernews.com/2026/08/microsoft-entra-id-flaw-cvss-100.html",
+              "label": "The Hacker News"
+            },
+            {
+              "url": "https://www.securityweek.com/microsoft-rolls-out-22-fresh-security-patches/",
+              "label": "SecurityWeek"
+            }
+          ],
+          "url": "https://thehackernews.com/2026/08/microsoft-entra-id-flaw-cvss-100.html",
+          "pubDate": "2026-08-21T08:12:19.000Z"
+        },
+        {
+          "title": "Cisco bug severity warning reads like Olympic gymnastics scores: 10, 10, 9.9, 9.6, and 7.5.",
+          "cve": "CVE-2026-20315",
+          "severity": "critical",
+          "score": 49,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Vulnérabilité critique CVE-2026-20315 affectant Cisco.\n\nCisco has revealed its Secure Workload Software, a micro-segmentation tool formerly known as Tetration that is supposed to stop attackers moving laterally across a network, has four critical flaws plus another high-severity bug. CVE-2026-20315 and CVE-2026-20317 are the two perfect-ten-rated bugs. Both relate to improper access control.",
+          "detail": "Vulnérabilité critique CVE-2026-20315 affectant Cisco.\n\nCisco has revealed its Secure Workload Software, a micro-segmentation tool formerly known as Tetration that is supposed to stop attackers moving laterally across a network, has four critical flaws plus another high-severity bug. CVE-2026-20315 and CVE-2026-20317 are the two perfect-ten-rated bugs. Both relate to improper access control. Cisco has not offered much detail about either, saying only that 20315 “covers authorization, authentication, privileges, and bypasses” and that 20317 has to do with “missing authentication, authentication bypass, and reliance on untrusted inputs.” The 9.9-rated flaw is CVE-2026-20231, which describes issues related to “Improper neutralization of special elements (covers command, OS, argument injection).” CVE-2026-20318 is the 9.6-er and is an improper input validation problem. Coming in last, at 7.5, is CVE-2026-20319, a problem related to “Improper restriction of operations within the bounds of a memory buffer” including overflows and out-of-bounds writes. Cisco offers Secure Workload Software as a SaaS-y service and for on-prem deployment. The company has fixed the flaws with its SaaS, but users still need to upgrade the Agent and Connector tools needed to use the cloudy software. On-prem users who have deployed version 3.10 or earlier need to get to version 3.10.9.1. Users of version 4.0 or later need to adopt 4.0.4.16 sooner rather than lat",
+          "action": "Vérifier l'exposition du parc et appliquer le correctif éditeur dès sa disponibilité.",
+          "image": "https://image.theregister.com/5290859.jpg?imageId=5290859&x=0&y=0&cropw=100&croph=100&panox=0&panoy=0&panow=100&panoh=100&width=1200&height=683",
+          "sources": [
+            {
+              "url": "https://www.theregister.com/security/2026/08/21/cisco-bug-severity-warning-reads-like-olympic-gymnastics-scores-10-10-99-96-and-75/5290838",
+              "label": "The Register"
+            }
+          ],
+          "url": "https://www.theregister.com/security/2026/08/21/cisco-bug-severity-warning-reads-like-olympic-gymnastics-scores-10-10-99-96-and-75/5290838",
+          "pubDate": "2026-08-21T05:33:08.000Z"
+        },
+        {
+          "title": "Certification CSPN de l'ANSSI pour Nextcloud (en plus de la certification allemande « BSI IT-Grundschutz »)",
+          "cve": null,
+          "severity": "critical",
+          "score": 34,
+          "corroboration": 1,
+          "region": "fr",
+          "body": "Vulnérabilité critique.\n\nNextcloud a été certifié par les autorités de contrôle de sécurité des gouvernements allemand et français pour les applications critiques, une certification reconnue à l'échelle européenne. La sécurité de Nextcloud est donc reconnue par la certification CSPN de l'ANSSI et l'IT-Grundschutz du BSI À une époque où la question n'est plus de savoir « si », mais « quand » une cyberattaque aura lieu, le respect strict des réglementations est primordial.",
+          "detail": "Vulnérabilité critique.\n\nNextcloud a été certifié par les autorités de contrôle de sécurité des gouvernements allemand et français pour les applications critiques, une certification reconnue à l'échelle européenne. La sécurité de Nextcloud est donc reconnue par la certification CSPN de l'ANSSI et l'IT-Grundschutz du BSI À une époque où la question n'est plus de savoir « si », mais « quand » une cyberattaque aura lieu, le respect strict des réglementations est primordial. Nextcloud a récemment obtenu deux nouvelles certifications de sécurité européennes ainsi qu'une analyse d'impact sur la protection des données (DPIA) exhaustive. Cela permet aux organismes du secteur public, ainsi qu'aux entreprises des secteurs réglementés, de répondre aux normes de conformité les plus élevées sans investissement supplémentaire. L'ANSSI (Agence nationale de la sécurité des systèmes d'information), l'autorité nationale française en matière de cybersécurité, a décerné à Nextcloud la certification CSPN (Certification de Sécurité de Premier Niveau). Ce faisant, l'ANSSI a certifié que Nextcloud Files offre un haut niveau de résilience face aux cyberattaques. À cette fin, l'agence a soumis Nextcloud Files à des tests approfondis de vulnérabilité et de pénétration et n'a pu identifier aucune faille. La plupart des certifications courantes, telles que SOC2 ou BSI C5, portent davantage sur les opérations que sur les logiciels",
+          "action": "Vérifier l'exposition du parc et appliquer le correctif éditeur dès sa disponibilité.",
+          "image": "https://www.globalsecuritymag.fr/local/cache-vignettes/L40xH21/35a39c9a1121d920b1115d047a3f78-9f9cf.png",
+          "sources": [
+            {
+              "url": "https://www.globalsecuritymag.fr/certification-cspn-de-l-anssi-pour-nextcloud-en-plus-de-la-certification.html",
+              "label": "Global Sec Mag"
+            }
+          ],
+          "url": "https://www.globalsecuritymag.fr/certification-cspn-de-l-anssi-pour-nextcloud-en-plus-de-la-certification.html",
+          "pubDate": "2026-08-22T04:00:59.328Z"
+        }
+      ]
+    },
+    {
+      "id": "attacks",
+      "items": [
+        {
+          "title": "Connecting the Dots: Securing the Overlooked Corners of the Software Development Lifecycle (SDLC) Supply Chain",
+          "cve": null,
+          "severity": "news",
+          "score": 90,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Incident de sécurité rapporté par Unit 42.\n\nAttackers are targeting CI/CD pipelines and developer tools instead of application code, requiring total SDLC visibility and strict security controls\n\nWhile supply chain threats have been quietly compounding over the past decade, the last 12–18 months have triggered a drastic shift in the scale and velocity of these attacks.",
+          "detail": "Incident de sécurité rapporté par Unit 42.\n\nAttackers are targeting CI/CD pipelines and developer tools instead of application code, requiring total SDLC visibility and strict security controls\n\nWhile supply chain threats have been quietly compounding over the past decade, the last 12–18 months have triggered a drastic shift in the scale and velocity of these attacks. Rather than just hunting for bugs in finished software, attackers are targeting the everyday tools and code developers rely on.\n\nUnit 42 research shows this happening at every step of the building process. We've observed attackers spending years pretending to be helpful contributors just to hide backdoors in core software, as seen in the XZ Utils vulnerability (CVE-2024-3094) . We've seen attackers hijack accounts to drop malware into popular libraries, like in the Axios supply chain attack . And we've seen them misuse setup scripts to automatically steal credentials using the Shai-Hulud npm worm .\n\nSimply put, attackers are more focused on poisoning the digital factory that builds an application as opposed to the application itself. By targeting continuous integration/continuous delivery (CI/CD) pipelines and developer environments, they hijack software at the source before it ever hits production.\n\nConsider the recent ChainDrop npm worm , which infected over 400 packages including massively popular libraries like keyv and cacheable-request using a highly evasive three-step chain:\n\nChainDrop secured long-term persistence by establishing cross-linked hooks directly inside developer tools like VS Code and Claude Code, while managing its entire command-and-control (C2) infrastructure dynamically through Ethereum blockchain transactions.\n\nThe malware triggers silently the second someone runs npm install by mi",
+          "action": "Surveiller les indicateurs de compromission associés et contrôler les actifs exposés.",
+          "image": "https://unit42.paloaltonetworks.com/wp-content/uploads/2026/08/09_Myth-Busting_Category_1505x922.jpg",
+          "sources": [
+            {
+              "url": "https://unit42.paloaltonetworks.com/sdlc-supply-chain/",
+              "label": "Unit 42"
+            }
+          ],
+          "url": "https://unit42.paloaltonetworks.com/sdlc-supply-chain/",
+          "pubDate": "2026-08-21T23:00:21.000Z"
+        },
+        {
+          "title": "Canada’s Hospital for Sick Children attacked by cybercriminals again as employee data stolen",
+          "cve": null,
+          "severity": "news",
+          "score": 84,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Incident de sécurité rapporté par The Record.\n\nThe Hospital for Sick Children — which was hit in a ransomware incident in 2022 that disabled some of its systems — released a statement on Thursday warning of a data theft incident they believe is tied to a third-party software application.\n\nCanada’s largest pediatric health center suffered a recent cybersecurity incident that exposed the personal information of current and former employees.\n\nThe Hospital for Sick Children — which was hit in a ransomware…",
+          "detail": "Incident de sécurité rapporté par The Record.\n\nThe Hospital for Sick Children — which was hit in a ransomware incident in 2022 that disabled some of its systems — released a statement on Thursday warning of a data theft incident they believe is tied to a third-party software application.\n\nCanada’s largest pediatric health center suffered a recent cybersecurity incident that exposed the personal information of current and former employees.\n\nThe Hospital for Sick Children — which was hit in a ransomware incident in 2022 that disabled some of its systems — released a statement on Thursday warning of a data theft incident they believe is tied to a third-party software application.\n\nThe recent cyberattack briefly took down the careers website for the hospital, which is known colloquially as SickKids, prompting it to begin an investigation.\n\nSickKids did not respond to requests for comment about when the attack occurred but said in a statement that investigators believe the hackers likely stole information related to current and former employees as well as job applicants and employees of related organizations, including the SickKids Foundation.\n\nThe notice does not specify what employee data was taken. The incident did not involve any clinical systems or patient information. SickKids did not respond to a list of questions, only resending the published statement.\n\nPeople who may be impacted have already been alerted and offered two years of credit monitoring services.",
+          "action": "Surveiller les indicateurs de compromission associés et contrôler les actifs exposés.",
+          "image": "https://cms.therecord.media/uploads/2022_12_sick_kids_hospital_94f66ec5d3.jpg",
+          "sources": [
+            {
+              "url": "https://therecord.media/canada-hospital-for-sick-children-attacked-again-employee-data",
+              "label": "The Record"
+            }
+          ],
+          "url": "https://therecord.media/canada-hospital-for-sick-children-attacked-again-employee-data",
+          "pubDate": "2026-08-21T15:00:00.000Z"
+        },
+        {
+          "title": "SickKids data breach exposes employee and job applicant info",
+          "cve": null,
+          "severity": "news",
+          "score": 80,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Incident de sécurité rapporté par BleepingComputer.\n\nToronto's Hospital for Sick Children (SickKids) says a cybersecurity incident exposed the personal information of some current and former employees and job applicants, stemming from a flaw in third-party software. Clinical systems and patient records were not affected.",
+          "detail": "Incident de sécurité rapporté par BleepingComputer.\n\nToronto's Hospital for Sick Children (SickKids) says a cybersecurity incident exposed the personal information of some current and former employees and job applicants, stemming from a flaw in third-party software. Clinical systems and patient records were not affected. (264)\n\nRogue ransomware affiliate poses as recovery firm to steal payments\n\nMicrosoft says August Windows updates may cause gaming issues\n\nCitrix urges admins to patch new NetScaler flaws as soon as possible\n\nNew SynkLoader malware pushed in Microsoft Teams phishing campaign\n\nHundreds of leaked AWS keys give full control over corporate accounts\n\nMicrosoft blames Windows gaming issues on RGB lighting devices",
+          "action": "Surveiller les indicateurs de compromission associés et contrôler les actifs exposés.",
+          "image": "https://www.bleepstatic.com/content/hl-images/2023/01/01/sickkids.jpg",
+          "sources": [
+            {
+              "url": "https://www.bleepingcomputer.com/news/security/sickkids-data-breach-exposes-employee-and-job-applicant-info/",
+              "label": "BleepingComputer"
+            }
+          ],
+          "url": "https://www.bleepingcomputer.com/news/security/sickkids-data-breach-exposes-employee-and-job-applicant-info/",
+          "pubDate": "2026-08-21T10:10:42.000Z"
+        },
+        {
+          "title": "Lawmakers seek watchdog review of federal hacking of Americans",
+          "cve": null,
+          "severity": "high",
+          "score": 72,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Incident de sécurité rapporté par CyberScoop.\n\nA pair of lawmakers wants a watchdog agency to probe how the federal government hacks Americans, including with the use of spyware, and deliver a report to the public. Sen. Ron Wyden, D-Ore., and Rep. Greg Casar, D-Texas, wrote to the Government Accountability Office on Friday to request the review.",
+          "detail": "Incident de sécurité rapporté par CyberScoop.\n\nA pair of lawmakers wants a watchdog agency to probe how the federal government hacks Americans, including with the use of spyware, and deliver a report to the public. Sen. Ron Wyden, D-Ore., and Rep. Greg Casar, D-Texas, wrote to the Government Accountability Office on Friday to request the review. “While federal law enforcement agencies have used hacking and spyware as an investigative tool for more than 25 years, there exists little public information regarding its scope, frequency, or operational safeguards,” they wrote. “Unlike traditional surveillance authorities, such as wiretaps or pen registers, the government does not publish annual reports for hacking operations.” The issue of U.S. government spyware usage has grown in prominence in President Donald Trump’s second term, as Immigration and Customs Enforcement has acknowledged working with spyware firm Paragon . Lawmakers have been asking whether that’s the full extent of U.S. government reliance on spyware after the Biden administration largely shunned it. But the Wyden and Casar letter is broader than just spyware. It also touches on the federal government’s acquisition of hacking tools, like those in the case of a former senior official at defense contractor L3Harris who was sentenced this year for stealing and selling capabilities developed for the federal government, and Rule 41 hacking powers. The congressional d",
+          "action": "Surveiller les indicateurs de compromission associés et contrôler les actifs exposés.",
+          "image": "https://cyberscoop.com/wp-content/uploads/sites/3/2026/08/GettyImages-1910110367.jpg",
+          "sources": [
+            {
+              "url": "https://cyberscoop.com/watchdog-review-federal-government-hacking-americans/",
+              "label": "CyberScoop"
+            }
+          ],
+          "url": "https://cyberscoop.com/watchdog-review-federal-government-hacking-americans/",
+          "pubDate": "2026-08-21T15:05:33.000Z"
+        },
+        {
+          "title": "U.S. Bank says breach claims related to fourth-party incident",
+          "cve": null,
+          "severity": "news",
+          "score": 70,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Incident de sécurité rapporté par The Record.\n\nThe bank said there is no evidence that its own systems, networks or data repositories were compromised.\n\nU.S. Bancorp said recent claims of data theft by a ransomware gang are related to a breach involving a contractor for a third-party, and do not impact its own systems or network.\n\nA spokesperson told Recorded Future News that U.S.",
+          "detail": "Incident de sécurité rapporté par The Record.\n\nThe bank said there is no evidence that its own systems, networks or data repositories were compromised.\n\nU.S. Bancorp said recent claims of data theft by a ransomware gang are related to a breach involving a contractor for a third-party, and do not impact its own systems or network.\n\nA spokesperson told Recorded Future News that U.S. Bancorp has investigated the claims and traced it back to “a potential cyber incident…related to a fourth party event that occurred outside” of their environment.\n\n“At this time, there is no evidence that our systems, networks or data repositories were compromised,” the spokesperson said. “We have provided relevant information to law enforcement and continue to support their investigation.”\n\nThe claims emerged on Thursday morning, when the LockBit ransomware gang added U.S. Bancorp to its list of victims and threatened to leak data in two weeks.\n\nU.S. Bancorp initially told Recorded Future News that there was no indication the bank’s systems were impacted and no evidence of unauthorized access to their network.\n\nThe company declined to name the third and fourth party at the source of the breach. U.S. Bancorp said it will continue to monitor the claims and remain vigilant about data exposure.",
+          "action": "Surveiller les indicateurs de compromission associés et contrôler les actifs exposés.",
+          "image": "https://cms.therecord.media/uploads/us_bank_8375cf38fc.jpg",
+          "sources": [
+            {
+              "url": "https://therecord.media/us-bank-says-breach-claims-related-to-fourth-party-incident",
+              "label": "The Record"
+            }
+          ],
+          "url": "https://therecord.media/us-bank-says-breach-claims-related-to-fourth-party-incident",
+          "pubDate": "2026-08-21T16:16:00.000Z"
+        },
+        {
+          "title": "Russian network monitoring firm confirms cyberattack claimed by pro-Ukraine hackers",
+          "cve": null,
+          "severity": "news",
+          "score": 70,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Incident de sécurité rapporté par The Record.\n\nThe statement came a day after a hacking group calling itself Black Spark claimed it had spent more than a month inside Microolap’s network and gained access to its internal systems, including EtherSensor, the company's network traffic analysis platform.\n\nRussian software developer Microolap confirmed that hackers had compromised some of its systems but denied claims that they gained access to its network monitoring platform or stole data belonging to majo…",
+          "detail": "Incident de sécurité rapporté par The Record.\n\nThe statement came a day after a hacking group calling itself Black Spark claimed it had spent more than a month inside Microolap’s network and gained access to its internal systems, including EtherSensor, the company's network traffic analysis platform.\n\nRussian software developer Microolap confirmed that hackers had compromised some of its systems but denied claims that they gained access to its network monitoring platform or stole data belonging to major Russian companies.\n\nMicroolap, which develops software for intercepting and analyzing network traffic, said Thursday that it had detected an attempted breach of several non-critical systems but found no evidence that hackers accessed its core infrastructure, customer data or other sensitive information.\n\n\"We urge people not to treat the attackers' claims as fact,\" Microolap CEO Andrey Smirnov said. \"Our cybersecurity systems worked as intended: We detected the incident and kept critical data secure.\"\n\nThe statement came a day after a hacking group calling itself Black Spark claimed it had spent more than a month inside Microolap’s network and gained access to its internal systems, including EtherSensor, the company's network traffic analysis platform.\n\nThe hackers claimed they extracted and deleted data belonging to several Microolap customers, including Russian Railways, state banknote and document producer Goznak, VTB Bank and its leasing subsidiary, and Russian IT company NEK.TECH.\n\nThe group published several screenshots that it said showed compromised systems and data obtained during the intrusion. The authenticity of the images could not be independently verified.",
+          "action": "Surveiller les indicateurs de compromission associés et contrôler les actifs exposés.",
+          "image": "https://cms.therecord.media/uploads/data_digital_2f719ba936.jpg",
+          "sources": [
+            {
+              "url": "https://therecord.media/russian-network-monitoring-firm-confirms-cyberattack-claimed-by-pro-ukraine-group",
+              "label": "The Record"
+            }
+          ],
+          "url": "https://therecord.media/russian-network-monitoring-firm-confirms-cyberattack-claimed-by-pro-ukraine-group",
+          "pubDate": "2026-08-21T13:55:00.000Z"
+        },
+        {
+          "title": "Oceanica Internacional — rançongiciel thegentlemen (WS)",
+          "cve": null,
+          "severity": "news",
+          "score": 70,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Incident de sécurité rapporté par ransomware.live.\n\nVictime revendiquée par le groupe de rançongiciel thegentlemen. Pays : WS. Secteur : Transportation. oceanica.ws Oceanica Internacional is a comprehensive logistics and freight forwarding company operating across Central America. They serve as a strategic logistics partner, providing international trade and supply chain solutions in countries like Costa Rica, Panama, and Guatemala.",
+          "detail": "Incident de sécurité rapporté par ransomware.live.\n\nVictime revendiquée par le groupe de rançongiciel thegentlemen.\n\nPays : WS.\n\nSecteur : Transportation.\n\noceanica.ws Oceanica Internacional is a comprehensive logistics and freight forwarding company operating across Central America.\nThey serve as a strategic logistics partner, providing international trade and supply chain solutions in countries like Costa Rica, Panama, and Guatemala.\nThe company specializes in coordinating imports, exports, and cargo transportation to support businesses throughout the region.",
+          "action": "Surveiller les indicateurs de compromission associés et contrôler les actifs exposés.",
+          "image": "https://images.ransomware.live/ransomware.png",
+          "sources": [
+            {
+              "url": "https://www.ransomware.live/id/T2NlYW5pY2EgSW50ZXJuYWNpb25hbEB0aGVnZW50bGVtZW4=",
+              "label": "ransomware.live"
+            }
+          ],
+          "url": "https://www.ransomware.live/id/T2NlYW5pY2EgSW50ZXJuYWNpb25hbEB0aGVnZW50bGVtZW4=",
+          "pubDate": "2026-08-21T08:19:21.000Z"
+        },
+        {
+          "title": "Hackers poison popular Rust crates to steal developers' credentials",
+          "cve": null,
+          "severity": "high",
+          "score": 69,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Incident de sécurité rapporté par The Register.\n\nHackers slipped malware into several popular Rust packages this week, turning routine software builds into a route onto developers' machines. The Rust Security Response Team disclosed the supply chain attack on Thursday after receiving a tip about a crate called proc-macro1. An investigation found that its build script fetched malware from a remote server. The attack extended beyond a single dodgy crate.",
+          "detail": "Incident de sécurité rapporté par The Register.\n\nHackers slipped malware into several popular Rust packages this week, turning routine software builds into a route onto developers' machines. The Rust Security Response Team disclosed the supply chain attack on Thursday after receiving a tip about a crate called proc-macro1. An investigation found that its build script fetched malware from a remote server. The attack extended beyond a single dodgy crate. Someone had published a new version of arrayref, a legitimate and widely used Rust package, with proc-macro1 added as a dependency. The attacker had also yanked recent legitimate releases of arrayref, helping steer users toward the poisoned release. The Rust team does not believe arrayref's maintainer was responsible. It suspects the developer's computer or credentials were compromised and locked the account while attempting to contact them. The attacker also published malicious versions of two other crates maintained by the same developer, internment and append-only-vec. The poisoned releases weren't around for long. Arrayref 0.3.10 was available on crates.io for 86 minutes, internment 0.8.7 for 90 minutes, and append-only-vec 0.1.9 for 107 minutes before they were removed. That's a narrow window, but arrayref is hardly some forgotten package gathering dust in the registry. Security firm Aikido, which separately analyzed the attack, puts arrayref at roughly 245 million lifetim",
+          "action": "Surveiller les indicateurs de compromission associés et contrôler les actifs exposés.",
+          "image": "https://image.theregister.com/1682371.jpg?imageId=1682371&x=0&y=0&cropw=100&croph=100&panox=0&panoy=0&panow=100&panoh=100&width=1200&height=683",
+          "sources": [
+            {
+              "url": "https://www.theregister.com/security/2026/08/21/hackers-poison-popular-rust-crates-to-steal-developers-credentials/5291075",
+              "label": "The Register"
+            }
+          ],
+          "url": "https://www.theregister.com/security/2026/08/21/hackers-poison-popular-rust-crates-to-steal-developers-credentials/5291075",
+          "pubDate": "2026-08-21T14:57:00.000Z"
+        },
+        {
+          "title": "Quaker State Mexico — rançongiciel qilin (MX)",
+          "cve": null,
+          "severity": "news",
+          "score": 69,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Incident de sécurité rapporté par ransomware.live.\n\nRansomware.live discovered on 2026-08-21 that Quaker State Mexico has been claimed by Qilin ransomware group\n\nSponsored by Hudson Rock – Use Hudson Rock's free cybercrime intelligence tools to learn how Infostealer infections are leading to ransomware attacks\n\nThe following DNS records were found for the victim's domain.\n\nLegal Disclaimer: Ransomware.live does not engage in the acquisition, exfiltration, downloading, possession, hosting, access, consultati…",
+          "detail": "Incident de sécurité rapporté par ransomware.live.\n\nRansomware.live discovered on 2026-08-21 that Quaker State Mexico has been claimed by Qilin ransomware group\n\nSponsored by Hudson Rock – Use Hudson Rock's free cybercrime intelligence tools to learn how Infostealer infections are leading to ransomware attacks\n\nThe following DNS records were found for the victim's domain.\n\nLegal Disclaimer: Ransomware.live does not engage in the acquisition, exfiltration, downloading, possession, hosting, access, consultation, redistribution, or disclosure of unlawfully obtained data. This platform indexes only publicly visible information posted by ransomware operators and open web sources without accessing or obtaining the underlying stolen content . The service is provided to support public awareness, legitimate research, and cyber-resilience. No stolen personal or confidential data is collected or distributed via this site.\n\nSession: 057726c909af65969646b040bbbfa5c4df67f5166a33cbac6cd9e1302b0b3ca148\n\nTox: 50DADDED26D859469371938B793456D8210A5AE02DD3C42979F5E52411BCB648F1CA68A5EDE5",
+          "action": "Surveiller les indicateurs de compromission associés et contrôler les actifs exposés.",
+          "image": "https://images.ransomware.live/victims/072038d419f6335db9fb3e595d06e44a.png",
+          "sources": [
+            {
+              "url": "https://www.ransomware.live/id/UXVha2VyIFN0YXRlIE1leGljb0BxaWxpbg==",
+              "label": "ransomware.live"
+            }
+          ],
+          "url": "https://www.ransomware.live/id/UXVha2VyIFN0YXRlIE1leGljb0BxaWxpbg==",
+          "pubDate": "2026-08-21T14:55:56.695Z"
+        },
+        {
+          "title": "Cinépolis — rançongiciel qilin (MX)",
+          "cve": null,
+          "severity": "news",
+          "score": 69,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Incident de sécurité rapporté par ransomware.live.\n\nRansomware.live discovered on 2026-08-21 that Cinépolis has been claimed by Qilin ransomware group\n\nSponsored by Hudson Rock – Use Hudson Rock's free cybercrime intelligence tools to learn how Infostealer infections are leading to ransomware attacks\n\nThe following DNS records were found for the victim's domain.\n\nLegal Disclaimer: Ransomware.live does not engage in the acquisition, exfiltration, downloading, possession, hosting, access, consultation, redist…",
+          "detail": "Incident de sécurité rapporté par ransomware.live.\n\nRansomware.live discovered on 2026-08-21 that Cinépolis has been claimed by Qilin ransomware group\n\nSponsored by Hudson Rock – Use Hudson Rock's free cybercrime intelligence tools to learn how Infostealer infections are leading to ransomware attacks\n\nThe following DNS records were found for the victim's domain.\n\nLegal Disclaimer: Ransomware.live does not engage in the acquisition, exfiltration, downloading, possession, hosting, access, consultation, redistribution, or disclosure of unlawfully obtained data. This platform indexes only publicly visible information posted by ransomware operators and open web sources without accessing or obtaining the underlying stolen content . The service is provided to support public awareness, legitimate research, and cyber-resilience. No stolen personal or confidential data is collected or distributed via this site.\n\nSession: 057726c909af65969646b040bbbfa5c4df67f5166a33cbac6cd9e1302b0b3ca148\n\nTox: 50DADDED26D859469371938B793456D8210A5AE02DD3C42979F5E52411BCB648F1CA68A5EDE5",
+          "action": "Surveiller les indicateurs de compromission associés et contrôler les actifs exposés.",
+          "image": "https://images.ransomware.live/victims/e693ca6267e36f71d9241983370c1656.png",
+          "sources": [
+            {
+              "url": "https://www.ransomware.live/id/Q2luw6lwb2xpc0BxaWxpbg==",
+              "label": "ransomware.live"
+            }
+          ],
+          "url": "https://www.ransomware.live/id/Q2luw6lwb2xpc0BxaWxpbg==",
+          "pubDate": "2026-08-21T12:56:35.156Z"
+        },
+        {
+          "title": "Ariel Energia — rançongiciel thegentlemen (Italie)",
+          "cve": null,
+          "severity": "news",
+          "score": 69,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Incident de sécurité rapporté par ransomware.live.\n\nVictime revendiquée par le groupe de rançongiciel thegentlemen. Pays : Italie. Secteur : Energy & Utilities. arielenergia.it zoominfo.com/c/gdl-spa/1311974459 Ariel Energia is a prominent Italian company based in Turin with over 40 years of experience in the home energy and comfort sector. They specialize in producing and distributing \"Made in Italy\" heating and cooling solutions, including pellet stoves, boilers, and air conditioners.",
+          "detail": "Incident de sécurité rapporté par ransomware.live.\n\nVictime revendiquée par le groupe de rançongiciel thegentlemen.\n\nPays : Italie.\n\nSecteur : Energy & Utilities.\n\narielenergia.it zoominfo.com/c/gdl-spa/1311974459 Ariel Energia is a prominent Italian company based in Turin with over 40 years of experience in the home energy and comfort sector.\nThey specialize in producing and distributing \"Made in Italy\" heating and cooling solutions, including pellet stoves, boilers, and air conditioners.\nThe company also provides renewable energy systems like photovoltaics and advanced water purifiers to promote sustainability and energy efficiency.",
+          "action": "Surveiller les indicateurs de compromission associés et contrôler les actifs exposés.",
+          "image": "https://images.ransomware.live/ransomware.png",
+          "sources": [
+            {
+              "url": "https://www.ransomware.live/id/QXJpZWwgRW5lcmdpYUB0aGVnZW50bGVtZW4=",
+              "label": "ransomware.live"
+            }
+          ],
+          "url": "https://www.ransomware.live/id/QXJpZWwgRW5lcmdpYUB0aGVnZW50bGVtZW4=",
+          "pubDate": "2026-08-21T08:20:48.000Z"
+        },
+        {
+          "title": "Aquasea — rançongiciel thegentlemen (NO)",
+          "cve": null,
+          "severity": "news",
+          "score": 69,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Incident de sécurité rapporté par ransomware.live.\n\nVictime revendiquée par le groupe de rançongiciel thegentlemen. Pays : NO. Secteur : Energy & Utilities. aquasea.com rocketreach.co/aquasea-inc-profile_b468216cfc5c9f6e Aquasea Inc. is a clothing and apparel manufacturing company headquartered in Compton, California, operating since 1995. The business specializes in full-package production, including cut and sew services, private label manufacturing, and screen printing.",
+          "detail": "Incident de sécurité rapporté par ransomware.live.\n\nVictime revendiquée par le groupe de rançongiciel thegentlemen.\n\nPays : NO.\n\nSecteur : Energy & Utilities.\n\naquasea.com rocketreach.co/aquasea-inc-profile_b468216cfc5c9f6e Aquasea Inc. is a clothing and apparel manufacturing company headquartered in Compton, California, operating since 1995.\nThe business specializes in full-package production, including cut and sew services, private label manufacturing, and screen printing.\nThey also operate nearshore textile manufacturing facilities to support their comprehensive apparel production capabilities.",
+          "action": "Surveiller les indicateurs de compromission associés et contrôler les actifs exposés.",
+          "image": "https://images.ransomware.live/ransomware.png",
+          "sources": [
+            {
+              "url": "https://www.ransomware.live/id/QXF1YXNlYUB0aGVnZW50bGVtZW4=",
+              "label": "ransomware.live"
+            }
+          ],
+          "url": "https://www.ransomware.live/id/QXF1YXNlYUB0aGVnZW50bGVtZW4=",
+          "pubDate": "2026-08-21T08:14:29.000Z"
+        },
+        {
+          "title": "Magdalena Grand Beach Golf Resort — rançongiciel thegentlemen (MX)",
+          "cve": null,
+          "severity": "news",
+          "score": 69,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Incident de sécurité rapporté par ransomware.live.\n\nVictime revendiquée par le groupe de rançongiciel thegentlemen. Pays : MX. Secteur : Hospitality. magdalenagrand.com zoominfo.com/c/magdalena-grand-beach--golf-resort/348187300 Magdalena Grand Beach & Golf Resort is a luxury hotel and resort located in Lowlands on the beautiful island of Tobago. It features premium oceanfront accommodations with access to a championship golf course, spa, pools, and tennis courts.",
+          "detail": "Incident de sécurité rapporté par ransomware.live.\n\nVictime revendiquée par le groupe de rançongiciel thegentlemen.\n\nPays : MX.\n\nSecteur : Hospitality.\n\nmagdalenagrand.com zoominfo.com/c/magdalena-grand-beach--golf-resort/348187300 Magdalena Grand Beach & Golf Resort is a luxury hotel and resort located in Lowlands on the beautiful island of Tobago.\nIt features premium oceanfront accommodations with access to a championship golf course, spa, pools, and tennis courts.\nThe property is also a popular destination for weddings, offering guests a variety of dining options and vibrant nightlife.",
+          "action": "Surveiller les indicateurs de compromission associés et contrôler les actifs exposés.",
+          "image": "https://images.ransomware.live/ransomware.png",
+          "sources": [
+            {
+              "url": "https://www.ransomware.live/id/TWFnZGFsZW5hIEdyYW5kIEJlYWNoIEdvbGYgUmVzb3J0QHRoZWdlbnRsZW1lbg==",
+              "label": "ransomware.live"
+            }
+          ],
+          "url": "https://www.ransomware.live/id/TWFnZGFsZW5hIEdyYW5kIEJlYWNoIEdvbGYgUmVzb3J0QHRoZWdlbnRsZW1lbg==",
+          "pubDate": "2026-08-21T07:50:43.000Z"
+        },
+        {
+          "title": "AWJ Holding — rançongiciel thegentlemen (AE)",
+          "cve": null,
+          "severity": "news",
+          "score": 69,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Incident de sécurité rapporté par ransomware.live.\n\nVictime revendiquée par le groupe de rançongiciel thegentlemen. Pays : AE. awjholding.com zoominfo.com/c/awj-holding-co/448239448 AWJ Holding Company is a prominent Saudi-based single-family office and investment firm established in 2016. Headquartered in Riyadh, the company specializes in real estate development, property management, and strategic investment management.",
+          "detail": "Incident de sécurité rapporté par ransomware.live.\n\nVictime revendiquée par le groupe de rançongiciel thegentlemen.\n\nPays : AE.\n\nawjholding.com zoominfo.com/c/awj-holding-co/448239448 AWJ Holding Company is a prominent Saudi-based single-family office and investment firm established in 2016.\nHeadquartered in Riyadh, the company specializes in real estate development, property management, and strategic investment management.\nIt focuses on high-impact developments and operates dynamic subsidiaries across retail, hospitality, and infrastructure sectors.",
+          "action": "Surveiller les indicateurs de compromission associés et contrôler les actifs exposés.",
+          "image": "https://images.ransomware.live/ransomware.png",
+          "sources": [
+            {
+              "url": "https://www.ransomware.live/id/QVdKIEhvbGRpbmdAdGhlZ2VudGxlbWVu",
+              "label": "ransomware.live"
+            }
+          ],
+          "url": "https://www.ransomware.live/id/QVdKIEhvbGRpbmdAdGhlZ2VudGxlbWVu",
+          "pubDate": "2026-08-21T07:45:17.000Z"
+        },
+        {
+          "title": "Rust Supply Chain Attack Linked to North Korean Hackers",
+          "cve": null,
+          "severity": "news",
+          "score": 68,
+          "corroboration": 2,
+          "region": "intl",
+          "body": "Incident de sécurité rapporté par Infosecurity Mag.\n\nCybersecurity researchers have linked a malicious backdoor in compromised Rust packages to previous North Korean supply chain attacks\n\nWiz security researchers have linked a recent software supply chain attack which targeted the Rust programming ecosystem to state-sponsored North Korean threat actors.\n\nThe campaign compromised several widely used open-source libraries hosted on the official Rust package registry, crates.io, embedding a backdoor designed to…",
+          "detail": "Incident de sécurité rapporté par Infosecurity Mag.\n\nCybersecurity researchers have linked a malicious backdoor in compromised Rust packages to previous North Korean supply chain attacks\n\nWiz security researchers have linked a recent software supply chain attack which targeted the Rust programming ecosystem to state-sponsored North Korean threat actors.\n\nThe campaign compromised several widely used open-source libraries hosted on the official Rust package registry, crates.io, embedding a backdoor designed to infiltrate developer workstations and continuous integration (CI) environments before a project even finishes compiling.\n\nThe incident unfolded on August 20, when an attacker gained access to a trusted open-source maintainer's account, updating three legitimate crates: arrayref, internment and append-only-vec.\n\nIn the Rust programming language, a crate is the smallest unit of code that the compiler looks at and builds at one time. It acts as a tree of modules that compile into a single binary or library file.\n\nRather than injecting malicious code directly into the source code of the main libraries, the attacker subtly modified the package manifests to import an external, typosquatted dependency named proc-macro1. This rogue package took advantage of the automated build process in the Rust package manager, cargo, downloading and executing an unauthorized payload in the background.\n\nAs Wiz researchers Rami McCarthy and Benjamin Read explained in their report , published a few hours after the beginning of the campaign, because build scripts run during compilation, building an affected project was sufficient to execute the payload.",
+          "action": "Surveiller les indicateurs de compromission associés et contrôler les actifs exposés.",
+          "image": "https://assets.infosecurity-magazine.com/webpage/og/77fe36c5-e531-4591-afef-acbdc8585038.jpg",
+          "sources": [
+            {
+              "url": "https://www.infosecurity-magazine.com/news/north-korean-rust-supply-chain/",
+              "label": "Infosecurity Mag"
+            },
+            {
+              "url": "https://www.securityweek.com/rust-supply-chain-attack-linked-to-north-korean-hackers/",
+              "label": "SecurityWeek"
+            }
+          ],
+          "url": "https://www.infosecurity-magazine.com/news/north-korean-rust-supply-chain/",
+          "pubDate": "2026-08-21T12:40:00.000Z"
+        },
+        {
+          "title": "Beauty Success : plus de 5,16 millions de fiches clients revendiquées dans une fuite massive",
+          "cve": null,
+          "severity": "news",
+          "score": 66,
+          "corroboration": 1,
+          "region": "fr",
+          "body": "Incident de sécurité rapporté par Cyberattaque.org.\n\nBeauty Success fait l’objet d’une importante revendication de fuite de données. Le hacker misere affirme avoir récupéré 10 279 819 enregistrements, dont 5\n\nAttaque Mis à jour le 21 août 2026 à 12h43 Beauty Success : plus de 5,16 millions de fiches clients revendiquées dans une fuite massive Beauty Success fait l’objet d’une importante revendication de fuite de données.",
+          "detail": "Incident de sécurité rapporté par Cyberattaque.org.\n\nBeauty Success fait l’objet d’une importante revendication de fuite de données. Le hacker misere affirme avoir récupéré 10 279 819 enregistrements, dont 5\n\nAttaque Mis à jour le 21 août 2026 à 12h43 Beauty Success : plus de 5,16 millions de fiches clients revendiquées dans une fuite massive Beauty Success fait l’objet d’une importante revendication de fuite de données. Le hacker misere affirme avoir récupéré 10 279 819 enregistrements , dont 5 169 727 entrées présentées comme uniques après déduplication.\n\nLa publication, diffusée le 21 août 2026 , met en vente une base attribuée à beautysuccess.fr . Un échantillon de 10 000 lignes est également donné par son auteur.\n\nBeauty Success est une enseigne française spécialisée dans la parfumerie, les cosmétiques et les soins de beauté. Son activité implique notamment la gestion de comptes clients et de données utilisées dans le cadre de ses opérations commerciales et de fidélité.\n\nLe hacker misere annonce un volume brut de 10 279 819 lignes et affirme avoir identifié 5 169 727 enregistrements uniques . Cette différence importante laisse penser qu’une partie des fiches apparaît plusieurs fois dans les données récupérées.\n\nLa méthode de déduplication utilisée n’étant pas détaillée, il est plus prudent de parler de 5,16 millions de fiches uniques revendiquées plutôt que d’affirmer que le même nombre de personnes distinctes est effectivement concerné.\n\nCyberattaque.org s’est procuré un échantillon des données attribuées à Beauty Success afin d’en examiner le contenu. Les lignes consultées permettent d’identifier plusieurs catégories de données personnelles :",
+          "action": "Surveiller les indicateurs de compromission associés et contrôler les actifs exposés.",
+          "image": "https://www.cyberattaque.org/wp-content/uploads/2026/05/cyberattaque_hacker12.jpg",
+          "sources": [
+            {
+              "url": "https://www.cyberattaque.org/beauty-success-plus-de-516-millions-de-fiches-clients-revendiquees-dans-une-fuite-massive/",
+              "label": "Cyberattaque.org"
+            }
+          ],
+          "url": "https://www.cyberattaque.org/beauty-success-plus-de-516-millions-de-fiches-clients-revendiquees-dans-une-fuite-massive/",
+          "pubDate": "2026-08-21T04:59:00.000Z"
+        },
+        {
+          "title": "Encore, encore, encore … un nouveau groupe ransomware : SovCali",
+          "cve": null,
+          "severity": "news",
+          "score": 65,
+          "corroboration": 1,
+          "region": "fr",
+          "body": "Incident de sécurité rapporté par Zataz.\n\nDYSPHOR1A émerge comme un nouveau groupe ransomware maître chanteur, avec ventes, fuites et retraits payants de données.\n\nFont Resizer Aa Actus cyber Darkweb Intelligence Artificielle ZATAZ Community Logiciels Vidéos Moteurs de recherche de fuites Actus cyber Justice Sécurité réseaux sociaux Vie privée OSINT News Darkweb Fuite de données Codes malveillants Espionnage Sécurité Ransomwares Piratage / Hack infiltration Intelligence Artificielle ZATAZ Communit…",
+          "detail": "Incident de sécurité rapporté par Zataz.\n\nDYSPHOR1A émerge comme un nouveau groupe ransomware maître chanteur, avec ventes, fuites et retraits payants de données.\n\nFont Resizer Aa Actus cyber Darkweb Intelligence Artificielle ZATAZ Community Logiciels Vidéos Moteurs de recherche de fuites Actus cyber Justice Sécurité réseaux sociaux Vie privée OSINT News Darkweb Fuite de données Codes malveillants Espionnage Sécurité Ransomwares Piratage / Hack infiltration Intelligence Artificielle ZATAZ Community Userlock Community Réseaux sociaux ZATAZ News Letter ZATAZ – Chaque vendredi midi PROTOCOLE D&rsquo;ALERTE ZATAZ Logiciels Vidéos Vidéos Youtube ZATAZ Émission ZATAZ sur Twitch Moteurs de recherche de fuites Follow US Actus cyber Darkweb Intelligence Artificielle ZATAZ Community Logiciels Vidéos Moteurs de recherche de fuites ZATAZ.COM > Actualités > Actualités > Divers > DYSPHOR1A, nouveau groupe de ransomware maître chanteur Actualités Divers Internet Clandestin (darknet) Piratage DYSPHOR1A, nouveau groupe de ransomware maître chanteur dernière mise à jour : 21/08/2026 16:54 Par Damien Bancal - Chercheur / Journaliste / Conférencier / Enseignant Il y a 13 heures Il y a 13 heures Partager 11 minutes de lecture Partager Un nouveau groupe de ransomware, DYSPHOR1A. Son modèle de maître chanteur repose sur la vente, la fuite et le retrait payant de données. DYSPHOR1A se présente comme un nouveau groupe de ransomware associé à Normal Hunters, un membre d’une communauté pirate, avec une méthode de maître chanteur centrée sur la pression financière. Sa vitrine publie des victimes, commercialise certaines bases et retire des contenus après paiement. L’opération revendique notamment des données liées à l’Université de Delhi, à la police indonésienne, à Yoma Fleet, JobNet, GUSTO Colle",
+          "action": "Surveiller les indicateurs de compromission associés et contrôler les actifs exposés.",
+          "image": "https://www.zataz.com/wp-content/uploads/Dysphor1a.jpg",
+          "sources": [
+            {
+              "url": "https://www.zataz.com/dysphor1a-nouveau-groupe-de-ransomware-maitre-chanteur/",
+              "label": "Zataz"
+            }
+          ],
+          "url": "https://www.zataz.com/dysphor1a-nouveau-groupe-de-ransomware-maitre-chanteur/",
+          "pubDate": "2026-08-21T14:44:23.000Z"
+        },
+        {
+          "title": "Target visé par une nouvelle revendication de fuite",
+          "cve": null,
+          "severity": "high",
+          "score": 63,
+          "corroboration": 1,
+          "region": "fr",
+          "body": "Incident de sécurité rapporté par Zataz.\n\nUn pirate renvendique le vol de codes sources à un géant de la grande distribution, sur fond d’une précédente fuite interne.\n\nTarget réapparaît ainsi dans les espaces clandestins utilisés pour faire pression sur les organisations victimes. Xpl0itrs, un nouveau , nouveau groupe de maîtres chanteurs affirme posséder des centaines de codes sources et menace d’en publier le contenu si le distributeur ne prend pas contact dans un délai rapide.",
+          "detail": "Incident de sécurité rapporté par Zataz.\n\nUn pirate renvendique le vol de codes sources à un géant de la grande distribution, sur fond d’une précédente fuite interne.\n\nTarget réapparaît ainsi dans les espaces clandestins utilisés pour faire pression sur les organisations victimes. Xpl0itrs, un nouveau , nouveau groupe de maîtres chanteurs affirme posséder des centaines de codes sources et menace d’en publier le contenu si le distributeur ne prend pas contact dans un délai rapide. le pirate parlait de 48 heures aprés sa revendication dans le darkweb.\n\nÀ ce stade, aucune confirmation indépendante n’établit qu’une nouvelle intrusion s’est réellement produite. Le groupe n’a fourni aucun extrait des fichiers annoncés. Cette absence empêche notamment de déterminer la nature du code concerné, son ancienneté ou son origine. Elle limite aussi la possibilité de distinguer une compromission récente d’une réutilisation de données déjà exfiltrées. Un rapprochement pourrait cependant se faire avec un incident découvert en janvier 2026. Un pirate inconnu et anonyme avait alors créé plusieurs dépôts sur Gitea, un service Git pouvant être auto-hébergé. Ces espaces étaient présentés comme contenant des portions du code interne de Target ainsi que de la documentation destinée aux développeurs. 57 000 lignes et annonçait une archive totale d’environ 860 Go (sic!). Et devinez quoi ?!! Le piratage avait été réussi via un infostealer ayant compromis le poste d’un salarié à la fin de septembre 2025.\n\nLa différence de volume est notable. Xpl0itrs revendique aujourd’hui 8,6 Go, contre environ 860 Go annoncés précédemment. Les deux ensembles auraient toutefois un point commun déterminant pour l’analyse cyber : la présence supposée de code source.\n\nTarget exploite plus de 2 000 magasins aux États-",
+          "action": "Surveiller les indicateurs de compromission associés et contrôler les actifs exposés.",
+          "image": "https://www.zataz.com/wp-content/uploads/target_code.jpg",
+          "sources": [
+            {
+              "url": "https://www.zataz.com/target-vise-par-une-nouvelle-revendication-de-fuite/",
+              "label": "Zataz"
+            }
+          ],
+          "url": "https://www.zataz.com/target-vise-par-une-nouvelle-revendication-de-fuite/",
+          "pubDate": "2026-08-21T15:41:54.000Z"
+        },
+        {
+          "title": "Geb Sas — rançongiciel thegentlemen (France)",
+          "cve": null,
+          "severity": "news",
+          "score": 61,
+          "corroboration": 1,
+          "region": "fr",
+          "body": "Incident de sécurité rapporté par ransomware.live.\n\nVictime revendiquée par le groupe de rançongiciel thegentlemen. Pays : France. geb.fr zoominfo.com/c/geb-sas/372743980 GEB SAS is a historic French chemical manufacturing company established in 1860. They specialize in formulating and producing essential sealing solutions, adhesives, and PVC glues. The family-owned business primarily provides high-quality maintenance and installation products for plumbing and heating professionals.",
+          "detail": "Incident de sécurité rapporté par ransomware.live.\n\nVictime revendiquée par le groupe de rançongiciel thegentlemen.\n\nPays : France.\n\ngeb.fr zoominfo.com/c/geb-sas/372743980 GEB SAS is a historic French chemical manufacturing company established in 1860.\nThey specialize in formulating and producing essential sealing solutions, adhesives, and PVC glues.\nThe family-owned business primarily provides high-quality maintenance and installation products for plumbing and heating professionals.",
+          "action": "Surveiller les indicateurs de compromission associés et contrôler les actifs exposés.",
+          "image": "https://images.ransomware.live/ransomware.png",
+          "sources": [
+            {
+              "url": "https://www.ransomware.live/id/R2ViIFNhc0B0aGVnZW50bGVtZW4=",
+              "label": "ransomware.live"
+            }
+          ],
+          "url": "https://www.ransomware.live/id/R2ViIFNhc0B0aGVnZW50bGVtZW4=",
+          "pubDate": "2026-08-21T08:00:07.000Z"
+        },
+        {
+          "title": "Pokémon Center touché par la cyberattaque d’un prestataire",
+          "cve": null,
+          "severity": "news",
+          "score": 59,
+          "corroboration": 1,
+          "region": "fr",
+          "body": "Incident de sécurité rapporté par Zataz.\n\nCyberattaque : des données de clients Pokémon Center exposées et certaines précommandes annulées en Europe.\n\nFont Resizer Aa Actus cyber Darkweb Intelligence Artificielle ZATAZ Community Logiciels Vidéos Moteurs de recherche de fuites Actus cyber Justice Sécurité réseaux sociaux Vie privée OSINT News Darkweb Fuite de données Codes malveillants Espionnage Sécurité Ransomwares Piratage / Hack infiltration Intelligence Artificielle ZATAZ Community Userlock Co…",
+          "detail": "Incident de sécurité rapporté par Zataz.\n\nCyberattaque : des données de clients Pokémon Center exposées et certaines précommandes annulées en Europe.\n\nFont Resizer Aa Actus cyber Darkweb Intelligence Artificielle ZATAZ Community Logiciels Vidéos Moteurs de recherche de fuites Actus cyber Justice Sécurité réseaux sociaux Vie privée OSINT News Darkweb Fuite de données Codes malveillants Espionnage Sécurité Ransomwares Piratage / Hack infiltration Intelligence Artificielle ZATAZ Community Userlock Community Réseaux sociaux ZATAZ News Letter ZATAZ – Chaque vendredi midi PROTOCOLE D&rsquo;ALERTE ZATAZ Logiciels Vidéos Vidéos Youtube ZATAZ Émission ZATAZ sur Twitch Moteurs de recherche de fuites Follow US Actus cyber Darkweb Intelligence Artificielle ZATAZ Community Logiciels Vidéos Moteurs de recherche de fuites ZATAZ.COM > Actualités > Actualités > Divers > Pokémon Center touché par la cyberattaque d&rsquo;un prestataire Actualités Divers Internet Clandestin (darknet) Piratage Pokémon Center touché par la cyberattaque d&rsquo;un prestataire dernière mise à jour : 21/08/2026 17:56 Par Damien Bancal - Chercheur / Journaliste / Conférencier / Enseignant Il y a 12 heures Il y a 12 heures Partager 10 minutes de lecture Partager Une cyberattaque visant CEVA Logistics expose des données de clients européens du Pokémon Center, une semaine après une alerte similaire adressée aux acheteurs de matériel Steam. Une même compromission chez un prestataire logistique relie désormais Valve et The Pokémon Company. ZATAZ vous expliquait la semaine derniére comment des pirates avaient mis la main sur des données de Valve (Steam) aprés le piratage d’un transporteur. Des clients européens du Pokémon Center ont été avertis après une cyberattaque contre CEVA Logistics, déjà citée dans l’incident a",
+          "action": "Surveiller les indicateurs de compromission associés et contrôler les actifs exposés.",
+          "image": "https://www.zataz.com/wp-content/uploads/pika_pika.jpg",
+          "sources": [
+            {
+              "url": "https://www.zataz.com/pokemon-center-touche-par-la-cyberattaque-dun-prestataire/",
+              "label": "Zataz"
+            }
+          ],
+          "url": "https://www.zataz.com/pokemon-center-touche-par-la-cyberattaque-dun-prestataire/",
+          "pubDate": "2026-08-21T15:56:09.000Z"
+        },
+        {
+          "title": "Groupe Géotec : une cyberattaque provoque une exfiltration de données et perturbe certains services",
+          "cve": null,
+          "severity": "news",
+          "score": 57,
+          "corroboration": 1,
+          "region": "fr",
+          "body": "Incident de sécurité rapporté par Cyberattaque.org.\n\nGroupe Géotec confirme avoir récemment été victime d’un incident de cybersécurité ayant entraîné une exfiltration de données. L’attaque touche certains de\n\nAttaque Mis à jour le 21 août 2026 à 17h02 Groupe Géotec : une cyberattaque provoque une exfiltration de données et perturbe certains services Groupe Géotec confirme avoir récemment été victime d’un incident de cybersécurité ayant entraîné une exfiltration de données .",
+          "detail": "Incident de sécurité rapporté par Cyberattaque.org.\n\nGroupe Géotec confirme avoir récemment été victime d’un incident de cybersécurité ayant entraîné une exfiltration de données. L’attaque touche certains de\n\nAttaque Mis à jour le 21 août 2026 à 17h02 Groupe Géotec : une cyberattaque provoque une exfiltration de données et perturbe certains services Groupe Géotec confirme avoir récemment été victime d’un incident de cybersécurité ayant entraîné une exfiltration de données . L’attaque touche certains de ses outils et pourrait également avoir des conséquences sur plusieurs services et échanges de l’entreprise.\n\nLe groupe indique avoir rapidement identifié l’incident avec l’aide de ses équipes internes et de partenaires spécialisés en cybersécurité. Des investigations sont toujours en cours afin de déterminer précisément la nature des données récupérées et l’étendue de la compromission .\n\nGroupe Géotec est spécialisé dans l’ingénierie géotechnique et environnementale et intervient notamment dans les études de sols, les infrastructures, l’environnement et différents projets de construction. Son activité implique de nombreux échanges techniques et professionnels avec ses clients et partenaires.\n\nContrairement à de simples revendications de cybercriminels, Groupe Géotec confirme directement qu’une exfiltration de données a eu lieu . Le communiqué ne précise toutefois ni le volume récupéré, ni le nombre de personnes concernées, ni les catégories exactes d’informations compromises.\n\nL’entreprise indique également que l’incident est susceptible d’avoir un impact sur certains de ses services et échanges , sans détailler pour le moment les outils concernés.\n\nGéotec ne communique pour l’instant aucune information sur la manière dont les attaquants sont parvenus à pénétrer son systè",
+          "action": "Surveiller les indicateurs de compromission associés et contrôler les actifs exposés.",
+          "image": "https://www.cyberattaque.org/wp-content/uploads/2026/03/cyberattaque_1-2.jpg",
+          "sources": [
+            {
+              "url": "https://www.cyberattaque.org/groupe-geotec-une-cyberattaque-provoque-une-exfiltration-de-donnees-et-perturbe-certains-services/",
+              "label": "Cyberattaque.org"
+            }
+          ],
+          "url": "https://www.cyberattaque.org/groupe-geotec-une-cyberattaque-provoque-une-exfiltration-de-donnees-et-perturbe-certains-services/",
+          "pubDate": "2026-08-21T15:02:30.000Z"
+        },
+        {
+          "title": "Protection Civile : plus de 525 000 personnes touchées par une cyberattaque",
+          "cve": null,
+          "severity": "news",
+          "score": 56,
+          "corroboration": 1,
+          "region": "fr",
+          "body": "Incident de sécurité rapporté par Cyberattaque.org.\n\nLa Fédération nationale de Protection Civile (FNPC) confirme avoir été victime d’une cyberattaque ayant touché sa plateforme eProtec. L’incident remonte à\n\nAttaque Mis à jour le 21 août 2026 à 17h09 Protection Civile : plus de 525 000 personnes touchées par une cyberattaque La Fédération nationale de Protection Civile (FNPC) confirme avoir été victime d’une cyberattaque ayant touché sa plateforme eProtec .",
+          "detail": "Incident de sécurité rapporté par Cyberattaque.org.\n\nLa Fédération nationale de Protection Civile (FNPC) confirme avoir été victime d’une cyberattaque ayant touché sa plateforme eProtec. L’incident remonte à\n\nAttaque Mis à jour le 21 août 2026 à 17h09 Protection Civile : plus de 525 000 personnes touchées par une cyberattaque La Fédération nationale de Protection Civile (FNPC) confirme avoir été victime d’une cyberattaque ayant touché sa plateforme eProtec . L’incident remonte à mars 2026 et pourrait avoir entraîné l’exposition de données personnelles concernant un nombre particulièrement important de personnes.\n\nSelon la revendication du hacker au mois de mars, plus de 525 000 personnes pourraient être concernées , dont des mineurs. Environ 15 000 photographies auraient également été récupérées lors de l’attaque.\n\nL’incident concerne eProtec , une plateforme utilisée par les bénévoles de la Protection Civile. L’organisation indique qu’à ce stade de ses investigations, certaines données personnelles sont susceptibles d’avoir été compromises.\n\nLa Protection Civile précise avoir déposé plainte auprès de la section de lutte contre la cybercriminalité du parquet de Paris . Le mode opératoire utilisé par les attaquants et le point d’entrée initial dans la plateforme ne sont pas détaillés pour le moment.\n\nLa Protection Civile est une association de sécurité civile spécialisée dans le secours, l’assistance aux populations et les dispositifs de premiers secours. Elle revendique environ 32 000 bénévoles actifs sur le territoire français.\n\nLe nombre de personnes potentiellement présentes dans la fuite dépasse donc largement celui des seuls bénévoles, ce qui laisse envisager un périmètre de données plus large autour des activités de la fédération.",
+          "action": "Surveiller les indicateurs de compromission associés et contrôler les actifs exposés.",
+          "image": "https://www.cyberattaque.org/wp-content/uploads/2026/08/protection-civile-2.jpg",
+          "sources": [
+            {
+              "url": "https://www.cyberattaque.org/protection-civile-plus-de-525-000-personnes-touchees-par-une-cyberattaque/",
+              "label": "Cyberattaque.org"
+            }
+          ],
+          "url": "https://www.cyberattaque.org/protection-civile-plus-de-525-000-personnes-touchees-par-une-cyberattaque/",
+          "pubDate": "2026-08-21T15:09:56.000Z"
+        },
+        {
+          "title": "Made in Bébé : plus de 960 000 personnes en fuite après une cyberattaque",
+          "cve": null,
+          "severity": "news",
+          "score": 56,
+          "corroboration": 1,
+          "region": "fr",
+          "body": "Incident de sécurité rapporté par Cyberattaque.org.\n\nMade in Bébé, site français spécialisé dans les produits pour bébés et enfants, fait l’objet d’une importante revendication de fuite de données. Le hacker\n\nAttaque Mis à jour le 21 août 2026 à 12h44 Made in Bébé : plus de 960 000 personnes en fuite après une cyberattaque Made in Bébé , site français spécialisé dans les produits pour bébés et enfants, fait l’objet d’une importante revendication de fuite de données.",
+          "detail": "Incident de sécurité rapporté par Cyberattaque.org.\n\nMade in Bébé, site français spécialisé dans les produits pour bébés et enfants, fait l’objet d’une importante revendication de fuite de données. Le hacker\n\nAttaque Mis à jour le 21 août 2026 à 12h44 Made in Bébé : plus de 960 000 personnes en fuite après une cyberattaque Made in Bébé , site français spécialisé dans les produits pour bébés et enfants, fait l’objet d’une importante revendication de fuite de données. Le hacker ChimeraZ affirme disposer de 1 359 546 lignes associées à 960 106 personnes .\n\nLa publication, diffusée le 21 août 2026 , présente une base au format JSON d’environ 1,45 Go . Les données revendiquées concernent principalement les commandes, la facturation et la livraison.\n\nMadeinbebe.com est un site français de commerce en ligne dédié à l’univers du bébé et de l’enfant. Son activité implique notamment la gestion des commandes, des adresses de facturation et de livraison ainsi que des informations nécessaires au traitement des achats.\n\nChimeraZ affirme vendre une base contenant 1 359 546 enregistrements et concernant 960 106 personnes. Ce nombre de personnes provient directement de sa revendication et ne peut pas être confirmé uniquement à partir du nombre de lignes, une même personne pouvant apparaître dans plusieurs commandes.\n\nCyberattaque.org s’est procuré un échantillon des données attribuées à Made in Bébé afin d’en examiner le contenu. Les éléments consultés montrent notamment :\n\nLa fuite ne se limite donc pas à des coordonnées. Les données permettent potentiellement de relier une personne à une commande précise, une adresse, des produits achetés et au montant payé .",
+          "action": "Surveiller les indicateurs de compromission associés et contrôler les actifs exposés.",
+          "image": "https://www.cyberattaque.org/wp-content/uploads/2026/05/cyberattaque_ecommerce.jpg",
+          "sources": [
+            {
+              "url": "https://www.cyberattaque.org/made-in-bebe-plus-de-960-000-personnes-en-fuite-apres-une-cyberattaque/",
+              "label": "Cyberattaque.org"
+            }
+          ],
+          "url": "https://www.cyberattaque.org/made-in-bebe-plus-de-960-000-personnes-en-fuite-apres-une-cyberattaque/",
+          "pubDate": "2026-08-21T05:00:00.000Z"
+        },
+        {
+          "title": "Allobébé : plus d’un million de clients dans une fuite couvrant vingt ans",
+          "cve": null,
+          "severity": "news",
+          "score": 52,
+          "corroboration": 1,
+          "region": "fr",
+          "body": "Incident de sécurité rapporté par Cyberattaque.org.\n\nAllobébé, site français spécialisé dans la vente de produits pour bébés et d’équipements de puériculture, fait l’objet d’une importante revendication de\n\nAttaque Mis à jour le 21 août 2026 à 12h45 Allobébé : plus d’un million de clients dans une fuite couvrant vingt ans Allobébé , site français spécialisé dans la vente de produits pour bébés et d’équipements de puériculture, fait l’objet d’une importante revendication de fuite de données.",
+          "detail": "Incident de sécurité rapporté par Cyberattaque.org.\n\nAllobébé, site français spécialisé dans la vente de produits pour bébés et d’équipements de puériculture, fait l’objet d’une importante revendication de\n\nAttaque Mis à jour le 21 août 2026 à 12h45 Allobébé : plus d’un million de clients dans une fuite couvrant vingt ans Allobébé , site français spécialisé dans la vente de produits pour bébés et d’équipements de puériculture, fait l’objet d’une importante revendication de fuite de données. Le hacker ChimeraZ affirme avoir récupéré 2 175 216 lignes associées à 1 136 058 personnes .\n\nLa publication, diffusée le 21 août 2026 , présente une archive d’environ 850 Mo contenant principalement des informations clients, des adresses et des commandes. Selon ChimeraZ, les données couvriraient une période particulièrement longue, allant de 2006 à 2026 .\n\nAllobébé.fr est un site de commerce électronique consacré à l’univers du bébé et de la puériculture. Son activité implique notamment la gestion de comptes clients, d’adresses de livraison et de facturation ainsi que de commandes réalisées en ligne.\n\nChimeraZ présente deux principaux ensembles de données : environ 1,2 million d’enregistrements liés aux adresses et près de 898 000 commandes . Au total, le hacker revendique 2 175 216 lignes pour 1 136 058 personnes.\n\nCe dernier chiffre provient directement de l’auteur de la fuite. Une même personne pouvant apparaître dans plusieurs commandes ou disposer de plusieurs adresses, le nombre de personnes réellement concernées ne peut pas être confirmé à partir du seul nombre de lignes .\n\nCyberattaque.org s’est procuré une partie des données attribuées à Allobébé afin d’en examiner le contenu. Les fichiers consultés font apparaître plusieurs catégories d’informations personnelles et commerc",
+          "action": "Surveiller les indicateurs de compromission associés et contrôler les actifs exposés.",
+          "image": "https://www.cyberattaque.org/wp-content/uploads/2026/05/cyberattaque_ecommerce.jpg",
+          "sources": [
+            {
+              "url": "https://www.cyberattaque.org/allobebe-plus-dun-million-de-clients-dans-une-fuite-couvrant-vingt-ans/",
+              "label": "Cyberattaque.org"
+            }
+          ],
+          "url": "https://www.cyberattaque.org/allobebe-plus-dun-million-de-clients-dans-une-fuite-couvrant-vingt-ans/",
+          "pubDate": "2026-08-21T05:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "culture",
+      "items": [
+        {
+          "title": "Lawmakers call for investigation into impact of CISA staffing cuts",
+          "cve": null,
+          "severity": "culture",
+          "score": 70,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Signal de veille — The Record.\n\nLawmakers say little is known about how recent cuts have impacted CISA and how the knowledge that was lost has been replaced.\n\nMembers of Congress have asked a government watchdog to examine the effect staffing cuts at the Cybersecurity and Infrastructure Security Agency (CISA) have had on the agency’s ability to function.\n\nBennie Thompson (D-MS), ranking member of the House Committee on Homeland Security, joined several other Democratic representatives in…",
+          "detail": "Signal de veille — The Record.\n\nLawmakers say little is known about how recent cuts have impacted CISA and how the knowledge that was lost has been replaced.\n\nMembers of Congress have asked a government watchdog to examine the effect staffing cuts at the Cybersecurity and Infrastructure Security Agency (CISA) have had on the agency’s ability to function.\n\nBennie Thompson (D-MS), ranking member of the House Committee on Homeland Security, joined several other Democratic representatives in signing a letter asking the Government Accountability Office (GAO) for more information about how CISA is protecting critical infrastructure after nearly one-third of its workforce was slashed at the onset of the Trump administration.\n\nNearly 1,000 CISA employees have been fired or quit since Trump took office, but acting director Nick Andersen said earlier this year that he planned to hire 300 employees to “rebuild its workforce and address staffing gaps left by the layoffs and voluntary departures.”\n\n“We respectfully request that the [GAO] examine the impact of recent staffing reductions and programmatic cuts at CISA on the agency's ability to carry out its mission requirements, protect critical infrastructure, and respond to evolving cyber and physical threats,” they wrote.\n\n“At precisely the moment when our adversaries are accelerating attacks against critical infrastructure, [CISA]... has lost nearly one-third of its workforce, raising serious concerns about the agency’s ability to fulfill its mission.”\n\nThe letter adds that little is known about how the cuts impacted CISA and how the knowledge that was lost has been replaced. Several critical CISA leaders have left the agency over the last year, including David Stern — the driving force behind a key ransomware notification initiat",
+          "action": null,
+          "image": "https://cms.therecord.media/uploads/cisa_4_3264a23d22.jpg",
+          "sources": [
+            {
+              "url": "https://therecord.media/lawmakers-call-for-investigation-into-impact-of-cisa-cuts",
+              "label": "The Record"
+            }
+          ],
+          "url": "https://therecord.media/lawmakers-call-for-investigation-into-impact-of-cisa-cuts",
+          "pubDate": "2026-08-21T19:56:00.000Z"
+        },
+        {
+          "title": "14 Trojanized npm Packages Drop RedC2 4.0 Linux Backdoor With AI-Assisted C2",
+          "cve": null,
+          "severity": "culture",
+          "score": 64,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Signal de veille — The Hacker News.\n\nCybersecurity researchers have discovered a set of trojanized npm packages that masquerade as working calendar and streak utilities but are engineered to stealthily deliver an artificial intelligence (AI)-powered Linux implant dubbed RedC2 4.0. \"When the module loads, it locates the bundled binary, marks it executable, and launches it as a detached background process,\" TrendAI, Trend Micro's",
+          "detail": "Signal de veille — The Hacker News.\n\nCybersecurity researchers have discovered a set of trojanized npm packages that masquerade as working calendar and streak utilities but are engineered to stealthily deliver an artificial intelligence (AI)-powered Linux implant dubbed RedC2 4.0. \"When the module loads, it locates the bundled binary, marks it executable, and launches it as a detached background process,\" TrendAI, Trend Micro's",
+          "action": null,
+          "image": "https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEgvZpEOpS6_M3zQlIDwvD1wMhESnRAMTCz1nW2JFP__pGSVWOw28REaDTZ5lI7sdwvcRKSSUHI4sm1CUuWs6_gvOXE1c5BbvKnR75iyBl9Er1SckweDAxBEotnOlSikBeOE5WEBIIGlS74w4b85pvznpr3c4mj88LzLt-3pGr1HHXHQDg5v7T9FxdBSWSlK/s1600/linux-npm.jpg",
+          "sources": [
+            {
+              "url": "https://thehackernews.com/2026/08/14-trojanized-npm-packages-drop-redc2.html",
+              "label": "The Hacker News"
+            }
+          ],
+          "url": "https://thehackernews.com/2026/08/14-trojanized-npm-packages-drop-redc2.html",
+          "pubDate": "2026-08-21T18:53:00.000Z"
+        },
+        {
+          "title": "Former NSA Director Paul Nakasone Launches National Security Advisory Firm",
+          "cve": null,
+          "severity": "culture",
+          "score": 64,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Signal de veille — SecurityWeek.\n\nPaul M. Nakasone, former director of the NSA and commander of U.S. Cyber Command, launched Nakasone Group, a boutique national security advisory firm.\n\nThe newly-formed Nakasone Group will counsel government leaders, corporations, prominent families, and other private clients confronting cybersecurity, geopolitical, and personal security risks.\n\nSubscribe to the SecurityWeek Email Briefing for the latest cybersecurity threats, trends, and expert insights.…",
+          "detail": "Signal de veille — SecurityWeek.\n\nPaul M. Nakasone, former director of the NSA and commander of U.S. Cyber Command, launched Nakasone Group, a boutique national security advisory firm.\n\nThe newly-formed Nakasone Group will counsel government leaders, corporations, prominent families, and other private clients confronting cybersecurity, geopolitical, and personal security risks.\n\nSubscribe to the SecurityWeek Email Briefing for the latest cybersecurity threats, trends, and expert insights.\n\nSubscribe to the SecurityWeek Email Briefing to stay informed on the latest threats, trends, and technology, along with insightful columns from industry experts.\n\nJoin this live webinar as we explore if detection-first security operations can keep pace with AI, or if it’s time to rethink prevention as the strongest default.\n\nCodeSecCon bridges the gap between dev and security. Discover best practices for secure coding, innovative risk-reduction tools, and safe AI integration to cultivate a true DevSecOps culture. Safely secure your apps!\n\nUltraViolet Cyber has named Andrew Park Chief Information Security Officer.",
+          "action": null,
+          "image": "https://www.securityweek.com/wp-content/uploads/2026/08/Paul_Nakasone-.jpg",
+          "sources": [
+            {
+              "url": "https://www.securityweek.com/former-nsa-director-paul-nakasone-launches-national-security-advisory-firm/",
+              "label": "SecurityWeek"
+            }
+          ],
+          "url": "https://www.securityweek.com/former-nsa-director-paul-nakasone-launches-national-security-advisory-firm/",
+          "pubDate": "2026-08-21T16:27:52.000Z"
+        },
+        {
+          "title": "Escape Data ZATAZ 2.0 transforme l’enquête en jeu",
+          "cve": null,
+          "severity": "culture",
+          "score": 64,
+          "corroboration": 1,
+          "region": "fr",
+          "body": "Signal de veille — Zataz.\n\nEscape Data ZATAZ 2.0 mêle escape game, OSINT, observation et réflexes cyber dans une enquête numérique estivale.\n\nFont Resizer Aa Actus cyber Darkweb Intelligence Artificielle ZATAZ Community Logiciels Vidéos Moteurs de recherche de fuites Actus cyber Justice Sécurité réseaux sociaux Vie privée OSINT News Darkweb Fuite de données Codes malveillants Espionnage Sécurité Ransomwares Piratage / Hack infiltration Intelligence Artificielle ZATAZ Community Userl…",
+          "detail": "Signal de veille — Zataz.\n\nEscape Data ZATAZ 2.0 mêle escape game, OSINT, observation et réflexes cyber dans une enquête numérique estivale.\n\nFont Resizer Aa Actus cyber Darkweb Intelligence Artificielle ZATAZ Community Logiciels Vidéos Moteurs de recherche de fuites Actus cyber Justice Sécurité réseaux sociaux Vie privée OSINT News Darkweb Fuite de données Codes malveillants Espionnage Sécurité Ransomwares Piratage / Hack infiltration Intelligence Artificielle ZATAZ Community Userlock Community Réseaux sociaux ZATAZ News Letter ZATAZ – Chaque vendredi midi PROTOCOLE D&rsquo;ALERTE ZATAZ Logiciels Vidéos Vidéos Youtube ZATAZ Émission ZATAZ sur Twitch Moteurs de recherche de fuites Follow US Actus cyber Darkweb Intelligence Artificielle ZATAZ Community Logiciels Vidéos Moteurs de recherche de fuites ZATAZ.COM > Actualités > Actualités > cyber actualité > Escape Data ZATAZ 2.0 transforme l’enquête en jeu Actualités cyber actualité Divers éducation cybersécurité Swatt Escape Data ZATAZ 2.0 transforme l’enquête en jeu dernière mise à jour : 21/08/2026 18:16 Par Damien Bancal - Chercheur / Journaliste / Conférencier / Enseignant Il y a 12 heures Il y a 12 heures Partager 7 minutes de lecture Partager Observer une image, repérer l’anomalie, tester une hypothèse : Escape Data ZATAZ 2.0 transforme les réflexes de l’investigation numérique en défi estival ludique. Je ne sais pas pour vous, mais moi, je commence vraiment à en avoir plein le c** de ces cyber attaques. Cela fait plus de 40 ans que je documente cet environnement ; 33 ans que ZATAZ.COM existe et je ne vois rien qui bouge. Des entreprises cyber sécurité qui vous promettent mont et merveille ; des pirates qui affichent clairement n’avoir aucune éthique et nos données réclamées à tour de bras par la moindre entreprise q",
+          "action": null,
+          "image": "https://www.zataz.com/wp-content/uploads/escape_game_zataz.jpg",
+          "sources": [
+            {
+              "url": "https://www.zataz.com/escape-data-zataz-2-0-transforme-lenquete-en-jeu/",
+              "label": "Zataz"
+            }
+          ],
+          "url": "https://www.zataz.com/escape-data-zataz-2-0-transforme-lenquete-en-jeu/",
+          "pubDate": "2026-08-21T16:16:14.000Z"
+        },
+        {
+          "title": "Contractors’ CMMC Confidence Rises as Ability to Prove It Falls Behind",
+          "cve": null,
+          "severity": "culture",
+          "score": 64,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Signal de veille — SecurityWeek.\n\nKiteworks and CyberSheath have released reports on the readiness of defense contractors in light of recent changes to the CMMC program.\n\nTwo industry surveys released this week by Kiteworks and CyberSheath paint a consistent picture of the defense industrial base.\n\nSubscribe to the SecurityWeek Email Briefing for the latest cybersecurity threats, trends, and expert insights.\n\nSubscribe to the SecurityWeek Email Briefing to stay informed on the latest threa…",
+          "detail": "Signal de veille — SecurityWeek.\n\nKiteworks and CyberSheath have released reports on the readiness of defense contractors in light of recent changes to the CMMC program.\n\nTwo industry surveys released this week by Kiteworks and CyberSheath paint a consistent picture of the defense industrial base.\n\nSubscribe to the SecurityWeek Email Briefing for the latest cybersecurity threats, trends, and expert insights.\n\nSubscribe to the SecurityWeek Email Briefing to stay informed on the latest threats, trends, and technology, along with insightful columns from industry experts.\n\nJoin this live webinar as we explore if detection-first security operations can keep pace with AI, or if it’s time to rethink prevention as the strongest default.\n\nCodeSecCon bridges the gap between dev and security. Discover best practices for secure coding, innovative risk-reduction tools, and safe AI integration to cultivate a true DevSecOps culture. Safely secure your apps!\n\nUltraViolet Cyber has named Andrew Park Chief Information Security Officer.",
+          "action": null,
+          "image": "https://www.securityweek.com/wp-content/uploads/2026/02/Defense-industry-DIB.jpeg",
+          "sources": [
+            {
+              "url": "https://www.securityweek.com/contractors-cmmc-confidence-rises-as-ability-to-prove-it-falls-behind/",
+              "label": "SecurityWeek"
+            }
+          ],
+          "url": "https://www.securityweek.com/contractors-cmmc-confidence-rises-as-ability-to-prove-it-falls-behind/",
+          "pubDate": "2026-08-21T08:41:06.000Z"
+        },
+        {
+          "title": "Microsoft blames Windows gaming issues on RGB lighting devices",
+          "cve": null,
+          "severity": "culture",
+          "score": 63,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Signal de veille — BleepingComputer.\n\nMicrosoft says ongoing issues causing games to crash or fail to launch after installing the August 2026 Windows updates may be caused by peripherals with RGB lighting.\n\nRogue ransomware affiliate poses as recovery firm to steal payments\n\nMicrosoft says August Windows updates may cause gaming issues\n\nCitrix urges admins to patch new NetScaler flaws as soon as possible\n\nNew SynkLoader malware pushed in Microsoft Teams phishing campaign\n\nHundreds of leaked AW…",
+          "detail": "Signal de veille — BleepingComputer.\n\nMicrosoft says ongoing issues causing games to crash or fail to launch after installing the August 2026 Windows updates may be caused by peripherals with RGB lighting.\n\nRogue ransomware affiliate poses as recovery firm to steal payments\n\nMicrosoft says August Windows updates may cause gaming issues\n\nCitrix urges admins to patch new NetScaler flaws as soon as possible\n\nNew SynkLoader malware pushed in Microsoft Teams phishing campaign\n\nHundreds of leaked AWS keys give full control over corporate accounts\n\nMicrosoft blames Windows gaming issues on RGB lighting devices",
+          "action": null,
+          "image": "https://www.bleepstatic.com/content/hl-images/2022/03/11/gamer.jpg",
+          "sources": [
+            {
+              "url": "https://www.bleepingcomputer.com/news/microsoft/microsoft-blames-windows-gaming-issues-on-rgb-lighting-devices/",
+              "label": "BleepingComputer"
+            }
+          ],
+          "url": "https://www.bleepingcomputer.com/news/microsoft/microsoft-blames-windows-gaming-issues-on-rgb-lighting-devices/",
+          "pubDate": "2026-08-21T14:54:49.000Z"
+        },
+        {
+          "title": "Un recrutement VPN français intrigue sur un forum pirate",
+          "cve": null,
+          "severity": "culture",
+          "score": 63,
+          "corroboration": 1,
+          "region": "fr",
+          "body": "Signal de veille — Zataz.\n\nUn membre d’un forum pirate russe recrute des francophones pour un VPN, malgré un historique lié au spam et aux RAT.\n\nFont Resizer Aa Actus cyber Darkweb Intelligence Artificielle ZATAZ Community Logiciels Vidéos Moteurs de recherche de fuites Actus cyber Justice Sécurité réseaux sociaux Vie privée OSINT News Darkweb Fuite de données Codes malveillants Espionnage Sécurité Ransomwares Piratage / Hack infiltration Intelligence Artificielle ZATAZ Community Us…",
+          "detail": "Signal de veille — Zataz.\n\nUn membre d’un forum pirate russe recrute des francophones pour un VPN, malgré un historique lié au spam et aux RAT.\n\nFont Resizer Aa Actus cyber Darkweb Intelligence Artificielle ZATAZ Community Logiciels Vidéos Moteurs de recherche de fuites Actus cyber Justice Sécurité réseaux sociaux Vie privée OSINT News Darkweb Fuite de données Codes malveillants Espionnage Sécurité Ransomwares Piratage / Hack infiltration Intelligence Artificielle ZATAZ Community Userlock Community Réseaux sociaux ZATAZ News Letter ZATAZ – Chaque vendredi midi PROTOCOLE D&rsquo;ALERTE ZATAZ Logiciels Vidéos Vidéos Youtube ZATAZ Émission ZATAZ sur Twitch Moteurs de recherche de fuites Follow US Actus cyber Darkweb Intelligence Artificielle ZATAZ Community Logiciels Vidéos Moteurs de recherche de fuites ZATAZ.COM > Actualités > Actualités > Divers > Un recrutement VPN français intrigue sur un forum pirate Actualités Divers Internet Clandestin (darknet) Piratage warcyber Un recrutement VPN français intrigue sur un forum pirate dernière mise à jour : 21/08/2026 16:27 Par Damien Bancal - Chercheur / Journaliste / Conférencier / Enseignant Il y a 14 heures Il y a 14 heures Partager 10 minutes de lecture Partager Un membre d’un forum cybercriminel russe recrute des francophones pour un VPN présenté comme légal. Son historique technique et commercial impose pourtant une lecture prudente, trés prudente. Le 13 août 2026, un internaute publie sur un forum pirate russe une annonce visant des personnes vivant en France ou maîtrisant le français. Il propose une collaboration rémunérée autour du développement d’un VPN, qu’il qualifie explicitement de « totalement légale », avant de renvoyer les candidats vers Telegram. Pris isolément, le message pourrait ressembler à une offre techniq",
+          "action": null,
+          "image": "https://www.zataz.com/wp-content/uploads/vpn_ru_fr.jpg",
+          "sources": [
+            {
+              "url": "https://www.zataz.com/un-recrutement-vpn-francais-intrigue-sur-un-forum-pirate/",
+              "label": "Zataz"
+            }
+          ],
+          "url": "https://www.zataz.com/un-recrutement-vpn-francais-intrigue-sur-un-forum-pirate/",
+          "pubDate": "2026-08-21T13:56:56.000Z"
+        },
+        {
+          "title": "Microsoft rolls out Classic Outlook theme for New Outlook users",
+          "cve": null,
+          "severity": "culture",
+          "score": 63,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Signal de veille — BleepingComputer.\n\nMicrosoft has started rolling out a Classic Outlook theme for users of Outlook on the web and the New Outlook for Windows.\n\nRogue ransomware affiliate poses as recovery firm to steal payments\n\nMicrosoft says August Windows updates may cause gaming issues\n\nCitrix urges admins to patch new NetScaler flaws as soon as possible\n\nNew SynkLoader malware pushed in Microsoft Teams phishing campaign\n\nHundreds of leaked AWS keys give full control over corporate accou…",
+          "detail": "Signal de veille — BleepingComputer.\n\nMicrosoft has started rolling out a Classic Outlook theme for users of Outlook on the web and the New Outlook for Windows.\n\nRogue ransomware affiliate poses as recovery firm to steal payments\n\nMicrosoft says August Windows updates may cause gaming issues\n\nCitrix urges admins to patch new NetScaler flaws as soon as possible\n\nNew SynkLoader malware pushed in Microsoft Teams phishing campaign\n\nHundreds of leaked AWS keys give full control over corporate accounts\n\nMicrosoft blames Windows gaming issues on RGB lighting devices",
+          "action": null,
+          "image": "https://www.bleepstatic.com/content/hl-images/2025/04/29/Outlook.jpg",
+          "sources": [
+            {
+              "url": "https://www.bleepingcomputer.com/news/microsoft/microsoft-rolls-out-classic-outlook-theme-for-new-outlook-users/",
+              "label": "BleepingComputer"
+            }
+          ],
+          "url": "https://www.bleepingcomputer.com/news/microsoft/microsoft-rolls-out-classic-outlook-theme-for-new-outlook-users/",
+          "pubDate": "2026-08-21T13:39:35.000Z"
+        },
+        {
+          "title": "Calling on Cyber Pros to Help Defend City Hall",
+          "cve": null,
+          "severity": "culture",
+          "score": 60,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Signal de veille — Dark Reading.\n\nGovernment agencies with smaller budgets need support — and here's how you can help.",
+          "detail": "Signal de veille — Dark Reading.\n\nGovernment agencies with smaller budgets need support — and here's how you can help.",
+          "action": null,
+          "image": null,
+          "sources": [
+            {
+              "url": "https://www.darkreading.com/cyber-risk/cyber-pros-help-city-hall",
+              "label": "Dark Reading"
+            }
+          ],
+          "url": "https://www.darkreading.com/cyber-risk/cyber-pros-help-city-hall",
+          "pubDate": "2026-08-21T14:00:00.000Z"
+        },
+        {
+          "title": "Des bases de joueurs européens de casino diffusées sur un forum pirate",
+          "cve": null,
+          "severity": "culture",
+          "score": 59,
+          "corroboration": 1,
+          "region": "fr",
+          "body": "Signal de veille — Zataz.\n\nUn vendeur propose des bases de joueurs de casino européens contenant coordonnées, téléphones et données de dépôt.\n\nFont Resizer Aa Actus cyber Darkweb Intelligence Artificielle ZATAZ Community Logiciels Vidéos Moteurs de recherche de fuites Actus cyber Justice Sécurité réseaux sociaux Vie privée OSINT News Darkweb Fuite de données Codes malveillants Espionnage Sécurité Ransomwares Piratage / Hack infiltration Intelligence Artificielle ZATAZ Community User…",
+          "detail": "Signal de veille — Zataz.\n\nUn vendeur propose des bases de joueurs de casino européens contenant coordonnées, téléphones et données de dépôt.\n\nFont Resizer Aa Actus cyber Darkweb Intelligence Artificielle ZATAZ Community Logiciels Vidéos Moteurs de recherche de fuites Actus cyber Justice Sécurité réseaux sociaux Vie privée OSINT News Darkweb Fuite de données Codes malveillants Espionnage Sécurité Ransomwares Piratage / Hack infiltration Intelligence Artificielle ZATAZ Community Userlock Community Réseaux sociaux ZATAZ News Letter ZATAZ – Chaque vendredi midi PROTOCOLE D&rsquo;ALERTE ZATAZ Logiciels Vidéos Vidéos Youtube ZATAZ Émission ZATAZ sur Twitch Moteurs de recherche de fuites Follow US Actus cyber Darkweb Intelligence Artificielle ZATAZ Community Logiciels Vidéos Moteurs de recherche de fuites ZATAZ.COM > Actualités > Actualités > Divers > Des bases de joueurs européens de casino diffusées sur un forum pirate Actualités Divers Monnaie virtuelle Piratage Social Engineering (SE) Des bases de joueurs européens de casino diffusées sur un forum pirate dernière mise à jour : 21/08/2026 17:28 Par Damien Bancal - Chercheur / Journaliste / Conférencier / Enseignant Il y a 13 heures Il y a 13 heures Partager 10 minutes de lecture Partager Un pirate affirme vendre des fichiers contenant des dizaines de milliers de joueurs européens, avec coordonnées personnelles et données de dépôt associées à des casinos en ligne. Un message publié en juillet 2026 sur un forum en .onion propose plusieurs bases de données attribuées à des clients de casinos européens. L’auteur évoque quatre fichiers comprenant chacun entre 20 000 et 50 000 lignes en moyenne. L’échantillon analysé associe identité, adresse électronique, adresse postale, ville, code postal, téléphone mobile, pays, source comme",
+          "action": null,
+          "image": "https://www.zataz.com/wp-content/uploads/Casino_europe_leak.jpg",
+          "sources": [
+            {
+              "url": "https://www.zataz.com/des-bases-de-joueurs-europeens-de-casino-diffusees-sur-un-forum-pirate/",
+              "label": "Zataz"
+            }
+          ],
+          "url": "https://www.zataz.com/des-bases-de-joueurs-europeens-de-casino-diffusees-sur-un-forum-pirate/",
+          "pubDate": "2026-08-21T15:28:56.000Z"
+        },
+        {
+          "title": "Checker max cible les portefeuilles Solana en masse",
+          "cve": null,
+          "severity": "culture",
+          "score": 59,
+          "corroboration": 1,
+          "region": "fr",
+          "body": "Signal de veille — Zataz.\n\nChecker max analyse Solana par lots de 1 000 adresses, une capacité sensible pour le triage de portefeuilles proposé sur un forum de pirates.\n\nFont Resizer Aa Actus cyber Darkweb Intelligence Artificielle ZATAZ Community Logiciels Vidéos Moteurs de recherche de fuites Actus cyber Justice Sécurité réseaux sociaux Vie privée OSINT News Darkweb Fuite de données Codes malveillants Espionnage Sécurité Ransomwares Piratage / Hack infiltration Intelligence Artifi…",
+          "detail": "Signal de veille — Zataz.\n\nChecker max analyse Solana par lots de 1 000 adresses, une capacité sensible pour le triage de portefeuilles proposé sur un forum de pirates.\n\nFont Resizer Aa Actus cyber Darkweb Intelligence Artificielle ZATAZ Community Logiciels Vidéos Moteurs de recherche de fuites Actus cyber Justice Sécurité réseaux sociaux Vie privée OSINT News Darkweb Fuite de données Codes malveillants Espionnage Sécurité Ransomwares Piratage / Hack infiltration Intelligence Artificielle ZATAZ Community Userlock Community Réseaux sociaux ZATAZ News Letter ZATAZ – Chaque vendredi midi PROTOCOLE D&rsquo;ALERTE ZATAZ Logiciels Vidéos Vidéos Youtube ZATAZ Émission ZATAZ sur Twitch Moteurs de recherche de fuites Follow US Actus cyber Darkweb Intelligence Artificielle ZATAZ Community Logiciels Vidéos Moteurs de recherche de fuites ZATAZ.COM > Actualités > Actualités > Divers > Checker max cible les portefeuilles Solana en masse Actualités Divers Monnaie virtuelle Checker max cible les portefeuilles Solana en masse dernière mise à jour : 21/08/2026 17:12 Par Damien Bancal - Chercheur / Journaliste / Conférencier / Enseignant Il y a 13 heures Il y a 13 heures Partager 10 minutes de lecture Partager Checker max promet d’identifier des avoirs Solana difficiles à repérer. Son mode d’analyse par milliers d’adresses lui donne toutefois une portée sensible en renseignement cyber. Présenté sur un forum criminel russe documenté par le Service de veille et d’investigation de ZATAZ, l’outil Checker max analyse des adresses Solana (cryptomonnaie) afin d’identifier des actifs absents d’un affichage classique. Le service revendique une couverture de 180 protocoles et 30 modules de vérification. Il recherche notamment staking, liquidités, prêts, vesting, airdrops non réclamés ou frais de cr",
+          "action": null,
+          "image": "https://www.zataz.com/wp-content/uploads/Checkermax_tool.jpg",
+          "sources": [
+            {
+              "url": "https://www.zataz.com/checker-max-cible-les-portefeuilles-solana-en-masse/",
+              "label": "Zataz"
+            }
+          ],
+          "url": "https://www.zataz.com/checker-max-cible-les-portefeuilles-solana-en-masse/",
+          "pubDate": "2026-08-21T15:12:09.000Z"
+        },
+        {
+          "title": "Deux millions de données françaises mises en vente",
+          "cve": null,
+          "severity": "culture",
+          "score": 59,
+          "corroboration": 1,
+          "region": "fr",
+          "body": "Signal de veille — Zataz.\n\nUn forum pirate propose deux millions de données françaises, sans preuve publique sur leur origine.\n\nFont Resizer Aa Actus cyber Darkweb Intelligence Artificielle ZATAZ Community Logiciels Vidéos Moteurs de recherche de fuites Actus cyber Justice Sécurité réseaux sociaux Vie privée OSINT News Darkweb Fuite de données Codes malveillants Espionnage Sécurité Ransomwares Piratage / Hack infiltration Intelligence Artificielle ZATAZ Community Userlock Community…",
+          "detail": "Signal de veille — Zataz.\n\nUn forum pirate propose deux millions de données françaises, sans preuve publique sur leur origine.\n\nFont Resizer Aa Actus cyber Darkweb Intelligence Artificielle ZATAZ Community Logiciels Vidéos Moteurs de recherche de fuites Actus cyber Justice Sécurité réseaux sociaux Vie privée OSINT News Darkweb Fuite de données Codes malveillants Espionnage Sécurité Ransomwares Piratage / Hack infiltration Intelligence Artificielle ZATAZ Community Userlock Community Réseaux sociaux ZATAZ News Letter ZATAZ – Chaque vendredi midi PROTOCOLE D&rsquo;ALERTE ZATAZ Logiciels Vidéos Vidéos Youtube ZATAZ Émission ZATAZ sur Twitch Moteurs de recherche de fuites Follow US Actus cyber Darkweb Intelligence Artificielle ZATAZ Community Logiciels Vidéos Moteurs de recherche de fuites ZATAZ.COM > Actualités > Actualités > Divers > Deux millions de données françaises mises en vente Actualités Divers Internet Clandestin (darknet) Piratage Deux millions de données françaises mises en vente dernière mise à jour : 21/08/2026 15:08 Par Damien Bancal - Chercheur / Journaliste / Conférencier / Enseignant Il y a 15 heures Il y a 15 heures Partager 10 minutes de lecture Partager Un vendeur actif sur un forum pirate d’Amérique du Sud affirme proposer deux millions d’enregistrements français, avec identité, coordonnées, adresse et date de naissance. Le 30 juillet 2026, un pirate informatique repéré par le Service de veille et d’Investigation de ZATAZ publie une annonce sur un forum cybercriminel d’Amérique du Sud. Le pirate affirme vendre une base concernant la France contenant deux millions d’enregistrements. Le prix affiché atteint 2 000 $. L’échantillon présenté décrit plusieurs catégories de données : nom, adresse électronique, téléphone, adresse postale, numéro de rue, ville,",
+          "action": null,
+          "image": "https://www.zataz.com/wp-content/uploads/2_millions_fuite.jpg",
+          "sources": [
+            {
+              "url": "https://www.zataz.com/deux-millions-de-donnees-francaises-mises-en-vente/",
+              "label": "Zataz"
+            }
+          ],
+          "url": "https://www.zataz.com/deux-millions-de-donnees-francaises-mises-en-vente/",
+          "pubDate": "2026-08-21T13:08:19.000Z"
+        },
+        {
+          "title": "C.Hunters, un service pirate testé pour la France",
+          "cve": null,
+          "severity": "culture",
+          "score": 59,
+          "corroboration": 1,
+          "region": "fr",
+          "body": "Signal de veille — Zataz.\n\nC.Hunters propose des appels ciblés sur un forum pirate, avec un intérêt explicite pour la France.\n\nFont Resizer Aa Actus cyber Darkweb Intelligence Artificielle ZATAZ Community Logiciels Vidéos Moteurs de recherche de fuites Actus cyber Justice Sécurité réseaux sociaux Vie privée OSINT News Darkweb Fuite de données Codes malveillants Espionnage Sécurité Ransomwares Piratage / Hack infiltration Intelligence Artificielle ZATAZ Community Userlock Community R…",
+          "detail": "Signal de veille — Zataz.\n\nC.Hunters propose des appels ciblés sur un forum pirate, avec un intérêt explicite pour la France.\n\nFont Resizer Aa Actus cyber Darkweb Intelligence Artificielle ZATAZ Community Logiciels Vidéos Moteurs de recherche de fuites Actus cyber Justice Sécurité réseaux sociaux Vie privée OSINT News Darkweb Fuite de données Codes malveillants Espionnage Sécurité Ransomwares Piratage / Hack infiltration Intelligence Artificielle ZATAZ Community Userlock Community Réseaux sociaux ZATAZ News Letter ZATAZ – Chaque vendredi midi PROTOCOLE D&rsquo;ALERTE ZATAZ Logiciels Vidéos Vidéos Youtube ZATAZ Émission ZATAZ sur Twitch Moteurs de recherche de fuites Follow US Actus cyber Darkweb Intelligence Artificielle ZATAZ Community Logiciels Vidéos Moteurs de recherche de fuites ZATAZ.COM > Actualités > Actualités > Divers > C.Hunters, un service pirate testé pour la France Actualités Divers Internet Clandestin (darknet) Piratage warcyber C.Hunters, un service pirate testé pour la France dernière mise à jour : 21/08/2026 14:54 Par Damien Bancal - Chercheur / Journaliste / Conférencier / Enseignant Il y a 15 heures Il y a 15 heures Partager 10 minutes de lecture Partager En juillet 2026, une question relance l’attention autour d’un service pirate du nom de C.Hunters : un « client » demande sur un forum pirate russophone si ce service fonctionne en France. Le service C.hunters apparaît publiquement dans cet espace russophone en mai 2025. ZATAZ vous en parlait à l’époque. Son offre commerciale repose sur des appels téléphoniques réalisés à la demande, notamment auprès de banques, plateformes de paiement, transporteurs ou commerces en ligne. Les opérateurs revendiquent des voix masculines et féminines en anglais, la confidentialité et la possibilité de modifier le numé",
+          "action": null,
+          "image": "https://www.zataz.com/wp-content/uploads/shiva_hack_phone.jpg",
+          "sources": [
+            {
+              "url": "https://www.zataz.com/c-hunters-un-service-pirate-teste-pour-la-france/",
+              "label": "Zataz"
+            }
+          ],
+          "url": "https://www.zataz.com/c-hunters-un-service-pirate-teste-pour-la-france/",
+          "pubDate": "2026-08-21T12:52:57.000Z"
+        },
+        {
+          "title": "« Nous sommes désolés » : GitHub s’explique sur sa panne de 7h47, sans voir le bout du tunnel",
+          "cve": null,
+          "severity": "culture",
+          "score": 59,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Signal de veille — Numerama.\n\nGitHub est revenu sur les causes de la panne géante qui a paralysé la plateforme le 17 août. En cause : un pic de trafic que l'infrastructure n'a pas su absorber. « Si vous aviez prévu de déployer un logiciel ce jour-là, nous sommes désolés pour ce désagrément.",
+          "detail": "Signal de veille — Numerama.\n\nGitHub est revenu sur les causes de la panne géante qui a paralysé la plateforme le 17 août. En cause : un pic de trafic que l'infrastructure n'a pas su absorber. « Si vous aviez prévu de déployer un logiciel ce jour-là, nous sommes désolés pour ce désagrément. » Le 20 août 2026, GitHub a présenté ses excuses à ses\n\nWatt Else, ToujoursPlus, Artificielles, Le Récap : votre dose hebdo d’infos exclusives et d’éditos endiablés !\n\nFrandroid Clubic Lemon Humanoid Mon compte Thème Clair Sombre Système 39,90 € /an\n\nNous générons pour vous un résumé de l’article grâce à une IA et nous le vérifions afin de nous assurer qu’il n’y ait aucune erreur, pour garantir l’authenticité de l’info.\n\nRecevez tous les soirs un résumé de l’actu importante avec Le Récap’\n\n« Si vous aviez prévu de déployer un logiciel ce jour-là, nous sommes désolés pour ce désagrément. »\n\nLe 20 août 2026, GitHub a présenté ses excuses à ses utilisateurs pour la panne survenue trois jours plus tôt.",
+          "action": null,
+          "image": "https://c0.lestechnophiles.com/www.numerama.com/wp-content/uploads/2026/08/design-sans-titre-2026-08-21t095936394.png?resize=1600,900&key=20f95095",
+          "sources": [
+            {
+              "url": "https://www.numerama.com/cyberguerre/2315379-nous-sommes-desoles-github-sexplique-sur-sa-panne-de-7h47-sans-voir-le-bout-du-tunnel.html",
+              "label": "Numerama"
+            }
+          ],
+          "url": "https://www.numerama.com/cyberguerre/2315379-nous-sommes-desoles-github-sexplique-sur-sa-panne-de-7h47-sans-voir-le-bout-du-tunnel.html",
+          "pubDate": "2026-08-21T08:13:20.000Z"
+        },
+        {
+          "title": "OWASP Flags Top AI Skill Risks in New Security Blueprint",
+          "cve": null,
+          "severity": "culture",
+          "score": 55,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Signal de veille — Dark Reading.\n\nThe Open Worldwide Application Security Project has a brand-new top 10 security list tailored for the modern era, and it debuts a Universal Skill Format to add consistency and security to the AI add-ons.",
+          "detail": "Signal de veille — Dark Reading.\n\nThe Open Worldwide Application Security Project has a brand-new top 10 security list tailored for the modern era, and it debuts a Universal Skill Format to add consistency and security to the AI add-ons.",
+          "action": null,
+          "image": null,
+          "sources": [
+            {
+              "url": "https://www.darkreading.com/application-security/owasp-flags-top-ai-skill-risks-security-blueprint",
+              "label": "Dark Reading"
+            }
+          ],
+          "url": "https://www.darkreading.com/application-security/owasp-flags-top-ai-skill-risks-security-blueprint",
+          "pubDate": "2026-08-21T17:36:53.000Z"
+        },
+        {
+          "title": "IA & Souveraineté : Converteo alerte sur le piège du \"souveraineté-washing\"",
+          "cve": null,
+          "severity": "culture",
+          "score": 49,
+          "corroboration": 1,
+          "region": "fr",
+          "body": "Signal de veille — Global Sec Mag.\n\nLe marché de l'intelligence artificielle est saturé par le débat sur la “souveraineté”, relancé par l'épisode Fable : en juin, Washington a coupé sans préavis l'accès des entreprises européennes aux modèles les plus avancés d'Anthropic, avant de rétablir l'accès trois semaines plus tard. Depuis, chaque vendeur de technologie se revendique “souverain”.",
+          "detail": "Signal de veille — Global Sec Mag.\n\nLe marché de l'intelligence artificielle est saturé par le débat sur la “souveraineté”, relancé par l'épisode Fable : en juin, Washington a coupé sans préavis l'accès des entreprises européennes aux modèles les plus avancés d'Anthropic, avant de rétablir l'accès trois semaines plus tard. Depuis, chaque vendeur de technologie se revendique “souverain”. Mais pour les grandes entreprises, cette notion est devenue illisible : elle mélange les enjeux géopolitiques nationaux (sécuriser l'approvisionnement en puces, datacenters et modèles) et la réalité opérationnelle des acteurs économiques et industriels. Pour y voir clair, Converteo appelle à recentrer le débat sur le véritable problème des entreprises : la politique de gestion des risques. Plutôt que de chercher à tout prix une \"IA Origine France\", la priorité est d'anticiper les défaillances. Cela implique de repenser les stratégies autour de scénarios concrets : • La résilience opérationnelle : Si un système devient inopérant demain, quel est l'impact immédiat sur les opérations ? • La réversibilité des architectures : Comment se préparer techniquement à basculer rapidement sur un plan B pour ne pas dépendre d'un fournisseur unique. En clair, il s'agit de sortir le sujet du terrain politique pour le ramener à ce qui se joue réellement dans les entreprises. “On ne peut pas mettre sur le même plan la sécurisation stratégique, qui",
+          "action": null,
+          "image": "https://www.globalsecuritymag.fr/local/cache-vignettes/L40xH21/35a39c9a1121d920b1115d047a3f78-9f9cf.png",
+          "sources": [
+            {
+              "url": "https://www.globalsecuritymag.fr/ia-souverainete-converteo-alerte-sur-le-piege-du-souverainete-washing.html",
+              "label": "Global Sec Mag"
+            }
+          ],
+          "url": "https://www.globalsecuritymag.fr/ia-souverainete-converteo-alerte-sur-le-piege-du-souverainete-washing.html",
+          "pubDate": "2026-08-22T04:00:59.324Z"
+        }
+      ]
+    }
+  ]
+}
