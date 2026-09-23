@@ -1,0 +1,1249 @@
+{
+  "id": "daily-2026-09-23",
+  "type": "daily",
+  "date": "2026-09-23",
+  "title": "Rapport quotidien - mercredi 23 septembre 2026",
+  "summary": "Sur les dernières 24 heures, la veille recense 68 vulnérabilités critiques, 58 incidents ou compromissions et 29 signaux de fond. Acteurs et produits les plus exposés : mcp-atlassian (pip), Microsoft et WordPress.",
+  "generatedAt": "2026-09-23T04:01:11.833Z",
+  "sections": [
+    {
+      "id": "vulns",
+      "items": [
+        {
+          "title": "CVE-2026-77244 — [mcp-atlassian] Authentication bypass in HTTP transport: AtlassianOpaqueTokenVerifier accepts any non-empty token",
+          "cve": "CVE-2026-77244",
+          "severity": "critical",
+          "score": 74,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Vulnérabilité critique CVE-2026-77244 affectant mcp-atlassian (pip) (score CVSS 10).\n\n[mcp-atlassian] Authentication bypass in HTTP transport: AtlassianOpaqueTokenVerifier accepts any non-empty token\n\nPattern A (single-user, server-side credentials): operator sets JIRA_USERNAME + JIRA_API_TOKEN (or CONFLUENCE_USERNAME + CONFLUENCE_API_TOKEN) in environment variables. Server uses these to call Jira/Confluence.",
+          "detail": "Vulnérabilité critique CVE-2026-77244 affectant mcp-atlassian (pip) (score CVSS 10).\n\n[mcp-atlassian] Authentication bypass in HTTP transport: AtlassianOpaqueTokenVerifier accepts any non-empty token\n\nPattern A (single-user, server-side credentials): operator sets JIRA_USERNAME + JIRA_API_TOKEN (or CONFLUENCE_USERNAME + CONFLUENCE_API_TOKEN) in environment variables. Server uses these to call Jira/Confluence. This is the documented quickstart pattern.\n\nPattern B (multi-user, OAuth or per-request PAT): operator sets up OAuth proxy or accepts per-user tokens via Authorization or service headers.\n\nThe authentication mechanism in HTTP transport has two issues that combine to permit unauthenticated access to Pattern A deployments:\n\nAtlassianOpaqueTokenVerifier.verify_token() at src/mcp_atlassian/utils/token_verifier.py accepts any non-empty string as a valid token:\n\nasync def verify_token(self, token: str) -> AccessToken | None: if not token: return None scopes = self.required_scopes or [] return AccessToken( token=token, client_id=\"atlassian\", scopes=scopes, expires_at=int(time.time()) + 86400 * 30, ) The docstring documents this: \"we accept non-empty tokens and attach the required scopes.\"\n\nThe default deployment does NOT enable the OAuth proxy auth provider (OAUTH_PROXY_ENABLE_ENV defaults to false; main.py:726). When _build_auth_provider() returns None, FastMCP HTTP transport accepts requests with no authentication challenge.",
+          "action": "Vérifier l'exposition du parc et appliquer le correctif éditeur dès sa disponibilité.",
+          "image": "https://github.githubassets.com/assets/advisory-database-show-f32c8207dfb2.png",
+          "sources": [
+            {
+              "url": "https://github.com/advisories/GHSA-wrhw-j3f9-8vc6",
+              "label": "GitHub Advisory"
+            }
+          ],
+          "url": "https://github.com/advisories/GHSA-wrhw-j3f9-8vc6",
+          "pubDate": "2026-09-22T20:36:26.000Z"
+        },
+        {
+          "title": "CVE-2026-75745 — Adobe Experience Manager Forms JEE is affected by an Incorrect Authorization vulnerability…",
+          "cve": "CVE-2026-75745",
+          "severity": "critical",
+          "score": 74,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Vulnérabilité critique CVE-2026-75745 (score CVSS 10).\n\nAdobe Experience Manager Forms JEE is affected by an Incorrect Authorization vulnerability that could result in arbitrary code execution in the context of the current user. An attacker could exploit this vulnerability to execute arbitrary code. Exploitation of this issue does not require user interaction. Scope is changed.",
+          "detail": "Vulnérabilité critique CVE-2026-75745 (score CVSS 10).\n\nAdobe Experience Manager Forms JEE is affected by an Incorrect Authorization vulnerability that could result in arbitrary code execution in the context of the current user. An attacker could exploit this vulnerability to execute arbitrary code. Exploitation of this issue does not require user interaction. Scope is changed.\n\nScore CVSS : 10\n\nType de faiblesse (CWE) : CWE-863",
+          "action": "Vérifier l'exposition du parc et appliquer le correctif éditeur dès sa disponibilité.",
+          "image": null,
+          "sources": [
+            {
+              "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-75745",
+              "label": "NVD"
+            },
+            {
+              "url": "https://www.cvedetails.com/cve/CVE-2026-75745/",
+              "label": "CVE Details"
+            }
+          ],
+          "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-75745",
+          "pubDate": "2026-09-22T19:16:47.510Z"
+        },
+        {
+          "title": "CVE-2026-75682 — Adobe Connect is affected by an Improper Neutralization of Special Elements used in an SQL…",
+          "cve": "CVE-2026-75682",
+          "severity": "critical",
+          "score": 74,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Vulnérabilité critique CVE-2026-75682 (score CVSS 9.9).\n\nAdobe Connect is affected by an Improper Neutralization of Special Elements used in an SQL Command ('SQL Injection') vulnerability that could result in arbitrary code execution in the context of the current user. A low-privileged attacker could exploit this vulnerability to execute arbitrary SQL commands, potentially gaining elevated access or control over the victim's account or session. Exploitation of this issue does not require user interaction.",
+          "detail": "Vulnérabilité critique CVE-2026-75682 (score CVSS 9.9).\n\nAdobe Connect is affected by an Improper Neutralization of Special Elements used in an SQL Command ('SQL Injection') vulnerability that could result in arbitrary code execution in the context of the current user. A low-privileged attacker could exploit this vulnerability to execute arbitrary SQL commands, potentially gaining elevated access or control over the victim's account or session. Exploitation of this issue does not require user interaction. Scope is changed.\n\nScore CVSS : 9.9\n\nType de faiblesse (CWE) : CWE-89",
+          "action": "Vérifier l'exposition du parc et appliquer le correctif éditeur dès sa disponibilité.",
+          "image": null,
+          "sources": [
+            {
+              "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-75682",
+              "label": "NVD"
+            },
+            {
+              "url": "https://www.cvedetails.com/cve/CVE-2026-75682/",
+              "label": "CVE Details"
+            }
+          ],
+          "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-75682",
+          "pubDate": "2026-09-22T19:16:46.260Z"
+        },
+        {
+          "title": "CVE-2026-89276 — Adobe Campaign Classic (ACC) is affected by an Improper Control of Generation of Code ('Co…",
+          "cve": "CVE-2026-89276",
+          "severity": "critical",
+          "score": 74,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Vulnérabilité critique CVE-2026-89276 (score CVSS 9.9).\n\nAdobe Campaign Classic (ACC) is affected by an Improper Control of Generation of Code ('Code Injection') vulnerability that could result in arbitrary code execution in the context of the current user. A low-privileged attacker could exploit this vulnerability to execute arbitrary code. Exploitation of this issue does not require user interaction. Scope is changed.",
+          "detail": "Vulnérabilité critique CVE-2026-89276 (score CVSS 9.9).\n\nAdobe Campaign Classic (ACC) is affected by an Improper Control of Generation of Code ('Code Injection') vulnerability that could result in arbitrary code execution in the context of the current user. A low-privileged attacker could exploit this vulnerability to execute arbitrary code. Exploitation of this issue does not require user interaction. Scope is changed.\n\nScore CVSS : 9.9\n\nType de faiblesse (CWE) : CWE-94",
+          "action": "Vérifier l'exposition du parc et appliquer le correctif éditeur dès sa disponibilité.",
+          "image": null,
+          "sources": [
+            {
+              "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-89276",
+              "label": "NVD"
+            },
+            {
+              "url": "https://www.cvedetails.com/cve/CVE-2026-89276/",
+              "label": "CVE Details"
+            }
+          ],
+          "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-89276",
+          "pubDate": "2026-09-22T18:17:29.550Z"
+        },
+        {
+          "title": "CVE-2026-89275 — Adobe Campaign Classic (ACC) is affected by an Improper Control of Generation of Code ('Co…",
+          "cve": "CVE-2026-89275",
+          "severity": "critical",
+          "score": 74,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Vulnérabilité critique CVE-2026-89275 (score CVSS 10).\n\nAdobe Campaign Classic (ACC) is affected by an Improper Control of Generation of Code ('Code Injection') vulnerability that could result in arbitrary code execution in the context of the current user. An attacker could exploit this vulnerability to execute arbitrary code. Exploitation of this issue does not require user interaction. Scope is changed.",
+          "detail": "Vulnérabilité critique CVE-2026-89275 (score CVSS 10).\n\nAdobe Campaign Classic (ACC) is affected by an Improper Control of Generation of Code ('Code Injection') vulnerability that could result in arbitrary code execution in the context of the current user. An attacker could exploit this vulnerability to execute arbitrary code. Exploitation of this issue does not require user interaction. Scope is changed.\n\nScore CVSS : 10\n\nType de faiblesse (CWE) : CWE-94",
+          "action": "Vérifier l'exposition du parc et appliquer le correctif éditeur dès sa disponibilité.",
+          "image": null,
+          "sources": [
+            {
+              "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-89275",
+              "label": "NVD"
+            },
+            {
+              "url": "https://www.cvedetails.com/cve/CVE-2026-89275/",
+              "label": "CVE Details"
+            }
+          ],
+          "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-89275",
+          "pubDate": "2026-09-22T18:17:29.407Z"
+        },
+        {
+          "title": "CVE-2026-83660 — Adobe Campaign Classic (ACC) is affected by a Server-Side Request Forgery (SSRF) vulnerabi…",
+          "cve": "CVE-2026-83660",
+          "severity": "critical",
+          "score": 74,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Vulnérabilité critique CVE-2026-83660 (score CVSS 9.9).\n\nAdobe Campaign Classic (ACC) is affected by a Server-Side Request Forgery (SSRF) vulnerability that could result in privilege escalation. Exploitation of this issue does not require user interaction. Scope is changed.",
+          "detail": "Vulnérabilité critique CVE-2026-83660 (score CVSS 9.9).\n\nAdobe Campaign Classic (ACC) is affected by a Server-Side Request Forgery (SSRF) vulnerability that could result in privilege escalation. Exploitation of this issue does not require user interaction. Scope is changed.\n\nScore CVSS : 9.9\n\nType de faiblesse (CWE) : CWE-918",
+          "action": "Vérifier l'exposition du parc et appliquer le correctif éditeur dès sa disponibilité.",
+          "image": null,
+          "sources": [
+            {
+              "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-83660",
+              "label": "NVD"
+            },
+            {
+              "url": "https://www.cvedetails.com/cve/CVE-2026-83660/",
+              "label": "CVE Details"
+            }
+          ],
+          "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-83660",
+          "pubDate": "2026-09-22T18:17:22.673Z"
+        },
+        {
+          "title": "CVE-2026-82013 — Adobe Campaign Classic (ACC) is affected by a Server-Side Request Forgery (SSRF) vulnerabi…",
+          "cve": "CVE-2026-82013",
+          "severity": "critical",
+          "score": 74,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Vulnérabilité critique CVE-2026-82013 (score CVSS 9.9).\n\nAdobe Campaign Classic (ACC) is affected by a Server-Side Request Forgery (SSRF) vulnerability that could result in privilege escalation. A low-privileged attacker could exploit this vulnerability to gain elevated access to internal resources. Exploitation of this issue does not require user interaction. Scope is changed.",
+          "detail": "Vulnérabilité critique CVE-2026-82013 (score CVSS 9.9).\n\nAdobe Campaign Classic (ACC) is affected by a Server-Side Request Forgery (SSRF) vulnerability that could result in privilege escalation. A low-privileged attacker could exploit this vulnerability to gain elevated access to internal resources. Exploitation of this issue does not require user interaction. Scope is changed.\n\nScore CVSS : 9.9\n\nType de faiblesse (CWE) : CWE-918",
+          "action": "Vérifier l'exposition du parc et appliquer le correctif éditeur dès sa disponibilité.",
+          "image": null,
+          "sources": [
+            {
+              "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-82013",
+              "label": "NVD"
+            },
+            {
+              "url": "https://www.cvedetails.com/cve/CVE-2026-82013/",
+              "label": "CVE Details"
+            }
+          ],
+          "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-82013",
+          "pubDate": "2026-09-22T18:17:21.657Z"
+        },
+        {
+          "title": "CVE-2026-75721 — Adobe Campaign Classic (ACC) is affected by an Improper Control of Generation of Code ('Co…",
+          "cve": "CVE-2026-75721",
+          "severity": "critical",
+          "score": 74,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Vulnérabilité critique CVE-2026-75721 (score CVSS 10).\n\nAdobe Campaign Classic (ACC) is affected by an Improper Control of Generation of Code ('Code Injection') vulnerability that could result in arbitrary code execution in the context of the current user. An attacker could exploit this vulnerability to execute arbitrary code. Exploitation of this issue does not require user interaction. Scope is changed.",
+          "detail": "Vulnérabilité critique CVE-2026-75721 (score CVSS 10).\n\nAdobe Campaign Classic (ACC) is affected by an Improper Control of Generation of Code ('Code Injection') vulnerability that could result in arbitrary code execution in the context of the current user. An attacker could exploit this vulnerability to execute arbitrary code. Exploitation of this issue does not require user interaction. Scope is changed.\n\nScore CVSS : 10\n\nType de faiblesse (CWE) : CWE-94",
+          "action": "Vérifier l'exposition du parc et appliquer le correctif éditeur dès sa disponibilité.",
+          "image": null,
+          "sources": [
+            {
+              "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-75721",
+              "label": "NVD"
+            },
+            {
+              "url": "https://www.cvedetails.com/cve/CVE-2026-75721/",
+              "label": "CVE Details"
+            }
+          ],
+          "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-75721",
+          "pubDate": "2026-09-22T18:17:16.033Z"
+        },
+        {
+          "title": "CVE-2026-75699 — Adobe Campaign Classic (ACC) is affected by an Improper Control of Generation of Code ('Co…",
+          "cve": "CVE-2026-75699",
+          "severity": "critical",
+          "score": 74,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Vulnérabilité critique CVE-2026-75699 (score CVSS 10).\n\nAdobe Campaign Classic (ACC) is affected by an Improper Control of Generation of Code ('Code Injection') vulnerability that could result in arbitrary code execution in the context of the current user. An attacker could exploit this vulnerability to execute arbitrary code. Exploitation of this issue does not require user interaction. Scope is changed.",
+          "detail": "Vulnérabilité critique CVE-2026-75699 (score CVSS 10).\n\nAdobe Campaign Classic (ACC) is affected by an Improper Control of Generation of Code ('Code Injection') vulnerability that could result in arbitrary code execution in the context of the current user. An attacker could exploit this vulnerability to execute arbitrary code. Exploitation of this issue does not require user interaction. Scope is changed.\n\nScore CVSS : 10\n\nType de faiblesse (CWE) : CWE-94",
+          "action": "Vérifier l'exposition du parc et appliquer le correctif éditeur dès sa disponibilité.",
+          "image": null,
+          "sources": [
+            {
+              "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-75699",
+              "label": "NVD"
+            },
+            {
+              "url": "https://www.cvedetails.com/cve/CVE-2026-75699/",
+              "label": "CVE Details"
+            }
+          ],
+          "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-75699",
+          "pubDate": "2026-09-22T18:17:15.760Z"
+        },
+        {
+          "title": "CVE-2026-73369 — Adobe Campaign Classic (ACC) is affected by an Improper Control of Generation of Code ('Co…",
+          "cve": "CVE-2026-73369",
+          "severity": "critical",
+          "score": 74,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Vulnérabilité critique CVE-2026-73369 (score CVSS 10).\n\nAdobe Campaign Classic (ACC) is affected by an Improper Control of Generation of Code ('Code Injection') vulnerability that could result in arbitrary code execution in the context of the current user. An attacker could exploit this vulnerability to execute arbitrary code. Exploitation of this issue does not require user interaction. Scope is changed.",
+          "detail": "Vulnérabilité critique CVE-2026-73369 (score CVSS 10).\n\nAdobe Campaign Classic (ACC) is affected by an Improper Control of Generation of Code ('Code Injection') vulnerability that could result in arbitrary code execution in the context of the current user. An attacker could exploit this vulnerability to execute arbitrary code. Exploitation of this issue does not require user interaction. Scope is changed.\n\nScore CVSS : 10\n\nType de faiblesse (CWE) : CWE-94",
+          "action": "Vérifier l'exposition du parc et appliquer le correctif éditeur dès sa disponibilité.",
+          "image": null,
+          "sources": [
+            {
+              "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-73369",
+              "label": "NVD"
+            },
+            {
+              "url": "https://www.cvedetails.com/cve/CVE-2026-73369/",
+              "label": "CVE Details"
+            }
+          ],
+          "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-73369",
+          "pubDate": "2026-09-22T18:17:15.300Z"
+        },
+        {
+          "title": "CVE-2026-82000 — Adobe Experience Manager Forms JEE is affected by a Server-Side Request Forgery (SSRF) vul…",
+          "cve": "CVE-2026-82000",
+          "severity": "critical",
+          "score": 73,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Vulnérabilité critique CVE-2026-82000 (score CVSS 9.6).\n\nAdobe Experience Manager Forms JEE is affected by a Server-Side Request Forgery (SSRF) vulnerability that could result in privilege escalation. A low-privileged attacker could exploit this vulnerability to gain elevated access to internal resources. Exploitation of this issue does not require user interaction. Scope is changed.",
+          "detail": "Vulnérabilité critique CVE-2026-82000 (score CVSS 9.6).\n\nAdobe Experience Manager Forms JEE is affected by a Server-Side Request Forgery (SSRF) vulnerability that could result in privilege escalation. A low-privileged attacker could exploit this vulnerability to gain elevated access to internal resources. Exploitation of this issue does not require user interaction. Scope is changed.\n\nScore CVSS : 9.6\n\nType de faiblesse (CWE) : CWE-918",
+          "action": "Vérifier l'exposition du parc et appliquer le correctif éditeur dès sa disponibilité.",
+          "image": null,
+          "sources": [
+            {
+              "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-82000",
+              "label": "NVD"
+            },
+            {
+              "url": "https://www.cvedetails.com/cve/CVE-2026-82000/",
+              "label": "CVE Details"
+            }
+          ],
+          "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-82000",
+          "pubDate": "2026-09-22T19:16:53.297Z"
+        },
+        {
+          "title": "CVE-2026-81995 — Adobe Experience Manager Forms JEE is affected by an Improper Input Validation vulnerabili…",
+          "cve": "CVE-2026-81995",
+          "severity": "critical",
+          "score": 72,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Vulnérabilité critique CVE-2026-81995 (score CVSS 9.1).\n\nAdobe Experience Manager Forms JEE is affected by an Improper Input Validation vulnerability that could result in arbitrary code execution in the context of the current user. An attacker with high privileges could exploit this vulnerability to execute arbitrary code. Exploitation of this issue does not require user interaction. Scope is changed.",
+          "detail": "Vulnérabilité critique CVE-2026-81995 (score CVSS 9.1).\n\nAdobe Experience Manager Forms JEE is affected by an Improper Input Validation vulnerability that could result in arbitrary code execution in the context of the current user. An attacker with high privileges could exploit this vulnerability to execute arbitrary code. Exploitation of this issue does not require user interaction. Scope is changed.\n\nScore CVSS : 9.1\n\nType de faiblesse (CWE) : CWE-20",
+          "action": "Vérifier l'exposition du parc et appliquer le correctif éditeur dès sa disponibilité.",
+          "image": null,
+          "sources": [
+            {
+              "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-81995",
+              "label": "NVD"
+            },
+            {
+              "url": "https://www.cvedetails.com/cve/CVE-2026-81995/",
+              "label": "CVE Details"
+            }
+          ],
+          "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-81995",
+          "pubDate": "2026-09-22T19:16:52.917Z"
+        },
+        {
+          "title": "CVE-2026-75698 — Adobe Connect is affected by a reflected Cross-Site Scripting (XSS) vulnerability. An atta…",
+          "cve": "CVE-2026-75698",
+          "severity": "critical",
+          "score": 72,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Vulnérabilité critique CVE-2026-75698 (score CVSS 9.3).\n\nAdobe Connect is affected by a reflected Cross-Site Scripting (XSS) vulnerability. An attacker could exploit this vulnerability to inject malicious scripts into a web page, potentially gaining elevated access or control over the victim's account or session. Exploitation of this issue requires user interaction in that a victim must visit a maliciously crafted URL or interact with a compromised web page. Scope is changed.",
+          "detail": "Vulnérabilité critique CVE-2026-75698 (score CVSS 9.3).\n\nAdobe Connect is affected by a reflected Cross-Site Scripting (XSS) vulnerability. An attacker could exploit this vulnerability to inject malicious scripts into a web page, potentially gaining elevated access or control over the victim's account or session. Exploitation of this issue requires user interaction in that a victim must visit a maliciously crafted URL or interact with a compromised web page. Scope is changed.\n\nScore CVSS : 9.3\n\nType de faiblesse (CWE) : CWE-79",
+          "action": "Vérifier l'exposition du parc et appliquer le correctif éditeur dès sa disponibilité.",
+          "image": null,
+          "sources": [
+            {
+              "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-75698",
+              "label": "NVD"
+            },
+            {
+              "url": "https://www.cvedetails.com/cve/CVE-2026-75698/",
+              "label": "CVE Details"
+            }
+          ],
+          "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-75698",
+          "pubDate": "2026-09-22T19:16:46.910Z"
+        },
+        {
+          "title": "CVE-2026-75689 — Adobe Connect is affected by a stored Cross-Site Scripting (XSS) vulnerability that could …",
+          "cve": "CVE-2026-75689",
+          "severity": "critical",
+          "score": 72,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Vulnérabilité critique CVE-2026-75689 (score CVSS 9.3).\n\nAdobe Connect is affected by a stored Cross-Site Scripting (XSS) vulnerability that could be abused by an attacker to inject malicious scripts into vulnerable form fields. Malicious JavaScript may be executed in a victim's browser when they browse to the page containing the vulnerable field, potentially gaining elevated access or control over the victim's account or session. Scope is changed.",
+          "detail": "Vulnérabilité critique CVE-2026-75689 (score CVSS 9.3).\n\nAdobe Connect is affected by a stored Cross-Site Scripting (XSS) vulnerability that could be abused by an attacker to inject malicious scripts into vulnerable form fields. Malicious JavaScript may be executed in a victim's browser when they browse to the page containing the vulnerable field, potentially gaining elevated access or control over the victim's account or session. Scope is changed.\n\nScore CVSS : 9.3\n\nType de faiblesse (CWE) : CWE-79",
+          "action": "Vérifier l'exposition du parc et appliquer le correctif éditeur dès sa disponibilité.",
+          "image": null,
+          "sources": [
+            {
+              "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-75689",
+              "label": "NVD"
+            },
+            {
+              "url": "https://www.cvedetails.com/cve/CVE-2026-75689/",
+              "label": "CVE Details"
+            }
+          ],
+          "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-75689",
+          "pubDate": "2026-09-22T19:16:46.643Z"
+        },
+        {
+          "title": "CVE-2026-75684 — Adobe Connect is affected by a stored Cross-Site Scripting (XSS) vulnerability that could …",
+          "cve": "CVE-2026-75684",
+          "severity": "critical",
+          "score": 72,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Vulnérabilité critique CVE-2026-75684 (score CVSS 9.3).\n\nAdobe Connect is affected by a stored Cross-Site Scripting (XSS) vulnerability that could be abused by an attacker to inject malicious scripts into vulnerable form fields. Malicious JavaScript may be executed in a victim's browser when they browse to the page containing the vulnerable field, potentially gaining elevated access or control over the victim's account or session. Scope is changed.",
+          "detail": "Vulnérabilité critique CVE-2026-75684 (score CVSS 9.3).\n\nAdobe Connect is affected by a stored Cross-Site Scripting (XSS) vulnerability that could be abused by an attacker to inject malicious scripts into vulnerable form fields. Malicious JavaScript may be executed in a victim's browser when they browse to the page containing the vulnerable field, potentially gaining elevated access or control over the victim's account or session. Scope is changed.\n\nScore CVSS : 9.3\n\nType de faiblesse (CWE) : CWE-79",
+          "action": "Vérifier l'exposition du parc et appliquer le correctif éditeur dès sa disponibilité.",
+          "image": null,
+          "sources": [
+            {
+              "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-75684",
+              "label": "NVD"
+            },
+            {
+              "url": "https://www.cvedetails.com/cve/CVE-2026-75684/",
+              "label": "CVE Details"
+            }
+          ],
+          "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-75684",
+          "pubDate": "2026-09-22T19:16:46.393Z"
+        },
+        {
+          "title": "WordPress : une faille critique permet de prendre le contrôle d’un site après un simple clic",
+          "cve": null,
+          "severity": "critical",
+          "score": 49,
+          "corroboration": 2,
+          "region": "fr",
+          "body": "Vulnérabilité critique affectant WordPress.\n\nWordPress vient de publier une mise à jour de sécurité pour corriger une vulnérabilité critique dans le cœur même du CMS. Référencée CVE-2026-87902 et\n\nFaille Mis à jour le 22 septembre 2026 à 21h36 WordPress : une faille critique permet de prendre le contrôle d’un site après un simple clic WordPress vient de publier une mise à jour de sécurité pour corriger une vulnérabilité critique dans le cœur même du CMS.",
+          "detail": "Vulnérabilité critique affectant WordPress.\n\nWordPress vient de publier une mise à jour de sécurité pour corriger une vulnérabilité critique dans le cœur même du CMS. Référencée CVE-2026-87902 et\n\nFaille Mis à jour le 22 septembre 2026 à 21h36 WordPress : une faille critique permet de prendre le contrôle d’un site après un simple clic WordPress vient de publier une mise à jour de sécurité pour corriger une vulnérabilité critique dans le cœur même du CMS. Référencée CVE-2026-87902 et évaluée à 9,2/10 , elle peut être exploitée sans disposer de compte et sans aucune action d’un administrateur connecté .\n\nLa faille touche toutes les versions de WordPress comprises entre 4.7.0 et 7.1.1 . Elle a été corrigée le 22 septembre 2026 avec WordPress 7.1.2 ainsi que dans les différentes branches encore prises en charge par le projet.\n\nLe problème se situe dans la manière dont WordPress détermine le fichier de modèle PHP à utiliser pour afficher certaines pages. Une partie de cette sélection peut être influencée depuis l’adresse demandée par l’internaute sans subir correctement les contrôles prévus contre les traversées de répertoires .\n\nUn attaquant distant peut ainsi, dans certaines configurations, amener WordPress à charger un fichier PHP présent ailleurs sur le serveur que dans les répertoires normalement prévus pour le thème actif.\n\nLe chargement d’un fichier PHP local ne signifie pas automatiquement qu’un attaquant peut exécuter le code de son choix. Pour atteindre ce scénario, un second ensemble de conditions doit être réuni sur le serveur .\n\nSi un fichier PHP exploitable est déjà présent et que la configuration du serveur le permet, la vulnérabilité peut néanmoins être transformée en exécution de code à distance , avec à la clé un risque de compromission complète du site.",
+          "action": "Vérifier l'exposition du parc et appliquer le correctif éditeur dès sa disponibilité.",
+          "image": "https://www.cyberattaque.org/wp-content/uploads/2026/09/wordpress-faille-2.jpg",
+          "sources": [
+            {
+              "url": "https://www.cyberattaque.org/cve-2026-87902-wordpress-une-faille-critique-permet-de-prendre-le-controle-dun-site-apres-un-simple-clic/",
+              "label": "Cyberattaque.org"
+            },
+            {
+              "url": "https://www.it-connect.fr/wordpress-click2shell-faille-rce-theme/",
+              "label": "IT-Connect"
+            }
+          ],
+          "url": "https://www.cyberattaque.org/cve-2026-87902-wordpress-une-faille-critique-permet-de-prendre-le-controle-dun-site-apres-un-simple-clic/",
+          "pubDate": "2026-09-22T19:33:02.000Z"
+        },
+        {
+          "title": "Du Chromebook au Googlebook, Google ne change pas tout",
+          "cve": null,
+          "severity": "high",
+          "score": 39,
+          "corroboration": 1,
+          "region": "fr",
+          "body": "Vulnérabilité élevée affectant Google.\n\nPossesseurs de Chromebooks, sachez que Googlebook n&rsquo;est « pas une migration forcée ». Google le réaffirme après l&rsquo;officialisation des premiers ordinateurs portables à entrer dans cette « catégorie premium ». Il y en a 5, d&rsquo;autant de constructeurs (Acer, ASUS, Dell, HP, Lenovo). La plupart ont ouvert les précommandes. On retiendra la date du lancement commercial en France : le 5 octobre 2026.",
+          "detail": "Vulnérabilité élevée affectant Google.\n\nPossesseurs de Chromebooks, sachez que Googlebook n&rsquo;est « pas une migration forcée ». Google le réaffirme après l&rsquo;officialisation des premiers ordinateurs portables à entrer dans cette « catégorie premium ». Il y en a 5, d&rsquo;autant de constructeurs (Acer, ASUS, Dell, HP, Lenovo). La plupart ont ouvert les précommandes. On retiendra la date du lancement commercial en France : le 5 octobre 2026. Il n&rsquo;y a pour le moment aucun Googlebook à moins de 1000 € TTC. Les matériaux qui composent leurs châssis s&rsquo;en ressentent (beaucoup d&rsquo;aluminium, voire de la fibre de carbone). Le rétroéclairage clavier et le capteur d&#8217;empreintes digitales y sont généralisés. Tout comme les écrans OLED tactiles &#8211; sauf chez Dell, qui a opté pour du LCD. Des NPU, mais peu d&rsquo;accent sur l&rsquo;IA locale Côté processeur, c&rsquo;est soit de l&rsquo;Intel Core Série 3 (chez Acer, ASUS et Lenovo), soit du Qualcomm Snapdragon X Elite (Dell, HP). Avec, dans tous les cas, un NPU embarqué d&rsquo;environ 50 TOPS. Malgré la présence de ce NPU, Google ne met pas vraiment en avant l&rsquo;aspect « IA locale ». Comme c&rsquo;était déjà le cas avec les Chromebooks, il promeut l&rsquo;IA tout court, sous la marque Gemini Intelligence. La principale fonctionnalité mise en valeur n&rsquo;est pas nouvelle. Il s&rsquo;agit du « Pointeur Magique ». En secouant le pointeur de",
+          "action": "Vérifier l'exposition du parc et appliquer le correctif éditeur dès sa disponibilité.",
+          "image": "https://www.silicon.fr/wp-content/uploads/2026/09/Googlebook.jpg",
+          "sources": [
+            {
+              "url": "https://www.silicon.fr/workspace-1376/googlebook-229241",
+              "label": "Silicon.fr"
+            }
+          ],
+          "url": "https://www.silicon.fr/workspace-1376/googlebook-229241",
+          "pubDate": "2026-09-22T12:55:46.000Z"
+        },
+        {
+          "title": "Bulletin d'actualité CERTFR-2026-ACT-040 (21 septembre 2026)",
+          "cve": null,
+          "severity": "culture",
+          "score": 12,
+          "corroboration": 1,
+          "region": "fr",
+          "body": "Vulnérabilité élevée.\n\nCe bulletin d'actualité du CERT-FR revient sur les vulnérabilités significatives de la semaine passée pour souligner leurs criticités. Il ne remplace pas l'analyse de l'ensemble des avis et alertes publiés par le CERT-FR dans le cadre d'une analyse de risques pour prioriser l'application des... Voir en ligne : https://www.cert.ssi.gouv.fr/actual...",
+          "detail": "Vulnérabilité élevée.\n\nCe bulletin d'actualité du CERT-FR revient sur les vulnérabilités significatives de la semaine passée pour souligner leurs criticités. Il ne remplace pas l'analyse de l'ensemble des avis et alertes publiés par le CERT-FR dans le cadre d'une analyse de risques pour prioriser l'application des... Voir en ligne : https://www.cert.ssi.gouv.fr/actual...",
+          "action": "Vérifier l'exposition du parc et appliquer le correctif éditeur dès sa disponibilité.",
+          "image": null,
+          "sources": [
+            {
+              "url": "https://www.globalsecuritymag.fr/bulletin-d-actualite-certfr-2026-act-040-21-septembre-2026.html",
+              "label": "Global Sec Mag"
+            }
+          ],
+          "url": "https://www.globalsecuritymag.fr/bulletin-d-actualite-certfr-2026-act-040-21-septembre-2026.html",
+          "pubDate": "2026-09-23T04:01:06.063Z"
+        }
+      ]
+    },
+    {
+      "id": "attacks",
+      "items": [
+        {
+          "title": "Another worry for water systems: infostealer exposure",
+          "cve": null,
+          "severity": "critical",
+          "score": 77,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Incident de sécurité rapporté par CyberScoop.\n\nNearly two of every 10 U.S. water and wastewater organizations have identity data actively exposed from infostealers harvesting their credentials, according to research published Tuesday. The study from identity risk firm SpyCloud follows months of reports about a wave of cyberattacks hitting targets in the sector , which U.S. government officials suspect are tied to Iran.",
+          "detail": "Incident de sécurité rapporté par CyberScoop.\n\nNearly two of every 10 U.S. water and wastewater organizations have identity data actively exposed from infostealers harvesting their credentials, according to research published Tuesday. The study from identity risk firm SpyCloud follows months of reports about a wave of cyberattacks hitting targets in the sector , which U.S. government officials suspect are tied to Iran. The company built a database of 66,845 Environmental Protection Agency-registered systems, examined internet domains and ultimately analyzed 10,000 organizations, finding that 1,787 showed active infostealer exposure. In one case, a single infected device at a smart meter technology provider that SpyCloud didn’t name contained saved logins linked to roughly 167 different U.S. utility metering tenants — meaning that one exposure opened the door to many more.&nbsp; That “cascading supply chain exposure” was one of the biggest findings of the report that SpyCloud shared exclusively with CyberScoop, said Jason Lancaster, chief investigations officer at the cyber firm, along with the quantitative approach” to measure exposure overall. “We talk about it a lot,” Lancaster said of the exponential risk that one exposure can present. “There&#8217;s examples here and there, but that was a standout example of, here&#8217;s a tangible thing that is an exposure right now.” Generally, “Infostealer exposure means the attacke",
+          "action": "Surveiller les indicateurs de compromission associés et contrôler les actifs exposés.",
+          "image": "https://cyberscoop.com/wp-content/uploads/sites/3/2026/09/GettyImages-2257697741-1.jpg",
+          "sources": [
+            {
+              "url": "https://cyberscoop.com/spycloud-study-water-utilities-infostealer-exposure/",
+              "label": "CyberScoop"
+            }
+          ],
+          "url": "https://cyberscoop.com/spycloud-study-water-utilities-infostealer-exposure/",
+          "pubDate": "2026-09-22T10:00:00.000Z"
+        },
+        {
+          "title": "AI is set to help cyber attackers much more than defenders, says UK official",
+          "cve": null,
+          "severity": "news",
+          "score": 75,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Incident de sécurité rapporté par The Record.\n\nDave Chismon, the NCSC’s chief technology officer for architecture, said in a blog post that the imbalance in AI means cyberattacks would likely grow as automated defenses struggle to keep pace.\n\nDefenders cannot yet put artificial intelligence to work as freely as attackers can, a senior official at Britain's National Cyber Security Centre (NCSC) warned Monday.\n\nDave Chismon, the NCSC’s chief technology officer for architecture, said in a blog post this i…",
+          "detail": "Incident de sécurité rapporté par The Record.\n\nDave Chismon, the NCSC’s chief technology officer for architecture, said in a blog post that the imbalance in AI means cyberattacks would likely grow as automated defenses struggle to keep pace.\n\nDefenders cannot yet put artificial intelligence to work as freely as attackers can, a senior official at Britain's National Cyber Security Centre (NCSC) warned Monday.\n\nDave Chismon, the NCSC’s chief technology officer for architecture, said in a blog post this imbalance means AI-enabled cyberattacks would likely grow as automated defenses struggle to keep pace.\n\nHis warning comes amid concerns about the kind of cybersecurity future AI will lead to. Over the summer, models from Google, Anthropic, OpenAI and Meta reached real-world systems during security evaluations. In most of these cases the models got in through basic means, including reusing exposed credentials.\n\nIn June, the Five Eyes intelligence alliance — which includes GCHQ, the agency NCSC is part of — warned that frontier AI could transform offensive and defensive cyber operations within months rather than years.\n\nSimilar concerns have been expressed by other authorities — from the chair of the G20’s financial stability board through to the Chinese Communist Party’s top intelligence official — but the nature of the “fundamental transformation” remains unclear.\n\nWhile software makers have in the months since the Five Eyes warning issued patches at record rates, a comparable rise in cyberattacks has not yet been observed.",
+          "action": "Surveiller les indicateurs de compromission associés et contrôler les actifs exposés.",
+          "image": "https://cms.therecord.media/uploads/arrows_1_d19c3041ee.jpg",
+          "sources": [
+            {
+              "url": "https://therecord.media/ai-set-to-help-attackers-more-than-defenders",
+              "label": "The Record"
+            }
+          ],
+          "url": "https://therecord.media/ai-set-to-help-attackers-more-than-defenders",
+          "pubDate": "2026-09-22T13:05:00.000Z"
+        },
+        {
+          "title": "Two arrested in UK after Microsoft takedown of ‘Eviltokens’ AI-chatbot for cybercriminals",
+          "cve": null,
+          "severity": "news",
+          "score": 70,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Incident de sécurité rapporté par The Record.\n\nAvailable on Telegram for a $1,500 initiation fee and a recurring monthly $500 subscription, EvilTokens provided cybercriminals with artificial intelligence tools enabling them to compromise accounts, analyze breached inboxes and find the best methods for monetizing their access through fraud.\n\nMicrosoft took legal action this month against an AI-powered cybercriminal platform called EvilTokens, using court authorization to take the tool offline and work w…",
+          "detail": "Incident de sécurité rapporté par The Record.\n\nAvailable on Telegram for a $1,500 initiation fee and a recurring monthly $500 subscription, EvilTokens provided cybercriminals with artificial intelligence tools enabling them to compromise accounts, analyze breached inboxes and find the best methods for monetizing their access through fraud.\n\nMicrosoft took legal action this month against an AI-powered cybercriminal platform called EvilTokens, using court authorization to take the tool offline and work with police in the U.K. to arrest those allegedly behind it.\n\nMicrosoft Digital Crimes Unit associate general counsel Steven Masada said they partnered with health sector cybersecurity non-profit Health-ISAC on a lawsuit in U.S. District Court that allowed them to dismantle the platform and related infrastructure.\n\nMicrosoft also worked with officers within U.K.’s Metropolitan Police Service's cybercrime team, resulting in arrests of two men, aged 32 and 38, earlier this month. Microsoft declined to identify the men but said both have since been released on bail while police continue their investigation.\n\n“The two individuals were alleged operators of EvilTokens. We believe others may have supported the service in various capacities,” a spokesperson told Recorded Future News.\n\nA spokesperson for the Metropolitan Police Service confirmed that two men were arrested as part of an investigation into the online phishing service. Officers carried out warrants on two locations last Friday.\n\nThe Metropolitan Police Service said the two men were arrested on suspicion of making articles for use in fraud and money laundering offenses. Microsoft reported the issue to the Metropolitan Police Service in August, according to the spokesperson.",
+          "action": "Surveiller les indicateurs de compromission associés et contrôler les actifs exposés.",
+          "image": "https://cms.therecord.media/uploads/eviltokens_bcc31bae39.jpg",
+          "sources": [
+            {
+              "url": "https://therecord.media/two-arrested-in-uk-after-microsoft-takedown-eviltokens",
+              "label": "The Record"
+            }
+          ],
+          "url": "https://therecord.media/two-arrested-in-uk-after-microsoft-takedown-eviltokens",
+          "pubDate": "2026-09-22T15:51:00.000Z"
+        },
+        {
+          "title": "Russia's internet shutdowns disrupt warnings about incoming drone attacks",
+          "cve": null,
+          "severity": "news",
+          "score": 70,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Incident de sécurité rapporté par The Record.\n\nRussia’s growing restrictions on mobile internet and cellular service are making it harder for people to receive warnings about incoming Ukrainian drone and missile attacks.",
+          "detail": "Incident de sécurité rapporté par The Record.\n\nRussia’s growing restrictions on mobile internet and cellular service are making it harder for people to receive warnings about incoming Ukrainian drone and missile attacks.",
+          "action": "Surveiller les indicateurs de compromission associés et contrôler les actifs exposés.",
+          "image": "https://cms.therecord.media/uploads/CC_0_1_0_d19ab52f20.png",
+          "sources": [
+            {
+              "url": "https://therecord.media/russia-internet-shutdowns-disrupt-warnings-about-drone-attacks",
+              "label": "The Record"
+            }
+          ],
+          "url": "https://therecord.media/russia-internet-shutdowns-disrupt-warnings-about-drone-attacks",
+          "pubDate": "2026-09-22T13:00:00.000Z"
+        },
+        {
+          "title": "Contagious Interview: 30,000 devices infected by a fake job interview",
+          "cve": null,
+          "severity": "high",
+          "score": 70,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Incident de sécurité rapporté par Security Affairs.\n\nNorth Korea-linked WaterPlum runs the Contagious Interview campaign, infecting over 30,000 devices using a fake job interview. On September 18, Japan&#8217;s National Police Agency, the FBI, the US Department of Defense&#8217;s Cyber Crime Center, and intelligence agencies from Australia and Germany published a joint advisory about a group called WaterPlum, better known as Contagious Interview . The name says it all.",
+          "detail": "Incident de sécurité rapporté par Security Affairs.\n\nNorth Korea-linked WaterPlum runs the Contagious Interview campaign, infecting over 30,000 devices using a fake job interview. On September 18, Japan&#8217;s National Police Agency, the FBI, the US Department of Defense&#8217;s Cyber Crime Center, and intelligence agencies from Australia and Germany published a joint advisory about a group called WaterPlum, better known as Contagious Interview . The name says it all. The job interview is the infection vector. The numbers in the advisory are hard to shrug off. At least 30,000 devices infected across more than 100 countries, funds or credentials stolen from over 7,000 cryptocurrency wallets, and a total of 1.7 billion yen, roughly $10.71 million, funneled back to North Korea. The victims are almost always the same type: freelance developers and specialists in blockchain and Web3 work. Japan&#8217;s NPA and the FBI assess that both WaterPlum operators and some North Korean IT workers report to the same place, the 313 General Bureau of the Munitions Industry Department, under the Workers&#8217; Party&#8217;s Central Committee. That&#8217;s not a loose affiliation. It&#8217;s an org chart. The trap itself is almost embarrassingly simple. WaterPlum actors pose as recruiters or hiring managers, often impersonating real AI, crypto, or NFT companies, and reach out on social media, job boards, and freelance platforms. Candidates get invi",
+          "action": "Surveiller les indicateurs de compromission associés et contrôler les actifs exposés.",
+          "image": "https://securityaffairs.com/wp-content/uploads/2025/07/image-41.png",
+          "sources": [
+            {
+              "url": "https://securityaffairs.com/199506/uncategorized/contagious-interview-30000-devices-infected-by-a-fake-job-interview.html",
+              "label": "Security Affairs"
+            }
+          ],
+          "url": "https://securityaffairs.com/199506/uncategorized/contagious-interview-30000-devices-infected-by-a-fake-job-interview.html",
+          "pubDate": "2026-09-22T06:44:46.000Z"
+        },
+        {
+          "title": "Sweden fines Miljödata $183,000 over breach affecting 2.2 million",
+          "cve": null,
+          "severity": "news",
+          "score": 68,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Incident de sécurité rapporté par BleepingComputer.\n\nSweden's data privacy regulator, IMY, has imposed a $183,000 (SEK 1.8 million) fine on IT systems provider Milj&ouml;data for inadequate security measures leading to a breach in August 2025 affecting 2.2 million people.\n\nShinyHunters claims FBI hack, data theft in PeopleSoft zero-day breach\n\nNew Windows Defender zero-day blocks Microsoft antivirus updates\n\nEvilTokens PhaaS disrupted after compromising 12,000 Microsoft accounts\n\nCheck Point warns of Managem…",
+          "detail": "Incident de sécurité rapporté par BleepingComputer.\n\nSweden's data privacy regulator, IMY, has imposed a $183,000 (SEK 1.8 million) fine on IT systems provider Milj&ouml;data for inadequate security measures leading to a breach in August 2025 affecting 2.2 million people.\n\nShinyHunters claims FBI hack, data theft in PeopleSoft zero-day breach\n\nNew Windows Defender zero-day blocks Microsoft antivirus updates\n\nEvilTokens PhaaS disrupted after compromising 12,000 Microsoft accounts\n\nCheck Point warns of Management Server zero-day exploited in attacks\n\nRogue external MFA providers can steal passwords during logins\n\nChinese hackers exploit WordPress, Zyxel flaws to steal govt data",
+          "action": "Surveiller les indicateurs de compromission associés et contrôler les actifs exposés.",
+          "image": "https://www.bleepstatic.com/content/hl-images/2025/08/27/sweden.jpg",
+          "sources": [
+            {
+              "url": "https://www.bleepingcomputer.com/news/security/sweden-fines-milj-data-183-000-over-breach-affecting-22-million/",
+              "label": "BleepingComputer"
+            }
+          ],
+          "url": "https://www.bleepingcomputer.com/news/security/sweden-fines-milj-data-183-000-over-breach-affecting-22-million/",
+          "pubDate": "2026-09-22T21:40:37.000Z"
+        },
+        {
+          "title": "Macfinger ClickFix campaign, (Tue, Sep 22nd)",
+          "cve": null,
+          "severity": "high",
+          "score": 66,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Incident de sécurité rapporté par SANS ISC.\n\nIntroduction I&#39;ve found several legitimate websites with injected script for a campaign using the ClickFix social engineering technique . This particular ClickFix campaign was documented earlier this month on the Ransom-ISAC Blog, but it doesn&#39;t appear to have a nickname yet. Since this campaign is targeting macOS environments through a fingerprinting process, I&#39;m calling it the &quot;Macfinger ClickFix&quot; campaign.",
+          "detail": "Incident de sécurité rapporté par SANS ISC.\n\nIntroduction I&#39;ve found several legitimate websites with injected script for a campaign using the ClickFix social engineering technique . This particular ClickFix campaign was documented earlier this month on the Ransom-ISAC Blog, but it doesn&#39;t appear to have a nickname yet. Since this campaign is targeting macOS environments through a fingerprinting process, I&#39;m calling it the &quot;Macfinger ClickFix&quot; campaign. No, this is not related to the MacFinger utility from decades ago. Instead, think of the movie Goldfinger , but with macOS malware and the internet instead of James Bond and Miss Galore. Shown above: An image I created to represent the Macfinger ClickFix campaign. Today&#39;s diary presents indicators from the Macfinger ClickFix campaign that I saw on Tuesday, 2026-09-22. Images From the Infection Shown above: First part of the Macfinger injected script in a page from a legitimate website. Shown above: Second part of the Macfinger injected script in a page from a legitimate website. Shown above: Fake bot protection page caused by the injected Macfinger script. Shown above: ClickFix instructions from fake verification pop-up caused by the injected Macfinger script. While displaying the fake bot protection page with the verification instructions, the Macfinger domain receives frequent POST requests from the victim host. These report information on the u",
+          "action": "Surveiller les indicateurs de compromission associés et contrôler les actifs exposés.",
+          "image": "https://isc.sans.edu/images/logos/isc/large.png",
+          "sources": [
+            {
+              "url": "https://isc.sans.edu/diary/rss/33360",
+              "label": "SANS ISC"
+            }
+          ],
+          "url": "https://isc.sans.edu/diary/rss/33360",
+          "pubDate": "2026-09-23T00:55:11.000Z"
+        },
+        {
+          "title": "Gaedke & Partner Steuerberatung — rançongiciel anubis (Allemagne)",
+          "cve": null,
+          "severity": "news",
+          "score": 66,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Incident de sécurité rapporté par ransomware.live.\n\nRansomware.live discovered on 2026-09-22 that Gaedke & Partner Steuerberatung has been claimed by Anubis ransomware group\n\nSponsored by Hudson Rock – Use Hudson Rock's free cybercrime intelligence tools to learn how Infostealer infections are leading to ransomware attacks\n\nLegal Disclaimer: Ransomware.live does not engage in the acquisition, exfiltration, downloading, possession, hosting, access, consultation, redistribution, or disclosure of unlawfully ob…",
+          "detail": "Incident de sécurité rapporté par ransomware.live.\n\nRansomware.live discovered on 2026-09-22 that Gaedke & Partner Steuerberatung has been claimed by Anubis ransomware group\n\nSponsored by Hudson Rock – Use Hudson Rock's free cybercrime intelligence tools to learn how Infostealer infections are leading to ransomware attacks\n\nLegal Disclaimer: Ransomware.live does not engage in the acquisition, exfiltration, downloading, possession, hosting, access, consultation, redistribution, or disclosure of unlawfully obtained data. This platform indexes only publicly visible information posted by ransomware operators and open web sources without accessing or obtaining the underlying stolen content . The service is provided to support public awareness, legitimate research, and cyber-resilience. No stolen personal or confidential data is collected or distributed via this site.\n\nSession: 057726c909af65969646b040bbbfa5c4df67f5166a33cbac6cd9e1302b0b3ca148\n\nTox: 50DADDED26D859469371938B793456D8210A5AE02DD3C42979F5E52411BCB648F1CA68A5EDE5",
+          "action": "Surveiller les indicateurs de compromission associés et contrôler les actifs exposés.",
+          "image": "https://images.ransomware.live/victims/519bbde100de2daa3697017549d39e55.png",
+          "sources": [
+            {
+              "url": "https://www.ransomware.live/id/R2FlZGtlICYgUGFydG5lciBTdGV1ZXJiZXJhdHVuZ0BhbnViaXM=",
+              "label": "ransomware.live"
+            }
+          ],
+          "url": "https://www.ransomware.live/id/R2FlZGtlICYgUGFydG5lciBTdGV1ZXJiZXJhdHVuZ0BhbnViaXM=",
+          "pubDate": "2026-09-22T22:22:39.493Z"
+        },
+        {
+          "title": "Malicious npm Package Poses as Twilio Bug-Bounty Probe, Can Exfiltrate Credentials",
+          "cve": null,
+          "severity": "news",
+          "score": 64,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Incident de sécurité rapporté par The Hacker News.\n\nCybersecurity researchers have disclosed details of a malicious npm package named \"tw-pkgprobe-7731\" that masquerades as a security tool targeting developers integrating Twilio into their applications, while stealthily attempting to harvest sensitive data. The package, named \"tw-pkgprobe-7731,\" was first uploaded to the npm registry in mid-August 2026 by an npm account named \"twdepprobe7731.\"",
+          "detail": "Incident de sécurité rapporté par The Hacker News.\n\nCybersecurity researchers have disclosed details of a malicious npm package named \"tw-pkgprobe-7731\" that masquerades as a security tool targeting developers integrating Twilio into their applications, while stealthily attempting to harvest sensitive data. The package, named \"tw-pkgprobe-7731,\" was first uploaded to the npm registry in mid-August 2026 by an npm account named \"twdepprobe7731.\"",
+          "action": "Surveiller les indicateurs de compromission associés et contrôler les actifs exposés.",
+          "image": "https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEikMlDL6W0FZvq8_gscr2M3UZIVnCYorB-Ip2G6To6-eZ04gFyOMsf-mvbqtMkYv484O3XnKhzySe0-UQjCOMm99fUhzrpkMD-QaZkn2UIUozJ5hLwrm7kXgLkODdkUUJk4GFXEkgrg7MlXKzcQ7kKtug2RmT80RROQfVRbQQm3HdeHBzAzhAjQ9bUf5eaT/s1600/twilio.jpg",
+          "sources": [
+            {
+              "url": "https://thehackernews.com/2026/09/malicious-npm-package-poses-as-twilio.html",
+              "label": "The Hacker News"
+            }
+          ],
+          "url": "https://thehackernews.com/2026/09/malicious-npm-package-poses-as-twilio.html",
+          "pubDate": "2026-09-22T17:58:15.000Z"
+        },
+        {
+          "title": "Shai-Hulud Attack Nips Cyber-Firm CrowdSec's GitHub Data",
+          "cve": null,
+          "severity": "news",
+          "score": 64,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Incident de sécurité rapporté par Dark Reading.\n\nThreat actors stole 170 private repositories using an OAuth token stolen from a former employee's computer through the TanStack npm supply chain attack.",
+          "detail": "Incident de sécurité rapporté par Dark Reading.\n\nThreat actors stole 170 private repositories using an OAuth token stolen from a former employee's computer through the TanStack npm supply chain attack.",
+          "action": "Surveiller les indicateurs de compromission associés et contrôler les actifs exposés.",
+          "image": null,
+          "sources": [
+            {
+              "url": "https://www.darkreading.com/cyberattacks-data-breaches/shai-hulud-attack-cyber-firm-crowdsec-github-data",
+              "label": "Dark Reading"
+            }
+          ],
+          "url": "https://www.darkreading.com/cyberattacks-data-breaches/shai-hulud-attack-cyber-firm-crowdsec-github-data",
+          "pubDate": "2026-09-22T17:32:49.000Z"
+        },
+        {
+          "title": "SideCopy Broadens India Targeting to Academia With ReverseRAT Spear-Phishing",
+          "cve": null,
+          "severity": "news",
+          "score": 64,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Incident de sécurité rapporté par The Hacker News.\n\nThe threat actor known as SideCopy has been observed using spear-phishing lures to target academic institutions in India, expanding their strategic focus beyond government entities. \"SideCopy campaign operations typically initiate through spear-phishing campaigns that leverage the abuse of mshta.exe to execute malicious scripts and circumvent standard security protocols,\" Trellix researchers",
+          "detail": "Incident de sécurité rapporté par The Hacker News.\n\nThe threat actor known as SideCopy has been observed using spear-phishing lures to target academic institutions in India, expanding their strategic focus beyond government entities. \"SideCopy campaign operations typically initiate through spear-phishing campaigns that leverage the abuse of mshta.exe to execute malicious scripts and circumvent standard security protocols,\" Trellix researchers",
+          "action": "Surveiller les indicateurs de compromission associés et contrôler les actifs exposés.",
+          "image": "https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEgVXTuBFDgZyaNFTznwdu5HXSKuVHU5xpM7JDvXP_Ra-68CsYd68bb6xMWPXbjmsM5oO211hZgzIN0NENk_cMBZZpL88LMsIaNkfSEpIWRRzyjRt7Ke6ZMeUXvIKcH3ncgDouKN8FGuunAFQFMolel0GgTBm1lzdVDH28WpWFUCI4Fvl9ju0q4Vv0S55PVx/s1600/word-school.jpg",
+          "sources": [
+            {
+              "url": "https://thehackernews.com/2026/09/sidecopy-broadens-india-targeting-to.html",
+              "label": "The Hacker News"
+            }
+          ],
+          "url": "https://thehackernews.com/2026/09/sidecopy-broadens-india-targeting-to.html",
+          "pubDate": "2026-09-22T07:52:03.000Z"
+        },
+        {
+          "title": "One Hidden Meta Muse Setting Could Let Attackers Turn the AI Assistant Into a Backdoor",
+          "cve": null,
+          "severity": "news",
+          "score": 64,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Incident de sécurité rapporté par The Hacker News.\n\nMalware already running on a Mac can quietly take over Meta's Muse assistant and use the broad access its owner granted the app, security researcher Patrick Wardle has shown in a&nbsp;proof-of-concept&nbsp;released on September 21. It works by changing a hidden setting so that when the user taps the microphone and dictates a prompt, the words go to the attacker instead of Meta. The flaw is in",
+          "detail": "Incident de sécurité rapporté par The Hacker News.\n\nMalware already running on a Mac can quietly take over Meta's Muse assistant and use the broad access its owner granted the app, security researcher Patrick Wardle has shown in a&nbsp;proof-of-concept&nbsp;released on September 21. It works by changing a hidden setting so that when the user taps the microphone and dictates a prompt, the words go to the attacker instead of Meta. The flaw is in",
+          "action": "Surveiller les indicateurs de compromission associés et contrôler les actifs exposés.",
+          "image": "https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEjjZLVTtI-AEbGRQqJ7aGa0tbXedD5L6P7VCEKIOGXOBZe7S3mhA-PnoHVEoZf3LBMzhcZSIX5sCTveGyZ-8qAqyAVaMXfEoxPL70OIESq-Iolqjkv8GuDjcVs1Jgh3k3SoOOGPDWFr6Lmk83avLqG1whcaiDclv5waXYhCuEqXk569wfwV8Ilrmvv3IKE/s1600/muse.jpg",
+          "sources": [
+            {
+              "url": "https://thehackernews.com/2026/09/one-hidden-meta-muse-setting-could-let.html",
+              "label": "The Hacker News"
+            }
+          ],
+          "url": "https://thehackernews.com/2026/09/one-hidden-meta-muse-setting-could-let.html",
+          "pubDate": "2026-09-22T06:33:57.000Z"
+        },
+        {
+          "title": "Rogue external MFA providers can steal passwords during logins",
+          "cve": null,
+          "severity": "news",
+          "score": 63,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Incident de sécurité rapporté par BleepingComputer.\n\nSecurity researchers developed an attack that lets hackers with privileged access register a rogue external MFA provider that steals users' passwords during legitimate login attempts.\n\nShinyHunters claims FBI hack, data theft in PeopleSoft zero-day breach\n\nNew Windows Defender zero-day blocks Microsoft antivirus updates\n\nEvilTokens PhaaS disrupted after compromising 12,000 Microsoft accounts\n\nCheck Point warns of Management Server zero-day exploited in att…",
+          "detail": "Incident de sécurité rapporté par BleepingComputer.\n\nSecurity researchers developed an attack that lets hackers with privileged access register a rogue external MFA provider that steals users' passwords during legitimate login attempts.\n\nShinyHunters claims FBI hack, data theft in PeopleSoft zero-day breach\n\nNew Windows Defender zero-day blocks Microsoft antivirus updates\n\nEvilTokens PhaaS disrupted after compromising 12,000 Microsoft accounts\n\nCheck Point warns of Management Server zero-day exploited in attacks\n\nRogue external MFA providers can steal passwords during logins\n\nChinese hackers exploit WordPress, Zyxel flaws to steal govt data",
+          "action": "Surveiller les indicateurs de compromission associés et contrôler les actifs exposés.",
+          "image": "https://www.bleepstatic.com/content/hl-images/2022/09/19/MFA.jpg",
+          "sources": [
+            {
+              "url": "https://www.bleepingcomputer.com/news/security/rogue-external-mfa-providers-can-steal-passwords-during-logins/",
+              "label": "BleepingComputer"
+            }
+          ],
+          "url": "https://www.bleepingcomputer.com/news/security/rogue-external-mfa-providers-can-steal-passwords-during-logins/",
+          "pubDate": "2026-09-22T21:45:45.000Z"
+        },
+        {
+          "title": "New ClosedQuorum Windows malware uses AI for attack decisions",
+          "cve": null,
+          "severity": "high",
+          "score": 63,
+          "corroboration": 2,
+          "region": "intl",
+          "body": "Incident de sécurité rapporté par The Register.\n\n'first' publicly documented Windows implant to use LLMs for C2\n\nA new Windows malware called CLOSEDQUORUM can query up to four LLM providers - Google Gemini, DeepSeek, Qwen, and Mistral - to autonomously select from predefined post-compromise actions, including stealing users’ credentials and cryptocurrency wallets.\n\nOnce deployed, the malware does not require continued commands from a human operator, according to Cisco Talos, which describes it as, to its…",
+          "detail": "Incident de sécurité rapporté par The Register.\n\n'first' publicly documented Windows implant to use LLMs for C2\n\nA new Windows malware called CLOSEDQUORUM can query up to four LLM providers - Google Gemini, DeepSeek, Qwen, and Mistral - to autonomously select from predefined post-compromise actions, including stealing users’ credentials and cryptocurrency wallets.\n\nOnce deployed, the malware does not require continued commands from a human operator, according to Cisco Talos, which describes it as, to its knowledge, the first publicly documented Windows implant to use this approach for command-and-control (C2).\n\nTalos discovered the binary with its new CAIRN (Cognitive Artifact Intelligence Research Network) toolkit for hunting, classifying, and tracking emerging AI-integrated malware, which the security shop also made available as an open source repository on Tuesday.\n\nWhile the threat hunters haven’t observed any in-the-wild deployment of CLOSEDQUORUM, they said that artifacts from the binary link the malware’s developer to postings that date back to 2025 on criminal forums related to carding.\n\nAfter deployment, the Go-based malware delegates its next action to a quorum of LLMs that vote on what it should do next. If the vote is tied, DeepSeek’s vote takes precedence, followed by Qwen, Mistral, and Gemini.",
+          "action": "Surveiller les indicateurs de compromission associés et contrôler les actifs exposés.",
+          "image": "https://image.theregister.com/5298442.jpg?imageId=5298442&x=0&y=0&cropw=100&croph=100&panox=0&panoy=0&panow=100&panoh=100&width=1200&height=683",
+          "sources": [
+            {
+              "url": "https://www.theregister.com/security/2026/09/22/windows-closedquorum-malware-uses-ai-models-to-autonomously-select-post-compromise-actions/5298435",
+              "label": "The Register"
+            },
+            {
+              "url": "https://www.bleepingcomputer.com/news/security/new-closedquorum-windows-malware-uses-ai-for-attack-decisions/",
+              "label": "BleepingComputer"
+            }
+          ],
+          "url": "https://www.theregister.com/security/2026/09/22/windows-closedquorum-malware-uses-ai-models-to-autonomously-select-post-compromise-actions/5298435",
+          "pubDate": "2026-09-22T21:33:29.000Z"
+        },
+        {
+          "title": "EvilTokens PhaaS disrupted after compromising 12,000 Microsoft accounts",
+          "cve": null,
+          "severity": "news",
+          "score": 63,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Incident de sécurité rapporté par BleepingComputer.\n\nThe EvilTokens platform that compromised more than 12,000 Microsoft accounts at over 10,000 organizations has been disrupted in an effort led by Microsoft's Digital Crimes Unit (DCU).\n\nShinyHunters claims FBI hack, data theft in PeopleSoft zero-day breach\n\nNew Windows Defender zero-day blocks Microsoft antivirus updates\n\nEvilTokens PhaaS disrupted after compromising 12,000 Microsoft accounts\n\nCheck Point warns of Management Server zero-day exploited in att…",
+          "detail": "Incident de sécurité rapporté par BleepingComputer.\n\nThe EvilTokens platform that compromised more than 12,000 Microsoft accounts at over 10,000 organizations has been disrupted in an effort led by Microsoft's Digital Crimes Unit (DCU).\n\nShinyHunters claims FBI hack, data theft in PeopleSoft zero-day breach\n\nNew Windows Defender zero-day blocks Microsoft antivirus updates\n\nEvilTokens PhaaS disrupted after compromising 12,000 Microsoft accounts\n\nCheck Point warns of Management Server zero-day exploited in attacks\n\nRogue external MFA providers can steal passwords during logins\n\nChinese hackers exploit WordPress, Zyxel flaws to steal govt data",
+          "action": "Surveiller les indicateurs de compromission associés et contrôler les actifs exposés.",
+          "image": "https://www.bleepstatic.com/content/hl-images/2026/09/22/phishing.jpg",
+          "sources": [
+            {
+              "url": "https://www.bleepingcomputer.com/news/security/eviltokens-phaas-disrupted-after-compromising-12-000-microsoft-accounts/",
+              "label": "BleepingComputer"
+            }
+          ],
+          "url": "https://www.bleepingcomputer.com/news/security/eviltokens-phaas-disrupted-after-compromising-12-000-microsoft-accounts/",
+          "pubDate": "2026-09-22T15:00:00.000Z"
+        },
+        {
+          "title": "Twizzit : 1,53 million de membres de clubs et associations en fuite",
+          "cve": null,
+          "severity": "news",
+          "score": 57,
+          "corroboration": 1,
+          "region": "fr",
+          "body": "Incident de sécurité rapporté par Cyberattaque.org.\n\nTwizzit, plateforme de gestion utilisée par des milliers de clubs, associations et fédérations européennes, fait l’objet d’une fuite de données d’une\n\nAttaque Mis à jour le 23 septembre 2026 à 5h54 Twizzit : 1,53 million de membres de clubs et associations en fuite Twizzit , plateforme de gestion utilisée par des milliers de clubs, associations et fédérations européennes, fait l’objet d’une fuite de données d’une ampleur inhabituelle.",
+          "detail": "Incident de sécurité rapporté par Cyberattaque.org.\n\nTwizzit, plateforme de gestion utilisée par des milliers de clubs, associations et fédérations européennes, fait l’objet d’une fuite de données d’une\n\nAttaque Mis à jour le 23 septembre 2026 à 5h54 Twizzit : 1,53 million de membres de clubs et associations en fuite Twizzit , plateforme de gestion utilisée par des milliers de clubs, associations et fédérations européennes, fait l’objet d’une fuite de données d’une ampleur inhabituelle. Le hacker RedStone affirme avoir récupéré une base contenant les informations de 1 532 886 membres uniques et la propose désormais à la vente.\n\nLe fichier représenterait environ 1,4 Go de données et plus de 4 millions de lignes . Des organisations situées notamment en Belgique, en France et aux Pays-Bas sont concernées par la revendication.\n\nTwizzit n’est pas un simple annuaire. La plateforme centralise la gestion des membres, des groupes, des inscriptions, des communications et de nombreuses tâches administratives pour des clubs sportifs, mouvements de jeunesse, associations, fédérations ou encore organisations culturelles.\n\nLe service revendique plus de 5 500 organisations utilisatrices en Europe . Cette position centrale explique la quantité de données susceptible de se retrouver réunie dans une seule compromission : un même membre peut être associé à plusieurs groupes, saisons, fonctions ou organisations au fil des années.\n\nRedStone annonce précisément 1 532 886 membres uniques , répartis dans plus de 178 000 groupes . La base comprendrait au total 4 048 767 lignes, dont plus de 3,3 millions d’associations entre membres et groupes.\n\nLe hacker revendique également la présence de 816 429 adresses e-mail , plus de 170 000 références à des photos et près de 19 000 numéros de téléphone. T",
+          "action": "Surveiller les indicateurs de compromission associés et contrôler les actifs exposés.",
+          "image": "https://www.cyberattaque.org/wp-content/uploads/2026/04/cyberattaque_16-2.jpg",
+          "sources": [
+            {
+              "url": "https://www.cyberattaque.org/cyberattaque-twizzit-1-53-million-de-membres-de-clubs-et-associations-en-fuite/",
+              "label": "Cyberattaque.org"
+            }
+          ],
+          "url": "https://www.cyberattaque.org/cyberattaque-twizzit-1-53-million-de-membres-de-clubs-et-associations-en-fuite/",
+          "pubDate": "2026-09-23T03:54:03.000Z"
+        },
+        {
+          "title": "Autobacs : 34 000 rendez-vous atelier exposés après une cyberattaque",
+          "cve": null,
+          "severity": "news",
+          "score": 57,
+          "corroboration": 1,
+          "region": "fr",
+          "body": "Incident de sécurité rapporté par Cyberattaque.org.\n\nAutobacs France, enseigne spécialisée dans l’entretien automobile, les pièces et les accessoires, fait l’objet d’une fuite de données revendiquée le 22\n\nAttaque Mis à jour le 23 septembre 2026 à 5h48 Autobacs : 34 000 rendez-vous atelier exposés après une cyberattaque Autobacs France , enseigne spécialisée dans l’entretien automobile, les pièces et les accessoires, fait l’objet d’une fuite de données revendiquée le 22 septembre 2026 .",
+          "detail": "Incident de sécurité rapporté par Cyberattaque.org.\n\nAutobacs France, enseigne spécialisée dans l’entretien automobile, les pièces et les accessoires, fait l’objet d’une fuite de données revendiquée le 22\n\nAttaque Mis à jour le 23 septembre 2026 à 5h48 Autobacs : 34 000 rendez-vous atelier exposés après une cyberattaque Autobacs France , enseigne spécialisée dans l’entretien automobile, les pièces et les accessoires, fait l’objet d’une fuite de données revendiquée le 22 septembre 2026 . Le hacker 0xDzz affirme avoir diffusé une partie d’une base contenant 34 017 enregistrements pour un volume d’environ 159 Mo.\n\nEn France, Autobacs exploite notamment plusieurs centres automobiles en Île-de-France proposant entretien, réparation, pneumatiques et prise de rendez-vous en atelier.\n\nCyberattaque.org s’est procuré les échantillons diffusés . Les données observées correspondent principalement à des archives de rendez-vous pris dans les ateliers Autobacs et regroupent plusieurs informations permettant d’identifier directement les clients et leur véhicule.\n\nCyberattaque.org ne reproduit volontairement aucune identité, coordonnée ou plaque d’immatriculation présente dans les fichiers.\n\nLe hacker annonce 34 017 lignes , mais ce chiffre ne correspond pas nécessairement à autant de personnes distinctes. Les échantillons montrent qu’un même client peut apparaître à plusieurs reprises lorsqu’il dispose de plusieurs rendez-vous.\n\nUne partie des données présentées dans l’échantillon remonte notamment à 2021 . À ce stade, la période complète couverte par les 34 017 enregistrements n’est pas connue.",
+          "action": "Surveiller les indicateurs de compromission associés et contrôler les actifs exposés.",
+          "image": "https://www.cyberattaque.org/wp-content/uploads/2026/04/cyberattaque_30.jpg",
+          "sources": [
+            {
+              "url": "https://www.cyberattaque.org/autobacs-34-000-rendez-vous-atelier-exposes-apres-une-cyberattaque/",
+              "label": "Cyberattaque.org"
+            }
+          ],
+          "url": "https://www.cyberattaque.org/autobacs-34-000-rendez-vous-atelier-exposes-apres-une-cyberattaque/",
+          "pubDate": "2026-09-23T03:48:44.000Z"
+        },
+        {
+          "title": "Uniformation : 1 200 stagiaires en fuite avec leurs numéros de Sécurité sociale",
+          "cve": null,
+          "severity": "news",
+          "score": 57,
+          "corroboration": 1,
+          "region": "fr",
+          "body": "Incident de sécurité rapporté par Cyberattaque.org.\n\nUniformation, l’opérateur de compétences (Opco) de la Cohésion sociale, fait l’objet d’une fuite de données revendiquée le 22 septembre 2026. Le hacker\n\nAttaque Mis à jour le 23 septembre 2026 à 5h43 Uniformation : 1 200 stagiaires en fuite avec leurs numéros de Sécurité sociale Uniformation , l’opérateur de compétences (Opco) de la Cohésion sociale, fait l’objet d’une fuite de données revendiquée le 22 septembre 2026 .",
+          "detail": "Incident de sécurité rapporté par Cyberattaque.org.\n\nUniformation, l’opérateur de compétences (Opco) de la Cohésion sociale, fait l’objet d’une fuite de données revendiquée le 22 septembre 2026. Le hacker\n\nAttaque Mis à jour le 23 septembre 2026 à 5h43 Uniformation : 1 200 stagiaires en fuite avec leurs numéros de Sécurité sociale Uniformation , l’opérateur de compétences (Opco) de la Cohésion sociale, fait l’objet d’une fuite de données revendiquée le 22 septembre 2026 . Le hacker Quantique affirme avoir récupéré les informations d’environ 1 200 personnes après avoir exploité un problème dans une API accessible depuis un compte utilisateur.\n\nUniformation accompagne notamment les entreprises et associations de la cohésion sociale dans le financement et l’organisation de la formation professionnelle . L’organisme intervient auprès des employeurs et salariés de plusieurs branches professionnelles.\n\nCyberattaque.org s’est procuré l’échantillon. Celui-ci contient bien quatre catégories de données :\n\nL’échantillon consulté permet de voir que les numéros présents ne sont toutefois pas tous enregistrés sous le même format : certains comportent les 15 chiffres du NIR avec sa clé , tandis que d’autres apparaissent sous une forme plus courte.\n\nLa présence du NIR associé à l’identité et à la date de naissance rend cette fuite particulièrement sensible. Contrairement à une simple adresse e-mail, ce numéro est un identifiant administratif durable utilisé dans de nombreuses démarches liées à la protection sociale.\n\nCes informations peuvent notamment faciliter des tentatives d’usurpation d’identité, de fraude administrative ou de phishing très ciblé . Cyberattaque.org ne reproduit volontairement aucun numéro ni aucune identité apparaissant dans les fichiers.",
+          "action": "Surveiller les indicateurs de compromission associés et contrôler les actifs exposés.",
+          "image": "https://www.cyberattaque.org/wp-content/uploads/2026/04/cyberattaque_51-2.jpg",
+          "sources": [
+            {
+              "url": "https://www.cyberattaque.org/uniformation-1-200-stagiaires-en-fuite-avec-leurs-numeros-de-securite-sociale/",
+              "label": "Cyberattaque.org"
+            }
+          ],
+          "url": "https://www.cyberattaque.org/uniformation-1-200-stagiaires-en-fuite-avec-leurs-numeros-de-securite-sociale/",
+          "pubDate": "2026-09-23T03:43:09.000Z"
+        },
+        {
+          "title": "Cloudflare, un CDN omniprésent aussi en Europe",
+          "cve": null,
+          "severity": "news",
+          "score": 53,
+          "corroboration": 1,
+          "region": "fr",
+          "body": "Incident de sécurité rapporté par Silicon.fr.\n\nDans les entreprises européennes, il y a 9 chances sur 10 pour que le CDN soit Cloudflare. La stat a fait quelque bruit début septembre. On la doit à une start-up britannique qui compile des données sur les stacks technologiques &#8211; et les revend à des fournisseurs de solutions de sécurité. Sur 44 143 organisations dans lesquelles elle a détecté un CDN, 39 547 utilisaient Cloudflare. Soit 89,6 %.",
+          "detail": "Incident de sécurité rapporté par Silicon.fr.\n\nDans les entreprises européennes, il y a 9 chances sur 10 pour que le CDN soit Cloudflare. La stat a fait quelque bruit début septembre. On la doit à une start-up britannique qui compile des données sur les stacks technologiques &#8211; et les revend à des fournisseurs de solutions de sécurité. Sur 44 143 organisations dans lesquelles elle a détecté un CDN, 39 547 utilisaient Cloudflare. Soit 89,6 %. Suivent Amazon (environ 7 %), Fastly (3 %) et Akamai (1 %). La part d&rsquo;Amazon est à prendre avec des pincettes : certaines entreprises sont hébergées chez AWS sans avoir délibérément choisi CloudFront. Ce problème ne se pose pas avec Cloudflare, dont le taux de pénétration dépasse 95 % aux Pays-Bas. Pays Entreprises utilisant Cloudflare Proportion Pays-Bas 7587 sur 7939 95,6 % Royaume-Uni 15 846 sur 17 007 93,2 % Pologne 2682 sur 2896 92,6 % France 3456 sur 4008 86,2 % Italie 3126 sur 3661 85,4 % Allemagne 4650 sur 5715 81,4 % Espagne 1576 sur 2001 78,8 % Irlande 624 sur 792 78,8 % Un quart du web derrière Cloudflare ? L&rsquo;échantillon n&rsquo;est pas forcément représentatif de toutes les typologies d&rsquo;organisations. Il se compose plutôt de PME. Un segment pour lequel l&rsquo;offre gratuite de Cloudflare &#8211; incluant protection DDoS et bande passante illimitée &#8211; a de sérieux arguments. Ces chiffres sont en tout cas à mettre en parallèle de ceux de W3Techs. Le",
+          "action": "Surveiller les indicateurs de compromission associés et contrôler les actifs exposés.",
+          "image": "https://www.silicon.fr/wp-content/uploads/2026/09/Cloudflare-Europe.png",
+          "sources": [
+            {
+              "url": "https://www.silicon.fr/business-1367/cloudflare-europe-229283",
+              "label": "Silicon.fr"
+            }
+          ],
+          "url": "https://www.silicon.fr/business-1367/cloudflare-europe-229283",
+          "pubDate": "2026-09-22T15:36:46.000Z"
+        },
+        {
+          "title": "MesMarches : 2 535 profils d’exposants en fuite fuite",
+          "cve": null,
+          "severity": "news",
+          "score": 52,
+          "corroboration": 1,
+          "region": "fr",
+          "body": "Incident de sécurité rapporté par Cyberattaque.org.\n\nMesMarches, plateforme française permettant de rechercher des marchés, foires, salons et autres événements et de mettre en relation organisateurs et\n\nAttaque Mis à jour le 23 septembre 2026 à 5h35 MesMarches : 2 535 profils d’exposants en fuite fuite MesMarches , plateforme française permettant de rechercher des marchés, foires, salons et autres événements et de mettre en relation organisateurs et exposants, fait l’objet d’une fuite de données revendiquée…",
+          "detail": "Incident de sécurité rapporté par Cyberattaque.org.\n\nMesMarches, plateforme française permettant de rechercher des marchés, foires, salons et autres événements et de mettre en relation organisateurs et\n\nAttaque Mis à jour le 23 septembre 2026 à 5h35 MesMarches : 2 535 profils d’exposants en fuite fuite MesMarches , plateforme française permettant de rechercher des marchés, foires, salons et autres événements et de mettre en relation organisateurs et exposants, fait l’objet d’une fuite de données revendiquée le 22 septembre 2026 .\n\nLe hacker Quantique affirme avoir récupéré les informations de 2 535 profils d’exposants après avoir exploré les API utilisées par le site. Une partie des données a été diffusée en échantillon et l’ensemble est annoncé au téléchargement.\n\nLa structure de la base revendiquée contient de nombreuses informations associées aux comptes professionnels : nom, prénom, adresse, e-mail, numéro de téléphone, localisation, raison sociale, SIRET , site internet et liens vers les réseaux sociaux.\n\nDes champs font également référence à des extraits Kbis, justificatifs de responsabilité civile professionnelle, avatars et différentes images associées aux profils . Le hacker affirme avoir également récupéré les images hébergées par la plateforme.\n\nPlusieurs champs sont particulièrement sensibles puisqu’ils concernent directement le fonctionnement des comptes : mot de passe, jeton de réinitialisation, identifiant de vérification, rôle, droits et statut de validation de l’adresse e-mail .\n\nLa présence d’un champ consacré aux mots de passe ne permet toutefois pas, à elle seule, de déterminer s’ils sont stockés en clair ou sous une forme protégée. Il en va de même pour les jetons de réinitialisation, dont la validité actuelle n’est pas établie.",
+          "action": "Surveiller les indicateurs de compromission associés et contrôler les actifs exposés.",
+          "image": "https://www.cyberattaque.org/wp-content/uploads/2026/04/cyberattaque_17-2.jpg",
+          "sources": [
+            {
+              "url": "https://www.cyberattaque.org/mesmarches-2-535-profils-dexposants-en-fuite-fuite/",
+              "label": "Cyberattaque.org"
+            }
+          ],
+          "url": "https://www.cyberattaque.org/mesmarches-2-535-profils-dexposants-en-fuite-fuite/",
+          "pubDate": "2026-09-23T03:35:26.000Z"
+        },
+        {
+          "title": "Legalstart : une cyberattaque expose les données personnelles de ses clients",
+          "cve": null,
+          "severity": "news",
+          "score": 52,
+          "corroboration": 1,
+          "region": "fr",
+          "body": "Incident de sécurité rapporté par Cyberattaque.org.\n\nPaymium, plateforme française spécialisée dans l’achat, la vente et la conservation de cryptomonnaies, informe ses clients d’un incident de sécurité\n\nAttaque Mis à jour le 22 septembre 2026 à 22h18 Paymium : des données personnelles de clients exposées après une cyberattaque Paymium , plateforme française spécialisée dans l’achat, la vente et la conservation de cryptomonnaies, informe ses clients d’un incident de sécurité survenu chez Brevo , son prestatai…",
+          "detail": "Incident de sécurité rapporté par Cyberattaque.org.\n\nPaymium, plateforme française spécialisée dans l’achat, la vente et la conservation de cryptomonnaies, informe ses clients d’un incident de sécurité\n\nAttaque Mis à jour le 22 septembre 2026 à 22h18 Paymium : des données personnelles de clients exposées après une cyberattaque Paymium , plateforme française spécialisée dans l’achat, la vente et la conservation de cryptomonnaies, informe ses clients d’un incident de sécurité survenu chez Brevo , son prestataire utilisé pour l’envoi de certaines communications par e-mail.\n\nDans une communication adressée à ses clients dont Cyberattaque.org s’est procuré une copie , Paymium indique que Brevo lui a signalé une intrusion ayant permis à un attaquant d’accéder à 138 comptes d’entreprises , dont le sien.\n\nSelon les informations communiquées par Paymium, certaines données de contact associées à ses utilisateurs ont pu être consultées :\n\nPaymium précise qu’ aucun e-mail frauduleux ou malveillant n’a été envoyé depuis son compte Brevo .\n\nL’incident serait strictement limité à l’environnement de Brevo. Paymium indique que cet outil ne contient aucun mot de passe, aucune clé API et aucune donnée liée aux portefeuilles ou à la situation fiscale de ses utilisateurs.\n\nLes actifs détenus par les clients ainsi que l’accès à leurs comptes Paymium ne seraient donc pas concernés par cette compromission .",
+          "action": "Surveiller les indicateurs de compromission associés et contrôler les actifs exposés.",
+          "image": "https://www.cyberattaque.org/wp-content/uploads/2026/04/cyberattaque_32.jpg",
+          "sources": [
+            {
+              "url": "https://www.cyberattaque.org/paymium-des-donnees-personnelles-de-clients-exposees-apres-une-cyberattaque/",
+              "label": "Cyberattaque.org"
+            }
+          ],
+          "url": "https://www.cyberattaque.org/paymium-des-donnees-personnelles-de-clients-exposees-apres-une-cyberattaque/",
+          "pubDate": "2026-09-22T20:18:52.000Z"
+        },
+        {
+          "title": "Cyberattaque : le scénario d’un « 11-Septembre numérique » inquiète les économistes",
+          "cve": null,
+          "severity": "news",
+          "score": 52,
+          "corroboration": 1,
+          "region": "fr",
+          "body": "Incident de sécurité rapporté par Cyberattaque.org.\n\nEt si la prochaine grande crise financière ne commençait ni par un krach boursier ni par une faillite bancaire, mais par une cyberattaque ? Vingt-cinq ans\n\ncyberactu Mis à jour le 22 septembre 2026 à 13h01 Cyberattaque : le scénario d’un « 11-Septembre numérique » inquiète les économistes Et si la prochaine grande crise financière ne commençait ni par un krach boursier ni par une faillite bancaire, mais par une cyberattaque ? Vingt-cinq ans après les atten…",
+          "detail": "Incident de sécurité rapporté par Cyberattaque.org.\n\nEt si la prochaine grande crise financière ne commençait ni par un krach boursier ni par une faillite bancaire, mais par une cyberattaque ? Vingt-cinq ans\n\ncyberactu Mis à jour le 22 septembre 2026 à 13h01 Cyberattaque : le scénario d’un « 11-Septembre numérique » inquiète les économistes Et si la prochaine grande crise financière ne commençait ni par un krach boursier ni par une faillite bancaire, mais par une cyberattaque ? Vingt-cinq ans après les attentats du 11 septembre 2001, l’économiste Santosh Brivio , responsable de l’Economic Research de la Banque Migros, estime qu’un choc numérique majeur pourrait désormais provoquer des perturbations économiques comparables par leur propagation et leurs conséquences à long terme.\n\nDans une analyse publiée à l’occasion du 25e anniversaire du 11-Septembre, l’économiste décrit notamment le risque d’un « cyber-run » : l’équivalent numérique d’une panique bancaire au cours de laquelle une cyberattaque suffisamment grave ferait perdre confiance aux clients et provoquerait des retraits ou transferts massifs de fonds en un temps extrêmement court.\n\nUn scénario qui pourrait sembler théorique. Pourtant, en France, les autorités financières se préparent déjà à des crises cyber susceptibles de perturber simultanément les banques et les moyens de paiement.\n\nUne panique bancaire traditionnelle est facilement identifiable : des clients inquiets se présentent en nombre devant leur banque pour récupérer leur argent. Dans une économie largement numérisée, cette image pourrait appartenir au passé.\n\nLe concept de « cyber-run » n’est d’ailleurs pas nouveau. Dès 2019, les chercheurs Darrell Duffie et Joshua Younger avaient étudié le risque qu’une cyberattaque contre une grande banque entraîne",
+          "action": "Surveiller les indicateurs de compromission associés et contrôler les actifs exposés.",
+          "image": "https://www.cyberattaque.org/wp-content/uploads/2026/04/cyberattaque_10-2.jpg",
+          "sources": [
+            {
+              "url": "https://www.cyberattaque.org/cyberattaque-le-scenario-dun-11-septembre-numerique-inquiete-les-economistes/",
+              "label": "Cyberattaque.org"
+            }
+          ],
+          "url": "https://www.cyberattaque.org/cyberattaque-le-scenario-dun-11-septembre-numerique-inquiete-les-economistes/",
+          "pubDate": "2026-09-22T11:01:52.000Z"
+        },
+        {
+          "title": "ColisPort : une fuite dévoile les trajets et contenus de 20 000 colis",
+          "cve": null,
+          "severity": "news",
+          "score": 52,
+          "corroboration": 1,
+          "region": "fr",
+          "body": "Incident de sécurité rapporté par Cyberattaque.org.\n\nColisPort, plateforme permettant aux particuliers et professionnels d’organiser le transport de colis en France et en Europe, fait l’objet d’une fuite de\n\nAttaque Mis à jour le 22 septembre 2026 à 6h19 ColisPort : une fuite dévoile les trajets et contenus de 20 000 colis ColisPort , plateforme permettant aux particuliers et professionnels d’organiser le transport de colis en France et en Europe, fait l’objet d’une fuite de données revendiquée par le hacker…",
+          "detail": "Incident de sécurité rapporté par Cyberattaque.org.\n\nColisPort, plateforme permettant aux particuliers et professionnels d’organiser le transport de colis en France et en Europe, fait l’objet d’une fuite de\n\nAttaque Mis à jour le 22 septembre 2026 à 6h19 ColisPort : une fuite dévoile les trajets et contenus de 20 000 colis ColisPort , plateforme permettant aux particuliers et professionnels d’organiser le transport de colis en France et en Europe, fait l’objet d’une fuite de données revendiquée par le hacker Quantique . Celui-ci a publié au téléchargement deux ensembles représentant au total près de 20 000 demandes et expéditions .\n\nLes fichiers contiennent notamment des noms, adresses, téléphones, e-mails, lieux de départ et d’arrivée , mais également des informations beaucoup plus précises sur les colis transportés : contenu déclaré, poids, dimensions, valeur, transporteur ou encore numéro de suivi.\n\nQuantique revendique deux principaux ensembles : 9 399 demandes de transport et 10 342 expéditions . Ces chiffres correspondent à des enregistrements et non nécessairement à autant de personnes distinctes, un même utilisateur pouvant apparaître plusieurs fois.\n\nLes données liées aux expéditions peuvent réunir les coordonnées complètes de l’expéditeur et du destinataire :\n\nCyberattaque.org s’est procuré les données des demandes de transport et l’a examiné. Les données s’étendent dans cet extrait de décembre 2023 jusqu’au 20 septembre 2026 , soit la veille de la publication de la fuite.\n\nLes utilisateurs renseignent directement la nature de ce qu’ils souhaitent transporter. L’échantillon comporte ainsi des descriptions de meubles, vélos, équipements sportifs, pièces automobiles, appareils électroniques et de nombreux autres objets, accompagnées de leur poids et de leurs dim",
+          "action": "Surveiller les indicateurs de compromission associés et contrôler les actifs exposés.",
+          "image": "https://www.cyberattaque.org/wp-content/uploads/2026/04/cyberattaque_31.jpg",
+          "sources": [
+            {
+              "url": "https://www.cyberattaque.org/colisport-pres-de-20-000-expeditions-en-fuite-apres-une-cyberattaque/",
+              "label": "Cyberattaque.org"
+            }
+          ],
+          "url": "https://www.cyberattaque.org/colisport-pres-de-20-000-expeditions-en-fuite-apres-une-cyberattaque/",
+          "pubDate": "2026-09-22T04:18:20.000Z"
+        }
+      ]
+    },
+    {
+      "id": "culture",
+      "items": [
+        {
+          "title": "Canadian regulator opens probe of IDScan for allegedly violating data privacy laws",
+          "cve": null,
+          "severity": "culture",
+          "score": 70,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Signal de veille — The Record.\n\nThe investigation, announced Monday, will probe IDScan’s security practices and whether victim notifications were adequate under Canada’s federal private-sector privacy law, the regulator said in a press release.\n\nPrivacy Commissioner of Canada Philippe Dufresne has launched a probe of IDScan.net in the wake of reports that a bad actor penetrated company databases to steal personal data and scans of 153 million people's drivers’ licenses.\n\nIDScan.net’s tec…",
+          "detail": "Signal de veille — The Record.\n\nThe investigation, announced Monday, will probe IDScan’s security practices and whether victim notifications were adequate under Canada’s federal private-sector privacy law, the regulator said in a press release.\n\nPrivacy Commissioner of Canada Philippe Dufresne has launched a probe of IDScan.net in the wake of reports that a bad actor penetrated company databases to steal personal data and scans of 153 million people's drivers’ licenses.\n\nIDScan.net’s technology is widely used by industry — particularly in the retail and hospitality sectors — to verify official IDs.\n\nThe investigation, announced Monday, will probe IDScan’s security practices and whether victim notifications were adequate under Canada’s federal private-sector privacy law, the regulator said in a press release .\n\nOn September 4, the identity verification company announced hackers obtained user data held in its cloud platform, but did not say how many customers were affected. The statement came amid a series of reports asserting that the breach exposed driver’s licenses belonging to tens of millions.\n\nIDScan learned of the breach on or around September 1, hours after journalist Brian Krebs revealed the scans were on sale on the dark web.\n\nThe identity verification company did not respond to a request for comment.",
+          "action": null,
+          "image": "https://cms.therecord.media/uploads/pexels_muhammed_ensar_157456120_10725897_5f2c4ce336.jpg",
+          "sources": [
+            {
+              "url": "https://therecord.media/canadian-regulator-opens-probe-of-idscan-following-data-breach",
+              "label": "The Record"
+            }
+          ],
+          "url": "https://therecord.media/canadian-regulator-opens-probe-of-idscan-following-data-breach",
+          "pubDate": "2026-09-22T19:52:00.000Z"
+        },
+        {
+          "title": "ISC Stormcast For Wednesday, September 23rd, 2026 https://isc.sans.edu/podcastdetail/10106, (Wed, Sep 23rd)",
+          "cve": null,
+          "severity": "culture",
+          "score": 66,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Signal de veille — SANS ISC.\n\nSANS Internet Storm Center - A global cooperative cyber threat / internet security monitor and alert system. Featuring daily handler diaries with summarizing and analyzing new threats to networks and internet security events.\n\nInternet Storm Center Sign In Sign Up Handler on Duty: Brad Duncan Threat Level: green Homepage Diaries Podcasts Jobs Data TCP/UDP Port Activity Port Trends SSH/Telnet Scanning Activity Weblogs Domains Threat Feeds Activity Threat Fe…",
+          "detail": "Signal de veille — SANS ISC.\n\nSANS Internet Storm Center - A global cooperative cyber threat / internet security monitor and alert system. Featuring daily handler diaries with summarizing and analyzing new threats to networks and internet security events.\n\nInternet Storm Center Sign In Sign Up Handler on Duty: Brad Duncan Threat Level: green Homepage Diaries Podcasts Jobs Data TCP/UDP Port Activity Port Trends SSH/Telnet Scanning Activity Weblogs Domains Threat Feeds Activity Threat Feeds Map Useful InfoSec Links Presentations & Papers Research Papers API Tools DShield Sensor DNS Looking Glass Honeypot (RPi/AWS) InfoSec Glossary Contact Us Contact Us About Us Handlers About Us Slack Channel Mastodon Bluesky X Keep yourself informed with our aggregate InfoSec news",
+          "action": null,
+          "image": "https://isc.sans.edu/images/logos/isc/large.png",
+          "sources": [
+            {
+              "url": "https://isc.sans.edu/diary/rss/33362",
+              "label": "SANS ISC"
+            }
+          ],
+          "url": "https://isc.sans.edu/diary/rss/33362",
+          "pubDate": "2026-09-23T02:40:13.000Z"
+        },
+        {
+          "title": "The Truth about GET and HTTP Standards, (Tue, Sep 22nd)",
+          "cve": null,
+          "severity": "culture",
+          "score": 66,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Signal de veille — SANS ISC.\n\nOn Friday, Xavier talked about the newly introduced HTTP Query method. This new method was introduced to allow &quot;GET&quot; requests that include a body. The main reason for this was that GET requests typically do not contain a body. But what if they do? The HTTP RFCs had &quot;issues&quot; defining this properly.",
+          "detail": "Signal de veille — SANS ISC.\n\nOn Friday, Xavier talked about the newly introduced HTTP Query method. This new method was introduced to allow &quot;GET&quot; requests that include a body. The main reason for this was that GET requests typically do not contain a body. But what if they do? The HTTP RFCs had &quot;issues&quot; defining this properly. RFC2616, which originally defined HTTP 1.1, stated in section 4.3: A message-body MUST NOT be included in a request if the specification of the request method (section&nbsp; 5.1.1 ) does not allow sending an entity-body in requests.&nbsp; And the&nbsp;GET specification never discussed message bodies. This was somewhat reworded in the newer version, RFC 7231, section 4.3.2: ​​​​​​A payload within a GET request message has no defined semantics; sending a payload body on a GET request might cause some existing&nbsp;implementations to reject the request. I did a quick check of a couple of common web servers I had handy, to see what would happen: Apache For this test, I ran Apache 2.4.68 on a Mac. It happily accepted a body with a GET request: % nc -c localhost 8080 GET /cgi-bin/test-cgi HTTP/1.1 Host: localhost Content-Length: 6 TEST HTTP/1.1 200 OK Date: Tue, 22 Sep 2026 14:39:17 GMT Server: Apache/2.4.68 (Unix) Transfer-Encoding: chunked Content-Type: text/plain; charset=iso-8859-1 18a CGI/1.0 test script report: [some details omited] CONTENT_LENGTH = 6 BODY = TEST T",
+          "action": null,
+          "image": "https://isc.sans.edu/images/logos/isc/large.png",
+          "sources": [
+            {
+              "url": "https://isc.sans.edu/diary/rss/33358",
+              "label": "SANS ISC"
+            }
+          ],
+          "url": "https://isc.sans.edu/diary/rss/33358",
+          "pubDate": "2026-09-22T19:06:15.000Z"
+        },
+        {
+          "title": "Cyera Raises $400 Million at $12+ Billion Valuation",
+          "cve": null,
+          "severity": "culture",
+          "score": 64,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Signal de veille — SecurityWeek.\n\nData security company Cyera raised $400 million in Series G extension funding, bringing the company’s valuation to more than $12 billion.\n\nThe data security company received the new investment from Goldman Sachs Alternatives, extending its Series G funding round.\n\nSubscribe to the SecurityWeek Email Briefing for the latest cybersecurity threats, trends, and expert insights.\n\nSubscribe to the SecurityWeek Email Briefing to stay informed on the latest threat…",
+          "detail": "Signal de veille — SecurityWeek.\n\nData security company Cyera raised $400 million in Series G extension funding, bringing the company’s valuation to more than $12 billion.\n\nThe data security company received the new investment from Goldman Sachs Alternatives, extending its Series G funding round.\n\nSubscribe to the SecurityWeek Email Briefing for the latest cybersecurity threats, trends, and expert insights.\n\nSubscribe to the SecurityWeek Email Briefing to stay informed on the latest threats, trends, and technology, along with insightful columns from industry experts.\n\nJoin as speakers examine the various components of ASM strategy, the push to mandate continuous asset visibility and inventory tools, and the use of red-teaming, bug bounties and pen-tests in modern security programs.\n\nExplore what it takes to operationalize continuous authorization at scale, including the technical, organizational, and cultural changes required.\n\nVeritas Capital has appointed Joel Fulton as Chief Information Security Officer.",
+          "action": null,
+          "image": "https://www.securityweek.com/wp-content/uploads/2025/11/funding-investment-market-3.jpeg",
+          "sources": [
+            {
+              "url": "https://www.securityweek.com/cyera-raises-400-million-at-12-billion-valuation/",
+              "label": "SecurityWeek"
+            }
+          ],
+          "url": "https://www.securityweek.com/cyera-raises-400-million-at-12-billion-valuation/",
+          "pubDate": "2026-09-22T14:29:34.000Z"
+        },
+        {
+          "title": "Reducing shadow IT visibility gaps with Wazuh",
+          "cve": null,
+          "severity": "culture",
+          "score": 63,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Signal de veille — BleepingComputer.\n\nShadow IT can leave security teams unaware of unmanaged endpoints, unauthorized software, and other assets that fall outside existing monitoring. Wazuh explains how endpoint inventory, agentless monitoring, and centralized analysis can help organizations identify and reduce these visibility gaps.\n\nShinyHunters claims FBI hack, data theft in PeopleSoft zero-day breach\n\nNew Windows Defender zero-day blocks Microsoft antivirus updates\n\nEvilTokens PhaaS disrup…",
+          "detail": "Signal de veille — BleepingComputer.\n\nShadow IT can leave security teams unaware of unmanaged endpoints, unauthorized software, and other assets that fall outside existing monitoring. Wazuh explains how endpoint inventory, agentless monitoring, and centralized analysis can help organizations identify and reduce these visibility gaps.\n\nShinyHunters claims FBI hack, data theft in PeopleSoft zero-day breach\n\nNew Windows Defender zero-day blocks Microsoft antivirus updates\n\nEvilTokens PhaaS disrupted after compromising 12,000 Microsoft accounts\n\nCheck Point warns of Management Server zero-day exploited in attacks\n\nRogue external MFA providers can steal passwords during logins\n\nChinese hackers exploit WordPress, Zyxel flaws to steal govt data",
+          "action": null,
+          "image": "https://www.bleepstatic.com/content/posts/2026/09/22/IMG_7712.png",
+          "sources": [
+            {
+              "url": "https://www.bleepingcomputer.com/news/security/reducing-shadow-it-visibility-gaps-with-wazuh/",
+              "label": "BleepingComputer"
+            }
+          ],
+          "url": "https://www.bleepingcomputer.com/news/security/reducing-shadow-it-visibility-gaps-with-wazuh/",
+          "pubDate": "2026-09-22T17:17:41.000Z"
+        },
+        {
+          "title": "AMD franchit le cap des 1 000 milliards $ de capitalisation",
+          "cve": null,
+          "severity": "culture",
+          "score": 63,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Signal de veille — Silicon.fr.\n\nAMD est devenu le quatrième fabricant américain de semi-conducteurs à dépasser les 1 000 milliards $ de valorisation boursière, porté par un bond de près de 10% de son action en séance. Le titre a atteint un plus haut historique à 615,52 $, avant de clôturer en hausse de 9,6% à 613,31 $, le 21 septembre. Cette performance place AMD aux côtés de Nvidia, Broadcom et Micron, seuls autres groupes américains du secteur à avoir déjà atteint ce seuil.",
+          "detail": "Signal de veille — Silicon.fr.\n\nAMD est devenu le quatrième fabricant américain de semi-conducteurs à dépasser les 1 000 milliards $ de valorisation boursière, porté par un bond de près de 10% de son action en séance. Le titre a atteint un plus haut historique à 615,52 $, avant de clôturer en hausse de 9,6% à 613,31 $, le 21 septembre. Cette performance place AMD aux côtés de Nvidia, Broadcom et Micron, seuls autres groupes américains du secteur à avoir déjà atteint ce seuil. Nvidia, qui avait dépassé les 1 000 milliards dès 2023, reste largement en tête avec une capitalisation supérieure à 5 000 milliards $ . Une stratégie qui dépasse la puce Au-delà de la conjoncture boursière, la progression d&rsquo;AMD reflète une évolution stratégique. Le groupe ne se contente plus de vendre des puces individuelles mais propose désormais des systèmes complets associant processeurs, équipements réseau et matériels connexes. Le groupe californien profite également de la demande croissante pour les processeurs centraux utilisés en complément des puces graphiques dans les serveurs dédiés à l&rsquo;inférence, un segment sur lequel il grignote des parts de marché à Intel. Les résultats du deuxième trimestre, publiés début août, avaient déjà illustré cette dynamique : le chiffre d&rsquo;affaires avait atteint 11,54 milliards $, en hausse de 50% sur un an, porté par une division Data Center en croissance de 107%, à 6,7 milliards",
+          "action": null,
+          "image": "https://www.silicon.fr/wp-content/uploads/2025/09/optimiseur-Fusion-AMD-serait-trop-permissif-F.jpg",
+          "sources": [
+            {
+              "url": "https://www.silicon.fr/business-1367/amd-franchit-le-cap-des-1-000-milliards-de-capitalisation-229284",
+              "label": "Silicon.fr"
+            }
+          ],
+          "url": "https://www.silicon.fr/business-1367/amd-franchit-le-cap-des-1-000-milliards-de-capitalisation-229284",
+          "pubDate": "2026-09-22T15:13:35.000Z"
+        },
+        {
+          "title": "Citing China, President Trump doubles down on hands-off approach to AI regulation",
+          "cve": null,
+          "severity": "high",
+          "score": 59,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Signal de veille — CyberScoop.\n\nPresident Donald Trump continued to defend his administration’s hands-off approach to AI regulation in the wake of hacks carried out by U.S. commercial frontier models that have rattled policymakers and industry veterans and spurred calls for more regulatory oversight.",
+          "detail": "Signal de veille — CyberScoop.\n\nPresident Donald Trump continued to defend his administration’s hands-off approach to AI regulation in the wake of hacks carried out by U.S. commercial frontier models that have rattled policymakers and industry veterans and spurred calls for more regulatory oversight. In a Truth Social post Monday, Trump dismissed worries from critics that “AI is going to kill us,” comparing them to complaints from environmentalists about climate change, which he also alleged was a false narrative. He also posited that nothing may matter more than future U.S. dominance of the technology over geopolitical rivals like China. “Whoever wins AI, WINS!” Trump posted. “We are leading now over China, and everyone else, and I’m going to keep it that way! I’m not going to stifle Growth, of something that will be bigger than the Industrial Revolution, or the internet, itself.” Trump has previously suggested that good leadership is the only regulation the U.S. needs for artificial intelligence. He later claimed the Department of Justice was ready to “rein things in” if companies overstepped, but offered no specifics on enforcement, legal authority, or where he would draw that line. “We will be careful, and that’s why we have the Department of Justice, and other Law Enforcement bodies, that will rein things in if we have to, but I will only encourage AI or, SI (SUPER INTELLIGENCE)!” Trump concluded. Secret",
+          "action": null,
+          "image": "https://cyberscoop.com/wp-content/uploads/sites/3/2026/09/Trump-Sam-Altman.jpeg",
+          "sources": [
+            {
+              "url": "https://cyberscoop.com/trump-hands-off-ai-regulation-china-race/",
+              "label": "CyberScoop"
+            }
+          ],
+          "url": "https://cyberscoop.com/trump-hands-off-ai-regulation-china-race/",
+          "pubDate": "2026-09-22T15:16:35.000Z"
+        },
+        {
+          "title": "C’est la guerre du caddie : Amazon bloque le nouvel agent shopping autonome de Meta",
+          "cve": null,
+          "severity": "high",
+          "score": 59,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Signal de veille — Numerama.\n\nDepuis quelques jours, l'IA de Meta ne peut plus faire vos courses sur Amazon. Le géant du e-commerce dénonce un outil non autorisé qui enfreint ses conditions d'utilisation.\n\nWatt Else, ToujoursPlus, Artificielles, Le Récap : votre dose hebdo d’infos exclusives et d’éditos endiablés !\n\nFrandroid Clubic Lemon Humanoid Mon compte Thème Clair Sombre Système 39,90 € /an\n\nNous générons pour vous un résumé de l’article grâce à une IA et nous le vérifions afin d…",
+          "detail": "Signal de veille — Numerama.\n\nDepuis quelques jours, l'IA de Meta ne peut plus faire vos courses sur Amazon. Le géant du e-commerce dénonce un outil non autorisé qui enfreint ses conditions d'utilisation.\n\nWatt Else, ToujoursPlus, Artificielles, Le Récap : votre dose hebdo d’infos exclusives et d’éditos endiablés !\n\nFrandroid Clubic Lemon Humanoid Mon compte Thème Clair Sombre Système 39,90 € /an\n\nNous générons pour vous un résumé de l’article grâce à une IA et nous le vérifions afin de nous assurer qu’il n’y ait aucune erreur, pour garantir l’authenticité de l’info.\n\nRecevez tous les soirs un résumé de l’actu importante avec Le Récap’\n\nLa semaine dernière s&rsquo;était bouclée de la plus belle des manières pour Meta et son dernier produit IA, Muse. Lancé début septembre et capable notamment de rechercher des produits et de passer commande à la place de l&rsquo;utilisateur, l&rsquo;outil s&rsquo;est hissé en tête des téléchargements de l&rsquo;App Store américain, détrônant ChatGPT.\n\nDepuis le 20 septembre, pourtant, les utilisateurs de Muse qui tentent de faire des achats sur Amazon via l&rsquo;agent IA de Meta se voient bloqués, leur usage enfreint les conditions d&rsquo;utilisation de la plateforme.",
+          "action": null,
+          "image": "https://img.numerama.com/www.numerama.com/wp-content/uploads/2026/09/design-sans-titre-2026-09-22t153937738.png?resize=1600,900&key=2ca51305",
+          "sources": [
+            {
+              "url": "https://www.numerama.com/tech/2337653-cest-la-guerre-du-caddie-amazon-bloque-le-nouvel-agent-shopping-autonome-de-meta.html",
+              "label": "Numerama"
+            }
+          ],
+          "url": "https://www.numerama.com/tech/2337653-cest-la-guerre-du-caddie-amazon-bloque-le-nouvel-agent-shopping-autonome-de-meta.html",
+          "pubDate": "2026-09-22T13:45:00.000Z"
+        },
+        {
+          "title": "AI Agents Are Rewriting the Rules of Lateral Movement",
+          "cve": null,
+          "severity": "culture",
+          "score": 59,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Signal de veille — The Hacker News.\n\nSecurity teams have spent decades asking whether an identity has too much access. AI agents raise a harder question: how can we determine which paths an autonomous system can discover, given the access it already has? A person may try several ways to complete a task. A deterministic application follows the flow its developer wrote. But an AI agent is relentless in its pursuit of done. In May",
+          "detail": "Signal de veille — The Hacker News.\n\nSecurity teams have spent decades asking whether an identity has too much access. AI agents raise a harder question: how can we determine which paths an autonomous system can discover, given the access it already has? A person may try several ways to complete a task. A deterministic application follows the flow its developer wrote. But an AI agent is relentless in its pursuit of done. In May",
+          "action": null,
+          "image": "https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEi9ivhHLwWwT7Ptbr537Fd2CV3d_maDSNRmH0up0x67UPpc5x45Uuz0Bg8EnLkjrtB3DYXldW7aKbzx5uljQSF7IhQlzHHA1HR0F16Eaxs8Y3tgURkizSrA79L3EqyD5RDlqPGljbXCTQj0tFFG2EOVueksvhyrmdmC-v6VFjs76KdzZlCg1juWiVOPDnU/s1600/token.jpg",
+          "sources": [
+            {
+              "url": "https://thehackernews.com/2026/09/ai-agents-are-rewriting-rules-of.html",
+              "label": "The Hacker News"
+            }
+          ],
+          "url": "https://thehackernews.com/2026/09/ai-agents-are-rewriting-rules-of.html",
+          "pubDate": "2026-09-22T12:30:00.000Z"
+        },
+        {
+          "title": "Only 13% of OT Network Segments Are Fully Isolated: Analysis",
+          "cve": null,
+          "severity": "culture",
+          "score": 59,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Signal de veille — SecurityWeek.\n\nForescout’s new network segmentation research shows that OT and medical devices often share network segments with other enterprise assets. The post Only 13% of OT Network Segments Are Fully Isolated: Analysis appeared first on SecurityWeek .",
+          "detail": "Signal de veille — SecurityWeek.\n\nForescout’s new network segmentation research shows that OT and medical devices often share network segments with other enterprise assets. The post Only 13% of OT Network Segments Are Fully Isolated: Analysis appeared first on SecurityWeek .",
+          "action": null,
+          "image": "https://www.securityweek.com/wp-content/uploads/2024/01/network-security-integration.jpg",
+          "sources": [
+            {
+              "url": "https://www.securityweek.com/only-13-of-ot-network-segments-are-fully-isolated-analysis/",
+              "label": "SecurityWeek"
+            }
+          ],
+          "url": "https://www.securityweek.com/only-13-of-ot-network-segments-are-fully-isolated-analysis/",
+          "pubDate": "2026-09-22T12:24:30.000Z"
+        },
+        {
+          "title": "GPT-6 Astra Breaks an Old Enigma Message",
+          "cve": null,
+          "severity": "culture",
+          "score": 59,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Signal de veille — Schneier on Sec..\n\nThis is pretty amazing: However, the most astonishing thing about this break is that the GPT­6 Astra did it entirely on its own. Carter Leffer only directed GPT­6 Astra to see if it could break any of the unbroken Enigma messages published on the Crypto Cellar Research web page. After analysing the unbroken messages on the website, it decided that the most promising message was Nr. 172, MVUEH and it also quickly suspected that the plaintext of Nr.",
+          "detail": "Signal de veille — Schneier on Sec..\n\nThis is pretty amazing: However, the most astonishing thing about this break is that the GPT­6 Astra did it entirely on its own. Carter Leffer only directed GPT­6 Astra to see if it could break any of the unbroken Enigma messages published on the Crypto Cellar Research web page. After analysing the unbroken messages on the website, it decided that the most promising message was Nr. 172, MVUEH and it also quickly suspected that the plaintext of Nr. 173, SIPVX, might be related to the plaintext of the unbroken MVUEH message. After trying many different approaches, GPT­6 Astra focused on using the repeated place name ROSENOW ROSENOW as a crib. After developing the necessary Python and C++ software for an Enigma simulator and an Enigma Bombe, GPT­6 Astra started a thorough break with the ROSENOW crib, which in the end resulted in the correct key and plaintext for the MVUEH message being found. We are still analysing the GPT­6 Astra logs to see exactly how it executed the break. And we are discovering amazing details. More details at the link.",
+          "action": null,
+          "image": null,
+          "sources": [
+            {
+              "url": "https://www.schneier.com/blog/archives/2026/09/gpt-6-astra-breaks-an-old-enigma-message.html",
+              "label": "Schneier on Sec."
+            }
+          ],
+          "url": "https://www.schneier.com/blog/archives/2026/09/gpt-6-astra-breaks-an-old-enigma-message.html",
+          "pubDate": "2026-09-22T11:02:45.000Z"
+        },
+        {
+          "title": "Malicious npm Package indexed-btree Hid Its Loader in Runtime Code Before Removal",
+          "cve": null,
+          "severity": "culture",
+          "score": 59,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Signal de veille — The Hacker News.\n\nA malicious npm package named \"indexed-btree\" has been observed hiding its malicious behavior within application code rather than using lifecycle scripts, indicating that threat actors are likely shifting tactics in response to recent security controls. \"Indexed-btree is a malicious npm package mimicking the legit sorted-btree package, an ordinary B-tree/indexing utility,\" Checkmarx said. \"",
+          "detail": "Signal de veille — The Hacker News.\n\nA malicious npm package named \"indexed-btree\" has been observed hiding its malicious behavior within application code rather than using lifecycle scripts, indicating that threat actors are likely shifting tactics in response to recent security controls. \"Indexed-btree is a malicious npm package mimicking the legit sorted-btree package, an ordinary B-tree/indexing utility,\" Checkmarx said. \"",
+          "action": null,
+          "image": "https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEjaN7aXt0PoPdZQ_VG77wkwdIyNugcdkFD6MnMvlj5LN_byw2ZrX8-gtpDld4CviuW1MOhHiElsvFtIkO9IfhBr4af-sJwM1zvR-RFICRll4G5jG4JNPX1vx4sup3omlw8uTJgro9UUfzecLMI1Whls3ihqZ9OXYJliIBjhpoodf4WI9j1lA6EUjms7x1pG/s1600/rth.jpg",
+          "sources": [
+            {
+              "url": "https://thehackernews.com/2026/09/malicious-npm-package-indexed-btree-hid.html",
+              "label": "The Hacker News"
+            }
+          ],
+          "url": "https://thehackernews.com/2026/09/malicious-npm-package-indexed-btree-hid.html",
+          "pubDate": "2026-09-22T09:38:18.000Z"
+        },
+        {
+          "title": "Japan Dismantles First North Korean Laptop Farm as US and Allies Detail Wider Scheme",
+          "cve": null,
+          "severity": "culture",
+          "score": 59,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Signal de veille — SecurityWeek.\n\nJapan has dismantled a North Korean laptop farm and a joint report with the US, Germany and Australia details the wider WaterPlum campaign\n\nThe US, Japan, Germany and Australia have published a joint report detailing the scope of North Korea’s WaterPlum campaign.\n\nSubscribe to the SecurityWeek Email Briefing for the latest cybersecurity threats, trends, and expert insights.\n\nSubscribe to the SecurityWeek Email Briefing to stay informed on the latest threat…",
+          "detail": "Signal de veille — SecurityWeek.\n\nJapan has dismantled a North Korean laptop farm and a joint report with the US, Germany and Australia details the wider WaterPlum campaign\n\nThe US, Japan, Germany and Australia have published a joint report detailing the scope of North Korea’s WaterPlum campaign.\n\nSubscribe to the SecurityWeek Email Briefing for the latest cybersecurity threats, trends, and expert insights.\n\nSubscribe to the SecurityWeek Email Briefing to stay informed on the latest threats, trends, and technology, along with insightful columns from industry experts.\n\nJoin as speakers examine the various components of ASM strategy, the push to mandate continuous asset visibility and inventory tools, and the use of red-teaming, bug bounties and pen-tests in modern security programs.\n\nExplore what it takes to operationalize continuous authorization at scale, including the technical, organizational, and cultural changes required.\n\nVeritas Capital has appointed Joel Fulton as Chief Information Security Officer.",
+          "action": null,
+          "image": "https://www.securityweek.com/wp-content/uploads/2025/01/North-Korea-hacking.jpeg",
+          "sources": [
+            {
+              "url": "https://www.securityweek.com/japan-dismantles-first-north-korean-laptop-farm-as-us-and-allies-detail-wider-scheme/",
+              "label": "SecurityWeek"
+            }
+          ],
+          "url": "https://www.securityweek.com/japan-dismantles-first-north-korean-laptop-farm-as-us-and-allies-detail-wider-scheme/",
+          "pubDate": "2026-09-22T08:37:06.000Z"
+        },
+        {
+          "title": "[Virtual Event] Cybersecurity Outlook 2027",
+          "cve": null,
+          "severity": "culture",
+          "score": 55,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Signal de veille — Dark Reading.\n\n[Virtual Event] Cybersecurity Outlook 2027",
+          "detail": "Signal de veille — Dark Reading.\n\n[Virtual Event] Cybersecurity Outlook 2027",
+          "action": null,
+          "image": null,
+          "sources": [
+            {
+              "url": "https://www.darkreading.com/events/virtual-event-cybersecurity-outlook-2027",
+              "label": "Dark Reading"
+            }
+          ],
+          "url": "https://www.darkreading.com/events/virtual-event-cybersecurity-outlook-2027",
+          "pubDate": "2026-09-23T04:01:06.054Z"
+        },
+        {
+          "title": "Relays Are Masking Chinese Access to Frontier AI Models in the US",
+          "cve": null,
+          "severity": "culture",
+          "score": 55,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Signal de veille — Dark Reading.\n\nMore than 80,000 AI relay servers are helping users in China mask their identities while they access cutting-edge large language models (LLMs), probably to clone them.",
+          "detail": "Signal de veille — Dark Reading.\n\nMore than 80,000 AI relay servers are helping users in China mask their identities while they access cutting-edge large language models (LLMs), probably to clone them.",
+          "action": null,
+          "image": null,
+          "sources": [
+            {
+              "url": "https://www.darkreading.com/cyber-risk/relays-masking-chinese-access-frontier-ai-models",
+              "label": "Dark Reading"
+            }
+          ],
+          "url": "https://www.darkreading.com/cyber-risk/relays-masking-chinese-access-frontier-ai-models",
+          "pubDate": "2026-09-22T21:12:37.000Z"
+        },
+        {
+          "title": "IA souveraine : Atos se dote d’un comité scientifique",
+          "cve": null,
+          "severity": "high",
+          "score": 54,
+          "corroboration": 1,
+          "region": "fr",
+          "body": "Signal de veille — Silicon.fr.\n\nAtos installe un comité scientifique en France chargé d&rsquo;accompagner sa réflexion sur l&rsquo;intelligence artificielle open source et souveraine. Cette instance doit conseiller le groupe dans ses choix technologiques et contribuer à ses projets d&rsquo;innovation, notamment ceux menés au sein de ses Inno&rsquo;Labs. Une équipe mêlant recherche, industrie et logiciel libre Le comité rassemble quatre personnalités extérieures au groupe.",
+          "detail": "Signal de veille — Silicon.fr.\n\nAtos installe un comité scientifique en France chargé d&rsquo;accompagner sa réflexion sur l&rsquo;intelligence artificielle open source et souveraine. Cette instance doit conseiller le groupe dans ses choix technologiques et contribuer à ses projets d&rsquo;innovation, notamment ceux menés au sein de ses Inno&rsquo;Labs. Une équipe mêlant recherche, industrie et logiciel libre Le comité rassemble quatre personnalités extérieures au groupe. Alexandre Bouard, qui dirige le programme « véhicule connecté » de la Software République ( un collectif d&rsquo;entreprises consacré à l&rsquo;innovation dans la mobilité ) après quinze ans passés chez BMW, y représente le secteur automobile. Stéphane Canu, professeur à l&rsquo;INSA Rouen Normandie et titulaire d&rsquo;une chaire de recherche en apprentissage statistique. Il occupe également une fonction de chargé de mission IA auprès du ministère de l&rsquo;Enseignement supérieur et de la Recherche. Philippe Freyssinet, directeur scientifique du BRGM et membre de l&rsquo;Académie des technologies, doit éclairer le comité sur les usages liés aux sciences de la Terre et à l&rsquo;environnement. Enfin, Jean-Baptiste Kempf, fondateur de l&rsquo;association VideoLan à l&rsquo;origine du lecteur VLC, y apporte son expérience du monde open source. Trois dirigeants d&rsquo;Atos France complètent ce comité : Franck Chartier, directeur général, Sylv",
+          "action": null,
+          "image": "https://www.silicon.fr/wp-content/uploads/2026/01/France-Travail-IA.png",
+          "sources": [
+            {
+              "url": "https://www.silicon.fr/data-ia-1372/ia-souveraine-atos-se-dote-dun-comite-scientifique-229247",
+              "label": "Silicon.fr"
+            }
+          ],
+          "url": "https://www.silicon.fr/data-ia-1372/ia-souveraine-atos-se-dote-dun-comite-scientifique-229247",
+          "pubDate": "2026-09-22T10:58:16.000Z"
+        },
+        {
+          "title": "Dassault Aviation teste deux algorithmes d’IA souveraine sur le Rafale",
+          "cve": null,
+          "severity": "high",
+          "score": 53,
+          "corroboration": 1,
+          "region": "fr",
+          "body": "Signal de veille — Silicon.fr.\n\nDassault Aviation a mené des essais en vol sur deux nouveaux algorithmes d&rsquo;intelligence artificielle embarqués à bord du Rafale. Le premier a été conçu par les propres équipes d&rsquo;ingénierie de l&rsquo;avionneur, le second en partenariat avec l&rsquo;entité cortAIx de Thales, avec qui Dassault collabore déjà sur l&rsquo;avion de combat.",
+          "detail": "Signal de veille — Silicon.fr.\n\nDassault Aviation a mené des essais en vol sur deux nouveaux algorithmes d&rsquo;intelligence artificielle embarqués à bord du Rafale. Le premier a été conçu par les propres équipes d&rsquo;ingénierie de l&rsquo;avionneur, le second en partenariat avec l&rsquo;entité cortAIx de Thales, avec qui Dassault collabore déjà sur l&rsquo;avion de combat. Selon le constructeur, ces briques logicielles ont désormais atteint un degré de maturité suffisant pour être envisagées dans le cadre des prochaines évolutions du Rafale. Dassault n&rsquo;a en revanche pas précisé la nature exacte des fonctions testées ni le rôle opérationnel qu&rsquo;elles seraient amenées à jouer dans le cockpit. Une IA pensée pour épauler l&rsquo;équipage Le groupe français situe ce travail dans une démarche plus large d&rsquo;intégration d&rsquo;une intelligence artificielle « contrôlée et supervisée », conçue pour assister l&rsquo;équipage plutôt que s&rsquo;y substituer. Dassault met en avant les difficultés spécifiques à ce type de développement dans le domaine militaire. Soit disposer de données opérationnelles suffisantes et fiables, qu&rsquo;elles soient issues de vols réels ou de simulations, faire dialoguer des expertises très différentes et faire tourner ces algorithmes sur une plateforme embarquée aux ressources de calcul par nature limitées. L&rsquo;entreprise revendique sur ce terrain plusieurs décenni",
+          "action": null,
+          "image": "https://www.silicon.fr/wp-content/uploads/2026/09/Rafale-.jpg",
+          "sources": [
+            {
+              "url": "https://www.silicon.fr/business-1367/dassault-aviation-teste-deux-algorithmes-dia-souveraine-sur-le-rafale-229289",
+              "label": "Silicon.fr"
+            }
+          ],
+          "url": "https://www.silicon.fr/business-1367/dassault-aviation-teste-deux-algorithmes-dia-souveraine-sur-le-rafale-229289",
+          "pubDate": "2026-09-22T15:54:29.000Z"
+        }
+      ]
+    }
+  ]
+}
