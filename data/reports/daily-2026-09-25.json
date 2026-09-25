@@ -1,0 +1,1061 @@
+{
+  "id": "daily-2026-09-25",
+  "type": "daily",
+  "date": "2026-09-25",
+  "title": "Rapport quotidien - vendredi 25 septembre 2026",
+  "summary": "Sur les dernières 24 heures, la veille recense 24 vulnérabilités critiques, 37 incidents ou compromissions et 30 signaux de fond. Acteurs et produits les plus exposés : Microsoft, Windows et snipe/snipe-it (composer).",
+  "generatedAt": "2026-09-25T04:01:22.646Z",
+  "sections": [
+    {
+      "id": "vulns",
+      "items": [
+        {
+          "title": "CVE-2026-56736 — phpMyFAQ has Stored XSS in Admin FAQ Editor via HTML Entity Bypass in Frontend FAQ Submission",
+          "cve": "CVE-2026-56736",
+          "severity": "high",
+          "score": 60,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Vulnérabilité élevée CVE-2026-56736 affectant thorsten/phpmyfaq (composer) (score CVSS 8.2).\n\nphpMyFAQ has Stored XSS in Admin FAQ Editor via HTML Entity Bypass in Frontend FAQ Submission\n\nVulnerable file: phpmyfaq/src/phpMyFAQ/Controller/Frontend/Api/FaqController.php (lines 109-115)\n\nFilter::filterVar() with FILTER_SANITIZE_SPECIAL_CHARS internally calls filterSanitizeString() which applies strip_tags() to remove HTML tags.",
+          "detail": "Vulnérabilité élevée CVE-2026-56736 affectant thorsten/phpmyfaq (composer) (score CVSS 8.2).\n\nphpMyFAQ has Stored XSS in Admin FAQ Editor via HTML Entity Bypass in Frontend FAQ Submission\n\nVulnerable file: phpmyfaq/src/phpMyFAQ/Controller/Frontend/Api/FaqController.php (lines 109-115)\n\nFilter::filterVar() with FILTER_SANITIZE_SPECIAL_CHARS internally calls filterSanitizeString() which applies strip_tags() to remove HTML tags. However, strip_tags() only removes actual HTML tag syntax (e.g., ) — it does NOT remove HTML entities (e.g., &lt;script&gt; ).\n\nWhen enableWysiwygEditorFrontend is true , html_entity_decode() is subsequently called, which converts the surviving HTML entities into real, executable HTML. No server-side HTML sanitizer (such as the Symfony HtmlSanitizer already used elsewhere in the codebase) is applied before storing the content in the database.\n\nVulnerable sink (admin template): phpmyfaq/assets/templates/admin/content/faq.editor.twig (line 127)\n\n$ this -> faq -> getFaq ( $ faqId , null , true ); $ faqData = $ this -> faq -> faqRecord ; // Raw content from DB Note: The public-facing FAQ view IS properly sanitized via FaqHelper::cleanUpContent() which uses Symfony HtmlSanitizer. Only the admin edit view is vulnerable.\n\nWhen an administrator navigates to edit the submitted FAQ entry:",
+          "action": "Vérifier l'exposition du parc et appliquer le correctif éditeur dès sa disponibilité.",
+          "image": "https://github.githubassets.com/assets/advisory-database-show-f32c8207dfb2.png",
+          "sources": [
+            {
+              "url": "https://github.com/advisories/GHSA-pgwp-vc7q-cvj3",
+              "label": "GitHub Advisory"
+            }
+          ],
+          "url": "https://github.com/advisories/GHSA-pgwp-vc7q-cvj3",
+          "pubDate": "2026-09-24T19:28:43.000Z"
+        },
+        {
+          "title": "CVE-2026-56737 — phpMyFAQ's two-factor authentication login bypasses the password factor",
+          "cve": "CVE-2026-56737",
+          "severity": "high",
+          "score": 59,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Vulnérabilité élevée CVE-2026-56737 affectant thorsten/phpmyfaq (composer) (score CVSS 8.1).\n\nphpMyFAQ's two-factor authentication login bypasses the password factor\n\nsrc/phpMyFAQ/Controller/Frontend/AuthenticationController.php:255-283 :\n\nvalidateToken() ( src/phpMyFAQ/User/TwoFactor.php:87-101 ) returns false when the user has no secret, so this is not a universal bypass of all accounts — it specifically defeats the password factor of every 2FA-enabled account :\n\nPre-req: a target account (e.g.",
+          "detail": "Vulnérabilité élevée CVE-2026-56737 affectant thorsten/phpmyfaq (composer) (score CVSS 8.1).\n\nphpMyFAQ's two-factor authentication login bypasses the password factor\n\nsrc/phpMyFAQ/Controller/Frontend/AuthenticationController.php:255-283 :\n\nvalidateToken() ( src/phpMyFAQ/User/TwoFactor.php:87-101 ) returns false when the user has no secret, so this is not a universal bypass of all accounts — it specifically defeats the password factor of every 2FA-enabled account :\n\nPre-req: a target account (e.g. admin ) has 2FA enabled (a common hardening choice). The attacker knows or enumerates the numeric user-id (1 = first/admin account in default installs).\n\nAuthentication bypass (CWE-287) / missing authentication for a critical step (CWE-306). The password — the primary credential — is never required for any 2FA-enabled account. Combined with the absent lockout, this enables full account takeover of users and administrators. Impacted: any deployment where users enable two-factor authentication.\n\nthorsten published to thorsten/phpMyFAQ Jul 13, 2026 Published by the National Vulnerability Database Sep 24, 2026 Published to the GitHub Advisory Database Sep 24, 2026 Reviewed Sep 24, 2026 Last updated Sep 24, 2026 Severity High 8.1 CVSS overall score This score calculates overall vulnerability severity from 0 to 10 and is based on the Common Vulnerability Scoring System (CVSS). / 10 CVSS v3 base metrics Attack vector Network Attack complexity High Privileges required None User interaction None Scope Unchanged Confidentiality High Integrity High Availability High Learn more about base metrics CVSS v3 base metrics Attack vector: More severe the more the remote (logically and physically) an attacker can be in order to exploit the vulnerability. Attack complexity: More severe for the leas",
+          "action": "Vérifier l'exposition du parc et appliquer le correctif éditeur dès sa disponibilité.",
+          "image": "https://github.githubassets.com/assets/advisory-database-show-f32c8207dfb2.png",
+          "sources": [
+            {
+              "url": "https://github.com/advisories/GHSA-8gpw-xvpf-hvx5",
+              "label": "GitHub Advisory"
+            }
+          ],
+          "url": "https://github.com/advisories/GHSA-8gpw-xvpf-hvx5",
+          "pubDate": "2026-09-24T19:29:27.000Z"
+        },
+        {
+          "title": "CVE-2026-61732 — Decepticon: Role-boundary forgery via ChatML special-token literals in web crawl output composed into LLM context",
+          "cve": "CVE-2026-61732",
+          "severity": "critical",
+          "score": 59,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Vulnérabilité critique CVE-2026-61732 affectant decepticon-core (pip) (score CVSS 10).\n\nDecepticon: Role-boundary forgery via ChatML special-token literals in web crawl output composed into LLM context\n\nThe vast majority of open-source and self-deployed model providers do not filter special-token literals. vLLM explicitly declined to fix this issue on 2026-04-21, closing it as \"out of scope for the inference layer.\" Fix responsibility therefore falls squarely on the Agent application layer.",
+          "detail": "Vulnérabilité critique CVE-2026-61732 affectant decepticon-core (pip) (score CVSS 10).\n\nDecepticon: Role-boundary forgery via ChatML special-token literals in web crawl output composed into LLM context\n\nThe vast majority of open-source and self-deployed model providers do not filter special-token literals. vLLM explicitly declined to fix this issue on 2026-04-21, closing it as \"out of scope for the inference layer.\" Fix responsibility therefore falls squarely on the Agent application layer. OpenClaw completed an analogous fix on 2026-04-22 via commit 2514746b3261 (~30 lines, sanitizer applied just before tool-output wrapping), demonstrating the feasibility of application-layer mitigation.\n\nConfirmed vulnerable when Decepticon is configured with a BYOK OpenAI-compatible backend whose tokenizer preserves special-token IDs — vLLM / SGLang / TGI confirmed upstream.\n\nNot currently exploitable against hosted vendors (OpenAI, Anthropic, DashScope) who strip special-token literals server-side. However, this immunity is vendor-side behavior, not an architectural guarantee of Decepticon. The durable control is application-layer literal filtering or escaping.\n\nThe vulnerability spans three layers — external data ingestion, LLM message composition, and command execution. All 16 specialist agents share this pipeline.\n\nThe recon agent collects target intelligence via a suite of tools ( nmap , httpx , dnsx , masscan , katana , ffuf , etc.). All tool outputs — including HTTP responses from target web servers — are captured as raw string content and returned to the agent loop:\n\n# recon.py:85-100 — tool registration for external data collection kg_ingest_nmap_xml , # Nmap scan results kg_ingest_httpx_jsonl , # HTTP probe responses kg_ingest_dnsx , # DNS enumeration output kg_ingest_katan",
+          "action": "Vérifier l'exposition du parc et appliquer le correctif éditeur dès sa disponibilité.",
+          "image": "https://github.githubassets.com/assets/advisory-database-show-f32c8207dfb2.png",
+          "sources": [
+            {
+              "url": "https://github.com/advisories/GHSA-g5f9-3xfg-p9mf",
+              "label": "GitHub Advisory"
+            }
+          ],
+          "url": "https://github.com/advisories/GHSA-g5f9-3xfg-p9mf",
+          "pubDate": "2026-09-24T19:17:49.000Z"
+        },
+        {
+          "title": "CVE-2026-59167 — SunEditor: Critical XSS vulnerability - sanitizer bypass",
+          "cve": "CVE-2026-59167",
+          "severity": "critical",
+          "score": 59,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Vulnérabilité critique CVE-2026-59167 affectant suneditor (npm) (score CVSS 10).\n\nSunEditor: Critical XSS vulnerability - sanitizer bypass\n\nThe sanitization logic does not fully remove executable event-handler attributes from certain custom/namespaced tags. As a result, an attacker may be able to inject HTML content that executes JavaScript when the rendered element is interacted with.\n\nThis behavior was observed after the changes introduced in this commit:\n\nDepending on how SUNEDITOR is integrated into an application, this could lead t…",
+          "detail": "Vulnérabilité critique CVE-2026-59167 affectant suneditor (npm) (score CVSS 10).\n\nSunEditor: Critical XSS vulnerability - sanitizer bypass\n\nThe sanitization logic does not fully remove executable event-handler attributes from certain custom/namespaced tags. As a result, an attacker may be able to inject HTML content that executes JavaScript when the rendered element is interacted with.\n\nThis behavior was observed after the changes introduced in this commit:\n\nDepending on how SUNEDITOR is integrated into an application, this could lead to:\n\nThe issue appears to be related to incomplete handling of namespaced/custom HTML elements such as:\n\na:b > Event-handler attributes such as onclick can remain attached to these crafted elements and execute when interacted with.\n\nThis suggests that the sanitization process may not consistently normalize and validate custom or namespaced elements before applying attribute filtering.",
+          "action": "Vérifier l'exposition du parc et appliquer le correctif éditeur dès sa disponibilité.",
+          "image": "https://github.githubassets.com/assets/advisory-database-show-f32c8207dfb2.png",
+          "sources": [
+            {
+              "url": "https://github.com/advisories/GHSA-6rf4-v2fh-m6p4",
+              "label": "GitHub Advisory"
+            }
+          ],
+          "url": "https://github.com/advisories/GHSA-6rf4-v2fh-m6p4",
+          "pubDate": "2026-09-24T14:57:55.000Z"
+        },
+        {
+          "title": "CVE-2026-97359 — HFS2 version 2.4.0 and earlier contains a template injection vulnerability in the multipar…",
+          "cve": "CVE-2026-97359",
+          "severity": "critical",
+          "score": 59,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Vulnérabilité critique CVE-2026-97359 (score CVSS 10).\n\nHFS2 version 2.4.0 and earlier contains a template injection vulnerability in the multipart upload handler that allows unauthenticated attackers to achieve remote code execution by embedding malicious template syntax in a filename. Attackers can craft a filename containing a closing template quoting sequence followed by an exec macro, which bypasses the authorization check in the dispatcher to execute arbitrary commands on the underlying host system.",
+          "detail": "Vulnérabilité critique CVE-2026-97359 (score CVSS 10).\n\nHFS2 version 2.4.0 and earlier contains a template injection vulnerability in the multipart upload handler that allows unauthenticated attackers to achieve remote code execution by embedding malicious template syntax in a filename. Attackers can craft a filename containing a closing template quoting sequence followed by an exec macro, which bypasses the authorization check in the dispatcher to execute arbitrary commands on the underlying host system.\n\nScore CVSS : 10\n\nType de faiblesse (CWE) : CWE-1336",
+          "action": "Vérifier l'exposition du parc et appliquer le correctif éditeur dès sa disponibilité.",
+          "image": null,
+          "sources": [
+            {
+              "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-97359",
+              "label": "NVD"
+            },
+            {
+              "url": "https://www.cvedetails.com/cve/CVE-2026-97359/",
+              "label": "CVE Details"
+            }
+          ],
+          "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-97359",
+          "pubDate": "2026-09-24T14:18:22.533Z"
+        },
+        {
+          "title": "CVE-2026-61741 — http4s-scala-xml has an XML External Entity (XXE) processing issue",
+          "cve": "CVE-2026-61741",
+          "severity": "critical",
+          "score": 57,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Vulnérabilité critique CVE-2026-61741 affectant org.http4s:http4s-scala-xml_2.12 (maven) (score CVSS 9.3).\n\nhttp4s-scala-xml has an XML External Entity (XXE) processing issue\n\nAn application that uses these decoders to parse untrusted XML is vulnerable to XML External Entity (XXE) attacks. An attacker can craft a request that:\n\nAny service that derives an XML EntityDecoder from this library and parses attacker-controlled input is affected.\n\nThese defaults match scala.xml.XMLLoader 's defaults since 2.0.0.\n\nBefore upgrading, override ElemInstances#saxFactory with…",
+          "detail": "Vulnérabilité critique CVE-2026-61741 affectant org.http4s:http4s-scala-xml_2.12 (maven) (score CVSS 9.3).\n\nhttp4s-scala-xml has an XML External Entity (XXE) processing issue\n\nAn application that uses these decoders to parse untrusted XML is vulnerable to XML External Entity (XXE) attacks. An attacker can craft a request that:\n\nAny service that derives an XML EntityDecoder from this library and parses attacker-controlled input is affected.\n\nThese defaults match scala.xml.XMLLoader 's defaults since 2.0.0.\n\nBefore upgrading, override ElemInstances#saxFactory with a hardened factory.",
+          "action": "Vérifier l'exposition du parc et appliquer le correctif éditeur dès sa disponibilité.",
+          "image": "https://github.githubassets.com/assets/advisory-database-show-f32c8207dfb2.png",
+          "sources": [
+            {
+              "url": "https://github.com/advisories/GHSA-cjx3-73hr-rpw7",
+              "label": "GitHub Advisory"
+            }
+          ],
+          "url": "https://github.com/advisories/GHSA-cjx3-73hr-rpw7",
+          "pubDate": "2026-09-24T19:35:16.000Z"
+        },
+        {
+          "title": "Attackers Exploit WordPress CVE-2026-87902 Within Hours of Disclosure",
+          "cve": "CVE-2026-87902",
+          "severity": "critical",
+          "score": 50,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Vulnérabilité critique CVE-2026-87902 affectant WordPress.\n\nThreat actors have begun to actively exploit a critical security flaw in WordPress within hours of public disclosure. The vulnerability in question is CVE-2026-87902 (CVSS score: 9.2), which could allow an unauthenticated attacker to obtain remote code execution (RCE). \"An unauthenticated attacker can make get_page_template() page-template resolution include a chosen readable local .php file",
+          "detail": "Vulnérabilité critique CVE-2026-87902 affectant WordPress.\n\nThreat actors have begun to actively exploit a critical security flaw in WordPress within hours of public disclosure. The vulnerability in question is CVE-2026-87902 (CVSS score: 9.2), which could allow an unauthenticated attacker to obtain remote code execution (RCE). \"An unauthenticated attacker can make get_page_template() page-template resolution include a chosen readable local .php file",
+          "action": "Vérifier l'exposition du parc et appliquer le correctif éditeur dès sa disponibilité.",
+          "image": "https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEizoRcyQE1N3fGUKa2FY_q_T7EG_CyjTpMGGk1oFUF-XpBZa0zCA6V2yEuv3_Z1OrEjMmhbHdaVmo6NMrwb98U9VFGXDpRcItboVuZH7qc9QgPd5ZLDudfJPWoaSDbtkoXJeLTZw-6JDbq5F6YEp4AkeoJd10Nb_H9tuU0fYdgqkLrP6BTpAPOYwO6WdmkN/s1600/wordpress-exploits.jpg",
+          "sources": [
+            {
+              "url": "https://thehackernews.com/2026/09/attackers-exploit-wordpress-cve-2026.html",
+              "label": "The Hacker News"
+            }
+          ],
+          "url": "https://thehackernews.com/2026/09/attackers-exploit-wordpress-cve-2026.html",
+          "pubDate": "2026-09-24T05:36:18.000Z"
+        },
+        {
+          "title": "Google to critical infra orgs: Our AI scanners won't be evil, promise",
+          "cve": null,
+          "severity": "critical",
+          "score": 49,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Vulnérabilité critique affectant Google.\n\nGoogle has jumped on the AI-defense-for-critical-systems train with its Scan for Good initiative, and says that its threat-hunting models have already autonomously uncovered critical security issues at hospitals, a municipality, a public rail operator, and major technology providers. So don't fear these bots.",
+          "detail": "Vulnérabilité critique affectant Google.\n\nGoogle has jumped on the AI-defense-for-critical-systems train with its Scan for Good initiative, and says that its threat-hunting models have already autonomously uncovered critical security issues at hospitals, a municipality, a public rail operator, and major technology providers. So don't fear these bots. The initiative, announced on Thursday, uses Google’s Gemini 3.8 Flash Cyber, a version of the model tuned for software bug hunting and remediation, and Wiz’s Red Agent - this is the Google-owned cloud security shop’s pentesting AI agent. The AI systems will uncover public exposures and attack paths across public services, critical infrastructure, and nonprofits, and then hand these off for verification and remediation to human security researchers. “The program has been active over the past several months, and with this official launch, we are scaling it globally,” Gal Nagli, head of offensive security at Wiz, told The Register. “There is no set end date.” It's similar to OpenAI’s Daybreak for Frontline Defenders initiative, announced earlier this month. This program will distribute $1 billion in credits to subsidize access to OpenAI services and training for resource-strapped cyber defenders, including those protecting water and energy systems, community banks, local governments, nonprofits, and open-source projects. And like OpenAI’s new program, the Wiz and Google DeepM",
+          "action": "Vérifier l'exposition du parc et appliquer le correctif éditeur dès sa disponibilité.",
+          "image": "https://image.theregister.com/5298699.jpg?imageId=5298699&x=0&y=0&cropw=100&croph=100&panox=0&panoy=0&panow=100&panoh=100&width=1200&height=683",
+          "sources": [
+            {
+              "url": "https://www.theregister.com/security/2026/09/24/google-to-critical-infra-orgs-our-ai-scanners-wont-be-evil-promise/5298685",
+              "label": "The Register"
+            }
+          ],
+          "url": "https://www.theregister.com/security/2026/09/24/google-to-critical-infra-orgs-our-ai-scanners-wont-be-evil-promise/5298685",
+          "pubDate": "2026-09-24T13:00:00.000Z"
+        },
+        {
+          "title": "« FBI Hacked by ShinyHunters »",
+          "cve": null,
+          "severity": "critical",
+          "score": 46,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Vulnérabilité critique.\n\nIt's been reported that threat actor group ShinyHunters said to 404 Media: ‘We Hacked the FBI:' Hackers Say They Have Data on All FBI Employees. A top cybersecurity expert with Suzu Labs offers some interesting context and perspective to this news. Denis Calderone, CTO, Suzu Labs “ShinyHunters has spent the last week picking fights.",
+          "detail": "Vulnérabilité critique.\n\nIt's been reported that threat actor group ShinyHunters said to 404 Media: ‘We Hacked the FBI:' Hackers Say They Have Data on All FBI Employees. A top cybersecurity expert with Suzu Labs offers some interesting context and perspective to this news. Denis Calderone, CTO, Suzu Labs “ShinyHunters has spent the last week picking fights. On Friday they took over Cl0p's leak site and put up a 'seized by ShinyHunters' banner, and by Tuesday the same banner was on the FBI's jobs portal. Both were framed as payback, one for threats from a rival gang and one for an FBI advisory that told victims not to pay them. The FBI hasn't confirmed anything yet, but if this holds up, it doesn't look like the ShinyHunters we've been seeing all year. Their model has always been breach, extort, then settle or leak, and that only works when the victim can pay. The FBI isn't going to pay, and it isn't going to pull an advisory because a criminal group demanded it. Not sure what's going to happen in a week, but I seriously doubt the FBI will act on this threat.” “They also say this isn't financially motivated, but I'd take that with a grain of salt. I have a hard time believing terabytes of FBI personnel data just sit on a shelf. Foreign intelligence services would love to have it, and having the FBI on their resume makes every future extortion demand more believable, and if the PeopleSoft zero-day is rea",
+          "action": "Vérifier l'exposition du parc et appliquer le correctif éditeur dès sa disponibilité.",
+          "image": null,
+          "sources": [
+            {
+              "url": "https://www.globalsecuritymag.fr/fbi-hacked-by-shinyhunters.html",
+              "label": "Global Sec Mag"
+            }
+          ],
+          "url": "https://www.globalsecuritymag.fr/fbi-hacked-by-shinyhunters.html",
+          "pubDate": "2026-09-25T04:01:02.228Z"
+        },
+        {
+          "title": "CVE-2026-59723 — Cline: Cross-Origin WebSocket Hijacking in Cline Hub Dashboard (`/browser` endpoint)",
+          "cve": "CVE-2026-59723",
+          "severity": "high",
+          "score": 46,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Vulnérabilité élevée CVE-2026-59723 affectant cline (npm) (score CVSS 8.8).\n\nCline: Cross-Origin WebSocket Hijacking in Cline Hub Dashboard (`/browser` endpoint)\n\nThe vulnerable code path spans multiple files in the apps/cline-hub workspace.\n\napps/cline-hub/src/options.ts:54–57 converts an empty ROOM_SECRET environment variable to undefined :\n\napps/cline-hub/src/server.ts:61–64 short-circuits all authorization when roomSecret is undefined , and performs no Origin header check at any point:\n\napps/cline-hub/src/server.ts:86–97 upgrad…",
+          "detail": "Vulnérabilité élevée CVE-2026-59723 affectant cline (npm) (score CVSS 8.8).\n\nCline: Cross-Origin WebSocket Hijacking in Cline Hub Dashboard (`/browser` endpoint)\n\nThe vulnerable code path spans multiple files in the apps/cline-hub workspace.\n\napps/cline-hub/src/options.ts:54–57 converts an empty ROOM_SECRET environment variable to undefined :\n\napps/cline-hub/src/server.ts:61–64 short-circuits all authorization when roomSecret is undefined , and performs no Origin header check at any point:\n\napps/cline-hub/src/server.ts:86–97 upgrades any request to /browser without inspecting the Origin header:\n\napps/cline-hub/src/server/sessions.ts:129–133 sets the default tool policy to auto-approve all tools for new dashboard sessions:\n\nnpm i -g cline@3.0.24 export CLINE_DATA_DIR= \" $( mktemp -d ) \" cline dashboard --no-open # Default: HOST=127.0.0.1, PORT=8787, ROOM_SECRET unset Exploit (browser console on any cross-origin page)",
+          "action": "Vérifier l'exposition du parc et appliquer le correctif éditeur dès sa disponibilité.",
+          "image": "https://github.githubassets.com/assets/advisory-database-show-f32c8207dfb2.png",
+          "sources": [
+            {
+              "url": "https://github.com/advisories/GHSA-3cj3-hqcr-g934",
+              "label": "GitHub Advisory"
+            }
+          ],
+          "url": "https://github.com/advisories/GHSA-3cj3-hqcr-g934",
+          "pubDate": "2026-09-24T19:48:34.000Z"
+        },
+        {
+          "title": "SCOUTz Prospect Intelligence Platform Launches for MSPs with 30-Day Beta",
+          "cve": null,
+          "severity": "critical",
+          "score": 46,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Vulnérabilité critique.\n\nPhoenix, Arizona, September 24th, 2026, CyberNewswire SCOUTz, a prospect intelligence platform built for managed service provider (MSP) security sales, is now available in open beta. The platform gives an MSP dated evidence about a prospect&#8217;s environment before the first meeting and keeps that evidence attached through delivery and reassessment.",
+          "detail": "Vulnérabilité critique.\n\nPhoenix, Arizona, September 24th, 2026, CyberNewswire SCOUTz, a prospect intelligence platform built for managed service provider (MSP) security sales, is now available in open beta. The platform gives an MSP dated evidence about a prospect&#8217;s environment before the first meeting and keeps that evidence attached through delivery and reassessment. The open beta is available at [&#8230;] The post SCOUTz Prospect Intelligence Platform Launches for MSPs with 30-Day Beta appeared first on GBHackers Security | #1 Globally Trusted Cyber Security News Platform .",
+          "action": "Vérifier l'exposition du parc et appliquer le correctif éditeur dès sa disponibilité.",
+          "image": "https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEhZv76la7II3EXUny1GIzPXyXTPnx6FonVwqyEr5e0DqYMRbG-ifZsYFEsV5ZWSakYPhVxD_ZvmfiK-QV-pBm5zr2ICp0gh4seQYcg4D400InjNfq_CudQdkWEfd-C1oNdZadJBfveZMsS_DBFAFXbg6WA4J-J5R1CMDkaraKHkt5xjFL2W7MkIOBP3Ucw/s1600/Insignary%20Launches%20Clarity%20On-Demand%20SBOMs,%20No%20Annual%20Commitment%20Required%20Toronto,%20Canada,%20July%2015th,%202026,%20CyberNewswire%20Enterprise-grade%20binary%20software%20verification%20for%20one%20proj%20-%202026-09-24T212856.42.webp",
+          "sources": [
+            {
+              "url": "https://gbhackers.com/scoutz-prospect-intelligence-platform-launches-for-msps-with-30-day-beta/",
+              "label": "GBHackers"
+            }
+          ],
+          "url": "https://gbhackers.com/scoutz-prospect-intelligence-platform-launches-for-msps-with-30-day-beta/",
+          "pubDate": "2026-09-24T18:58:54.000Z"
+        },
+        {
+          "title": "CVE-2026-63498 — Snipe-IT: Stored XSS via Inline XML Rendering in the Uploaded Files API",
+          "cve": "CVE-2026-63498",
+          "severity": "high",
+          "score": 46,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Vulnérabilité élevée CVE-2026-63498 affectant snipe/snipe-it (composer) (score CVSS 8.7).\n\nSnipe-IT: Stored XSS via Inline XML Rendering in the Uploaded Files API\n\nThe attack requires an authenticated account with file access to at least one supported object and one victim interaction. Scope changes because attacker-controlled code executes in another user's Snipe-IT security context.",
+          "detail": "Vulnérabilité élevée CVE-2026-63498 affectant snipe/snipe-it (composer) (score CVSS 8.7).\n\nSnipe-IT: Stored XSS via Inline XML Rendering in the Uploaded Files API\n\nThe attack requires an authenticated account with file access to at least one supported object and one victim interaction. Scope changes because attacker-controlled code executes in another user's Snipe-IT security context. The script can read same-origin data available to the victim and perform authenticated actions as that victim.\n\nFile validation treats XML as an allowed attachment format, but the API download path treats all accepted formats as safe active browser content. Extension allowlisting for upload is not equivalent to determining whether a response is safe to render inline. Laravel derives the response Content-Type from each stored file. It returns text/xml; charset=utf-8, while the controller overrides the normal attachment disposition with Content-Disposition: inline. Chromium processes the xml-stylesheet instruction, loads the second same-origin API attachment as XSLT, and executes script in the HTML document produced by the transform.\n\nAn attacker can execute arbitrary JavaScript in the Snipe-IT origin when a victim opens the malicious attachment URL. Depending on the victim's privileges, this can enable:\n\nReplace the base URL, token, object type, and object ID with values from the test instance:\n\ncurl -i \\ -H 'Authorization: Bearer ATTACKER_API_TOKEN' \\ -H 'Accept: application/json' \\ -F 'file[]=@style.xml;type=text/xml' \\ 'https://snipe-it.example/api/v1/models/1/files' Expected result: HTTP 200 and a successful upload response.\n\ncurl -s \\ -H 'Authorization: Bearer ATTACKER_API_TOKEN' \\ -H 'Accept: application/json' \\ 'https://snipe-it.example/api/v1/models/1/files' Read the style.xml uploa",
+          "action": "Vérifier l'exposition du parc et appliquer le correctif éditeur dès sa disponibilité.",
+          "image": "https://github.githubassets.com/assets/advisory-database-show-f32c8207dfb2.png",
+          "sources": [
+            {
+              "url": "https://github.com/advisories/GHSA-396x-xmvh-p563",
+              "label": "GitHub Advisory"
+            }
+          ],
+          "url": "https://github.com/advisories/GHSA-396x-xmvh-p563",
+          "pubDate": "2026-09-24T18:19:38.000Z"
+        },
+        {
+          "title": "CVE-2026-85057 — ZITADEL: Actions V1 sandbox escape: host file read via require()",
+          "cve": "CVE-2026-85057",
+          "severity": "high",
+          "score": 46,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Vulnérabilité élevée CVE-2026-85057 affectant github.com/zitadel/zitadel (go) (score CVSS 8.7).\n\nZITADEL: Actions V1 sandbox escape: host file read via require()\n\nZITADEL Actions V1 run custom JavaScript inside the ZITADEL server process at OIDC, SAML, and login-flow trigger points. The runtime enables the goja Node-compatible require() registry without restricting the source loader, so Action scripts can load host files readable by the ZITADEL process (notably .js and .json , and in some cases other file contents via error channels).\n\nAn attacker wit…",
+          "detail": "Vulnérabilité élevée CVE-2026-85057 affectant github.com/zitadel/zitadel (go) (score CVSS 8.7).\n\nZITADEL: Actions V1 sandbox escape: host file read via require()\n\nZITADEL Actions V1 run custom JavaScript inside the ZITADEL server process at OIDC, SAML, and login-flow trigger points. The runtime enables the goja Node-compatible require() registry without restricting the source loader, so Action scripts can load host files readable by the ZITADEL process (notably .js and .json , and in some cases other file contents via error channels).\n\nAn attacker with ORG_OWNER on any organization (which includes org.action.write and org.flow.write ) can therefore:\n\nThis collapses the expected multi-tenant isolation boundary: a tenant organization administrator is not meant to access host filesystem secrets or instance-wide credentials.\n\nScope note: This issue affects Actions V1 . Host command execution was not identified as part of this vulnerability. Impact depends on what the ZITADEL process can read on disk and on deployment layout — documented Compose and quick-start setups that write bootstrap PATs or machine keys into the API container amplify severity.\n\nThe vulnerability has been addressed in the latest releases. The patch disables filesystem-backed module loading for Action scripts so that only the intended native zitadel/* modules can be required.\n\nIf you have any questions or comments about this advisory, please email us at security@zitadel.com",
+          "action": "Vérifier l'exposition du parc et appliquer le correctif éditeur dès sa disponibilité.",
+          "image": "https://github.githubassets.com/assets/advisory-database-show-f32c8207dfb2.png",
+          "sources": [
+            {
+              "url": "https://github.com/advisories/GHSA-fgmf-7rf8-m6vf",
+              "label": "GitHub Advisory"
+            }
+          ],
+          "url": "https://github.com/advisories/GHSA-fgmf-7rf8-m6vf",
+          "pubDate": "2026-09-24T18:19:32.000Z"
+        },
+        {
+          "title": "Hackers now exploit critical Roundcube flaw in code injection attacks",
+          "cve": null,
+          "severity": "critical",
+          "score": 46,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Vulnérabilité critique.\n\nA high-severity Roundcube Webmail vulnerability patched in May is now being actively exploited in attacks, according to the Canadian Centre for Cyber Security.\n\nOpenAI hacked Australian Medicare govt site, probed data providers\n\nPlaceholder domain used in dev docs now serves ClickFix attacks\n\nShinyHunters claims FBI hack, data theft in PeopleSoft zero-day breach\n\nMalicious AI agents steal 600K credit cards, infect 100+ sites with skimmers\n\nMacSync malware…",
+          "detail": "Vulnérabilité critique.\n\nA high-severity Roundcube Webmail vulnerability patched in May is now being actively exploited in attacks, according to the Canadian Centre for Cyber Security.\n\nOpenAI hacked Australian Medicare govt site, probed data providers\n\nPlaceholder domain used in dev docs now serves ClickFix attacks\n\nShinyHunters claims FBI hack, data theft in PeopleSoft zero-day breach\n\nMalicious AI agents steal 600K credit cards, infect 100+ sites with skimmers\n\nMacSync malware uses public iCloud calendars to deliver new payloads\n\nNew Carbonato malware uses AI agents to hijack exposed Docker hosts",
+          "action": "Vérifier l'exposition du parc et appliquer le correctif éditeur dès sa disponibilité.",
+          "image": "https://www.bleepstatic.com/content/hl-images/2026/09/24/Roundcube.jpg",
+          "sources": [
+            {
+              "url": "https://www.bleepingcomputer.com/news/security/critical-roundcube-flaw-now-actively-exploited-in-code-injection-attacks/",
+              "label": "BleepingComputer"
+            }
+          ],
+          "url": "https://www.bleepingcomputer.com/news/security/critical-roundcube-flaw-now-actively-exploited-in-code-injection-attacks/",
+          "pubDate": "2026-09-24T13:27:57.000Z"
+        },
+        {
+          "title": "CVE-2026-57171 — Trestle is vulnerable to arbitrary file write via path traversal in author generate commands (Incomplete fix of CVE-2026-46345)",
+          "cve": "CVE-2026-57171",
+          "severity": "high",
+          "score": 45,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Vulnérabilité élevée CVE-2026-57171 affectant compliance-trestle (pip) (score CVSS 8.4).\n\nTrestle is vulnerable to arbitrary file write via path traversal in author generate commands (Incomplete fix of CVE-2026-46345)\n\nPrimitive: attacker-controlled --output value reaches trestle_root / args.output write sink with only is_directory_name_allowed() (parts[0]-only task-name-collision check), not the PathSecurityValidator.validate_local_path() guard added by the CVE-2026-46345 fix\n\nImpact: arbitrary-location file write outside the trestle workspace…",
+          "detail": "Vulnérabilité élevée CVE-2026-57171 affectant compliance-trestle (pip) (score CVSS 8.4).\n\nTrestle is vulnerable to arbitrary file write via path traversal in author generate commands (Incomplete fix of CVE-2026-46345)\n\nPrimitive: attacker-controlled --output value reaches trestle_root / args.output write sink with only is_directory_name_allowed() (parts[0]-only task-name-collision check), not the PathSecurityValidator.validate_local_path() guard added by the CVE-2026-46345 fix\n\nImpact: arbitrary-location file write outside the trestle workspace as the process owner (8.4 High; conservative C:N variant 7.7, still High); with --force-overwrite, the attacker-chosen directory is first recursively deleted shutil.rmtree)\n\nPrecondition: attacker influences the -o argument in a CI/automation pipeline or multi-tenant trestle workspace running these generate subcommands\n\nFix: call PathSecurityValidator.validate_local_path(markdown_path, trestle_root) immediately after building markdown_path in catalog.py, ssp.py, and prof.py, mirroring the existing jinja fix\n\nThe remediation for CVE-2026-46345 / GHSA-4q5v-7g7x-j79w (\"Arbitrary File Write via Path Traversal in compliance-trestle – jinja\") added a new PathSecurityValidator.validate_local_path() guard and wired it into the jinja command's output path. The identical output = trestle_root / args.output write pattern in the sibling author commands — catalog-generate, profile-generate, and ssp-generate — was not updated. Those commands instead rely on is_directory_name_allowed(), a task-name-collision check that does not stop path traversal: an absolute --output or a --output whose first component is innocuous subdir/../../../...) escapes the trestle workspace and writes generated markdown under an attacker-chosen output root outside the",
+          "action": "Vérifier l'exposition du parc et appliquer le correctif éditeur dès sa disponibilité.",
+          "image": "https://github.githubassets.com/assets/advisory-database-show-f32c8207dfb2.png",
+          "sources": [
+            {
+              "url": "https://github.com/advisories/GHSA-r4vp-3vw6-r2x5",
+              "label": "GitHub Advisory"
+            }
+          ],
+          "url": "https://github.com/advisories/GHSA-r4vp-3vw6-r2x5",
+          "pubDate": "2026-09-24T19:52:34.000Z"
+        }
+      ]
+    },
+    {
+      "id": "attacks",
+      "items": [
+        {
+          "title": "Astrana latest healthcare tech firm to report data breach to SEC",
+          "cve": null,
+          "severity": "news",
+          "score": 75,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Incident de sécurité rapporté par The Record.\n\nThe healthcare firm Astrana warned regulators that hackers accessed confidential information by impersonating company personnel.\n\nThe healthcare company Astrana warned regulators this week that a recent cyberattack exposed confidential information.\n\nThe company filed a report with the Securities and Exchange Commission (SEC) on Tuesday evening about a recent incident in which hackers impersonated Astrana personnel and spoofed the company’s main corporate t…",
+          "detail": "Incident de sécurité rapporté par The Record.\n\nThe healthcare firm Astrana warned regulators that hackers accessed confidential information by impersonating company personnel.\n\nThe healthcare company Astrana warned regulators this week that a recent cyberattack exposed confidential information.\n\nThe company filed a report with the Securities and Exchange Commission (SEC) on Tuesday evening about a recent incident in which hackers impersonated Astrana personnel and spoofed the company’s main corporate telephone number.\n\nThe hackers contacted employees using the spoofed number and eventually were able to gain access to company servers.\n\n“Based on the current status of the Company’s ongoing investigation, the Company believes that certain private and/or confidential information maintained on the Company’s servers has been accessed and/or acquired without authorization,” Astrana said.\n\nThe company did not respond to requests for comment about whether the incident involved ransomware. The report notes that, among several measures taken, the company had to restore “certain systems from clean backups.”\n\nLaw enforcement has been notified of the attack alongside other state and federal regulators as well as customers.",
+          "action": "Surveiller les indicateurs de compromission associés et contrôler les actifs exposés.",
+          "image": "https://cms.therecord.media/uploads/Doctor_computer_6cebfc2119.jpg",
+          "sources": [
+            {
+              "url": "https://therecord.media/astrana-cyberattack-sec-ransomware",
+              "label": "The Record"
+            }
+          ],
+          "url": "https://therecord.media/astrana-cyberattack-sec-ransomware",
+          "pubDate": "2026-09-24T13:15:00.000Z"
+        },
+        {
+          "title": "House and Senate members propose legislation for CISA to step up cyber defenses for biotech",
+          "cve": null,
+          "severity": "critical",
+          "score": 72,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Incident de sécurité rapporté par CyberScoop.\n\nBiotechnology doesn’t fall neatly into any one of the 16 government-designated critical infrastructure sectors that receive specialized and focused attention from feds, leading some lawmakers to worry that it’s not getting the protection from cyberattacks and other risks that it needs.",
+          "detail": "Incident de sécurité rapporté par CyberScoop.\n\nBiotechnology doesn’t fall neatly into any one of the 16 government-designated critical infrastructure sectors that receive specialized and focused attention from feds, leading some lawmakers to worry that it’s not getting the protection from cyberattacks and other risks that it needs. That’s why a bipartisan group of senators and representatives announced legislation Thursday that would place an emphasis at the Cybersecurity and Infrastructure Security Agency on defending biotechnology, biomanufacturing and biological data. The Protecting Biotechnology and Biomanufacturing as Critical Infrastructure Act and the Protecting Biological Data Act are two separate bills with the same group of cosponsors. Both bills would weave biotech into the law that established the Department of Homeland Security. The former would direct DHS to come up with plans to make sure biotech and biomanufacturing are protected as critical infrastructure, but not as a whole new sector. The plans would identify key biotech players, conduct outreach to them and develop steps to update the National Infrastructure Protection Plan this year to incorporate biotech sector input. The latter would make sure that systems handling genomic sequences and sensitive biometric data are covered as critical infrastructure and integrated into the national cyber strategy , that CISA would work with biotech players on security",
+          "action": "Surveiller les indicateurs de compromission associés et contrôler les actifs exposés.",
+          "image": "https://cyberscoop.com/wp-content/uploads/sites/3/2026/09/GettyImages-2252642618.jpg",
+          "sources": [
+            {
+              "url": "https://cyberscoop.com/biotech-critical-infrastructure-cybersecurity-legislation/",
+              "label": "CyberScoop"
+            }
+          ],
+          "url": "https://cyberscoop.com/biotech-critical-infrastructure-cybersecurity-legislation/",
+          "pubDate": "2026-09-24T21:23:40.000Z"
+        },
+        {
+          "title": "Malicious npm Packages That Evade Defenses",
+          "cve": null,
+          "severity": "news",
+          "score": 72,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Incident de sécurité rapporté par Schneier on Sec..\n\nThis is an impressive piece of malware. Its sophistication says nation-state to me, but there is no direct evidence and certainly no attribution.\n\nThis is an impressive piece of malware . Its sophistication says nation-state to me, but there is no direct evidence and certainly no attribution.\n\nWhat I’m stating below is what I basically realized after reading the linked article in Bruce’s topic above, so it’s an on-topic response as well as a rant if you wi…",
+          "detail": "Incident de sécurité rapporté par Schneier on Sec..\n\nThis is an impressive piece of malware. Its sophistication says nation-state to me, but there is no direct evidence and certainly no attribution.\n\nThis is an impressive piece of malware . Its sophistication says nation-state to me, but there is no direct evidence and certainly no attribution.\n\nWhat I’m stating below is what I basically realized after reading the linked article in Bruce’s topic above, so it’s an on-topic response as well as a rant if you will, of sorts.\n\njavascript is being incorporated almost everywhere, and it angers me that it’s even being shoved down everyone’s throat even where it’s not needed at all. Many, very many sites, apps, systems, operating systems, files – could do/function just fine without the pest called .js which is worse than what we had with the nasty flashplayer a while ago.\n\nOn top of that, although I am trying as much as possibly permitted to utilize FOSS – I am still longing and hoping for that day to come, where the dependencies nightmare gets taken care of, so that one does not end up breaking a system while attempting to completely remove CUPS for example, and there are many more cases where one simply cannot remove unwanted software because it uses the same dependencies as some or bunch of other “critical” system components. A nightmare. Plus there’s more and more instances where many FOSS “players” are accepting “donations” or grants from Microsoft in order to quietly return the favor by incorporating some or many of MS “ideas” or concepts into their packages while developing new concepts or “improving” the old ones. It’s truly disgusting what money buys. These things are getting worse by the day. Can’t even trust the FOSS guys anymore.\n\nHardcore Criminals in ID Government",
+          "action": "Surveiller les indicateurs de compromission associés et contrôler les actifs exposés.",
+          "image": null,
+          "sources": [
+            {
+              "url": "https://www.schneier.com/blog/archives/2026/09/malicious-npm-packages-that-evade-defenses.html",
+              "label": "Schneier on Sec."
+            }
+          ],
+          "url": "https://www.schneier.com/blog/archives/2026/09/malicious-npm-packages-that-evade-defenses.html",
+          "pubDate": "2026-09-24T11:07:42.000Z"
+        },
+        {
+          "title": "Kyiv internet providers report major outages after Russian attacks damage data centers",
+          "cve": null,
+          "severity": "news",
+          "score": 70,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Incident de sécurité rapporté par The Record.\n\nAt least four internet providers serving Kyiv and other parts of Ukraine suffered partial connectivity losses following Wednesday’s drone attack, according to internet monitoring group NetBlocks.\n\nRussian drone strikes damaged data centers and telecommunications infrastructure in Kyiv this week, leaving thousands of people in the Ukrainian capital and surrounding region without reliable internet access.\n\nAt least four internet providers serving Kyiv and ot…",
+          "detail": "Incident de sécurité rapporté par The Record.\n\nAt least four internet providers serving Kyiv and other parts of Ukraine suffered partial connectivity losses following Wednesday’s drone attack, according to internet monitoring group NetBlocks.\n\nRussian drone strikes damaged data centers and telecommunications infrastructure in Kyiv this week, leaving thousands of people in the Ukrainian capital and surrounding region without reliable internet access.\n\nAt least four internet providers serving Kyiv and other parts of Ukraine suffered partial connectivity losses following Wednesday’s drone attack, according to internet monitoring group NetBlocks . The affected networks included Kyiv Link, Pautina, Utels and Crazy Network.\n\nUkraine’s Ministry of Digital Transformation said around 100,000 households in Kyiv and the region experienced internet problems after the attack, with repair crews assessing damage and working to restore stable connections.\n\nSeveral providers said the disruption was caused by direct damage to facilities housing critical networking equipment.\n\nAccording to Utels, one Kyiv data center containing its core network equipment was damaged in the attack and lost power. The company said it managed to restore service to most customers within about two hours.\n\nPautina reported more extensive damage, saying several infrastructure sites were hit and nearly half of its network temporarily lost service. The company said critical equipment and communications lines were damaged.",
+          "action": "Surveiller les indicateurs de compromission associés et contrôler les actifs exposés.",
+          "image": "https://cms.therecord.media/uploads/kyiv_attack_aff390fe71.jpg",
+          "sources": [
+            {
+              "url": "https://therecord.media/kyiv-internet-providers-report-outages-after-russian-strikes",
+              "label": "The Record"
+            }
+          ],
+          "url": "https://therecord.media/kyiv-internet-providers-report-outages-after-russian-strikes",
+          "pubDate": "2026-09-24T13:30:00.000Z"
+        },
+        {
+          "title": "US Court Sentences Armenian Man to Prison for Ryuk Ransomware Attacks",
+          "cve": null,
+          "severity": "news",
+          "score": 70,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Incident de sécurité rapporté par SecurityWeek.\n\nArmenian man Karen Vardanyan has been sentenced to prison by a US court for his role in Ryuk ransomware attacks\n\nSubscribe to the SecurityWeek Email Briefing for the latest cybersecurity threats, trends, and expert insights.\n\nSubscribe to the SecurityWeek Email Briefing to stay informed on the latest threats, trends, and technology, along with insightful columns from industry experts.\n\nJoin as speakers examine the various components of ASM strategy, the pu…",
+          "detail": "Incident de sécurité rapporté par SecurityWeek.\n\nArmenian man Karen Vardanyan has been sentenced to prison by a US court for his role in Ryuk ransomware attacks\n\nSubscribe to the SecurityWeek Email Briefing for the latest cybersecurity threats, trends, and expert insights.\n\nSubscribe to the SecurityWeek Email Briefing to stay informed on the latest threats, trends, and technology, along with insightful columns from industry experts.\n\nJoin as speakers examine the various components of ASM strategy, the push to mandate continuous asset visibility and inventory tools, and the use of red-teaming, bug bounties and pen-tests in modern security programs.\n\nExplore what it takes to operationalize continuous authorization at scale, including the technical, organizational, and cultural changes required.\n\nGwen Gann has become State Chief Information Security Officer for the State of Washington at WaTech.\n\nPietr Lindahal has been named Vice President and Chief Information Security Officer at Boston Scientific.",
+          "action": "Surveiller les indicateurs de compromission associés et contrôler les actifs exposés.",
+          "image": "https://www.securityweek.com/wp-content/uploads/2024/10/hacker-prison-sentence.jpeg",
+          "sources": [
+            {
+              "url": "https://www.securityweek.com/us-court-sentences-armenian-man-to-prison-for-ryuk-ransomware-attacks/",
+              "label": "SecurityWeek"
+            }
+          ],
+          "url": "https://www.securityweek.com/us-court-sentences-armenian-man-to-prison-for-ryuk-ransomware-attacks/",
+          "pubDate": "2026-09-24T08:38:29.000Z"
+        },
+        {
+          "title": "New Carbonato malware uses AI agents to hijack exposed Docker hosts",
+          "cve": null,
+          "severity": "news",
+          "score": 68,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Incident de sécurité rapporté par BleepingComputer.\n\nA new botnet malware called Carbonato is targeting insecure hosts running Docker daemons to install the Hermes Agent AI framework and take control.\n\nOpenAI hacked Australian Medicare govt site, probed data providers\n\nPlaceholder domain used in dev docs now serves ClickFix attacks\n\nShinyHunters claims FBI hack, data theft in PeopleSoft zero-day breach\n\nMalicious AI agents steal 600K credit cards, infect 100+ sites with skimmers\n\nMacSync malware uses public…",
+          "detail": "Incident de sécurité rapporté par BleepingComputer.\n\nA new botnet malware called Carbonato is targeting insecure hosts running Docker daemons to install the Hermes Agent AI framework and take control.\n\nOpenAI hacked Australian Medicare govt site, probed data providers\n\nPlaceholder domain used in dev docs now serves ClickFix attacks\n\nShinyHunters claims FBI hack, data theft in PeopleSoft zero-day breach\n\nMalicious AI agents steal 600K credit cards, infect 100+ sites with skimmers\n\nMacSync malware uses public iCloud calendars to deliver new payloads\n\nNew Carbonato malware uses AI agents to hijack exposed Docker hosts",
+          "action": "Surveiller les indicateurs de compromission associés et contrôler les actifs exposés.",
+          "image": "https://www.bleepstatic.com/content/hl-images/2022/04/21/Docker__headpic.jpg",
+          "sources": [
+            {
+              "url": "https://www.bleepingcomputer.com/news/security/new-carbonato-malware-uses-ai-agents-to-hijack-exposed-docker-hosts/",
+              "label": "BleepingComputer"
+            }
+          ],
+          "url": "https://www.bleepingcomputer.com/news/security/new-carbonato-malware-uses-ai-agents-to-hijack-exposed-docker-hosts/",
+          "pubDate": "2026-09-24T20:10:48.000Z"
+        },
+        {
+          "title": "Corp MDM Spyware Targets Logistics Firms, Steals New SMS and Redirects Calls",
+          "cve": null,
+          "severity": "news",
+          "score": 67,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Incident de sécurité rapporté par The Hacker News.\n\nThe logistics sector has become the target of a new malicious cyber campaign that distributes an Android spyware codenamed Corp MDM. According to Have I Been Squatted, the campaign uses fake Google Play pages branded as CEVA and TKW Logistics to distribute an Android Package Kit (APK) file that's dressed up as a system service. The delivered app has the package name \"com.corp.mdm\" Corp MDM",
+          "detail": "Incident de sécurité rapporté par The Hacker News.\n\nThe logistics sector has become the target of a new malicious cyber campaign that distributes an Android spyware codenamed Corp MDM. According to Have I Been Squatted, the campaign uses fake Google Play pages branded as CEVA and TKW Logistics to distribute an Android Package Kit (APK) file that's dressed up as a system service. The delivered app has the package name \"com.corp.mdm\" Corp MDM",
+          "action": "Surveiller les indicateurs de compromission associés et contrôler les actifs exposés.",
+          "image": "https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEhitRqKj3-JlcQ69xxlsxJs80aq7MNxgAc_VrV-TCrHGTVEwdWKIdvAiwB4szXMT3cRKpkzCRVObZxAO47CLl3JWLRerxVSITKy9xorsP-XY212M07JzDkZ7VXOA-r0maycB0jMv0r5Kl3q0VgrxpoeYfHJ_gkeXbzXLKz_3gAhDGy1ML06lfta_5w8u_Xo/s1600/1000110893.jpg",
+          "sources": [
+            {
+              "url": "https://thehackernews.com/2026/09/corp-mdm-spyware-targets-logistics.html",
+              "label": "The Hacker News"
+            }
+          ],
+          "url": "https://thehackernews.com/2026/09/corp-mdm-spyware-targets-logistics.html",
+          "pubDate": "2026-09-24T12:05:27.000Z"
+        },
+        {
+          "title": "Lawmakers introduce bill for voluntary telecom cyber rules after Salt Typhoon hacks",
+          "cve": null,
+          "severity": "critical",
+          "score": 66,
+          "corroboration": 2,
+          "region": "intl",
+          "body": "Incident de sécurité rapporté par CyberScoop.\n\nU.S. Sens. Mark Warner (D-VA) and Ted Cruz (R-TX) introduced the Telecommunications Cybersecurity and Resilience Act on Thursday, arguing that the new effort was necessary in light of the Salt Typhoon attacks which saw Chinese hackers breach nearly all of the major telecommunications giants in the U.S.",
+          "detail": "Incident de sécurité rapporté par CyberScoop.\n\nU.S. Sens. Mark Warner (D-VA) and Ted Cruz (R-TX) introduced the Telecommunications Cybersecurity and Resilience Act on Thursday, arguing that the new effort was necessary in light of the Salt Typhoon attacks which saw Chinese hackers breach nearly all of the major telecommunications giants in the U.S.",
+          "action": "Surveiller les indicateurs de compromission associés et contrôler les actifs exposés.",
+          "image": "https://cyberscoop.com/wp-content/uploads/sites/3/2026/09/GettyImages-2281447950.jpg",
+          "sources": [
+            {
+              "url": "https://cyberscoop.com/senate-telecom-cybersecurity-resilience-act-salt-typhoon/",
+              "label": "CyberScoop"
+            },
+            {
+              "url": "https://therecord.media/lawmakers-introduce-bill-for-voluntary-telecom-cyber-rules",
+              "label": "The Record"
+            }
+          ],
+          "url": "https://cyberscoop.com/senate-telecom-cybersecurity-resilience-act-salt-typhoon/",
+          "pubDate": "2026-09-24T20:15:00.000Z"
+        },
+        {
+          "title": "Ryuk Member Karen Vardanyan Sentenced to Two Years in U.S. Prison",
+          "cve": null,
+          "severity": "high",
+          "score": 65,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Incident de sécurité rapporté par Security Affairs.\n\nRyuk member Karen Vardanyan was sentenced to 24 months in U.S. prison after extradition from Ukraine and ordered to pay $1.2M in restitution. Karen Vardanyan , a 35-year-old Armenian citizen who went by &#8220;Maneeken&#8221; and, oddly, &#8220;Karl Lagerfeld&#8221; online, was extradited from Ukraine and sentenced to 24 months in federal prison plus three years of supervised release. He was also ordered to pay $1,219,106 in restitution to his victims.",
+          "detail": "Incident de sécurité rapporté par Security Affairs.\n\nRyuk member Karen Vardanyan was sentenced to 24 months in U.S. prison after extradition from Ukraine and ordered to pay $1.2M in restitution. Karen Vardanyan , a 35-year-old Armenian citizen who went by &#8220;Maneeken&#8221; and, oddly, &#8220;Karl Lagerfeld&#8221; online, was extradited from Ukraine and sentenced to 24 months in federal prison plus three years of supervised release. He was also ordered to pay $1,219,106 in restitution to his victims. &#8220;Karen Vardanyan, 35, was sentenced to 24 months in federal prison and 3 years’ supervised release. He was also ordered to pay $1,219,106.00 in restitution to the victims in the case.&#8221; states the press release by DoJ.. That number alone tells you the scale of what he was involved in, and it&#8217;s only a fraction of the total damage the wider conspiracy caused. In July, Vardanyan pleaded guilty in the U.S. for his role in Ryuk ransomware attacks targeting American organizations between 2019 and 2020. Extradited from Ukraine after his 2025 arrest, he admitted providing initial access to corporate networks that enabled ransomware deployment. Between November 2019 and April 2020, Karen Vardanyan illegally accessed corporate networks and helped deploy Ryuk ransomware on hundreds of servers and workstations. The attacks encrypted victims’ data and demanded Bitcoin payments in exchange for decryption keys. Among the victim",
+          "action": "Surveiller les indicateurs de compromission associés et contrôler les actifs exposés.",
+          "image": "https://securityaffairs.com/wp-content/uploads/2015/03/DoJ.jpg",
+          "sources": [
+            {
+              "url": "https://securityaffairs.com/199692/cyber-crime/ryuk-member-karen-vardanyan-sentenced-to-two-years-in-u-s-prison.html",
+              "label": "Security Affairs"
+            }
+          ],
+          "url": "https://securityaffairs.com/199692/cyber-crime/ryuk-member-karen-vardanyan-sentenced-to-two-years-in-u-s-prison.html",
+          "pubDate": "2026-09-24T20:50:17.000Z"
+        },
+        {
+          "title": "Astrana Health Data Breach Impacts Private, Confidential Information",
+          "cve": null,
+          "severity": "news",
+          "score": 64,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Incident de sécurité rapporté par SecurityWeek.\n\nAstrana Health says data was stolen from its servers after hackers used social engineering to gain access to its systems.\n\nHackers impersonated the company’s personnel and contacted its employees to gain access to Astrana Health’s servers.\n\nSubscribe to the SecurityWeek Email Briefing for the latest cybersecurity threats, trends, and expert insights.\n\nSubscribe to the SecurityWeek Email Briefing to stay informed on the latest threats, trends, and technolog…",
+          "detail": "Incident de sécurité rapporté par SecurityWeek.\n\nAstrana Health says data was stolen from its servers after hackers used social engineering to gain access to its systems.\n\nHackers impersonated the company’s personnel and contacted its employees to gain access to Astrana Health’s servers.\n\nSubscribe to the SecurityWeek Email Briefing for the latest cybersecurity threats, trends, and expert insights.\n\nSubscribe to the SecurityWeek Email Briefing to stay informed on the latest threats, trends, and technology, along with insightful columns from industry experts.\n\nJoin as speakers examine the various components of ASM strategy, the push to mandate continuous asset visibility and inventory tools, and the use of red-teaming, bug bounties and pen-tests in modern security programs.\n\nExplore what it takes to operationalize continuous authorization at scale, including the technical, organizational, and cultural changes required.\n\nGwen Gann has become State Chief Information Security Officer for the State of Washington at WaTech.",
+          "action": "Surveiller les indicateurs de compromission associés et contrôler les actifs exposés.",
+          "image": "https://www.securityweek.com/wp-content/uploads/2025/10/bank-finance-lender-credit-union-hack.jpeg",
+          "sources": [
+            {
+              "url": "https://www.securityweek.com/astrana-health-data-breach-impacts-private-confidential-information/",
+              "label": "SecurityWeek"
+            }
+          ],
+          "url": "https://www.securityweek.com/astrana-health-data-breach-impacts-private-confidential-information/",
+          "pubDate": "2026-09-24T09:56:04.000Z"
+        },
+        {
+          "title": "Government contractor exposed path to immigration records",
+          "cve": null,
+          "severity": "high",
+          "score": 64,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Incident de sécurité rapporté par The Register.\n\nWelcome back to PWNED, the column where we look at all the ways your security can become self-owned. Today’s scary story involves government contractors who just had to make their lives easier at the expense of locking down sensitive information. Have a story about someone leaving a gaping hole in their network? Share it with us at pwned@sitpub.com. Anonymity is available upon request.",
+          "detail": "Incident de sécurité rapporté par The Register.\n\nWelcome back to PWNED, the column where we look at all the ways your security can become self-owned. Today’s scary story involves government contractors who just had to make their lives easier at the expense of locking down sensitive information. Have a story about someone leaving a gaping hole in their network? Share it with us at pwned@sitpub.com. Anonymity is available upon request. Our tale of bureaucratic hell comes courtesy of security researcher Joe Brinkley, who previously worked for a government contractor as an information system security officer responsible for firewall rule changes, plus network intrusion detection and prevention. To improve the contractor's ability to deploy program changes, some of the org's developers wanted to change the firewall rules so it would be easier to move data from a low-security datacenter where they tested new code to the classified datacenter that housed the production server and data. They wanted to be able to VPN into a low-security commercial datacenter, where other non-governmental tenants, such as Microsoft and Oracle, had servers accessible through the same VPN connection. The datacenter itself provided the VPN, not the government. Back then, in the early 2010s, developers would use a provisioning server to help deploy code from dev to production. But there was always a hard firewall between the classified datacenter and the n",
+          "action": "Surveiller les indicateurs de compromission associés et contrôler les actifs exposés.",
+          "image": "https://image.theregister.com/5298696.jpg?imageId=5298696&x=0&y=0&cropw=100&croph=100&panox=0&panoy=0&panow=100&panoh=100&width=1200&height=683",
+          "sources": [
+            {
+              "url": "https://www.theregister.com/security/2026/09/24/government-contractor-exposed-path-to-immigration-records/5298689",
+              "label": "The Register"
+            }
+          ],
+          "url": "https://www.theregister.com/security/2026/09/24/government-contractor-exposed-path-to-immigration-records/5298689",
+          "pubDate": "2026-09-24T08:30:00.000Z"
+        },
+        {
+          "title": "MacSync malware uses public iCloud calendars to deliver new payloads",
+          "cve": null,
+          "severity": "news",
+          "score": 63,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Incident de sécurité rapporté par BleepingComputer.\n\nA new variant of the MacSync malware targeting macOS systems now uses public iCloud calendar events to deliver new native payloads.\n\nOpenAI hacked Australian Medicare govt site, probed data providers\n\nPlaceholder domain used in dev docs now serves ClickFix attacks\n\nShinyHunters claims FBI hack, data theft in PeopleSoft zero-day breach\n\nMalicious AI agents steal 600K credit cards, infect 100+ sites with skimmers\n\nMacSync malware uses public iCloud calendars…",
+          "detail": "Incident de sécurité rapporté par BleepingComputer.\n\nA new variant of the MacSync malware targeting macOS systems now uses public iCloud calendar events to deliver new native payloads.\n\nOpenAI hacked Australian Medicare govt site, probed data providers\n\nPlaceholder domain used in dev docs now serves ClickFix attacks\n\nShinyHunters claims FBI hack, data theft in PeopleSoft zero-day breach\n\nMalicious AI agents steal 600K credit cards, infect 100+ sites with skimmers\n\nMacSync malware uses public iCloud calendars to deliver new payloads\n\nNew Carbonato malware uses AI agents to hijack exposed Docker hosts",
+          "action": "Surveiller les indicateurs de compromission associés et contrôler les actifs exposés.",
+          "image": "https://www.bleepstatic.com/content/hl-images/2026/05/18/Apple.jpg",
+          "sources": [
+            {
+              "url": "https://www.bleepingcomputer.com/news/security/macsync-malware-uses-public-icloud-calendars-to-deliver-new-payloads/",
+              "label": "BleepingComputer"
+            }
+          ],
+          "url": "https://www.bleepingcomputer.com/news/security/macsync-malware-uses-public-icloud-calendars-to-deliver-new-payloads/",
+          "pubDate": "2026-09-24T20:53:35.000Z"
+        },
+        {
+          "title": "Exposed GitLab project email addresses let attackers push code",
+          "cve": null,
+          "severity": "high",
+          "score": 63,
+          "corroboration": 2,
+          "region": "intl",
+          "body": "Incident de sécurité rapporté par GBHackers.\n\nA long-lived GitLab incoming email token embedded in project email addresses for the \"Email work item\" feature can be exploited to push attacker-controlled code, create merge requests, and trigger CI/CD pipelines using the permissions of the token owner.\n\nThis issue can also bypass GitLab’s IP restrictions, as incoming email is explicitly excluded from those controls.\n\nSecurity researcher J oe Leon from Aikido Security reported that GitLab’s private email…",
+          "detail": "Incident de sécurité rapporté par GBHackers.\n\nA long-lived GitLab incoming email token embedded in project email addresses for the \"Email work item\" feature can be exploited to push attacker-controlled code, create merge requests, and trigger CI/CD pipelines using the permissions of the token owner.\n\nThis issue can also bypass GitLab’s IP restrictions, as incoming email is explicitly excluded from those controls.\n\nSecurity researcher J oe Leon from Aikido Security reported that GitLab’s private email addresses, which are intended to allow users to create issues by email, contain a credential that functions more like an account-wide, fine-grained access token than a project-scoped mail address.\n\nThe token does not expire and is reused across all projects accessible to the account, including private repositories.\n\nGitLab exposes a private email address through the “Email work item to this project” option. The address typically follows this format:\n\n`incoming+project-id-glimt- [email protected] ` While the interface historically described the address as a means to create project work items, the embedded glimt-incoming email token authenticates requests as the account owner.\n\nGitLab’s documentation confirms that this incoming email token does not expire and that anyone who obtains it can create issues and merge requests as the associated user.",
+          "action": "Surveiller les indicateurs de compromission associés et contrôler les actifs exposés.",
+          "image": "https://gbhackers.com/wp-content/uploads/2026/09/a72bf50f-4cb8-4a3f-aec7-c0316bb97bee-2-1.webp",
+          "sources": [
+            {
+              "url": "https://gbhackers.com/gitlab-email-token/",
+              "label": "GBHackers"
+            },
+            {
+              "url": "https://www.bleepingcomputer.com/news/security/exposed-gitlab-project-email-addresses-let-attackers-push-code/",
+              "label": "BleepingComputer"
+            }
+          ],
+          "url": "https://gbhackers.com/gitlab-email-token/",
+          "pubDate": "2026-09-24T17:47:44.000Z"
+        },
+        {
+          "title": "Doinsport : 1,75 million de réservations de la plateforme sportive revendiquées",
+          "cve": null,
+          "severity": "news",
+          "score": 62,
+          "corroboration": 1,
+          "region": "fr",
+          "body": "Incident de sécurité rapporté par Cyberattaque.org.\n\nDoinsport fait de nouveau l’objet d’une importante revendication de fuite de données. Le hacker RedStone affirme avoir récupéré une base de 6,9 Go\n\nAttaque Mis à jour le 24 septembre 2026 à 18h25 Doinsport : 1,75 million de réservations de la plateforme sportive revendiquées Doinsport fait de nouveau l’objet d’une importante revendication de fuite de données.",
+          "detail": "Incident de sécurité rapporté par Cyberattaque.org.\n\nDoinsport fait de nouveau l’objet d’une importante revendication de fuite de données. Le hacker RedStone affirme avoir récupéré une base de 6,9 Go\n\nAttaque Mis à jour le 24 septembre 2026 à 18h25 Doinsport : 1,75 million de réservations de la plateforme sportive revendiquées Doinsport fait de nouveau l’objet d’une importante revendication de fuite de données. Le hacker RedStone affirme avoir récupéré une base de 6,9 Go comprenant notamment 54 545 utilisateurs, 176 242 fiches clients et près de 1,75 million de réservations réalisées auprès de clubs sportifs.\n\nCette publication intervient un peu plus de deux mois après une première fuite attribuée à Doinsport révélée par Cyberattaque.org le 15 juillet 2026. À l’époque, des données personnelles détaillées, dont celles de personnes mineures , avaient déjà été retrouvées dans les fichiers diffusés.\n\nDoinsport est une société française basée à Marseille qui fournit aux clubs sportifs un logiciel centralisant leurs réservations, membres, abonnements, paiements et outils de gestion. La plateforme est notamment très présente dans le padel et le tennis et indique accompagner aujourd’hui plus de 1 000 clubs .\n\nCette centralisation explique la diversité des informations retrouvées dans la nouvelle base revendiquée : il ne s’agit pas uniquement d’une liste d’utilisateurs, mais de données permettant de relier des personnes à leurs clubs, leurs pratiques sportives et leur historique de réservations .\n\nRedStone présente les fichiers comme une base complète de Doinsport représentant environ 2,1 millions d’enregistrements . Selon les statistiques publiées par le hacker, elle comprendrait notamment :\n\nCes chiffres ne peuvent pas être additionnés pour déterminer le nombre de victimes. Un",
+          "action": "Surveiller les indicateurs de compromission associés et contrôler les actifs exposés.",
+          "image": "https://www.cyberattaque.org/wp-content/uploads/2026/09/doinsport-cyberattaque-3.jpg",
+          "sources": [
+            {
+              "url": "https://www.cyberattaque.org/cyberattaque-doinsport-175-million-de-reservations-de-la-plateforme-sportive-revendiquees/",
+              "label": "Cyberattaque.org"
+            }
+          ],
+          "url": "https://www.cyberattaque.org/cyberattaque-doinsport-175-million-de-reservations-de-la-plateforme-sportive-revendiquees/",
+          "pubDate": "2026-09-24T16:25:29.000Z"
+        },
+        {
+          "title": "Aéroclub de l’AIA : les licences des pilotes et personnels liés à la Défense exposés",
+          "cve": null,
+          "severity": "news",
+          "score": 62,
+          "corroboration": 1,
+          "region": "fr",
+          "body": "Incident de sécurité rapporté par Cyberattaque.org.\n\nAcaia.fr, site lié à un aéroclub de Clermont-Ferrand, fait l’objet d’une importante fuite de données publiée ce 24 septembre 2026. La hackeuse Sophia\n\nAttaque Mis à jour le 24 septembre 2026 à 12h14 Aéroclub de l’AIA : les licences des pilotes et personnels liés à la Défense exposés Acaia.fr , site lié à un aéroclub de Clermont-Ferrand, fait l’objet d’une importante fuite de données publiée ce 24 septembre 2026 .",
+          "detail": "Incident de sécurité rapporté par Cyberattaque.org.\n\nAcaia.fr, site lié à un aéroclub de Clermont-Ferrand, fait l’objet d’une importante fuite de données publiée ce 24 septembre 2026. La hackeuse Sophia\n\nAttaque Mis à jour le 24 septembre 2026 à 12h14 Aéroclub de l’AIA : les licences des pilotes et personnels liés à la Défense exposés Acaia.fr , site lié à un aéroclub de Clermont-Ferrand, fait l’objet d’une importante fuite de données publiée ce 24 septembre 2026 . La hackeuse Sophia diffuse gratuitement plusieurs exports contenant des informations particulièrement détaillées sur des membres et anciens membres : identité, coordonnées, activités aéronautiques, licences de pilote, dates de visites médicales et, dans certains cas, informations liées à leur activité professionnelle.\n\nLes données montrent notamment la présence de personnes liées à l’ AIA de Clermont-Ferrand , avec des références à différents services internes et plusieurs adresses professionnelles utilisant des domaines liés à la Défense. D’autres profils correspondent à des retraités, ayants droit ou personnes extérieures.\n\nLes fichiers diffusés comportent un niveau de détail important sur les membres. On y retrouve notamment :\n\nCyberattaque.org ne reproduit volontairement aucune identité, adresse, numéro de téléphone ou autre donnée permettant d’identifier les personnes présentes dans la fuite.\n\nLa fuite dépasse largement un simple annuaire de membres. Les exports comprennent des informations directement liées à la pratique aéronautique : numéro et type de licence, date d’obtention, date de validité de la licence et date de validité de la visite médicale .\n\nLes activités pratiquées sont également précisées pour certains membres : avion, planeur ou ULM , ainsi que la qualité de pilote, moniteur, mécanicien",
+          "action": "Surveiller les indicateurs de compromission associés et contrôler les actifs exposés.",
+          "image": "https://www.cyberattaque.org/wp-content/uploads/2026/04/cyberattaque_31.jpg",
+          "sources": [
+            {
+              "url": "https://www.cyberattaque.org/acaia-fr-pirate-les-licences-des-pilotes-et-personnels-lies-a-la-defense-expose/",
+              "label": "Cyberattaque.org"
+            }
+          ],
+          "url": "https://www.cyberattaque.org/acaia-fr-pirate-les-licences-des-pilotes-et-personnels-lies-a-la-defense-expose/",
+          "pubDate": "2026-09-24T10:12:32.000Z"
+        },
+        {
+          "title": "ARNtreal : 101 000 utilisateurs et leurs réseaux sociaux revendiqués dans une fuite de données",
+          "cve": null,
+          "severity": "news",
+          "score": 61,
+          "corroboration": 1,
+          "region": "fr",
+          "body": "Incident de sécurité rapporté par Cyberattaque.org.\n\nARNtreal, marque française de vêtements qui associe ses produits à une application gamifiée permettant d’accomplir des missions, gagner des récompenses et\n\nAttaque Mis à jour le 24 septembre 2026 à 13h12 ARNtreal : 101 000 utilisateurs et leurs réseaux sociaux revendiqués dans une fuite de données ARNtreal , marque française de vêtements qui associe ses produits à une application gamifiée permettant d’accomplir des missions, gagner des récompenses et parti…",
+          "detail": "Incident de sécurité rapporté par Cyberattaque.org.\n\nARNtreal, marque française de vêtements qui associe ses produits à une application gamifiée permettant d’accomplir des missions, gagner des récompenses et\n\nAttaque Mis à jour le 24 septembre 2026 à 13h12 ARNtreal : 101 000 utilisateurs et leurs réseaux sociaux revendiqués dans une fuite de données ARNtreal , marque française de vêtements qui associe ses produits à une application gamifiée permettant d’accomplir des missions, gagner des récompenses et participer à un programme d’affiliation, fait l’objet d’une importante fuite de données revendiquée par le hacker RedStone .\n\nL’attaquant affirme avoir récupéré une base de 3,5 Go contenant plus de 5,5 millions de lignes , dont les profils de 101 015 utilisateurs . La base complète est désormais proposée à la vente.\n\nRedStone annonce notamment la présence de 81 006 adresses e-mail et 39 327 numéros de téléphone . Les données couvriraient une période allant de mars 2024 à septembre 2026.\n\nCyberattaque.org s’est procuré l’échantillon diffusé avec la revendication. Les profils peuvent associer plusieurs informations à un même utilisateur : nom ou pseudonyme, e-mail, téléphone, identifiant interne, date de création du compte, niveau, points accumulés, codes d’affiliation et comptes associés sur différents réseaux sociaux.\n\nLes mots de passe ne figurent pas parmi les données annoncées par le hacker.\n\nLa particularité de cette fuite vient surtout du nombre d’identifiants sociaux associés aux comptes. Le hacker revendique 16 455 comptes Instagram , 15 865 identifiants Discord , 8 596 comptes TikTok et 5 490 comptes X .",
+          "action": "Surveiller les indicateurs de compromission associés et contrôler les actifs exposés.",
+          "image": "https://www.cyberattaque.org/wp-content/uploads/2026/04/cyberattaque_21-2.jpg",
+          "sources": [
+            {
+              "url": "https://www.cyberattaque.org/cyberattaque-arntreal-101-000-utilisateurs-et-leurs-reseaux-sociaux-revendiques-dans-une-fuite-massive/",
+              "label": "Cyberattaque.org"
+            }
+          ],
+          "url": "https://www.cyberattaque.org/cyberattaque-arntreal-101-000-utilisateurs-et-leurs-reseaux-sociaux-revendiques-dans-une-fuite-massive/",
+          "pubDate": "2026-09-24T11:12:40.000Z"
+        },
+        {
+          "title": "ASP : une cyberattaque expose 143 000 lignes de bénéficiaires du Coup de pouce énergie",
+          "cve": null,
+          "severity": "news",
+          "score": 60,
+          "corroboration": 1,
+          "region": "fr",
+          "body": "Incident de sécurité rapporté par Cyberattaque.org.\n\nL’Agence de services et de paiement (ASP), organisme public chargé de gérer et verser de nombreuses aides publiques en France, confirme avoir subi une\n\nAttaque Mis à jour le 24 septembre 2026 à 17h35 ASP : une cyberattaque expose 143 000 lignes de bénéficiaires du Coup de pouce énergie L’ Agence de services et de paiement (ASP) , organisme public chargé de gérer et verser de nombreuses aides publiques en France, confirme avoir subi une fuite de données .",
+          "detail": "Incident de sécurité rapporté par Cyberattaque.org.\n\nL’Agence de services et de paiement (ASP), organisme public chargé de gérer et verser de nombreuses aides publiques en France, confirme avoir subi une\n\nAttaque Mis à jour le 24 septembre 2026 à 17h35 ASP : une cyberattaque expose 143 000 lignes de bénéficiaires du Coup de pouce énergie L’ Agence de services et de paiement (ASP) , organisme public chargé de gérer et verser de nombreuses aides publiques en France, confirme avoir subi une fuite de données . Un hacker revendique de son côté 143 518 lignes contenant notamment des avis de paiement et des coordonnées bancaires de bénéficiaires.\n\nDans les échantillons consultés par Cyberattaque.org apparaissent des identités, adresses postales, références administratives, noms des banques, IBAN, BIC et montants d’aides versées . Les exemples concernent notamment le dispositif francilien « Coup de pouce énergie ».\n\nDans un courrier adressé aux personnes concernées, l’ASP confirme qu’un incident de sécurité est survenu le 27 août 2026 sur le portail associé au dispositif d’aide « Coup de pouce énergie » de la Région Île-de-France.\n\nL’agence indique avoir détecté le lendemain, le 28 août, un accès frauduleux à un compte utilisateur ayant permis l’exfiltration de documents contenant des données personnelles . Les fichiers concernés sont des avis de paiement datant de 2023 et 2024.\n\nL’ASP précise que le compte compromis a depuis été bloqué, que la vulnérabilité à l’origine de l’incident a été identifiée et corrigée et que l’incident a été notifié à la CNIL par l’ASP et la Région Île-de-France.\n\nL’Agence de services et de paiement est un établissement public intervenant pour le compte de l’État, de collectivités et d’autres acteurs publics. Sa mission consiste notamment à gérer, co",
+          "action": "Surveiller les indicateurs de compromission associés et contrôler les actifs exposés.",
+          "image": "https://www.cyberattaque.org/wp-content/uploads/2026/05/cyberattaque_hacker20.jpg",
+          "sources": [
+            {
+              "url": "https://www.cyberattaque.org/asp-une-cyberattaque-expose-143-000-lignes-de-beneficiaires-daides-publiques/",
+              "label": "Cyberattaque.org"
+            }
+          ],
+          "url": "https://www.cyberattaque.org/asp-une-cyberattaque-expose-143-000-lignes-de-beneficiaires-daides-publiques/",
+          "pubDate": "2026-09-24T14:38:19.000Z"
+        },
+        {
+          "title": "Maileva, filiale de La Poste victime d’une cyberattaque",
+          "cve": null,
+          "severity": "news",
+          "score": 52,
+          "corroboration": 1,
+          "region": "fr",
+          "body": "Incident de sécurité rapporté par Cyberattaque.org.\n\nMaileva, marque de Docaposte spécialisée dans l’envoi et la gestion de courriers, fait face à un incident de sécurité ayant entraîné l’arrêt de ses\n\nAttaque Mis à jour le 24 septembre 2026 à 17h46 Maileva, filiale de La Poste victime d&rsquo;une cyberattaque Maileva , marque de Docaposte spécialisée dans l’envoi et la gestion de courriers, fait face à un incident de sécurité ayant entraîné l’arrêt de ses services depuis le 23 septembre 2026 à 7 heures .",
+          "detail": "Incident de sécurité rapporté par Cyberattaque.org.\n\nMaileva, marque de Docaposte spécialisée dans l’envoi et la gestion de courriers, fait face à un incident de sécurité ayant entraîné l’arrêt de ses\n\nAttaque Mis à jour le 24 septembre 2026 à 17h46 Maileva, filiale de La Poste victime d&rsquo;une cyberattaque Maileva , marque de Docaposte spécialisée dans l’envoi et la gestion de courriers, fait face à un incident de sécurité ayant entraîné l’arrêt de ses services depuis le 23 septembre 2026 à 7 heures . Les investigations menées par l’entreprise ont confirmé des tentatives d’accès non autorisées à certains comptes.\n\nL’objectif du cybercriminel était particulièrement concret : utiliser les services de Maileva pour procéder à l’envoi illégitime de courriers . L’entreprise indique avoir déposé plainte et maintient ses services à l’arrêt le temps de sécuriser son infrastructure.\n\nDans une communication adressée à ses clients dont Cyberattaque.org s’est procuré une copie , Maileva explique que ses investigations ont confirmé des tentatives d’accès non autorisées réalisées par un cybercriminel.\n\nL’attaquant aurait cherché à exploiter des comptes Maileva afin de déclencher des envois de courriers sans l’autorisation de leurs propriétaires . La société ne précise pas à ce stade comment les comptes concernés ont été compromis ni combien de clients sont impliqués.\n\nDès la détection de l’activité suspecte, Maileva indique avoir bloqué les comptes concernés . L’entreprise a ensuite choisi d’aller plus loin en interrompant préventivement son service.\n\nCet arrêt est en place depuis le 23 septembre à 7 heures . Les équipes de Maileva poursuivent leurs investigations avant de permettre le rétablissement des services dans des conditions jugées suffisamment sûres.",
+          "action": "Surveiller les indicateurs de compromission associés et contrôler les actifs exposés.",
+          "image": "https://www.cyberattaque.org/wp-content/uploads/2026/09/maileva-cyberattaque-2.jpg",
+          "sources": [
+            {
+              "url": "https://www.cyberattaque.org/maileva-filiale-de-la-poste-victime-dune-cyberattaque/",
+              "label": "Cyberattaque.org"
+            }
+          ],
+          "url": "https://www.cyberattaque.org/maileva-filiale-de-la-poste-victime-dune-cyberattaque/",
+          "pubDate": "2026-09-24T15:46:53.000Z"
+        },
+        {
+          "title": "Uptoo : 740 000 CV revendiqués après une cyberattaque",
+          "cve": null,
+          "severity": "news",
+          "score": 52,
+          "corroboration": 1,
+          "region": "fr",
+          "body": "Incident de sécurité rapporté par Cyberattaque.org.\n\nUptoo, cabinet français spécialisé dans le recrutement de commerciaux et de profils liés à la vente, fait l’objet d’une cyberattaque revendiquée ce 24\n\nAttaque Mis à jour le 24 septembre 2026 à 13h34 Uptoo : 740 000 CV revendiqués après une cyberattaque Uptoo , cabinet français spécialisé dans le recrutement de commerciaux et de profils liés à la vente, fait l’objet d’une cyberattaque revendiquée ce 24 septembre 2026 .",
+          "detail": "Incident de sécurité rapporté par Cyberattaque.org.\n\nUptoo, cabinet français spécialisé dans le recrutement de commerciaux et de profils liés à la vente, fait l’objet d’une cyberattaque revendiquée ce 24\n\nAttaque Mis à jour le 24 septembre 2026 à 13h34 Uptoo : 740 000 CV revendiqués après une cyberattaque Uptoo , cabinet français spécialisé dans le recrutement de commerciaux et de profils liés à la vente, fait l’objet d’une cyberattaque revendiquée ce 24 septembre 2026 . Le hacker akashi1337 affirme avoir obtenu l’accès à plus de 740 000 profils de candidats et CV .\n\nL’attaquant menace désormais de vendre ou publier l’ensemble des données sous 72 heures si l’entreprise ne paie pas pour leur suppression. Une tentative d’extorsion qui pourrait concerner un très grand nombre de personnes ayant postulé ou créé un profil auprès d’Uptoo.\n\nUptoo accompagne depuis de nombreuses années les entreprises dans le recrutement de commerciaux, business developers, responsables commerciaux ou directeurs des ventes. Son activité repose notamment sur une importante base de candidats permettant aux recruteurs de rechercher et d’évaluer des profils.\n\nSelon le hacker, c’est précisément cette base qui aurait été compromise. Il revendique l’accès à plus de 740 000 dossiers , comprenant à la fois les informations enregistrées sur les candidats et les fichiers de CV associés.\n\nUn échantillon diffusé avec la revendication contient notamment des noms et prénoms, adresses e-mail, numéros de téléphone ainsi que les régions dans lesquelles les candidats indiquent rechercher un emploi.\n\nLes données concernent principalement des profils français, mais l’échantillon comporte également des numéros de téléphone étrangers et des candidats susceptibles de rechercher un poste dans plusieurs régions.",
+          "action": "Surveiller les indicateurs de compromission associés et contrôler les actifs exposés.",
+          "image": "https://www.cyberattaque.org/wp-content/uploads/2026/04/cyberattaque_30.jpg",
+          "sources": [
+            {
+              "url": "https://www.cyberattaque.org/uptoo-740-000-cv-revendiques-apres-une-cyberattaque/",
+              "label": "Cyberattaque.org"
+            }
+          ],
+          "url": "https://www.cyberattaque.org/uptoo-740-000-cv-revendiques-apres-une-cyberattaque/",
+          "pubDate": "2026-09-24T11:29:00.000Z"
+        },
+        {
+          "title": "New Android malware RemControl steals banking PINs and blocks removal attempts",
+          "cve": null,
+          "severity": "news",
+          "score": 48,
+          "corroboration": 2,
+          "region": "fr",
+          "body": "Incident de sécurité rapporté par Help Net Security.\n\nA new Android banking trojan called RemControl tricks victims into installing a fake TV app, then takes control of their phones to steal banking PINs, Group-IB has found. Researchers confirmed that the malware targets customers of more than 30 banks in Italy, France, Spain, Poland, Portugal, Canada and some Gulf states. The first samples were submitted to VirusTotal on July 19, 2026.",
+          "detail": "Incident de sécurité rapporté par Help Net Security.\n\nA new Android banking trojan called RemControl tricks victims into installing a fake TV app, then takes control of their phones to steal banking PINs, Group-IB has found. Researchers confirmed that the malware targets customers of more than 30 banks in Italy, France, Spain, Poland, Portugal, Canada and some Gulf states. The first samples were submitted to VirusTotal on July 19, 2026. The domain used for its command and control (C2) server was registered on &#8230; More &#8594; The post New Android malware RemControl steals banking PINs and blocks removal attempts appeared first on Help Net Security .",
+          "action": "Surveiller les indicateurs de compromission associés et contrôler les actifs exposés.",
+          "image": "https://img.helpnetsecurity.com/wp-content/uploads/2025/11/17085051/scam-danger-mobile.webp",
+          "sources": [
+            {
+              "url": "https://www.helpnetsecurity.com/2026/09/24/remcontrol-android-banking-trojan-fake-tv-app/",
+              "label": "Help Net Security"
+            },
+            {
+              "url": "https://gbhackers.com/remcontrol-android-malware/",
+              "label": "GBHackers"
+            }
+          ],
+          "url": "https://www.helpnetsecurity.com/2026/09/24/remcontrol-android-banking-trojan-fake-tv-app/",
+          "pubDate": "2026-09-24T09:40:43.000Z"
+        }
+      ]
+    },
+    {
+      "id": "culture",
+      "items": [
+        {
+          "title": "Digital forensics firm with US federal contracts covered up ties to Russia, DOJ alleges",
+          "cve": null,
+          "severity": "culture",
+          "score": 70,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Signal de veille — The Record.\n\nTwo executives at a data extraction and digital forensics company that sold several U.S. agencies its software were arrested for allegedly lying about the fact that its technology is made in Russia.\n\nThe Department of Justice announced Wednesday that it arrested two principals at a data extraction and digital forensics company that sold several U.S.",
+          "detail": "Signal de veille — The Record.\n\nTwo executives at a data extraction and digital forensics company that sold several U.S. agencies its software were arrested for allegedly lying about the fact that its technology is made in Russia.\n\nThe Department of Justice announced Wednesday that it arrested two principals at a data extraction and digital forensics company that sold several U.S. agencies its software while allegedly lying about foreign ownership and the fact that its technology is made in Russia.\n\nThe Departments of Defense (DOD) and Homeland Security (DHS) bought Oxygen Forensics’ software after allegedly being lied to about its foreign ties, according to a press release . DHS branches — including the Secret Service, the National Computer Forensics Institute (NCFI), Homeland Security Investigations and the Office of the Inspector General — all used the firm’s products.\n\nOxygen is a direct competitor of the well-known digital forensics company Cellebrite, whose work with authoritarian governments has drawn worldwide attention. Digital forensic software is frequently used by law enforcement and intelligence agencies to break into phones.\n\nThe firm reportedly has nearly 10,000 contracts in more than 150 countries.\n\nOxygen CEO Lee Reiber, 55, of Boise, Idaho, was arrested Sunday and has been released on bond.\n\nMoscow resident Oleg Sergeyevich Davydov, 52, was arrested the same day in London and was Oxygen’s chief technology officer. Federal authorities said they plan to seek his extradition to the U.S.",
+          "action": null,
+          "image": "https://cms.therecord.media/uploads/Oxygen_Forensics_3c85fd7a02.jpg",
+          "sources": [
+            {
+              "url": "https://therecord.media/russia-forensics-technology-doj",
+              "label": "The Record"
+            }
+          ],
+          "url": "https://therecord.media/russia-forensics-technology-doj",
+          "pubDate": "2026-09-24T20:30:00.000Z"
+        },
+        {
+          "title": "Rydox cybercriminal marketplace operator pleads guilty following co-conspirator brothers’s deportation",
+          "cve": null,
+          "severity": "culture",
+          "score": 70,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Signal de veille — The Record.\n\nArdit Kutleshi, 28, was extradited from his home country of Kosovo last year after prosecutors accused him and his older brother of running Rydox — an illicit platform used by cybercriminals to sell stolen personal information, illegal access to devices and other tools for carrying out fraud.\n\nOne of the key figures behind the Rydox cybercriminal marketplace pleaded guilty this week to aggravated identity theft and money laundering charges.\n\nArdit Kutleshi…",
+          "detail": "Signal de veille — The Record.\n\nArdit Kutleshi, 28, was extradited from his home country of Kosovo last year after prosecutors accused him and his older brother of running Rydox — an illicit platform used by cybercriminals to sell stolen personal information, illegal access to devices and other tools for carrying out fraud.\n\nOne of the key figures behind the Rydox cybercriminal marketplace pleaded guilty this week to aggravated identity theft and money laundering charges.\n\nArdit Kutleshi, 28, was extradited from his home country of Kosovo last year after prosecutors accused him and his older brother of running Rydox — an illicit platform used by cybercriminals to sell stolen personal information, illegal access to devices and other tools for carrying out fraud.\n\nKutleshi will be sentenced in February and faces a mandatory minimum of two years in prison for the aggravated identity theft charge and a maximum penalty of 20 years for the money laundering count.\n\nU.S. Attorney Troy Rivetti noted that Kutleshi’s brother previously pleaded guilty and was sentenced to time served before being deported back to Kosovo in December.\n\nWhen contacted for comment about whether Kutleshi will also be deported, a Justice Department spokesperson directed Recorded Future News to the Department of Homeland Security, which did not respond to requests for comment. The DOJ did not say whether he is still in their custody or not.\n\nRivetti said the brothers made “hundreds of thousands of dollars from the marketplace where cybercriminals could purchase information and tools to effect and further their online crime.”",
+          "action": null,
+          "image": "https://cms.therecord.media/uploads/2021_06_prison_jail_1_e1626298298850_5a76c96390.jpg",
+          "sources": [
+            {
+              "url": "https://therecord.media/rydox-criminal-marketplace-operator-pleads-guilty",
+              "label": "The Record"
+            }
+          ],
+          "url": "https://therecord.media/rydox-criminal-marketplace-operator-pleads-guilty",
+          "pubDate": "2026-09-24T18:57:00.000Z"
+        },
+        {
+          "title": "OT Security Guidance: NIST Drafts Updated Guide, CISA/FBI Advise on ICS Integrators",
+          "cve": null,
+          "severity": "culture",
+          "score": 67,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Signal de veille — SecurityWeek.\n\nNIST published a draft update to its OT security guide, while CISA and the FBI address the risks of working with third-party ICS integrators.\n\nRevision 4 of NIST’s operational technology security guide is open for public comments until November 30.\n\nSubscribe to the SecurityWeek Email Briefing for the latest cybersecurity threats, trends, and expert insights.\n\nSubscribe to the SecurityWeek Email Briefing to stay informed on the latest threats, trends, and…",
+          "detail": "Signal de veille — SecurityWeek.\n\nNIST published a draft update to its OT security guide, while CISA and the FBI address the risks of working with third-party ICS integrators.\n\nRevision 4 of NIST’s operational technology security guide is open for public comments until November 30.\n\nSubscribe to the SecurityWeek Email Briefing for the latest cybersecurity threats, trends, and expert insights.\n\nSubscribe to the SecurityWeek Email Briefing to stay informed on the latest threats, trends, and technology, along with insightful columns from industry experts.\n\nJoin as speakers examine the various components of ASM strategy, the push to mandate continuous asset visibility and inventory tools, and the use of red-teaming, bug bounties and pen-tests in modern security programs.\n\nExplore what it takes to operationalize continuous authorization at scale, including the technical, organizational, and cultural changes required.\n\nGwen Gann has become State Chief Information Security Officer for the State of Washington at WaTech.",
+          "action": null,
+          "image": "https://www.securityweek.com/wp-content/uploads/2026/09/OT-industrial-ICS.jpeg",
+          "sources": [
+            {
+              "url": "https://www.securityweek.com/ot-security-guidance-nist-drafts-updated-guide-cisa-fbi-advise-on-ics-integrators/",
+              "label": "SecurityWeek"
+            }
+          ],
+          "url": "https://www.securityweek.com/ot-security-guidance-nist-drafts-updated-guide-cisa-fbi-advise-on-ics-integrators/",
+          "pubDate": "2026-09-24T11:05:16.000Z"
+        },
+        {
+          "title": "ISC Stormcast For Friday, September 25th, 2026 https://isc.sans.edu/podcastdetail/10110, (Fri, Sep 25th)",
+          "cve": null,
+          "severity": "culture",
+          "score": 66,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Signal de veille — SANS ISC.\n\nISC Stormcast For Friday, September 25th, 2026 https://isc.sans.edu/podcastdetail/10110, Author: Johannes Ullrich\n\nInternet Storm Center Sign In Sign Up Handler on Duty: Brad Duncan Threat Level: green previous Click HERE to learn more about classes Johannes is teaching for SANS ISC Stormcast For Friday, September 25th, 2026 https://isc.sans.edu/podcastdetail/10110 Click HERE to learn more about classes Johannes is teaching for SANS previous Comments Login…",
+          "detail": "Signal de veille — SANS ISC.\n\nISC Stormcast For Friday, September 25th, 2026 https://isc.sans.edu/podcastdetail/10110, Author: Johannes Ullrich\n\nInternet Storm Center Sign In Sign Up Handler on Duty: Brad Duncan Threat Level: green previous Click HERE to learn more about classes Johannes is teaching for SANS ISC Stormcast For Friday, September 25th, 2026 https://isc.sans.edu/podcastdetail/10110 Click HERE to learn more about classes Johannes is teaching for SANS previous Comments Login here to join the discussion.",
+          "action": null,
+          "image": "https://isc.sans.edu/images/logos/isc/large.png",
+          "sources": [
+            {
+              "url": "https://isc.sans.edu/diary/rss/33370",
+              "label": "SANS ISC"
+            }
+          ],
+          "url": "https://isc.sans.edu/diary/rss/33370",
+          "pubDate": "2026-09-25T03:45:12.000Z"
+        },
+        {
+          "title": "Island Raises $400 Million at $6.4 Billion Valuation",
+          "cve": null,
+          "severity": "culture",
+          "score": 65,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Signal de veille — SecurityWeek.\n\nIsland raised $400 million in a Series F funding round led by Evolution Equity Partners, bringing the company’s valuation to $6.4 billion.\n\nSubscribe to the SecurityWeek Email Briefing for the latest cybersecurity threats, trends, and expert insights.\n\nSubscribe to the SecurityWeek Email Briefing to stay informed on the latest threats, trends, and technology, along with insightful columns from industry experts.\n\nJoin as speakers examine the various compone…",
+          "detail": "Signal de veille — SecurityWeek.\n\nIsland raised $400 million in a Series F funding round led by Evolution Equity Partners, bringing the company’s valuation to $6.4 billion.\n\nSubscribe to the SecurityWeek Email Briefing for the latest cybersecurity threats, trends, and expert insights.\n\nSubscribe to the SecurityWeek Email Briefing to stay informed on the latest threats, trends, and technology, along with insightful columns from industry experts.\n\nJoin as speakers examine the various components of ASM strategy, the push to mandate continuous asset visibility and inventory tools, and the use of red-teaming, bug bounties and pen-tests in modern security programs.\n\nExplore what it takes to operationalize continuous authorization at scale, including the technical, organizational, and cultural changes required.\n\nGwen Gann has become State Chief Information Security Officer for the State of Washington at WaTech.\n\nPietr Lindahal has been named Vice President and Chief Information Security Officer at Boston Scientific.",
+          "action": null,
+          "image": "https://www.securityweek.com/wp-content/uploads/2025/12/funding-round.jpeg",
+          "sources": [
+            {
+              "url": "https://www.securityweek.com/island-raises-400-million-at-6-4-billion-valuation/",
+              "label": "SecurityWeek"
+            }
+          ],
+          "url": "https://www.securityweek.com/island-raises-400-million-at-6-4-billion-valuation/",
+          "pubDate": "2026-09-24T11:39:09.000Z"
+        },
+        {
+          "title": "Phone-hacking company that won U.S. security agency contracts hid Russian ownership, DOJ alleges",
+          "cve": null,
+          "severity": "high",
+          "score": 64,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Signal de veille — CyberScoop.\n\nLaw enforcement has arrested two leaders of a Russian-owned phone hacking company used by Kremlin agencies who allegedly masked its foreign ownership from the U.S. Defense Department, Department of Homeland Security and others to win millions of dollars worth of contracts, the Justice Department announced Wednesday .",
+          "detail": "Signal de veille — CyberScoop.\n\nLaw enforcement has arrested two leaders of a Russian-owned phone hacking company used by Kremlin agencies who allegedly masked its foreign ownership from the U.S. Defense Department, Department of Homeland Security and others to win millions of dollars worth of contracts, the Justice Department announced Wednesday . Lee Reiber of Boise, Idaho, the CEO of Oxygen Forensics (Oxygen US), was arrested in his home state and Oleg Davydov, one of five Russian nationals whom DOJ said actually controlled the company, was arrested in London, from where the department plans to seek his extradition. They face charges of conspiracy to commit wire fraud. Publicly, Oxygen went to great lengths to present Reiber as the true leader of a company based in Alexandria, Va., asserting that the company was not controlled by Russian-based executives, according to a criminal complaint., While the company told government agencies it was U.S.-owned, Russian officials with the company repeatedly overruled him, the complaint alleges.&nbsp; Oxygen’s business aims were complicated in 2022 after the United States expanded sanctions against Russia following its invasion of Ukraine. That’s when the company installed Reiber as CEO and removed the owners from public corporate filings. An unnamed co-conspirator in the complaint nonetheless said that “fateful decisions will be made by” five shareholders, including",
+          "action": null,
+          "image": "https://cyberscoop.com/wp-content/uploads/sites/3/2026/09/GettyImages-2252317890.jpg",
+          "sources": [
+            {
+              "url": "https://cyberscoop.com/oxygen-forensics-ceo-arrested-russian-ownership-fraud/",
+              "label": "CyberScoop"
+            }
+          ],
+          "url": "https://cyberscoop.com/oxygen-forensics-ceo-arrested-russian-ownership-fraud/",
+          "pubDate": "2026-09-24T17:07:31.000Z"
+        },
+        {
+          "title": "Kontext Security Emerges With $4 Million for AI Agent Runtime Controls",
+          "cve": null,
+          "severity": "high",
+          "score": 64,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Signal de veille — SecurityWeek.\n\nKontext Security has launched publicly with $4 million in funding to provide visibility and control over AI agents’ actions.\n\nThe startup’s runtime enforcement platform evaluates AI agents in real time to provide visibility and control over their actions.\n\nSubscribe to the SecurityWeek Email Briefing for the latest cybersecurity threats, trends, and expert insights.\n\nSubscribe to the SecurityWeek Email Briefing to stay informed on the latest threats, trend…",
+          "detail": "Signal de veille — SecurityWeek.\n\nKontext Security has launched publicly with $4 million in funding to provide visibility and control over AI agents’ actions.\n\nThe startup’s runtime enforcement platform evaluates AI agents in real time to provide visibility and control over their actions.\n\nSubscribe to the SecurityWeek Email Briefing for the latest cybersecurity threats, trends, and expert insights.\n\nSubscribe to the SecurityWeek Email Briefing to stay informed on the latest threats, trends, and technology, along with insightful columns from industry experts.\n\nJoin as speakers examine the various components of ASM strategy, the push to mandate continuous asset visibility and inventory tools, and the use of red-teaming, bug bounties and pen-tests in modern security programs.\n\nExplore what it takes to operationalize continuous authorization at scale, including the technical, organizational, and cultural changes required.\n\nGwen Gann has become State Chief Information Security Officer for the State of Washington at WaTech.",
+          "action": null,
+          "image": "https://www.securityweek.com/wp-content/uploads/2025/12/cyber-security-investment.jpeg",
+          "sources": [
+            {
+              "url": "https://www.securityweek.com/kontext-security-emerges-with-4-million-for-ai-agent-runtime-controls/",
+              "label": "SecurityWeek"
+            }
+          ],
+          "url": "https://www.securityweek.com/kontext-security-emerges-with-4-million-for-ai-agent-runtime-controls/",
+          "pubDate": "2026-09-24T15:52:00.000Z"
+        },
+        {
+          "title": "Windows 11 KB5124010 update released with 46 changes and fixes",
+          "cve": null,
+          "severity": "culture",
+          "score": 63,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Signal de veille — BleepingComputer.\n\nMicrosoft released the KB5124010 September 2026 non-security preview update for Windows 11 24H2 and 25H2, with 46 changes including Bluetooth improvements and the ability to remap the Copilot key.\n\nOpenAI hacked Australian Medicare govt site, probed data providers\n\nPlaceholder domain used in dev docs now serves ClickFix attacks\n\nShinyHunters claims FBI hack, data theft in PeopleSoft zero-day breach\n\nMalicious AI agents steal 600K credit cards, infect 100+…",
+          "detail": "Signal de veille — BleepingComputer.\n\nMicrosoft released the KB5124010 September 2026 non-security preview update for Windows 11 24H2 and 25H2, with 46 changes including Bluetooth improvements and the ability to remap the Copilot key.\n\nOpenAI hacked Australian Medicare govt site, probed data providers\n\nPlaceholder domain used in dev docs now serves ClickFix attacks\n\nShinyHunters claims FBI hack, data theft in PeopleSoft zero-day breach\n\nMalicious AI agents steal 600K credit cards, infect 100+ sites with skimmers\n\nMacSync malware uses public iCloud calendars to deliver new payloads\n\nNew Carbonato malware uses AI agents to hijack exposed Docker hosts",
+          "action": null,
+          "image": "https://www.bleepstatic.com/content/hl-images/2025/10/27/Windows_11.jpg",
+          "sources": [
+            {
+              "url": "https://www.bleepingcomputer.com/news/microsoft/windows-11-kb5124010-update-released-with-46-changes-and-fixes/",
+              "label": "BleepingComputer"
+            }
+          ],
+          "url": "https://www.bleepingcomputer.com/news/microsoft/windows-11-kb5124010-update-released-with-46-changes-and-fixes/",
+          "pubDate": "2026-09-24T12:16:32.000Z"
+        },
+        {
+          "title": "Microsoft fixes bug that broke Windows File History backup feature",
+          "cve": null,
+          "severity": "culture",
+          "score": 63,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Signal de veille — BleepingComputer.\n\nMicrosoft has fixed a known issue that breaks the built-in File History backup feature on some Windows systems after installing the September 2026 security updates.\n\nOpenAI hacked Australian Medicare govt site, probed data providers\n\nPlaceholder domain used in dev docs now serves ClickFix attacks\n\nShinyHunters claims FBI hack, data theft in PeopleSoft zero-day breach\n\nMalicious AI agents steal 600K credit cards, infect 100+ sites with skimmers\n\nMacSync mal…",
+          "detail": "Signal de veille — BleepingComputer.\n\nMicrosoft has fixed a known issue that breaks the built-in File History backup feature on some Windows systems after installing the September 2026 security updates.\n\nOpenAI hacked Australian Medicare govt site, probed data providers\n\nPlaceholder domain used in dev docs now serves ClickFix attacks\n\nShinyHunters claims FBI hack, data theft in PeopleSoft zero-day breach\n\nMalicious AI agents steal 600K credit cards, infect 100+ sites with skimmers\n\nMacSync malware uses public iCloud calendars to deliver new payloads\n\nNew Carbonato malware uses AI agents to hijack exposed Docker hosts",
+          "action": null,
+          "image": "https://www.bleepstatic.com/content/hl-images/2026/03/10/Windows.jpg",
+          "sources": [
+            {
+              "url": "https://www.bleepingcomputer.com/news/microsoft/microsoft-fixes-windows-backup-feature-broken-by-september-updates/",
+              "label": "BleepingComputer"
+            }
+          ],
+          "url": "https://www.bleepingcomputer.com/news/microsoft/microsoft-fixes-windows-backup-feature-broken-by-september-updates/",
+          "pubDate": "2026-09-24T08:14:47.000Z"
+        },
+        {
+          "title": "Questionnaire sur l’Australie, site gouvernemental infiltré, mail générique : ce que l’on sait de la nouvelle dérive agentique d’OpenAI",
+          "cve": null,
+          "severity": "culture",
+          "score": 60,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Signal de veille — Numerama.\n\nUn agent d'IA d'OpenAI a accédé sans autorisation à un portail de statistiques lié à Medicare, l'assurance maladie australienne. Le Premier ministre Anthony Albanese vient de rendre l'affaire publique et dénonce la façon dont l'entreprise l'a prévenu.\n\nWatt Else, ToujoursPlus, Artificielles, Le Récap : votre dose hebdo d’infos exclusives et d’éditos endiablés !\n\nFrandroid Clubic Lemon Humanoid Mon compte Thème Clair Sombre Système 39,90 € /an\n\nNous généron…",
+          "detail": "Signal de veille — Numerama.\n\nUn agent d'IA d'OpenAI a accédé sans autorisation à un portail de statistiques lié à Medicare, l'assurance maladie australienne. Le Premier ministre Anthony Albanese vient de rendre l'affaire publique et dénonce la façon dont l'entreprise l'a prévenu.\n\nWatt Else, ToujoursPlus, Artificielles, Le Récap : votre dose hebdo d’infos exclusives et d’éditos endiablés !\n\nFrandroid Clubic Lemon Humanoid Mon compte Thème Clair Sombre Système 39,90 € /an\n\nNous générons pour vous un résumé de l’article grâce à une IA et nous le vérifions afin de nous assurer qu’il n’y ait aucune erreur, pour garantir l’authenticité de l’info.\n\nRecevez tous les soirs un résumé de l’actu importante avec Le Récap’\n\nC&rsquo;est un incident qui date de juin dernier, mais qui vient seulement d&rsquo;être officialisé.\n\nLe Premier ministre australien Anthony Albanese a révélé le 23 septembre 2026 qu&rsquo;un agent d&rsquo;OpenAI avait « infiltré un site web du gouvernement australien » alors qu&rsquo;il cherchait des statistiques médicales. Le portail concerné héberge des données liées à Medicare, le régime national d&rsquo;assurance maladie du pays.",
+          "action": null,
+          "image": "https://img.numerama.com/www.numerama.com/wp-content/uploads/2026/08/design-sans-titre-2026-08-27t104101752.png?resize=1600,900&key=8b3aabfe",
+          "sources": [
+            {
+              "url": "https://www.numerama.com/cyberguerre/2339277-questionnaire-sur-laustralie-site-gouvernemental-infiltre-mail-generique-ce-que-lon-sait-de-la-nouvelle-derive-agentique-dopenai.html",
+              "label": "Numerama"
+            }
+          ],
+          "url": "https://www.numerama.com/cyberguerre/2339277-questionnaire-sur-laustralie-site-gouvernemental-infiltre-mail-generique-ce-que-lon-sait-de-la-nouvelle-derive-agentique-dopenai.html",
+          "pubDate": "2026-09-24T09:35:32.000Z"
+        },
+        {
+          "title": "Autonomous AI Hacks Raise Thorny Questions of Legal Accountability",
+          "cve": null,
+          "severity": "high",
+          "score": 59,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Signal de veille — SecurityWeek.\n\nThe prospect of legal accountability around AI is unclear, but what happens when the hackers aren’t human?\n\nThe prospect of legal accountability is unclear. Lawsuits are a possibility, but some legal experts believe any criminal investigations would face an extremely high burden.\n\nSubscribe to the SecurityWeek Email Briefing for the latest cybersecurity threats, trends, and expert insights.\n\nSubscribe to the SecurityWeek Email Briefing to stay informed on…",
+          "detail": "Signal de veille — SecurityWeek.\n\nThe prospect of legal accountability around AI is unclear, but what happens when the hackers aren’t human?\n\nThe prospect of legal accountability is unclear. Lawsuits are a possibility, but some legal experts believe any criminal investigations would face an extremely high burden.\n\nSubscribe to the SecurityWeek Email Briefing for the latest cybersecurity threats, trends, and expert insights.\n\nSubscribe to the SecurityWeek Email Briefing to stay informed on the latest threats, trends, and technology, along with insightful columns from industry experts.\n\nJoin as speakers examine the various components of ASM strategy, the push to mandate continuous asset visibility and inventory tools, and the use of red-teaming, bug bounties and pen-tests in modern security programs.\n\nExplore what it takes to operationalize continuous authorization at scale, including the technical, organizational, and cultural changes required.\n\nGwen Gann has become State Chief Information Security Officer for the State of Washington at WaTech.",
+          "action": null,
+          "image": "https://www.securityweek.com/wp-content/uploads/2026/07/AI-artificial-intelligence-model-frontier.webp",
+          "sources": [
+            {
+              "url": "https://www.securityweek.com/autonomous-ai-hacks-raise-thorny-questions-of-legal-accountability/",
+              "label": "SecurityWeek"
+            }
+          ],
+          "url": "https://www.securityweek.com/autonomous-ai-hacks-raise-thorny-questions-of-legal-accountability/",
+          "pubDate": "2026-09-24T20:35:21.000Z"
+        },
+        {
+          "title": "Placeholder third-party[.]com Referenced Across 1,700+ Repositories Now Serves Malicious Content",
+          "cve": null,
+          "severity": "culture",
+          "score": 59,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Signal de veille — The Hacker News.\n\nThe \"third-party[.]com\" domain, commonly used as a documentation placeholder, has been observed serving a ClickFix lure to Windows browsers while displaying a harmless decoy to other users. \"third-party[.]com has been a generic documentation placeholder for years, the same role example.com plays,\" Manifold Security's Head of Research, Ax Sharma, said. \"Unlike 'example[.]com,' third-party[.]com",
+          "detail": "Signal de veille — The Hacker News.\n\nThe \"third-party[.]com\" domain, commonly used as a documentation placeholder, has been observed serving a ClickFix lure to Windows browsers while displaying a harmless decoy to other users. \"third-party[.]com has been a generic documentation placeholder for years, the same role example.com plays,\" Manifold Security's Head of Research, Ax Sharma, said. \"Unlike 'example[.]com,' third-party[.]com",
+          "action": null,
+          "image": "https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEhy4aXDWSC5cKzOZO8lRbk8o5I1fHPlCGbfxxYL6tyJxauEL-8EVj7-AypDhYt_Wg6bDLqlj0UK4LrGJdeI4ChsksaB6tTZxo8ikCLdwC0wjRfJPE_Z1qM_CVUg7s1ORdmWW2XTDtlPPDcI8JvelrbmJhcjVthnqYWQrZ7ySnIMMPRZfa_VzgaBCWyWc_JJ/s1600/third.jpg",
+          "sources": [
+            {
+              "url": "https://thehackernews.com/2026/09/placeholder-third-partycom-referenced.html",
+              "label": "The Hacker News"
+            }
+          ],
+          "url": "https://thehackernews.com/2026/09/placeholder-third-partycom-referenced.html",
+          "pubDate": "2026-09-24T15:27:32.000Z"
+        },
+        {
+          "title": "Begin at the End: How to Enable Agentic Remediation",
+          "cve": null,
+          "severity": "culture",
+          "score": 59,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Signal de veille — SecurityWeek.\n\nImplementing Agentic remediation in cybersecurity: where the mandate to adopt AI meets a problem worth solving.\n\nAgentic remediation is not an act of faith. We are talking about fixing known problems, not judgment calls about unfamiliar risk.\n\nSubscribe to the SecurityWeek Email Briefing for the latest cybersecurity threats, trends, and expert insights.\n\nSubscribe to the SecurityWeek Email Briefing to stay informed on the latest threats, trends, and techno…",
+          "detail": "Signal de veille — SecurityWeek.\n\nImplementing Agentic remediation in cybersecurity: where the mandate to adopt AI meets a problem worth solving.\n\nAgentic remediation is not an act of faith. We are talking about fixing known problems, not judgment calls about unfamiliar risk.\n\nSubscribe to the SecurityWeek Email Briefing for the latest cybersecurity threats, trends, and expert insights.\n\nSubscribe to the SecurityWeek Email Briefing to stay informed on the latest threats, trends, and technology, along with insightful columns from industry experts.\n\nJoin as speakers examine the various components of ASM strategy, the push to mandate continuous asset visibility and inventory tools, and the use of red-teaming, bug bounties and pen-tests in modern security programs.\n\nExplore what it takes to operationalize continuous authorization at scale, including the technical, organizational, and cultural changes required.\n\nGwen Gann has become State Chief Information Security Officer for the State of Washington at WaTech.",
+          "action": null,
+          "image": "https://www.securityweek.com/wp-content/uploads/2024/01/Cybersecurity-Teams.jpg",
+          "sources": [
+            {
+              "url": "https://www.securityweek.com/begin-at-the-end-how-to-enable-agentic-remediation/",
+              "label": "SecurityWeek"
+            }
+          ],
+          "url": "https://www.securityweek.com/begin-at-the-end-how-to-enable-agentic-remediation/",
+          "pubDate": "2026-09-24T11:00:00.000Z"
+        },
+        {
+          "title": "UK Government Shifts to Service-Led Cyber Governance After Stinging Audit",
+          "cve": null,
+          "severity": "critical",
+          "score": 57,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Signal de veille — Infosecurity Mag.\n\nWhitehall is shifting from mandatory cyber controls to service-led governance following a critical audit exposing failures of its 2022 cyber strategy\n\nThe UK government is overhauling its approach to cybersecurity for the British civil service sector, moving away from top‑down mandates toward centrally built services that frontline teams actually adopt and use.\n\n“A mandate is permission to direct.",
+          "detail": "Signal de veille — Infosecurity Mag.\n\nWhitehall is shifting from mandatory cyber controls to service-led governance following a critical audit exposing failures of its 2022 cyber strategy\n\nThe UK government is overhauling its approach to cybersecurity for the British civil service sector, moving away from top‑down mandates toward centrally built services that frontline teams actually adopt and use.\n\n“A mandate is permission to direct. It isn’t the ability to make change happen,” said Breandán Knowlton‑Hung, Deputy CISO at the UK Civil Service. “We learned that the hard way across a very federated system.”\n\nDuring the Gartner Security & Risk Management Summit in London on September 23, Knowlton‑Hung outlined how a 2025 National Audit Office (NAO) report forced a rethink of the operating model set out in the 2022 National Cyber Security Strategy .\n\nThe 2022 strategy pitched an ambitious “defend as one” vision. Under this approach Knowlton‑Hung’s office sets direction and holds a macro view of risk while departments own and manage their local risks.\n\nOn paper, the strategy acknowledged the UK government’s reality, which is made of roughly 465 separate entities, including ministries, agencies and public bodies with their own leaders, budgets and systems.\n\nHowever, in practice, the model relied on a quiet assumption that simply issuing standards and requiring assurance would lead to compliance and outcomes, Knowlton‑Hung said.",
+          "action": null,
+          "image": "https://assets.infosecurity-magazine.com/webpage/og/4e601cea-5e3e-4eac-a6b1-48f995da603f.jpg",
+          "sources": [
+            {
+              "url": "https://www.infosecurity-magazine.com/news/uk-government-service-led-cyber/",
+              "label": "Infosecurity Mag"
+            }
+          ],
+          "url": "https://www.infosecurity-magazine.com/news/uk-government-service-led-cyber/",
+          "pubDate": "2026-09-24T11:00:00.000Z"
+        },
+        {
+          "title": "[Virtual Event] Cybersecurity Outlook 2027",
+          "cve": null,
+          "severity": "culture",
+          "score": 55,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Signal de veille — Dark Reading.\n\n[Virtual Event] Cybersecurity Outlook 2027",
+          "detail": "Signal de veille — Dark Reading.\n\n[Virtual Event] Cybersecurity Outlook 2027",
+          "action": null,
+          "image": null,
+          "sources": [
+            {
+              "url": "https://www.darkreading.com/events/virtual-event-cybersecurity-outlook-2027",
+              "label": "Dark Reading"
+            }
+          ],
+          "url": "https://www.darkreading.com/events/virtual-event-cybersecurity-outlook-2027",
+          "pubDate": "2026-09-25T04:01:02.216Z"
+        },
+        {
+          "title": "Le Barreau de Paris veut former ses avocats à l’IA",
+          "cve": null,
+          "severity": "culture",
+          "score": 45,
+          "corroboration": 1,
+          "region": "fr",
+          "body": "Signal de veille — Silicon.fr.\n\nLe Barreau de Paris lance son « Académie IA », un programme de formation gratuit pour les avocats parisiens. La première session est prévue en novembre. L&rsquo;initiative répond à des difficultés que décrivent les responsables de la profession. Selon plusieurs exemples cités par l&rsquo;AFP , des clients arrivent avec des analyses générées par l&rsquo;IA et leur accordent parfois plus de crédit qu&rsquo;à leur avocat.",
+          "detail": "Signal de veille — Silicon.fr.\n\nLe Barreau de Paris lance son « Académie IA », un programme de formation gratuit pour les avocats parisiens. La première session est prévue en novembre. L&rsquo;initiative répond à des difficultés que décrivent les responsables de la profession. Selon plusieurs exemples cités par l&rsquo;AFP , des clients arrivent avec des analyses générées par l&rsquo;IA et leur accordent parfois plus de crédit qu&rsquo;à leur avocat. Le bâtonnier Louis Degos évoque aussi des « hallucinations » dans des conclusions d&rsquo;avocats, avec « quelques cas » remontés jusqu&rsquo;à lui. François Girault, du Conseil national des barreaux (CNB), constate une hausse des sanctions, pour l&rsquo;instant clémentes. Il observe aussi un recrutement « un peu figé », car les tâches des jeunes collaborateurs peuvent être confiées à l&rsquo;IA. L&rsquo;écart entre cabinets alimente une autre inquiétude. Selon une enquête du CNB de mai 2025, 57 % des avocats exerçant seuls utilisent l&rsquo;IA, contre 86 % dans les cabinets de plus de 100 avocats. LouisDegos relativise, estimant que les petites structures accèdent à des abonnements abordables. Face à cette réalité, l&rsquo;Ordre avait adopté, en juillet, un modèle de charte d&rsquo;utilisation de l&rsquo;IA, mis à la disposition de tous les cabinets. Ce texte n&rsquo;est pas contraignant et chaque cabinet peut l&rsquo;adapter. Il rappelle notamment qu&rsquo;un o",
+          "action": null,
+          "image": "https://www.silicon.fr/wp-content/uploads/2025/09/Loi-numerique-amendements-logiciel-libre-divisent-F.jpg",
+          "sources": [
+            {
+              "url": "https://www.silicon.fr/emploi-formation-1373/le-barreau-de-paris-veut-former-ses-avocats-a-lia-229339",
+              "label": "Silicon.fr"
+            }
+          ],
+          "url": "https://www.silicon.fr/emploi-formation-1373/le-barreau-de-paris-veut-former-ses-avocats-a-lia-229339",
+          "pubDate": "2026-09-24T14:44:21.000Z"
+        }
+      ]
+    }
+  ]
+}
