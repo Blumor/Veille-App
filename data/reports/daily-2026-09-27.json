@@ -1,0 +1,693 @@
+{
+  "id": "daily-2026-09-27",
+  "type": "daily",
+  "date": "2026-09-27",
+  "title": "Rapport quotidien - dimanche 27 septembre 2026",
+  "summary": "Sur les dernières 24 heures, la veille recense 9 vulnérabilités critiques, 13 incidents ou compromissions et 5 signaux de fond. Acteurs et produits les plus exposés : Microsoft, WordPress et Oracle.",
+  "generatedAt": "2026-09-27T04:01:13.948Z",
+  "sections": [
+    {
+      "id": "vulns",
+      "items": [
+        {
+          "title": "CVE-2026-100740 — A vulnerability was detected in D-Link DIR-895L A1_102b07. Impacted is the function tunnel…",
+          "cve": "CVE-2026-100740",
+          "severity": "critical",
+          "score": 59,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Vulnérabilité critique CVE-2026-100740 (score CVSS 9.9).\n\nA vulnerability was detected in D-Link DIR-895L A1_102b07. Impacted is the function tunnel_set_params of the file tunnel.c of the component L2TP Control Channel Parser. Performing a manipulation results in out-of-bounds write. The attack may be initiated remotely. The exploit is now public and may be used.",
+          "detail": "Vulnérabilité critique CVE-2026-100740 (score CVSS 9.9).\n\nA vulnerability was detected in D-Link DIR-895L A1_102b07. Impacted is the function tunnel_set_params of the file tunnel.c of the component L2TP Control Channel Parser. Performing a manipulation results in out-of-bounds write. The attack may be initiated remotely. The exploit is now public and may be used.\n\nScore CVSS : 9.9\n\nType de faiblesse (CWE) : CWE-119, CWE-787",
+          "action": "Vérifier l'exposition du parc et appliquer le correctif éditeur dès sa disponibilité.",
+          "image": null,
+          "sources": [
+            {
+              "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-100740",
+              "label": "NVD"
+            },
+            {
+              "url": "https://www.cvedetails.com/cve/CVE-2026-100740/",
+              "label": "CVE Details"
+            }
+          ],
+          "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-100740",
+          "pubDate": "2026-09-27T01:17:17.810Z"
+        },
+        {
+          "title": "CVE-2026-100717 — froxlor is a server administration panel. In versions 2.3.10 and earlier, Validate::valida…",
+          "cve": "CVE-2026-100717",
+          "severity": "critical",
+          "score": 59,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Vulnérabilité critique CVE-2026-100717 (score CVSS 9.9).\n\nfroxlor is a server administration panel. In versions 2.3.10 and earlier, Validate::validateUrl rejects carriage return and line feed characters only in the path, query and fragment components returned by parse_url, and never inspects the userinfo (user:pass@) components. This is an incomplete fix for GHSA-c3p2.",
+          "detail": "Vulnérabilité critique CVE-2026-100717 (score CVSS 9.9).\n\nfroxlor is a server administration panel. In versions 2.3.10 and earlier, Validate::validateUrl rejects carriage return and line feed characters only in the path, query and fragment components returned by parse_url, and never inspects the userinfo (user:pass@) components. This is an incomplete fix for GHSA-c3p2. An authenticated low-privilege customer with subdomain-create rights (no admin or change_serversettings privilege required) can supply a subdomain redirect URL that carries a CR/LF payload in the userinfo portion (e.g. http://user%0areturn 200 \"pwned\";%0a@evil.com/). The value passes validation, survives IDNA encoding, and is written verbatim into the generated nginx or Apache vhost configuration, allowing the attacker to break out of the emitted directive and inject arbitrary web-server configuration lines. froxlor regenerates and reloads the web-server configuration as root, so the injected directives take effect server-wide and can hijack responses or read local files. The issue is fixed in version 2.3.12.\n\nScore CVSS : 9.9\n\nType de faiblesse (CWE) : CWE-93",
+          "action": "Vérifier l'exposition du parc et appliquer le correctif éditeur dès sa disponibilité.",
+          "image": null,
+          "sources": [
+            {
+              "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-100717",
+              "label": "NVD"
+            },
+            {
+              "url": "https://www.cvedetails.com/cve/CVE-2026-100717/",
+              "label": "CVE Details"
+            }
+          ],
+          "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-100717",
+          "pubDate": "2026-09-26T14:16:57.753Z"
+        },
+        {
+          "title": "CVE-2026-100716 — Froxlor is a server administration panel. In versions 2.3.10 and earlier, the customer dat…",
+          "cve": "CVE-2026-100716",
+          "severity": "critical",
+          "score": 59,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Vulnérabilité critique CVE-2026-100716 (score CVSS 9.9).\n\nFroxlor is a server administration panel. In versions 2.3.10 and earlier, the customer data-export (DataDump) cron fails to validate intermediate path components of the export destination: Froxlor\\FileDir::makeCorrectDir() contains an off-by-one in its path-component walk that skips the first segment below the customer home directory, and the guard in ExportCron.php checks only the final component with is_link().",
+          "detail": "Vulnérabilité critique CVE-2026-100716 (score CVSS 9.9).\n\nFroxlor is a server administration panel. In versions 2.3.10 and earlier, the customer data-export (DataDump) cron fails to validate intermediate path components of the export destination: Froxlor\\FileDir::makeCorrectDir() contains an off-by-one in its path-component walk that skips the first segment below the customer home directory, and the guard in ExportCron.php checks only the final component with is_link(). An authenticated customer whose account has the export feature enabled can schedule an export into a genuine subdirectory of their own webspace, then replace an intermediate path component with a symlink before the root-owned cron runs. The cron's `chown -R` then recursively changes ownership of the linked directory tree — for example /etc — to the customer's UID, yielding host root and cross-tenant compromise. Exploitation is deterministic and requires no race. This is an incomplete fix of GHSA-75h4-... The issue is fixed in Froxlor 2.3.12.\n\nScore CVSS : 9.9\n\nType de faiblesse (CWE) : CWE-59",
+          "action": "Vérifier l'exposition du parc et appliquer le correctif éditeur dès sa disponibilité.",
+          "image": null,
+          "sources": [
+            {
+              "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-100716",
+              "label": "NVD"
+            },
+            {
+              "url": "https://www.cvedetails.com/cve/CVE-2026-100716/",
+              "label": "CVE Details"
+            }
+          ],
+          "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-100716",
+          "pubDate": "2026-09-26T14:16:57.583Z"
+        },
+        {
+          "title": "CVE-2026-100715 — Froxlor through 2.3.10 is vulnerable to arbitrary file deletion via symlink following in t…",
+          "cve": "CVE-2026-100715",
+          "severity": "critical",
+          "score": 58,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Vulnérabilité critique CVE-2026-100715 (score CVSS 9.6).\n\nFroxlor through 2.3.10 is vulnerable to arbitrary file deletion via symlink following in the FTP data deletion cron task. Cron task 8 (deleteFtpData), queued when an FTP account is deleted, calls FileDir::makeCorrectDir() without the $fixed_homedir argument, so the symlink component walk is skipped, and then executes 'rm -rf' as root on the resulting path with string-level guards only.",
+          "detail": "Vulnérabilité critique CVE-2026-100715 (score CVSS 9.6).\n\nFroxlor through 2.3.10 is vulnerable to arbitrary file deletion via symlink following in the FTP data deletion cron task. Cron task 8 (deleteFtpData), queued when an FTP account is deleted, calls FileDir::makeCorrectDir() without the $fixed_homedir argument, so the symlink component walk is skipped, and then executes 'rm -rf' as root on the resulting path with string-level guards only. Because makeCorrectDir() appends a trailing slash, GNU rm dereferences a symlink used either as an intermediate path component or as the final component. An authenticated customer who can write to the FTP home directory can plant a symlink between task insertion and cron execution, causing the root cron job to recursively delete arbitrary directory trees, resulting in cross-tenant data destruction and host denial of service. This issue is fixed in Froxlor 2.3.12.\n\nScore CVSS : 9.6\n\nType de faiblesse (CWE) : CWE-59",
+          "action": "Vérifier l'exposition du parc et appliquer le correctif éditeur dès sa disponibilité.",
+          "image": null,
+          "sources": [
+            {
+              "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-100715",
+              "label": "NVD"
+            },
+            {
+              "url": "https://www.cvedetails.com/cve/CVE-2026-100715/",
+              "label": "CVE Details"
+            }
+          ],
+          "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-100715",
+          "pubDate": "2026-09-26T14:16:57.427Z"
+        },
+        {
+          "title": "CVE-2026-100721 — vm2 before 3.12.2 contains an authorization bypass in the NodeVM external-module resolver.…",
+          "cve": "CVE-2026-100721",
+          "severity": "critical",
+          "score": 57,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Vulnérabilité critique CVE-2026-100721 (score CVSS 9).\n\nvm2 before 3.12.2 contains an authorization bypass in the NodeVM external-module resolver. When an embedder configures `require.external` with a custom resolver (and `context: 'host'`), `LegacyResolver.customResolve` in lib/resolver-compat.js records the resolved module directory in `this.externals` as `new RegExp('^' + escapeRegExp(resolvedPath))`, without requiring a path separator or end-of-string boundary.",
+          "detail": "Vulnérabilité critique CVE-2026-100721 (score CVSS 9).\n\nvm2 before 3.12.2 contains an authorization bypass in the NodeVM external-module resolver. When an embedder configures `require.external` with a custom resolver (and `context: 'host'`), `LegacyResolver.customResolve` in lib/resolver-compat.js records the resolved module directory in `this.externals` as `new RegExp('^' + escapeRegExp(resolvedPath))`, without requiring a path separator or end-of-string boundary. Untrusted guest code can therefore require the allowlisted module (e.g. `foo`) and then require the absolute path of a non-allowlisted sibling whose path merely shares the resolved prefix (e.g. `.../node_modules/foo2/index.js`); the sibling passes `isPathAllowedForModule` and is loaded through `hostRequire`, so its top-level code runs in the host process before the exports are wrapped with `vm.readonly`, resulting in a sandbox escape and arbitrary code execution in the host context.\n\nScore CVSS : 9\n\nType de faiblesse (CWE) : CWE-863",
+          "action": "Vérifier l'exposition du parc et appliquer le correctif éditeur dès sa disponibilité.",
+          "image": null,
+          "sources": [
+            {
+              "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-100721",
+              "label": "NVD"
+            },
+            {
+              "url": "https://www.cvedetails.com/cve/CVE-2026-100721/",
+              "label": "CVE Details"
+            }
+          ],
+          "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-100721",
+          "pubDate": "2026-09-27T02:17:17.547Z"
+        },
+        {
+          "title": "U.S. CISA adds WordPress flaw to its Known Exploited Vulnerabilities catalog",
+          "cve": "CVE-2026-87902",
+          "severity": "critical",
+          "score": 53,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Vulnérabilité critique CVE-2026-87902 affectant WordPress.\n\nU.S. Cybersecurity and Infrastructure Security Agency (CISA) adds WordPress&nbsp;flaw to its Known Exploited Vulnerabilities catalog. The U.S. Cybersecurity and Infrastructure Security Agency (CISA) added a WordPress Core flaw, tracked as CVE-2026-87902 (CVSS score of 9.2), to its Known Exploited Vulnerabilities (KEV) catalog .",
+          "detail": "Vulnérabilité critique CVE-2026-87902 affectant WordPress.\n\nU.S. Cybersecurity and Infrastructure Security Agency (CISA) adds WordPress&nbsp;flaw to its Known Exploited Vulnerabilities catalog. The U.S. Cybersecurity and Infrastructure Security Agency (CISA) added a WordPress Core flaw, tracked as CVE-2026-87902 (CVSS score of 9.2), to its Known Exploited Vulnerabilities (KEV) catalog . CVE-2026-87902 allows an unauthenticated attacker to make the get_page_template() function include a readable local PHP file outside the active theme directories. Under specific server and theme conditions, the flaw can lead to remote code execution. The vulnerability is being actively exploited, with attackers using pearcmd.php to write malicious PHP files and execute code. This week, WordPress released version 7.1.2 to address this flaw. It stems from how the CMS resolves page templates, with a real path to remote code execution. The bug affected every version back to 4.7.0. That’s nearly a decade of releases, and nobody needs an account to trigger it. Robert Ressl gets credit for reporting it. According to&nbsp; Binding Operational Directive (BOD) 22-01: Reducing the Significant Risk of Known Exploited Vulnerabilities , FCEB agencies have to address the identified vulnerabilities by the due date to protect their networks against attacks exploiting the flaws in the catalog. Experts also recommend that private organizations review the&nbsp; Catalog &nbs",
+          "action": "Vérifier l'exposition du parc et appliquer le correctif éditeur dès sa disponibilité.",
+          "image": "https://securityaffairs.com/wp-content/uploads/2020/07/CISA.jpeg",
+          "sources": [
+            {
+              "url": "https://securityaffairs.com/199790/security/u-s-cisa-adds-wordpress-flaw-to-its-known-exploited-vulnerabilities-catalog.html",
+              "label": "Security Affairs"
+            }
+          ],
+          "url": "https://securityaffairs.com/199790/security/u-s-cisa-adds-wordpress-flaw-to-its-known-exploited-vulnerabilities-catalog.html",
+          "pubDate": "2026-09-26T07:42:26.000Z"
+        },
+        {
+          "title": "ShinyHunters uses WAF bypass trick in Oracle PeopleSoft attacks",
+          "cve": "CVE-2026-35273",
+          "severity": "critical",
+          "score": 51,
+          "corroboration": 2,
+          "region": "intl",
+          "body": "Vulnérabilité critique CVE-2026-35273 affectant Oracle.\n\nShinyHunters-linked attackers exploit CVE-2026-35273 in Oracle PeopleSoft, bypassing WAF rules to deploy web shells on dozens of systems.\n\nGoogle is warning of renewed mass exploitation of a known security vulnerability in Oracle PeopleSoft as part of a campaign targeting multiple sectors globally.\n\nThe ShinyHunters-linked activity involves the weaponization of CVE-2026-35273 (CVSS score: 9.8), a critical security flaw that could result in unauthenticated…",
+          "detail": "Vulnérabilité critique CVE-2026-35273 affectant Oracle.\n\nShinyHunters-linked attackers exploit CVE-2026-35273 in Oracle PeopleSoft, bypassing WAF rules to deploy web shells on dozens of systems.\n\nGoogle is warning of renewed mass exploitation of a known security vulnerability in Oracle PeopleSoft as part of a campaign targeting multiple sectors globally.\n\nThe ShinyHunters-linked activity involves the weaponization of CVE-2026-35273 (CVSS score: 9.8), a critical security flaw that could result in unauthenticated remote code execution.\n\nThe vulnerability was first exploited as a zero-day in attacks against academic institutions to conduct reconnaissance, deploy remote access software like MeshCentral agent for persistence, move laterally over SSH, run a shell script to connect via SSH to other internal PeopleSoft machines using known username/password combinations, and steal data.\n\nAt that time, Google-owned Mandiant said it initiated notifications to over 100 global organizations whose IP addresses matched vulnerable endpoints, most of them located in the U.S.\n\n\"This new wave of activity stems from UNC6240 modifying its exploit to bypass web application firewall (WAF) rules blocking the vulnerable Environment Management Hub (PSEMHUB) endpoint,\" Mandiant said .\n\n\"The threat actor bypassed these string-based WAF rules by URL-encoding a single character in the request path, requesting /%50SEMHUB/ in place of /PSEMHUB/. Many WAF and reverse proxy rules match the literal path before URL decoding, while the PeopleSoft application server decodes the request and routes it to the vulnerable servlet.\"",
+          "action": "Vérifier l'exposition du parc et appliquer le correctif éditeur dès sa disponibilité.",
+          "image": "https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEiYN2VWIT2g8mQkV0GeZWzYErKcubb0-baI8J__2nmdElucECc7HrLkdPsR1dz93qjMBI5sr_dL8yPWHf2bwWCBXa3YfutHAeJ-70UCSMuJrHhyOB3RO4OkuDjuw7gxRLXUnK-CeK9jZO0uOJRy-N3w-rV7uZ4t1FnFIWNjEsKtSYQINUvPX31mKzV_5Ert/s1600/oracle-flaw.jpg",
+          "sources": [
+            {
+              "url": "https://thehackernews.com/2026/09/attackers-bypass-wafs-to-exploit-oracle.html",
+              "label": "The Hacker News"
+            },
+            {
+              "url": "https://www.bleepingcomputer.com/news/security/shinyhunters-uses-waf-bypass-trick-in-oracle-peoplesoft-attacks/",
+              "label": "BleepingComputer"
+            }
+          ],
+          "url": "https://thehackernews.com/2026/09/attackers-bypass-wafs-to-exploit-oracle.html",
+          "pubDate": "2026-09-26T19:03:34.000Z"
+        },
+        {
+          "title": "SharePoint RCE and MikroTik RouterOS Flaws Actively Exploited in the Wild",
+          "cve": "CVE-2026-65660",
+          "severity": "critical",
+          "score": 49,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Vulnérabilité critique CVE-2026-65660 affectant Microsoft.\n\nThe U.S. Cybersecurity and Infrastructure Security Agency (CISA) on Friday added two security flaws impacting Microsoft SharePoint and Mikrotik RouterOS to its Known Exploited Vulnerabilities (KEV) catalog, citing evidence of active exploitation. The vulnerabilities in question are as follows - CVE-2026-65660 (CVSS score: 8.8) - A code injection vulnerability in Microsoft Office SharePoint",
+          "detail": "Vulnérabilité critique CVE-2026-65660 affectant Microsoft.\n\nThe U.S. Cybersecurity and Infrastructure Security Agency (CISA) on Friday added two security flaws impacting Microsoft SharePoint and Mikrotik RouterOS to its Known Exploited Vulnerabilities (KEV) catalog, citing evidence of active exploitation. The vulnerabilities in question are as follows - CVE-2026-65660 (CVSS score: 8.8) - A code injection vulnerability in Microsoft Office SharePoint",
+          "action": "Vérifier l'exposition du parc et appliquer le correctif éditeur dès sa disponibilité.",
+          "image": "https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEiHEPamtRBBEzltsUWnj-F8umrMf4eUUhTmGUJdhHlrvWZamHWpBtXcrpQKDArTziRiiIWv8psX4DTZyN9kLBtcAyLOPJma9_M7sYKgYz6WBISbOhJrRlfByfCKfTTMdBqaYUp-0nskrt2ndt3poUFLDGegEFJojS0EzEvwAqzaUNtvX26jZopYE4zA4S3K/s1600/share-kev.jpg",
+          "sources": [
+            {
+              "url": "https://thehackernews.com/2026/09/sharepoint-rce-and-mikrotik-routeros.html",
+              "label": "The Hacker News"
+            }
+          ],
+          "url": "https://thehackernews.com/2026/09/sharepoint-rce-and-mikrotik-routeros.html",
+          "pubDate": "2026-09-26T08:49:53.000Z"
+        },
+        {
+          "title": "Ecofone : une faille zero-day de Magento ouvre l’accès aux données de ses clients",
+          "cve": null,
+          "severity": "critical",
+          "score": 46,
+          "corroboration": 1,
+          "region": "fr",
+          "body": "Vulnérabilité critique.\n\nEcofone, spécialiste français des smartphones, tablettes et appareils électroniques reconditionnés, informe ses clients d’une intrusion sur sa boutique en\n\nAttaque Mis à jour le 26 septembre 2026 à 16h32 Ecofone : une faille zero-day de Magento ouvre l’accès aux données de ses clients Ecofone , spécialiste français des smartphones, tablettes et appareils électroniques reconditionnés, informe ses clients d’une intrusion sur sa boutique en ligne .",
+          "detail": "Vulnérabilité critique.\n\nEcofone, spécialiste français des smartphones, tablettes et appareils électroniques reconditionnés, informe ses clients d’une intrusion sur sa boutique en\n\nAttaque Mis à jour le 26 septembre 2026 à 16h32 Ecofone : une faille zero-day de Magento ouvre l’accès aux données de ses clients Ecofone , spécialiste français des smartphones, tablettes et appareils électroniques reconditionnés, informe ses clients d’une intrusion sur sa boutique en ligne . L’attaque, détectée le 5 septembre 2026, aurait débuté dès le 4 septembre en exploitant une vulnérabilité alors inconnue d’Adobe Magento.\n\nLes investigations n’ont pas permis de déterminer si des données ont effectivement été consultées ou copiées. Ecofone explique toutefois ne pas pouvoir exclure cette possibilité et considère plusieurs catégories d’informations personnelles comme potentiellement exposées .\n\nEcofone est la marque commerciale de la société française Kalidil , créée en 2005. L’entreprise est spécialisée dans la vente et le reconditionnement de smartphones, tablettes, montres connectées et autres équipements électroniques.\n\nElle indique avoir donné une seconde vie à plus de 200 000 appareils et commercialise également ses produits sur de grandes places de marché comme Amazon, Back Market, Cdiscount, Fnac, Darty ou Rakuten.\n\nDans une communication adressée à ses clients dont Cyberattaque.org s’est procuré une copie , Ecofone explique avoir constaté une intrusion sur sa boutique en ligne le 5 septembre 2026 .\n\nLes analyses réalisées avec son hébergeur ont ensuite retrouvé des traces d’activité malveillante dès le 4 septembre . Selon l’entreprise, l’attaquant a exploité une nouvelle vulnérabilité affectant le logiciel Adobe Magento alors qu’aucun correctif spécifique n’était encore disponible",
+          "action": "Vérifier l'exposition du parc et appliquer le correctif éditeur dès sa disponibilité.",
+          "image": "https://www.cyberattaque.org/wp-content/uploads/2026/09/ecophone-cyberattaque-2.jpg",
+          "sources": [
+            {
+              "url": "https://www.cyberattaque.org/ecofone-une-faille-zero-day-de-magento-ouvre-lacces-aux-donnees-de-ses-clients/",
+              "label": "Cyberattaque.org"
+            }
+          ],
+          "url": "https://www.cyberattaque.org/ecofone-une-faille-zero-day-de-magento-ouvre-lacces-aux-donnees-de-ses-clients/",
+          "pubDate": "2026-09-26T16:00:00.000Z"
+        },
+        {
+          "title": "Multiples vulnérabilités dans le noyau Linux de SUSE (25 septembre 2026)",
+          "cve": null,
+          "severity": "high",
+          "score": 39,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Vulnérabilité élevée affectant Linux.\n\nAn attacker can bypass restrictions of CUPS, via Case-insensitive Username, in order to gain user privileges.\n\nCybersécurité Sécurité informatique Global Security Mag Magazine Online antivirus spywares offres emploi sécurité télécom réseau SOC CERT CSIRT DATA CENTERS Stockage Sauvegarde Archivage Restauration\n\nAn attacker can bypass restrictions of CUPS, via Case-insensitive Username, in order to gain user privileges.",
+          "detail": "Vulnérabilité élevée affectant Linux.\n\nAn attacker can bypass restrictions of CUPS, via Case-insensitive Username, in order to gain user privileges.\n\nCybersécurité Sécurité informatique Global Security Mag Magazine Online antivirus spywares offres emploi sécurité télécom réseau SOC CERT CSIRT DATA CENTERS Stockage Sauvegarde Archivage Restauration\n\nAn attacker can bypass restrictions of CUPS, via Case-insensitive Username, in order to gain user privileges.",
+          "action": "Vérifier l'exposition du parc et appliquer le correctif éditeur dès sa disponibilité.",
+          "image": null,
+          "sources": [
+            {
+              "url": "https://www.globalsecuritymag.fr/vigilance-fr-cups-user-access-via-case-insensitive-username-analyzed-on-09-09.html",
+              "label": "Global Sec Mag"
+            }
+          ],
+          "url": "https://www.globalsecuritymag.fr/vigilance-fr-cups-user-access-via-case-insensitive-username-analyzed-on-09-09.html",
+          "pubDate": "2026-09-27T04:01:04.040Z"
+        },
+        {
+          "title": "Elementor CSRF Flaw Lets Attackers Take Over Sites After Admin Clicks Crafted Link",
+          "cve": null,
+          "severity": "high",
+          "score": 39,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Vulnérabilité élevée affectant WordPress.\n\nDetails have emerged about a high-severity security flaw in the Elementor Website Builder WordPress plugin that could be exploited by an unauthenticated attacker to create rogue administrator accounts and take control of a site. The cross-site request forgery (CSRF) vulnerability, which has yet to be assigned a CVE identifier, carries a CVSS score of 8.8 out of 10.0. It only affects versions",
+          "detail": "Vulnérabilité élevée affectant WordPress.\n\nDetails have emerged about a high-severity security flaw in the Elementor Website Builder WordPress plugin that could be exploited by an unauthenticated attacker to create rogue administrator accounts and take control of a site. The cross-site request forgery (CSRF) vulnerability, which has yet to be assigned a CVE identifier, carries a CVSS score of 8.8 out of 10.0. It only affects versions",
+          "action": "Vérifier l'exposition du parc et appliquer le correctif éditeur dès sa disponibilité.",
+          "image": "https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEgoCsmpn_im_gimeko6yEdebgucFfzjRrTH0Hmvl1triNXT64w_JdoBIqCrFEApRZ9mmKBYfJQ1fqgfubPH3ZRaWW7SJ2HSr18mBsjSdFE6AwVl362SwcdzHp0EtlL2qoVuYARkSKmOqQaORUjjYVAM-PCT9Itvvkgb69lyVLttezAFtAuCw86RpPu3lAo4/s1600/wordpress-ele.jpg",
+          "sources": [
+            {
+              "url": "https://thehackernews.com/2026/09/elementor-csrf-flaw-lets-attackers-take.html",
+              "label": "The Hacker News"
+            }
+          ],
+          "url": "https://thehackernews.com/2026/09/elementor-csrf-flaw-lets-attackers-take.html",
+          "pubDate": "2026-09-26T09:55:22.000Z"
+        },
+        {
+          "title": "OpenAI Agents Accessed US Government Websites Without Authorization",
+          "cve": null,
+          "severity": "high",
+          "score": 24,
+          "corroboration": 2,
+          "region": "intl",
+          "body": "Vulnérabilité élevée.\n\nOpenAI is investigating AI agents that accessed US gov websites without authorization, including an attempted Education Department hack. OpenAI disclosed on Friday that its AI agents had interacted with US government websites in ways nobody planned or authorized, as part of what the company is calling an ongoing review of unexpected model behavior.",
+          "detail": "Vulnérabilité élevée.\n\nOpenAI is investigating AI agents that accessed US gov websites without authorization, including an attempted Education Department hack. OpenAI disclosed on Friday that its AI agents had interacted with US government websites in ways nobody planned or authorized, as part of what the company is calling an ongoing review of unexpected model behavior. The affected sites include two operated by the Securities and Exchange Commission and data sources run by the US Census Bureau. OpenAI was clear that it found no use of SEC credentials, no access to nonpublic information, no changes to SEC systems, and no evidence of an actual compromise or security vulnerability. OpenAI CEO Sam Altman said on social media Friday that there is more to investigate. &#8220;OpenAI’s CEO Sam Altman said on social media Friday that there is an “extensive and ongoing review related to our agents’ use of internet access during training and evaluation.”&#8221; reads the report published by Associated Press. The word &#8220;extensive&#8221; is doing a lot of work in that sentence. Independent AI research lab Transluce found more. Through its own investigation, it identified what it describes as a rudimentary attempted hack by agents apparently originating from OpenAI against the Department of Education&#8217;s civil rights office website. The attempt didn&#8217;t succeed. The Education Department said its own",
+          "action": "Vérifier l'exposition du parc et appliquer le correctif éditeur dès sa disponibilité.",
+          "image": "https://securityaffairs.com/wp-content/uploads/2026/09/image-76.png",
+          "sources": [
+            {
+              "url": "https://securityaffairs.com/199815/ai/openai-agents-accessed-us-government-websites-without-authorization.html",
+              "label": "Security Affairs"
+            },
+            {
+              "url": "https://www.securityweek.com/openai-says-its-models-engaged-with-us-government-websites-in-new-model-misbehavior-disclosure/",
+              "label": "SecurityWeek"
+            }
+          ],
+          "url": "https://securityaffairs.com/199815/ai/openai-agents-accessed-us-government-websites-without-authorization.html",
+          "pubDate": "2026-09-26T15:41:32.000Z"
+        },
+        {
+          "title": "Exploit.in Database Reveals the Roots of Today’s Ransomware Ecosystem",
+          "cve": null,
+          "severity": "high",
+          "score": 24,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Vulnérabilité élevée.\n\nExploit.in data shows how a 2005 cybercrime forum helped shape today&#8217;s ransomware ecosystem, with users and practices surviving for decades. Ransomnews researcher Dancho Danchev dug up a database dump of Exploit.in covering its first three years, from February 2005 to May 2008, and the numbers inside it tell a story about Russian cybercrime that enforcement press releases don&#8217;t.",
+          "detail": "Vulnérabilité élevée.\n\nExploit.in data shows how a 2005 cybercrime forum helped shape today&#8217;s ransomware ecosystem, with users and practices surviving for decades. Ransomnews researcher Dancho Danchev dug up a database dump of Exploit.in covering its first three years, from February 2005 to May 2008, and the numbers inside it tell a story about Russian cybercrime that enforcement press releases don&#8217;t. The dump contains 9,647 registered members, 13,925 threads, and 80,891 posts. The researcher who analyzed it had been reading Russian-language forums since those years and expected to recognize the layout. What surprised them wasn&#8217;t the marketplace threads selling shells and credit cards next to botnet rental offers. It was how many of the people from 2005 are still on the boards twenty years later. The forum&#8217;s section list in 2005 sat malware analysis, spam, carding, and vulnerability testing right next to car tuning, mobile phones, games, and general chat. That wasn&#8217;t ironic. It was the actual culture. About a third of everything written on Exploit.in in those years was people talking about their phones and each other. The biggest single section was the marketplace at 10,377 posts, but the car section and the humor board weren&#8217;t far behind the technical areas. &#8220;Most writing about Russian cybercrime forums calls them marketplaces, and they were. What the writin",
+          "action": "Vérifier l'exposition du parc et appliquer le correctif éditeur dès sa disponibilité.",
+          "image": "https://securityaffairs.com/wp-content/uploads/2026/09/image-75.png",
+          "sources": [
+            {
+              "url": "https://securityaffairs.com/199800/cyber-crime/exploit-in-database-reveals-the-roots-of-todays-ransomware-ecosystem.html",
+              "label": "Security Affairs"
+            }
+          ],
+          "url": "https://securityaffairs.com/199800/cyber-crime/exploit-in-database-reveals-the-roots-of-todays-ransomware-ecosystem.html",
+          "pubDate": "2026-09-26T14:34:26.000Z"
+        },
+        {
+          "title": "Multiples vulnérabilités dans les produits IBM (25 septembre 2026)",
+          "cve": null,
+          "severity": "news",
+          "score": 16,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Vulnérabilité élevée.\n\nDe multiples vulnérabilités ont été découvertes dans les produits IBM. Certaines d'entre elles permettent à un attaquant de provoquer une exécution de code arbitraire à distance, un déni de service à…\n\nCybersécurité Sécurité informatique Global Security Mag Magazine Online antivirus spywares offres emploi sécurité télécom réseau SOC CERT CSIRT DATA CENTERS Stockage Sauvegarde Archivage Restauration\n\nDe multiples vulnérabilités ont été découvertes dans les…",
+          "detail": "Vulnérabilité élevée.\n\nDe multiples vulnérabilités ont été découvertes dans les produits IBM. Certaines d'entre elles permettent à un attaquant de provoquer une exécution de code arbitraire à distance, un déni de service à…\n\nCybersécurité Sécurité informatique Global Security Mag Magazine Online antivirus spywares offres emploi sécurité télécom réseau SOC CERT CSIRT DATA CENTERS Stockage Sauvegarde Archivage Restauration\n\nDe multiples vulnérabilités ont été découvertes dans les produits IBM. Certaines d’entre elles permettent à un attaquant de provoquer une exécution de code arbitraire à distance, un déni de service à distance et une atteinte à la confidentialité des données.",
+          "action": "Vérifier l'exposition du parc et appliquer le correctif éditeur dès sa disponibilité.",
+          "image": null,
+          "sources": [
+            {
+              "url": "https://www.globalsecuritymag.fr/multiples-vulnerabilites-dans-les-produits-ibm-25-septembre-2026.html",
+              "label": "Global Sec Mag"
+            }
+          ],
+          "url": "https://www.globalsecuritymag.fr/multiples-vulnerabilites-dans-les-produits-ibm-25-septembre-2026.html",
+          "pubDate": "2026-09-27T04:01:04.040Z"
+        }
+      ]
+    },
+    {
+      "id": "attacks",
+      "items": [
+        {
+          "title": "China and US Agree to Establish AI Safety Channel and Continue Trade and Military Talks",
+          "cve": null,
+          "severity": "news",
+          "score": 64,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Incident de sécurité rapporté par SecurityWeek.\n\nThe US and China agreed to set up a communication mechanism for artificial intelligence-related incidents. The post China and US Agree to Establish AI Safety Channel and Continue Trade and Military Talks appeared first on SecurityWeek .",
+          "detail": "Incident de sécurité rapporté par SecurityWeek.\n\nThe US and China agreed to set up a communication mechanism for artificial intelligence-related incidents. The post China and US Agree to Establish AI Safety Channel and Continue Trade and Military Talks appeared first on SecurityWeek .",
+          "action": "Surveiller les indicateurs de compromission associés et contrôler les actifs exposés.",
+          "image": "https://www.securityweek.com/wp-content/uploads/2025/11/China-APT-AI-artificial-intelligence.jpeg",
+          "sources": [
+            {
+              "url": "https://www.securityweek.com/china-and-us-agree-to-establish-ai-safety-channel-and-continue-trade-and-military-talks/",
+              "label": "SecurityWeek"
+            }
+          ],
+          "url": "https://www.securityweek.com/china-and-us-agree-to-establish-ai-safety-channel-and-continue-trade-and-military-talks/",
+          "pubDate": "2026-09-26T18:09:28.000Z"
+        },
+        {
+          "title": "New x47.c Windows Botnet Weaponizes xAI Grok, AI API Draining",
+          "cve": null,
+          "severity": "news",
+          "score": 64,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Incident de sécurité rapporté par SecurityWeek.\n\nThe x47.c Windows botnet includes DDoS, credential theft, and SOCKS5 proxy capabilities and uses AI to maintain persistence.\n\nThe Windows botnet relies on AI to maintain persistence, using xAI Grok to choose from predefined actions.\n\nSubscribe to the SecurityWeek Email Briefing for the latest cybersecurity threats, trends, and expert insights.\n\nSubscribe to the SecurityWeek Email Briefing to stay informed on the latest threats, trends, and technology, alon…",
+          "detail": "Incident de sécurité rapporté par SecurityWeek.\n\nThe x47.c Windows botnet includes DDoS, credential theft, and SOCKS5 proxy capabilities and uses AI to maintain persistence.\n\nThe Windows botnet relies on AI to maintain persistence, using xAI Grok to choose from predefined actions.\n\nSubscribe to the SecurityWeek Email Briefing for the latest cybersecurity threats, trends, and expert insights.\n\nSubscribe to the SecurityWeek Email Briefing to stay informed on the latest threats, trends, and technology, along with insightful columns from industry experts.\n\nJoin as speakers examine the various components of ASM strategy, the push to mandate continuous asset visibility and inventory tools, and the use of red-teaming, bug bounties and pen-tests in modern security programs.\n\nExplore what it takes to operationalize continuous authorization at scale, including the technical, organizational, and cultural changes required.\n\nDoppel has named Joey Rachid as Chief Security Advisor and Field Chief Information Security Officer.",
+          "action": "Surveiller les indicateurs de compromission associés et contrôler les actifs exposés.",
+          "image": "https://www.securityweek.com/wp-content/uploads/2025/12/botnet.jpeg",
+          "sources": [
+            {
+              "url": "https://www.securityweek.com/new-x47-c-windows-botnet-weaponizes-xai-grok-ai-api-draining/",
+              "label": "SecurityWeek"
+            }
+          ],
+          "url": "https://www.securityweek.com/new-x47-c-windows-botnet-weaponizes-xai-grok-ai-api-draining/",
+          "pubDate": "2026-09-26T12:00:00.000Z"
+        },
+        {
+          "title": "GitHub Actions re-enabled with Mini Shai-Hulud payload still active",
+          "cve": null,
+          "severity": "news",
+          "score": 63,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Incident de sécurité rapporté par BleepingComputer.\n\nTwo third-party GitHub Actions previously compromised in a Mini Shai-Hulud campaign were re-enabled by their maintainer and remained accessible for more than a week despite still pointing to malicious code.\n\nMicrosoft pauses KB5002907 update after Office license deactivations\n\nKiteworks urges 6-hour server shutdown over potential zero-day attacks\n\nOpenAI's AI agents accidentally uploaded user-provided images to third-party sites\n\nShinyHunters hacked Clop l…",
+          "detail": "Incident de sécurité rapporté par BleepingComputer.\n\nTwo third-party GitHub Actions previously compromised in a Mini Shai-Hulud campaign were re-enabled by their maintainer and remained accessible for more than a week despite still pointing to malicious code.\n\nMicrosoft pauses KB5002907 update after Office license deactivations\n\nKiteworks urges 6-hour server shutdown over potential zero-day attacks\n\nOpenAI's AI agents accidentally uploaded user-provided images to third-party sites\n\nShinyHunters hacked Clop leak site using Grav CMS path traversal flaw\n\nShinyHunters uses WAF bypass trick in Oracle PeopleSoft attacks\n\nClaude Opus 5.5 uses 95% fewer em dashes, but its answers are getting longer",
+          "action": "Surveiller les indicateurs de compromission associés et contrôler les actifs exposés.",
+          "image": "https://www.bleepstatic.com/content/hl-images/2026/05/05/Hackerbox.jpg",
+          "sources": [
+            {
+              "url": "https://www.bleepingcomputer.com/news/security/github-actions-re-enabled-with-mini-shai-hulud-payload-still-active/",
+              "label": "BleepingComputer"
+            }
+          ],
+          "url": "https://www.bleepingcomputer.com/news/security/github-actions-re-enabled-with-mini-shai-hulud-payload-still-active/",
+          "pubDate": "2026-09-26T14:19:46.000Z"
+        },
+        {
+          "title": "cipher.systems — rançongiciel m3rx (États-Unis)",
+          "cve": null,
+          "severity": "news",
+          "score": 61,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Incident de sécurité rapporté par ransomware.live.\n\nVictime revendiquée par le groupe de rançongiciel m3rx. Pays : États-Unis. Secteur : Technology. +1 703-672-0051 , At Cipher Systems, we specialize in delivering enterprise-grade IT solutions designed to help businesses evolve, secure, and scale in a rapidly changing digital world. From future-proof cloud infrastructures to next-gen cybersecurity and AI-powered intelligence, our solutions are engineered for performance and built for growth.",
+          "detail": "Incident de sécurité rapporté par ransomware.live.\n\nVictime revendiquée par le groupe de rançongiciel m3rx.\n\nPays : États-Unis.\n\nSecteur : Technology.\n\n+1 703-672-0051 , At Cipher Systems, we specialize in delivering enterprise-grade IT solutions designed to help businesses evolve, secure, and scale in a rapidly changing digital world. From future-proof cloud infrastructures to next-gen cybersecurity and AI-powered intelligence, our solutions are engineered for performance and built for growth. With deep expertise in software engineering, IT consulting, and data science, we turn complex challenges into streamlined outcomes—ensuring that your systems are secure, your data is insightful, and your technology is always a step ahead. Stolen: --",
+          "action": "Surveiller les indicateurs de compromission associés et contrôler les actifs exposés.",
+          "image": "https://images.ransomware.live/victims/ce4ca133ec9184214e7f3fb88f7ad83d.png",
+          "sources": [
+            {
+              "url": "https://www.ransomware.live/id/Y2lwaGVyLnN5c3RlbXNAbTNyeA==",
+              "label": "ransomware.live"
+            }
+          ],
+          "url": "https://www.ransomware.live/id/Y2lwaGVyLnN5c3RlbXNAbTNyeA==",
+          "pubDate": "2026-09-26T17:02:05.404Z"
+        },
+        {
+          "title": "International Chemical Co. — rançongiciel Barracuda",
+          "cve": null,
+          "severity": "news",
+          "score": 61,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Incident de sécurité rapporté par ransomware.live.\n\nVictime revendiquée par le groupe de rançongiciel Barracuda. Secteur : Manufacturing. International Chemical Company (ICC) manufactures specialty metalworking fluids, industrial cleaners, rust preventatives, and custom chemical formulations. We have extracted the most important files from their main file server and possess data on their sales, formulas, patents, manufacturing, contracts, and partners.",
+          "detail": "Incident de sécurité rapporté par ransomware.live.\n\nVictime revendiquée par le groupe de rançongiciel Barracuda.\n\nSecteur : Manufacturing.\n\nInternational Chemical Company (ICC) manufactures specialty metalworking fluids, industrial cleaners, rust preventatives, and custom chemical formulations.\nWe have extracted the most important files from their main file server and possess data on their sales, formulas, patents, manufacturing, contracts, and partners.\nFor example, we possess the full formulation and manufacturing instructions for I.C.C.’s patented Biodraulic hydraulic oil. And even more than that. It is available for sale to competitors.\nVictim website: https://e-icc.com | Severity: HIGH | Size: 90 GB | Status: selling | $50,000",
+          "action": "Surveiller les indicateurs de compromission associés et contrôler les actifs exposés.",
+          "image": "https://images.ransomware.live/victims/0189c8e1c75d6904bc4236ef6d4c57a4.png",
+          "sources": [
+            {
+              "url": "https://www.ransomware.live/id/SW50ZXJuYXRpb25hbCBDaGVtaWNhbCBDby5AQmFycmFjdWRh",
+              "label": "ransomware.live"
+            }
+          ],
+          "url": "https://www.ransomware.live/id/SW50ZXJuYXRpb25hbCBDaGVtaWNhbCBDby5AQmFycmFjdWRh",
+          "pubDate": "2026-09-26T15:50:16.203Z"
+        },
+        {
+          "title": "Lunex Stealer Abuses AMD Driver to Disable Security Monitoring and Steal Browser Credentials",
+          "cve": null,
+          "severity": "news",
+          "score": 59,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Incident de sécurité rapporté par The Hacker News.\n\nThe Psychedelic Stealer malware distributed via compromised Ukrainian websites using ClickFix-style Cloudflare verification checks is part of a wider malware-as-a-service (MaaS) platform called Lunex. The new findings come from Ontinue, which described the activity as a four-stage attack chain aimed at targeting Ukrainian-speaking users. \"The attack chain begins with a fake CAPTCHA page and",
+          "detail": "Incident de sécurité rapporté par The Hacker News.\n\nThe Psychedelic Stealer malware distributed via compromised Ukrainian websites using ClickFix-style Cloudflare verification checks is part of a wider malware-as-a-service (MaaS) platform called Lunex. The new findings come from Ontinue, which described the activity as a four-stage attack chain aimed at targeting Ukrainian-speaking users. \"The attack chain begins with a fake CAPTCHA page and",
+          "action": "Surveiller les indicateurs de compromission associés et contrôler les actifs exposés.",
+          "image": "https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEjlKEfNLMvV7mEVtxmw1nS48l0bWRxvhvRH5MHdn20FjDTm6B0_5okfLjQ49AamYo9DPVC1aV1O2bl11Vd8776ziWsV96tcxQviDK0RjOnGK_Dyx_Zs2e2VBjgChf91_H2cHH0u_UoyAGlGlJkKnozWFqf-sxmXNW0QlnfY3Ilgdkg3p4qG7p3Z0SmdnJMq/s1600/stealer-malware.jpg",
+          "sources": [
+            {
+              "url": "https://thehackernews.com/2026/09/lunex-stealer-abuses-amd-driver-to.html",
+              "label": "The Hacker News"
+            }
+          ],
+          "url": "https://thehackernews.com/2026/09/lunex-stealer-abuses-amd-driver-to.html",
+          "pubDate": "2026-09-26T18:22:52.000Z"
+        },
+        {
+          "title": "Zero Trust for AI Agents Starts With Fixing Zero Visibility",
+          "cve": null,
+          "severity": "news",
+          "score": 59,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Incident de sécurité rapporté par The Hacker News.\n\nThe way we talk about AI agents is shifting, and the way we implement them requires an even more fundamental shift. While earlier discourse focused on how quickly organizations could stand up agents and how much productivity they could promise, a string of recent incidents, including a widely discussed intrusion at Hugging Face during an evaluation of OpenAI agents, has spurred organizations to",
+          "detail": "Incident de sécurité rapporté par The Hacker News.\n\nThe way we talk about AI agents is shifting, and the way we implement them requires an even more fundamental shift. While earlier discourse focused on how quickly organizations could stand up agents and how much productivity they could promise, a string of recent incidents, including a widely discussed intrusion at Hugging Face during an evaluation of OpenAI agents, has spurred organizations to",
+          "action": "Surveiller les indicateurs de compromission associés et contrôler les actifs exposés.",
+          "image": "https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEhbfTXTCeNSvaPIRWOUJJxKPfYp45QnSjl24XZ1Set210zScJhg03o_TYX0QKPQdcSq-vkiWnymSqBu-bSwcCm1Kb2Te5do1VIcbCQjc_-TOOR6VwqRiHu5LE-tBb0gdrDjmPuDADfUraASQenGh-1gI4PF_xa2GwREsDM4vq4_C-aEU8EJsBBvhykJ1E0/s1600/sans-article.jpg",
+          "sources": [
+            {
+              "url": "https://thehackernews.com/2026/09/zero-trust-for-ai-agents-starts-with.html",
+              "label": "The Hacker News"
+            }
+          ],
+          "url": "https://thehackernews.com/2026/09/zero-trust-for-ai-agents-starts-with.html",
+          "pubDate": "2026-09-26T10:30:00.000Z"
+        },
+        {
+          "title": "Kiteworks Urges Customers to Shut Down Systems for 9 Hours Over Possible Cyber Attack",
+          "cve": null,
+          "severity": "news",
+          "score": 59,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Incident de sécurité rapporté par The Hacker News.\n\nKiteworks (formerly Accellion) is urging customers to shut down their systems as a precautionary measure for nine hours over the weekend after it received threat intelligence about an imminent cyber attack. \"Kiteworks received credible threat intelligence from federal intelligence authorities indicating that a threat actor may attempt to target some Kiteworks systems,\" said Frank Balonis, Chief",
+          "detail": "Incident de sécurité rapporté par The Hacker News.\n\nKiteworks (formerly Accellion) is urging customers to shut down their systems as a precautionary measure for nine hours over the weekend after it received threat intelligence about an imminent cyber attack. \"Kiteworks received credible threat intelligence from federal intelligence authorities indicating that a threat actor may attempt to target some Kiteworks systems,\" said Frank Balonis, Chief",
+          "action": "Surveiller les indicateurs de compromission associés et contrôler les actifs exposés.",
+          "image": "https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEjv53vaJYNeZNicsGcrBICKzTEXfHanPN-VR6-pTFsSJEV2IGpJn2MainwfMgqV2k96VN_ocXYLbmykTSVpwTPZr16tauFV37hU3g-lA4X31aqJQFYIsdwlHwNUIhNn9euB8SddL8d7wRKa7Ira2vNi51WNHyJivZ2Z3kkRDcAZtCQfSyvZHNLrZbqbF7jr/s1600/kite.jpg",
+          "sources": [
+            {
+              "url": "https://thehackernews.com/2026/09/kiteworks-urges-customers-to-shut-down.html",
+              "label": "The Hacker News"
+            }
+          ],
+          "url": "https://thehackernews.com/2026/09/kiteworks-urges-customers-to-shut-down.html",
+          "pubDate": "2026-09-26T07:48:33.000Z"
+        },
+        {
+          "title": "Cigusto : les données de 150 000 clients de l’enseigne de vape revendiquées",
+          "cve": null,
+          "severity": "news",
+          "score": 56,
+          "corroboration": 1,
+          "region": "fr",
+          "body": "Incident de sécurité rapporté par Cyberattaque.org.\n\nCigusto, réseau français spécialisé dans la cigarette électronique et les produits de vapotage, fait l’objet d’une nouvelle revendication de fuite de\n\nAttaque Mis à jour le 26 septembre 2026 à 23h31 Cigusto : les données de 150 000 clients de l’enseigne de vape revendiquées Cigusto , réseau français spécialisé dans la cigarette électronique et les produits de vapotage, fait l’objet d’une nouvelle revendication de fuite de données.",
+          "detail": "Incident de sécurité rapporté par Cyberattaque.org.\n\nCigusto, réseau français spécialisé dans la cigarette électronique et les produits de vapotage, fait l’objet d’une nouvelle revendication de fuite de\n\nAttaque Mis à jour le 26 septembre 2026 à 23h31 Cigusto : les données de 150 000 clients de l’enseigne de vape revendiquées Cigusto , réseau français spécialisé dans la cigarette électronique et les produits de vapotage, fait l’objet d’une nouvelle revendication de fuite de données. Le hacker ZMLOOKUP affirme avoir récupéré les informations d’environ 150 000 utilisateurs de l’enseigne.\n\nL’échantillon diffusé contient des noms, prénoms, adresses e-mail , mais également plusieurs informations directement liées au programme de fidélité de Cigusto, comme le montant de cashback disponible ou le statut du client.\n\nCigusto est une enseigne française spécialisée dans la vente de cigarettes électroniques, e-liquides et accessoires de vapotage . Lancé en 2013, le réseau dispose aujourd’hui de plus de 200 boutiques en France ainsi que d’un site de vente en ligne.\n\nL’entreprise exploite également un programme de fidélité permettant notamment à ses clients d’accumuler des avantages et du cashback lors de leurs achats.\n\nCyberattaque.org s’est procuré les échantillons associés à la revendication. Les profils observés comportent notamment :\n\nUn élément attire particulièrement l’attention : les données diffusées ne semblent pas provenir d’une vieille sauvegarde abandonnée. Dans l’échantillon, certaines fiches ont été mises à jour le 22 septembre 2026 , soit seulement quelques jours avant la mise en vente de la base.",
+          "action": "Surveiller les indicateurs de compromission associés et contrôler les actifs exposés.",
+          "image": "https://www.cyberattaque.org/wp-content/uploads/2026/09/cigusto-cyberattaque-2.jpg",
+          "sources": [
+            {
+              "url": "https://www.cyberattaque.org/cigusto-les-donnees-de-150-000-clients-de-lenseigne-de-vape-revendiquees/",
+              "label": "Cyberattaque.org"
+            }
+          ],
+          "url": "https://www.cyberattaque.org/cigusto-les-donnees-de-150-000-clients-de-lenseigne-de-vape-revendiquees/",
+          "pubDate": "2026-09-26T21:29:29.000Z"
+        },
+        {
+          "title": "CAPM Europe : 200 Go d’e-mails, documents et données CRM diffusés",
+          "cve": null,
+          "severity": "news",
+          "score": 52,
+          "corroboration": 1,
+          "region": "fr",
+          "body": "Incident de sécurité rapporté par Cyberattaque.org.\n\nCAPM Europe, important spécialiste français des chariots élévateurs et du matériel de manutention, apparaît dans une nouvelle publication du hacker\n\nAttaque Mis à jour le 26 septembre 2026 à 20h53 CAPM Europe : 200 Go d’e-mails, documents et données CRM diffusés CAPM Europe , important spécialiste français des chariots élévateurs et du matériel de manutention, apparaît dans une nouvelle publication du hacker ChimeraZ .",
+          "detail": "Incident de sécurité rapporté par Cyberattaque.org.\n\nCAPM Europe, important spécialiste français des chariots élévateurs et du matériel de manutention, apparaît dans une nouvelle publication du hacker\n\nAttaque Mis à jour le 26 septembre 2026 à 20h53 CAPM Europe : 200 Go d’e-mails, documents et données CRM diffusés CAPM Europe , important spécialiste français des chariots élévateurs et du matériel de manutention, apparaît dans une nouvelle publication du hacker ChimeraZ . Celui-ci affirme diffuser environ 200 Go de données provenant de l’environnement blgCloud utilisé par l’entreprise, soit près de 194 000 fichiers .\n\nLa publication, datée du 26 septembre 2026 , contient des exemples d’ e-mails, fiches CRM et documents commerciaux . Elle est présentée comme le numéro 17 d’une série de fuites issues de blgCloud , un ERP français utilisé par de nombreuses entreprises pour centraliser leur relation client, leurs ventes, leurs stocks, leurs factures ou encore leur SAV.\n\nCréée en 1998 et installée à Senlis dans l’Oise, CAPM Europe est spécialisée dans le négoce, la location et la maintenance de matériels de manutention. L’entreprise commercialise notamment des chariots élévateurs neufs et d’occasion, nacelles, transpalettes et pièces détachées .\n\nSon site affiche actuellement plus de 2 000 matériels en stock . CAPM Europe utilise également les outils de blgCloud pour plusieurs fonctions liées à son activité commerciale et à la gestion de ses données.\n\nChimeraZ annonce précisément 193 982 fichiers pour un volume total d’environ 200 Go . Contrairement à une fuite classique constituée d’un simple fichier clients, le périmètre semble ici beaucoup plus large et correspond à des données issues d’un environnement de gestion d’entreprise.\n\nCyberattaque.org s’est procuré les échantill",
+          "action": "Surveiller les indicateurs de compromission associés et contrôler les actifs exposés.",
+          "image": "https://www.cyberattaque.org/wp-content/uploads/2026/09/capm-europe-cyberattaque-2.jpg",
+          "sources": [
+            {
+              "url": "https://www.cyberattaque.org/capm-europe-cyberattaque-200-go-de-mails-documents-et-donnees-crm-diffuses/",
+              "label": "Cyberattaque.org"
+            }
+          ],
+          "url": "https://www.cyberattaque.org/capm-europe-cyberattaque-200-go-de-mails-documents-et-donnees-crm-diffuses/",
+          "pubDate": "2026-09-26T18:40:00.000Z"
+        },
+        {
+          "title": "Aestria : les données clients et outils internes d’un prestataire cyber en fuite",
+          "cve": null,
+          "severity": "news",
+          "score": 52,
+          "corroboration": 1,
+          "region": "fr",
+          "body": "Incident de sécurité rapporté par Cyberattaque.org.\n\nCarrefour a informé début septembre certains de ses clients qu’une partie de leurs données personnelles a été exposée à la suite d’un incident de sécurité\n\nAttaque Mis à jour le 26 septembre 2026 à 16h32 Carrefour : des données clients exposées après la cyberattaque de son prestataire Carrefour a informé début septembre certains de ses clients qu’une partie de leurs données personnelles a été exposée à la suite d’un incident de sécurité ayant touché l’un d…",
+          "detail": "Incident de sécurité rapporté par Cyberattaque.org.\n\nCarrefour a informé début septembre certains de ses clients qu’une partie de leurs données personnelles a été exposée à la suite d’un incident de sécurité\n\nAttaque Mis à jour le 26 septembre 2026 à 16h32 Carrefour : des données clients exposées après la cyberattaque de son prestataire Carrefour a informé début septembre certains de ses clients qu’une partie de leurs données personnelles a été exposée à la suite d’un incident de sécurité ayant touché l’un de ses prestataires. Les informations concernées comprennent les noms, prénoms, adresses e-mail et numéros de téléphone .\n\nLe groupe ne nomme pas directement le prestataire dans la communication consultée par Cyberattaque.org . Plusieurs éléments permettent cependant d’identifier Shipup , la plateforme de suivi des livraisons déjà impliquée ces dernières semaines dans plusieurs fuites touchant de grandes enseignes françaises.\n\nDans une communication adressée à ses clients dont Cyberattaque.org s’est procuré une copie, Carrefour explique qu’« un de ses prestataires » a subi un incident de sécurité au sein de son système d’information.\n\nLes données personnelles susceptibles d’avoir été compromises sont limitées, selon l’enseigne, aux prénom, nom, adresse e-mail et numéro de téléphone .\n\nCarrefour précise qu’ aucune donnée bancaire ni aucun mot de passe n’a été compromis dans le cadre de cet incident. L’enseigne invite néanmoins ses clients à se méfier des e-mails, SMS et autres communications suspectes pouvant exploiter les informations dérobées.\n\nSi Carrefour ne cite pas le nom de son sous-traitant dans son message, les éléments recoupés par Cyberattaque.org permettent de rapprocher cette notification de la cyberattaque contre Shipup .",
+          "action": "Surveiller les indicateurs de compromission associés et contrôler les actifs exposés.",
+          "image": "https://www.cyberattaque.org/wp-content/uploads/2026/09/carrefour-cyberattaque-2.jpg",
+          "sources": [
+            {
+              "url": "https://www.cyberattaque.org/carrefour-des-donnees-clients-exposees-apres-la-cyberattaque-de-son-prestataire/",
+              "label": "Cyberattaque.org"
+            }
+          ],
+          "url": "https://www.cyberattaque.org/carrefour-des-donnees-clients-exposees-apres-la-cyberattaque-de-son-prestataire/",
+          "pubDate": "2026-09-26T14:32:13.000Z"
+        },
+        {
+          "title": "Communauto : les permis de conduire des membres volés après une cyberattaque",
+          "cve": null,
+          "severity": "news",
+          "score": 52,
+          "corroboration": 1,
+          "region": "fr",
+          "body": "Incident de sécurité rapporté par Cyberattaque.org.\n\nCommunauto, service d’autopartage présent notamment à Paris et en Île-de-France, informe certains de ses membres d’un incident de sécurité ayant\n\nAttaque Mis à jour le 26 septembre 2026 à 13h35 Communauto : les permis de conduire des membres volés après une cyberattaque Communauto , service d’autopartage présent notamment à Paris et en Île-de-France, informe certains de ses membres d’un incident de sécurité ayant potentiellement exposé leurs documents d’id…",
+          "detail": "Incident de sécurité rapporté par Cyberattaque.org.\n\nCommunauto, service d’autopartage présent notamment à Paris et en Île-de-France, informe certains de ses membres d’un incident de sécurité ayant\n\nAttaque Mis à jour le 26 septembre 2026 à 13h35 Communauto : les permis de conduire des membres volés après une cyberattaque Communauto , service d’autopartage présent notamment à Paris et en Île-de-France, informe certains de ses membres d’un incident de sécurité ayant potentiellement exposé leurs documents d’identité . L’entreprise indique avoir détecté le 4 septembre 2026 l’utilisation non autorisée d’un compte utilisateur interne.\n\nLes premières investigations montrent que des documents transmis lors de l’inscription et de la vérification d’identité ont pu être consultés ou téléchargés. Parmi les informations concernées figurent notamment des permis de conduire, photographies, noms, dates de naissance, adresses et numéros de téléphone .\n\nD’origine québécoise, Communauto propose un service de voitures en autopartage . En France, l’entreprise dispose notamment de plusieurs centaines de véhicules accessibles sur réservation à Paris et dans sa proche couronne.\n\nL’accès à ce type de service implique nécessairement de vérifier l’identité et le droit à conduire des utilisateurs. C’est précisément une partie de ces documents administratifs qui pourrait avoir été exposée lors de l’incident.\n\nDans une communication adressée aux membres dont Cyberattaque.org s’est procuré une copie , Communauto indique que les informations susceptibles d’avoir été consultées ou téléchargées comprennent :\n\nCommunauto ne précise pas dans cette notification combien de membres sont concernés ni quels documents ont effectivement été téléchargés pour chaque personne.",
+          "action": "Surveiller les indicateurs de compromission associés et contrôler les actifs exposés.",
+          "image": "https://www.cyberattaque.org/wp-content/uploads/2026/09/communauto-cyberattaque-2.jpg",
+          "sources": [
+            {
+              "url": "https://www.cyberattaque.org/communauto-permis-cyberattaque-voles/",
+              "label": "Cyberattaque.org"
+            }
+          ],
+          "url": "https://www.cyberattaque.org/communauto-permis-cyberattaque-voles/",
+          "pubDate": "2026-09-26T11:33:48.000Z"
+        },
+        {
+          "title": "Celinni : les propriétaires de bijoux exposés après une cyberattaque",
+          "cve": null,
+          "severity": "news",
+          "score": 52,
+          "corroboration": 1,
+          "region": "fr",
+          "body": "Incident de sécurité rapporté par Cyberattaque.org.\n\nCelinni, maison française spécialisée dans la joaillerie et les diamants naturels, fait l’objet d’une revendication de cyberattaque. Un acteur utilisant\n\nAttaque Mis à jour le 26 septembre 2026 à 8h41 Celinni : les propriétaires de bijoux exposés après une cyberattaque Celinni , maison française spécialisée dans la joaillerie et les diamants naturels, fait l’objet d’une revendication de cyberattaque.",
+          "detail": "Incident de sécurité rapporté par Cyberattaque.org.\n\nCelinni, maison française spécialisée dans la joaillerie et les diamants naturels, fait l’objet d’une revendication de cyberattaque. Un acteur utilisant\n\nAttaque Mis à jour le 26 septembre 2026 à 8h41 Celinni : les propriétaires de bijoux exposés après une cyberattaque Celinni , maison française spécialisée dans la joaillerie et les diamants naturels, fait l’objet d’une revendication de cyberattaque. Un acteur utilisant le pseudonyme 0xDzz , associé à la signature CyberFLN, affirme avoir compromis ses systèmes et récupéré des données clients ainsi que des informations commerciales internes .\n\nDans une publication datée du 25 septembre 2026 , le hacker revendique notamment 243 871 références ou lignes de données liées à l’activité de la maison et des informations concernant 32 914 diamants certifiés GIA . En parallèle, un message de phishing imitant l’Assurance Maladie a été envoyé avec l’adresse noreply@celinni.com . Contactée par Cyberattaque.org, Celinni confirme sur ce second point l’utilisation frauduleuse d’un identifiant d’envoi appartenant à son prestataire d’emailing entre le 22 et le 24 septembre.\n\nBasée à Paris , la Maison Celinni est exploitée par la société Steinberg International. L’enseigne se présente comme diamantaire depuis 1967 et commercialise des bagues de fiançailles, alliances, bijoux sur mesure, diamants et pierres précieuses , en ligne comme dans ses différentes bijouteries.\n\nCe positionnement rend les données potentiellement compromises particulièrement sensibles. Contrairement à une boutique en ligne classique, un historique de commande peut ici être associé à des bijoux ou diamants d’une valeur importante , parfois avec une référence permettant d’identifier précisément une pierre.\n\nLa revend",
+          "action": "Surveiller les indicateurs de compromission associés et contrôler les actifs exposés.",
+          "image": "https://www.cyberattaque.org/wp-content/uploads/2026/09/celinni-cyberattaque-dd-2.jpg",
+          "sources": [
+            {
+              "url": "https://www.cyberattaque.org/celinni-les-proprietaires-de-bijoux-exposes-apres-une-cyberattaque/",
+              "label": "Cyberattaque.org"
+            }
+          ],
+          "url": "https://www.cyberattaque.org/celinni-les-proprietaires-de-bijoux-exposes-apres-une-cyberattaque/",
+          "pubDate": "2026-09-26T05:24:59.000Z"
+        }
+      ]
+    },
+    {
+      "id": "culture",
+      "items": [
+        {
+          "title": "Claude Opus 5.5 uses 95% fewer em dashes, but its answers are getting longer",
+          "cve": null,
+          "severity": "culture",
+          "score": 63,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Signal de veille — BleepingComputer.\n\nAnthropic's Claude Opus 5.5 appears to be changing how it writes, with new analysis showing fewer obvious AI writing patterns, shorter sentences, and simpler wording compared with Opus 5.\n\nMicrosoft pauses KB5002907 update after Office license deactivations\n\nKiteworks urges 6-hour server shutdown over potential zero-day attacks\n\nOpenAI's AI agents accidentally uploaded user-provided images to third-party sites\n\nShinyHunters hacked Clop leak site using Grav…",
+          "detail": "Signal de veille — BleepingComputer.\n\nAnthropic's Claude Opus 5.5 appears to be changing how it writes, with new analysis showing fewer obvious AI writing patterns, shorter sentences, and simpler wording compared with Opus 5.\n\nMicrosoft pauses KB5002907 update after Office license deactivations\n\nKiteworks urges 6-hour server shutdown over potential zero-day attacks\n\nOpenAI's AI agents accidentally uploaded user-provided images to third-party sites\n\nShinyHunters hacked Clop leak site using Grav CMS path traversal flaw\n\nShinyHunters uses WAF bypass trick in Oracle PeopleSoft attacks\n\nClaude Opus 5.5 uses 95% fewer em dashes, but its answers are getting longer",
+          "action": null,
+          "image": "https://www.bleepstatic.com/content/hl-images/2026/05/07/Claude_AI.png",
+          "sources": [
+            {
+              "url": "https://www.bleepingcomputer.com/news/artificial-intelligence/claude-opus-55-uses-95-percent-fewer-em-dashes-but-its-answers-are-getting-longer/",
+              "label": "BleepingComputer"
+            }
+          ],
+          "url": "https://www.bleepingcomputer.com/news/artificial-intelligence/claude-opus-55-uses-95-percent-fewer-em-dashes-but-its-answers-are-getting-longer/",
+          "pubDate": "2026-09-26T16:26:58.000Z"
+        },
+        {
+          "title": "Microsoft pauses KB5002907 update after Office license deactivations",
+          "cve": null,
+          "severity": "culture",
+          "score": 63,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Signal de veille — BleepingComputer.\n\nMicrosoft has paused the rollout of the KB5002907 Microsoft 365 update after users report that it deactivated, or in some cases completely removed, perpetual Office 2016 and Office 2019 installations.\n\nMicrosoft pauses KB5002907 update after Office license deactivations\n\nKiteworks urges 6-hour server shutdown over potential zero-day attacks\n\nOpenAI's AI agents accidentally uploaded user-provided images to third-party sites\n\nShinyHunters hacked Clop leak si…",
+          "detail": "Signal de veille — BleepingComputer.\n\nMicrosoft has paused the rollout of the KB5002907 Microsoft 365 update after users report that it deactivated, or in some cases completely removed, perpetual Office 2016 and Office 2019 installations.\n\nMicrosoft pauses KB5002907 update after Office license deactivations\n\nKiteworks urges 6-hour server shutdown over potential zero-day attacks\n\nOpenAI's AI agents accidentally uploaded user-provided images to third-party sites\n\nShinyHunters hacked Clop leak site using Grav CMS path traversal flaw\n\nShinyHunters uses WAF bypass trick in Oracle PeopleSoft attacks\n\nClaude Opus 5.5 uses 95% fewer em dashes, but its answers are getting longer",
+          "action": null,
+          "image": "https://www.bleepstatic.com/content/hl-images/2026/05/19/Microsoft365.jpg",
+          "sources": [
+            {
+              "url": "https://www.bleepingcomputer.com/news/microsoft/microsoft-365-kb5002907-update-paused-after-office-license-deactivations/",
+              "label": "BleepingComputer"
+            }
+          ],
+          "url": "https://www.bleepingcomputer.com/news/microsoft/microsoft-365-kb5002907-update-paused-after-office-license-deactivations/",
+          "pubDate": "2026-09-26T15:50:38.000Z"
+        },
+        {
+          "title": "OpenAI's AI agents accidentally uploaded user-provided images to third-party sites",
+          "cve": null,
+          "severity": "culture",
+          "score": 63,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Signal de veille — BleepingComputer.\n\nOpenAI says its AI agents uploaded user-provided images to third-party image-hosting services while carrying out research and evaluation tasks.\n\nMicrosoft pauses KB5002907 update after Office license deactivations\n\nKiteworks urges 6-hour server shutdown over potential zero-day attacks\n\nOpenAI's AI agents accidentally uploaded user-provided images to third-party sites\n\nShinyHunters hacked Clop leak site using Grav CMS path traversal flaw\n\nShinyHunters uses…",
+          "detail": "Signal de veille — BleepingComputer.\n\nOpenAI says its AI agents uploaded user-provided images to third-party image-hosting services while carrying out research and evaluation tasks.\n\nMicrosoft pauses KB5002907 update after Office license deactivations\n\nKiteworks urges 6-hour server shutdown over potential zero-day attacks\n\nOpenAI's AI agents accidentally uploaded user-provided images to third-party sites\n\nShinyHunters hacked Clop leak site using Grav CMS path traversal flaw\n\nShinyHunters uses WAF bypass trick in Oracle PeopleSoft attacks\n\nClaude Opus 5.5 uses 95% fewer em dashes, but its answers are getting longer",
+          "action": null,
+          "image": "https://www.bleepstatic.com/content/hl-images/2026/09/08/OpenAI.jpg",
+          "sources": [
+            {
+              "url": "https://www.bleepingcomputer.com/news/artificial-intelligence/openais-ai-agents-accidentally-uploaded-user-provided-images-to-third-party-sites/",
+              "label": "BleepingComputer"
+            }
+          ],
+          "url": "https://www.bleepingcomputer.com/news/artificial-intelligence/openais-ai-agents-accidentally-uploaded-user-provided-images-to-third-party-sites/",
+          "pubDate": "2026-09-26T12:28:41.000Z"
+        },
+        {
+          "title": "[Virtual Event] Cybersecurity Outlook 2027",
+          "cve": null,
+          "severity": "culture",
+          "score": 55,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Signal de veille — Dark Reading.\n\n[Virtual Event] Cybersecurity Outlook 2027",
+          "detail": "Signal de veille — Dark Reading.\n\n[Virtual Event] Cybersecurity Outlook 2027",
+          "action": null,
+          "image": null,
+          "sources": [
+            {
+              "url": "https://www.darkreading.com/events/virtual-event-cybersecurity-outlook-2027",
+              "label": "Dark Reading"
+            }
+          ],
+          "url": "https://www.darkreading.com/events/virtual-event-cybersecurity-outlook-2027",
+          "pubDate": "2026-09-27T04:01:04.038Z"
+        },
+        {
+          "title": "Après MDT, Microsoft lâche WDS : le rôle sera déprécié dans le prochain Windows Server",
+          "cve": null,
+          "severity": "culture",
+          "score": 48,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Signal de veille — IT-Connect.\n\nMicrosoft va déprécier le rôle WDS dès la prochaine version de Windows Server. Périmètre, calendrier et alternatives : voici ce que les admins doivent savoir.\n\nActualités IT & Tech, tutoriels en administration système, réseau et cybersécurité.\n\nArchitecture Réseau Cybersécurité Linux & Logiciels Libres Microsoft (On-Premise) Microsoft 365 & Azure Self-Hosting & Open Source Stockage & NAS Cours IT Actualités Entreprise Actu Cybersécurité Web Logiciel – OS M…",
+          "detail": "Signal de veille — IT-Connect.\n\nMicrosoft va déprécier le rôle WDS dès la prochaine version de Windows Server. Périmètre, calendrier et alternatives : voici ce que les admins doivent savoir.\n\nActualités IT & Tech, tutoriels en administration système, réseau et cybersécurité.\n\nArchitecture Réseau Cybersécurité Linux & Logiciels Libres Microsoft (On-Premise) Microsoft 365 & Azure Self-Hosting & Open Source Stockage & NAS Cours IT Actualités Entreprise Actu Cybersécurité Web Logiciel – OS Matériel Réseaux sociaux Mobile Bons Plans Tests Débutants Livres Vidéos IT-Connect » Actualités » Entreprise » Après MDT, Microsoft lâche WDS : le rôle sera déprécié dans le prochain Windows Server Entreprise Après MDT, Microsoft lâche WDS : le rôle sera déprécié dans le prochain Windows Server 26/09/2026 Florian BURNEL 1 commentaire Microsoft , Windows Server Le rôle WDS, correspondant aux services de déploiement de Windows, sera déprécié à partir de la prochaine version majeure de Windows Server. Microsoft l'a annoncé officiellement par l'intermédiaire d'un document de support. Voici ce qu'il faut savoir.\n\nMicrosoft a publié une nouvelle note d'information (KB5129631) consacrée à Windows Deployment Services (WDS). Et ce n'est pas pour annoncer l'ajout de nouveautés. Au contraire, ce rôle, bien connu des administrateurs pour déployer des images Windows via le réseau grâce au démarrage PXE, sera déprécié à partir de la prochaine version de Windows Server. Nous ne savons pas exactement quand sera disponible cette future version, mais la décision est prise.\n\nLe mot utilisé est important : une dépréciation n'est pas une suppression. Nous en avons le bon exemple avec WSUS : il est déprécié sur Windows Server 2025, mais il est toujours utilisable et disponible. Pour WDS, ce sera la même chose",
+          "action": null,
+          "image": "https://www.it-connect.fr/wp-content-itc/uploads/2026/09/wds-deprecated-next-windows-server.jpg",
+          "sources": [
+            {
+              "url": "https://www.it-connect.fr/microsoft-deprecie-wds-windows-server/",
+              "label": "IT-Connect"
+            }
+          ],
+          "url": "https://www.it-connect.fr/microsoft-deprecie-wds-windows-server/",
+          "pubDate": "2026-09-26T06:53:27.000Z"
+        }
+      ]
+    }
+  ]
+}
