@@ -1,0 +1,1057 @@
+{
+  "id": "daily-2026-10-03",
+  "type": "daily",
+  "date": "2026-10-03",
+  "title": "Rapport quotidien - samedi 3 octobre 2026",
+  "summary": "Sur les dernières 24 heures, la veille recense 22 vulnérabilités critiques, 34 incidents ou compromissions et 17 signaux de fond. Acteurs et produits les plus exposés : Microsoft, trigger.dev (npm) et github.com/siyuan-note/siyuan/kernel (go).",
+  "generatedAt": "2026-10-03T04:01:09.368Z",
+  "sections": [
+    {
+      "id": "vulns",
+      "items": [
+        {
+          "title": "CVE-2026-19652 — The Divi Membership plugin for WordPress is vulnerable to Privilege Escalation in versions…",
+          "cve": "CVE-2026-19652",
+          "severity": "critical",
+          "score": 74,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Vulnérabilité critique CVE-2026-19652 (score CVSS 9.8).\n\nThe Divi Membership plugin for WordPress is vulnerable to Privilege Escalation in versions up to, and including, 2.2.0. This is due to the `dmem_form_submit_handler()` function determining the new user's role by iterating all WordPress roles and calling `password_verify()` against an attacker-controlled bcrypt hash supplied in the `form_id` POST parameter, with no validation or whitelist of allowed roles.",
+          "detail": "Vulnérabilité critique CVE-2026-19652 (score CVSS 9.8).\n\nThe Divi Membership plugin for WordPress is vulnerable to Privilege Escalation in versions up to, and including, 2.2.0. This is due to the `dmem_form_submit_handler()` function determining the new user's role by iterating all WordPress roles and calling `password_verify()` against an attacker-controlled bcrypt hash supplied in the `form_id` POST parameter, with no validation or whitelist of allowed roles. This makes it possible for unauthenticated attackers to register a new account with the administrator role by submitting a locally computed bcrypt hash of `administrator` as `form_id`, and when `auto_login=on` is submitted, be immediately authenticated as that administrator in the same request, resulting in full site takeover. Exploitation requires a WordPress nonce, but that nonce is publicly emitted on any page rendering the Divi Membership registration form and is therefore obtainable by any unauthenticated visitor.\n\nScore CVSS : 9.8\n\nType de faiblesse (CWE) : CWE-269",
+          "action": "Vérifier l'exposition du parc et appliquer le correctif éditeur dès sa disponibilité.",
+          "image": null,
+          "sources": [
+            {
+              "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-19652",
+              "label": "NVD"
+            },
+            {
+              "url": "https://www.cvedetails.com/cve/CVE-2026-19652/",
+              "label": "CVE Details"
+            }
+          ],
+          "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-19652",
+          "pubDate": "2026-10-02T14:17:10.483Z"
+        },
+        {
+          "title": "CVE-2026-97637 — The JSON API Auth plugin for WordPress is vulnerable to Authentication Bypass via Cached S…",
+          "cve": "CVE-2026-97637",
+          "severity": "critical",
+          "score": 74,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Vulnérabilité critique CVE-2026-97637 (score CVSS 9.8).\n\nThe JSON API Auth plugin for WordPress is vulnerable to Authentication Bypass via Cached Session Cookie Disclosure in all versions up to, and including, 3.1.2. The vulnerability exists because the required PI-Media/json-api parent plugin caches controller dispatch results in transients keyed solely by URI and query string, ignoring HTTP method and POST body; this causes the `generate_auth_cookie()` endpoint — which embeds a live WordPress `logged_in` cooki…",
+          "detail": "Vulnérabilité critique CVE-2026-97637 (score CVSS 9.8).\n\nThe JSON API Auth plugin for WordPress is vulnerable to Authentication Bypass via Cached Session Cookie Disclosure in all versions up to, and including, 3.1.2. The vulnerability exists because the required PI-Media/json-api parent plugin caches controller dispatch results in transients keyed solely by URI and query string, ignoring HTTP method and POST body; this causes the `generate_auth_cookie()` endpoint — which embeds a live WordPress `logged_in` cookie produced by `wp_generate_auth_cookie()` directly in its JSON response body — to serve that cached authenticated response to any subsequent unauthenticated GET request to the same URI. This makes it possible for unauthenticated attackers to retrieve a valid Administrator `logged_in` session cookie from the cached response and use it to fully authenticate as the site Administrator, including via the same plugin's `get_currentuserinfo` endpoint and any cookie-authenticated controller action. Exploitation requires the PI-Media/json-api parent plugin to be installed and active with the Auth controller enabled, and a legitimate Administrator must have POSTed to `/api/auth/generate_auth_cookie/` within the preceding 24-hour cache TTL; the nominal HTTPS enforcement gate present in `Auth.php` is trivially bypassed by supplying `insecure=cool` as a request parameter.\n\nScore CVSS : 9.8\n\nType de faiblesse (CWE) : CWE-287",
+          "action": "Vérifier l'exposition du parc et appliquer le correctif éditeur dès sa disponibilité.",
+          "image": null,
+          "sources": [
+            {
+              "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-97637",
+              "label": "NVD"
+            },
+            {
+              "url": "https://www.cvedetails.com/cve/CVE-2026-97637/",
+              "label": "CVE Details"
+            }
+          ],
+          "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-97637",
+          "pubDate": "2026-10-02T08:17:05.660Z"
+        },
+        {
+          "title": "CVE-2026-19660 — The Divi Membership plugin for WordPress is vulnerable to Authentication Bypass in all ver…",
+          "cve": "CVE-2026-19660",
+          "severity": "critical",
+          "score": 74,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Vulnérabilité critique CVE-2026-19660 (score CVSS 9.8).\n\nThe Divi Membership plugin for WordPress is vulnerable to Authentication Bypass in all versions up to, and including, 2.3.0. The `process_paypal_callback` function, hooked to the `init` action, accepts a base64-encoded `paypal_param` GET parameter with no IPN validation, no cryptographic signature check, no ownership verification, and no nonce, allowing it to trust an entirely attacker-controlled user ID value that is passed directly to `wp_set_current_use…",
+          "detail": "Vulnérabilité critique CVE-2026-19660 (score CVSS 9.8).\n\nThe Divi Membership plugin for WordPress is vulnerable to Authentication Bypass in all versions up to, and including, 2.3.0. The `process_paypal_callback` function, hooked to the `init` action, accepts a base64-encoded `paypal_param` GET parameter with no IPN validation, no cryptographic signature check, no ownership verification, and no nonce, allowing it to trust an entirely attacker-controlled user ID value that is passed directly to `wp_set_current_user()` and `wp_set_auth_cookie()`. This makes it possible for unauthenticated attackers to log in as any existing WordPress user — including administrators — by supplying an arbitrary user ID in the `paypal_param` GET parameter, resulting in full site takeover. The vulnerability is further compounded by the fact that the PayPal gateway class is instantiated unconditionally regardless of whether PayPal is enabled or configured, ensuring the vulnerable hook is always registered on every front-end request.\n\nScore CVSS : 9.8\n\nType de faiblesse (CWE) : CWE-287",
+          "action": "Vérifier l'exposition du parc et appliquer le correctif éditeur dès sa disponibilité.",
+          "image": null,
+          "sources": [
+            {
+              "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-19660",
+              "label": "NVD"
+            },
+            {
+              "url": "https://www.cvedetails.com/cve/CVE-2026-19660/",
+              "label": "CVE Details"
+            }
+          ],
+          "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-19660",
+          "pubDate": "2026-10-02T05:16:38.430Z"
+        },
+        {
+          "title": "CVE-2026-14378 — The DevKit Pro plugin for WordPress is vulnerable to Authentication Bypass Leading to Admi…",
+          "cve": "CVE-2026-14378",
+          "severity": "critical",
+          "score": 74,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Vulnérabilité critique CVE-2026-14378 (score CVSS 9.8).\n\nThe DevKit Pro plugin for WordPress is vulnerable to Authentication Bypass Leading to Administrator Account Takeover in all versions up to, and including, 2.3.0 This is due to the `revert_switch` handler trusting the attacker-controlled `original_user_id` cookie as the privileged identity: `verify_nonce_and_capability()` incorrectly checks the `manage_options` capability on the user identified by the cookie rather than on the actual requester via `current_…",
+          "detail": "Vulnérabilité critique CVE-2026-14378 (score CVSS 9.8).\n\nThe DevKit Pro plugin for WordPress is vulnerable to Authentication Bypass Leading to Administrator Account Takeover in all versions up to, and including, 2.3.0 This is due to the `revert_switch` handler trusting the attacker-controlled `original_user_id` cookie as the privileged identity: `verify_nonce_and_capability()` incorrectly checks the `manage_options` capability on the user identified by the cookie rather than on the actual requester via `current_user_can()`, while the switch-back form and a valid session-bound nonce are emitted publicly via `wp_footer` to any visitor — including unauthenticated users — whenever that cookie is present. This makes it possible for unauthenticated attackers to set the `original_user_id` cookie to any administrator's user ID, collect the rendered nonce, and POST it back to the `revert_switch` handler, causing `wp_set_auth_cookie()` to be called with the administrator's ID and granting the attacker a full administrator-level authenticated session and complete site takeover.\n\nScore CVSS : 9.8\n\nType de faiblesse (CWE) : CWE-287",
+          "action": "Vérifier l'exposition du parc et appliquer le correctif éditeur dès sa disponibilité.",
+          "image": null,
+          "sources": [
+            {
+              "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-14378",
+              "label": "NVD"
+            },
+            {
+              "url": "https://www.cvedetails.com/cve/CVE-2026-14378/",
+              "label": "CVE Details"
+            }
+          ],
+          "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-14378",
+          "pubDate": "2026-10-02T04:18:06.277Z"
+        },
+        {
+          "title": "CVE-2026-10032 — @a2ui/web_core: `openUrl` permits `javascript:` URI execution via agent-supplied button actions",
+          "cve": "CVE-2026-10032",
+          "severity": "critical",
+          "score": 72,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Vulnérabilité critique CVE-2026-10032 affectant @a2ui/web_core (npm) (score CVSS 9.3).\n\n@a2ui/web_core: `openUrl` permits `javascript:` URI execution via agent-supplied button actions\n\nThe vulnerability exists in the openUrl function implementation within the Basic Catalog of @a2ui/web_core (commit 23a003248abbf59da6c376ea64ace91d82d209ff ).\n\nSink — renderers/web_core/src/v0_9/basic_catalog/functions/basic_functions.ts:428-430 :\n\nInsufficient schema validation — renderers/web_core/src/v0_9/basic_catalog/functions/basic_functions_api.ts:453-45…",
+          "detail": "Vulnérabilité critique CVE-2026-10032 affectant @a2ui/web_core (npm) (score CVSS 9.3).\n\n@a2ui/web_core: `openUrl` permits `javascript:` URI execution via agent-supplied button actions\n\nThe vulnerability exists in the openUrl function implementation within the Basic Catalog of @a2ui/web_core (commit 23a003248abbf59da6c376ea64ace91d82d209ff ).\n\nSink — renderers/web_core/src/v0_9/basic_catalog/functions/basic_functions.ts:428-430 :\n\nInsufficient schema validation — renderers/web_core/src/v0_9/basic_catalog/functions/basic_functions_api.ts:453-458 :\n\nAll three renderers implemented in the A2UI repository are affected:\n\nAny other A2UI renderer which depends on web_core and uses its basic catalog implementation is also affected.\n\nThe issue was fixed in a2ui-project/a2ui#1707 and released in web_core version 0.10.2, by blocking URLs that do not use the HTTP or HTTPS schemes, or those that are invalid.",
+          "action": "Vérifier l'exposition du parc et appliquer le correctif éditeur dès sa disponibilité.",
+          "image": "https://github.githubassets.com/assets/advisory-database-show-f32c8207dfb2.png",
+          "sources": [
+            {
+              "url": "https://github.com/advisories/GHSA-72qq-p3r5-f7wq",
+              "label": "GitHub Advisory"
+            }
+          ],
+          "url": "https://github.com/advisories/GHSA-72qq-p3r5-f7wq",
+          "pubDate": "2026-10-02T22:55:49.000Z"
+        },
+        {
+          "title": "Kiteworks &amp; Citrix Incidents Show Challenges of Zero-Day Response",
+          "cve": null,
+          "severity": "critical",
+          "score": 61,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Vulnérabilité critique affectant Citrix.\n\nOne company told customers to power down its data-protection platform during a nine-hour window, while the other remained mum on reported attacks prior to releasing a patch for its product.",
+          "detail": "Vulnérabilité critique affectant Citrix.\n\nOne company told customers to power down its data-protection platform during a nine-hour window, while the other remained mum on reported attacks prior to releasing a patch for its product.",
+          "action": "Vérifier l'exposition du parc et appliquer le correctif éditeur dès sa disponibilité.",
+          "image": null,
+          "sources": [
+            {
+              "url": "https://www.darkreading.com/cybersecurity-operations/kiteworks-citrix-incidents-challenges-zero-day-response",
+              "label": "Dark Reading"
+            }
+          ],
+          "url": "https://www.darkreading.com/cybersecurity-operations/kiteworks-citrix-incidents-challenges-zero-day-response",
+          "pubDate": "2026-10-02T16:56:30.000Z"
+        },
+        {
+          "title": "Vibe-Trading FastAPI endpoints permit unauthenticated access, file upload, and an RCE chain",
+          "cve": null,
+          "severity": "critical",
+          "score": 59,
+          "corroboration": 3,
+          "region": "intl",
+          "body": "Vulnérabilité critique affectant vibe-trading-ai (pip) (score CVSS 10).\n\nVibe-Trading FastAPI endpoints permit unauthenticated access, file upload, and an RCE chain\n\nThe shipped agent/.env.example line 112 ships # API_AUTH_KEY= commented out. require_auth() at agent/api_server.py line 303 executes if not api_key: return and returns None immediately when API_AUTH_KEY is unset, so every endpoint decorated with dependencies=[Depends(require_auth)] operates as unauthenticated.",
+          "detail": "Vulnérabilité critique affectant vibe-trading-ai (pip) (score CVSS 10).\n\nVibe-Trading FastAPI endpoints permit unauthenticated access, file upload, and an RCE chain\n\nThe shipped agent/.env.example line 112 ships # API_AUTH_KEY= commented out. require_auth() at agent/api_server.py line 303 executes if not api_key: return and returns None immediately when API_AUTH_KEY is unset, so every endpoint decorated with dependencies=[Depends(require_auth)] operates as unauthenticated. The shipped Dockerfile does not contain a USER directive, so the FastAPI process runs as uid=0(root) inside the container (verified: docker exec id returns uid=0(root) gid=0(root) ). The docker-compose.yml binds 0.0.0.0:8899 with no network restriction.\n\nThe only operator action required beyond a clean install is supplying a working LLM API key so the agent loop can complete its tool-call round trip — this is the normal first step to make the agent functional, not an additional security opt-in. F-A4 and F-A5 do not require an LLM key (see per-finding notes); F1 and F3 do not require an LLM key for the unauth surface itself, only for the chained RCE demonstration in F1.\n\ngit clone https://github.com/HKUDS/Vibe-Trading.git cd Vibe-Trading git checkout 7452610113a75529b5d55fd2217bb17f7bec66f7 # v0.1.6 + 1 frontend fix; same vuln state as v0.1.6 cp agent/.env.example agent/.env # (For F1 chained demo only:) edit agent/.env to set OPENROUTER_API_KEY= docker compose up -d # port 8899 is now reachable; HOST below is the docker host's IP from the attacker's perspective Note on the HOST placeholder used throughout the per-finding \"Steps to observe\" blocks below : replace HOST with the address you reach the docker host on — typically localhost (or 127.0.0.1 ) if you are running the reproducer on the same machin",
+          "action": "Vérifier l'exposition du parc et appliquer le correctif éditeur dès sa disponibilité.",
+          "image": "https://github.githubassets.com/assets/advisory-database-show-f32c8207dfb2.png",
+          "sources": [
+            {
+              "url": "https://github.com/advisories/GHSA-v2f8-6655-7grj",
+              "label": "GitHub Advisory"
+            },
+            {
+              "url": "https://www.globalsecuritymag.fr/vigilance-fr-webmin-server-side-request-forgery-via-upload-download-file.html",
+              "label": "Global Sec Mag"
+            },
+            {
+              "url": "https://gbhackers.com/multiple-cpanel-whm-vulnerabilities/",
+              "label": "GBHackers"
+            }
+          ],
+          "url": "https://github.com/advisories/GHSA-v2f8-6655-7grj",
+          "pubDate": "2026-10-03T04:01:02.592Z"
+        },
+        {
+          "title": "CVE-2026-73802 — gitea-runner: workflow container.options passes host namespaces and capability flags to job container when privileged mode is disabled",
+          "cve": "CVE-2026-73802",
+          "severity": "critical",
+          "score": 59,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Vulnérabilité critique CVE-2026-73802 affectant gitea.com/gitea/runner (go) (score CVSS 9.9).\n\ngitea-runner: workflow container.options passes host namespaces and capability flags to job container when privileged mode is disabled\n\nPrivileged=false PidMode=host IpcMode=host CapAdd=[\"ALL\"] SecurityOpt=[\"seccomp=unconfined\",\"apparmor=unconfined\"] Attacker workflow YAML:\n\njobs : breakout : runs-on : ubuntu-latest container : image : ubuntu:22.04 options : >- --pid=host --ipc=host --cap-add=ALL --security-opt seccomp=unconfined --security-opt apparmor=un…",
+          "detail": "Vulnérabilité critique CVE-2026-73802 affectant gitea.com/gitea/runner (go) (score CVSS 9.9).\n\ngitea-runner: workflow container.options passes host namespaces and capability flags to job container when privileged mode is disabled\n\nPrivileged=false PidMode=host IpcMode=host CapAdd=[\"ALL\"] SecurityOpt=[\"seccomp=unconfined\",\"apparmor=unconfined\"] Attacker workflow YAML:\n\njobs : breakout : runs-on : ubuntu-latest container : image : ubuntu:22.04 options : >- --pid=host --ipc=host --cap-add=ALL --security-opt seccomp=unconfined --security-opt apparmor=unconfined steps : - name : host namespace marker run : | nsenter -t 1 -m -u -i -n -p -- sh -c \"id > /tmp/marker\" Impact An attacker who can submit a workflow to a repository using a shared Docker-backed act_runner can:\n\nCritical severity for shared runners where untrusted users can trigger workflows. High severity for single-tenant runners with privileged mode explicitly disabled as a security control.\n\nTreat container.options as untrusted input. Reject or strip when privileged mode is disabled:\n\nbircni published to go-gitea/gitea Aug 15, 2026 Published to the GitHub Advisory Database Oct 2, 2026 Reviewed Oct 2, 2026 Last updated Oct 2, 2026 Severity Critical 9.9 CVSS overall score This score calculates overall vulnerability severity from 0 to 10 and is based on the Common Vulnerability Scoring System (CVSS). / 10 CVSS v3 base metrics Attack vector Network Attack complexity Low Privileges required Low User interaction None Scope Changed Confidentiality High Integrity High Availability High Learn more about base metrics CVSS v3 base metrics Attack vector: More severe the more the remote (logically and physically) an attacker can be in order to exploit the vulnerability. Attack complexity: More severe for the least complex attac",
+          "action": "Vérifier l'exposition du parc et appliquer le correctif éditeur dès sa disponibilité.",
+          "image": "https://github.githubassets.com/assets/advisory-database-show-f32c8207dfb2.png",
+          "sources": [
+            {
+              "url": "https://github.com/advisories/GHSA-x4q3-gcj3-m6cf",
+              "label": "GitHub Advisory"
+            }
+          ],
+          "url": "https://github.com/advisories/GHSA-x4q3-gcj3-m6cf",
+          "pubDate": "2026-10-02T23:18:12.000Z"
+        },
+        {
+          "title": "CVE-2026-82042 — UTMStack before 11.2.16 contains an authentication bypass vulnerability that allows remote…",
+          "cve": "CVE-2026-82042",
+          "severity": "critical",
+          "score": 59,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Vulnérabilité critique CVE-2026-82042 (score CVSS 9.8).\n\nUTMStack before 11.2.16 contains an authentication bypass vulnerability that allows remote attackers to gain full administrative API access by presenting a valid Utm-Internal-Key header matching the INTERNAL_KEY environment variable value, which the InternalApiKeyFilter accepts for any endpoint without path restriction, constant-time comparison, rate limiting, or audit logging.",
+          "detail": "Vulnérabilité critique CVE-2026-82042 (score CVSS 9.8).\n\nUTMStack before 11.2.16 contains an authentication bypass vulnerability that allows remote attackers to gain full administrative API access by presenting a valid Utm-Internal-Key header matching the INTERNAL_KEY environment variable value, which the InternalApiKeyFilter accepts for any endpoint without path restriction, constant-time comparison, rate limiting, or audit logging. Attackers who obtain the key value can authenticate without a user account or JWT to create accounts, manage users, exfiltrate data, and modify security rules.\n\nScore CVSS : 9.8\n\nType de faiblesse (CWE) : CWE-306",
+          "action": "Vérifier l'exposition du parc et appliquer le correctif éditeur dès sa disponibilité.",
+          "image": null,
+          "sources": [
+            {
+              "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-82042",
+              "label": "NVD"
+            },
+            {
+              "url": "https://www.cvedetails.com/cve/CVE-2026-82042/",
+              "label": "CVE Details"
+            }
+          ],
+          "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-82042",
+          "pubDate": "2026-10-02T21:16:56.643Z"
+        },
+        {
+          "title": "CVE-2026-82041 — UTMStack before 11.2.16 contains a missing authorization vulnerability in UTMIncidentComma…",
+          "cve": "CVE-2026-82041",
+          "severity": "critical",
+          "score": 59,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Vulnérabilité critique CVE-2026-82041 (score CVSS 9.9).\n\nUTMStack before 11.2.16 contains a missing authorization vulnerability in UTMIncidentCommandWebsocket.processCommand(), the handler mapped to the /command/{hostname} STOMP destination, where no role check or command allowlist is applied before forwarding supplied commands.",
+          "detail": "Vulnérabilité critique CVE-2026-82041 (score CVSS 9.9).\n\nUTMStack before 11.2.16 contains a missing authorization vulnerability in UTMIncidentCommandWebsocket.processCommand(), the handler mapped to the /command/{hostname} STOMP destination, where no role check or command allowlist is applied before forwarding supplied commands. Any authenticated user, regardless of role, can send arbitrary operating-system commands over gRPC to any connected agent, resulting in command execution on monitored endpoints where agent processes commonly run as root or SYSTEM.\n\nScore CVSS : 9.9\n\nType de faiblesse (CWE) : CWE-862",
+          "action": "Vérifier l'exposition du parc et appliquer le correctif éditeur dès sa disponibilité.",
+          "image": null,
+          "sources": [
+            {
+              "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-82041",
+              "label": "NVD"
+            },
+            {
+              "url": "https://www.cvedetails.com/cve/CVE-2026-82041/",
+              "label": "CVE Details"
+            }
+          ],
+          "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-82041",
+          "pubDate": "2026-10-02T21:16:56.497Z"
+        },
+        {
+          "title": "CVE-2023-54405 — H3C CVM, the Cloud Virtualization Management component of the H3C CAS cloud platform, cont…",
+          "cve": "CVE-2023-54405",
+          "severity": "critical",
+          "score": 59,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Vulnérabilité critique CVE-2023-54405 (score CVSS 9.8).\n\nH3C CVM, the Cloud Virtualization Management component of the H3C CAS cloud platform, contains an unauthenticated arbitrary file upload vulnerability in the /cas/fileUpload/upload endpoint that allows remote attackers to write arbitrary files by manipulating the caller-supplied token parameter without restricting path traversal or file type.",
+          "detail": "Vulnérabilité critique CVE-2023-54405 (score CVSS 9.8).\n\nH3C CVM, the Cloud Virtualization Management component of the H3C CAS cloud platform, contains an unauthenticated arbitrary file upload vulnerability in the /cas/fileUpload/upload endpoint that allows remote attackers to write arbitrary files by manipulating the caller-supplied token parameter without restricting path traversal or file type. Attackers can exploit the path traversal in the token parameter to upload a malicious JSP file into a web-accessible directory and then request it to achieve remote code execution as the web-server user. Exploitation evidence was first observed by the Shadowserver Foundation on 2023-10-14.\n\nScore CVSS : 9.8\n\nType de faiblesse (CWE) : CWE-434",
+          "action": "Vérifier l'exposition du parc et appliquer le correctif éditeur dès sa disponibilité.",
+          "image": null,
+          "sources": [
+            {
+              "url": "https://nvd.nist.gov/vuln/detail/CVE-2023-54405",
+              "label": "NVD"
+            },
+            {
+              "url": "https://www.cvedetails.com/cve/CVE-2023-54405/",
+              "label": "CVE Details"
+            }
+          ],
+          "url": "https://nvd.nist.gov/vuln/detail/CVE-2023-54405",
+          "pubDate": "2026-10-02T19:16:38.897Z"
+        },
+        {
+          "title": "U.S. CISA adds Fortinet FortiMail flaw to its Known Exploited Vulnerabilities catalog",
+          "cve": "CVE-2026-104286",
+          "severity": "critical",
+          "score": 49,
+          "corroboration": 6,
+          "region": "intl",
+          "body": "Vulnérabilité critique CVE-2026-104286 affectant Fortinet.\n\nU.S. Cybersecurity and Infrastructure Security Agency (CISA) adds Fortinet FortiMail flaw to its Known Exploited Vulnerabilities catalog. The U.S. Cybersecurity and Infrastructure Security Agency (CISA) added a Fortinet FortiMail flaw, tracked as CVE-2026-104286 (CVSS score of 9.8), to its Known Exploited Vulnerabilities (KEV) catalog . The flaw is a path traversal vulnerability that can be triggered through specially crafted HTTP or HTTPS requests.",
+          "detail": "Vulnérabilité critique CVE-2026-104286 affectant Fortinet.\n\nU.S. Cybersecurity and Infrastructure Security Agency (CISA) adds Fortinet FortiMail flaw to its Known Exploited Vulnerabilities catalog. The U.S. Cybersecurity and Infrastructure Security Agency (CISA) added a Fortinet FortiMail flaw, tracked as CVE-2026-104286 (CVSS score of 9.8), to its Known Exploited Vulnerabilities (KEV) catalog . The flaw is a path traversal vulnerability that can be triggered through specially crafted HTTP or HTTPS requests. An unauthenticated attacker can exploit the issue to bypass restrictions on file paths and write arbitrary files to the underlying system. The vulnerability also involves improper handling of NULL characters, which can help the attacker bypass security checks. The flaw is reportedly being exploited in the wild, so affected customers are urged to apply the recommended workaround. &#8220;An Improper Limitation of a Pathname to a Restricted Directory (&#8216;Path Traversal&#8217;) [CWE-22] and Improper Neutralization of NULL Byte or NULL Character [CWE-158] vulnerability may allow an unauthenticated attacker to write arbitrary files on the underlying system via crafted HTTP or HTTPS requests.&#8221; reads the advisory . &#8220;This has been reported to be exploited in the wild&#8221; The company did not disclose how many customers were affected, when the attacks started, who was behind them, or technical details of the attacks. Below a",
+          "action": "Vérifier l'exposition du parc et appliquer le correctif éditeur dès sa disponibilité.",
+          "image": null,
+          "sources": [
+            {
+              "url": "https://www.theregister.com/security/2026/10/02/fortinet-sounds-the-alarm-over-actively-exploited-fortimail-zero-day/5300803",
+              "label": "The Register"
+            },
+            {
+              "url": "https://www.helpnetsecurity.com/2026/10/02/fortinet-fortimail-vulnerability-cve-2026-104286/",
+              "label": "Help Net Security"
+            },
+            {
+              "url": "https://www.securityweek.com/exploited-fortinet-fortimail-zero-day-calls-for-urgent-action/",
+              "label": "SecurityWeek"
+            },
+            {
+              "url": "https://thehackernews.com/2026/10/critical-fortimail-zero-day-flaw.html",
+              "label": "The Hacker News"
+            },
+            {
+              "url": "https://www.globalsecuritymag.fr/vulnerabilite-dans-fortinet-fortimail-02-octobre-2026.html",
+              "label": "Global Sec Mag"
+            },
+            {
+              "url": "https://securityaffairs.com/200224/security/u-s-cisa-adds-fortinet-fortimail-flaw-to-its-known-exploited-vulnerabilities-catalog.html",
+              "label": "Security Affairs"
+            }
+          ],
+          "url": "https://www.theregister.com/security/2026/10/02/fortinet-sounds-the-alarm-over-actively-exploited-fortimail-zero-day/5300803",
+          "pubDate": "2026-10-03T04:01:02.589Z"
+        },
+        {
+          "title": "'Warlock' ransomware used in attacks on critical infrastructure in Portuguese, Spanish-speaking countries",
+          "cve": null,
+          "severity": "critical",
+          "score": 49,
+          "corroboration": 3,
+          "region": "intl",
+          "body": "Vulnérabilité critique affectant Microsoft.\n\nThe group is exploiting a variety of vulnerabilities impacting Microsoft SharePoint, according to a new report from Symantec Threat Hunter Team.\n\nCritical infrastructure organizations in Portuguese- and Spanish-speaking countries are being attacked by a Chinese group using a ransomware strain called Warlock.\n\nThe group is exploiting a variety of vulnerabilities impacting Microsoft SharePoint, according to a new report from Symantec Threat Hunter Team.\n\nSym…",
+          "detail": "Vulnérabilité critique affectant Microsoft.\n\nThe group is exploiting a variety of vulnerabilities impacting Microsoft SharePoint, according to a new report from Symantec Threat Hunter Team.\n\nCritical infrastructure organizations in Portuguese- and Spanish-speaking countries are being attacked by a Chinese group using a ransomware strain called Warlock.\n\nThe group is exploiting a variety of vulnerabilities impacting Microsoft SharePoint, according to a new report from Symantec Threat Hunter Team.\n\nSymantec researchers said the victims include a water utility, a telecommunications provider, a university and a regional government. The organizations are located across Europe, Africa and Latin America.\n\nLast year, Microsoft warned that China-based hackers using the Warlock ransomware were focusing their attacks on SharePoint vulnerabilities colloquially named “ToolShell.”\n\nSymantec found that the attacks have continued into 2026 and now include newer SharePoint vulnerabilities recently spotlighted by the U.S. government.\n\nThe campaign illustrated that hackers are still finding success in exploiting SharePoint deployments that have not been patched either for the 2025 vulnerabilities or the 2026 bugs.",
+          "action": "Vérifier l'exposition du parc et appliquer le correctif éditeur dès sa disponibilité.",
+          "image": "https://cms.therecord.media/uploads/moshed_10_02_10_8_51_fb7e436dcd.png",
+          "sources": [
+            {
+              "url": "https://therecord.media/warlock-ransomware-used-in-critical-infrastructure-attacks",
+              "label": "The Record"
+            },
+            {
+              "url": "https://www.securityweek.com/warlock-expands-sharepoint-exploitation-in-critical-infrastructure-attacks/",
+              "label": "SecurityWeek"
+            },
+            {
+              "url": "https://www.bleepingcomputer.com/news/security/warlock-ransomware-breach-sharepoint-in-water-telecom-operator-attacks/",
+              "label": "BleepingComputer"
+            }
+          ],
+          "url": "https://therecord.media/warlock-ransomware-used-in-critical-infrastructure-attacks",
+          "pubDate": "2026-10-02T18:33:01.000Z"
+        },
+        {
+          "title": "GitLab warns of critical RCE vulnerability in AI Gateway service",
+          "cve": null,
+          "severity": "critical",
+          "score": 49,
+          "corroboration": 2,
+          "region": "intl",
+          "body": "Vulnérabilité critique affectant GitLab.\n\nGitLab fixed CVE-2026-90970, a 9.9 AI Gateway flaw that could let logged-in Duo Agent Platform users run commands on self-hosted gateways.\n\nA critical flaw in GitLab's AI Gateway could let a logged-in user with Duo Agent Platform access run commands on the gateway under certain conditions, GitLab said in an advisory .\n\nThe gateway is the service that connects a GitLab instance to AI models, and only organizations that host their own gateway need to act.",
+          "detail": "Vulnérabilité critique affectant GitLab.\n\nGitLab fixed CVE-2026-90970, a 9.9 AI Gateway flaw that could let logged-in Duo Agent Platform users run commands on self-hosted gateways.\n\nA critical flaw in GitLab's AI Gateway could let a logged-in user with Duo Agent Platform access run commands on the gateway under certain conditions, GitLab said in an advisory .\n\nThe gateway is the service that connects a GitLab instance to AI models, and only organizations that host their own gateway need to act. The flaw is fixed in gateway versions 19.2.4, 19.3.2, and 19.4.1.\n\nThe flaw is tracked as CVE-2026-90970 . GitLab disclosed it on October 2 and rated it critical, with a CVSS score of 9.9 out of 10.\n\nGitLab runs AI Gateways for its customers and has already fixed them. Customers on GitLab.com, GitLab Dedicated, and self-managed instances that use a GitLab-hosted gateway do not need to act, the company said.\n\nSelf-managed customers can instead host their own gateway , an option GitLab offers for keeping AI request and response data inside the customer's own environment. GitLab strongly recommends that those customers update immediately. It sent that guidance to customers with self-hosted gateways before it published the advisory.\n\nThe advisory does not say whether the flaw has been used in attacks. The U.S. Cybersecurity and Infrastructure Security Agency (CISA) added an assessment to the CVE record on October 2 that lists exploitation as \"none.\" CISA's other two values cover a public proof of concept and active exploitation.",
+          "action": "Vérifier l'exposition du parc et appliquer le correctif éditeur dès sa disponibilité.",
+          "image": "https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEhXhnbLdlAtkMBrrXYLiOxfbEdXI4PrEIq6dy3SL8Xa5SzPF6if9sf8GGu4PtkUTI3EYQHqBde4cDp4Y60OjgQBmqtZHTlL_gvgvlxNSeZ6nrRnriOmH3m23vq7f2bpylilVl39c_X-RNpvYQlRrC91gU_oHbk6e_ZbZ-7_fglpsQCFoLFp3sHkcn44960/s1600/gitlab-rce.jpg",
+          "sources": [
+            {
+              "url": "https://thehackernews.com/2026/10/gitlab-patches-critical-self-hosted-ai.html",
+              "label": "The Hacker News"
+            },
+            {
+              "url": "https://www.bleepingcomputer.com/news/security/gitlab-warns-of-critical-rce-vulnerability-in-ai-gateway-service/",
+              "label": "BleepingComputer"
+            }
+          ],
+          "url": "https://thehackernews.com/2026/10/gitlab-patches-critical-self-hosted-ai.html",
+          "pubDate": "2026-10-02T17:33:31.000Z"
+        },
+        {
+          "title": "Dell CSM Flaws Enable Unauthenticated Admin Access and Root on Kubernetes Nodes",
+          "cve": "CVE-2026-63688",
+          "severity": "critical",
+          "score": 49,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Vulnérabilité critique CVE-2026-63688 affectant Kubernetes.\n\nDell has released security updates to address multiple critical security flaws in Dell Container Storage Modules (CSM) that could be exploited by bad actors to take over susceptible systems. The vulnerabilities are listed below - CVE-2026-63688 (CVSS score: 10.0) - A missing authentication for critical function vulnerability in the csm-authorization-storage gRPC server that an",
+          "detail": "Vulnérabilité critique CVE-2026-63688 affectant Kubernetes.\n\nDell has released security updates to address multiple critical security flaws in Dell Container Storage Modules (CSM) that could be exploited by bad actors to take over susceptible systems. The vulnerabilities are listed below - CVE-2026-63688 (CVSS score: 10.0) - A missing authentication for critical function vulnerability in the csm-authorization-storage gRPC server that an",
+          "action": "Vérifier l'exposition du parc et appliquer le correctif éditeur dès sa disponibilité.",
+          "image": "https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEiypcfC3W6keUc31zSJympZfpI6eLwDhyphenhyphen4uy_0M3VFljfoSn2pjzBmS3yyAZTzILPxi_sXeOx2jyeu6mdSPKqjiFv7LAMd2mn6Q8GvIRq6yVXUoQm5MiXeEs96i9IT-ZCP2W7hAzR08B9JOuOJv8NNI7o7DfCSa7cplzrsT_x_0R0dPVSQxKmdLP8NvAsnp/s1600/dell.jpg",
+          "sources": [
+            {
+              "url": "https://thehackernews.com/2026/10/dell-csm-flaws-enable-unauthenticated.html",
+              "label": "The Hacker News"
+            }
+          ],
+          "url": "https://thehackernews.com/2026/10/dell-csm-flaws-enable-unauthenticated.html",
+          "pubDate": "2026-10-02T17:02:12.000Z"
+        },
+        {
+          "title": "La DGFiP… et bien d’autres : un été riche en vols de données dans le secteur public",
+          "cve": "CVE-2026-72898",
+          "severity": "critical",
+          "score": 38,
+          "corroboration": 1,
+          "region": "fr",
+          "body": "Vulnérabilité critique CVE-2026-72898.\n\nAttention : il y a dans Metabase une vulnérabilité critique qui permet l&rsquo;injection SQL sans authentification. Le 10 septembre 2026, le CERT-FR avait émis une alerte de sécurité à ce sujet. Il disait avoir connaissance de nombreuses compromissions. Parmi elles, il y avait très probablement celle de Zéro Logement Vacant.",
+          "detail": "Vulnérabilité critique CVE-2026-72898.\n\nAttention : il y a dans Metabase une vulnérabilité critique qui permet l&rsquo;injection SQL sans authentification. Le 10 septembre 2026, le CERT-FR avait émis une alerte de sécurité à ce sujet. Il disait avoir connaissance de nombreuses compromissions. Parmi elles, il y avait très probablement celle de Zéro Logement Vacant. Ce service, que les collectivités territoriales utilisent pour identifier les propriétaires de logements durablement vacants et prendre contact avec eux, a visiblement subi un vol de données. L&rsquo;acte a en tout cas été revendiqué, d&rsquo;après l&rsquo;ANSSI, qui affirme en avoir été informée le 28 août. « Le point d&rsquo;entrée serait la compromission d&rsquo;une instance Metabase », explique-t-elle désormais dans son premier point de situation sur le dispositif REACTIV . Le document liste une vingtaine d&rsquo;incidents survenus depuis début juillet. Leur point commun : des exfiltrations potentielles ou avérées. Certains restent en cours de qualification. Pour les autres, l&rsquo;ANSSI communique, avec plus ou moins de certitude, des bilans chiffrés. Parfois sur les victimes, parfois sur les volumes de données, parfois sur les deux. Les incidents chiffrés avec certitude Le 12 août, une agence de ministère de l&rsquo;Europe et des affaires étrangères a été ciblée. En l&rsquo;occurrence, l&rsquo;AEFE ( Agence pour l&rsquo;enseignement français à l&rsqu",
+          "action": "Vérifier l'exposition du parc et appliquer le correctif éditeur dès sa disponibilité.",
+          "image": "https://www.silicon.fr/wp-content/uploads/2026/10/vols-donnees-secteur-public-REACTIV.png",
+          "sources": [
+            {
+              "url": "https://www.silicon.fr/cybersecurite-1371/vols-donnees-secteur-public-229502",
+              "label": "Silicon.fr"
+            }
+          ],
+          "url": "https://www.silicon.fr/cybersecurite-1371/vols-donnees-secteur-public-229502",
+          "pubDate": "2026-10-02T17:27:16.000Z"
+        },
+        {
+          "title": "Supercalculateurs : Bull double sa production à Angers",
+          "cve": null,
+          "severity": "high",
+          "score": 24,
+          "corroboration": 1,
+          "region": "fr",
+          "body": "Vulnérabilité élevée.\n\nBull inaugure son nouveau bâtiment de production à Angers. La construction du site remonte à 1963, Avec un investissement de 80 millions d’euros, le fabricant français de supercalculateurs double sa capacité industrielle, alors que l’Europe cherche à renforcer son autonomie en matière de calcul haute performance et d’IA. Selon Reuters, la production du site est déjà passée de six à douze baies par mois.",
+          "detail": "Vulnérabilité élevée.\n\nBull inaugure son nouveau bâtiment de production à Angers. La construction du site remonte à 1963, Avec un investissement de 80 millions d’euros, le fabricant français de supercalculateurs double sa capacité industrielle, alors que l’Europe cherche à renforcer son autonomie en matière de calcul haute performance et d’IA. Selon Reuters, la production du site est déjà passée de six à douze baies par mois. Bull indique pouvoir atteindre 24 baies mensuelles en 2027 si la demande se maintient. L’usine est présentée par Bull comme le seul site industriel européen capable d’assembler de grands supercalculateurs. Elle conçoit, intègre, teste et valide des machines de calcul avancé, des infrastructures d’IA, des serveurs d’entreprise et, à terme, des technologies quantiques. Le nouveau bâtiment couvre 20 000 m², dont 10 700 m² dédiés à la production. Bull annonce un doublement de capacité, une hausse de 30% de la productivité et une réduction de 30% des coûts de maintenance du bâtiment. Une demande portée par l’IA Ce doublement de capacité intervient dans un contexte de forte croissance des commandes. Emmanuel Le Roux, le PDG de Bull, indiqué à Reuters que l’entreprise avait reçu cette année plus de commandes que jamais auparavant et remporté 15 des 18 appels d’offres émis par EuroHPC , face notamment à Hewlett Packard Enterprise. L’Union européenne a engagé 7 milliards € entre 2021 et",
+          "action": "Vérifier l'exposition du parc et appliquer le correctif éditeur dès sa disponibilité.",
+          "image": "https://www.silicon.fr/wp-content/uploads/2026/10/bbb42NWA-scaled.jpg",
+          "sources": [
+            {
+              "url": "https://www.silicon.fr/business-1367/supercalculateurs-bull-double-sa-production-a-angers-229486",
+              "label": "Silicon.fr"
+            }
+          ],
+          "url": "https://www.silicon.fr/business-1367/supercalculateurs-bull-double-sa-production-a-angers-229486",
+          "pubDate": "2026-10-02T10:39:36.000Z"
+        }
+      ]
+    },
+    {
+      "id": "attacks",
+      "items": [
+        {
+          "title": "Mississippi mayor says ransomware incident led city to shut down systems",
+          "cve": null,
+          "severity": "news",
+          "score": 81,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Incident de sécurité rapporté par The Record.\n\nGovernment services were temporarily disrupted by ransomware in Vicksburg, Mississippi. Mayor Willis Thompson said the FBI and other authorities are investigating.\n\nA ransomware attack has shut down the computer systems of Vicksburg, Mississippi, the city’s mayor told residents on Thursday evening.\n\nMayor Willis Thompson published a statement in the local newspaper saying the city is investigating a ransomware attack that has not impacted emergency service…",
+          "detail": "Incident de sécurité rapporté par The Record.\n\nGovernment services were temporarily disrupted by ransomware in Vicksburg, Mississippi. Mayor Willis Thompson said the FBI and other authorities are investigating.\n\nA ransomware attack has shut down the computer systems of Vicksburg, Mississippi, the city’s mayor told residents on Thursday evening.\n\nMayor Willis Thompson published a statement in the local newspaper saying the city is investigating a ransomware attack that has not impacted emergency services but has affected payments for utilities. He said the system shutdown was “temporary.”\n\nThompson said no one's services will be shut off while the investigation is ongoing and no penalties will be issued for late payments. He later told the Vicksburg Post that the city has been working on the recovery effort with the FBI, Department of Homeland Security and other state officials alongside private cybersecurity experts.\n\n“One of the top priorities of our investigation is determining whether there was any compromise of personal or confidential information relating to current and/or former customers, contractors, vendors, employees, or affiliated business partners of the City,” Thompson said in a statement.\n\n“At this time, the investigation is ongoing, and the City has not reached a final determination regarding what information, if any, may have been accessed or acquired without authorization.”\n\nThe city did not respond to requests for comment about ransom demands or the identity of the attackers.",
+          "action": "Surveiller les indicateurs de compromission associés et contrôler les actifs exposés.",
+          "image": "https://cms.therecord.media/uploads/Vicksburg_City_Hall_Mississippi_988dfcbc1e.jpg",
+          "sources": [
+            {
+              "url": "https://therecord.media/vicksburg-mississippi-government-ransomware-attack",
+              "label": "The Record"
+            }
+          ],
+          "url": "https://therecord.media/vicksburg-mississippi-government-ransomware-attack",
+          "pubDate": "2026-10-02T14:06:00.000Z"
+        },
+        {
+          "title": "Judge dismisses spyware case brought by Salvadoran journalists targeted with Pegasus",
+          "cve": null,
+          "severity": "news",
+          "score": 78,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Incident de sécurité rapporté par The Record.\n\nThe plaintiffs, who all worked for the independent and Salvadoran news outlet El Faro, failed to convince the court that their case had jurisdiction in California, according to the judge’s order.\n\nA California federal judge on Wednesday dismissed a lawsuit filed by a group of Salvadoran journalists whose devices were infected with powerful zero-click spyware.\n\nThe plaintiffs, who all worked for the independent and Salvadoran news outlet El Faro, failed to…",
+          "detail": "Incident de sécurité rapporté par The Record.\n\nThe plaintiffs, who all worked for the independent and Salvadoran news outlet El Faro, failed to convince the court that their case had jurisdiction in California, according to the judge’s order.\n\nA California federal judge on Wednesday dismissed a lawsuit filed by a group of Salvadoran journalists whose devices were infected with powerful zero-click spyware.\n\nThe plaintiffs, who all worked for the independent and Salvadoran news outlet El Faro, failed to convince the court that their case had jurisdiction in California, according to the judge’s order.\n\nBetween June 2020 and November 2021 Pegasus was deployed against lead plaintiff Carlos Dada and colleagues at least 226 times, according to the Knight First Amendment Institute, which filed the lawsuit on their behalf in November 2022.\n\nThe Dada case was the first to be filed against the Pegasus manufacturer, NSO Group, in a U.S. court.\n\nThe decision on Wednesday is a big loss for the plaintiffs, though the case could still be revived down the road. Another judge tossed the case in March 2024, saying it was “entirely foreign” and had no standing to be tried in California.\n\nDada and the other El Faro employees argued the case could be tried there because the attacks leveraged compromised infrastructure located in the state.",
+          "action": "Surveiller les indicateurs de compromission associés et contrôler les actifs exposés.",
+          "image": "https://cms.therecord.media/uploads/markus_spiske_Qs_OEYV_Zv_Ui_I_unsplash2_77e8e56e44.jpg",
+          "sources": [
+            {
+              "url": "https://therecord.media/judge-dismisses-spyware-case-brought-by-salvadoran-journalists",
+              "label": "The Record"
+            }
+          ],
+          "url": "https://therecord.media/judge-dismisses-spyware-case-brought-by-salvadoran-journalists",
+          "pubDate": "2026-10-02T20:30:00.000Z"
+        },
+        {
+          "title": "Mat Bao Corporation — rançongiciel rhysida (VN)",
+          "cve": null,
+          "severity": "news",
+          "score": 70,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Incident de sécurité rapporté par ransomware.live.\n\nVictime revendiquée par le groupe de rançongiciel rhysida. Pays : VN. Secteur : Technology. Mat Bao Corporation Mat Bao Corporation offers a range of services including domain registration, cloud hosting, professional email solutions, and cloud server storage. Files: 746,108Data volume: 106.8 GBGovernment inspection materials - NEAC inspection decision No.",
+          "detail": "Incident de sécurité rapporté par ransomware.live.\n\nVictime revendiquée par le groupe de rançongiciel rhysida.\n\nPays : VN.\n\nSecteur : Technology.\n\nMat Bao Corporation Mat Bao Corporation offers a range of services including domain registration, cloud hosting, professional email solutions, and cloud server storage. Files: 746,108Data volume: 106.8 GBGovernment inspection materials - NEAC inspection decision No. 61/QD (29.04.2025) against the certification authority, working minutes naming state inspectors and company staff (through December 2025).Corporate core - GPKD business-registration documents bearing the owner's signature, shareholder records, tax commitments (January 2026).Personal data - national ID cards (CCCD) and employee passports with signatures, staff lists.Regulator correspondence - VNNIC, NEAC, the Government Cipher Committee (including RSA-1024 token vulnerabilities).Litigation and operations - the VINASEED dispute, internal investigations, operations-department mail.    More",
+          "action": "Surveiller les indicateurs de compromission associés et contrôler les actifs exposés.",
+          "image": "https://images.ransomware.live/victims/bd7a822b7d1fa93a9beaab3af29ca138.png",
+          "sources": [
+            {
+              "url": "https://www.ransomware.live/id/TWF0IEJhbyBDb3Jwb3JhdGlvbkByaHlzaWRh",
+              "label": "ransomware.live"
+            }
+          ],
+          "url": "https://www.ransomware.live/id/TWF0IEJhbyBDb3Jwb3JhdGlvbkByaHlzaWRh",
+          "pubDate": "2026-10-02T20:04:06.819Z"
+        },
+        {
+          "title": "Electro Heat Sweden AB — rançongiciel rhysida (SE)",
+          "cve": null,
+          "severity": "news",
+          "score": 69,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Incident de sécurité rapporté par ransomware.live.\n\nVictime revendiquée par le groupe de rançongiciel rhysida. Pays : SE. Secteur : Energy & Utilities. Electro Heat Sweden AB ElectroHeat industrial furnaces are used in manufacturing industries all over the world.Files: 1,723,527Data volume: 2,55 TBAll intellectual property - SolidWorks CAD designs of every product, backups of the PDM drawing vault.All accounting and payroll - Visma databases and SPCS payroll databases of four legal entities.Legally sensitiv…",
+          "detail": "Incident de sécurité rapporté par ransomware.live.\n\nVictime revendiquée par le groupe de rançongiciel rhysida.\n\nPays : SE.\n\nSecteur : Energy & Utilities.\n\nElectro Heat Sweden AB ElectroHeat industrial furnaces are used in manufacturing industries all over the world.Files: 1,723,527Data volume: 2,55 TBAll intellectual property - SolidWorks CAD designs of every product, backups of the PDM drawing vault.All accounting and payroll - Visma databases and SPCS payroll databases of four legal entities.Legally sensitive material -  confidential settlement agreement with ABB for a $75,000 payment, liquidated-damages dispute correspondence, cost-pricing calculations.Employee personal data - passport details, visa applications (passport, address, phone, DOB ), insurance policies.Contracts and acceptances - signed agreements and acceptance certificates with Hitachi, ABB, Scania and other customers.    More",
+          "action": "Surveiller les indicateurs de compromission associés et contrôler les actifs exposés.",
+          "image": "https://images.ransomware.live/victims/fe46bfc4588113f70d3603899f566960.png",
+          "sources": [
+            {
+              "url": "https://www.ransomware.live/id/RWxlY3RybyBIZWF0IFN3ZWRlbiBBQkByaHlzaWRh",
+              "label": "ransomware.live"
+            }
+          ],
+          "url": "https://www.ransomware.live/id/RWxlY3RybyBIZWF0IFN3ZWRlbiBBQkByaHlzaWRh",
+          "pubDate": "2026-10-02T18:03:41.086Z"
+        },
+        {
+          "title": "Antino Backdoor Uses Outlook and OneDrive for C2 in China-Nexus Espionage Campaign",
+          "cve": null,
+          "severity": "news",
+          "score": 69,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Incident de sécurité rapporté par The Hacker News.\n\nGovernment and policy organizations across Asia have become the target of a new campaign orchestrated by a China-nexus threat actor. The activity, which has targeted government and policy organizations in Taiwan, India, the Philippines, Cambodia, Pakistan, Thailand, and Myanmar, involves the deployment of a previously undocumented backdoor codenamed Antino. Cisco Talos is tracking the cluster",
+          "detail": "Incident de sécurité rapporté par The Hacker News.\n\nGovernment and policy organizations across Asia have become the target of a new campaign orchestrated by a China-nexus threat actor. The activity, which has targeted government and policy organizations in Taiwan, India, the Philippines, Cambodia, Pakistan, Thailand, and Myanmar, involves the deployment of a previously undocumented backdoor codenamed Antino. Cisco Talos is tracking the cluster",
+          "action": "Surveiller les indicateurs de compromission associés et contrôler les actifs exposés.",
+          "image": "https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEjE3s79KuB4kHE3Kf6kjA84HqdcQ2TTVyJCgIkLcSnpbMr6vCwjaLjJVE1KiXT2lZfcx_CbKlHjiX9PrEppf53uaTvQ_Vyicl447mGIkdz1ZOzmGR1hPJzgODM2J_lnsbKPhTBvvTgdDcSS4V1JzJ-feSpyJFDyDkKS0BfK7AXTCNWaL9DZ60tmWVysyVo0/s1600/ms-cyber.jpg",
+          "sources": [
+            {
+              "url": "https://thehackernews.com/2026/10/antino-backdoor-uses-outlook-and.html",
+              "label": "The Hacker News"
+            }
+          ],
+          "url": "https://thehackernews.com/2026/10/antino-backdoor-uses-outlook-and.html",
+          "pubDate": "2026-10-02T17:33:16.000Z"
+        },
+        {
+          "title": "Automovil Club del Ecuador ANETA — rançongiciel Barracuda (EC)",
+          "cve": null,
+          "severity": "news",
+          "score": 69,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Incident de sécurité rapporté par ransomware.live.\n\nVictime revendiquée par le groupe de rançongiciel Barracuda. Pays : EC. Secteur : Transportation. We have a database of all the car club's customers and applications, photos of customers, financial documents, and a complete dump of emails from the mail server for the entire year: aanaluisa@aneta.org.ec.tgz abenavides@aneta.org.ec.tgz abermudez@aneta.org.ec.tgz abonilla@aneta.org.ec.tgz abozzano@aneta.org.ec.tgz academicobabahoyo@aneta.org.ec.tgz academicom…",
+          "detail": "Incident de sécurité rapporté par ransomware.live.\n\nVictime revendiquée par le groupe de rançongiciel Barracuda.\n\nPays : EC.\n\nSecteur : Transportation.\n\nWe have a database of all the car club's customers and applications, photos of customers, financial documents, and a complete dump of emails from the mail server for the entire year:\n\naanaluisa@aneta.org.ec.tgz\nabenavides@aneta.org.ec.tgz\nabermudez@aneta.org.ec.tgz\nabonilla@aneta.org.ec.tgz\nabozzano@aneta.org.ec.tgz\nacademicobabahoyo@aneta.org.ec.tgz\nacademicomachala@aneta.org.ec.tgz\nacademico_biloxi@aneta.org.ec.tgz\nacademico_gaspar@aneta.org.ec.tgz\nacademico_latacunga@aneta.org.ec.tgz\nachamchay@aneta.org.ec.tgz\nadavila@aneta.org.ec.tgz\nadelhy@aneta.org.ec.tgz\nalicto@aneta.org.ec.tgz\nambienteaneta@aneta.org.ec.tgz\nanaranjo@aneta.org.ec.tgz\napozo@aneta.org.ec.tgz\naramos@aneta.org.ec.tgz\narchivocalderon@aneta.org.ec.tgz\narchivo_matriz@aneta.org.ec.tgz\narivera@aneta.org.ec.tgz\narodriguez@aneta.org.ec.tgz\nasanchez@aneta.org.ec.tgz\nasesor@aneta.org.ec.tgz\nasesorquito@aneta.org.ec.tgz\natituana@aneta.org.ec.tgz\nauditoria@aneta.org.ec.tgz\navaca@aneta.org.ec.tgz\nbchamba@aneta.org.ec.tgz\nbchicaiza@aneta.org.ec.tgz\nbeaterio@aneta.org.ec.tgz\nbmedina@aneta.org.ec.tgz\nbuzonesmatriz@aneta.org.ec.tgz\nbuzonesnorte@aneta.org.ec.tgz\ncajacounter_carcelen@aneta.org.ec.tgz\ncajacuenca@aneta.org.ec.tgz\ncajagye@aneta.org.ec.tgz\ncajasto@aneta.org.ec.tgz\ncajavillaflora@aneta.org.ec.tgz\ncaja_gaspar@aneta.org.ec.tgz\ncaja_sanrafael@aneta.org.ec.tgz\ncalderon@aneta.org.ec.tgz\ncalidadgps@aneta.org.ec.tgz\ncaperez@aneta.org.ec.tgz\ncarblogs@aneta.org.ec.tgz\ncarcelen_counter@aneta.org.ec.tgz\ncartieda@aneta.org.ec.tgz\ncbarrera@aneta.org.ec.tgz\nccarrion@aneta.org.ec.tgz\nccastro@aneta.org.ec.tgz\ncchiluisa@aneta.org.ec.tgz\ncci@aneta.org.ec.tgz\ncfeijoo@aneta.org.ec.tgz\ncguarderas@aneta.org.ec.tgz\ncharo@aneta.org.ec.tgz\ncizurieta@aneta.org.ec.tgz\nclientes_turismo@aneta.org.ec.tgz\ncnt_esmeraldas@aneta.org.ec.tgz\ncomprobantes@aneta.org.ec.tgz\ncondado@aneta.org.ec.tgz\nconfirmacionesfin@aneta.org.ec.tgz\ncontabilidad_coca@aneta.org.ec.tgz\ncontabilidad_kennedy@aneta.org.ec.tgz\ncontabilidad_puyo@aneta.org.ec.tgz\ncontabilidad_urdesa@aneta.org.ec.tgz\ncontentmanager@aneta.org.ec.tgz\ncotero@aneta.org.ec.tgz\ncounter2sanrafael@aneta.org.ec.tgz\ncounter2solanda@aneta.org.ec.tgz\ncounter2_cumbaya@aneta.org.ec.tgz\ncounter2_gaspar@aneta.org.ec.tgz\ncountercarcelen@aneta.org.ec.tgz\ncountercentenario@aneta.org.ec.tgz\ncountermanta@aneta.org.ec.tgz\ncountersolanda@aneta.org.ec.tgz\ncountervillaflora@aneta.org.ec.tgz\ncounter_centenario@aneta.org.ec.tgz\ncounter_diezagosto@aneta.org.ec.tgz\ncounter_ibarra@aneta.org.ec.tgz\ncounter_lalibertad@aneta.org.ec.tgz\ncounter_quevedo@aneta.org.ec.tgz\ncounter_sanrafael@aneta.org.ec.tgz\ncounter_tulcan@aneta.org.ec.tgz\ncounter_urdesa2@aneta.org.ec.tgz\ncounter_urdesa3@aneta.org.ec.tgz\ncounter_urdesa@aneta.org.ec.tgz\ncpozo@aneta.org.ec.tgz\ncrm@aneta.org.ec.tgz\ncum_ventas@aneta.org.ec.tgz\ncyanez@aneta.org.ec.tgz\ndalmeida@aneta.org.ec.tgz\ndarica@aneta.org.ec.tgz\ndcalderon@aneta.org.ec.tgz\ndfarinango@aneta.org.ec.tgz\ndgordon@aneta.org.ec.tgz\ndguerrero@aneta.org.ec.tgz\ndllumiquinga@aneta.org.ec.tgz\ndnaranjo@aneta.org.ec.tgz\ndnavarrete@aneta.org.ec.tgz\ndpaez@aneta.org.ec.tgz\ndreyes@aneta.org.ec.tgz\ndsimbana@aneta.org.ec.tgz\nebaca@aneta.org.ec.tgz\nebarragan@aneta.org.ec.tgz\neestrella@aneta.org.ec.tgz\neguerrero@aneta.org.ec.tgz\nejecutivo10@aneta.org.ec.tgz\nejecutivo1@aneta.org.ec.tgz\nejecutivo2@aneta.org.ec.tgz\nejecutivo3@aneta.org.ec.tgz\nejecutivo4@aneta.org.ec.tgz\nejecutivo6@aneta.org.ec.tgz\nejecutivo7@aneta.org.ec.tgz\nejecutivo8@aneta.org.ec.tgz\nejecutivo9@aneta.org.ec.tgz\nemejia@aneta.org.ec.tgz\nepuga@aneta.org.ec.tgz\nescuelacentenario@aneta.org.ec.tgz\nescuelademotos@aneta.org.ec.tgz\nescuelagye@aneta.org.ec.tgz\nesmsupervision@aneta.org.ec.tgz\nesports@aneta.org.ec.tgz\neviracocha@aneta.org.ec.tgz\neyajamin@aneta.org.ec.tgz\nfacebook_aneta@aneta.org.ec.tgz\nfactura@aneta.org.ec.tgz\nfacturacion@aneta.org.ec.tgz\nfcarvajal@aneta.org.ec.tgz\nfestrada@aneta.org.ec.tgz\nfguerrero@aneta.org.ec.tgz\nflagua@aneta.org.ec.tgz\nfmeza@aneta.org.ec.tgz\nfparedes@aneta.org.ec.tgz\nfrodriguez@aneta.org.ec.tgz\nfruiz@aneta.org.ec.tgz\nfsanchez@aneta.org.ec.tgz\nftamayo@aneta.org.ec.tgz\nfzapata@aneta.org.ec.tgz\nganchundia@aneta.org.ec.tgz\ngaspar_counter1@aneta.org.ec.tgz\ngerencia@aneta.org.ec.tgz\ngestionambiental_gasomatriz@aneta.org.ec.tgz\nggarciaferaud@aneta.org.ec.tgz\nglamina@aneta.org.ec.tgz\ngmontufar@aneta.org.ec.tgz\ngobando@aneta.org.ec.tgz\ngocana@aneta.org.ec.tgz\ngroldan@aneta.org.ec.tgz\ngrosero@aneta.org.ec.tgz\ngsarzosa@aneta.org.ec.tgz\nhviteri@aneta.org.ec.tgz\niargoti@aneta.org.ec.tgz\nicevallos@aneta.org.ec.tgz\ninscripcion@aneta.org.ec.tgz\niorbe@aneta.org.ec.tgz\njbermudez@aneta.org.ec.tgz\njefecommarketing@aneta.org.ec.tgz\njefeflota@aneta.org.ec.tgz\njespinosa@aneta.org.ec.tgz\njguillen@aneta.org.ec.tgz\njlechon@aneta.org.ec.tgz\njmolina@aneta.org.ec.tgz\njnarvaez@aneta.org.ec.tgz\njnavas@aneta.org.ec.tgz\njoperaciones@aneta.org.ec.tgz\njortiz@aneta.org.ec.tgz\njrodriguez@aneta.org.ec.tgz\njsegovia@aneta.org.ec.tgz\njsuarez@aneta.org.ec.tgz\njtipantiza@aneta.org.ec.tgz\njvivanco@aneta.org.ec.tgz\njyepez@aneta.org.ec.tgz\nkbalcazar@aneta.org.ec.tgz\nkchavez@aneta.org.ec.tgz\nkintriago@aneta.org.ec.tgz\nkmaldonado@aneta.org.ec.tgz\nkochoa@aneta.org.ec.tgz\nlalava@aneta.org.ec.tgz\nlante@aneta.org.ec.tgz\nlaveiga@aneta.org.ec.tgz\nlcadena@aneta.org.ec.tgz\nlchasi@aneta.org.ec.tgz\nlhernandez@aneta.org.ec.tgz\nlicencias@aneta.org.ec.tgz\nlmacias@aneta.org.ec.tgz\nlmendoza@aneta.org.ec.tgz\nlosceibos@aneta.org.ec.tgz\nlruiz@aneta.org.ec.tgz\nlteran@aneta.org.ec.tgz\nlvillares@aneta.org.ec.tgz\nmanta_academico@aneta.org.ec.tgz\nmarketing@aneta.org.ec.tgz\nmbarros@aneta.org.ec.tgz\nmcalva@aneta.org.ec.tgz\nmchangoluisa@aneta.org.ec.tgz\nmcisneros@aneta.org.ec.tgz\nmcorrea@aneta.org.ec.tgz\nmduque@aneta.org.ec.tgz\nmjaramillo@aneta.org.ec.tgz\nmmarmol@aneta.org.ec.tgz\nmmedina@aneta.org.ec.tgz\nmmiranda@aneta.org.ec.tgz\nmobando@aneta.org.ec.tgz\nmorellana@aneta.org.ec.tgz\nmovilidadsostenible@aneta.org.ec.tgz\nmpinargote@aneta.org.ec.tgz\nmporras@aneta.org.ec.tgz\nmvivero@aneta.org.ec.tgz\nmyepez@aneta.org.ec.tgz\nnarias@aneta.org.ec.tgz\nnbejarano@aneta.org.ec.tgz\nnoreplay@aneta.org.ec.tgz\nnotificacionesdb@aneta.org.ec.tgz\nogarcia@aneta.org.ec.tgz\norivera@aneta.org.ec.tgz\nosticket@aneta.org.ec.tgz\nparias@aneta.org.ec.tgz\npasante1_marketing@aneta.org.ec.tgz\npasante_comercial@aneta.org.ec.tgz\npasante_contabilidad@aneta.org.ec.tgz\npasante_marketing@aneta.org.ec.tgz\npasante_sistemas@aneta.org.ec.tgz\npasante_talentohumano@aneta.org.ec.tgz\npasante_vial@aneta.org.ec.tgz\npaseoviadaule@aneta.org.ec.tgz\npdiaz@aneta.org.ec.tgz\npjativa@aneta.org.ec.tgz\npmunoz@aneta.org.ec.tgz\npprieto@aneta.org.ec.tgz\npproanio@aneta.org.ec.tgz\npresidencia@aneta.org.ec.tgz\npsandoval@aneta.org.ec.tgz\npsicotecnico10degosto@aneta.org.ec.tgz\npsicotecnico_kennedy@aneta.org.ec.tgz\npsicotecnico_urdesa@aneta.org.ec.tgz\npsico_centenario@aneta.org.ec.tgz\nptocarapungo@aneta.org.ec.tgz\nptoeltriangulo@aneta.org.ec.tgz\nptomitadelmundo@aneta.org.ec.tgz\nptoveldorado@aneta.org.ec.tgz\nptovlatacunga@aneta.org.ec.tgz\nptovmachala@aneta.org.ec.tgz\nptovmalldelrio@aneta.org.ec.tgz\nptovmanta@aneta.org.ec.tgz\nptovportoviejo@aneta.org.ec.tgz\nptovquitumbe@aneta.org.ec.tgz\nptovrivermall@aneta.org.ec.tgz\nptovsangolqui@aneta.org.ec.tgz\nptovsauces@aneta.org.ec.tgz\nptovtaconocoto@aneta.org.ec.tgz\nptovtaelcoca@aneta.org.ec.tgz\nptovtaescala@aneta.org.ec.tgz\nptovtamanta1@aneta.org.ec.tgz\nptovvillaflora@aneta.org.ec.tgz\nptrujillo@aneta.org.ec.tgz\nquicentrosur@aneta.org.ec.tgz\nralvaro@aneta.org.ec.tgz\nrchavez@aneta.org.ec.tgz\nrecreo@aneta.org.ec.tgz\nrespeto.laboral@aneta.org.ec.tgz\nrguevara@aneta.org.ec.tgz\nrgusqui@aneta.org.ec.tgz\nriobamba_academico@aneta.org.ec.tgz\nriocentrosur@aneta.org.ec.tgz\nrmejia@aneta.org.ec.tgz\nrrivera@aneta.org.ec.tgz\nrtilleria@aneta.org.ec.tgz\nsacademica_quevedo@aneta.org.ec.tgz\nsaladereuniones@aneta.org.ec.tgz\nsaneduardo@aneta.org.ec.tgz\nsanluis@aneta.org.ec.tgz\nsanrafaelsecretaria@aneta.org.ec.tgz\nsanrafael_secretaria2@aneta.org.ec.tgz\nsantodomingo_academico@aneta.org.ec.tgz\nsargudo@aneta.org.ec.tgz\nsarmas@aneta.org.ec.tgz\nsecretacadmanta@aneta.org.ec.tgz\nsecretacad_puyo@aneta.org.ec.tgz\nsecretaria2@aneta.org.ec.tgz\nsecretaria4@aneta.org.ec.tgz\nsecretariaacademica_ambato@aneta.org.ec.tgz\nsecretariacarcelen@aneta.org.ec.tgz\nsecretariacontadora_riobamba@aneta.org.ec.tgz\nsecretariacops@aneta.org.ec.tgz\nsecretariacumbaya@aneta.org.ec.tgz\nsecretaria_academica_coca@aneta.org.ec.tgz\nsecretaria_carcelen@aneta.org.ec.tgz\nsecretaria_portoviejo@aneta.org.ec.tgz\nsecretaria_vicentina@aneta.org.ec.tgz\nsecstaelena@aneta.org.ec.tgz\nsec_esmeraldas@aneta.org.ec.tgz\nsegvial@aneta.org.ec.tgz\nseleccionrrhh@aneta.org.ec.tgz\nservicios@aneta.org.ec.tgz\nsleon@aneta.org.ec.tgz\nsmartfleet@aneta.org.ec.tgz\nsnavarrete@aneta.org.ec.tgz\nsocios@aneta.org.ec.tgz\nsolanda_academico@aneta.org.ec.tgz\nsoporte_sistemas@aneta.org.ec.tgz\nspintado@aneta.org.ec.tgz\nspuga@aneta.org.ec.tgz\nsrodriguez@aneta.org.ec.tgz\nsupervescuela_riobamba@aneta.org.ec.tgz\nsupervision_carcelen@aneta.org.ec.tgz\nsupervisorcum@aneta.org.ec.tgz\nsupervisorgye@aneta.org.ec.tgz\nsupervisormachala@aneta.org.ec.tgz\nsupervisorqtt@aneta.org.ec.tgz\nsupervisorsur@aneta.org.ec.tgz\nsupgaspar1@aneta.org.ec.tgz\nsupgaspar@aneta.org.ec.tgz\nsupqto@aneta.org.ec.tgz\nsupqtv@aneta.org.ec.tgz\nsupstaelena@aneta.org.ec.tgz\nsupvicentina@aneta.org.ec.tgz\nsvaldiviezo@aneta.org.ec.tgz\ntalentohumano@aneta.org.ec.tgz\ntamayo@aneta.org.ec.tgz\ntelemercadeogye@aneta.org.ec.tgz\nticket@aneta.org.ec.tgz\ntterrestre@aneta.org.ec.tgz\ntulloa@aneta.org.ec.tgz\nturismo@aneta.org.ec.tgz\nusuarioappaneta01@aneta.org.ec.tgz\nusuarioappaneta02@aneta.org.ec.tgz\nusuarioappaneta03@aneta.org.ec.tgz\nuvi@aneta.org.ec.tgz\nvgranja@aneta.org.ec.tgz\nvllori@aneta.org.ec.tgz\nvortiz@aneta.org.ec.tgz\nwebmaster@aneta.org.ec.tgz | Status: selling | $30,000",
+          "action": "Surveiller les indicateurs de compromission associés et contrôler les actifs exposés.",
+          "image": "https://images.ransomware.live/victims/a09cb13349d1ed6342e1e1036becc759.png",
+          "sources": [
+            {
+              "url": "https://www.ransomware.live/id/QXV0b21vdmlsIENsdWIgZGVsIEVjdWFkb3IgQU5FVEFAQmFycmFjdWRh",
+              "label": "ransomware.live"
+            }
+          ],
+          "url": "https://www.ransomware.live/id/QXV0b21vdmlsIENsdWIgZGVsIEVjdWFkb3IgQU5FVEFAQmFycmFjdWRh",
+          "pubDate": "2026-10-02T04:50:16.222Z"
+        },
+        {
+          "title": "Microsoft’s X account hacked in crypto pump-and-dump scheme",
+          "cve": null,
+          "severity": "news",
+          "score": 68,
+          "corroboration": 2,
+          "region": "intl",
+          "body": "Incident de sécurité rapporté par BleepingComputer.\n\nOn Thursday, unknown attackers hijacked the official Microsoft account on X, which has over 13 million followers, in what appeared to be a pump-and-dump scheme promoting a crypto token.\n\nMetamask discloses security incident affecting its infrastructure\n\nMicrosoft enables Windows settings backup by default for orgs\n\nOver 543,000 valid credentials exposed in public GitHub repositories\n\nFrontline Education breach exposes school district employee data\n\nWarlock…",
+          "detail": "Incident de sécurité rapporté par BleepingComputer.\n\nOn Thursday, unknown attackers hijacked the official Microsoft account on X, which has over 13 million followers, in what appeared to be a pump-and-dump scheme promoting a crypto token.\n\nMetamask discloses security incident affecting its infrastructure\n\nMicrosoft enables Windows settings backup by default for orgs\n\nOver 543,000 valid credentials exposed in public GitHub repositories\n\nFrontline Education breach exposes school district employee data\n\nWarlock ransomware breach SharePoint in water, telecom operator attacks\n\nGitLab warns of critical RCE vulnerability in AI Gateway service",
+          "action": "Surveiller les indicateurs de compromission associés et contrôler les actifs exposés.",
+          "image": "https://www.bleepstatic.com/content/hl-images/2026/10/02/Microsoft-X.jpg",
+          "sources": [
+            {
+              "url": "https://www.bleepingcomputer.com/news/security/microsofts-x-account-hacked-in-crypto-token-pump-and-dump-scheme/",
+              "label": "BleepingComputer"
+            },
+            {
+              "url": "https://www.securityweek.com/crypto-scammers-hijack-microsofts-official-x-account/",
+              "label": "SecurityWeek"
+            }
+          ],
+          "url": "https://www.bleepingcomputer.com/news/security/microsofts-x-account-hacked-in-crypto-token-pump-and-dump-scheme/",
+          "pubDate": "2026-10-02T11:46:10.000Z"
+        },
+        {
+          "title": "Far West Contractors — rançongiciel Deadlock (États-Unis)",
+          "cve": null,
+          "severity": "news",
+          "score": 66,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Incident de sécurité rapporté par ransomware.live.\n\nVictime revendiquée par le groupe de rançongiciel Deadlock. Pays : États-Unis. Secteur : Manufacturing. Far West Contractors is a commercial construction company and general contractor headquartered in Placentia, California Founded in 2009, the company specializes in SCIF(Sensitive Compartmented Information Facilities) construction projects for high-security facilities, as well as tenant improvements in the aerospace and defense industry.",
+          "detail": "Incident de sécurité rapporté par ransomware.live.\n\nVictime revendiquée par le groupe de rançongiciel Deadlock.\n\nPays : États-Unis.\n\nSecteur : Manufacturing.\n\nFar West Contractors is a commercial construction company and general contractor headquartered in Placentia, California Founded in 2009, the company specializes in SCIF(Sensitive Compartmented Information Facilities) construction projects for high-security facilities, as well as tenant improvements in the aerospace and defense industry. Their well-known project partners and clients include Boeing, Jet Propulsion Laboratory (JPL), and Northrop Grumman [url=farwestcontractors.com]farwestcontractors.com[/url]",
+          "action": "Surveiller les indicateurs de compromission associés et contrôler les actifs exposés.",
+          "image": "https://images.ransomware.live/ransomware.png",
+          "sources": [
+            {
+              "url": "https://www.ransomware.live/id/VW5pdmVyc2l0eSBvZiBJbGxpbm9pcyBDaGljYWdvQEJvb2JhIFByb2plY3Q=",
+              "label": "ransomware.live"
+            }
+          ],
+          "url": "https://www.ransomware.live/id/VW5pdmVyc2l0eSBvZiBJbGxpbm9pcyBDaGljYWdvQEJvb2JhIFByb2plY3Q=",
+          "pubDate": "2026-10-02T12:42:52.515Z"
+        },
+        {
+          "title": "Californian accused of shipping $300M worth of Nvidia chips to China without Uncle Sam’s approval",
+          "cve": null,
+          "severity": "critical",
+          "score": 65,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Incident de sécurité rapporté par The Register.\n\nA California business owner was arrested on Thursday after being charged with allegedly smuggling Nvidia hardware to China without the proper export licenses. Keeping the highest-end GPUs out of Chinese hands has been a priority for the US government.",
+          "detail": "Incident de sécurité rapporté par The Register.\n\nA California business owner was arrested on Thursday after being charged with allegedly smuggling Nvidia hardware to China without the proper export licenses. Keeping the highest-end GPUs out of Chinese hands has been a priority for the US government. Greg Lui, 38, allegedly tried to export around $300 million worth of Nvidia kit - typically used for artificial intelligence (AI) development - via US-based freight businesses and Malaysian transshipment companies. Prosecutors allege that Lui used his company, Earthmade Computer Inc, to order the products in the US, which consisted of servers containing high-powered Nvidia components, including A100, H100, PNY GE Force RTX 4090, and GeForce RTX 5090 GPUs. Lui would then send them to Malaysia and Singapore, two countries that do not require licenses from the Commerce Department, and companies there would forward them to China in an effort to circumvent US export controls. His alleged crimes violate regulations prohibiting the sale of economically sensitive equipment to adversarial countries, such as China, in the interests of national security. In lay terms, the US doesn’t want its own tech companies’ high-end hardware being used to accelerate China’s push for dominance in the race for the world’s most capable AI. Or, as it’s referred to in the US nowadays, “super intelligence (SI).” “SI is the defining technology of the era,” said",
+          "action": "Surveiller les indicateurs de compromission associés et contrôler les actifs exposés.",
+          "image": null,
+          "sources": [
+            {
+              "url": "https://www.theregister.com/security/2026/10/02/californian-accused-of-shipping-300m-worth-of-nvidia-chips-to-china-without-uncle-sams-approval/5300856",
+              "label": "The Register"
+            }
+          ],
+          "url": "https://www.theregister.com/security/2026/10/02/californian-accused-of-shipping-300m-worth-of-nvidia-chips-to-china-without-uncle-sams-approval/5300856",
+          "pubDate": "2026-10-02T15:20:00.000Z"
+        },
+        {
+          "title": "OpenAI alerts 100+ orgs that its 'misaligned models' attempted to break in - or worse",
+          "cve": null,
+          "severity": "high",
+          "score": 63,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Incident de sécurité rapporté par The Register.\n\nOpenAI's agents have repeatedly strayed beyond their intended scope. Two separate reports detail the activity, including one from Sam Altman’s company saying it has notified more than 100 organizations about potentially problematic model activity. OpenAI, in a late Wednesday update to its ongoing Hugging Face investigation, said it has notified more than 100 organizations that “misaligned models” may have accessed their systems.",
+          "detail": "Incident de sécurité rapporté par The Register.\n\nOpenAI's agents have repeatedly strayed beyond their intended scope. Two separate reports detail the activity, including one from Sam Altman’s company saying it has notified more than 100 organizations about potentially problematic model activity. OpenAI, in a late Wednesday update to its ongoing Hugging Face investigation, said it has notified more than 100 organizations that “misaligned models” may have accessed their systems. “Notification does not mean that any private information was accessed, or that there was a compromise of any third-party system,” the update said. A separate Thursday report from digital forensic and incident response startup Asymmetric Security said OpenAI’s rogue agents accessed data belonging to 55 organizations. These include the US Department of Education, UN Trade and Development, US Bureau of Economic Analysis, MAX.gov containing federal budget documents, the European Centre for Disease Prevention and Control, the US Securities and Exchange Commission, the International Energy Agency, and the FBI Crime Data Explorer. Asymmetric used only publicly available data to compile this list, and said the activity occurred between March and September. The agents’ probes indicate they were tasked with researching public health and other data, “possibly as part of an evaluation,” according to the report. “We found successful access to staging environments; e",
+          "action": "Surveiller les indicateurs de compromission associés et contrôler les actifs exposés.",
+          "image": "https://image.theregister.com/5300902.jpg?imageId=5300902&x=0&y=0&cropw=100&croph=100&panox=0&panoy=0&panow=100&panoh=100&width=1200&height=683",
+          "sources": [
+            {
+              "url": "https://www.theregister.com/security/2026/10/02/openai-alerts-100-orgs-that-its-misaligned-models-attempted-to-break-in-or-worse/5300891",
+              "label": "The Register"
+            }
+          ],
+          "url": "https://www.theregister.com/security/2026/10/02/openai-alerts-100-orgs-that-its-misaligned-models-attempted-to-break-in-or-worse/5300891",
+          "pubDate": "2026-10-02T17:37:05.000Z"
+        },
+        {
+          "title": "US sanctions Tren de Aragua gang members in ATM hacks crackdown",
+          "cve": null,
+          "severity": "news",
+          "score": 63,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Incident de sécurité rapporté par BleepingComputer.\n\nThe U.S. Treasury Department has sanctioned eight members of the Venezuelan gang Tren de Aragua (TdA) for their role in the theft of millions of dollars in ATM jackpotting attacks across the United States.\n\nMetamask discloses security incident affecting its infrastructure\n\nMicrosoft enables Windows settings backup by default for orgs\n\nOver 543,000 valid credentials exposed in public GitHub repositories\n\nFrontline Education breach exposes school district em…",
+          "detail": "Incident de sécurité rapporté par BleepingComputer.\n\nThe U.S. Treasury Department has sanctioned eight members of the Venezuelan gang Tren de Aragua (TdA) for their role in the theft of millions of dollars in ATM jackpotting attacks across the United States.\n\nMetamask discloses security incident affecting its infrastructure\n\nMicrosoft enables Windows settings backup by default for orgs\n\nOver 543,000 valid credentials exposed in public GitHub repositories\n\nFrontline Education breach exposes school district employee data\n\nWarlock ransomware breach SharePoint in water, telecom operator attacks\n\nGitLab warns of critical RCE vulnerability in AI Gateway service",
+          "action": "Surveiller les indicateurs de compromission associés et contrôler les actifs exposés.",
+          "image": "https://www.bleepstatic.com/content/hl-images/2025/01/09/US_Treasury.jpg",
+          "sources": [
+            {
+              "url": "https://www.bleepingcomputer.com/news/security/us-sanctions-tren-de-aragua-members-in-atm-jackpotting-crackdown/",
+              "label": "BleepingComputer"
+            }
+          ],
+          "url": "https://www.bleepingcomputer.com/news/security/us-sanctions-tren-de-aragua-members-in-atm-jackpotting-crackdown/",
+          "pubDate": "2026-10-02T15:20:53.000Z"
+        },
+        {
+          "title": "The EDR blind spot: 3 ways browser attacks evade endpoint telemetry",
+          "cve": null,
+          "severity": "news",
+          "score": 63,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Incident de sécurité rapporté par BleepingComputer.\n\nBrowser-based attacks can steal sessions, abuse extensions, or manipulate users without creating the endpoint artifacts EDR is designed to detect. NordLayer explains three ways attacks can evade endpoint telemetry and why browser-level controls can help close the gap.\n\nMetamask discloses security incident affecting its infrastructure\n\nMicrosoft enables Windows settings backup by default for orgs\n\nOver 543,000 valid credentials exposed in public GitHub repo…",
+          "detail": "Incident de sécurité rapporté par BleepingComputer.\n\nBrowser-based attacks can steal sessions, abuse extensions, or manipulate users without creating the endpoint artifacts EDR is designed to detect. NordLayer explains three ways attacks can evade endpoint telemetry and why browser-level controls can help close the gap.\n\nMetamask discloses security incident affecting its infrastructure\n\nMicrosoft enables Windows settings backup by default for orgs\n\nOver 543,000 valid credentials exposed in public GitHub repositories\n\nFrontline Education breach exposes school district employee data\n\nWarlock ransomware breach SharePoint in water, telecom operator attacks\n\nGitLab warns of critical RCE vulnerability in AI Gateway service",
+          "action": "Surveiller les indicateurs de compromission associés et contrôler les actifs exposés.",
+          "image": "https://www.bleepstatic.com/content/posts/2026/09/27/nord-radar-header.png",
+          "sources": [
+            {
+              "url": "https://www.bleepingcomputer.com/news/security/the-edr-blind-spot-3-ways-browser-attacks-evade-endpoint-telemetry/",
+              "label": "BleepingComputer"
+            }
+          ],
+          "url": "https://www.bleepingcomputer.com/news/security/the-edr-blind-spot-3-ways-browser-attacks-evade-endpoint-telemetry/",
+          "pubDate": "2026-10-02T14:00:10.000Z"
+        },
+        {
+          "title": "Thai Lion Air — rançongiciel qilin (TH)",
+          "cve": null,
+          "severity": "news",
+          "score": 61,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Incident de sécurité rapporté par ransomware.live.\n\nRansomware.live discovered on 2026-10-02 that Thai Lion Air has been claimed by Qilin ransomware group\n\nSponsored by Hudson Rock – Use Hudson Rock's free cybercrime intelligence tools to learn how Infostealer infections are leading to ransomware attacks\n\nThe following DNS records were found for the victim's domain.\n\nLegal Disclaimer: Ransomware.live does not engage in the acquisition, exfiltration, downloading, possession, hosting, access, consultation, re…",
+          "detail": "Incident de sécurité rapporté par ransomware.live.\n\nRansomware.live discovered on 2026-10-02 that Thai Lion Air has been claimed by Qilin ransomware group\n\nSponsored by Hudson Rock – Use Hudson Rock's free cybercrime intelligence tools to learn how Infostealer infections are leading to ransomware attacks\n\nThe following DNS records were found for the victim's domain.\n\nLegal Disclaimer: Ransomware.live does not engage in the acquisition, exfiltration, downloading, possession, hosting, access, consultation, redistribution, or disclosure of unlawfully obtained data. This platform indexes only publicly visible information posted by ransomware operators and open web sources without accessing or obtaining the underlying stolen content . The service is provided to support public awareness, legitimate research, and cyber-resilience. No stolen personal or confidential data is collected or distributed via this site.\n\nSession: 057726c909af65969646b040bbbfa5c4df67f5166a33cbac6cd9e1302b0b3ca148\n\nTox: 50DADDED26D859469371938B793456D8210A5AE02DD3C42979F5E52411BCB648F1CA68A5EDE5",
+          "action": "Surveiller les indicateurs de compromission associés et contrôler les actifs exposés.",
+          "image": "https://images.ransomware.live/victims/38ddea21028b642dd6b2470d9b3ee844.png",
+          "sources": [
+            {
+              "url": "https://www.ransomware.live/id/VGhhaSBMaW9uIEFpckBxaWxpbg==",
+              "label": "ransomware.live"
+            }
+          ],
+          "url": "https://www.ransomware.live/id/VGhhaSBMaW9uIEFpckBxaWxpbg==",
+          "pubDate": "2026-10-02T21:04:33.694Z"
+        },
+        {
+          "title": "Paessolucoes — rançongiciel Panzer (BR)",
+          "cve": null,
+          "severity": "news",
+          "score": 61,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Incident de sécurité rapporté par ransomware.live.\n\nRansomware.live discovered on 2026-10-02 that Paessolucoes has been claimed by Panzer ransomware group\n\nSponsored by Hudson Rock – Use Hudson Rock's free cybercrime intelligence tools to learn how Infostealer infections are leading to ransomware attacks\n\nLegal Disclaimer: Ransomware.live does not engage in the acquisition, exfiltration, downloading, possession, hosting, access, consultation, redistribution, or disclosure of unlawfully obtained data.",
+          "detail": "Incident de sécurité rapporté par ransomware.live.\n\nRansomware.live discovered on 2026-10-02 that Paessolucoes has been claimed by Panzer ransomware group\n\nSponsored by Hudson Rock – Use Hudson Rock's free cybercrime intelligence tools to learn how Infostealer infections are leading to ransomware attacks\n\nLegal Disclaimer: Ransomware.live does not engage in the acquisition, exfiltration, downloading, possession, hosting, access, consultation, redistribution, or disclosure of unlawfully obtained data. This platform indexes only publicly visible information posted by ransomware operators and open web sources without accessing or obtaining the underlying stolen content . The service is provided to support public awareness, legitimate research, and cyber-resilience. No stolen personal or confidential data is collected or distributed via this site.\n\nSession: 057726c909af65969646b040bbbfa5c4df67f5166a33cbac6cd9e1302b0b3ca148\n\nTox: 50DADDED26D859469371938B793456D8210A5AE02DD3C42979F5E52411BCB648F1CA68A5EDE5",
+          "action": "Surveiller les indicateurs de compromission associés et contrôler les actifs exposés.",
+          "image": "https://images.ransomware.live/victims/718ea457ae5073e908b5cc22b8130a98.png",
+          "sources": [
+            {
+              "url": "https://www.ransomware.live/id/UGFlc3NvbHVjb2VzQFBhbnplcg==",
+              "label": "ransomware.live"
+            }
+          ],
+          "url": "https://www.ransomware.live/id/UGFlc3NvbHVjb2VzQFBhbnplcg==",
+          "pubDate": "2026-10-02T17:54:19.000Z"
+        },
+        {
+          "title": "Inova Semiconductors GmbH — rançongiciel qilin (Allemagne)",
+          "cve": null,
+          "severity": "news",
+          "score": 61,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Incident de sécurité rapporté par ransomware.live.\n\nRansomware.live discovered on 2026-10-02 that Inova Semiconductors GmbH has been claimed by Qilin ransomware group\n\nSponsored by Hudson Rock – Use Hudson Rock's free cybercrime intelligence tools to learn how Infostealer infections are leading to ransomware attacks\n\nThe following DNS records were found for the victim's domain.\n\nLegal Disclaimer: Ransomware.live does not engage in the acquisition, exfiltration, downloading, possession, hosting, access, cons…",
+          "detail": "Incident de sécurité rapporté par ransomware.live.\n\nRansomware.live discovered on 2026-10-02 that Inova Semiconductors GmbH has been claimed by Qilin ransomware group\n\nSponsored by Hudson Rock – Use Hudson Rock's free cybercrime intelligence tools to learn how Infostealer infections are leading to ransomware attacks\n\nThe following DNS records were found for the victim's domain.\n\nLegal Disclaimer: Ransomware.live does not engage in the acquisition, exfiltration, downloading, possession, hosting, access, consultation, redistribution, or disclosure of unlawfully obtained data. This platform indexes only publicly visible information posted by ransomware operators and open web sources without accessing or obtaining the underlying stolen content . The service is provided to support public awareness, legitimate research, and cyber-resilience. No stolen personal or confidential data is collected or distributed via this site.\n\nSession: 057726c909af65969646b040bbbfa5c4df67f5166a33cbac6cd9e1302b0b3ca148\n\nTox: 50DADDED26D859469371938B793456D8210A5AE02DD3C42979F5E52411BCB648F1CA68A5EDE5",
+          "action": "Surveiller les indicateurs de compromission associés et contrôler les actifs exposés.",
+          "image": "https://images.ransomware.live/victims/0e065f5051a95e5804eb837066fce12b.png",
+          "sources": [
+            {
+              "url": "https://www.ransomware.live/id/SW5vdmEgU2VtaWNvbmR1Y3RvcnMgR21iSEBxaWxpbg==",
+              "label": "ransomware.live"
+            }
+          ],
+          "url": "https://www.ransomware.live/id/SW5vdmEgU2VtaWNvbmR1Y3RvcnMgR21iSEBxaWxpbg==",
+          "pubDate": "2026-10-02T14:03:54.179Z"
+        },
+        {
+          "title": "www.pierrefeu.fr — rançongiciel krybit (France)",
+          "cve": null,
+          "severity": "news",
+          "score": 61,
+          "corroboration": 1,
+          "region": "fr",
+          "body": "Incident de sécurité rapporté par ransomware.live.\n\nRansomware.live discovered on 2026-10-02 that www.pierrefeu.fr has been claimed by Krybit ransomware group\n\nSponsored by Hudson Rock – Use Hudson Rock's free cybercrime intelligence tools to learn how Infostealer infections are leading to ransomware attacks\n\nThe following DNS records were found for the victim's domain.\n\nLegal Disclaimer: Ransomware.live does not engage in the acquisition, exfiltration, downloading, possession, hosting, access, consultation…",
+          "detail": "Incident de sécurité rapporté par ransomware.live.\n\nRansomware.live discovered on 2026-10-02 that www.pierrefeu.fr has been claimed by Krybit ransomware group\n\nSponsored by Hudson Rock – Use Hudson Rock's free cybercrime intelligence tools to learn how Infostealer infections are leading to ransomware attacks\n\nThe following DNS records were found for the victim's domain.\n\nLegal Disclaimer: Ransomware.live does not engage in the acquisition, exfiltration, downloading, possession, hosting, access, consultation, redistribution, or disclosure of unlawfully obtained data. This platform indexes only publicly visible information posted by ransomware operators and open web sources without accessing or obtaining the underlying stolen content . The service is provided to support public awareness, legitimate research, and cyber-resilience. No stolen personal or confidential data is collected or distributed via this site.\n\nSession: 057726c909af65969646b040bbbfa5c4df67f5166a33cbac6cd9e1302b0b3ca148\n\nTox: 50DADDED26D859469371938B793456D8210A5AE02DD3C42979F5E52411BCB648F1CA68A5EDE5",
+          "action": "Surveiller les indicateurs de compromission associés et contrôler les actifs exposés.",
+          "image": "https://images.ransomware.live/victims/a3766fd839d6686c66440f65e8c7c52f.png",
+          "sources": [
+            {
+              "url": "https://www.ransomware.live/id/d3d3LnBpZXJyZWZldS5mckBrcnliaXQ=",
+              "label": "ransomware.live"
+            }
+          ],
+          "url": "https://www.ransomware.live/id/d3d3LnBpZXJyZWZldS5mckBrcnliaXQ=",
+          "pubDate": "2026-10-02T09:30:39.397Z"
+        }
+      ]
+    },
+    {
+      "id": "culture",
+      "items": [
+        {
+          "title": "Bipartisan backlash to ALPRs grows as two high-profile bills are introduced",
+          "cve": null,
+          "severity": "high",
+          "score": 70,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Signal de veille — The Record.\n\nRepublican Sen. Josh Hawley has new legislation on limiting automated license plate readers (ALPRs), while Democratic Sens. Bernie Sanders and Jeff Merkley, with Rep. Alexandria Ocasio-Cortez, have teed up a broader bill.\n\nTwo bills introduced in Congress over the past three days underscore how the mounting bipartisan backlash to artificial intelligence-powered automatic license plate recognition (ALPR) cameras has reached a tipping point, with Flock and o…",
+          "detail": "Signal de veille — The Record.\n\nRepublican Sen. Josh Hawley has new legislation on limiting automated license plate readers (ALPRs), while Democratic Sens. Bernie Sanders and Jeff Merkley, with Rep. Alexandria Ocasio-Cortez, have teed up a broader bill.\n\nTwo bills introduced in Congress over the past three days underscore how the mounting bipartisan backlash to artificial intelligence-powered automatic license plate recognition (ALPR) cameras has reached a tipping point, with Flock and other ALPR companies increasingly facing political risks.\n\nOn Wednesday, Sen. Josh Hawley (R-MO) introduced the Stop Flock Abuse Act to bolster safeguards for AI-enabled cameras and protect people’s constitutional rights.\n\nSens. Bernie Sanders (D-VT) and Jeff Merkley (D-OR), with Rep. Alexandria Ocasio Cortez (D-NY), introduced a broader bill Friday, proposing to block the federal government from using ALPR cameras and prevent states deploying them from receiving federal funding. It also would let Americans sue the federal government if their rights are violated by deployment of ALPRs, according to a press release .\n\n“Going to the doctor? Flock knows,” Sanders said in a statement. “Dropping your kid off at school? Flock is tracking you. Flock is always watching. We cannot allow America to become a surveillance state where a handful of AI oligarchs profit by giving the government the power to track our every movement.”\n\nIn addition to signaling the striking bipartisan nature of the accelerating outcry over the cameras, the proposed bills would apply to all ALPR camera companies, including Motorola and Axon.\n\nPrivacy and civil liberties activists have long worried that the intensifying public uproar over Flock — which has maintained a higher public profile than its competitors — has left co",
+          "action": null,
+          "image": "https://cms.therecord.media/uploads/Josh_Hawley_Sept_2026_014ea346af.jpg",
+          "sources": [
+            {
+              "url": "https://therecord.media/alpr-legislation-hawley-sanders-merkley-aoc",
+              "label": "The Record"
+            }
+          ],
+          "url": "https://therecord.media/alpr-legislation-hawley-sanders-merkley-aoc",
+          "pubDate": "2026-10-02T19:30:00.000Z"
+        },
+        {
+          "title": "Unidentified Flock Cameras in Florida",
+          "cve": null,
+          "severity": "culture",
+          "score": 64,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Signal de veille — Schneier on Sec..\n\nSt. Lucie County in Florida discovered ( alt link ) a dozen Flock cameras whose ownership it can&#8217;t identify, and that the county government had not permitted. I am reminded of the decade-old story of StingRay cell phone surveillance devices in Washington, DC, whose operators were also unknown. My guess is that in the StingRay case, the devices were operated by foreign actors.",
+          "detail": "Signal de veille — Schneier on Sec..\n\nSt. Lucie County in Florida discovered ( alt link ) a dozen Flock cameras whose ownership it can&#8217;t identify, and that the county government had not permitted. I am reminded of the decade-old story of StingRay cell phone surveillance devices in Washington, DC, whose operators were also unknown. My guess is that in the StingRay case, the devices were operated by foreign actors. This Flock case is more likely some local government entity that didn&#8217;t bother getting approval. Were I a foreign actor, I would rather hack the existing Flock network&#8212;like Israel did with Tehran&#8217;s surveillance cameras&#8212;than risk installing my own. Regardless, once we normalize a surveillance infrastructure, both friends and foes will take advantage of it.",
+          "action": null,
+          "image": null,
+          "sources": [
+            {
+              "url": "https://www.schneier.com/blog/archives/2026/10/unidentified-flock-cameras-in-florida.html",
+              "label": "Schneier on Sec."
+            }
+          ],
+          "url": "https://www.schneier.com/blog/archives/2026/10/unidentified-flock-cameras-in-florida.html",
+          "pubDate": "2026-10-02T14:52:46.000Z"
+        },
+        {
+          "title": "macOS Users Targeted by Fake Zoom Installer Carrying CloudSyncD Backdoor",
+          "cve": null,
+          "severity": "culture",
+          "score": 64,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Signal de veille — SecurityWeek.\n\nA macOS dropper was found inside a disguised Zoom client. The malware is tracked as CloudSyncD and is designed to deliver a stealthy backdoor.\n\nThe dropper “carries a complete universal Mach-O inside itself, roughly 756 KB in the development build, and extracts it at runtime.\n\nSubscribe to the SecurityWeek Email Briefing for the latest cybersecurity threats, trends, and expert insights.\n\nSubscribe to the SecurityWeek Email Briefing to stay informed on the…",
+          "detail": "Signal de veille — SecurityWeek.\n\nA macOS dropper was found inside a disguised Zoom client. The malware is tracked as CloudSyncD and is designed to deliver a stealthy backdoor.\n\nThe dropper “carries a complete universal Mach-O inside itself, roughly 756 KB in the development build, and extracts it at runtime.\n\nSubscribe to the SecurityWeek Email Briefing for the latest cybersecurity threats, trends, and expert insights.\n\nSubscribe to the SecurityWeek Email Briefing to stay informed on the latest threats, trends, and technology, along with insightful columns from industry experts.\n\nLearn how to address potential risks and not restrict AI adoption in your organization. See what a centralized AI gateway is and how it works in practice.\n\nJoin as we decipher the world of zero trust and share war stories on securing an organization by eliminating implicit trust and continuously validating every stage of a digital interaction.\n\nQuantum Secure Encryption Corp. has appointed Joseph Hall as CIO.",
+          "action": null,
+          "image": "https://www.securityweek.com/wp-content/uploads/2023/01/Cybersecurity_News-SecurityWeek.jpg",
+          "sources": [
+            {
+              "url": "https://www.securityweek.com/macos-users-targeted-by-fake-zoom-installer-carrying-cloudsyncd-backdoor/",
+              "label": "SecurityWeek"
+            }
+          ],
+          "url": "https://www.securityweek.com/macos-users-targeted-by-fake-zoom-installer-carrying-cloudsyncd-backdoor/",
+          "pubDate": "2026-10-02T13:15:00.000Z"
+        },
+        {
+          "title": "In Rare Move, Alleged Iranian State Hacker Extradited to US",
+          "cve": null,
+          "severity": "culture",
+          "score": 64,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Signal de veille — SecurityWeek.\n\nCharged with hacking universities and private organizations, Iranian national Amir Barati was extradited from Montenegro to the US.\n\nAmir Barati, an alleged member of the Mabna Institute, was indicted for targeting universities, private organizations, and government entities in the US and abroad.\n\nSubscribe to the SecurityWeek Email Briefing for the latest cybersecurity threats, trends, and expert insights.\n\nSubscribe to the SecurityWeek Email Briefing to…",
+          "detail": "Signal de veille — SecurityWeek.\n\nCharged with hacking universities and private organizations, Iranian national Amir Barati was extradited from Montenegro to the US.\n\nAmir Barati, an alleged member of the Mabna Institute, was indicted for targeting universities, private organizations, and government entities in the US and abroad.\n\nSubscribe to the SecurityWeek Email Briefing for the latest cybersecurity threats, trends, and expert insights.\n\nSubscribe to the SecurityWeek Email Briefing to stay informed on the latest threats, trends, and technology, along with insightful columns from industry experts.\n\nLearn how to address potential risks and not restrict AI adoption in your organization. See what a centralized AI gateway is and how it works in practice.\n\nJoin as we decipher the world of zero trust and share war stories on securing an organization by eliminating implicit trust and continuously validating every stage of a digital interaction.\n\nQuantum Secure Encryption Corp. has appointed Joseph Hall as CIO.",
+          "action": null,
+          "image": "https://www.securityweek.com/wp-content/uploads/2026/03/Irianian-cyberattacks-hacks.jpg",
+          "sources": [
+            {
+              "url": "https://www.securityweek.com/in-rare-move-iranian-hacker-accused-of-working-for-irgc-extradited-to-us/",
+              "label": "SecurityWeek"
+            }
+          ],
+          "url": "https://www.securityweek.com/in-rare-move-iranian-hacker-accused-of-working-for-irgc-extradited-to-us/",
+          "pubDate": "2026-10-02T11:14:34.000Z"
+        },
+        {
+          "title": "Malicious Linux Implants Mimic Asian Mail Security Products",
+          "cve": null,
+          "severity": "culture",
+          "score": 60,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Signal de veille — Dark Reading.\n\nA trio of newly discovered backdoors walk and quack like legitimate edge solutions, so it's hard to tell they're not.",
+          "detail": "Signal de veille — Dark Reading.\n\nA trio of newly discovered backdoors walk and quack like legitimate edge solutions, so it's hard to tell they're not.",
+          "action": null,
+          "image": null,
+          "sources": [
+            {
+              "url": "https://www.darkreading.com/threat-intelligence/malicious-linux-implants-mimic-asian-mail-security",
+              "label": "Dark Reading"
+            }
+          ],
+          "url": "https://www.darkreading.com/threat-intelligence/malicious-linux-implants-mimic-asian-mail-security",
+          "pubDate": "2026-10-02T13:00:00.000Z"
+        },
+        {
+          "title": "Friday Squid Blogging: EU is Trying to Fight Unregulated Squid Fishing",
+          "cve": null,
+          "severity": "culture",
+          "score": 59,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Signal de veille — Schneier on Sec..\n\nThe EU is recommending import controls to combat unregulated squid fishing in the Southwest Atlantic. I&#8217;m not optimistic. As usual, you can also use this squid post to talk about the security stories in the news that I haven&#8217;t covered. Blog moderation policy.",
+          "detail": "Signal de veille — Schneier on Sec..\n\nThe EU is recommending import controls to combat unregulated squid fishing in the Southwest Atlantic. I&#8217;m not optimistic. As usual, you can also use this squid post to talk about the security stories in the news that I haven&#8217;t covered. Blog moderation policy.",
+          "action": null,
+          "image": null,
+          "sources": [
+            {
+              "url": "https://www.schneier.com/blog/archives/2026/10/friday-squid-blogging-eu-is-trying-to-fight-unregulated-squid-fishing.html",
+              "label": "Schneier on Sec."
+            }
+          ],
+          "url": "https://www.schneier.com/blog/archives/2026/10/friday-squid-blogging-eu-is-trying-to-fight-unregulated-squid-fishing.html",
+          "pubDate": "2026-10-02T21:02:18.000Z"
+        },
+        {
+          "title": "How American Political Campaigns Are Using AI—and What They’re Spending on the Tools",
+          "cve": null,
+          "severity": "culture",
+          "score": 59,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Signal de veille — Schneier on Sec..\n\nThis essay was written with Nathan E. Sanders, and originally appeared in The Guardian . New campaign finance disclosure data shines a light on which US political campaigns are using AI tools and how much they are spending on them. Candidates&#8217;, parties&#8217; and committees&#8217; spending reveals that AI is fast becoming an essential tool of politics.",
+          "detail": "Signal de veille — Schneier on Sec..\n\nThis essay was written with Nathan E. Sanders, and originally appeared in The Guardian . New campaign finance disclosure data shines a light on which US political campaigns are using AI tools and how much they are spending on them. Candidates&#8217;, parties&#8217; and committees&#8217; spending reveals that AI is fast becoming an essential tool of politics. The candidates themselves are quiet about how they are using the technology in their own campaigns . It&#8217;s a sensitive issue that we have been tracking closely since we started writing our book, Rewiring Democracy , which examined how AI is beginning to influence politics. A September 2025 Pew survey of Americans found that more than 70% would think less of a candidate if they used AI to help write a speech. Itemized expenditure disclosure data from the US Federal Election Commission, dating back to 2020, reveals at least $17m in disclosed spending on AI technology vendors across 523 federal candidates and campaigns. Data from four states, California, Colorado, Massachusetts and Washington, provides a more localized picture going back to 2022. Beginning with the AI behemoths, at least 80 federal campaigns and committees have reported spending with OpenAI since 2024. The total spending is not huge: only about $50,000 reported, skewing slightly more Republican than Democratic. The Republican National Committee is the lar",
+          "action": null,
+          "image": null,
+          "sources": [
+            {
+              "url": "https://www.schneier.com/blog/archives/2026/10/how-american-political-campaigns-are-using-ai-and-what-theyre-spending-on-the-tools.html",
+              "label": "Schneier on Sec."
+            }
+          ],
+          "url": "https://www.schneier.com/blog/archives/2026/10/how-american-political-campaigns-are-using-ai-and-what-theyre-spending-on-the-tools.html",
+          "pubDate": "2026-10-02T11:02:19.000Z"
+        },
+        {
+          "title": "Is Your Organization Ready for 2027's AI Accountability Era?",
+          "cve": null,
+          "severity": "culture",
+          "score": 55,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Signal de veille — Dark Reading.\n\nOrganizations may face an artificial intelligence (AI) reckoning over the next year. Omdia and Gartner weigh in on how to tackle the governance, security, and value challenges ahead.",
+          "detail": "Signal de veille — Dark Reading.\n\nOrganizations may face an artificial intelligence (AI) reckoning over the next year. Omdia and Gartner weigh in on how to tackle the governance, security, and value challenges ahead.",
+          "action": null,
+          "image": null,
+          "sources": [
+            {
+              "url": "https://www.darkreading.com/cybersecurity-operations/is-your-organization-ready-for-2027-s-ai-accountability-era-",
+              "label": "Dark Reading"
+            }
+          ],
+          "url": "https://www.darkreading.com/cybersecurity-operations/is-your-organization-ready-for-2027-s-ai-accountability-era-",
+          "pubDate": "2026-10-02T16:01:22.000Z"
+        },
+        {
+          "title": "Is It Fair to Blame 'Rogue' AI for Security Failures?",
+          "cve": null,
+          "severity": "culture",
+          "score": 55,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Signal de veille — Dark Reading.\n\n&quot;Rogue AI&quot; terminology anthropomorphizes LLMs and shifts risk responsibility from vendors. Defenders should treat agents as untrusted, nondeterministic software systems, not sentient beings with malicious intent.",
+          "detail": "Signal de veille — Dark Reading.\n\n&quot;Rogue AI&quot; terminology anthropomorphizes LLMs and shifts risk responsibility from vendors. Defenders should treat agents as untrusted, nondeterministic software systems, not sentient beings with malicious intent.",
+          "action": null,
+          "image": null,
+          "sources": [
+            {
+              "url": "https://www.darkreading.com/insider-threats/blame-rogue-ai-security-failures",
+              "label": "Dark Reading"
+            }
+          ],
+          "url": "https://www.darkreading.com/insider-threats/blame-rogue-ai-security-failures",
+          "pubDate": "2026-10-02T15:51:33.000Z"
+        },
+        {
+          "title": "Safari History Database Tags Can Reveal Users’ Browsing Themes in Forensic Investigations",
+          "cve": null,
+          "severity": "culture",
+          "score": 48,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Signal de veille — GBHackers.\n\nSafari&#8217;s History database contains a lesser-known tagging artifact that can help investigators infer a user’s browsing themes. While this feature is not definitive evidence of intent, when correlated with URLs, visit times, cache data, downloads, and network telemetry, it can provide useful context for macOS forensic timelines.",
+          "detail": "Signal de veille — GBHackers.\n\nSafari&#8217;s History database contains a lesser-known tagging artifact that can help investigators infer a user’s browsing themes. While this feature is not definitive evidence of intent, when correlated with URLs, visit times, cache data, downloads, and network telemetry, it can provide useful context for macOS forensic timelines. Safari History Tags and Browsing Themes Safari&#8217;s History.db [&#8230;] The post Safari History Database Tags Can Reveal Users’ Browsing Themes in Forensic Investigations appeared first on GBHackers Security | #1 Globally Trusted Cyber Security News Platform .",
+          "action": null,
+          "image": "https://gbhackers.com/wp-content/uploads/2026/10/afa3031f-b15b-4a21-a66d-290ee71e669e-1.webp",
+          "sources": [
+            {
+              "url": "https://gbhackers.com/safari-history-database-tags-can-reveal-users-browsing-themes/",
+              "label": "GBHackers"
+            }
+          ],
+          "url": "https://gbhackers.com/safari-history-database-tags-can-reveal-users-browsing-themes/",
+          "pubDate": "2026-10-02T12:35:11.000Z"
+        },
+        {
+          "title": "Installation et utilisation de Claude Code : premiers pas",
+          "cve": null,
+          "severity": "culture",
+          "score": 48,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Signal de veille — IT-Connect.\n\nApprenez à installer et à utiliser Claude Code sur Windows ou Linux, en GUI ou CLI, pour commencer à lire, écrire et exécuter du code sur votre machine.\n\nActualités IT & Tech, tutoriels en administration système, réseau et cybersécurité.\n\nArchitecture Réseau Cybersécurité Linux & Logiciels Libres Microsoft (On-Premise) Microsoft 365 & Azure Self-Hosting & Open Source Stockage & NAS Cours IT Actualités Entreprise Actu Cybersécurité Web Logiciel – OS Matérie…",
+          "detail": "Signal de veille — IT-Connect.\n\nApprenez à installer et à utiliser Claude Code sur Windows ou Linux, en GUI ou CLI, pour commencer à lire, écrire et exécuter du code sur votre machine.\n\nActualités IT & Tech, tutoriels en administration système, réseau et cybersécurité.\n\nArchitecture Réseau Cybersécurité Linux & Logiciels Libres Microsoft (On-Premise) Microsoft 365 & Azure Self-Hosting & Open Source Stockage & NAS Cours IT Actualités Entreprise Actu Cybersécurité Web Logiciel – OS Matériel Réseaux sociaux Mobile Bons Plans Tests Débutants Livres Vidéos IT-Connect » Cours - Tutoriels » Web, Dev & IA » IA » Installation et utilisation de Claude Code : premiers pas IA Installation et utilisation de Claude Code : premiers pas 02/10/2026 Mickael Dorigny 2 commentaires Claude , IA Claude Code est l'interface officielle d'Anthropic pour accéder à Claude localement, sur votre système. Contrairement à l'interface web bien connue du LLM, Claude Code offre une intégration directe dans votre système. Nous allons voir dans cet article comment l'installer et l'utiliser sous Windows et sous Linux, en ligne de commande comme en GUI.\n\nPour un grand nombre de cas d'usage, l'intégration de Claude Code apporte de nouvelles opportunités d'utilisation. Vous pourrez utiliser Claude pour qu'il lise, crée et modifie des documents, du code ou des scripts, mais aussi pour qu'il exécute des commandes. Cela permet d'aller bien au-delà de la simple conversation que l'on a habituellement avec un LLM. Nous verrons aussi les risques liés à ce nouvel usage.\n\nCet article couvre l'installation graphique (Windows et Linux), la CLI (Linux), la configuration basique, et les cas d'usage concrets. À la fin, vous saurez installer Claude Code et l'utiliser pour vos premiers projets réels.\n\nClaude Code est un outi",
+          "action": null,
+          "image": "https://www.it-connect.fr/wp-content-itc/uploads/2026/09/tuto-installation-claude-code.jpg",
+          "sources": [
+            {
+              "url": "https://www.it-connect.fr/tuto-installation-et-utilisation-de-claude-code/",
+              "label": "IT-Connect"
+            }
+          ],
+          "url": "https://www.it-connect.fr/tuto-installation-et-utilisation-de-claude-code/",
+          "pubDate": "2026-10-02T07:45:00.000Z"
+        },
+        {
+          "title": "Criminal recruiters want people on your payroll",
+          "cve": null,
+          "severity": "culture",
+          "score": 48,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Signal de veille — Help Net Security.\n\nLegitimate employee access can let criminals circumvent security controls that would be difficult to overcome from outside an organization. Routine actions such as information lookups, account resets, transaction approvals and shipment changes can become services sold to criminal customers, according to Intel 471’s Insiders for Hire: Underground Recruitment, Access Claims and Insider-Enabled Services report.",
+          "detail": "Signal de veille — Help Net Security.\n\nLegitimate employee access can let criminals circumvent security controls that would be difficult to overcome from outside an organization. Routine actions such as information lookups, account resets, transaction approvals and shipment changes can become services sold to criminal customers, according to Intel 471’s Insiders for Hire: Underground Recruitment, Access Claims and Insider-Enabled Services report. A market for insider capabilities Cybercriminals sought employees at specific organizations, offered payments to brokers and referrers to find suitable personnel, &#8230; More &#8594; The post Criminal recruiters want people on your payroll appeared first on Help Net Security .",
+          "action": null,
+          "image": "https://img.helpnetsecurity.com/wp-content/uploads/2026/06/09174915/insider-threat.webp",
+          "sources": [
+            {
+              "url": "https://www.helpnetsecurity.com/2026/10/02/intel-471-insider-threat-recruitment-report/",
+              "label": "Help Net Security"
+            }
+          ],
+          "url": "https://www.helpnetsecurity.com/2026/10/02/intel-471-insider-threat-recruitment-report/",
+          "pubDate": "2026-10-02T06:00:05.000Z"
+        },
+        {
+          "title": "AI agents keep access to company data after their work is done",
+          "cve": null,
+          "severity": "high",
+          "score": 48,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Signal de veille — Help Net Security.\n\nIT teams responsible for identity security are concerned about AI agents’ ongoing access to company systems and the actions they take on users’ behalf, according to a Delinea’s 2026 Identity Security Report: The AI Enforcement Gap. “Written policy is only as good as your ability to enforce it at the moment an AI agent acts,” said Art Gilliland, CEO of Delinea.",
+          "detail": "Signal de veille — Help Net Security.\n\nIT teams responsible for identity security are concerned about AI agents’ ongoing access to company systems and the actions they take on users’ behalf, according to a Delinea’s 2026 Identity Security Report: The AI Enforcement Gap. “Written policy is only as good as your ability to enforce it at the moment an AI agent acts,” said Art Gilliland, CEO of Delinea. “Our research echoes what I hear from leaders constantly: they have the AI policies &#8230; More &#8594; The post AI agents keep access to company data after their work is done appeared first on Help Net Security .",
+          "action": null,
+          "image": "https://img.helpnetsecurity.com/wp-content/uploads/2026/03/27085031/ai-evolution-1500.webp",
+          "sources": [
+            {
+              "url": "https://www.helpnetsecurity.com/2026/10/02/delinea-ai-policy-adoption-enforcement-report/",
+              "label": "Help Net Security"
+            }
+          ],
+          "url": "https://www.helpnetsecurity.com/2026/10/02/delinea-ai-policy-adoption-enforcement-report/",
+          "pubDate": "2026-10-02T04:30:21.000Z"
+        },
+        {
+          "title": "Wer trägt die Verantwortung, wenn KI handelt?",
+          "cve": null,
+          "severity": "culture",
+          "score": 45,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Signal de veille — Global Sec Mag.\n\nVertex-CEO Chris Young: Vertrauen und Governance müssen Schritt halten Chris Young Vertex „Die Debatte über das Tempo der KI-Entwicklung ist wichtig, weil die Fähigkeiten heutiger Modelle bestimmen werden, wie KI künftig in Wirtschaft und Gesellschaft eingesetzt wird. Geschwindigkeit und Leistungsfähigkeit sind jedoch nur ein Teil der Gleichung. Vertrauen, Verantwortlichkeit und Governance müssen sich parallel zur Technologie weiterentwickeln.",
+          "detail": "Signal de veille — Global Sec Mag.\n\nVertex-CEO Chris Young: Vertrauen und Governance müssen Schritt halten Chris Young Vertex „Die Debatte über das Tempo der KI-Entwicklung ist wichtig, weil die Fähigkeiten heutiger Modelle bestimmen werden, wie KI künftig in Wirtschaft und Gesellschaft eingesetzt wird. Geschwindigkeit und Leistungsfähigkeit sind jedoch nur ein Teil der Gleichung. Vertrauen, Verantwortlichkeit und Governance müssen sich parallel zur Technologie weiterentwickeln. Wir haben eine vergleichbare Entwicklung bereits bei der Einführung der Cloud erlebt. Mit zunehmender Verbreitung entwickelten Anbieter und Unternehmen gemeinsame Modelle für Sicherheit, Governance und Verantwortlichkeit. Das notwendige Vertrauen musste mit den technologischen Fähigkeiten wachsen - und genau das ist geschehen. Agentenbasierte KI tritt nun in eine ähnliche Phase ein. Der entscheidende Unterschied: KI-Agenten geben nicht nur Empfehlungen, sondern können innerhalb festgelegter Befugnisse selbstständig handeln. Die dafür erforderlichen Vertrauensstrukturen können nicht allein in der Verantwortung der Modellentwickler liegen. Unternehmen müssen selbst klare Grenzen definieren, festlegen, bei welchen Entscheidungen menschliches Urteilsvermögen unverzichtbar bleibt, das tatsächliche Verhalten der eingesetzten Agenten überwachen und eindeutige Möglichkeiten schaffen, in automatisierte Abläufe einzugreifen. Menschen werden nicht j",
+          "action": null,
+          "image": "https://www.globalsecuritymag.fr/local/cache-vignettes/L1200xH630/800b107ca284596996d4adb38a2f4d-1cd8c.jpg",
+          "sources": [
+            {
+              "url": "https://www.globalsecuritymag.fr/wer-tragt-die-verantwortung-wenn-ki-handelt.html",
+              "label": "Global Sec Mag"
+            }
+          ],
+          "url": "https://www.globalsecuritymag.fr/wer-tragt-die-verantwortung-wenn-ki-handelt.html",
+          "pubDate": "2026-10-03T04:01:02.590Z"
+        },
+        {
+          "title": "ChatGPT, suite collaborative : OpenAI s’en approche",
+          "cve": null,
+          "severity": "culture",
+          "score": 45,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Signal de veille — Silicon.fr.\n\nLa bibliothèque s&rsquo;en va, les pages et les espaces arrivent, les projets restent : ainsi évolue ChatGPT. Ce changement n&rsquo;est pas que terminologique. Il est aussi fonctionnel. Avec lui, OpenAI introduit une couche d&rsquo;édition collaborative. Elle s&rsquo;incarne pour le moment en un format : les fameuses « pages », équivalentes à des documents Word. Les « espaces » servent à les organiser, éventuellement aux côtés de fichiers importés.",
+          "detail": "Signal de veille — Silicon.fr.\n\nLa bibliothèque s&rsquo;en va, les pages et les espaces arrivent, les projets restent : ainsi évolue ChatGPT. Ce changement n&rsquo;est pas que terminologique. Il est aussi fonctionnel. Avec lui, OpenAI introduit une couche d&rsquo;édition collaborative. Elle s&rsquo;incarne pour le moment en un format : les fameuses « pages », équivalentes à des documents Word. Les « espaces » servent à les organiser, éventuellement aux côtés de fichiers importés. Ils sont, en quelque sorte, ce que les « projets » sont aux conversations*, en plus de remplir la fonction jusque-là dévolue à la « bibliothèque ». L&rsquo;ensemble arrive progressivement sur les forfaits ChatGPT Pro, Business (ex-Team) et Enterprise. L&rsquo;édition collaborative est pour le moment opérationnelle sur le web et les applications de bureau. Sur mobile, on ne peut que consulter les pages. Feuilles de calcul et diapositives sont censées s&rsquo;y ajouter « bientôt ». ChatGPT Work avait ouvert la voie OpenAI avait déjà développé l&rsquo;aspect suite de productivité avec le mode ChatGPT Work. Lancé en juillet sur les forfaits Business et Enterprise, il complète les modes Chat et Codex pour accompagner la « production de livrables finalisés » (documents texte, feuilles de calcul, présentations, rapports et sites), y compris dans Excel et Google Workspace. L&rsquo;aspect collaboration s&rsquo;est notamment manisfesté, pendan",
+          "action": null,
+          "image": "https://www.silicon.fr/wp-content/uploads/2026/10/ChatGPT-suite-collaborative.jpg",
+          "sources": [
+            {
+              "url": "https://www.silicon.fr/workspace-1376/chatgpt-suite-collaborative-229492",
+              "label": "Silicon.fr"
+            }
+          ],
+          "url": "https://www.silicon.fr/workspace-1376/chatgpt-suite-collaborative-229492",
+          "pubDate": "2026-10-02T14:55:34.000Z"
+        }
+      ]
+    }
+  ]
+}
