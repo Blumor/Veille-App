@@ -1,0 +1,849 @@
+{
+  "id": "daily-2026-10-11",
+  "type": "daily",
+  "date": "2026-10-11",
+  "title": "Rapport quotidien - dimanche 11 octobre 2026",
+  "summary": "Sur les dernières 24 heures, la veille recense 12 vulnérabilités critiques, 20 incidents ou compromissions et 6 signaux de fond. Acteurs et produits les plus exposés : GitHub, Linux et Windows.",
+  "generatedAt": "2026-10-11T04:01:17.866Z",
+  "sections": [
+    {
+      "id": "vulns",
+      "items": [
+        {
+          "title": "CVE-2026-104803 — The WPCOM Member plugin for WordPress is vulnerable to Authentication Bypass in all versio…",
+          "cve": "CVE-2026-104803",
+          "severity": "critical",
+          "score": 74,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Vulnérabilité critique CVE-2026-104803 (score CVSS 9.8).\n\nThe WPCOM Member plugin for WordPress is vulnerable to Authentication Bypass in all versions up to, and including, 1.7.27 via the `uuid` and `code` parameters of the social-login callback handler registered on the `init` hook. The vulnerability exists because the `login` function's social-login flow performs no nonce validation, no OAuth state verification, and no per-visitor namespace isolation in the session store, allowing an unauthenticated attacker to…",
+          "detail": "Vulnérabilité critique CVE-2026-104803 (score CVSS 9.8).\n\nThe WPCOM Member plugin for WordPress is vulnerable to Authentication Bypass in all versions up to, and including, 1.7.27 via the `uuid` and `code` parameters of the social-login callback handler registered on the `init` hook. The vulnerability exists because the `login` function's social-login flow performs no nonce validation, no OAuth state verification, and no per-visitor namespace isolation in the session store, allowing an unauthenticated attacker to issue a crafted GET request that writes an attacker-named, attacker-valued entry into the global session namespace (bypassing the per-visitor prefix by prepending an underscore), then issue a second GET request triggering `weapp_new_user()` to read that forged entry and resolve the attacker-supplied `openid` value to a bound WordPress account before `wp_set_auth_cookie()` establishes a fully authenticated session. This makes it possible for unauthenticated attackers to log in as any WordPress user — including administrators — whose bound social provider identifier (openid/unionid) is known or discoverable. Successful exploitation requires that the target site has at least one social provider configured (which activates the vulnerable handler) and that the attacker knows or can enumerate the victim account's bound openid or unionid.\n\nScore CVSS : 9.8\n\nType de faiblesse (CWE) : CWE-287",
+          "action": "Vérifier l'exposition du parc et appliquer le correctif éditeur dès sa disponibilité.",
+          "image": null,
+          "sources": [
+            {
+              "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-104803",
+              "label": "NVD"
+            },
+            {
+              "url": "https://www.cvedetails.com/cve/CVE-2026-104803/",
+              "label": "CVE Details"
+            }
+          ],
+          "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-104803",
+          "pubDate": "2026-10-10T08:17:04.210Z"
+        },
+        {
+          "title": "CVE-2026-103889 — The 3D Product configurator for WooCommerce plugin for WordPress is vulnerable to Remote C…",
+          "cve": "CVE-2026-103889",
+          "severity": "critical",
+          "score": 74,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Vulnérabilité critique CVE-2026-103889 (score CVSS 9.8).\n\nThe 3D Product configurator for WooCommerce plugin for WordPress is vulnerable to Remote Code Execution in all versions up to, and including, 2.16.2 via the 'xpv_image' parameter parameter. This is due to missing authentication and nonce checks on the wp_loaded handler combined with no sanitization of the xpv_image POST parameter before it is echoed unescaped into a Dompdf-rendered HTML template with PHP execution enabled.",
+          "detail": "Vulnérabilité critique CVE-2026-103889 (score CVSS 9.8).\n\nThe 3D Product configurator for WooCommerce plugin for WordPress is vulnerable to Remote Code Execution in all versions up to, and including, 2.16.2 via the 'xpv_image' parameter parameter. This is due to missing authentication and nonce checks on the wp_loaded handler combined with no sanitization of the xpv_image POST parameter before it is echoed unescaped into a Dompdf-rendered HTML template with PHP execution enabled. This makes it possible for unauthenticated attackers to execute code on the server. The only nonce and authentication check in the handler is entirely enclosed in a block comment with no replacement, making the endpoint reachable via a single unauthenticated POST to any URL on the site.\n\nScore CVSS : 9.8\n\nType de faiblesse (CWE) : CWE-434",
+          "action": "Vérifier l'exposition du parc et appliquer le correctif éditeur dès sa disponibilité.",
+          "image": null,
+          "sources": [
+            {
+              "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-103889",
+              "label": "NVD"
+            },
+            {
+              "url": "https://www.cvedetails.com/cve/CVE-2026-103889/",
+              "label": "CVE Details"
+            }
+          ],
+          "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-103889",
+          "pubDate": "2026-10-10T05:16:39.130Z"
+        },
+        {
+          "title": "CVE-2026-104732 — The Advanced IP Blocker plugin for WordPress is vulnerable to Authentication Bypass in all…",
+          "cve": "CVE-2026-104732",
+          "severity": "critical",
+          "score": 74,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Vulnérabilité critique CVE-2026-104732 (score CVSS 9.8).\n\nThe Advanced IP Blocker plugin for WordPress is vulnerable to Authentication Bypass in all versions up to, and including, 8.13.13 The vulnerability exists because `handle_login_action()` performs no server-side check — via transient, session marker, or equivalent — that a requester completed step-1 password authentication before processing a step-2 TOTP submission for the POSTed `user_id`; compounding this, an error branch in the function unconditionally m…",
+          "detail": "Vulnérabilité critique CVE-2026-104732 (score CVSS 9.8).\n\nThe Advanced IP Blocker plugin for WordPress is vulnerable to Authentication Bypass in all versions up to, and including, 8.13.13 The vulnerability exists because `handle_login_action()` performs no server-side check — via transient, session marker, or equivalent — that a requester completed step-1 password authentication before processing a step-2 TOTP submission for the POSTed `user_id`; compounding this, an error branch in the function unconditionally mints a fresh `advaipbl-2fa-interim-{user_id}` nonce and delivers it in a `Location` header to any unauthenticated caller, after which `display_2fa_login_form_step_2()` renders a valid `advaipbl-2fa-verify-{user_id}` nonce in HTML — both nonces computed against a fixed `uid=0` empty-session context and therefore fully reusable by the attacker across subsequent requests. This makes it possible for unauthenticated attackers to bypass authentication entirely for any 2FA-enabled account, including administrators, by brute-forcing an unthrottled 6-digit TOTP code (no attempt counter, no account lockout, and no `wp_login_failed` firing) and receiving a fully authenticated session cookie via `wp_set_auth_cookie` without ever supplying the account password, resulting in complete site takeover. Exploitation requires only a known `user_id` for an account that has the plugin's 2FA feature enabled.\n\nScore CVSS : 9.8\n\nType de faiblesse (CWE) : CWE-287",
+          "action": "Vérifier l'exposition du parc et appliquer le correctif éditeur dès sa disponibilité.",
+          "image": null,
+          "sources": [
+            {
+              "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-104732",
+              "label": "NVD"
+            },
+            {
+              "url": "https://www.cvedetails.com/cve/CVE-2026-104732/",
+              "label": "CVE Details"
+            }
+          ],
+          "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-104732",
+          "pubDate": "2026-10-10T04:18:08.493Z"
+        },
+        {
+          "title": "CVE-2026-104801 — The PPOM – Product Addons & Custom Fields for WooCommerce plugin for WordPress is vulnerab…",
+          "cve": "CVE-2026-104801",
+          "severity": "critical",
+          "score": 72,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Vulnérabilité critique CVE-2026-104801 (score CVSS 9.1).\n\nThe PPOM – Product Addons & Custom Fields for WooCommerce plugin for WordPress is vulnerable to arbitrary file deletion due to insufficient file path validation in the rename_files function in all versions up to, and including, 34.0.10 This makes it possible for unauthenticated attackers to delete arbitrary files on the server, which can easily lead to remote code execution when the right file is deleted (such as wp-config.php).",
+          "detail": "Vulnérabilité critique CVE-2026-104801 (score CVSS 9.1).\n\nThe PPOM – Product Addons & Custom Fields for WooCommerce plugin for WordPress is vulnerable to arbitrary file deletion due to insufficient file path validation in the rename_files function in all versions up to, and including, 34.0.10 This makes it possible for unauthenticated attackers to delete arbitrary files on the server, which can easily lead to remote code execution when the right file is deleted (such as wp-config.php). The relocated file is moved byte-identically into the publicly accessible wp-content/uploads/ppom_files/confirmed/ directory, meaning the attack also results in arbitrary file read for any web-readable file on the server.\n\nScore CVSS : 9.1\n\nType de faiblesse (CWE) : CWE-22",
+          "action": "Vérifier l'exposition du parc et appliquer le correctif éditeur dès sa disponibilité.",
+          "image": null,
+          "sources": [
+            {
+              "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-104801",
+              "label": "NVD"
+            },
+            {
+              "url": "https://www.cvedetails.com/cve/CVE-2026-104801/",
+              "label": "CVE Details"
+            }
+          ],
+          "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-104801",
+          "pubDate": "2026-10-10T07:16:40.560Z"
+        },
+        {
+          "title": "CVE-2026-97670 — The Avada (Fusion) Builder plugin for WordPress is vulnerable to authorization bypass in a…",
+          "cve": "CVE-2026-97670",
+          "severity": "critical",
+          "score": 72,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Vulnérabilité critique CVE-2026-97670 (score CVSS 9.1).\n\nThe Avada (Fusion) Builder plugin for WordPress is vulnerable to authorization bypass in all versions up to, and including, 7.16.1. This is due to the plugin not properly verifying authorization before dispatching a WordPress action hook whose name is taken from an attacker-supplied form-field value (via the notification email_message [field] placeholder and the {action_hook,...} dynamic-data token; the 3.16.1 trust gate is_content_request_supplied() only…",
+          "detail": "Vulnérabilité critique CVE-2026-97670 (score CVSS 9.1).\n\nThe Avada (Fusion) Builder plugin for WordPress is vulnerable to authorization bypass in all versions up to, and including, 7.16.1. This is due to the plugin not properly verifying authorization before dispatching a WordPress action hook whose name is taken from an attacker-supplied form-field value (via the notification email_message [field] placeholder and the {action_hook,...} dynamic-data token; the 3.16.1 trust gate is_content_request_supplied() only inspects $_POST['args']/$_GET['args'], never the $_POST['formData'] the public form-submit endpoint parses). This makes it possible for unauthenticated attackers to invoke arbitrary WordPress action hooks (multiple per request), causing state changes up to permanent, irreversible destruction of site content: a verified unauthenticated request permanently deleted trashed posts, pages, and comments via the core wp_scheduled_delete action. Other non-deny-listed hooks extend the impact to denial of service (e.g. wp_maybe_auto_update) and, where vulnerable third-party handlers are installed, further privileged writes. The same unauthenticated dynamic-data pipeline additionally exposes a blind arbitrary user/post-meta read; the read result is delivered only to the site owner and is not attacker-exfiltrable through the plugin's own email/response paths. Exploitation requires a published Avada form with AJAX submission and a notification whose email_message template includes an [all_fields] or explicit [field] placeholder - the default form configuration.\n\nScore CVSS : 9.1\n\nType de faiblesse (CWE) : CWE-94",
+          "action": "Vérifier l'exposition du parc et appliquer le correctif éditeur dès sa disponibilité.",
+          "image": null,
+          "sources": [
+            {
+              "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-97670",
+              "label": "NVD"
+            },
+            {
+              "url": "https://www.cvedetails.com/cve/CVE-2026-97670/",
+              "label": "CVE Details"
+            }
+          ],
+          "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-97670",
+          "pubDate": "2026-10-10T05:16:40.850Z"
+        },
+        {
+          "title": "CVE-2026-107645 — The Blocksy Companion plugin for WordPress is vulnerable to privilege escalation in versio…",
+          "cve": "CVE-2026-107645",
+          "severity": "critical",
+          "score": 72,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Vulnérabilité critique CVE-2026-107645 (score CVSS 9.1).\n\nThe Blocksy Companion plugin for WordPress is vulnerable to privilege escalation in versions up to, and including, 2.1.58 This is due to the implement_user_registration() AJAX handler explicitly disabling Dokan's vendor-registration nonce check (via add_filter('dokan_register_nonce_check', '__return_false')) and then trusting an attacker-supplied $_POST['role'] value when invoking wc_create_new_customer() and wc_set_customer_auth_cookie().",
+          "detail": "Vulnérabilité critique CVE-2026-107645 (score CVSS 9.1).\n\nThe Blocksy Companion plugin for WordPress is vulnerable to privilege escalation in versions up to, and including, 2.1.58 This is due to the implement_user_registration() AJAX handler explicitly disabling Dokan's vendor-registration nonce check (via add_filter('dokan_register_nonce_check', '__return_false')) and then trusting an attacker-supplied $_POST['role'] value when invoking wc_create_new_customer() and wc_set_customer_auth_cookie(). This makes it possible for unauthenticated attackers to elevate their privileges to a Dokan 'seller' (vendor) account — including sites where the Dokan vendor signup is explicitly turned off — and to be auto-authenticated into that account, which grants publishing capabilities beyond those of a normal customer.\n\nScore CVSS : 9.1\n\nType de faiblesse (CWE) : CWE-269",
+          "action": "Vérifier l'exposition du parc et appliquer le correctif éditeur dès sa disponibilité.",
+          "image": null,
+          "sources": [
+            {
+              "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-107645",
+              "label": "NVD"
+            },
+            {
+              "url": "https://www.cvedetails.com/cve/CVE-2026-107645/",
+              "label": "CVE Details"
+            }
+          ],
+          "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-107645",
+          "pubDate": "2026-10-10T04:18:10.090Z"
+        },
+        {
+          "title": "Hackers Use AI Agents and GodPotato Exploit to Gain Windows SYSTEM Privileges",
+          "cve": null,
+          "severity": "critical",
+          "score": 61,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Vulnérabilité critique affectant Windows.\n\nHackers used AI agents to turn an exposed application endpoint into full administrative control of a server in under 24 hours. The intrusion involved hundreds of commands, credential theft, and Windows privilege escalation without new malware or a zero-day vulnerability.",
+          "detail": "Vulnérabilité critique affectant Windows.\n\nHackers used AI agents to turn an exposed application endpoint into full administrative control of a server in under 24 hours. The intrusion involved hundreds of commands, credential theft, and Windows privilege escalation without new malware or a zero-day vulnerability. Researchers Austin Ritchie and Daxton Wirth assessed with high confidence that large language model-driven agents [&#8230;] The post Hackers Use AI Agents and GodPotato Exploit to Gain Windows SYSTEM Privileges appeared first on GBHackers Security | #1 Globally Trusted Cyber Security News Platform .",
+          "action": "Vérifier l'exposition du parc et appliquer le correctif éditeur dès sa disponibilité.",
+          "image": "https://gbhackers.com/wp-content/uploads/2026/10/hackers-use-ai-agents-and-godpotato-exploit-to-gain-windows-system-privileges234-6ac9e600b6493.webp",
+          "sources": [
+            {
+              "url": "https://gbhackers.com/hackers-use-ai-agents-and-godpotato-exploit/",
+              "label": "GBHackers"
+            }
+          ],
+          "url": "https://gbhackers.com/hackers-use-ai-agents-and-godpotato-exploit/",
+          "pubDate": "2026-10-10T07:16:30.000Z"
+        },
+        {
+          "title": "CVE-2026-108707 — Wukong_HRM through commit 186115e contains an authentication bypass vulnerability in Param…",
+          "cve": "CVE-2026-108707",
+          "severity": "critical",
+          "score": 59,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Vulnérabilité critique CVE-2026-108707 (score CVSS 9.8).\n\nWukong_HRM through commit 186115e contains an authentication bypass vulnerability in ParamAspect that allows unauthenticated attackers to call every HRM API endpoint by omitting the AUTH-TOKEN header. Attackers gain HR administrator access to read payslips, salary history and employee personal data, download attachments, and modify or delete company-wide HR records.",
+          "detail": "Vulnérabilité critique CVE-2026-108707 (score CVSS 9.8).\n\nWukong_HRM through commit 186115e contains an authentication bypass vulnerability in ParamAspect that allows unauthenticated attackers to call every HRM API endpoint by omitting the AUTH-TOKEN header. Attackers gain HR administrator access to read payslips, salary history and employee personal data, download attachments, and modify or delete company-wide HR records.\n\nScore CVSS : 9.8\n\nType de faiblesse (CWE) : CWE-287",
+          "action": "Vérifier l'exposition du parc et appliquer le correctif éditeur dès sa disponibilité.",
+          "image": null,
+          "sources": [
+            {
+              "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-108707",
+              "label": "NVD"
+            },
+            {
+              "url": "https://www.cvedetails.com/cve/CVE-2026-108707/",
+              "label": "CVE Details"
+            }
+          ],
+          "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-108707",
+          "pubDate": "2026-10-11T02:16:39.477Z"
+        },
+        {
+          "title": "CVE-2026-108598 — Floci 1.1.0 before 2.2.0 contains a code injection vulnerability in VtlTemplateEngine that…",
+          "cve": "CVE-2026-108598",
+          "severity": "critical",
+          "score": 59,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Vulnérabilité critique CVE-2026-108598 (score CVSS 9.8).\n\nFloci 1.1.0 before 2.2.0 contains a code injection vulnerability in VtlTemplateEngine that allows unauthenticated attackers to execute commands via unrestricted Velocity mapping templates. Attackers can create a REST API with a MOCK integration whose template uses $util reflection to reach Runtime or ProcessBuilder, executing OS commands in the Floci JVM.",
+          "detail": "Vulnérabilité critique CVE-2026-108598 (score CVSS 9.8).\n\nFloci 1.1.0 before 2.2.0 contains a code injection vulnerability in VtlTemplateEngine that allows unauthenticated attackers to execute commands via unrestricted Velocity mapping templates. Attackers can create a REST API with a MOCK integration whose template uses $util reflection to reach Runtime or ProcessBuilder, executing OS commands in the Floci JVM.\n\nScore CVSS : 9.8\n\nType de faiblesse (CWE) : CWE-94",
+          "action": "Vérifier l'exposition du parc et appliquer le correctif éditeur dès sa disponibilité.",
+          "image": null,
+          "sources": [
+            {
+              "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-108598",
+              "label": "NVD"
+            },
+            {
+              "url": "https://www.cvedetails.com/cve/CVE-2026-108598/",
+              "label": "CVE Details"
+            }
+          ],
+          "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-108598",
+          "pubDate": "2026-10-10T19:16:58.347Z"
+        },
+        {
+          "title": "CVE-2026-108551 — openapi-typescript-codegen through 0.31.0 contains a code injection vulnerability that all…",
+          "cve": "CVE-2026-108551",
+          "severity": "critical",
+          "score": 59,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Vulnérabilité critique CVE-2026-108551 (score CVSS 9.8).\n\nopenapi-typescript-codegen through 0.31.0 contains a code injection vulnerability that allows attackers controlling an OpenAPI document to inject JavaScript by supplying unescaped values interpolated into single-quoted string literals. Attackers can embed a single quote in path keys, parameter names, servers[0].url, or info.version to execute arbitrary JavaScript when generated clients are imported or service methods called.",
+          "detail": "Vulnérabilité critique CVE-2026-108551 (score CVSS 9.8).\n\nopenapi-typescript-codegen through 0.31.0 contains a code injection vulnerability that allows attackers controlling an OpenAPI document to inject JavaScript by supplying unescaped values interpolated into single-quoted string literals. Attackers can embed a single quote in path keys, parameter names, servers[0].url, or info.version to execute arbitrary JavaScript when generated clients are imported or service methods called.\n\nScore CVSS : 9.8\n\nType de faiblesse (CWE) : CWE-94",
+          "action": "Vérifier l'exposition du parc et appliquer le correctif éditeur dès sa disponibilité.",
+          "image": null,
+          "sources": [
+            {
+              "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-108551",
+              "label": "NVD"
+            },
+            {
+              "url": "https://www.cvedetails.com/cve/CVE-2026-108551/",
+              "label": "CVE Details"
+            }
+          ],
+          "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-108551",
+          "pubDate": "2026-10-10T15:16:58.273Z"
+        },
+        {
+          "title": "CVE-2026-94589 — The Extensions For CF7 (Contact form 7 Database, Conditional Fields and Redirection) plugi…",
+          "cve": "CVE-2026-94589",
+          "severity": "critical",
+          "score": 59,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Vulnérabilité critique CVE-2026-94589 (score CVSS 9.8).\n\nThe Extensions For CF7 (Contact form 7 Database, Conditional Fields and Redirection) plugin for WordPress is vulnerable to Arbitrary File Upload in all versions up to, and including, 3.4.5 via the extcf7_submit function. This is due to missing file extension, MIME type, and size validation in the signature field's validation_filter(), combined with the absence of PHP-execution guards in the upload directory and a sanitize_file_name() bypass that converts s…",
+          "detail": "Vulnérabilité critique CVE-2026-94589 (score CVSS 9.8).\n\nThe Extensions For CF7 (Contact form 7 Database, Conditional Fields and Redirection) plugin for WordPress is vulnerable to Arbitrary File Upload in all versions up to, and including, 3.4.5 via the extcf7_submit function. This is due to missing file extension, MIME type, and size validation in the signature field's validation_filter(), combined with the absence of PHP-execution guards in the upload directory and a sanitize_file_name() bypass that converts shell.php- into shell.php. This makes it possible for unauthenticated attackers to upload files that may be executable, which makes remote code execution possible.\n\nScore CVSS : 9.8\n\nType de faiblesse (CWE) : CWE-434",
+          "action": "Vérifier l'exposition du parc et appliquer le correctif éditeur dès sa disponibilité.",
+          "image": null,
+          "sources": [
+            {
+              "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-94589",
+              "label": "NVD"
+            },
+            {
+              "url": "https://www.cvedetails.com/cve/CVE-2026-94589/",
+              "label": "CVE Details"
+            }
+          ],
+          "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-94589",
+          "pubDate": "2026-10-10T04:18:19.713Z"
+        },
+        {
+          "title": "Two AhsayCBS Zero-Day Vulnerabilities Actively Exploited to Take Over Backup Servers",
+          "cve": null,
+          "severity": "critical",
+          "score": 46,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Vulnérabilité critique.\n\nThreat actors are exploiting two zero-day vulnerabilities in Ahsay Cloud Backup Server (AhsayCBS) to compromise exposed backup servers without authentication and execute commands with SYSTEM privileges. Observed intrusions have deployed web shells and cryptocurrency miners, exposing weaknesses in the infrastructure that centrally manages backup operations.",
+          "detail": "Vulnérabilité critique.\n\nThreat actors are exploiting two zero-day vulnerabilities in Ahsay Cloud Backup Server (AhsayCBS) to compromise exposed backup servers without authentication and execute commands with SYSTEM privileges. Observed intrusions have deployed web shells and cryptocurrency miners, exposing weaknesses in the infrastructure that centrally manages backup operations. According to Field Effect’s October 9, 2026, report, exploitation began [&#8230;] The post Two AhsayCBS Zero-Day Vulnerabilities Actively Exploited to Take Over Backup Servers appeared first on GBHackers Security | #1 Globally Trusted Cyber Security News Platform .",
+          "action": "Vérifier l'exposition du parc et appliquer le correctif éditeur dès sa disponibilité.",
+          "image": "https://gbhackers.com/wp-content/uploads/2026/10/two-ahsaycbs-zero-day-vulnerabilities-actively-exploited-to-take-over-backup-servers3r-6ac9e8aa6cfbe.webp",
+          "sources": [
+            {
+              "url": "https://gbhackers.com/two-ahsaycbs-zero-day-vulnerabilities/",
+              "label": "GBHackers"
+            }
+          ],
+          "url": "https://gbhackers.com/two-ahsaycbs-zero-day-vulnerabilities/",
+          "pubDate": "2026-10-10T07:27:33.000Z"
+        },
+        {
+          "title": "Vigilance.fr - Noyau Linux : multiples vulnérabilités du 10/08/2026",
+          "cve": null,
+          "severity": "news",
+          "score": 31,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Vulnérabilité élevée affectant Linux.\n\nUn attaquant peut employer plusieurs vulnérabilités de Kitty, du 10/08/2026.\n\nCybersécurité Sécurité informatique Global Security Mag Magazine Online antivirus spywares offres emploi sécurité télécom réseau SOC CERT CSIRT DATA CENTERS Stockage Sauvegarde Archivage Restauration\n\nUn attaquant peut employer plusieurs vulnérabilités de Kitty, du 10/08/2026.",
+          "detail": "Vulnérabilité élevée affectant Linux.\n\nUn attaquant peut employer plusieurs vulnérabilités de Kitty, du 10/08/2026.\n\nCybersécurité Sécurité informatique Global Security Mag Magazine Online antivirus spywares offres emploi sécurité télécom réseau SOC CERT CSIRT DATA CENTERS Stockage Sauvegarde Archivage Restauration\n\nUn attaquant peut employer plusieurs vulnérabilités de Kitty, du 10/08/2026.",
+          "action": "Vérifier l'exposition du parc et appliquer le correctif éditeur dès sa disponibilité.",
+          "image": null,
+          "sources": [
+            {
+              "url": "https://www.globalsecuritymag.fr/vigilance-fr-kitty-quatre-vulnerabilites-du-10-08-2026.html",
+              "label": "Global Sec Mag"
+            }
+          ],
+          "url": "https://www.globalsecuritymag.fr/vigilance-fr-kitty-quatre-vulnerabilites-du-10-08-2026.html",
+          "pubDate": "2026-10-11T04:01:06.791Z"
+        },
+        {
+          "title": "Multiples vulnérabilités dans Apache Struts (09 octobre 2026)",
+          "cve": null,
+          "severity": "news",
+          "score": 31,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Vulnérabilité élevée affectant Apache.\n\nDe multiples vulnérabilités ont été découvertes dans Apache Struts. Certaines d'entre elles permettent à un attaquant de provoquer une exécution de code arbitraire à distance, un déni de service à distance et une atteinte à la confidentialité des données. L'éditeur indique que les versions 2 des... Voir en ligne : https://www.cert.ssi.gouv.fr/avis/C...",
+          "detail": "Vulnérabilité élevée affectant Apache.\n\nDe multiples vulnérabilités ont été découvertes dans Apache Struts. Certaines d'entre elles permettent à un attaquant de provoquer une exécution de code arbitraire à distance, un déni de service à distance et une atteinte à la confidentialité des données. L'éditeur indique que les versions 2 des... Voir en ligne : https://www.cert.ssi.gouv.fr/avis/C...",
+          "action": "Vérifier l'exposition du parc et appliquer le correctif éditeur dès sa disponibilité.",
+          "image": null,
+          "sources": [
+            {
+              "url": "https://www.globalsecuritymag.fr/vulnerabilite-dans-les-produits-tenable-09-octobre-2026.html",
+              "label": "Global Sec Mag"
+            }
+          ],
+          "url": "https://www.globalsecuritymag.fr/vulnerabilite-dans-les-produits-tenable-09-octobre-2026.html",
+          "pubDate": "2026-10-11T04:01:06.791Z"
+        },
+        {
+          "title": "Multiples vulnérabilités dans le noyau Linux d'Ubuntu (09 octobre 2026)",
+          "cve": null,
+          "severity": "news",
+          "score": 31,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Vulnérabilité élevée affectant Linux.\n\nDe multiples vulnérabilités ont été découvertes dans le noyau Linux d'Ubuntu. Certaines d'entre elles permettent à un attaquant de provoquer une élévation de privilèges, un déni de service à distance…\n\nCybersécurité Sécurité informatique Global Security Mag Magazine Online antivirus spywares offres emploi sécurité télécom réseau SOC CERT CSIRT DATA CENTERS Stockage Sauvegarde Archivage Restauration\n\nDe multiples vulnérabilités ont été découvertes dans le n…",
+          "detail": "Vulnérabilité élevée affectant Linux.\n\nDe multiples vulnérabilités ont été découvertes dans le noyau Linux d'Ubuntu. Certaines d'entre elles permettent à un attaquant de provoquer une élévation de privilèges, un déni de service à distance…\n\nCybersécurité Sécurité informatique Global Security Mag Magazine Online antivirus spywares offres emploi sécurité télécom réseau SOC CERT CSIRT DATA CENTERS Stockage Sauvegarde Archivage Restauration\n\nDe multiples vulnérabilités ont été découvertes dans le noyau Linux d’Ubuntu. Certaines d’entre elles permettent à un attaquant de provoquer une élévation de privilèges, un déni de service à distance et une atteinte à la confidentialité des données.",
+          "action": "Vérifier l'exposition du parc et appliquer le correctif éditeur dès sa disponibilité.",
+          "image": null,
+          "sources": [
+            {
+              "url": "https://www.globalsecuritymag.fr/multiples-vulnerabilites-dans-le-noyau-linux-d-ubuntu-09-octobre-2026.html",
+              "label": "Global Sec Mag"
+            }
+          ],
+          "url": "https://www.globalsecuritymag.fr/multiples-vulnerabilites-dans-le-noyau-linux-d-ubuntu-09-octobre-2026.html",
+          "pubDate": "2026-10-11T04:01:06.791Z"
+        }
+      ]
+    },
+    {
+      "id": "attacks",
+      "items": [
+        {
+          "title": "Silent Ransom Group Allegedly Extorted $207 Million Without Encrypting Files",
+          "cve": null,
+          "severity": "news",
+          "score": 73,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Incident de sécurité rapporté par Security Affairs.\n\nSilent Ransom Group allegedly extorted $207 million from 27 law firms in six months using phone calls and social engineering, not encryption. Silent Ransom Group doesn’t rely on encryption. No malware payload, no locked files, just phone calls and social engineering aimed almost entirely at law firms, and apparently it works extraordinarily well.",
+          "detail": "Incident de sécurité rapporté par Security Affairs.\n\nSilent Ransom Group allegedly extorted $207 million from 27 law firms in six months using phone calls and social engineering, not encryption. Silent Ransom Group doesn’t rely on encryption. No malware payload, no locked files, just phone calls and social engineering aimed almost entirely at law firms, and apparently it works extraordinarily well. A new leak of the group’s internal chats, first shared with DataBreaches by researcher Tammy Harper, backs that up with numbers. The leaked data comes from two of the group’s servers and covers about 13 months, from August 2025 to September 2026. It contains 5,692 chat messages about ransom negotiations, ways to access victims’ systems, and plans for future targets. &#8220;The leak was first shared with this site by Tammy Harper as an onion site with 5,692 chat messages that discuss victim payments, possible access methods, approaches to future victims, the purchase of an apartment in Moscow by one of the members, and discussions of guns and drones, among other topics.&#8221; reads the report published by DataBreaches. The chats also discuss personal matters, including one member buying an apartment in Moscow, as well as guns and drones. The conversations sound less like a secret criminal operation and more like a sales team sharing tips on how to make money. The group’s internal records claim that 27 law firms paid around $207 million",
+          "action": "Surveiller les indicateurs de compromission associés et contrôler les actifs exposés.",
+          "image": "https://securityaffairs.com/wp-content/uploads/2026/06/Silent-Ransom-Group.png",
+          "sources": [
+            {
+              "url": "https://securityaffairs.com/200719/cyber-crime/silent-ransom-group-allegedly-extorted-207-million-without-encrypting-files.html",
+              "label": "Security Affairs"
+            }
+          ],
+          "url": "https://securityaffairs.com/200719/cyber-crime/silent-ransom-group-allegedly-extorted-207-million-without-encrypting-files.html",
+          "pubDate": "2026-10-10T15:05:54.000Z"
+        },
+        {
+          "title": "Royal Thai Air Force — rançongiciel thegentlemen (TH)",
+          "cve": null,
+          "severity": "news",
+          "score": 70,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Incident de sécurité rapporté par ransomware.live.\n\nVictime revendiquée par le groupe de rançongiciel thegentlemen. Pays : TH. Secteur : Government & Defense. rtaf.mi.th is the official portal of the Royal Thai Air Force, one of Asia's oldest air forces (founded November 2, 1913; independent since 1937), with ~46,000 personnel and 11 combat wings, now running a modern Odoo-based portal publishing financial reports, procurement plans, and White Papers on its \"Unbeatable Air Force\" roadmap to 2037.",
+          "detail": "Incident de sécurité rapporté par ransomware.live.\n\nVictime revendiquée par le groupe de rançongiciel thegentlemen.\n\nPays : TH.\n\nSecteur : Government & Defense.\n\nrtaf.mi.th is the official portal of the Royal Thai Air Force, one of Asia's oldest air forces (founded November 2, 1913; independent since 1937), with ~46,000 personnel and 11 combat wings, now running a modern Odoo-based portal publishing financial reports, procurement plans, and White Papers on its \"Unbeatable Air Force\" roadmap to 2037. Its fleet spans 46 F-16s, 11 Gripen C/D, 13 F-5TH Super Tigris, Saab 340 Erieye AEW&C, C-130s, and a VIP fleet including an ex-Thai Airways A340-500. In July 2025 the RTAF fought its first combat since 1988 in the Thai-Cambodian border conflict, with its Gripens achieving the type's first-ever combat weapons launch. The centerpiece modernization is the Gripen E/F program: Thailand signed the $550M \"Peace Burapha 1\" contract in August 2025 — first in APAC — with deliveries from 2029 and 8 more jets sought toward a 12-aircraft squadron by 2037. Air Chief Marshal Seksan Kantha, the 31st commander since October 2025",
+          "action": "Surveiller les indicateurs de compromission associés et contrôler les actifs exposés.",
+          "image": "https://images.ransomware.live/ransomware.png",
+          "sources": [
+            {
+              "url": "https://www.ransomware.live/id/Um95YWwgVGhhaSBBaXIgRm9yY2VAdGhlZ2VudGxlbWVu",
+              "label": "ransomware.live"
+            }
+          ],
+          "url": "https://www.ransomware.live/id/Um95YWwgVGhhaSBBaXIgRm9yY2VAdGhlZ2VudGxlbWVu",
+          "pubDate": "2026-10-10T18:02:05.000Z"
+        },
+        {
+          "title": "Gress Clark Young & Schoepper — rançongiciel rhysida (États-Unis)",
+          "cve": null,
+          "severity": "news",
+          "score": 65,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Incident de sécurité rapporté par ransomware.live.\n\nVictime revendiquée par le groupe de rançongiciel rhysida. Pays : États-Unis. Secteur : Professional Services. Gress Clark Young & Schoepper 167,804 files / ~166.4 GBBanking details - of the firm and its clients.SSNs + signatures of clients/witnesses; W-9, I-9 forms with DL/SSN card copies; W-4 forms.BIIA case-management procedures (Board of Industrial Insurance Appeals): default orders (Order of Default), internal 'Conference Questions', consulting-fee pa…",
+          "detail": "Incident de sécurité rapporté par ransomware.live.\n\nVictime revendiquée par le groupe de rançongiciel rhysida.\n\nPays : États-Unis.\n\nSecteur : Professional Services.\n\nGress Clark Young & Schoepper 167,804 files / ~166.4 GBBanking details - of the firm and its clients.SSNs + signatures of clients/witnesses; W-9, I-9 forms with DL/SSN card copies; W-4 forms.BIIA case-management procedures (Board of Industrial Insurance Appeals): default orders (Order of Default), internal 'Conference Questions', consulting-fee payments to experts.Firm finances: the firm's QuickBooks company file, VOID checks bearing signatures, expert-payment records, SaaS invoices.Medical photos and imaging; hundreds of pages of PHI/APF (Activity Prescription Forms) - X-rays, complete medical records.'Coaching' letters to doctors - including a letter to the physician in the Jachacy matter with wording indicative of steering a medical opinion ('coaching letter') - a potential ethics violation regarding witness handling.Credentials/access to the SPC e-file system (court e-filing).Disciplinary action against partner Daniel W. Gress.    More",
+          "action": "Surveiller les indicateurs de compromission associés et contrôler les actifs exposés.",
+          "image": "https://images.ransomware.live/victims/dde43211c986889efac13449e9a1813d.png",
+          "sources": [
+            {
+              "url": "https://www.ransomware.live/id/RGV4Q29tQFJlZGFjdA==",
+              "label": "ransomware.live"
+            }
+          ],
+          "url": "https://www.ransomware.live/id/RGV4Q29tQFJlZGFjdA==",
+          "pubDate": "2026-10-10T16:53:11.980Z"
+        },
+        {
+          "title": "US Sentences Empire Market Co-Creator Over $430 Million Criminal Marketplace",
+          "cve": null,
+          "severity": "high",
+          "score": 64,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Incident de sécurité rapporté par Security Affairs.\n\nEmpire Market co-creator Raheim Hamilton was sentenced to 40 years in prison for running a dark web marketplace linked to $430 million in illegal trades. The case against Empire Market shows how a dark web marketplace can become a major criminal business, bringing together drug trafficking, stolen credentials, personal data and hacking tools.",
+          "detail": "Incident de sécurité rapporté par Security Affairs.\n\nEmpire Market co-creator Raheim Hamilton was sentenced to 40 years in prison for running a dark web marketplace linked to $430 million in illegal trades. The case against Empire Market shows how a dark web marketplace can become a major criminal business, bringing together drug trafficking, stolen credentials, personal data and hacking tools. &#8220;A Virginia man who co-created and operated “Empire Market”—a dark web marketplace that enabled users to anonymously buy and sell illegal goods and services—has been sentenced to 40 years in federal prison.&#8221; reads the press release published by DoJ. &#8220;RAHEIM HAMILTON co-owned and operated Empire Market from 2018 to 2020. &#8220; On October 7, 2026, the U.S. Department of Justice announced that Raheim Hamilton, a 30-year-old man from Virginia who co-created and operated the marketplace, had been sentenced to 40 years in federal prison and fined $5 million. His case also highlights a point worth remembering: hiding behind cryptocurrency, encryption and the dark web doesn&#8217;t guarantee that law enforcement won&#8217;t identify the people running the operation. Hamilton co-owned and operated Empire Market with Thomas Pavey between 2018 and 2020. In June 2024, two men, Thomas Pavey (aka “Dopenugget”) and Raheim Hamilton (aka “Sydney” and “Zero Angel”), were charged in federal court in Chicago for operating the dark web mark",
+          "action": "Surveiller les indicateurs de compromission associés et contrôler les actifs exposés.",
+          "image": "https://securityaffairs.com/wp-content/uploads/2020/08/Empire-Market.png",
+          "sources": [
+            {
+              "url": "https://securityaffairs.com/200704/cyber-crime/us-sentences-empire-market-co-creator-over-430-million-criminal-marketplace.html",
+              "label": "Security Affairs"
+            }
+          ],
+          "url": "https://securityaffairs.com/200704/cyber-crime/us-sentences-empire-market-co-creator-over-430-million-criminal-marketplace.html",
+          "pubDate": "2026-10-10T07:22:40.000Z"
+        },
+        {
+          "title": "Cyber exec arrested in case allegedly tied to ShinyHunters hackers",
+          "cve": null,
+          "severity": "news",
+          "score": 63,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Incident de sécurité rapporté par BleepingComputer.\n\nCanadian cybersecurity executive Edward Dubrovsky has been arrested in Pennsylvania in connection with alleged extortion activity that multiple reports have linked to the FBI's ongoing crackdown on the ShinyHunters hacking group.\n\nARTEX AI, Claude agents used in cyberattacks on South Korean banks\n\nMicrosoft: Outdated Windows devices will stop receiving security updates\n\nCitrix warns admins to patch new NetScaler RCE flaw immediately\n\nCyber exec arrested in…",
+          "detail": "Incident de sécurité rapporté par BleepingComputer.\n\nCanadian cybersecurity executive Edward Dubrovsky has been arrested in Pennsylvania in connection with alleged extortion activity that multiple reports have linked to the FBI's ongoing crackdown on the ShinyHunters hacking group.\n\nARTEX AI, Claude agents used in cyberattacks on South Korean banks\n\nMicrosoft: Outdated Windows devices will stop receiving security updates\n\nCitrix warns admins to patch new NetScaler RCE flaw immediately\n\nCyber exec arrested in case allegedly tied to ShinyHunters hackers\n\nARTEX AI, Claude agents used in cyberattacks on South Korean banks\n\nCriminal IP Introduces AITEM as the Next Evolution of Attack Surface Management",
+          "action": "Surveiller les indicateurs de compromission associés et contrôler les actifs exposés.",
+          "image": "https://www.bleepstatic.com/content/hl-images/2022/12/16/FBI__headpic.jpg",
+          "sources": [
+            {
+              "url": "https://www.bleepingcomputer.com/news/security/cyber-exec-arrested-in-case-allegedly-tied-to-shinyhunters-hackers/",
+              "label": "BleepingComputer"
+            }
+          ],
+          "url": "https://www.bleepingcomputer.com/news/security/cyber-exec-arrested-in-case-allegedly-tied-to-shinyhunters-hackers/",
+          "pubDate": "2026-10-10T15:07:54.000Z"
+        },
+        {
+          "title": "ARTEX AI, Claude agents used in cyberattacks on South Korean banks",
+          "cve": null,
+          "severity": "news",
+          "score": 63,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Incident de sécurité rapporté par BleepingComputer.\n\nThe cyberattacks that shook the South Korean financial sector earlier this month were launched by a Chinese hacker using the ARTEX AI penetration testing suite and Claude agents.\n\nARTEX AI, Claude agents used in cyberattacks on South Korean banks\n\nMicrosoft: Outdated Windows devices will stop receiving security updates\n\nCitrix warns admins to patch new NetScaler RCE flaw immediately\n\nCyber exec arrested in case allegedly tied to ShinyHunters hackers\n\nARTEX…",
+          "detail": "Incident de sécurité rapporté par BleepingComputer.\n\nThe cyberattacks that shook the South Korean financial sector earlier this month were launched by a Chinese hacker using the ARTEX AI penetration testing suite and Claude agents.\n\nARTEX AI, Claude agents used in cyberattacks on South Korean banks\n\nMicrosoft: Outdated Windows devices will stop receiving security updates\n\nCitrix warns admins to patch new NetScaler RCE flaw immediately\n\nCyber exec arrested in case allegedly tied to ShinyHunters hackers\n\nARTEX AI, Claude agents used in cyberattacks on South Korean banks\n\nCriminal IP Introduces AITEM as the Next Evolution of Attack Surface Management",
+          "action": "Surveiller les indicateurs de compromission associés et contrôler les actifs exposés.",
+          "image": "https://www.bleepstatic.com/content/hl-images/2026/10/09/robot-hacker.jpg",
+          "sources": [
+            {
+              "url": "https://www.bleepingcomputer.com/news/security/hacker-used-artex-ai-and-claude-agents-to-target-south-korean-banks/",
+              "label": "BleepingComputer"
+            }
+          ],
+          "url": "https://www.bleepingcomputer.com/news/security/hacker-used-artex-ai-and-claude-agents-to-target-south-korean-banks/",
+          "pubDate": "2026-10-10T14:16:17.000Z"
+        },
+        {
+          "title": "Criminal IP Introduces AITEM as the Next Evolution of Attack Surface Management",
+          "cve": null,
+          "severity": "news",
+          "score": 63,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Incident de sécurité rapporté par BleepingComputer.\n\nTraditional attack surface management helps organizations discover exposed assets, but visibility alone is not enough to address threats. Criminal IP introduces AITEM, an AI-powered approach that connects exposure discovery with investigation, risk prioritization, and response.\n\nARTEX AI, Claude agents used in cyberattacks on South Korean banks\n\nMicrosoft: Outdated Windows devices will stop receiving security updates\n\nCitrix warns admins to patch new NetSc…",
+          "detail": "Incident de sécurité rapporté par BleepingComputer.\n\nTraditional attack surface management helps organizations discover exposed assets, but visibility alone is not enough to address threats. Criminal IP introduces AITEM, an AI-powered approach that connects exposure discovery with investigation, risk prioritization, and response.\n\nARTEX AI, Claude agents used in cyberattacks on South Korean banks\n\nMicrosoft: Outdated Windows devices will stop receiving security updates\n\nCitrix warns admins to patch new NetScaler RCE flaw immediately\n\nCyber exec arrested in case allegedly tied to ShinyHunters hackers\n\nARTEX AI, Claude agents used in cyberattacks on South Korean banks\n\nCriminal IP Introduces AITEM as the Next Evolution of Attack Surface Management",
+          "action": "Surveiller les indicateurs de compromission associés et contrôler les actifs exposés.",
+          "image": "https://www.bleepstatic.com/content/posts/2026/10/06/criminal-ip-aitem.jpg",
+          "sources": [
+            {
+              "url": "https://www.bleepingcomputer.com/news/security/criminal-ip-introduces-aitem-as-the-next-evolution-of-attack-surface-management/",
+              "label": "BleepingComputer"
+            }
+          ],
+          "url": "https://www.bleepingcomputer.com/news/security/criminal-ip-introduces-aitem-as-the-next-evolution-of-attack-surface-management/",
+          "pubDate": "2026-10-10T12:30:39.000Z"
+        },
+        {
+          "title": "TEXMA International Co., Ltd — rançongiciel dragonforce (TW)",
+          "cve": null,
+          "severity": "news",
+          "score": 61,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Incident de sécurité rapporté par ransomware.live.\n\nVictime revendiquée par le groupe de rançongiciel dragonforce. Pays : TW. Secteur : Manufacturing. TEXMA International Co., Ltd. is a leading Taiwanese apparel manufacturer specializing in high-quality women's woven apparel, activewear, and sportswear. Founded in 1975, the company operates under a \"Taiwan orders, global production\" business model, supplying some of the world's most recognizable fashion brands.",
+          "detail": "Incident de sécurité rapporté par ransomware.live.\n\nVictime revendiquée par le groupe de rançongiciel dragonforce.\n\nPays : TW.\n\nSecteur : Manufacturing.\n\nTEXMA International Co., Ltd. is a leading Taiwanese apparel manufacturer specializing in high-quality women's woven apparel, activewear, and sportswear. Founded in 1975, the company operates under a \"Taiwan orders, global production\" business model, supplying some of the world's most recognizable fashion brands.",
+          "action": "Surveiller les indicateurs de compromission associés et contrôler les actifs exposés.",
+          "image": "https://images.ransomware.live/victims/af703a7360550825c7e5d59814fdb673.png",
+          "sources": [
+            {
+              "url": "https://www.ransomware.live/id/VEVYTUEgSW50ZXJuYXRpb25hbCBDby4sIEx0ZEBkcmFnb25mb3JjZQ==",
+              "label": "ransomware.live"
+            }
+          ],
+          "url": "https://www.ransomware.live/id/VEVYTUEgSW50ZXJuYXRpb25hbCBDby4sIEx0ZEBkcmFnb25mb3JjZQ==",
+          "pubDate": "2026-10-10T20:04:49.616Z"
+        },
+        {
+          "title": "Helwan University (HITU) — rançongiciel UmBra (EG)",
+          "cve": null,
+          "severity": "news",
+          "score": 61,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Incident de sécurité rapporté par ransomware.live.\n\nVictime revendiquée par le groupe de rançongiciel UmBra. Pays : EG. Secteur : Education. Helwan International Technological University — a pioneering Egyptian institution offering cutting-edge programs in Cybersecurity, Data Science, Artificial Intelligence, and Mechatronics, equipped with advanced labs and strong industry partnerships to prepare students for the digital future.",
+          "detail": "Incident de sécurité rapporté par ransomware.live.\n\nVictime revendiquée par le groupe de rançongiciel UmBra.\n\nPays : EG.\n\nSecteur : Education.\n\nHelwan International Technological University — a pioneering Egyptian institution offering cutting-edge programs in Cybersecurity, Data Science, Artificial Intelligence, and Mechatronics, equipped with advanced labs and strong industry partnerships to prepare students for the digital future.",
+          "action": "Surveiller les indicateurs de compromission associés et contrôler les actifs exposés.",
+          "image": "https://images.ransomware.live/victims/d05c021893576e0ade86ab4a66fdbf28.png",
+          "sources": [
+            {
+              "url": "https://www.ransomware.live/id/SGVsd2FuIFVuaXZlcnNpdHkgKEhJVFUpQFVtQnJh",
+              "label": "ransomware.live"
+            }
+          ],
+          "url": "https://www.ransomware.live/id/SGVsd2FuIFVuaXZlcnNpdHkgKEhJVFUpQFVtQnJh",
+          "pubDate": "2026-10-10T16:54:02.119Z"
+        },
+        {
+          "title": "ACI Proyectos SAS — rançongiciel qilin (CO)",
+          "cve": null,
+          "severity": "news",
+          "score": 61,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Incident de sécurité rapporté par ransomware.live.\n\nRansomware.live discovered on 2026-10-10 that ACI Proyectos SAS has been claimed by Qilin ransomware group\n\nSponsored by Hudson Rock – Use Hudson Rock's free cybercrime intelligence tools to learn how Infostealer infections are leading to ransomware attacks\n\nThe following DNS records were found for the victim's domain.\n\nLegal Disclaimer: Ransomware.live does not engage in the acquisition, exfiltration, downloading, possession, hosting, access, consultation…",
+          "detail": "Incident de sécurité rapporté par ransomware.live.\n\nRansomware.live discovered on 2026-10-10 that ACI Proyectos SAS has been claimed by Qilin ransomware group\n\nSponsored by Hudson Rock – Use Hudson Rock's free cybercrime intelligence tools to learn how Infostealer infections are leading to ransomware attacks\n\nThe following DNS records were found for the victim's domain.\n\nLegal Disclaimer: Ransomware.live does not engage in the acquisition, exfiltration, downloading, possession, hosting, access, consultation, redistribution, or disclosure of unlawfully obtained data. This platform indexes only publicly visible information posted by ransomware operators and open web sources without accessing or obtaining the underlying stolen content . The service is provided to support public awareness, legitimate research, and cyber-resilience. No stolen personal or confidential data is collected or distributed via this site.\n\nSession: 057726c909af65969646b040bbbfa5c4df67f5166a33cbac6cd9e1302b0b3ca148\n\nTox: 50DADDED26D859469371938B793456D8210A5AE02DD3C42979F5E52411BCB648F1CA68A5EDE5",
+          "action": "Surveiller les indicateurs de compromission associés et contrôler les actifs exposés.",
+          "image": "https://images.ransomware.live/victims/268643db4927c9f66b176d5c49e755cf.png",
+          "sources": [
+            {
+              "url": "https://www.ransomware.live/id/QUNJIFByb3llY3RvcyBTQVNAcWlsaW4=",
+              "label": "ransomware.live"
+            }
+          ],
+          "url": "https://www.ransomware.live/id/QUNJIFByb3llY3RvcyBTQVNAcWlsaW4=",
+          "pubDate": "2026-10-10T16:06:14.655Z"
+        },
+        {
+          "title": "KOIKE Sanso Kogoyo Co. Ltd. — rançongiciel exitium (JP)",
+          "cve": null,
+          "severity": "news",
+          "score": 61,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Incident de sécurité rapporté par ransomware.live.\n\nVictime revendiquée par le groupe de rançongiciel exitium. Pays : JP. Secteur : Manufacturing. Website: koike-japan.com You have time until Tuesday(10.13.2026). If you wouldn't contact us we will start selling data. We have 5.8 TB of data: agreements confidential data correspondence files all customers and clients data engineering drawings AND MUCH MORE... Contact us until your time runs out.",
+          "detail": "Incident de sécurité rapporté par ransomware.live.\n\nVictime revendiquée par le groupe de rançongiciel exitium.\n\nPays : JP.\n\nSecteur : Manufacturing.\n\nWebsite: koike-japan.com\nYou have time until Tuesday(10.13.2026). If you wouldn't contact us we will start selling data.\nWe have 5.8 TB of data: \nagreements\nconfidential data \ncorrespondence files\nall customers and clients data\nengineering drawings \nAND MUCH MORE...\n\nContact us until your time runs out.",
+          "action": "Surveiller les indicateurs de compromission associés et contrôler les actifs exposés.",
+          "image": "https://images.ransomware.live/victims/c81dede367c10a30f7403435fa01065f.png",
+          "sources": [
+            {
+              "url": "https://www.ransomware.live/id/S09JS0UgU2Fuc28gS29nb3lvIENvLiBMdGQuQGV4aXRpdW0=",
+              "label": "ransomware.live"
+            }
+          ],
+          "url": "https://www.ransomware.live/id/S09JS0UgU2Fuc28gS29nb3lvIENvLiBMdGQuQGV4aXRpdW0=",
+          "pubDate": "2026-10-10T14:31:32.355Z"
+        },
+        {
+          "title": "LD Constructora — rançongiciel qilin (CL)",
+          "cve": null,
+          "severity": "news",
+          "score": 61,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Incident de sécurité rapporté par ransomware.live.\n\nRansomware.live discovered on 2026-10-10 that LD Constructora has been claimed by Qilin ransomware group\n\nSponsored by Hudson Rock – Use Hudson Rock's free cybercrime intelligence tools to learn how Infostealer infections are leading to ransomware attacks\n\nThe following DNS records were found for the victim's domain.\n\nLegal Disclaimer: Ransomware.live does not engage in the acquisition, exfiltration, downloading, possession, hosting, access, consultation,…",
+          "detail": "Incident de sécurité rapporté par ransomware.live.\n\nRansomware.live discovered on 2026-10-10 that LD Constructora has been claimed by Qilin ransomware group\n\nSponsored by Hudson Rock – Use Hudson Rock's free cybercrime intelligence tools to learn how Infostealer infections are leading to ransomware attacks\n\nThe following DNS records were found for the victim's domain.\n\nLegal Disclaimer: Ransomware.live does not engage in the acquisition, exfiltration, downloading, possession, hosting, access, consultation, redistribution, or disclosure of unlawfully obtained data. This platform indexes only publicly visible information posted by ransomware operators and open web sources without accessing or obtaining the underlying stolen content . The service is provided to support public awareness, legitimate research, and cyber-resilience. No stolen personal or confidential data is collected or distributed via this site.\n\nSession: 057726c909af65969646b040bbbfa5c4df67f5166a33cbac6cd9e1302b0b3ca148\n\nTox: 50DADDED26D859469371938B793456D8210A5AE02DD3C42979F5E52411BCB648F1CA68A5EDE5",
+          "action": "Surveiller les indicateurs de compromission associés et contrôler les actifs exposés.",
+          "image": "https://images.ransomware.live/victims/54dc80297e9f6d22bcdfbb78984aecbc.png",
+          "sources": [
+            {
+              "url": "https://www.ransomware.live/id/TEQgQ29uc3RydWN0b3JhQHFpbGlu",
+              "label": "ransomware.live"
+            }
+          ],
+          "url": "https://www.ransomware.live/id/TEQgQ29uc3RydWN0b3JhQHFpbGlu",
+          "pubDate": "2026-10-10T12:44:37.847Z"
+        },
+        {
+          "title": "Insider Cyber Extortion Plot Against Industrial Firm Lands Engineer in Prison",
+          "cve": null,
+          "severity": "news",
+          "score": 59,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Incident de sécurité rapporté par SecurityWeek.\n\nA former New Jersey infrastructure engineer was sentenced to 32 months in federal prison for sabotaging his employer's network.\n\nThe former core infrastructure engineer deleted admin accounts, reset hundreds of passwords, and demanded 20 bitcoin to spare the company’s servers.\n\nSubscribe to the SecurityWeek Email Briefing for the latest cybersecurity threats, trends, and expert insights.\n\nSubscribe to the SecurityWeek Email Briefing to stay informed on the…",
+          "detail": "Incident de sécurité rapporté par SecurityWeek.\n\nA former New Jersey infrastructure engineer was sentenced to 32 months in federal prison for sabotaging his employer's network.\n\nThe former core infrastructure engineer deleted admin accounts, reset hundreds of passwords, and demanded 20 bitcoin to spare the company’s servers.\n\nSubscribe to the SecurityWeek Email Briefing for the latest cybersecurity threats, trends, and expert insights.\n\nSubscribe to the SecurityWeek Email Briefing to stay informed on the latest threats, trends, and technology, along with insightful columns from industry experts.\n\nLearn about Frontier Pace Governance: a practical approach to helping IT operations move at AI speed without sacrificing security, accountability, or operational discipline.\n\nJoin as we decipher the world of zero trust and share war stories on securing an organization by eliminating implicit trust and continuously validating every stage of a digital interaction.\n\nRapid7 has named Rik Ferguson as VP of Security Intelligence.",
+          "action": "Surveiller les indicateurs de compromission associés et contrôler les actifs exposés.",
+          "image": "https://www.securityweek.com/wp-content/uploads/2024/03/hacker-sentenced-prison.jpeg",
+          "sources": [
+            {
+              "url": "https://www.securityweek.com/insider-cyber-extortion-plot-against-industrial-firm-lands-engineer-in-prison/",
+              "label": "SecurityWeek"
+            }
+          ],
+          "url": "https://www.securityweek.com/insider-cyber-extortion-plot-against-industrial-firm-lands-engineer-in-prison/",
+          "pubDate": "2026-10-10T11:00:00.000Z"
+        },
+        {
+          "title": "Courtiers Partenaires : les recherches immobilières de 57 000 personnes mises en vente sur le darkweb",
+          "cve": null,
+          "severity": "news",
+          "score": 59,
+          "corroboration": 1,
+          "region": "fr",
+          "body": "Incident de sécurité rapporté par Cyberattaque.org.\n\nCourtiers Partenaires, réseau suisse spécialisé dans le courtage immobilier, fait l’objet d’une importante revendication de fuite de données.... L’article Courtiers Partenaires : les recherches immobilières de 57 000 personnes mises en vente sur le darkweb est apparu en premier sur Cyberattaque.org .",
+          "detail": "Incident de sécurité rapporté par Cyberattaque.org.\n\nCourtiers Partenaires, réseau suisse spécialisé dans le courtage immobilier, fait l’objet d’une importante revendication de fuite de données.... L’article Courtiers Partenaires : les recherches immobilières de 57 000 personnes mises en vente sur le darkweb est apparu en premier sur Cyberattaque.org .",
+          "action": "Surveiller les indicateurs de compromission associés et contrôler les actifs exposés.",
+          "image": "https://www.cyberattaque.org/wp-content/uploads/2026/10/courtiers-partenaires-cyberattaque-2.jpg",
+          "sources": [
+            {
+              "url": "https://www.cyberattaque.org/courtiers-partenaires-les-recherches-immobilieres-de-57-000-personnes-mises-en-vente-sur-le-darkweb/",
+              "label": "Cyberattaque.org"
+            }
+          ],
+          "url": "https://www.cyberattaque.org/courtiers-partenaires-les-recherches-immobilieres-de-57-000-personnes-mises-en-vente-sur-le-darkweb/",
+          "pubDate": "2026-10-10T05:50:39.000Z"
+        },
+        {
+          "title": "DarkBlinders Hackers Use Fake Meeting App to Deploy Backdoor and Steal Government Data",
+          "cve": null,
+          "severity": "news",
+          "score": 58,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Incident de sécurité rapporté par GBHackers.\n\nDarkBlinders hackers are deploying a fake video meeting application and abusing GitHub repositories in a cyberespionage campaign targeting Israel and the Kurdistan Region of Iraq. Dream researchers observed the operation between August and October 2026.",
+          "detail": "Incident de sécurité rapporté par GBHackers.\n\nDarkBlinders hackers are deploying a fake video meeting application and abusing GitHub repositories in a cyberespionage campaign targeting Israel and the Kurdistan Region of Iraq. Dream researchers observed the operation between August and October 2026. The investigation confirmed compromises affecting a government cloud environment in Kurdistan and a prominent Israeli individual associated with the security [&#8230;] The post DarkBlinders Hackers Use Fake Meeting App to Deploy Backdoor and Steal Government Data appeared first on GBHackers Security | #1 Globally Trusted Cyber Security News Platform .",
+          "action": "Surveiller les indicateurs de compromission associés et contrôler les actifs exposés.",
+          "image": "https://gbhackers.com/wp-content/uploads/2026/10/darkblinders-hackers-use-fake-meeting-app-to-deploy-backdoor-and-steal-government-data234-6ac9ea71a4a0f.webp",
+          "sources": [
+            {
+              "url": "https://gbhackers.com/darkblinders-hackers-use-fake-meeting-app/",
+              "label": "GBHackers"
+            }
+          ],
+          "url": "https://gbhackers.com/darkblinders-hackers-use-fake-meeting-app/",
+          "pubDate": "2026-10-10T07:39:56.000Z"
+        },
+        {
+          "title": "Infogreffe : 3,7 millions de lignes revendiquées après une cyberattaque",
+          "cve": null,
+          "severity": "high",
+          "score": 57,
+          "corroboration": 1,
+          "region": "fr",
+          "body": "Incident de sécurité rapporté par Cyberattaque.org.\n\nInfogreffe, le portail français permettant d’accéder aux informations légales et économiques des entreprises enregistrées au registre du commerce, fait\n\nAttaque Mis à jour le 10 octobre 2026 à 15h29 Infogreffe : 3,7 millions de lignes revendiquées après une cyberattaque Infogreffe , le portail français permettant d’accéder aux informations légales et économiques des entreprises enregistrées au registre du commerce, fait l’objet d’une importante revendicati…",
+          "detail": "Incident de sécurité rapporté par Cyberattaque.org.\n\nInfogreffe, le portail français permettant d’accéder aux informations légales et économiques des entreprises enregistrées au registre du commerce, fait\n\nAttaque Mis à jour le 10 octobre 2026 à 15h29 Infogreffe : 3,7 millions de lignes revendiquées après une cyberattaque Infogreffe , le portail français permettant d’accéder aux informations légales et économiques des entreprises enregistrées au registre du commerce, fait l’objet d’une importante revendication de cyberattaque. Le collectif LunarisSec affirme avoir compromis l’organisation et revendique 3 708 531 lignes de données .\n\nLa revendication est attribuée à plusieurs membres du groupe utilisant les pseudonymes CybΞr, Pwn2dd, Hex@py et 0xDzz . Mais surtout, plusieurs captures d’écran communiquées comme preuves semblent montrer un niveau d’accès allant bien au-delà d’une simple extraction de données publiques.\n\nCyberattaque.org s’est procuré ces éléments . L’une des captures transmises le 10 octobre 2026 montre notamment ce qui ressemble à la configuration d’une connexion directe à une base PostgreSQL , avec une adresse JDBC, un nom d’utilisateur et un mot de passe enregistré.\n\nInfogreffe est le service de diffusion de l’information légale et officielle issue des greffes des tribunaux de commerce. Il permet notamment de consulter ou commander des extraits Kbis, comptes annuels, actes, statuts, informations sur les dirigeants, procédures collectives ou états d’endettement.\n\nLe portail propose également plusieurs services destinés aux entreprises, notamment autour de la donnée, de la surveillance d’entreprises et du recouvrement des créances impayées .\n\nLunarisSec annonce avoir récupéré 3 708 531 lignes liées à Infogreffe. Aucun élément communiqué à Cyberattaque.org",
+          "action": "Surveiller les indicateurs de compromission associés et contrôler les actifs exposés.",
+          "image": "https://www.cyberattaque.org/wp-content/uploads/2026/10/infogreffe-cyberattaque-3.jpg",
+          "sources": [
+            {
+              "url": "https://www.cyberattaque.org/infogreffe-37-millions-de-lignes-revendiquees-apres-une-cyberattaque/",
+              "label": "Cyberattaque.org"
+            }
+          ],
+          "url": "https://www.cyberattaque.org/infogreffe-37-millions-de-lignes-revendiquees-apres-une-cyberattaque/",
+          "pubDate": "2026-10-10T13:29:12.000Z"
+        },
+        {
+          "title": "École 42 : 140 080 profils en fuite après scraping",
+          "cve": null,
+          "severity": "news",
+          "score": 52,
+          "corroboration": 1,
+          "region": "fr",
+          "body": "Incident de sécurité rapporté par Cyberattaque.org.\n\n42, le réseau international d’écoles d’informatique né en France, fait l’objet d’une importante vente de données. Le hacker fentag affirme avoir collecté\n\nAttaque Mis à jour le 10 octobre 2026 à 7h39 École 42 : 140 080 profils en fuite après scraping 42 , le réseau international d’écoles d’informatique né en France, fait l’objet d’une importante vente de données.",
+          "detail": "Incident de sécurité rapporté par Cyberattaque.org.\n\n42, le réseau international d’écoles d’informatique né en France, fait l’objet d’une importante vente de données. Le hacker fentag affirme avoir collecté\n\nAttaque Mis à jour le 10 octobre 2026 à 7h39 École 42 : 140 080 profils en fuite après scraping 42 , le réseau international d’écoles d’informatique né en France, fait l’objet d’une importante vente de données. Le hacker fentag affirme avoir collecté 140 080 profils provenant de l’environnement numérique de 42, accompagnés de 94 427 photographies de profil .\n\nLa collecte aurait été réalisée le 8 octobre 2026 , soit la veille de la mise en vente. Le hacker parle lui-même de scraping et non d’une intrusion dans les serveurs de l’école. À ce stade, rien ne permet donc d’affirmer que le système d’information de 42 a été directement compromis.\n\nCyberattaque.org a pu consulter un échantillon de 1 000 profils . Les données observées correspondent bien à des comptes du réseau 42, répartis sur de nombreux campus à travers le monde, dont plusieurs campus français.\n\n42 est un réseau international d’écoles d’informatique gratuites dont le premier campus a ouvert à Paris. Son modèle repose notamment sur une pédagogie sans cours magistraux, avec des projets informatiques, des évaluations entre étudiants et les célèbres périodes de sélection appelées « Piscines ».\n\nLe réseau s’est depuis largement internationalisé avec des campus en Europe, en Afrique, en Asie, au Moyen-Orient ou encore en Amérique. Les données proposées à la vente ne concernent donc pas uniquement 42 Paris mais semblent provenir de l’annuaire global utilisé par le réseau .\n\nFentag affirme avoir récupéré précisément 140 080 profils . Pour chacun d’entre eux, différents éléments peuvent être présents : nom, prénom,",
+          "action": "Surveiller les indicateurs de compromission associés et contrôler les actifs exposés.",
+          "image": "https://www.cyberattaque.org/wp-content/uploads/2026/10/ecole-42-cyberattaque-2.jpg",
+          "sources": [
+            {
+              "url": "https://www.cyberattaque.org/cyberattaque-ecole-42-140-080-profils-en-fuite-apres-scraping/",
+              "label": "Cyberattaque.org"
+            }
+          ],
+          "url": "https://www.cyberattaque.org/cyberattaque-ecole-42-140-080-profils-en-fuite-apres-scraping/",
+          "pubDate": "2026-10-10T05:39:26.000Z"
+        },
+        {
+          "title": "Wimoov : une cyberttaque touche la plateforme WIN",
+          "cve": null,
+          "severity": "news",
+          "score": 52,
+          "corroboration": 1,
+          "region": "fr",
+          "body": "Incident de sécurité rapporté par Cyberattaque.org.\n\nWimoov confirme publiquement avoir été victime d’une cyberattaque visant sa plateforme WIN. L’organisation affiche désormais directement sur son site\n\nAttaque Mis à jour le 10 octobre 2026 à 7h29 Wimoov : une cyberttaque touche la plateforme WIN Wimoov confirme publiquement avoir été victime d’une cyberattaque visant sa plateforme WIN .",
+          "detail": "Incident de sécurité rapporté par Cyberattaque.org.\n\nWimoov confirme publiquement avoir été victime d’une cyberattaque visant sa plateforme WIN. L’organisation affiche désormais directement sur son site\n\nAttaque Mis à jour le 10 octobre 2026 à 7h29 Wimoov : une cyberttaque touche la plateforme WIN Wimoov confirme publiquement avoir été victime d’une cyberattaque visant sa plateforme WIN . L’organisation affiche désormais directement sur son site Internet un message d’information concernant l’incident, découvert le 26 août 2026 et qualifié de violation de données personnelles .\n\nLes premières investigations montrent qu’un tiers malveillant est parvenu à accéder à WIN en utilisant un compte utilisateur compromis . Wimoov indique toutefois qu’à ce stade, aucune fuite de données n’a été constatée .\n\nWimoov est une association spécialisée dans la mobilité inclusive. Elle accompagne notamment des personnes rencontrant des difficultés de déplacement dans leur parcours d’insertion sociale ou professionnelle.\n\nWIN est son interface numérique, utilisée dans le cadre de ces accompagnements. L’incident est donc potentiellement sensible compte tenu de la nature des publics et des informations susceptibles d’être traitées au sein de la plateforme.\n\nContrairement à de nombreuses cyberattaques reposant sur l’exploitation d’une vulnérabilité technique, Wimoov indique avoir identifié pour le moment la compromission d’un compte utilisateur comme point d’entrée.\n\nUn tiers malveillant aurait ainsi réussi à utiliser des identifiants valides pour accéder à la plateforme WIN. L’organisation ne précise pas comment ces identifiants ont été récupérés : vol de mot de passe, phishing, réutilisation d’identifiants compromis ou autre méthode.",
+          "action": "Surveiller les indicateurs de compromission associés et contrôler les actifs exposés.",
+          "image": "https://www.cyberattaque.org/wp-content/uploads/2026/10/wimoov-cyberattaque-2.jpg",
+          "sources": [
+            {
+              "url": "https://www.cyberattaque.org/wimoov-une-cyberttaque-touche-la-plateforme-win/",
+              "label": "Cyberattaque.org"
+            }
+          ],
+          "url": "https://www.cyberattaque.org/wimoov-une-cyberttaque-touche-la-plateforme-win/",
+          "pubDate": "2026-10-10T05:29:36.000Z"
+        }
+      ]
+    },
+    {
+      "id": "culture",
+      "items": [
+        {
+          "title": "Why TLP should not replace your internal information classification, (Sat, Oct 10th)",
+          "cve": null,
+          "severity": "high",
+          "score": 66,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Signal de veille — SANS ISC.\n\nThe Traffic Light Protocol (TLP)[ 1 ], which is now in its second incarnation, is a wonderful standard that enables one to easily communicate whether information may be shared further (and if so, how far). That being said, I&#39;ve noticed a somewhat unfortunate trend in a number of organizations that try to fit TLP into a niche it was never supposed to occupy by attempting to use its labels as a replacement for traditional internal information classificat…",
+          "detail": "Signal de veille — SANS ISC.\n\nThe Traffic Light Protocol (TLP)[ 1 ], which is now in its second incarnation, is a wonderful standard that enables one to easily communicate whether information may be shared further (and if so, how far). That being said, I&#39;ve noticed a somewhat unfortunate trend in a number of organizations that try to fit TLP into a niche it was never supposed to occupy by attempting to use its labels as a replacement for traditional internal information classification schemes. At first glance, this may seem quite reasonable. After all, TLP is a well-known standard, and it defines a simple set of labels for restricting the sharing of information (as you can see in the following table). And since most organizational classification schemes also consist of only a few levels, why not use TLP instead of maintaining a separate set of labels? Unfortunately, there are several reasons why this might not be the best idea. The first is that TLP was never intended to be used in this way. In fact, the official TLP 2.0 standard explicitly states that &ldquo;TLP is not a formal classification scheme&rdquo; and that it was not designed to define information handling or encryption rules. Its purpose is to specify with whom information may be shared, not how it should be protected. While these two aspects are certainly related, they are far from being interchangeable. An internal information classificatio",
+          "action": null,
+          "image": "https://isc.sans.edu/diaryimages/images/26-10-10-tlpv2.png",
+          "sources": [
+            {
+              "url": "https://isc.sans.edu/diary/rss/33414",
+              "label": "SANS ISC"
+            }
+          ],
+          "url": "https://isc.sans.edu/diary/rss/33414",
+          "pubDate": "2026-10-10T09:11:34.000Z"
+        },
+        {
+          "title": "Iranian VPN-over-DNS Activity Generates 40 Billion DNS Observations During Military Conflict",
+          "cve": null,
+          "severity": "culture",
+          "score": 63,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Signal de veille — GBHackers.\n\nA newly disclosed unprecedented surge in suspected Iranian VPN-over-DNS activity, with one domain generating 40 billion passive DNS observations within days. Published October 9, 2026, the investigation documents infrastructure expanding across more than 100 domains during military conflict, while leaving its operators, transmitted content, and purpose unconfirmed.",
+          "detail": "Signal de veille — GBHackers.\n\nA newly disclosed unprecedented surge in suspected Iranian VPN-over-DNS activity, with one domain generating 40 billion passive DNS observations within days. Published October 9, 2026, the investigation documents infrastructure expanding across more than 100 domains during military conflict, while leaving its operators, transmitted content, and purpose unconfirmed. The activity began around 07:00 UTC on March [&#8230;] The post Iranian VPN-over-DNS Activity Generates 40 Billion DNS Observations During Military Conflict appeared first on GBHackers Security | #1 Globally Trusted Cyber Security News Platform .",
+          "action": null,
+          "image": "https://gbhackers.com/wp-content/uploads/2026/10/iranian-vpn-over-dns-activity-generates-40-billion-dns-observations-during-military-conflict243-6ac9edce8c6f0.webp",
+          "sources": [
+            {
+              "url": "https://gbhackers.com/iranian-vpn-over-dns-activity-generates-40-billion/",
+              "label": "GBHackers"
+            }
+          ],
+          "url": "https://gbhackers.com/iranian-vpn-over-dns-activity-generates-40-billion/",
+          "pubDate": "2026-10-10T07:50:12.000Z"
+        },
+        {
+          "title": "The Third-Party Agent Problem: Why Security Built for AI You Chose Misses the Agents You Didn't",
+          "cve": null,
+          "severity": "culture",
+          "score": 59,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Signal de veille — The Hacker News.\n\nIn environments studied for the 2026 State of Agent Security Report, roughly 1,280 third-party products now embed AI. About 282 of them sit behind single sign-on. The other thousand are invisible to identity infrastructure by default, not because anyone hid them, but because an identity stack can only govern what authenticates through it, and most agents never do. That gap is the clearest",
+          "detail": "Signal de veille — The Hacker News.\n\nIn environments studied for the 2026 State of Agent Security Report, roughly 1,280 third-party products now embed AI. About 282 of them sit behind single sign-on. The other thousand are invisible to identity infrastructure by default, not because anyone hid them, but because an identity stack can only govern what authenticates through it, and most agents never do. That gap is the clearest",
+          "action": null,
+          "image": "https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEghemGbtxM2amUYAlxUPHPdMiyDMQJFWZeY-dDODRqCRD0phZXXQv0rrKHiOsLPW3t0Fq2XxvvFyCC-OmNs7TXhXXKSRVMPpC1GPKSUsyzN9t-W6L4jtiA2DUiTLgou4iyw0QXN-6Wfz0H2zWYGgC6-OxtlQrfb0PygOeBWwDnR11nl3Gl8W5pL07sExNc/s1600/reco.gif",
+          "sources": [
+            {
+              "url": "https://thehackernews.com/2026/10/the-third-party-agent-problem-why.html",
+              "label": "The Hacker News"
+            }
+          ],
+          "url": "https://thehackernews.com/2026/10/the-third-party-agent-problem-why.html",
+          "pubDate": "2026-10-10T11:00:00.000Z"
+        },
+        {
+          "title": "« Découvrez comment fonctionne le logiciel » : massivement partagé, cet outil IA veut mettre la rétro-ingénierie à la portée de tous",
+          "cve": null,
+          "severity": "high",
+          "score": 59,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Signal de veille — Numerama.\n\nBranché sur les assistants de code, l’outil open source REA permet de faire décortiquer un programme par une IA en lui posant simplement une question. Plébiscité en quelques jours, il soulève déjà des questions juridiques.\n\nWatt Else, ToujoursPlus, Artificielles, Le Récap : votre dose hebdo d’infos exclusives et d’éditos endiablés !\n\nFrandroid Clubic Lemon Humanoid Mon compte Thème Clair Sombre Système 39,90 € /an\n\nNous générons pour vous un résumé de l’ar…",
+          "detail": "Signal de veille — Numerama.\n\nBranché sur les assistants de code, l’outil open source REA permet de faire décortiquer un programme par une IA en lui posant simplement une question. Plébiscité en quelques jours, il soulève déjà des questions juridiques.\n\nWatt Else, ToujoursPlus, Artificielles, Le Récap : votre dose hebdo d’infos exclusives et d’éditos endiablés !\n\nFrandroid Clubic Lemon Humanoid Mon compte Thème Clair Sombre Système 39,90 € /an\n\nNous générons pour vous un résumé de l’article grâce à une IA et nous le vérifions afin de nous assurer qu’il n’y ait aucune erreur, pour garantir l’authenticité de l’info.\n\nRecevez tous les soirs un résumé de l’actu importante avec Le Récap’\n\nLa Saaspocalypse fulgurante promise il y a quelques mois n’est pas arrivée, mais n’était-ce qu’un répit ?\n\nL’arrivée des assistants de code a déjà bousculé le modèle des logiciels par abonnement, et les clones de Photoshop ou de la suite Office développés avec l’IA se multiplient, certains devenant de réels projets construits en équipe .",
+          "action": null,
+          "image": "https://img.numerama.com/www.numerama.com/wp-content/uploads/2026/10/ollage-10.png?resize=1600,900&key=4bae235e",
+          "sources": [
+            {
+              "url": "https://www.numerama.com/tech/2350773-decouvrez-comment-fonctionne-le-logiciel-massivement-partage-cet-outil-ia-veut-mettre-la-retro-ingenierie-a-la-portee-de-tous.html",
+              "label": "Numerama"
+            }
+          ],
+          "url": "https://www.numerama.com/tech/2350773-decouvrez-comment-fonctionne-le-logiciel-massivement-partage-cet-outil-ia-veut-mettre-la-retro-ingenierie-a-la-portee-de-tous.html",
+          "pubDate": "2026-10-10T08:49:19.000Z"
+        },
+        {
+          "title": "Les géants de l’IA préparent déjà l’après-catastrophe et redoutent deux scénarios en particulier",
+          "cve": null,
+          "severity": "culture",
+          "score": 59,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Signal de veille — Numerama.\n\nSelon Axios, les dirigeants d’Anthropic, d’OpenAI et d’autres entreprises de l’IA simulent en privé la crise politique qui suivrait un premier accident majeur causé par l’IA.\n\nWatt Else, ToujoursPlus, Artificielles, Le Récap : votre dose hebdo d’infos exclusives et d’éditos endiablés !\n\nFrandroid Clubic Lemon Humanoid Mon compte Thème Clair Sombre Système 39,90 € /an\n\nNous générons pour vous un résumé de l’article grâce à une IA et nous le vérifions afin d…",
+          "detail": "Signal de veille — Numerama.\n\nSelon Axios, les dirigeants d’Anthropic, d’OpenAI et d’autres entreprises de l’IA simulent en privé la crise politique qui suivrait un premier accident majeur causé par l’IA.\n\nWatt Else, ToujoursPlus, Artificielles, Le Récap : votre dose hebdo d’infos exclusives et d’éditos endiablés !\n\nFrandroid Clubic Lemon Humanoid Mon compte Thème Clair Sombre Système 39,90 € /an\n\nNous générons pour vous un résumé de l’article grâce à une IA et nous le vérifions afin de nous assurer qu’il n’y ait aucune erreur, pour garantir l’authenticité de l’info.\n\nRecevez tous les soirs un résumé de l’actu importante avec Le Récap’\n\nFaire des scénarios de crise n’a rien d’exceptionnel. La pratique est courante en entreprise, et le Pentagone organise par exemple des wargames depuis des décennies.\n\nLa différence, c’est la portée que pourraient avoir les scénarios mis en place. Et à ce jeu-là, l’IA occupe actuellement une place à part. D’après Axios, beaucoup de chercheurs et de dirigeants du secteur jugent un incident majeur inévitable, et plusieurs d’entre eux ont confié au média américain qu’ils le prévoient même dans les six à douze prochains mois.",
+          "action": null,
+          "image": "https://img.numerama.com/www.numerama.com/wp-content/uploads/2026/10/ollage-9.png?resize=1600,900&key=70b86201",
+          "sources": [
+            {
+              "url": "https://www.numerama.com/tech/2350763-les-geants-de-lia-preparent-deja-lapres-catastrophe-et-redoutent-deux-scenarios-en-particulier.html",
+              "label": "Numerama"
+            }
+          ],
+          "url": "https://www.numerama.com/tech/2350763-les-geants-de-lia-preparent-deja-lapres-catastrophe-et-redoutent-deux-scenarios-en-particulier.html",
+          "pubDate": "2026-10-10T07:31:37.000Z"
+        },
+        {
+          "title": "`123456' password used in Danish CPR data breach",
+          "cve": null,
+          "severity": "culture",
+          "score": 50,
+          "corroboration": 2,
+          "region": "intl",
+          "body": "Signal de veille — Hacker News.\n\nAt least three accounts at the company linked to a major breach of Denmark’s CPR register reportedly used the password “123456”, including an administrator account. At least three user accounts at the Funen-based IT company Pays used the password “123456” when hackers gained access to Denmark’s CPR register, Politiken reports. One of them was the […]",
+          "detail": "Signal de veille — Hacker News.\n\nAt least three accounts at the company linked to a major breach of Denmark’s CPR register reportedly used the password “123456”, including an administrator account. At least three user accounts at the Funen-based IT company Pays used the password “123456” when hackers gained access to Denmark’s CPR register, Politiken reports. One of them was the […]",
+          "action": null,
+          "image": null,
+          "sources": [
+            {
+              "url": "https://cphpost.dk/2026-10-10/news/round-up/123456-password-used-in-massive-danish-cpr-data-breach/",
+              "label": "Hacker News"
+            },
+            {
+              "url": "https://news.ycombinator.com/item?id=50031269",
+              "label": "Discussion HN"
+            }
+          ],
+          "url": "https://cphpost.dk/2026-10-10/news/round-up/123456-password-used-in-massive-danish-cpr-data-breach/",
+          "pubDate": "2026-10-10T09:51:49.000Z"
+        }
+      ]
+    }
+  ]
+}
