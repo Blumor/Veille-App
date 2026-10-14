@@ -1,0 +1,1253 @@
+{
+  "id": "daily-2026-10-14",
+  "type": "daily",
+  "date": "2026-10-14",
+  "title": "Rapport quotidien - mercredi 14 octobre 2026",
+  "summary": "Sur les dernières 24 heures, la veille recense 61 vulnérabilités critiques, 59 incidents ou compromissions et 25 signaux de fond. Acteurs et produits les plus exposés : Microsoft.WindowsDesktop.App.Runtime.win-arm64 (nuget), Microsoft et Microsoft.AspNetCore.App.Runtime.linux-arm (nuget).",
+  "generatedAt": "2026-10-14T04:01:23.596Z",
+  "sections": [
+    {
+      "id": "vulns",
+      "items": [
+        {
+          "title": "CVE-2026-97668 — The Abandoned Cart Pro for WooCommerce plugin for WordPress is vulnerable to SQL Injection…",
+          "cve": "CVE-2026-97668",
+          "severity": "critical",
+          "score": 74,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Vulnérabilité critique CVE-2026-97668 (score CVSS 9.8).\n\nThe Abandoned Cart Pro for WooCommerce plugin for WordPress is vulnerable to SQL Injection via the guest cart persistent meta_value in all versions up to, and including, 10.8.0 due to insufficient escaping on user supplied data and lack of sufficient preparation on the existing SQL query in the update_guest_persistent_cart() function.",
+          "detail": "Vulnérabilité critique CVE-2026-97668 (score CVSS 9.8).\n\nThe Abandoned Cart Pro for WooCommerce plugin for WordPress is vulnerable to SQL Injection via the guest cart persistent meta_value in all versions up to, and including, 10.8.0 due to insufficient escaping on user supplied data and lack of sufficient preparation on the existing SQL query in the update_guest_persistent_cart() function. The abandoned_cart_info value, populated from attacker-controlled checkout fields such as the SMS consent field, is passed through stripslashes() and concatenated directly into an UPDATE statement while the adjacent SELECT and INSERT use prepared statements. This makes it possible for unauthenticated attackers to append additional SQL to the query. Because the sink is an UPDATE ... SET on the wp_usermeta table, the injection can both extract sensitive information from the database via time-based blind techniques and modify usermeta rows; it has been demonstrated to escalate an arbitrary account to administrator by writing a wp_capabilities row that shadows the legitimate one.\n\nScore CVSS : 9.8\n\nType de faiblesse (CWE) : CWE-89",
+          "action": "Vérifier l'exposition du parc et appliquer le correctif éditeur dès sa disponibilité.",
+          "image": null,
+          "sources": [
+            {
+              "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-97668",
+              "label": "NVD"
+            },
+            {
+              "url": "https://www.cvedetails.com/cve/CVE-2026-97668/",
+              "label": "CVE Details"
+            }
+          ],
+          "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-97668",
+          "pubDate": "2026-10-14T03:17:37.797Z"
+        },
+        {
+          "title": "CVE-2026-97657 — The Abandoned Cart Pro for WooCommerce plugin for WordPress is vulnerable to Authenticatio…",
+          "cve": "CVE-2026-97657",
+          "severity": "critical",
+          "score": 74,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Vulnérabilité critique CVE-2026-97657 (score CVSS 9.8).\n\nThe Abandoned Cart Pro for WooCommerce plugin for WordPress is vulnerable to Authentication Bypass via Malleable Encryption and Bypassable HMAC in all versions up to, and including, 10.8.0. This is due to the use of MAC-free AES-CTR encryption for cart-recovery link tokens — where the 8-byte CTR nonce is carried inside the ciphertext blob and the encryption key is looked up using the attacker-supplied `user_email` GET parameter — combined with an HMAC nonc…",
+          "detail": "Vulnérabilité critique CVE-2026-97657 (score CVSS 9.8).\n\nThe Abandoned Cart Pro for WooCommerce plugin for WordPress is vulnerable to Authentication Bypass via Malleable Encryption and Bypassable HMAC in all versions up to, and including, 10.8.0. This is due to the use of MAC-free AES-CTR encryption for cart-recovery link tokens — where the 8-byte CTR nonce is carried inside the ciphertext blob and the encryption key is looked up using the attacker-supplied `user_email` GET parameter — combined with an HMAC nonce check in `wcap_email_track_links()` that is only enforced when the `wcap_nonce` parameter is non-empty, allowing complete bypass by omission, and an insecure direct object reference on the decrypted `abandoned_id` with no ownership verification confirming the cart belongs to the email used for decryption. This makes it possible for unauthenticated attackers who possess a single legitimate cart-recovery link (obtained from their own reminder email) to recover the keystream, forge a ciphertext that decrypts to any victim's cart ID, and trigger a call to `wp_set_auth_cookie()` for the victim user — achieving full account takeover of any user who has ever abandoned a cart, including administrators. The auto-login feature defaults to enabled and is forced on during plugin upgrades, meaning all affected installations are exploitable without any additional configuration.\n\nScore CVSS : 9.8\n\nType de faiblesse (CWE) : CWE-639",
+          "action": "Vérifier l'exposition du parc et appliquer le correctif éditeur dès sa disponibilité.",
+          "image": null,
+          "sources": [
+            {
+              "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-97657",
+              "label": "NVD"
+            },
+            {
+              "url": "https://www.cvedetails.com/cve/CVE-2026-97657/",
+              "label": "CVE Details"
+            }
+          ],
+          "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-97657",
+          "pubDate": "2026-10-14T03:17:37.657Z"
+        },
+        {
+          "title": "CVE-2026-110002 — The Snazzy Social Media Feed plugin for WordPress is vulnerable to Arbitrary File Upload i…",
+          "cve": "CVE-2026-110002",
+          "severity": "critical",
+          "score": 74,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Vulnérabilité critique CVE-2026-110002 (score CVSS 9.8).\n\nThe Snazzy Social Media Feed plugin for WordPress is vulnerable to Arbitrary File Upload in all versions up to, and including, 2.5 via the (file scope) function. This is due to missing WordPress bootstrap, authentication, capability, and nonce checks in the standalone save-to-cache.php script, combined with insufficient sanitization of the pluginURL parameter before it is written to a web-executable PHP file.",
+          "detail": "Vulnérabilité critique CVE-2026-110002 (score CVSS 9.8).\n\nThe Snazzy Social Media Feed plugin for WordPress is vulnerable to Arbitrary File Upload in all versions up to, and including, 2.5 via the (file scope) function. This is due to missing WordPress bootstrap, authentication, capability, and nonce checks in the standalone save-to-cache.php script, combined with insufficient sanitization of the pluginURL parameter before it is written to a web-executable PHP file. This makes it possible for authenticated attackers, with subscriber-level access and above, to upload files that may be executable, which makes remote code execution possible. The save-to-cache.php script is directly reachable without loading WordPress; FILTER_SANITIZE_URL — the only filter applied to the pluginURL value — preserves the characters required to craft a valid PHP payload, which is then written verbatim into cached-content/cached-feed.php and immediately executable via a single GET request.\n\nScore CVSS : 9.8\n\nType de faiblesse (CWE) : CWE-434",
+          "action": "Vérifier l'exposition du parc et appliquer le correctif éditeur dès sa disponibilité.",
+          "image": null,
+          "sources": [
+            {
+              "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-110002",
+              "label": "NVD"
+            },
+            {
+              "url": "https://www.cvedetails.com/cve/CVE-2026-110002/",
+              "label": "CVE Details"
+            }
+          ],
+          "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-110002",
+          "pubDate": "2026-10-14T03:17:20.220Z"
+        },
+        {
+          "title": "CVE-2026-90532 — Adobe Experience Manager is affected by an Incorrect Authorization vulnerability that coul…",
+          "cve": "CVE-2026-90532",
+          "severity": "critical",
+          "score": 74,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Vulnérabilité critique CVE-2026-90532 (score CVSS 10).\n\nAdobe Experience Manager is affected by an Incorrect Authorization vulnerability that could result in arbitrary code execution in the context of the current user, potentially gaining elevated access or control over the victim's account or session. Exploitation of this issue does not require user interaction. Scope is changed.",
+          "detail": "Vulnérabilité critique CVE-2026-90532 (score CVSS 10).\n\nAdobe Experience Manager is affected by an Incorrect Authorization vulnerability that could result in arbitrary code execution in the context of the current user, potentially gaining elevated access or control over the victim's account or session. Exploitation of this issue does not require user interaction. Scope is changed.\n\nScore CVSS : 10\n\nType de faiblesse (CWE) : CWE-863",
+          "action": "Vérifier l'exposition du parc et appliquer le correctif éditeur dès sa disponibilité.",
+          "image": null,
+          "sources": [
+            {
+              "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-90532",
+              "label": "NVD"
+            },
+            {
+              "url": "https://www.cvedetails.com/cve/CVE-2026-90532/",
+              "label": "CVE Details"
+            }
+          ],
+          "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-90532",
+          "pubDate": "2026-10-13T20:19:10.150Z"
+        },
+        {
+          "title": "CVE-2026-75732 — Adobe Experience Manager is affected by an Incorrect Authorization vulnerability that coul…",
+          "cve": "CVE-2026-75732",
+          "severity": "critical",
+          "score": 74,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Vulnérabilité critique CVE-2026-75732 (score CVSS 9.9).\n\nAdobe Experience Manager is affected by an Incorrect Authorization vulnerability that could result in arbitrary code execution in the context of the current user, potentially gaining elevated access or control over the victim's account or session. Exploitation of this issue does not require user interaction. Scope is changed.",
+          "detail": "Vulnérabilité critique CVE-2026-75732 (score CVSS 9.9).\n\nAdobe Experience Manager is affected by an Incorrect Authorization vulnerability that could result in arbitrary code execution in the context of the current user, potentially gaining elevated access or control over the victim's account or session. Exploitation of this issue does not require user interaction. Scope is changed.\n\nScore CVSS : 9.9\n\nType de faiblesse (CWE) : CWE-863",
+          "action": "Vérifier l'exposition du parc et appliquer le correctif éditeur dès sa disponibilité.",
+          "image": null,
+          "sources": [
+            {
+              "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-75732",
+              "label": "NVD"
+            },
+            {
+              "url": "https://www.cvedetails.com/cve/CVE-2026-75732/",
+              "label": "CVE Details"
+            }
+          ],
+          "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-75732",
+          "pubDate": "2026-10-13T20:18:04.200Z"
+        },
+        {
+          "title": "CVE-2026-48383 — Adobe Experience Manager is affected by an Incorrect Authorization vulnerability that coul…",
+          "cve": "CVE-2026-48383",
+          "severity": "critical",
+          "score": 74,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Vulnérabilité critique CVE-2026-48383 (score CVSS 10).\n\nAdobe Experience Manager is affected by an Incorrect Authorization vulnerability that could result in arbitrary code execution in the context of the current user, potentially gaining elevated access or control over the victim's account or session. Exploitation of this issue does not require user interaction. Scope is changed.",
+          "detail": "Vulnérabilité critique CVE-2026-48383 (score CVSS 10).\n\nAdobe Experience Manager is affected by an Incorrect Authorization vulnerability that could result in arbitrary code execution in the context of the current user, potentially gaining elevated access or control over the victim's account or session. Exploitation of this issue does not require user interaction. Scope is changed.\n\nScore CVSS : 10\n\nType de faiblesse (CWE) : CWE-863",
+          "action": "Vérifier l'exposition du parc et appliquer le correctif éditeur dès sa disponibilité.",
+          "image": null,
+          "sources": [
+            {
+              "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-48383",
+              "label": "NVD"
+            },
+            {
+              "url": "https://www.cvedetails.com/cve/CVE-2026-48383/",
+              "label": "CVE Details"
+            }
+          ],
+          "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-48383",
+          "pubDate": "2026-10-13T20:17:29.017Z"
+        },
+        {
+          "title": "CVE-2026-48382 — Adobe Experience Manager is affected by an Incorrect Authorization vulnerability that coul…",
+          "cve": "CVE-2026-48382",
+          "severity": "critical",
+          "score": 74,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Vulnérabilité critique CVE-2026-48382 (score CVSS 10).\n\nAdobe Experience Manager is affected by an Incorrect Authorization vulnerability that could result in arbitrary code execution in the context of the current user, potentially gaining elevated access or control over the victim's account or session. Exploitation of this issue does not require user interaction. Scope is changed.",
+          "detail": "Vulnérabilité critique CVE-2026-48382 (score CVSS 10).\n\nAdobe Experience Manager is affected by an Incorrect Authorization vulnerability that could result in arbitrary code execution in the context of the current user, potentially gaining elevated access or control over the victim's account or session. Exploitation of this issue does not require user interaction. Scope is changed.\n\nScore CVSS : 10\n\nType de faiblesse (CWE) : CWE-863",
+          "action": "Vérifier l'exposition du parc et appliquer le correctif éditeur dès sa disponibilité.",
+          "image": null,
+          "sources": [
+            {
+              "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-48382",
+              "label": "NVD"
+            },
+            {
+              "url": "https://www.cvedetails.com/cve/CVE-2026-48382/",
+              "label": "CVE Details"
+            }
+          ],
+          "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-48382",
+          "pubDate": "2026-10-13T20:17:28.900Z"
+        },
+        {
+          "title": "CVE-2026-105895 — Adobe Experience Manager is affected by an Improper Input Validation vulnerability that co…",
+          "cve": "CVE-2026-105895",
+          "severity": "critical",
+          "score": 74,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Vulnérabilité critique CVE-2026-105895 (score CVSS 9.9).\n\nAdobe Experience Manager is affected by an Improper Input Validation vulnerability that could result in arbitrary code execution in the context of the current user, potentially gaining elevated access or control over the victim's account or session. Exploitation of this issue does not require user interaction. Scope is changed.",
+          "detail": "Vulnérabilité critique CVE-2026-105895 (score CVSS 9.9).\n\nAdobe Experience Manager is affected by an Improper Input Validation vulnerability that could result in arbitrary code execution in the context of the current user, potentially gaining elevated access or control over the victim's account or session. Exploitation of this issue does not require user interaction. Scope is changed.\n\nScore CVSS : 9.9\n\nType de faiblesse (CWE) : CWE-20",
+          "action": "Vérifier l'exposition du parc et appliquer le correctif éditeur dès sa disponibilité.",
+          "image": null,
+          "sources": [
+            {
+              "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-105895",
+              "label": "NVD"
+            },
+            {
+              "url": "https://www.cvedetails.com/cve/CVE-2026-105895/",
+              "label": "CVE Details"
+            }
+          ],
+          "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-105895",
+          "pubDate": "2026-10-13T20:17:15.420Z"
+        },
+        {
+          "title": "CVE-2026-103848 — Adobe Experience Manager is affected by an Improper Neutralization of Special Elements use…",
+          "cve": "CVE-2026-103848",
+          "severity": "critical",
+          "score": 74,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Vulnérabilité critique CVE-2026-103848 (score CVSS 9.9).\n\nAdobe Experience Manager is affected by an Improper Neutralization of Special Elements used in an OS Command ('OS Command Injection') vulnerability that could result in arbitrary code execution in the context of the current user. A low-privileged attacker could exploit this vulnerability to execute arbitrary code. Exploitation of this issue does not require user interaction. Scope is changed.",
+          "detail": "Vulnérabilité critique CVE-2026-103848 (score CVSS 9.9).\n\nAdobe Experience Manager is affected by an Improper Neutralization of Special Elements used in an OS Command ('OS Command Injection') vulnerability that could result in arbitrary code execution in the context of the current user. A low-privileged attacker could exploit this vulnerability to execute arbitrary code. Exploitation of this issue does not require user interaction. Scope is changed.\n\nScore CVSS : 9.9\n\nType de faiblesse (CWE) : CWE-78",
+          "action": "Vérifier l'exposition du parc et appliquer le correctif éditeur dès sa disponibilité.",
+          "image": null,
+          "sources": [
+            {
+              "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-103848",
+              "label": "NVD"
+            },
+            {
+              "url": "https://www.cvedetails.com/cve/CVE-2026-103848/",
+              "label": "CVE Details"
+            }
+          ],
+          "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-103848",
+          "pubDate": "2026-10-13T20:17:11.267Z"
+        },
+        {
+          "title": "CVE-2026-105016 — Microsoft Security Advisory CVE-2026-105016 - Microsoft QUIC Remote Code Execution Vulnerability",
+          "cve": "CVE-2026-105016",
+          "severity": "critical",
+          "score": 74,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Vulnérabilité critique CVE-2026-105016 affectant Microsoft.Native.Quic.MsQuic.Schannel (nuget) (score CVSS 9.8).\n\nMicrosoft Security Advisory CVE-2026-105016 - Microsoft QUIC Remote Code Execution Vulnerability\n\nA crafted IPv6 QUIC packet can reach the Microsoft QUIC HTTP/3 path without authentication or user interaction and trigger remote code execution.\n\nAnnouncement for this issue can be found at dotnet/announcements#446\n\nThe vulnerability affects Microsoft .NET projects that use an affected package version listed below.\n\nIf your application uses a package version…",
+          "detail": "Vulnérabilité critique CVE-2026-105016 affectant Microsoft.Native.Quic.MsQuic.Schannel (nuget) (score CVSS 9.8).\n\nMicrosoft Security Advisory CVE-2026-105016 - Microsoft QUIC Remote Code Execution Vulnerability\n\nA crafted IPv6 QUIC packet can reach the Microsoft QUIC HTTP/3 path without authentication or user interaction and trigger remote code execution.\n\nAnnouncement for this issue can be found at dotnet/announcements#446\n\nThe vulnerability affects Microsoft .NET projects that use an affected package version listed below.\n\nIf your application uses a package version listed in affected packages , it is exposed to the vulnerability.\n\nOnce you have installed the updated runtime or SDK, restart your applications for the update to take effect.\n\nAdditionally, if you have deployed self-contained applications targeting any of the impacted versions, these applications are also vulnerable and must be recompiled and redeployed.",
+          "action": "Vérifier l'exposition du parc et appliquer le correctif éditeur dès sa disponibilité.",
+          "image": "https://github.githubassets.com/assets/advisory-database-show-f32c8207dfb2.png",
+          "sources": [
+            {
+              "url": "https://github.com/advisories/GHSA-5gjq-3f94-rcf7",
+              "label": "GitHub Advisory"
+            }
+          ],
+          "url": "https://github.com/advisories/GHSA-5gjq-3f94-rcf7",
+          "pubDate": "2026-10-13T19:56:35.000Z"
+        },
+        {
+          "title": "CVE-2026-92909 — Adobe Commerce is affected by an Incorrect Authorization vulnerability that could result i…",
+          "cve": "CVE-2026-92909",
+          "severity": "critical",
+          "score": 74,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Vulnérabilité critique CVE-2026-92909 (score CVSS 9.8).\n\nAdobe Commerce is affected by an Incorrect Authorization vulnerability that could result in arbitrary code execution in the context of the current user. An attacker could exploit this vulnerability to execute arbitrary code. Exploitation of this issue does not require user interaction.",
+          "detail": "Vulnérabilité critique CVE-2026-92909 (score CVSS 9.8).\n\nAdobe Commerce is affected by an Incorrect Authorization vulnerability that could result in arbitrary code execution in the context of the current user. An attacker could exploit this vulnerability to execute arbitrary code. Exploitation of this issue does not require user interaction.\n\nScore CVSS : 9.8\n\nType de faiblesse (CWE) : CWE-863",
+          "action": "Vérifier l'exposition du parc et appliquer le correctif éditeur dès sa disponibilité.",
+          "image": null,
+          "sources": [
+            {
+              "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-92909",
+              "label": "NVD"
+            },
+            {
+              "url": "https://www.cvedetails.com/cve/CVE-2026-92909/",
+              "label": "CVE Details"
+            }
+          ],
+          "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-92909",
+          "pubDate": "2026-10-13T19:21:43.613Z"
+        },
+        {
+          "title": "CVE-2026-103849 — Adobe Commerce is affected by an Improper Neutralization of Special Elements Used in a Tem…",
+          "cve": "CVE-2026-103849",
+          "severity": "critical",
+          "score": 74,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Vulnérabilité critique CVE-2026-103849 (score CVSS 10).\n\nAdobe Commerce is affected by an Improper Neutralization of Special Elements Used in a Template Engine vulnerability that could result in arbitrary code execution in the context of the current user, potentially gaining elevated access or control over the victim's account or session. Exploitation of this issue does not require user interaction. Scope is changed.",
+          "detail": "Vulnérabilité critique CVE-2026-103849 (score CVSS 10).\n\nAdobe Commerce is affected by an Improper Neutralization of Special Elements Used in a Template Engine vulnerability that could result in arbitrary code execution in the context of the current user, potentially gaining elevated access or control over the victim's account or session. Exploitation of this issue does not require user interaction. Scope is changed.\n\nScore CVSS : 10\n\nType de faiblesse (CWE) : CWE-1336",
+          "action": "Vérifier l'exposition du parc et appliquer le correctif éditeur dès sa disponibilité.",
+          "image": null,
+          "sources": [
+            {
+              "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-103849",
+              "label": "NVD"
+            },
+            {
+              "url": "https://www.cvedetails.com/cve/CVE-2026-103849/",
+              "label": "CVE Details"
+            }
+          ],
+          "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-103849",
+          "pubDate": "2026-10-13T19:17:53.997Z"
+        },
+        {
+          "title": "CVE-2026-88092 — Microsoft Security Advisory CVE-2026-88092 - ASP.NET Core Security Feature Bypass Vulnerability",
+          "cve": "CVE-2026-88092",
+          "severity": "critical",
+          "score": 73,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Vulnérabilité critique CVE-2026-88092 affectant Microsoft.AspNetCore.App.Runtime.linux-arm (nuget) (score CVSS 9.4).\n\nMicrosoft Security Advisory CVE-2026-88092 - ASP.NET Core Security Feature Bypass Vulnerability\n\nAn aborted Kestrel HTTP/1 connection can reparse unread request-body bytes as another request, creating a request-smuggling or desynchronization path.\n\nAnnouncement for this issue can be found at dotnet/announcements#472\n\nThe vulnerability affects Microsoft .NET projects that use an affected package version listed below.\n\nIf using a package listed in affected p…",
+          "detail": "Vulnérabilité critique CVE-2026-88092 affectant Microsoft.AspNetCore.App.Runtime.linux-arm (nuget) (score CVSS 9.4).\n\nMicrosoft Security Advisory CVE-2026-88092 - ASP.NET Core Security Feature Bypass Vulnerability\n\nAn aborted Kestrel HTTP/1 connection can reparse unread request-body bytes as another request, creating a request-smuggling or desynchronization path.\n\nAnnouncement for this issue can be found at dotnet/announcements#472\n\nThe vulnerability affects Microsoft .NET projects that use an affected package version listed below.\n\nIf using a package listed in affected packages , you're exposed to the vulnerability.\n\nOnce you have installed the updated runtime or SDK, restart your apps for the update to take effect.\n\nAdditionally, if you've deployed self-contained applications targeting any of the impacted versions, these applications are also vulnerable and must be recompiled and redeployed.",
+          "action": "Vérifier l'exposition du parc et appliquer le correctif éditeur dès sa disponibilité.",
+          "image": "https://github.githubassets.com/assets/advisory-database-show-f32c8207dfb2.png",
+          "sources": [
+            {
+              "url": "https://github.com/advisories/GHSA-rv87-ccxw-8ggf",
+              "label": "GitHub Advisory"
+            }
+          ],
+          "url": "https://github.com/advisories/GHSA-rv87-ccxw-8ggf",
+          "pubDate": "2026-10-13T20:40:50.000Z"
+        },
+        {
+          "title": "CVE-2026-92097 — The Click to Chat for WhatsApp plugin for WordPress is vulnerable to Arbitrary Shortcode E…",
+          "cve": "CVE-2026-92097",
+          "severity": "critical",
+          "score": 72,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Vulnérabilité critique CVE-2026-92097 (score CVSS 9.1).\n\nThe Click to Chat for WhatsApp plugin for WordPress is vulnerable to Arbitrary Shortcode Execution in versions up to, and including, 4.44 This is due to the greetings_dialog() function building the {url} template placeholder from a sanitize_text_field()-filtered $_SERVER['REQUEST_URI'] on archive pages and then passing the substituted greeting content to do_shortcode() in the greetings-1 and greetings-2 templates, without stripping shortcode delimiters.",
+          "detail": "Vulnérabilité critique CVE-2026-92097 (score CVSS 9.1).\n\nThe Click to Chat for WhatsApp plugin for WordPress is vulnerable to Arbitrary Shortcode Execution in versions up to, and including, 4.44 This is due to the greetings_dialog() function building the {url} template placeholder from a sanitize_text_field()-filtered $_SERVER['REQUEST_URI'] on archive pages and then passing the substituted greeting content to do_shortcode() in the greetings-1 and greetings-2 templates, without stripping shortcode delimiters. Because wp_kses() runs against main_content BEFORE the {url} substitution, the attacker-controlled URL bytes reach do_shortcode() unfiltered. This makes it possible for unauthenticated attackers to execute arbitrary shortcodes registered by WordPress core, the active theme, or any other plugin (e.\n\nScore CVSS : 9.1\n\nType de faiblesse (CWE) : CWE-94",
+          "action": "Vérifier l'exposition du parc et appliquer le correctif éditeur dès sa disponibilité.",
+          "image": null,
+          "sources": [
+            {
+              "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-92097",
+              "label": "NVD"
+            },
+            {
+              "url": "https://www.cvedetails.com/cve/CVE-2026-92097/",
+              "label": "CVE Details"
+            }
+          ],
+          "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-92097",
+          "pubDate": "2026-10-14T02:17:01.397Z"
+        },
+        {
+          "title": "CVE-2026-70188 — Microsoft Security Advisory CVE-2026-70188 - ASP.NET Core Security Feature Bypass Vulnerability",
+          "cve": "CVE-2026-70188",
+          "severity": "critical",
+          "score": 72,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Vulnérabilité critique CVE-2026-70188 affectant Microsoft.AspNetCore.App.Runtime.linux-arm (nuget) (score CVSS 9.1).\n\nMicrosoft Security Advisory CVE-2026-70188 - ASP.NET Core Security Feature Bypass Vulnerability\n\nKestrel accepts newline characters in HTTP/2 request trailers and values retrieved from the dynamic HPACK table instead of treating them as malformed.\n\nAnnouncement for this issue can be found at dotnet/announcements#462\n\nThe vulnerability affects Microsoft .NET projects that use an affected package version listed below.\n\nIf using a package listed in affected p…",
+          "detail": "Vulnérabilité critique CVE-2026-70188 affectant Microsoft.AspNetCore.App.Runtime.linux-arm (nuget) (score CVSS 9.1).\n\nMicrosoft Security Advisory CVE-2026-70188 - ASP.NET Core Security Feature Bypass Vulnerability\n\nKestrel accepts newline characters in HTTP/2 request trailers and values retrieved from the dynamic HPACK table instead of treating them as malformed.\n\nAnnouncement for this issue can be found at dotnet/announcements#462\n\nThe vulnerability affects Microsoft .NET projects that use an affected package version listed below.\n\nIf using a package listed in affected packages , you're exposed to the vulnerability.\n\nOnce you have installed the updated runtime or SDK, restart your apps for the update to take effect.\n\nAdditionally, if you've deployed self-contained applications targeting any of the impacted versions, these applications are also vulnerable and must be recompiled and redeployed.",
+          "action": "Vérifier l'exposition du parc et appliquer le correctif éditeur dès sa disponibilité.",
+          "image": "https://github.githubassets.com/assets/advisory-database-show-f32c8207dfb2.png",
+          "sources": [
+            {
+              "url": "https://github.com/advisories/GHSA-fpq8-4vhr-rcxx",
+              "label": "GitHub Advisory"
+            }
+          ],
+          "url": "https://github.com/advisories/GHSA-fpq8-4vhr-rcxx",
+          "pubDate": "2026-10-13T20:37:27.000Z"
+        },
+        {
+          "title": "NIS2 : la loi attend, les attaquants non",
+          "cve": null,
+          "severity": "critical",
+          "score": 34,
+          "corroboration": 1,
+          "region": "fr",
+          "body": "Vulnérabilité critique.\n\nLe 17 octobre 2026, la France aura deux ans de retard sur la transposition de la directive NIS2, dont l&rsquo;échéance était fixée au 17 octobre 2024. Le calendrier semblait pourtant enfin se resserrer : inscrit à l&rsquo;ordre du jour de l&rsquo;Assemblée nationale les 7 et 9 octobre, le projet de loi relatif à la résilience des infrastructures critiques et au renforcement de la cybersécurité devait être débattu en séance publique.",
+          "detail": "Vulnérabilité critique.\n\nLe 17 octobre 2026, la France aura deux ans de retard sur la transposition de la directive NIS2, dont l&rsquo;échéance était fixée au 17 octobre 2024. Le calendrier semblait pourtant enfin se resserrer : inscrit à l&rsquo;ordre du jour de l&rsquo;Assemblée nationale les 7 et 9 octobre, le projet de loi relatif à la résilience des infrastructures critiques et au renforcement de la cybersécurité devait être débattu en séance publique. Il n&rsquo;en sera rien. Le 6 octobre, la conférence des présidents l&rsquo;a retiré de l&rsquo;ordre du jour, sans fixer de nouvelle date. Faut-il s&rsquo;en émouvoir ? Pour les cybercriminels, la réponse est connue : l&rsquo;absence de loi n&rsquo;a jamais arrêté un attaquant. Pour les entreprises, elle ne doit pas non plus servir de prétexte. Car ce que NIS2 demande, sécuriser sa supply chain et former ses équipes, relève moins de la conformité que du bon sens opérationnel. Trois constats, tirés de l&rsquo;actualité récente, le montrent. Un texte qui n&rsquo;en finit pas d&rsquo;attendre Le parcours du projet de loi Résilience ressemble à une longue série de rendez-vous manqués. Déposé au Sénat le 15 octobre 2024 avec engagement de la procédure accélérée, il a été adopté par les sénateurs le 12 mars 2025, puis remanié par la commission spéciale de l&rsquo;Assemblée nationale, qui a adopté sa version le 10 septembre 2025. Un examen en séance avait",
+          "action": "Vérifier l'exposition du parc et appliquer le correctif éditeur dès sa disponibilité.",
+          "image": "https://www.silicon.fr/wp-content/uploads/2026/10/Florian-Malecki-Responsable-Europe-du-Sud-chez-KnowBe4.png",
+          "sources": [
+            {
+              "url": "https://www.silicon.fr/cybersecurite-1371/nis2-la-loi-attend-les-attaquants-non-229628",
+              "label": "Silicon.fr"
+            }
+          ],
+          "url": "https://www.silicon.fr/cybersecurite-1371/nis2-la-loi-attend-les-attaquants-non-229628",
+          "pubDate": "2026-10-13T11:17:51.000Z"
+        },
+        {
+          "title": "« Choix, contrôle et flexibilité sur la télémétrie »",
+          "cve": null,
+          "severity": "high",
+          "score": 24,
+          "corroboration": 1,
+          "region": "fr",
+          "body": "Vulnérabilité élevée.\n\nMatthieu Rouvre, Directeur Commercial Europe du Sud de Cribl, aux Assises de la cybersécurité, à Monaco, explique comment reprendre la main sur les coûts du SIEM et de l'observabilité face à l'explosion des volumes de données. Matthieu Rouvre Directeur Commercial Europe du Sud, Cribl, © GS Mag GSM : comment présenteriez-vous votre parcours ? M. R.",
+          "detail": "Vulnérabilité élevée.\n\nMatthieu Rouvre, Directeur Commercial Europe du Sud de Cribl, aux Assises de la cybersécurité, à Monaco, explique comment reprendre la main sur les coûts du SIEM et de l'observabilité face à l'explosion des volumes de données. Matthieu Rouvre Directeur Commercial Europe du Sud, Cribl, © GS Mag GSM : comment présenteriez-vous votre parcours ? M. R. : je suis dans l'informatique depuis 2010 : EMC, puis le logiciel chez un éditeur racheté par Cisco, et plus de six ans dans l'univers de la donnée et de l'observabilité avant de rejoindre Cribl en juin 2024. Je couvre la France, l'Espagne, l'Italie et le Portugal. GSM : à quel problème répond Cribl ? M. R. : les volumes de données progressent d'environ 27 % par an selon IDC, quand les budgets augmentent de 7 % au mieux. Placés entre les sources, comme les pare-feu, et les destinations, comme le SIEM (gestion des informations et des événements de sécurité), nous collectons et routons la donnée de façon agnostique, avec un filtrage qui réduit de 30 à 70 % le volume transmis. Créée en 2017, l'entreprise annonce aujourd'hui plus de 350 millions de dollars de revenu récurrent annuel. GSM : un exemple concret ? M. R. : dans le cadre d'une migration d'un systeme de sécurité, plutôt que de tout envoyer vers le palier de stockage le plus coûteux, nous y avons seulement copier 15 à 20 % des données, le reste reste sur des stockages moins chers",
+          "action": "Vérifier l'exposition du parc et appliquer le correctif éditeur dès sa disponibilité.",
+          "image": "https://www.globalsecuritymag.fr/local/cache-vignettes/L229xH120/5b7d1816c9d4ffba48a0cc1ff8b11c-01d10.jpg",
+          "sources": [
+            {
+              "url": "https://www.globalsecuritymag.fr/choix-controle-et-flexibilite-sur-la-telemetrie.html",
+              "label": "Global Sec Mag"
+            }
+          ],
+          "url": "https://www.globalsecuritymag.fr/choix-controle-et-flexibilite-sur-la-telemetrie.html",
+          "pubDate": "2026-10-14T04:01:06.415Z"
+        },
+        {
+          "title": "Cyberattacks crank French supermarket refrigeration systems up to 50°C",
+          "cve": null,
+          "severity": "high",
+          "score": 24,
+          "corroboration": 1,
+          "region": "fr",
+          "body": "Vulnérabilité élevée.\n\nCyberattacks on supermarket refrigeration systems reportedly pushed temperatures as high as 50°C (122°F), affecting hundreds of stores in France and forcing retailers to discard food. Major supermarkets such as Carrefour, Coopérative U, Intermarché, Monoprix, and more were hit by the attacks, which spoiled perishable food and left stores without fresh produce.",
+          "detail": "Vulnérabilité élevée.\n\nCyberattacks on supermarket refrigeration systems reportedly pushed temperatures as high as 50°C (122°F), affecting hundreds of stores in France and forcing retailers to discard food. Major supermarkets such as Carrefour, Coopérative U, Intermarché, Monoprix, and more were hit by the attacks, which spoiled perishable food and left stores without fresh produce. The affected equipment includes cold-storage units used to hold food before it reaches supermarket shelves. The criminals behind the attack raised temperatures to unsafe levels, spoiling food and in some cases starting fires. Some affected retailers used refrigeration controllers produced by Danish company Danfoss. Authorities have not identified the entry point or confirmed exploitation of the vulnerabilities previously disclosed by Claroty and patched in August 2025, although the manufacturer said affected stores were running outdated firmware. Experts say the previously identified vulnerabilities were easily scriptable and relied on a unique but predictable authentication method. Claroty found a hidden authentication mechanism in the AK-SM 800A platform that accepted a code generated from the device's current date, bypassing the configured administrator password. Anyone who reproduced the algorithm could generate a valid daily code and gain administrative access. \"It's a zero-skill thing to pull off, I wrote the bash s",
+          "action": "Vérifier l'exposition du parc et appliquer le correctif éditeur dès sa disponibilité.",
+          "image": "https://image.theregister.com/153071.jpg?imageId=153071&x=0&y=0&cropw=100&croph=100&panox=0&panoy=0&panow=100&panoh=100&width=1200&height=683",
+          "sources": [
+            {
+              "url": "https://www.theregister.com/security/2026/10/13/cyberattacks-crank-french-supermarket-refrigeration-systems-up-to-50c/5302784",
+              "label": "The Register"
+            }
+          ],
+          "url": "https://www.theregister.com/security/2026/10/13/cyberattacks-crank-french-supermarket-refrigeration-systems-up-to-50c/5302784",
+          "pubDate": "2026-10-13T12:00:00.000Z"
+        },
+        {
+          "title": "Hackers cranked French supermarkets’ freezers up to 50 degrees, causing hundreds of stores to lose their stock",
+          "cve": null,
+          "severity": "high",
+          "score": 24,
+          "corroboration": 1,
+          "region": "fr",
+          "body": "Vulnérabilité élevée.\n\nHackers hit French supermarkets via unpatched Danfoss refrigeration systems, remote-heating freezers and destroying stock worth millions. Overnight from Sunday to Monday, a large cyberattack hit the refrigeration systems of hundreds of French supermarkets, BFMTV revealed . The attackers targeted equipment from the Danish maker Danfoss that many French stores use to regulate their cold.",
+          "detail": "Vulnérabilité élevée.\n\nHackers hit French supermarkets via unpatched Danfoss refrigeration systems, remote-heating freezers and destroying stock worth millions. Overnight from Sunday to Monday, a large cyberattack hit the refrigeration systems of hundreds of French supermarkets, BFMTV revealed . The attackers targeted equipment from the Danish maker Danfoss that many French stores use to regulate their cold. Fresh and frozen stock was destroyed, and the Paris prosecutor says there were also fires. The method is simple and nasty. Refrigeration systems have a forced defrost function that clears ice buildup, and the attackers appear to have triggered it remotely in a continuous mode, with a temperature setting of 50 degrees. The equipment heated for several hours instead of keeping goods cold, and when staff opened the fridges and freezers in the morning, a sector source told BFM, &#8220;a wave of heat&#8221; came out. &#8220;300 Intermarché and Netto stores, and fewer than 100 U stores, were affected on Monday, October 12, by a cyberattack targeting the refrigeration control systems of the Danish manufacturer Danfoss, according to the two retailers.&#8221; reports BFMTV. &#8220;Hackers reportedly remotely altered the temperatures of the systems, causing the destruction of stocks of fresh and frozen products.&#8221; The scale is still being counted. The Mousquetaires group says 300 of its Intermarché an",
+          "action": "Vérifier l'exposition du parc et appliquer le correctif éditeur dès sa disponibilité.",
+          "image": "https://securityaffairs.com/wp-content/uploads/2026/10/image-29.png",
+          "sources": [
+            {
+              "url": "https://securityaffairs.com/200863/hacking/hackers-cranked-french-supermarkets-freezers-up-to-50-degrees-causing-hundreds-of-stores-to-lose-their-stock.html",
+              "label": "Security Affairs"
+            }
+          ],
+          "url": "https://securityaffairs.com/200863/hacking/hackers-cranked-french-supermarkets-freezers-up-to-50-degrees-causing-hundreds-of-stores-to-lose-their-stock.html",
+          "pubDate": "2026-10-13T07:50:08.000Z"
+        },
+        {
+          "title": "« Gommer la complexité de l'empilement technologique »",
+          "cve": null,
+          "severity": "news",
+          "score": 16,
+          "corroboration": 1,
+          "region": "fr",
+          "body": "Vulnérabilité élevée.\n\nAdrien Porcheron, Area Director France et Afrique francophone de Cato Networks, aux Assises de la cybersécurité, a défendu un modèle où réseau et sécurité ne font plus qu'un, et où l'intelligence artificielle (IA) sert d'abord à protéger plus vite. Adrien Porcheron Area Director France et Afrique francophone, Cato Networks, © Global Security Mag GSM : quelle est l'histoire de Cato Networks ? A. P. : c'est tout d'abord une aventure humaine et technologique.",
+          "detail": "Vulnérabilité élevée.\n\nAdrien Porcheron, Area Director France et Afrique francophone de Cato Networks, aux Assises de la cybersécurité, a défendu un modèle où réseau et sécurité ne font plus qu'un, et où l'intelligence artificielle (IA) sert d'abord à protéger plus vite. Adrien Porcheron Area Director France et Afrique francophone, Cato Networks, © Global Security Mag GSM : quelle est l'histoire de Cato Networks ? A. P. : c'est tout d'abord une aventure humaine et technologique. Quand j'ai rejoint l'entreprise il y a cinq ans et demi, nous étions aux prémices du SASE (Secure Access Service Edge) en France. Fondée par Shlomo Kramer, d'origine israélienne et aujourd'hui internationale, la société reste indépendante. Nous sommes aujourd'hui près de 2 000 collaborateurs, contre 250 à mon arrivée, avec plus de 700 clients en France. GSM : quelle est la promesse du SASE ? A. P. : donner une visibilité claire sur le réseau et les usages, et offrir à l'utilisateur la même expérience où qu'il se trouve. Ce que nous venons gommer, c'est la complexité de l'empilement des briques technologiques. Nous réunissons nativement le réseau, le SD-WAN et les fonctions de sécurité, fondées sur le zero trust, dans une seule plateforme, avec une console unique et un backbone privé de plus de cent points de présence, indépendant de l'internet public. Protéger en 45 minutes GSM : Que présentez-vous aux Assises ? A. P. : Notre",
+          "action": "Vérifier l'exposition du parc et appliquer le correctif éditeur dès sa disponibilité.",
+          "image": "https://www.globalsecuritymag.fr/local/cache-vignettes/L229xH120/31e9221571c12f3f407df361cfcb65-c5f5f.jpg",
+          "sources": [
+            {
+              "url": "https://www.globalsecuritymag.fr/gommer-la-complexite-de-l-empilement-technologique.html",
+              "label": "Global Sec Mag"
+            }
+          ],
+          "url": "https://www.globalsecuritymag.fr/gommer-la-complexite-de-l-empilement-technologique.html",
+          "pubDate": "2026-10-14T04:01:06.416Z"
+        },
+        {
+          "title": "Bulletin d'actualité CERTFR-2026-ACT-043 (12 octobre 2026)",
+          "cve": null,
+          "severity": "culture",
+          "score": 12,
+          "corroboration": 1,
+          "region": "fr",
+          "body": "Vulnérabilité élevée.\n\nCe bulletin d'actualité du CERT-FR revient sur les vulnérabilités significatives de la semaine passée pour souligner leurs criticités. Il ne remplace pas l'analyse de l'ensemble des avis et alertes publiés par le CERT-FR dans le cadre d'une analyse de risques pour prioriser l'application des... Voir en ligne : https://www.cert.ssi.gouv.fr/actual...",
+          "detail": "Vulnérabilité élevée.\n\nCe bulletin d'actualité du CERT-FR revient sur les vulnérabilités significatives de la semaine passée pour souligner leurs criticités. Il ne remplace pas l'analyse de l'ensemble des avis et alertes publiés par le CERT-FR dans le cadre d'une analyse de risques pour prioriser l'application des... Voir en ligne : https://www.cert.ssi.gouv.fr/actual...",
+          "action": "Vérifier l'exposition du parc et appliquer le correctif éditeur dès sa disponibilité.",
+          "image": null,
+          "sources": [
+            {
+              "url": "https://www.globalsecuritymag.fr/bulletin-d-actualite-certfr-2026-act-043-12-octobre-2026.html",
+              "label": "Global Sec Mag"
+            }
+          ],
+          "url": "https://www.globalsecuritymag.fr/bulletin-d-actualite-certfr-2026-act-043-12-octobre-2026.html",
+          "pubDate": "2026-10-14T04:01:06.416Z"
+        }
+      ]
+    },
+    {
+      "id": "attacks",
+      "items": [
+        {
+          "title": "The Noise Inside the Network: How an Unsophisticated Attack Exposed a Third-Party Risk",
+          "cve": null,
+          "severity": "news",
+          "score": 86,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Incident de sécurité rapporté par Unit 42.\n\nUnit 42 dissects a cyberattack targeting a European bank's IT infrastructure, delivering concrete defense strategies to help organizations detect and counter comparable threats.\n\nWhen unusual activity was detected on a European bank’s central IT system, its internal security team quickly recognized that the incident warranted immediate response. They discovered unauthorized VPN-based access attempts that spanned several months.",
+          "detail": "Incident de sécurité rapporté par Unit 42.\n\nUnit 42 dissects a cyberattack targeting a European bank's IT infrastructure, delivering concrete defense strategies to help organizations detect and counter comparable threats.\n\nWhen unusual activity was detected on a European bank’s central IT system, its internal security team quickly recognized that the incident warranted immediate response. They discovered unauthorized VPN-based access attempts that spanned several months. They then engaged Unit 42 to determine the full scope of the intrusion, identify any persistent footholds and secure the environment.\n\nWhile the activity appeared to be a stealthy cyberespionage campaign, the actual intrusion was made possible by gaps in foundational security controls. Rather than relying on novel techniques, the threat actor succeeded through persistence, exploiting weaknesses that stronger identity protections and basic security hygiene could have prevented. The case highlights an important lesson: Sometimes the most damaging intrusions begin with the simplest oversights.\n\nThe intrusion originated through a third-party-managed external gateway appliance that was not properly configured to enforce strict authentication. Using compromised credentials, the attacker began by authenticating to internal systems. Once inside, the threat actor launched a discovery campaign of the internal network.\n\nThe threat actor conducted multiple rounds of reconnaissance, performing extensive host and network scans across a wide range of protocols and interacting with thousands of systems. This broad, noisy approach was less a targeted strike than casting a net to uncover as many access points as possible.\n\nThe pattern continued with credential testing. Over a period of a few months, the threat actor laun",
+          "action": "Surveiller les indicateurs de compromission associés et contrôler les actifs exposés.",
+          "image": "https://unit42.paloaltonetworks.com/wp-content/uploads/2025/11/07_Listicle_Category_1505x922.jpg",
+          "sources": [
+            {
+              "url": "https://unit42.paloaltonetworks.com/noise-inside-network-third-party-risk/",
+              "label": "Unit 42"
+            }
+          ],
+          "url": "https://unit42.paloaltonetworks.com/noise-inside-network-third-party-risk/",
+          "pubDate": "2026-10-13T22:00:04.000Z"
+        },
+        {
+          "title": "FTC: Company netted at least $60 million charging sextortion victims for help it didn’t provide",
+          "cve": null,
+          "severity": "news",
+          "score": 75,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Incident de sécurité rapporté par The Record.\n\nAn Ohio-based company charged individuals thousands of dollars to fight sextortion scams, but the operation itself was fraudulent, according to a Federal Trade Commission complaint.\n\nDigital Forensics Corporation (DFC), owner Dmitry Belkin and several affiliated companies are behind the scheme, which allegedly ran from February 2023 through July 2026, the FTC said.",
+          "detail": "Incident de sécurité rapporté par The Record.\n\nAn Ohio-based company charged individuals thousands of dollars to fight sextortion scams, but the operation itself was fraudulent, according to a Federal Trade Commission complaint.\n\nDigital Forensics Corporation (DFC), owner Dmitry Belkin and several affiliated companies are behind the scheme, which allegedly ran from February 2023 through July 2026, the FTC said. A federal court has temporarily ordered the “sextortion assistance” company from doing business until a decision is reached, the agency said.\n\nDesperate defendants receiving threats from sextortionists who said they will share naked photos or other sensitive sexual information with family members and employers have turned to DFC for help only to be manipulated into spending thousands, the FTC said in a press release .\n\nIn reality, DFC did none of these things, according to the FTC.\n\n“Instead of communicating with the sextortionist through the victim's account, defendants routinely change the victim's account settings simply to block the sextortionist's communications,” the complaint said. “Instead of obtaining investigative information, defendants fabricate chat transcripts.”\n\nDFC also allegedly routinely reused pre-saved location coordinates — typically for Nigeria and the Philippines — to trick customers into believing they had located the sextortionist.\n\nThe company used a script for sales calls, the complaint said, and would customize language to play to specific fears different victims might have. For example, victims in the military would be told they could face a dishonorable discharge while married victims were warned that a sextortionist could target their spouses and in-laws, the complaint said.",
+          "action": "Surveiller les indicateurs de compromission associés et contrôler les actifs exposés.",
+          "image": "https://cms.therecord.media/uploads/pablo_merchan_montes_OX_Ya_AAC_Jg_IE_unsplash_de6bc94260.jpg",
+          "sources": [
+            {
+              "url": "https://therecord.media/sextortion-assistance-company-alleged-fraud-ftc-complaint",
+              "label": "The Record"
+            }
+          ],
+          "url": "https://therecord.media/sextortion-assistance-company-alleged-fraud-ftc-complaint",
+          "pubDate": "2026-10-13T20:12:00.000Z"
+        },
+        {
+          "title": "West African scammers targeted in joint international government-industry operation",
+          "cve": null,
+          "severity": "high",
+          "score": 73,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Incident de sécurité rapporté par CyberScoop.\n\nA joint international law enforcement and industry operation against scammers netted 28 arrests, rescued 117 trafficking victims and led to the takedown of more than 3.7 million accounts, the Justice Department announced Tuesday. The crackdown, billed as “Joint Disruption Week,” focused on West Africa and also identified more than $11 million in freezable funds and led to the seizure of hundreds of electronic devices.",
+          "detail": "Incident de sécurité rapporté par CyberScoop.\n\nA joint international law enforcement and industry operation against scammers netted 28 arrests, rescued 117 trafficking victims and led to the takedown of more than 3.7 million accounts, the Justice Department announced Tuesday. The crackdown, billed as “Joint Disruption Week,” focused on West Africa and also identified more than $11 million in freezable funds and led to the seizure of hundreds of electronic devices. The range of scams involved included law enforcement impersonation scams, digital arrest extortion schemes, pig butchering and other online fraud operations targeting victims around the world. Participants heralded it as the largest joint scam operation to date, and the first focused on West Africa. “For so long, the problem of international scams seemed impossible to tackle,” Kelly Milliron, acting chief of staff and counselor to the Assistant Attorney General leading the Criminal Division, told reporters. “But now, because of collaborations like Joint Disruption Week, we have a plan, a consolidated approach, bringing together people that can bring solutions and, most of all, safety for our citizens.” It’s the latest effort in the Trump administration’s ongoing bid to make countering scam operations a theme of his term, and to make disrupting cyber adversaries and criminals a central focus of its cyber strategy .&nbsp; Participating agencies in the London-hosted",
+          "action": "Surveiller les indicateurs de compromission associés et contrôler les actifs exposés.",
+          "image": "https://cyberscoop.com/wp-content/uploads/sites/3/2026/10/scamcenterghana.png",
+          "sources": [
+            {
+              "url": "https://cyberscoop.com/west-african-scammers-international-scam-crackdown-joint-disruption-week/",
+              "label": "CyberScoop"
+            }
+          ],
+          "url": "https://cyberscoop.com/west-african-scammers-international-scam-crackdown-joint-disruption-week/",
+          "pubDate": "2026-10-13T16:15:08.000Z"
+        },
+        {
+          "title": "Laerdal — rançongiciel everest (NO)",
+          "cve": null,
+          "severity": "news",
+          "score": 73,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Incident de sécurité rapporté par ransomware.live.\n\nVictime revendiquée par le groupe de rançongiciel everest. Pays : NO. Secteur : Healthcare. Laerdal Medical is a Norwegian company specializing in medical training equipment, simulation technology, and healthcare education solutions. It designs manikins, simulators, and resuscitation training tools used by hospitals, emergency services, and educational institutions worldwide.",
+          "detail": "Incident de sécurité rapporté par ransomware.live.\n\nVictime revendiquée par le groupe de rançongiciel everest.\n\nPays : NO.\n\nSecteur : Healthcare.\n\nLaerdal Medical is a Norwegian company specializing in medical training equipment, simulation technology, and healthcare education solutions. It designs manikins, simulators, and resuscitation training tools used by hospitals, emergency services, and educational institutions worldwide. Headquartered in Stavanger, Norway, the company operates in the medical devices and healthcare training industry, supporting patient safety initiatives, CPR training, and lifesaving skills education globally.",
+          "action": "Surveiller les indicateurs de compromission associés et contrôler les actifs exposés.",
+          "image": "https://images.ransomware.live/victims/84c9f1eb265853f92660e3315d28fbfc.png",
+          "sources": [
+            {
+              "url": "https://www.ransomware.live/id/TGFlcmRhbEBldmVyZXN0",
+              "label": "ransomware.live"
+            }
+          ],
+          "url": "https://www.ransomware.live/id/TGFlcmRhbEBldmVyZXN0",
+          "pubDate": "2026-10-13T16:02:51.817Z"
+        },
+        {
+          "title": "Zenidoc — rançongiciel Panzer",
+          "cve": null,
+          "severity": "news",
+          "score": 73,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Incident de sécurité rapporté par ransomware.live.\n\nVictime revendiquée par le groupe de rançongiciel Panzer. Secteur : Professional Services. a French healthcare software company that helps hospitals and medical professionals automate documentation, transcribe medical dictation, manage patient records, and streamline workflows using AI and voice-recognition technology. Data Content : - 605k Patient Data, Names, Phone, SSN and more. - Zenidoc Cloud Dev, Data, Prod, Support Chats, Source Codes and more.",
+          "detail": "Incident de sécurité rapporté par ransomware.live.\n\nVictime revendiquée par le groupe de rançongiciel Panzer.\n\nSecteur : Professional Services.\n\na French healthcare software company that helps hospitals and medical professionals automate documentation, transcribe medical dictation, manage patient records, and streamline workflows using AI and voice-recognition technology. Data Content : - 605k Patient Data, Names, Phone, SSN and more. - Zenidoc Cloud Dev, Data, Prod, Support Chats, Source Codes and more.",
+          "action": "Surveiller les indicateurs de compromission associés et contrôler les actifs exposés.",
+          "image": "https://images.ransomware.live/victims/00330aca63ba39cc14f3ab4a17328192.png",
+          "sources": [
+            {
+              "url": "https://www.ransomware.live/id/WmVuaWRvY0BQYW56ZXI=",
+              "label": "ransomware.live"
+            }
+          ],
+          "url": "https://www.ransomware.live/id/WmVuaWRvY0BQYW56ZXI=",
+          "pubDate": "2026-10-13T09:46:46.000Z"
+        },
+        {
+          "title": "Danvikshem (Stiftelsen Danviks Hospital) — rançongiciel Wallstreet (SE)",
+          "cve": null,
+          "severity": "news",
+          "score": 69,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Incident de sécurité rapporté par ransomware.live.\n\nRansomware.live discovered on 2026-10-13 that Danvikshem (Stiftelsen Danviks Hospital) has been claimed by Wallstreet ransomware group\n\nSponsored by Hudson Rock – Use Hudson Rock's free cybercrime intelligence tools to learn how Infostealer infections are leading to ransomware attacks\n\nLegal Disclaimer: Ransomware.live does not engage in the acquisition, exfiltration, downloading, possession, hosting, access, consultation, redistribution, or disclosure of…",
+          "detail": "Incident de sécurité rapporté par ransomware.live.\n\nRansomware.live discovered on 2026-10-13 that Danvikshem (Stiftelsen Danviks Hospital) has been claimed by Wallstreet ransomware group\n\nSponsored by Hudson Rock – Use Hudson Rock's free cybercrime intelligence tools to learn how Infostealer infections are leading to ransomware attacks\n\nLegal Disclaimer: Ransomware.live does not engage in the acquisition, exfiltration, downloading, possession, hosting, access, consultation, redistribution, or disclosure of unlawfully obtained data. This platform indexes only publicly visible information posted by ransomware operators and open web sources without accessing or obtaining the underlying stolen content . The service is provided to support public awareness, legitimate research, and cyber-resilience. No stolen personal or confidential data is collected or distributed via this site.\n\nSession: 057726c909af65969646b040bbbfa5c4df67f5166a33cbac6cd9e1302b0b3ca148\n\nTox: 50DADDED26D859469371938B793456D8210A5AE02DD3C42979F5E52411BCB648F1CA68A5EDE5",
+          "action": "Surveiller les indicateurs de compromission associés et contrôler les actifs exposés.",
+          "image": "https://images.ransomware.live/ransomware.png",
+          "sources": [
+            {
+              "url": "https://www.ransomware.live/id/RGFudmlrc2hlbSAoU3RpZnRlbHNlbiBEYW52aWtzIEhvc3BpdGFsKUBXYWxsc3RyZWV0",
+              "label": "ransomware.live"
+            }
+          ],
+          "url": "https://www.ransomware.live/id/RGFudmlrc2hlbSAoU3RpZnRlbHNlbiBEYW52aWtzIEhvc3BpdGFsKUBXYWxsc3RyZWV0",
+          "pubDate": "2026-10-13T16:44:23.000Z"
+        },
+        {
+          "title": "merkezilac_archives — rançongiciel HYFLOCK (TR)",
+          "cve": null,
+          "severity": "news",
+          "score": 69,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Incident de sécurité rapporté par ransomware.live.\n\nVictime revendiquée par le groupe de rançongiciel HYFLOCK. Pays : TR. Secteur : Other. It is not a retail pharmacy, but a well-known large-scale comprehensive pharmaceutical and hygiene/disinfection product manufacturer with nearly a century of history.",
+          "detail": "Incident de sécurité rapporté par ransomware.live.\n\nVictime revendiquée par le groupe de rançongiciel HYFLOCK.\n\nPays : TR.\n\nSecteur : Other.\n\nIt is not a retail pharmacy, but a well-known large-scale comprehensive pharmaceutical and hygiene/disinfection product manufacturer with nearly a century of history. Here’s a detailed introduction about the company: 🏢 Company Background and Scale • Founded: Established in 1934, it is one of the oldest local pharmaceutical factories in modern Turkey, with 100% Turkish capital. • Production Base: Its modern central laboratory and factory are located in Çekmeköy, Istanbul, Turkey, with high-standard closed production workshops covering an area of 7,000 square meters. • Certification Standards: Production is fully supervised by the Turkish Ministry of Health (T.C. Sağlık Bakanlığı) and has passed a series of international certifications including cGMP (current Good Manufacturing Practice), cGLP (Good Laboratory Practice), ISO 9001, and ISO 13485 (Medical Device Quality Management System). 🧪 Core Products and Business Merkez İlaç follows its iconic slogan “#sağlıkiçinhijyenşart” (Hygiene is a prerequisite for health) and is the leader in Turkey for first aid, skin care, and disinfection products, with the most complete product categories and extremely high market share: 1. Disinfection and Anti-infection Series (core products): • Produces various professional and consumer skin disinfectants, hand sanitizers, anti-infection foams, surgical wipes, and wound cleansers (common brands include Opakjel and İsosol series). 2. Over-the-Counter (OTC) Medicines and Ointments: • Produces skin ointments and creams, such as İhtamol ointment, Starbaz cream, İsosol ointment, Vitamin E, and baby diaper rash cream (Pişik Kremi) for skin care, burns, and eczema. 3. First Aid and Medical Consumables: • It is the first and only company in the Turkish pharmaceutical industry to legally produce standardized first aid kits (Hızır medical kits, covering earthquakes, home, car, and industrial scenarios) and household/commercial medicine boxes. 4. Contract Manufacturing (CMO): • In addition to its own brand, it also manufactures tablets, capsules, sprays, drops, liquids, and semi-solid ointments for over 50 global and local pharmaceutical companies. 🌍 Industry Influence The company’s service network is extremely extensive, directly supplying products to over 3,000 local pharmacists and more than 9,500 hospitals and clinics in Turkey, and exporting to multiple overseas countries. In international humanitarian aid (such as Red Crescent supplies and earthquake donations), it is also a major provider of medical supplies and surgical/first aid consumables in Turkey.",
+          "action": "Surveiller les indicateurs de compromission associés et contrôler les actifs exposés.",
+          "image": "https://images.ransomware.live/victims/70115303358be566dc38f3b0d87318b2.png",
+          "sources": [
+            {
+              "url": "https://www.ransomware.live/id/bWVya2V6aWxhY19hcmNoaXZlc0BIWUZMT0NL",
+              "label": "ransomware.live"
+            }
+          ],
+          "url": "https://www.ransomware.live/id/bWVya2V6aWxhY19hcmNoaXZlc0BIWUZMT0NL",
+          "pubDate": "2026-10-13T06:16:39.000Z"
+        },
+        {
+          "title": "Anthropic warns self-replicating AI could spread to your smart devices",
+          "cve": null,
+          "severity": "high",
+          "score": 68,
+          "corroboration": 4,
+          "region": "intl",
+          "body": "Incident de sécurité rapporté par Security Affairs.\n\nAnthropic shows how small AI models could autonomously replicate across IoT devices, raising concerns about adaptive, AI-powered botnets.\n\nU.S. CISA adds Ivanti Connect Secure flaw to its Known Exploited Vulnerabilities catalog\n\nAnthropic Shows How Small AI Models Could Replicate Across IoT Devices\n\nHackers cranked French supermarkets' freezers up to 50 degrees, causing hundreds of stores to lose their stock\n\nShinyHunters arrest number three: a Canadian ra…",
+          "detail": "Incident de sécurité rapporté par Security Affairs.\n\nAnthropic shows how small AI models could autonomously replicate across IoT devices, raising concerns about adaptive, AI-powered botnets.\n\nU.S. CISA adds Ivanti Connect Secure flaw to its Known Exploited Vulnerabilities catalog\n\nAnthropic Shows How Small AI Models Could Replicate Across IoT Devices\n\nHackers cranked French supermarkets' freezers up to 50 degrees, causing hundreds of stores to lose their stock\n\nShinyHunters arrest number three: a Canadian ransomware negotiator\n\nCanonical Hit by Second DDoS Attack in 2026, Public Websites Disrupted\n\nCyberXero Used 51 AI Agents to Steal 628,000 Ukrainian Records",
+          "action": "Surveiller les indicateurs de compromission associés et contrôler les actifs exposés.",
+          "image": "https://securityaffairs.com/wp-content/uploads/2026/10/image-30.png",
+          "sources": [
+            {
+              "url": "https://securityaffairs.com/200880/ai/anthropic-shows-how-small-ai-models-could-replicate-across-iot-devices.html",
+              "label": "Security Affairs"
+            },
+            {
+              "url": "https://www.bleepingcomputer.com/news/security/anthropic-warns-self-replicating-ai-could-spread-to-your-smart-devices/",
+              "label": "BleepingComputer"
+            },
+            {
+              "url": "https://thehackernews.com/2026/10/anthropic-warns-small-ai-models-could.html",
+              "label": "The Hacker News"
+            },
+            {
+              "url": "https://www.securityweek.com/small-ai-models-may-soon-be-able-to-self-replicate-on-iot-devices-anthropic-warns/",
+              "label": "SecurityWeek"
+            }
+          ],
+          "url": "https://securityaffairs.com/200880/ai/anthropic-shows-how-small-ai-models-could-replicate-across-iot-devices.html",
+          "pubDate": "2026-10-13T21:16:34.000Z"
+        },
+        {
+          "title": "Xandr Fined a Record €8.6 Million for Relaying Grindr Data Revealing Sexual Orientation",
+          "cve": null,
+          "severity": "high",
+          "score": 68,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Incident de sécurité rapporté par The Hacker News.\n\nThe Norwegian Data Protection Authority (DPA) has fined Xandr, an advertising unit owned by Microsoft, €8.6 million ($9.62 million) for illegally relaying ​Grindr users' sensitive data to advertisers. The administrative penalty is the largest issued by the data protection watchdog, arguing the case merited a high fine because of the \"very serious\" nature of the breach. The infringements",
+          "detail": "Incident de sécurité rapporté par The Hacker News.\n\nThe Norwegian Data Protection Authority (DPA) has fined Xandr, an advertising unit owned by Microsoft, €8.6 million ($9.62 million) for illegally relaying ​Grindr users' sensitive data to advertisers. The administrative penalty is the largest issued by the data protection watchdog, arguing the case merited a high fine because of the \"very serious\" nature of the breach. The infringements",
+          "action": "Surveiller les indicateurs de compromission associés et contrôler les actifs exposés.",
+          "image": "https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEhGjfJJaKUMdLoNBTH2AYUmelL_XonLcf93p8hSgMXRbLGJwReAYV-BUZ2jpBPuvUQktW0PTKi1-21oFnBJF8PfECgT7t5r-S-iMUxjrdoWPf3EDxa2IVrQYjT98HG6s-LfPlJqm8mArrfEOEZS_scT7EYG8eXxMrUaII0UaQ3kAmWDJ3mRTR4JyIJhj-5S/s1600/grindr-data.jpg",
+          "sources": [
+            {
+              "url": "https://thehackernews.com/2026/10/xandr-fined-record-86-million-for.html",
+              "label": "The Hacker News"
+            }
+          ],
+          "url": "https://thehackernews.com/2026/10/xandr-fined-record-86-million-for.html",
+          "pubDate": "2026-10-13T13:12:32.000Z"
+        },
+        {
+          "title": "KVH — rançongiciel everest (États-Unis)",
+          "cve": null,
+          "severity": "news",
+          "score": 66,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Incident de sécurité rapporté par ransomware.live.\n\nVictime revendiquée par le groupe de rançongiciel everest. Pays : États-Unis. Secteur : Technology. KVH Industries is a U.S.-based company headquartered in Middletown, Rhode Island, operating in the satellite communications and connectivity industry. It provides mobile connectivity services, including satellite TV, internet, and VSAT solutions, primarily serving maritime, leisure marine, and land mobile markets worldwide.",
+          "detail": "Incident de sécurité rapporté par ransomware.live.\n\nVictime revendiquée par le groupe de rançongiciel everest.\n\nPays : États-Unis.\n\nSecteur : Technology.\n\nKVH Industries is a U.S.-based company headquartered in Middletown, Rhode Island, operating in the satellite communications and connectivity industry. It provides mobile connectivity services, including satellite TV, internet, and VSAT solutions, primarily serving maritime, leisure marine, and land mobile markets worldwide. KVH also develops navigation and stabilization products such as fiber optic gyros used in defense and commercial applications.",
+          "action": "Surveiller les indicateurs de compromission associés et contrôler les actifs exposés.",
+          "image": "https://images.ransomware.live/victims/e572add2767248d5ff197f1547d88281.png",
+          "sources": [
+            {
+              "url": "https://www.ransomware.live/id/S1ZIQGV2ZXJlc3Q=",
+              "label": "ransomware.live"
+            }
+          ],
+          "url": "https://www.ransomware.live/id/S1ZIQGV2ZXJlc3Q=",
+          "pubDate": "2026-10-13T16:03:28.561Z"
+        },
+        {
+          "title": "victim — rançongiciel sarcoma",
+          "cve": null,
+          "severity": "news",
+          "score": 66,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Incident de sécurité rapporté par ransomware.live.\n\nRansomware.live discovered on 2026-10-13 that victim has been claimed by Sarcoma ransomware group\n\nSponsored by Hudson Rock – Use Hudson Rock's free cybercrime intelligence tools to learn how Infostealer infections are leading to ransomware attacks\n\nLegal Disclaimer: Ransomware.live does not engage in the acquisition, exfiltration, downloading, possession, hosting, access, consultation, redistribution, or disclosure of unlawfully obtained data.",
+          "detail": "Incident de sécurité rapporté par ransomware.live.\n\nRansomware.live discovered on 2026-10-13 that victim has been claimed by Sarcoma ransomware group\n\nSponsored by Hudson Rock – Use Hudson Rock's free cybercrime intelligence tools to learn how Infostealer infections are leading to ransomware attacks\n\nLegal Disclaimer: Ransomware.live does not engage in the acquisition, exfiltration, downloading, possession, hosting, access, consultation, redistribution, or disclosure of unlawfully obtained data. This platform indexes only publicly visible information posted by ransomware operators and open web sources without accessing or obtaining the underlying stolen content . The service is provided to support public awareness, legitimate research, and cyber-resilience. No stolen personal or confidential data is collected or distributed via this site.\n\nSession: 057726c909af65969646b040bbbfa5c4df67f5166a33cbac6cd9e1302b0b3ca148\n\nTox: 50DADDED26D859469371938B793456D8210A5AE02DD3C42979F5E52411BCB648F1CA68A5EDE5",
+          "action": "Surveiller les indicateurs de compromission associés et contrôler les actifs exposés.",
+          "image": "https://images.ransomware.live/ransomware.png",
+          "sources": [
+            {
+              "url": "https://www.ransomware.live/id/dmljdGltQHNhcmNvbWE=",
+              "label": "ransomware.live"
+            }
+          ],
+          "url": "https://www.ransomware.live/id/dmljdGltQHNhcmNvbWE=",
+          "pubDate": "2026-10-13T15:38:21.154Z"
+        },
+        {
+          "title": "Topcon Healthcare — rançongiciel everest (JP)",
+          "cve": null,
+          "severity": "news",
+          "score": 65,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Incident de sécurité rapporté par ransomware.live.\n\nVictime revendiquée par le groupe de rançongiciel everest. Pays : JP. Secteur : Healthcare. Topcon Healthcare is a subsidiary of Topcon Corporation, a Japan-based multinational company. Topcon Healthcare specializes in medical technology, focusing on ophthalmic and eye care equipment, including diagnostic imaging devices, electronic medical record software, and vision screening tools.",
+          "detail": "Incident de sécurité rapporté par ransomware.live.\n\nVictime revendiquée par le groupe de rançongiciel everest.\n\nPays : JP.\n\nSecteur : Healthcare.\n\nTopcon Healthcare is a subsidiary of Topcon Corporation, a Japan-based multinational company. Topcon Healthcare specializes in medical technology, focusing on ophthalmic and eye care equipment, including diagnostic imaging devices, electronic medical record software, and vision screening tools. It serves healthcare providers, optometrists, and ophthalmologists globally, with significant operations in the United States, supporting eye care diagnostics and practice management solutions.",
+          "action": "Surveiller les indicateurs de compromission associés et contrôler les actifs exposés.",
+          "image": "https://images.ransomware.live/victims/d9dd403e05fdd4443761eba0d09e6db2.png",
+          "sources": [
+            {
+              "url": "https://www.ransomware.live/id/VG9wY29uIEhlYWx0aGNhcmVAZXZlcmVzdA==",
+              "label": "ransomware.live"
+            }
+          ],
+          "url": "https://www.ransomware.live/id/VG9wY29uIEhlYWx0aGNhcmVAZXZlcmVzdA==",
+          "pubDate": "2026-10-13T16:02:11.508Z"
+        },
+        {
+          "title": "Hunter Neurology — rançongiciel N0n",
+          "cve": null,
+          "severity": "news",
+          "score": 65,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Incident de sécurité rapporté par ransomware.live.\n\nVictime revendiquée par le groupe de rançongiciel N0n. Secteur : Healthcare. Healthcare - Neurology (AU) · New South Wales, Australia | Patient records of an Australian neurology practice: 15,252 patient images and scans, 11,819 patient letters and reports, 439 laboratory results and 839 patient records system files; Four complete weekly backups of the practice medical records system; Protected health information including patient names, dates of birth and…",
+          "detail": "Incident de sécurité rapporté par ransomware.live.\n\nVictime revendiquée par le groupe de rançongiciel N0n.\n\nSecteur : Healthcare.\n\nHealthcare - Neurology (AU) · New South Wales, Australia | Patient records of an Australian neurology practice: 15,252 patient images and scans, 11,819 patient letters and reports, 439 laboratory results and 839 patient records system files; Four complete weekly backups of the practice medical records system; Protected health information including patient names, dates of birth and clinical data | [NOT PAID — EXPOSED]",
+          "action": "Surveiller les indicateurs de compromission associés et contrôler les actifs exposés.",
+          "image": "https://images.ransomware.live/victims/64f5c457c96d33e4ffc98803176e1474.png",
+          "sources": [
+            {
+              "url": "https://www.ransomware.live/id/SHVudGVyIE5ldXJvbG9neUBOMG4=",
+              "label": "ransomware.live"
+            }
+          ],
+          "url": "https://www.ransomware.live/id/SHVudGVyIE5ldXJvbG9neUBOMG4=",
+          "pubDate": "2026-10-13T14:53:14.878Z"
+        },
+        {
+          "title": "AI Turns Familiar Cyberattacks Into a Race Against Time",
+          "cve": null,
+          "severity": "news",
+          "score": 64,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Incident de sécurité rapporté par SecurityWeek.\n\nIBM’s Steve Wallin explains why the speed and scale of AI-assisted attacks make proactive security, zero trust, resilience and recovery more urgent than ever.\n\nIBM’s Steve Wallin talks to SecurityWeek on the effect of AI-driven attacks on enterprise defenses.\n\nSubscribe to the SecurityWeek Email Briefing for the latest cybersecurity threats, trends, and expert insights.\n\nSubscribe to the SecurityWeek Email Briefing to stay informed on the latest threats, t…",
+          "detail": "Incident de sécurité rapporté par SecurityWeek.\n\nIBM’s Steve Wallin explains why the speed and scale of AI-assisted attacks make proactive security, zero trust, resilience and recovery more urgent than ever.\n\nIBM’s Steve Wallin talks to SecurityWeek on the effect of AI-driven attacks on enterprise defenses.\n\nSubscribe to the SecurityWeek Email Briefing for the latest cybersecurity threats, trends, and expert insights.\n\nSubscribe to the SecurityWeek Email Briefing to stay informed on the latest threats, trends, and technology, along with insightful columns from industry experts.\n\nLearn about Frontier Pace Governance: a practical approach to helping IT operations move at AI speed without sacrificing security, accountability, or operational discipline.\n\nJoin as we decipher the world of zero trust and share war stories on securing an organization by eliminating implicit trust and continuously validating every stage of a digital interaction.\n\nJeff Hackett has been appointed CFO at internet intelligence provider Censys.",
+          "action": "Surveiller les indicateurs de compromission associés et contrôler les actifs exposés.",
+          "image": "https://www.securityweek.com/wp-content/uploads/2023/11/Threat-Intelligence-sharing.jpg",
+          "sources": [
+            {
+              "url": "https://www.securityweek.com/ai-turns-familiar-cyberattacks-into-a-race-against-time/",
+              "label": "SecurityWeek"
+            }
+          ],
+          "url": "https://www.securityweek.com/ai-turns-familiar-cyberattacks-into-a-race-against-time/",
+          "pubDate": "2026-10-13T11:00:00.000Z"
+        },
+        {
+          "title": "$86 Million Crypto Heist Linked to Ledger Signer Hardware Implant",
+          "cve": null,
+          "severity": "news",
+          "score": 64,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Incident de sécurité rapporté par SecurityWeek.\n\nHackers stole at least $86 million in cryptocurrency using a hardware implant in Ledger signers sold via CryptoBilis.\n\nA small circuit board hidden under the signers’ screens read user data and transmitted it to the attackers.\n\nSubscribe to the SecurityWeek Email Briefing for the latest cybersecurity threats, trends, and expert insights.\n\nSubscribe to the SecurityWeek Email Briefing to stay informed on the latest threats, trends, and technology, along with…",
+          "detail": "Incident de sécurité rapporté par SecurityWeek.\n\nHackers stole at least $86 million in cryptocurrency using a hardware implant in Ledger signers sold via CryptoBilis.\n\nA small circuit board hidden under the signers’ screens read user data and transmitted it to the attackers.\n\nSubscribe to the SecurityWeek Email Briefing for the latest cybersecurity threats, trends, and expert insights.\n\nSubscribe to the SecurityWeek Email Briefing to stay informed on the latest threats, trends, and technology, along with insightful columns from industry experts.\n\nLearn about Frontier Pace Governance: a practical approach to helping IT operations move at AI speed without sacrificing security, accountability, or operational discipline.\n\nJoin as we decipher the world of zero trust and share war stories on securing an organization by eliminating implicit trust and continuously validating every stage of a digital interaction.\n\nJeff Hackett has been appointed CFO at internet intelligence provider Censys.",
+          "action": "Surveiller les indicateurs de compromission associés et contrôler les actifs exposés.",
+          "image": "https://www.securityweek.com/wp-content/uploads/2024/01/cryptocurrency.jpeg",
+          "sources": [
+            {
+              "url": "https://www.securityweek.com/86-million-crypto-heist-linked-to-ledger-signer-hardware-implant/",
+              "label": "SecurityWeek"
+            }
+          ],
+          "url": "https://www.securityweek.com/86-million-crypto-heist-linked-to-ledger-signer-hardware-implant/",
+          "pubDate": "2026-10-13T10:36:05.000Z"
+        },
+        {
+          "title": "Valode & Pistre — rançongiciel Panzer (France)",
+          "cve": null,
+          "severity": "news",
+          "score": 61,
+          "corroboration": 1,
+          "region": "fr",
+          "body": "Incident de sécurité rapporté par ransomware.live.\n\nVictime revendiquée par le groupe de rançongiciel Panzer. Pays : France. Secteur : Professional Services. Valode & Pistre is today one of France’s premier architecture and engineering firms. Based in Paris with a branch operating for over ten years in Beijing, the firm works on projects both in France and across the globe in Europe, Asia, the Middle East, North and Sub-Saharan Africa, Russia and Central America.",
+          "detail": "Incident de sécurité rapporté par ransomware.live.\n\nVictime revendiquée par le groupe de rançongiciel Panzer.\n\nPays : France.\n\nSecteur : Professional Services.\n\nValode & Pistre is today one of France’s premier architecture and engineering firms. Based in Paris with a branch operating for over ten years in Beijing, the firm works on projects both in France and across the globe in Europe, Asia, the Middle East, North and Sub-Saharan Africa, Russia and Central America. Valode & Pistre’s practice focuses on very diverse scales, from developing comprehensive plans for brand new cities to designing furniture. It also includes very diverse briefs.",
+          "action": "Surveiller les indicateurs de compromission associés et contrôler les actifs exposés.",
+          "image": "https://images.ransomware.live/victims/dabb5bb0989da198b08170608b6a6559.png",
+          "sources": [
+            {
+              "url": "https://www.ransomware.live/id/VmFsb2RlICYgUGlzdHJlQFBhbnplcg==",
+              "label": "ransomware.live"
+            }
+          ],
+          "url": "https://www.ransomware.live/id/VmFsb2RlICYgUGlzdHJlQFBhbnplcg==",
+          "pubDate": "2026-10-13T10:31:03.000Z"
+        },
+        {
+          "title": "Frigos piratés dans les supermarchés : les grandes enseignes ont un coupable tout désigné",
+          "cve": null,
+          "severity": "news",
+          "score": 55,
+          "corroboration": 1,
+          "region": "fr",
+          "body": "Incident de sécurité rapporté par Numerama.\n\nAprès l’attaque qui a mis hors service les rayons frais de centaines de supermarchés français, la question des responsabilités se pose déjà. Et les grandes enseignes désignent un maillon bien précis de la chaîne.\n\nWatt Else, ToujoursPlus, Artificielles, Le Récap : votre dose hebdo d’infos exclusives et d’éditos endiablés !\n\nFrandroid Clubic Lemon Humanoid Mon compte Thème Clair Sombre Système 39,90 € /an\n\nNous générons pour vous un résumé de l’article grâc…",
+          "detail": "Incident de sécurité rapporté par Numerama.\n\nAprès l’attaque qui a mis hors service les rayons frais de centaines de supermarchés français, la question des responsabilités se pose déjà. Et les grandes enseignes désignent un maillon bien précis de la chaîne.\n\nWatt Else, ToujoursPlus, Artificielles, Le Récap : votre dose hebdo d’infos exclusives et d’éditos endiablés !\n\nFrandroid Clubic Lemon Humanoid Mon compte Thème Clair Sombre Système 39,90 € /an\n\nNous générons pour vous un résumé de l’article grâce à une IA et nous le vérifions afin de nous assurer qu’il n’y ait aucune erreur, pour garantir l’authenticité de l’info.\n\nRecevez tous les soirs un résumé de l’actu importante avec Le Récap’\n\nC’est l’heure des comptes. Dans la nuit du dimanche 11 au lundi 12 octobre 2026, des hackers sont parvenus à prendre la main à distance sur des contrôleurs de réfrigération Danfoss qui fonctionnaient avec d’anciennes versions du logiciel du fabricant.\n\nUn piratage qui leur a permis de déclencher le dégivrage automatique des meubles frigorifiques, ce qui a fait grimper la température dans les vitrines de 250 à 350 magasins, selon les différents décomptes .",
+          "action": "Surveiller les indicateurs de compromission associés et contrôler les actifs exposés.",
+          "image": "https://img.numerama.com/www.numerama.com/wp-content/uploads/2026/10/ollage-17.png?resize=1600,900&key=9b3544fc",
+          "sources": [
+            {
+              "url": "https://www.numerama.com/cyberguerre/2352099-frigos-pirates-dans-les-supermarches-les-grandes-enseignes-ont-un-coupable-tout-designe.html",
+              "label": "Numerama"
+            }
+          ],
+          "url": "https://www.numerama.com/cyberguerre/2352099-frigos-pirates-dans-les-supermarches-les-grandes-enseignes-ont-un-coupable-tout-designe.html",
+          "pubDate": "2026-10-13T11:20:38.000Z"
+        },
+        {
+          "title": "C’est l’hécatombe : après Danfoss, un deuxième fournisseur de systèmes frigorifiques est visé par des hackers",
+          "cve": null,
+          "severity": "news",
+          "score": 55,
+          "corroboration": 1,
+          "region": "fr",
+          "body": "Incident de sécurité rapporté par Numerama.\n\nLa cyberattaque qui a déréglé les vitrines réfrigérées de centaines de supermarchés ne se limite pas aux équipements Danfoss. Selon plusieurs témoignages, les régulateurs de Dixell sont aussi concernés, et au moins un Leclerc du Tarn en a fait les frais mardi matin.\n\nWatt Else, ToujoursPlus, Artificielles, Le Récap : votre dose hebdo d’infos exclusives et d’éditos endiablés !\n\nFrandroid Clubic Lemon Humanoid Mon compte Thème Clair Sombre Système 39,90 € /a…",
+          "detail": "Incident de sécurité rapporté par Numerama.\n\nLa cyberattaque qui a déréglé les vitrines réfrigérées de centaines de supermarchés ne se limite pas aux équipements Danfoss. Selon plusieurs témoignages, les régulateurs de Dixell sont aussi concernés, et au moins un Leclerc du Tarn en a fait les frais mardi matin.\n\nWatt Else, ToujoursPlus, Artificielles, Le Récap : votre dose hebdo d’infos exclusives et d’éditos endiablés !\n\nFrandroid Clubic Lemon Humanoid Mon compte Thème Clair Sombre Système 39,90 € /an\n\nNous générons pour vous un résumé de l’article grâce à une IA et nous le vérifions afin de nous assurer qu’il n’y ait aucune erreur, pour garantir l’authenticité de l’info.\n\nRecevez tous les soirs un résumé de l’actu importante avec Le Récap’\n\nMise à jour à 16 h 10 avec l’alerte publiée par le CERT-FR de l’Anssi.\n\nL’affaire Danfoss n’a pas encore rendu son verdict qu’une autre apparaît déjà.",
+          "action": "Surveiller les indicateurs de compromission associés et contrôler les actifs exposés.",
+          "image": "https://img.numerama.com/www.numerama.com/wp-content/uploads/2026/10/ollage-16.png?resize=1600,900&key=17a4248d",
+          "sources": [
+            {
+              "url": "https://www.numerama.com/cyberguerre/2352205-cest-lhecatombe-apres-danfoss-un-deuxieme-fournisseur-de-systemes-frigorifiques-est-vise-par-des-hackers.html",
+              "label": "Numerama"
+            }
+          ],
+          "url": "https://www.numerama.com/cyberguerre/2352205-cest-lhecatombe-apres-danfoss-un-deuxieme-fournisseur-de-systemes-frigorifiques-est-vise-par-des-hackers.html",
+          "pubDate": "2026-10-13T10:28:53.000Z"
+        },
+        {
+          "title": "Incident de sécurité ciblant les Danfoss série AK-SM et AK-SC (12 octobre 2026)",
+          "cve": null,
+          "severity": "news",
+          "score": 49,
+          "corroboration": 1,
+          "region": "fr",
+          "body": "Incident de sécurité rapporté par Global Sec Mag.\n\nLe CERT-FR a connaissance de nombreuses compromissions de Danfoss série AK-SM et AK-SC. L'exposition d'une interface de gestion sur Internet est contraire aux bonnes pratiques. Dans le cas où l'administration à distance est impérative, une première mesure temporaire peut consister à restreindre... Voir en ligne : https://www.cert.ssi.gouv.fr/alerte...",
+          "detail": "Incident de sécurité rapporté par Global Sec Mag.\n\nLe CERT-FR a connaissance de nombreuses compromissions de Danfoss série AK-SM et AK-SC. L'exposition d'une interface de gestion sur Internet est contraire aux bonnes pratiques. Dans le cas où l'administration à distance est impérative, une première mesure temporaire peut consister à restreindre... Voir en ligne : https://www.cert.ssi.gouv.fr/alerte...",
+          "action": "Surveiller les indicateurs de compromission associés et contrôler les actifs exposés.",
+          "image": null,
+          "sources": [
+            {
+              "url": "https://www.globalsecuritymag.fr/incident-de-securite-ciblant-les-danfoss-serie-ak-sm-et-ak-sc-12-octobre-2026.html",
+              "label": "Global Sec Mag"
+            }
+          ],
+          "url": "https://www.globalsecuritymag.fr/incident-de-securite-ciblant-les-danfoss-serie-ak-sm-et-ak-sc-12-octobre-2026.html",
+          "pubDate": "2026-10-14T04:01:06.417Z"
+        },
+        {
+          "title": "« Il faut être proactif plutôt que réactif »",
+          "cve": null,
+          "severity": "high",
+          "score": 45,
+          "corroboration": 1,
+          "region": "fr",
+          "body": "Incident de sécurité rapporté par Global Sec Mag.\n\nLaurent Tombois, Country Manager France, Benelux et Afrique francophone de Bitdefender, a exposé aux Assises de la cybersécurité 2026, à Monaco, une stratégie tournée vers la prévention et la souveraineté européenne. Laurent Tombois Country Manager France, Benelux et Afrique francophone, Bitdefender, © Global Security Mag GSM : Comment présenteriez-vous Bitdefender ? L. T.",
+          "detail": "Incident de sécurité rapporté par Global Sec Mag.\n\nLaurent Tombois, Country Manager France, Benelux et Afrique francophone de Bitdefender, a exposé aux Assises de la cybersécurité 2026, à Monaco, une stratégie tournée vers la prévention et la souveraineté européenne. Laurent Tombois Country Manager France, Benelux et Afrique francophone, Bitdefender, © Global Security Mag GSM : Comment présenteriez-vous Bitdefender ? L. T. : C'est un éditeur roumain créé il y a plus de vingt-cinq ans, connu du grand public, dont l'offre entreprise s'est développée depuis une dizaine d'années. Nos technologies sont conçues en interne, avec une recherche et développement toujours basée à Bucarest. Nous accélérons, notamment par acquisitions, avec un objectif clair : devenir l'un des acteurs majeurs de la souveraineté européenne en cybersécurité. En France, notre offre est hébergée chez OVHcloud, qualifié SecNumCloud par l'Agence nationale de la sécurité des systèmes d'information (ANSSI). GSM : Quel a été votre parcours ? L. T. : Vingt-cinq ans exclusivement en cybersécurité : la distribution, un intégrateur, puis treize ans chez Forcepoint. J'ai rejoint Bitdefender il y a six. GSM : Quelle différence entre un antivirus et un EDR ? L. T. : Les deux sont complémentaires, et nous proposons les deux. L'antivirus s'appuie sur des signatures pour bloquer les menaces connues. L'EDR (Endpoint Detection and Response) apporte du contexte en enregistrant l",
+          "action": "Surveiller les indicateurs de compromission associés et contrôler les actifs exposés.",
+          "image": "https://www.globalsecuritymag.fr/local/cache-vignettes/L229xH120/4229fc6cc7d3a6d37e8330c7e496ef-f54ad.jpg",
+          "sources": [
+            {
+              "url": "https://www.globalsecuritymag.fr/il-faut-etre-proactif-plutot-que-reactif.html",
+              "label": "Global Sec Mag"
+            }
+          ],
+          "url": "https://www.globalsecuritymag.fr/il-faut-etre-proactif-plutot-que-reactif.html",
+          "pubDate": "2026-10-14T04:01:06.416Z"
+        },
+        {
+          "title": "Cyberattaque contre Intermarché : les commentaires de Samuel Hassine, CEO de Filigran",
+          "cve": null,
+          "severity": "news",
+          "score": 45,
+          "corroboration": 1,
+          "region": "fr",
+          "body": "Incident de sécurité rapporté par UnderNews.\n\nLe groupe Les Mousquetaires, propriétaire de la chaîne de distribution française Intermarché, a déclaré avoir été la cible d’une cyberattaque qui a touché environ 150 de ses magasins. Il a précisé que les réfrigérateurs avaient été chauffés jusqu’à 50 degrés Celsius pendant six heures et que l’entreprise avait jeté tous les aliments afin d’éviter tout [&#8230;] The post Cyberattaque contre Intermarché : les commentaires de Samuel Hassine, CEO de Filigran f…",
+          "detail": "Incident de sécurité rapporté par UnderNews.\n\nLe groupe Les Mousquetaires, propriétaire de la chaîne de distribution française Intermarché, a déclaré avoir été la cible d’une cyberattaque qui a touché environ 150 de ses magasins. Il a précisé que les réfrigérateurs avaient été chauffés jusqu’à 50 degrés Celsius pendant six heures et que l’entreprise avait jeté tous les aliments afin d’éviter tout [&#8230;] The post Cyberattaque contre Intermarché : les commentaires de Samuel Hassine, CEO de Filigran first appeared on UnderNews .",
+          "action": "Surveiller les indicateurs de compromission associés et contrôler les actifs exposés.",
+          "image": "https://www.undernews.fr/wp-content/uploads/2021/05/malware-cyber-attaque-trojan.jpg",
+          "sources": [
+            {
+              "url": "https://www.undernews.fr/hacking-hacktivisme/cyberattaque-contre-intermarche-les-commentaires-de-samuel-hassine-ceo-de-filigran.html",
+              "label": "UnderNews"
+            }
+          ],
+          "url": "https://www.undernews.fr/hacking-hacktivisme/cyberattaque-contre-intermarche-les-commentaires-de-samuel-hassine-ceo-de-filigran.html",
+          "pubDate": "2026-10-13T17:28:12.000Z"
+        }
+      ]
+    },
+    {
+      "id": "culture",
+      "items": [
+        {
+          "title": "Two arrested as DOJ takes down laptop farms responsible for $3 million in North Korean revenue",
+          "cve": null,
+          "severity": "culture",
+          "score": 75,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Signal de veille — The Record.\n\nMore than 40 residences in Texas were the target of a federal operation in September to clamp down on remote worker scams that feed money back to the North Korean regime.\n\nThe Department of Justice disrupted multiple laptop farms across Texas allegedly being used by North Korean nationals to facilitate an IT worker scheme that allows the country to earn millions from U.S.",
+          "detail": "Signal de veille — The Record.\n\nMore than 40 residences in Texas were the target of a federal operation in September to clamp down on remote worker scams that feed money back to the North Korean regime.\n\nThe Department of Justice disrupted multiple laptop farms across Texas allegedly being used by North Korean nationals to facilitate an IT worker scheme that allows the country to earn millions from U.S. companies.\n\nThe laptop farm raids, which were conducted September 21-25, targeted more than 40 residences, the DOJ said.\n\nLaw enforcement seized 187 laptops and other devices used by North Koreans. Such schemes have earned millions over the last eight years by tricking U.S. companies into hiring workers remotely into lucrative IT roles through stolen or purchased identities.\n\nAlongside the raids, the DOJ indicted and arrested U.S. nationals Michael James Bostelle of Pennsylvania and Juan Cecilio Pena Carrillo of Texas. Several Chinese and North Korean nationals also were indicted. The department did not respond to requests for comment about whether the indictments and arrests were linked to the Texas laptop farm raids.\n\nThe DOJ indicted Bostelle and Pena on wire fraud, money laundering, and identity theft charges, accusing them of being key U.S.-based cogs in the IT worker scheme.\n\nLarge parts of the indictment are centered around U.S. national Trey Michael Nolte, who was not charged.",
+          "action": null,
+          "image": "https://cms.therecord.media/uploads/lala_azizli_g2warq_Cl_K_c_unsplash_10392c4957.jpg",
+          "sources": [
+            {
+              "url": "https://therecord.media/north-korea-laptop-farms-worker-scams-doj-raids-texas",
+              "label": "The Record"
+            }
+          ],
+          "url": "https://therecord.media/north-korea-laptop-farms-worker-scams-doj-raids-texas",
+          "pubDate": "2026-10-13T20:55:00.000Z"
+        },
+        {
+          "title": "North Korean hackers target Ukrainian experts for possible intelligence on Russia's war",
+          "cve": null,
+          "severity": "culture",
+          "score": 75,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Signal de veille — The Record.\n\nNorth Korean hackers have been targeting Ukrainian experts in diplomacy, security and international policy amid Pyongyang’s growing military cooperation with Russia.",
+          "detail": "Signal de veille — The Record.\n\nNorth Korean hackers have been targeting Ukrainian experts in diplomacy, security and international policy amid Pyongyang’s growing military cooperation with Russia.",
+          "action": null,
+          "image": "https://cms.therecord.media/uploads/NK_military_8b739bf964.jpg",
+          "sources": [
+            {
+              "url": "https://therecord.media/north-korea-hackers-russia-ukraine",
+              "label": "The Record"
+            }
+          ],
+          "url": "https://therecord.media/north-korea-hackers-russia-ukraine",
+          "pubDate": "2026-10-13T15:15:00.000Z"
+        },
+        {
+          "title": "West African scam compounds raided, more than 100 suspected trafficking victims ‘rescued’",
+          "cve": null,
+          "severity": "culture",
+          "score": 70,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Signal de veille — The Record.\n\nMore than two dozen people were arrested by police in Ghana and Nigeria as part of a U.K.-hosted operation that also included tech companies.\n\nPolice in Ghana and Nigeria arrested or detained 28 people and identified more than 100 suspected victims of human trafficking during an international operation targeting scam compounds in West Africa, U.S.",
+          "detail": "Signal de veille — The Record.\n\nMore than two dozen people were arrested by police in Ghana and Nigeria as part of a U.K.-hosted operation that also included tech companies.\n\nPolice in Ghana and Nigeria arrested or detained 28 people and identified more than 100 suspected victims of human trafficking during an international operation targeting scam compounds in West Africa, U.S. and British officials announced Tuesday.\n\nThe operation was hosted by Britain’s National Crime Agency (NCA) in London last week. It brought together 15 law enforcement agencies and the same number of tech companies — including Meta, Microsoft and Google — as part of what they called Joint Disruption Week.\n\nIn Ghana, authorities raided a compound in Sasaabi, a semi-rural community outside the capital, Accra, arresting 19 people and seizing 303 devices, according to the U.S. Department of Justice. Nigerian authorities made nine further arrests.\n\n“These networks steal savings on one side of the screen, and people’s freedom on the other,” said Matthew Floyd, a deputy assistant director in the FBI’s Criminal Division.\n\nThe Department of Justice said the technology companies it worked with removed more than 3.7 million accounts, pages and groups linked to the West African scam centres.\n\nMeta’s Rob Cochrane gave the same figure for Facebook and Instagram alone. The department did not break the total down by company.",
+          "action": null,
+          "image": "https://cms.therecord.media/uploads/ghana_scam_center_october_2026_a4cc9e53d2.png",
+          "sources": [
+            {
+              "url": "https://therecord.media/ghana-nigeria-scam-centers-raided-uk-us",
+              "label": "The Record"
+            }
+          ],
+          "url": "https://therecord.media/ghana-nigeria-scam-centers-raided-uk-us",
+          "pubDate": "2026-10-13T16:05:00.000Z"
+        },
+        {
+          "title": "OpenAI engineer arrested for allegedly planting spy device in office",
+          "cve": null,
+          "severity": "high",
+          "score": 67,
+          "corroboration": 3,
+          "region": "intl",
+          "body": "Signal de veille — The Hacker News.\n\nAn OpenAI engineering lead was arrested over an allegedly planted audio recorder in an executive conference room.\n\nA Saudi National and employee of OpenAI has been arrested for allegedly planting a hidden recording device in an executive conference room at the company's San Francisco offices to covertly record sensitive conversations.\n\nAbdulrahman Alfozan, 35, has been charged with using or endeavoring to use an electronic, mechanical, or other device to i…",
+          "detail": "Signal de veille — The Hacker News.\n\nAn OpenAI engineering lead was arrested over an allegedly planted audio recorder in an executive conference room.\n\nA Saudi National and employee of OpenAI has been arrested for allegedly planting a hidden recording device in an executive conference room at the company's San Francisco offices to covertly record sensitive conversations.\n\nAbdulrahman Alfozan, 35, has been charged with using or endeavoring to use an electronic, mechanical, or other device to intercept oral communications. He was arrested by authorities on October 9, 2026, the U.S. Department of Justice (DoJ) said. Alfozan had been employed at OpenAI since July 2025, working as an engineering lead. He has since been terminated.\n\nAccording to Alfozan's LinkedIn profile, he graduated from the University of California, Berkeley, with a master's in data science in 2025. He was previously employed at Meta as a senior systems engineer and went on to become the founding engineer at Nash.\n\n\"Abdulrahman Alfozan allegedly concealed a covert recording device inside his employer's executive conference room to secretly capture sensitive communications about the company's super intelligence technology,\" Kash Patel, Director of the U.S. Federal Bureau of Investigation (FBI), said in a statement.\n\n\"Protecting American SI [super intelligence] innovation is essential to safeguarding our nation's economic strength and national security, and the FBI views that mission as one of our highest counterintelligence priorities.\"\n\nAccording to the complaint, on or around September 30, 2026, OpenAI personnel discovered a surreptitious audio recording device inserted into a USB port on the back of a television in an executive conference room. The device was said to have been concealed in toilet paper",
+          "action": null,
+          "image": "https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEjE6tXAfDSv5HwaNsBdrtgbjvOoTMYJuMGQPGpLM5auUfz9dUSuExG-IY_42zMx-VP8GbM-oXAVGbKjHIqNOHy08-lKsCPrJMbhPrDw-9UlJpapcAMZohyphenhypheng7IZh192IoEGs66NRp6TNCWIFYsO5oh9gKkIeILKD_8zdzCHBmoJCeCi65kZjDvQyZwzicV2I/s1600/opens.jpg",
+          "sources": [
+            {
+              "url": "https://thehackernews.com/2026/10/openai-employee-arrested-for-allegedly.html",
+              "label": "The Hacker News"
+            },
+            {
+              "url": "https://www.securityweek.com/employee-arrested-after-listening-device-found-in-openai-conference-room-fbi-and-the-company-say/",
+              "label": "SecurityWeek"
+            },
+            {
+              "url": "https://www.bleepingcomputer.com/news/artificial-intelligence/openai-engineer-arrested-for-allegedly-planting-spy-device-in-office/",
+              "label": "BleepingComputer"
+            }
+          ],
+          "url": "https://thehackernews.com/2026/10/openai-employee-arrested-for-allegedly.html",
+          "pubDate": "2026-10-14T01:59:25.000Z"
+        },
+        {
+          "title": "Microsoft: Windows 11 24H2 Home and Pro reached end of support",
+          "cve": null,
+          "severity": "culture",
+          "score": 63,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Signal de veille — BleepingComputer.\n\nMicrosoft announced today that devices running Windows 11 24H2 Home and Pro editions have reached the end of support and will no longer receive monthly security and non-security preview updates.\n\nAnthropic warns self-replicating AI could spread to your smart devices\n\nMicrosoft October 2026 Patch Tuesday fixes 1,411 flaws, 3 zero-days\n\nOpenAI engineer arrested for allegedly planting spy device in office\n\nAnthropic warns self-replicating AI could spread to y…",
+          "detail": "Signal de veille — BleepingComputer.\n\nMicrosoft announced today that devices running Windows 11 24H2 Home and Pro editions have reached the end of support and will no longer receive monthly security and non-security preview updates.\n\nAnthropic warns self-replicating AI could spread to your smart devices\n\nMicrosoft October 2026 Patch Tuesday fixes 1,411 flaws, 3 zero-days\n\nOpenAI engineer arrested for allegedly planting spy device in office\n\nAnthropic warns self-replicating AI could spread to your smart devices\n\nMicrosoft October 2026 Patch Tuesday fixes 1,411 flaws, 3 zero-days\n\nHow to enable Kernel-mode Hardware-enforced Stack Protection in Windows 11",
+          "action": null,
+          "image": "https://www.bleepstatic.com/content/hl-images/2026/10/05/Windows_11.jpg",
+          "sources": [
+            {
+              "url": "https://www.bleepingcomputer.com/news/microsoft/microsoft-windows-11-24h2-home-and-pro-reached-end-of-support/",
+              "label": "BleepingComputer"
+            }
+          ],
+          "url": "https://www.bleepingcomputer.com/news/microsoft/microsoft-windows-11-24h2-home-and-pro-reached-end-of-support/",
+          "pubDate": "2026-10-13T19:04:38.000Z"
+        },
+        {
+          "title": "Product Walkthrough: Bitdefender AI Visibility and Control",
+          "cve": null,
+          "severity": "culture",
+          "score": 59,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Signal de veille — The Hacker News.\n\nA user opens a browser tab, pastes data into a chat assistant, and nothing is installed. A developer adds a coding&nbsp;assistant as an editor extension, and nothing shows up in the installed programs list. Someone downloads a local model runtime, a program that runs models directly on the machine instead of sending data to an external service, because they were told not to send company data",
+          "detail": "Signal de veille — The Hacker News.\n\nA user opens a browser tab, pastes data into a chat assistant, and nothing is installed. A developer adds a coding&nbsp;assistant as an editor extension, and nothing shows up in the installed programs list. Someone downloads a local model runtime, a program that runs models directly on the machine instead of sending data to an external service, because they were told not to send company data",
+          "action": null,
+          "image": "https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEjkLz0n_kNY4YMLYNTi1KElj3dkaig5LqA6Koy92X4ndKfwBO8ctC5bNVyII81TUHljc7MGrpMZBsUX5j4126sBd3Sk5fX_DGjIo-yz5qGrRsHgi2qiLNUUbfCSvOHcE-KoYqGzNLBvTVzwEKDt2hZ4dvGK8YYOTeA-f6FHX49GA0myiau9Mqgc_LT7D1k/s1600/bit.jpg",
+          "sources": [
+            {
+              "url": "https://thehackernews.com/2026/10/product-walkthrough-bitdefender-ai.html",
+              "label": "The Hacker News"
+            }
+          ],
+          "url": "https://thehackernews.com/2026/10/product-walkthrough-bitdefender-ai.html",
+          "pubDate": "2026-10-13T10:30:00.000Z"
+        },
+        {
+          "title": "Two Critical MarkLogic Flaws Could Give Delegated Managers Persistent Admin Control",
+          "cve": null,
+          "severity": "critical",
+          "score": 59,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Signal de veille — The Hacker News.\n\nTwo of 31 newly disclosed flaws in Progress Software's&nbsp;MarkLogic Server&nbsp;database could let an account given only some management privileges take administrator control of the server, the company says. Progress published all 31 on October 12 and scored five of them critical. Fixes have been available since September 10, in&nbsp;MarkLogic 11.3.7&nbsp;and&nbsp;MarkLogic 12.1.0. Affected",
+          "detail": "Signal de veille — The Hacker News.\n\nTwo of 31 newly disclosed flaws in Progress Software's&nbsp;MarkLogic Server&nbsp;database could let an account given only some management privileges take administrator control of the server, the company says. Progress published all 31 on October 12 and scored five of them critical. Fixes have been available since September 10, in&nbsp;MarkLogic 11.3.7&nbsp;and&nbsp;MarkLogic 12.1.0. Affected",
+          "action": null,
+          "image": "https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEjvGRzVYOU1S12WE6ja5ZSrhInOGaNdwCGGwWch1oJn_SDtoy90ycGVjd-JeDjwSSH8XDzKlkoKsu_vlND1iW0aWJgEqf3Ti18goDI0yXeaLbF2DHrokj8Qdvm1kHEi8wqdm6_axRi17PVBqtlgFWLpZnv6Eufx_bFMkpWcnz6ymbQI4IDB7lgYi3QrZ7w/s1600/amrk.jpg",
+          "sources": [
+            {
+              "url": "https://thehackernews.com/2026/10/two-critical-marklogic-flaws-could-give.html",
+              "label": "The Hacker News"
+            }
+          ],
+          "url": "https://thehackernews.com/2026/10/two-critical-marklogic-flaws-could-give.html",
+          "pubDate": "2026-10-13T08:44:01.000Z"
+        },
+        {
+          "title": "Des IA capables de se multiplier toutes seules sur des boîtiers TV ? Anthropic alerte sur ce risque",
+          "cve": null,
+          "severity": "culture",
+          "score": 59,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Signal de veille — Numerama.\n\nFaire tourner une IA sur quinze boîtiers Android TV : c’est l’expérience menée par Anthropic, qui étudie comment des modèles pourraient se multiplier sur des objets connectés, sans data center. Un scénario dont plusieurs étapes restent à démontrer.",
+          "detail": "Signal de veille — Numerama.\n\nFaire tourner une IA sur quinze boîtiers Android TV : c’est l’expérience menée par Anthropic, qui étudie comment des modèles pourraient se multiplier sur des objets connectés, sans data center. Un scénario dont plusieurs étapes restent à démontrer. Une IA n’a pas forcément besoin d’un immense centre de données pour\n\nWatt Else, ToujoursPlus, Artificielles, Le Récap : votre dose hebdo d’infos exclusives et d’éditos endiablés !\n\nFrandroid Clubic Lemon Humanoid Mon compte Thème Clair Sombre Système 39,90 € /an\n\nNous générons pour vous un résumé de l’article grâce à une IA et nous le vérifions afin de nous assurer qu’il n’y ait aucune erreur, pour garantir l’authenticité de l’info.\n\nRecevez tous les soirs un résumé de l’actu importante avec Le Récap’\n\nUne IA n’a pas forcément besoin d’un immense centre de données pour fonctionner. Des appareils beaucoup plus modestes peuvent lui fournir les ressources nécessaires. Reste une question : pourrait-elle s’y installer, puis se copier sur d’autres machines sans intervention humaine ?\n\nC’est le scénario exploré par William Zhou et Daniel Freeman, chercheurs chez Anthropic, dans un billet publié le 12 octobre 2026. L’entreprise s’intéresse notamment aux objets connectés, comme les boîtiers Android TV et les appareils électroménagers intelligents, souvent peu sécurisés.",
+          "action": null,
+          "image": "https://img.numerama.com/www.numerama.com/wp-content/uploads/2026/10/1-12.png?resize=1600,900&key=fbabb320",
+          "sources": [
+            {
+              "url": "https://www.numerama.com/tech/2351851-des-ia-capables-de-se-multiplier-toutes-seules-sur-des-boitiers-tv-anthropic-alerte-sur-ce-risque.html",
+              "label": "Numerama"
+            }
+          ],
+          "url": "https://www.numerama.com/tech/2351851-des-ia-capables-de-se-multiplier-toutes-seules-sur-des-boitiers-tv-anthropic-alerte-sur-ce-risque.html",
+          "pubDate": "2026-10-13T08:42:53.000Z"
+        },
+        {
+          "title": "Anthropic Finds Ingredients for Future AI Worms",
+          "cve": null,
+          "severity": "culture",
+          "score": 55,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Signal de veille — Dark Reading.\n\nAnthropic's latest study combined IoT and network tests to explore AI self-replication, which researchers said would be &quot;challenging&quot; to shut down.",
+          "detail": "Signal de veille — Dark Reading.\n\nAnthropic's latest study combined IoT and network tests to explore AI self-replication, which researchers said would be &quot;challenging&quot; to shut down.",
+          "action": null,
+          "image": null,
+          "sources": [
+            {
+              "url": "https://www.darkreading.com/perimeter/anthropic-ingredients-future-ai-worms",
+              "label": "Dark Reading"
+            }
+          ],
+          "url": "https://www.darkreading.com/perimeter/anthropic-ingredients-future-ai-worms",
+          "pubDate": "2026-10-13T20:35:23.000Z"
+        },
+        {
+          "title": "Implants espions dans des Ledger : les détenteurs de cryptomonnaies doutent désormais de toute la chaîne de distribution",
+          "cve": null,
+          "severity": "culture",
+          "score": 55,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Signal de veille — Numerama.\n\nAprès la découverte d’implants espions dans des portefeuilles Ledger vendus par le revendeur CryptoBilis, les rumeurs se multiplient sur les réseaux sociaux. Ledger appelle à la prudence, mais peine à rassurer des clients qui démontent désormais leurs appareils.\n\nWatt Else, ToujoursPlus, Artificielles, Le Récap : votre dose hebdo d’infos exclusives et d’éditos endiablés !\n\nFrandroid Clubic Lemon Humanoid Mon compte Thème Clair Sombre Système 39,90 € /an\n\nN…",
+          "detail": "Signal de veille — Numerama.\n\nAprès la découverte d’implants espions dans des portefeuilles Ledger vendus par le revendeur CryptoBilis, les rumeurs se multiplient sur les réseaux sociaux. Ledger appelle à la prudence, mais peine à rassurer des clients qui démontent désormais leurs appareils.\n\nWatt Else, ToujoursPlus, Artificielles, Le Récap : votre dose hebdo d’infos exclusives et d’éditos endiablés !\n\nFrandroid Clubic Lemon Humanoid Mon compte Thème Clair Sombre Système 39,90 € /an\n\nNous générons pour vous un résumé de l’article grâce à une IA et nous le vérifions afin de nous assurer qu’il n’y ait aucune erreur, pour garantir l’authenticité de l’info.\n\nRecevez tous les soirs un résumé de l’actu importante avec Le Récap’\n\nIl suffit de taper « Ledger » dans la barre de recherche de X pour mesurer l’étendue des dégâts.\n\nDepuis plusieurs jours, les messages d’utilisateurs inquiets, en colère ou décidés à vider leur portefeuille s’accumulent et accusent le fabricant français de portefeuilles matériels, ces petits boîtiers censés protéger l’accès aux cryptomonnaies de leurs propriétaires, d’avoir négligé la sécurité de ses appareils.",
+          "action": null,
+          "image": "https://img.numerama.com/www.numerama.com/wp-content/uploads/2026/10/66f2634ec5d70dd0e002804d-ledgerpreview.png?resize=1600,900&key=520ff19e",
+          "sources": [
+            {
+              "url": "https://www.numerama.com/cyberguerre/2351867-implants-espions-dans-des-ledger-les-detenteurs-de-cryptomonnaies-doutent-desormais-de-toute-la-chaine-de-distribution.html",
+              "label": "Numerama"
+            }
+          ],
+          "url": "https://www.numerama.com/cyberguerre/2351867-implants-espions-dans-des-ledger-les-detenteurs-de-cryptomonnaies-doutent-desormais-de-toute-la-chaine-de-distribution.html",
+          "pubDate": "2026-10-13T08:50:00.000Z"
+        },
+        {
+          "title": "Defenders Reluctant to Deploy Agentic AI as a Cybersecurity Tool",
+          "cve": null,
+          "severity": "culture",
+          "score": 52,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Signal de veille — Infosecurity Mag.\n\nFlashpoint research suggests that only 25% of security teams have actively deployed AI, with many concerned about AI Agents’ negative impact\n\nCompanies have invested more resources than ever into agentic AI as a cyber defense tool amid growing AI-enabled cyber threats to enterprise networks from.",
+          "detail": "Signal de veille — Infosecurity Mag.\n\nFlashpoint research suggests that only 25% of security teams have actively deployed AI, with many concerned about AI Agents’ negative impact\n\nCompanies have invested more resources than ever into agentic AI as a cyber defense tool amid growing AI-enabled cyber threats to enterprise networks from. However, the majority of cybersecurity teams remain reluctant to deploy the technology due to concerns over their effectiveness.\n\nPublished on October 13, The Enterprise Threat Intelligence Report: 2026 from Flashpoint suggested that despite the ongoing discussion surrounding the potential cyber risks around offensive agentic AI , just a quarter (25%) of cybersecurity teams are actively using agentic AI tools as part of their active cyber defense strategy.\n\nWhile three quarters of security teams have yet to fully investigate the potential deployment of AI tools into their security operations, 20% of those surveyed said that they are running a closed pilot scheme, and a further 35% said they are examining the potential of adoption within the next 12 to 24 months. The remaining 20% of respondents said they have no plans to test out agentic AI as part of their cyber defense as things stand.\n\nOf those who are using or are piloting AI agents, tasks these tools are involved in include information retrieval and alert prioritization, as well as more active tasks such as blocking IP addresses, updating blacklists and monitoring suspicious traffic.\n\nSome organizations have also used AI to help with more advanced activity, including taking automated action that can directly affect security operations. However, many remain wary of providing an AI agent with this amount of decision-making authority.\n\nSome cybersecurity professionals expressed concerns a",
+          "action": null,
+          "image": "https://assets.infosecurity-magazine.com/webpage/og/78f27e46-2d21-49f3-8d00-6a4237153334.jpeg",
+          "sources": [
+            {
+              "url": "https://www.infosecurity-magazine.com/news/defenders-skeptical-agentic-ai/",
+              "label": "Infosecurity Mag"
+            }
+          ],
+          "url": "https://www.infosecurity-magazine.com/news/defenders-skeptical-agentic-ai/",
+          "pubDate": "2026-10-13T13:30:00.000Z"
+        },
+        {
+          "title": "Microsoft Teams ouvre la porte aux détecteurs de deepfakes : ce qui change en novembre",
+          "cve": null,
+          "severity": "culture",
+          "score": 52,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Signal de veille — IT-Connect.\n\nDès novembre 2026, Microsoft Teams pourra afficher des alertes en réunion grâce à des outils tiers de détection de deepfakes. Voici ce qui va changer.\n\nActualités IT & Tech, tutoriels en administration système, réseau et cybersécurité.\n\nArchitecture Réseau Cybersécurité Linux & Logiciels Libres Microsoft (On-Premise) Microsoft 365 & Azure Self-Hosting & Open Source Stockage & NAS Cours IT Actualités Entreprise Actu Cybersécurité Web Logiciel – OS Matériel…",
+          "detail": "Signal de veille — IT-Connect.\n\nDès novembre 2026, Microsoft Teams pourra afficher des alertes en réunion grâce à des outils tiers de détection de deepfakes. Voici ce qui va changer.\n\nActualités IT & Tech, tutoriels en administration système, réseau et cybersécurité.\n\nArchitecture Réseau Cybersécurité Linux & Logiciels Libres Microsoft (On-Premise) Microsoft 365 & Azure Self-Hosting & Open Source Stockage & NAS Cours IT Actualités Entreprise Actu Cybersécurité Web Logiciel – OS Matériel Réseaux sociaux Mobile Bons Plans Tests Débutants Livres Vidéos IT-Connect » Actualités » Entreprise » Microsoft Teams ouvre la porte aux détecteurs de deepfakes : ce qui change en novembre Entreprise Microsoft Teams ouvre la porte aux détecteurs de deepfakes : ce qui change en novembre 13/10/2026 Clément HAUROGNÉ 0 commentaire Cybersécurité , Microsoft , Teams Voir et entendre quelqu'un en visio ne suffit plus à prouver son identité. Les outils de génération par IA produisent désormais des voix et des visages crédibles, y compris en direct. Pour pallier à cela, Microsoft prévoit l'intégration de solutions tierces de détection de deepfakes dans Teams.\n\nAnnoncée le 2 octobre 2026 dans la Roadmap de Microsoft 365 sous l'ID 573451, le statut de cette nouveauté est actuellement « In development » et la disponibilité générale est annoncée pour novembre 2026. Cet article est l'occasion de faire le point sur cette annonce, ses limites et les préparatifs côté IT.\n\nLes outils de génération audio et vidéo évoluent à un rythme soutenu. Cloner une voix à partir d'un court échantillon ou remplacer un visage en direct est devenu accessible et rapide, notamment avec l'intelligence artificielle. Les usages malveillants sont divers et variés :\n\nMicrosoft Teams est une cible directe. D'après le rapport de",
+          "action": null,
+          "image": "https://www.it-connect.fr/wp-content-itc/uploads/2026/10/microsoft-teams-outils-tiers-detection-de-deepfakes.jpg",
+          "sources": [
+            {
+              "url": "https://www.it-connect.fr/microsoft-teams-ouvre-la-porte-aux-detecteurs-de-deepfakes-ce-qui-change-en-novembre/",
+              "label": "IT-Connect"
+            }
+          ],
+          "url": "https://www.it-connect.fr/microsoft-teams-ouvre-la-porte-aux-detecteurs-de-deepfakes-ce-qui-change-en-novembre/",
+          "pubDate": "2026-10-13T11:00:00.000Z"
+        },
+        {
+          "title": "10 milliards € de potentiel d’économies sur les achats logiciels : d’où vient ce chiffre ?",
+          "cve": null,
+          "severity": "high",
+          "score": 51,
+          "corroboration": 1,
+          "region": "fr",
+          "body": "Signal de veille — Silicon.fr.\n\nDeux LLM concurrents font-ils nécessairement doublon ? Spendesk a pris ce parti pour évoquer les dépenses logicielles des entreprises dans l&rsquo;UE. Au-delà de la méthodologie, on gardera à l&rsquo;esprit que les résultats émanent d&rsquo;un fournisseur&#8230; de solutions de gestion des dépenses.",
+          "detail": "Signal de veille — Silicon.fr.\n\nDeux LLM concurrents font-ils nécessairement doublon ? Spendesk a pris ce parti pour évoquer les dépenses logicielles des entreprises dans l&rsquo;UE. Au-delà de la méthodologie, on gardera à l&rsquo;esprit que les résultats émanent d&rsquo;un fournisseur&#8230; de solutions de gestion des dépenses. Nous en reprenons néanmoins quelques-uns, en particulier parce qu&rsquo;ils illustrent un état de fait : pour une même chose, tout le monde ne paye pas le même prix. 7 Md€ à aller chercher en négociant ?&#8230; L&rsquo;analyse couvre la période de juin 2025 à juin 2026. Elle englobe 2568 entreprises actives. La majorité en France (60,5 %). Le reste dans 13 autres pays, principalement l&rsquo;Allemagne (16 %) et le Royaume-Uni (12,6 %). La distribution est à l&rsquo;image du marché européen : 91 % de ces entreprises comptent moins de 250 employés. À partir de cet échantillon, Spendesk extrapole à l&rsquo;UE en s&rsquo;appuyant sur les données d&rsquo;Eurostat pour 2024. Bilan : dans la catégorie des entreprises de 50 à 250 employés, la variation des prix entraîne à elle seule 7 Md€ de surdépenses par an . Ce montant découle de l&rsquo;analyse des dépenses dans une trentaine de logiciels SaaS avec licence par siège. Spendesk affirme avoir mesuré ce que les entreprises payaient mensuellement par employé « pour exactement le même produit ». Partant, il a pris comme référence le « quarti",
+          "action": null,
+          "image": "https://www.silicon.fr/wp-content/uploads/2026/10/logiciels-Europe-economies-10-milliards-1024x837.jpg",
+          "sources": [
+            {
+              "url": "https://www.silicon.fr/business-1367/achats-logiciels-economies-229645",
+              "label": "Silicon.fr"
+            }
+          ],
+          "url": "https://www.silicon.fr/business-1367/achats-logiciels-economies-229645",
+          "pubDate": "2026-10-13T16:40:27.000Z"
+        },
+        {
+          "title": "Claude for Intune : déployer et sécuriser Claude sur iPhone et iPad en entreprise",
+          "cve": null,
+          "severity": "culture",
+          "score": 48,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Signal de veille — IT-Connect.\n\nClaude for Intune permet de gérer l'app Claude sur iOS avec Intune : prérequis, consentement Entra ID, déploiement, stratégie APP et accès conditionnel.\n\nActualités IT & Tech, tutoriels en administration système, réseau et cybersécurité.\n\nArchitecture Réseau Cybersécurité Linux & Logiciels Libres Microsoft (On-Premise) Microsoft 365 & Azure Self-Hosting & Open Source Stockage & NAS Cours IT Actualités Entreprise Actu Cybersécurité Web Logiciel – OS Matérie…",
+          "detail": "Signal de veille — IT-Connect.\n\nClaude for Intune permet de gérer l'app Claude sur iOS avec Intune : prérequis, consentement Entra ID, déploiement, stratégie APP et accès conditionnel.\n\nActualités IT & Tech, tutoriels en administration système, réseau et cybersécurité.\n\nArchitecture Réseau Cybersécurité Linux & Logiciels Libres Microsoft (On-Premise) Microsoft 365 & Azure Self-Hosting & Open Source Stockage & NAS Cours IT Actualités Entreprise Actu Cybersécurité Web Logiciel – OS Matériel Réseaux sociaux Mobile Bons Plans Tests Débutants Livres Vidéos IT-Connect » Cours - Tutoriels » Microsoft 365 & Cloud Azure » Microsoft Intune » Claude for Intune : déployer et sécuriser Claude sur iPhone et iPad en entreprise Microsoft Intune Claude for Intune : déployer et sécuriser Claude sur iPhone et iPad en entreprise 13/10/2026 Clément HAUROGNÉ 0 commentaire IA , intune , Microsoft Anthropic propose, depuis le 5 octobre 2026, Claude for Intune, une app iOS conçue pour les organisations qui pilotent leurs mobiles avec Microsoft Intune. Elle prend en charge les stratégies de protection des applications Intune et l'accès conditionnel Microsoft Entra. Les organisations peuvent désormais encadrer le déploiement et l'usage de Claude, comme n'importe quelle autre app métier. Dans cet article, nous allons aborder les prérequis, le déploiement dans Intune et la protection de l'app.\n\nClaude for Intune est une version managée de l'application Claude pour iOS. Cette application est distincte de l'application Claude standard, et elles sont toutes les deux disponibles sur l'Apple App Store ( voir cette page ). En tant qu'application managée, elle permet de proposer une expérience unifiée aux utilisateurs :\n\nLorsque l'organisation souhaite exploiter l'une des fonctionnalités ci-dessus, elle d",
+          "action": null,
+          "image": "https://www.it-connect.fr/wp-content-itc/uploads/2026/10/claude-for-intune-tuto.jpg",
+          "sources": [
+            {
+              "url": "https://www.it-connect.fr/claude-for-intune-deployer-et-securiser-claude-sur-iphone-et-ipad-en-entreprise/",
+              "label": "IT-Connect"
+            }
+          ],
+          "url": "https://www.it-connect.fr/claude-for-intune-deployer-et-securiser-claude-sur-iphone-et-ipad-en-entreprise/",
+          "pubDate": "2026-10-13T14:45:00.000Z"
+        },
+        {
+          "title": "NinjaOne combines Katana AI and MCP server to accelerate IT problem resolution",
+          "cve": null,
+          "severity": "culture",
+          "score": 48,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Signal de veille — Help Net Security.\n\nNinjaOne has announced Katana AI, an agentic AI technician that supports and elevates IT workers, and the NinjaOne MCP server, an agentic orchestration connector that extends the platform&#8217;s governed access to the AI tools teams already use. “Modern IT environments generate more data than any technician can process,” said Phil Hochmuth, research VP, endpoint management and enterprise mobility at IDC.",
+          "detail": "Signal de veille — Help Net Security.\n\nNinjaOne has announced Katana AI, an agentic AI technician that supports and elevates IT workers, and the NinjaOne MCP server, an agentic orchestration connector that extends the platform&#8217;s governed access to the AI tools teams already use. “Modern IT environments generate more data than any technician can process,” said Phil Hochmuth, research VP, endpoint management and enterprise mobility at IDC. “Hunting for a problem&#8217;s context instead of actually solving the issue wastes time for IT &#8230; More &#8594; The post NinjaOne combines Katana AI and MCP server to accelerate IT problem resolution appeared first on Help Net Security .",
+          "action": null,
+          "image": "https://img.helpnetsecurity.com/wp-content/uploads/2024/11/28150559/hns-large_logo.webp",
+          "sources": [
+            {
+              "url": "https://www.helpnetsecurity.com/2026/10/13/ninjaone-katana-ai-mcp/",
+              "label": "Help Net Security"
+            }
+          ],
+          "url": "https://www.helpnetsecurity.com/2026/10/13/ninjaone-katana-ai-mcp/",
+          "pubDate": "2026-10-13T13:26:43.000Z"
+        },
+        {
+          "title": "« Donner une identité aux agents IA est devenu un standard »",
+          "cve": null,
+          "severity": "high",
+          "score": 45,
+          "corroboration": 1,
+          "region": "fr",
+          "body": "Signal de veille — Global Sec Mag.\n\nOkta, éditeur américain de solutions de gestion des identités et des accès en mode cloud, sécurise aussi bien les collaborateurs que les clients, les partenaires et désormais les agents IA. Xavier Mathis, son Vice-Président régional et Country Manager France, revient sur le partenariat avec ENGIE et sur l'enjeu des identités non humaines, lors des Assises de la cybersécurité 2026, à Monaco.",
+          "detail": "Signal de veille — Global Sec Mag.\n\nOkta, éditeur américain de solutions de gestion des identités et des accès en mode cloud, sécurise aussi bien les collaborateurs que les clients, les partenaires et désormais les agents IA. Xavier Mathis, son Vice-Président régional et Country Manager France, revient sur le partenariat avec ENGIE et sur l'enjeu des identités non humaines, lors des Assises de la cybersécurité 2026, à Monaco. Xavier Mathis Vice-Président régional et Country Manager France, Okta, © Global Security Mag GSM : pouvez-vous présenter Okta et votre rôle ? X. M. : je suis Vice-Président régional et Country Manager France d'Okta. Notre métier est la gestion des identités : savoir qui a accès à quoi et gérer le cycle de vie des identités depuis une plateforme unique, interopérable avec les autres technologies de l'entreprise. Nous comptons parmi nos clients environ 70 % des entreprises du CAC 40, dont ENGIE, et nous consacrons un milliard de dollars par an à l'innovation. GSM : comment le partenariat avec ENGIE est-il né ? X. M. : Il y a onze ans, le groupe s'appelait encore GDF Suez et migrait sa messagerie vers Office 365. Le déploiement mondial était tres compliqué : à force d'acquisitions, le groupe comptait une centaine de forêts d'identités. Nous avons d'abord fourni Universal Directory, un méta-annuaire qui fédère les identités dispersées. Plus de mille applications ont suivi, pour les collaborateur",
+          "action": null,
+          "image": "https://www.globalsecuritymag.fr/local/cache-vignettes/L229xH120/4b1dd6721a2c3534bb97b764785e06-6a705.jpg",
+          "sources": [
+            {
+              "url": "https://www.globalsecuritymag.fr/donner-une-identite-aux-agents-ia-est-devenu-un-standard.html",
+              "label": "Global Sec Mag"
+            }
+          ],
+          "url": "https://www.globalsecuritymag.fr/donner-une-identite-aux-agents-ia-est-devenu-un-standard.html",
+          "pubDate": "2026-10-14T04:01:06.417Z"
+        }
+      ]
+    }
+  ]
+}
