@@ -1,0 +1,1017 @@
+{
+  "id": "daily-2026-10-20",
+  "type": "daily",
+  "date": "2026-10-20",
+  "title": "Rapport quotidien - mardi 20 octobre 2026",
+  "summary": "Sur les dernières 24 heures, la veille recense 11 vulnérabilités critiques, 34 incidents ou compromissions et 24 signaux de fond. Acteurs et produits les plus exposés : Microsoft, aiohttp (pip) et mercury (pip).",
+  "generatedAt": "2026-10-20T04:01:16.580Z",
+  "sections": [
+    {
+      "id": "vulns",
+      "items": [
+        {
+          "title": "CVE-2026-111057 — Mercury: Unauthenticated Remote Code Execution in /api/terminals - access control bypass",
+          "cve": "CVE-2026-111057",
+          "severity": "critical",
+          "score": 59,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Vulnérabilité critique CVE-2026-111057 affectant mercury (pip) (score CVSS 10).\n\nMercury: Unauthenticated Remote Code Execution in /api/terminals - access control bypass\n\nBLOCKED_PATTERNS = [ # JupyterLab UI + API r\"/lab(?!/(?:extensions/|api/settings(?:/|$)|api/translations(?:/|$)))(?:/.*)?\" r\"/api/terminals(?:/.*)?\", r\"/api/shutdown(?:/.*)?\", r\"/files(?:/.*)?\", ] The missing comma between the first and the second line causes Python to merge the rules, therefore the actual list that is blocked looks like this:\n\n/lab...(?:/.",
+          "detail": "Vulnérabilité critique CVE-2026-111057 affectant mercury (pip) (score CVSS 10).\n\nMercury: Unauthenticated Remote Code Execution in /api/terminals - access control bypass\n\nBLOCKED_PATTERNS = [ # JupyterLab UI + API r\"/lab(?!/(?:extensions/|api/settings(?:/|$)|api/translations(?:/|$)))(?:/.*)?\" r\"/api/terminals(?:/.*)?\", r\"/api/shutdown(?:/.*)?\", r\"/files(?:/.*)?\", ] The missing comma between the first and the second line causes Python to merge the rules, therefore the actual list that is blocked looks like this:\n\n/lab...(?:/. * )?/api/terminals(?:/. * )? (the first two lines joined together) /api/shutdown(?:/. * )? /files(?:/. * )?\n\nA direct request to /api/terminals does not match any of the 3 blocklist rules and is therefore not blocked , reaching Jupyter Server's built-in terminal API, which spawns a real OS shell accessible over a WebSocket connection. No authentication, account, session or pre-existing access to Mercury is required.\n\nTesting was performed on a local Docker deployment ( https://runmercury.com/deploy/dockerfile/ ), Mercury version 3.2.3, default configuration.\n\npython3 -c \" import websocket, json, time ws = websocket.create_connection('ws://localhost:8888/terminals/websocket/1') print(ws.recv()) ws.send(json.dumps(['stdin', 'whoami && id\\n'])) time.sleep(1) ws.settimeout(2) try: while True: print(ws.recv()) except Exception: pass \" Observed output:\n\nExploitable by any network client that can reach the Mercury server, including the public internet if it is deployed without additional access controls (VPN, reverse-proxy authentication, firewall).",
+          "action": "Vérifier l'exposition du parc et appliquer le correctif éditeur dès sa disponibilité.",
+          "image": "https://github.githubassets.com/assets/advisory-database-show-f32c8207dfb2.png",
+          "sources": [
+            {
+              "url": "https://github.com/advisories/GHSA-f8c7-rwf9-fmgm",
+              "label": "GitHub Advisory"
+            }
+          ],
+          "url": "https://github.com/advisories/GHSA-f8c7-rwf9-fmgm",
+          "pubDate": "2026-10-19T17:00:54.000Z"
+        },
+        {
+          "title": "CVE-2026-111058 — Mercury: Unauthenticated Remote Code Execution via /api/kernels",
+          "cve": "CVE-2026-111058",
+          "severity": "critical",
+          "score": 59,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Vulnérabilité critique CVE-2026-111058 affectant mercury (pip) (score CVSS 9.8).\n\nMercury: Unauthenticated Remote Code Execution via /api/kernels\n\n/api/kernels is NOT in the blocklist (and cannot be — Mercury needs kernels to run notebooks), and patch_kernel_websocket_handler() ( mercury_app/idle_timeout.py ) only tracks the idle-timeout: it wraps on_message to call self.application._timeout_manager.touch() and then invokes the original handler with no filtering of execute_request .",
+          "detail": "Vulnérabilité critique CVE-2026-111058 affectant mercury (pip) (score CVSS 9.8).\n\nMercury: Unauthenticated Remote Code Execution via /api/kernels\n\n/api/kernels is NOT in the blocklist (and cannot be — Mercury needs kernels to run notebooks), and patch_kernel_websocket_handler() ( mercury_app/idle_timeout.py ) only tracks the idle-timeout: it wraps on_message to call self.application._timeout_manager.touch() and then invokes the original handler with no filtering of execute_request . So any unauthenticated network client can:\n\nOn mercury 3.2.4 — the release that fixed GHSA-f8c7 — with the default (tokenless) config, as an unauthenticated client: POST /api/terminals returns 403 (the f8c7 fix is present), but POST /api/kernels returns 201 ; opening the kernel websocket and sending an execute_request executed attacker-supplied Python (ran whoami as the server process user and wrote a marker file /tmp/PWNED_MERCURY_RCE ). Full unauthenticated remote code execution. Deterministic PoC (client script + notebook) included.\n\nUnauthenticated, network-reachable arbitrary code execution as the Mercury server process user on every default deployment — complete compromise of the host/container and any data/secrets it can reach.\n\nThe blocklist cannot secure an anonymous kernel-backed server. Require real per-request authentication (a token or password) by default, or restrict the kernel message channel so anonymous websocket clients cannot issue execute_request outside Mercury's own controlled execution flow.\n\nOSV.dev CLEAN(0) for mercury and mljar-mercury ; the repo's only advisory ( GHSA-f8c7-rwf9-fmgm ) covers /api/terminals only (description does not mention kernels); no issue/PR describes the /api/kernels RCE (#219/#134/#262 are \"add auth\" feature requests that merely confirm anon",
+          "action": "Vérifier l'exposition du parc et appliquer le correctif éditeur dès sa disponibilité.",
+          "image": "https://github.githubassets.com/assets/advisory-database-show-f32c8207dfb2.png",
+          "sources": [
+            {
+              "url": "https://github.com/advisories/GHSA-rv4m-xm3f-3ccq",
+              "label": "GitHub Advisory"
+            }
+          ],
+          "url": "https://github.com/advisories/GHSA-rv4m-xm3f-3ccq",
+          "pubDate": "2026-10-19T16:49:08.000Z"
+        },
+        {
+          "title": "Threat Brief: Active Exploitation of PAN-OS CVE-2026-0257 (Updated October 19)",
+          "cve": "CVE-2026-0257",
+          "severity": "high",
+          "score": 58,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Vulnérabilité élevée CVE-2026-0257 affectant PAN-OS.\n\nRansomware operators including Spikey Scorpius (aka Qilin) and Tarnished Scorpius (aka Inc) are exploiting PAN-OS vulnerability CVE-2026-0257.\n\nOctober 19 Update: Unit 42 continues to observe attempted exploitation of CVE-2026-0257 by ransomware operators including Spikey Scorpius (aka Qilin) and Tarnished Scorpius (aka Inc).",
+          "detail": "Vulnérabilité élevée CVE-2026-0257 affectant PAN-OS.\n\nRansomware operators including Spikey Scorpius (aka Qilin) and Tarnished Scorpius (aka Inc) are exploiting PAN-OS vulnerability CVE-2026-0257.\n\nOctober 19 Update: Unit 42 continues to observe attempted exploitation of CVE-2026-0257 by ransomware operators including Spikey Scorpius (aka Qilin) and Tarnished Scorpius (aka Inc). We’re also aware of public reporting attributing exploitation to threat actors using Settra ransomware.\n\nPalo Alto Networks Unit 42 has observed active exploitation of PAN-OS vulnerability CVE-2026-0257 by an unidentified threat actor attempting to access GlobalProtect. This security flaw involves an authentication bypass in the portal and gateway components of vulnerable versions of PAN-OS ® software, which could allow unauthorized attackers to circumvent security controls and initiate virtual private network (VPN) connections. This CVE was added to the Known Exploited Vulnerability (KEV) catalog on May 13, 2026.\n\nNo post-access behavior or lateral movement has been identified as of this time. Only a small portion of the probed devices actually established VPN sessions, resulting in gateway-connected events.\n\nWe advise organizations to proactively hunt for the indicators of the activity specified in this report and activate incident response protocols for any successful gateway-connected events linked to these indicators. Additionally, we strongly recommend reviewing the security advisory for CVE-2026-0257 , following the available workarounds and mitigations or upgrading to a version that includes a fix for this issue.\n\nFor pre-proof of concept release (May 29, 2026) activities, search for these IP addresses in GlobalProtect logs to look for successful login connection:\n\nSearch GlobalProtect l",
+          "action": "Vérifier l'exposition du parc et appliquer le correctif éditeur dès sa disponibilité.",
+          "image": "https://unit42.paloaltonetworks.com/wp-content/uploads/2026/06/07_Vulnerabilities_1920x900.jpg",
+          "sources": [
+            {
+              "url": "https://unit42.paloaltonetworks.com/active-exploitation-of-pan-os-cve-2026-0257/",
+              "label": "Unit 42"
+            }
+          ],
+          "url": "https://unit42.paloaltonetworks.com/active-exploitation-of-pan-os-cve-2026-0257/",
+          "pubDate": "2026-10-19T22:35:42.000Z"
+        },
+        {
+          "title": "Drupal Warns of Fast Exploitation Risk for Critical Core RCE Flaw",
+          "cve": null,
+          "severity": "critical",
+          "score": 49,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Vulnérabilité critique affectant Drupal.\n\nDrupal has announced patches for two critical-severity remote code execution vulnerabilities in the Entity List and Field UI modules.\n\nCritical flaws impact the Entity List and Field UI modules, and exploit paths exist with contributed modules.\n\nSubscribe to the SecurityWeek Email Briefing for the latest cybersecurity threats, trends, and expert insights.\n\nSubscribe to the SecurityWeek Email Briefing to stay informed on the latest threats, trends, and tech…",
+          "detail": "Vulnérabilité critique affectant Drupal.\n\nDrupal has announced patches for two critical-severity remote code execution vulnerabilities in the Entity List and Field UI modules.\n\nCritical flaws impact the Entity List and Field UI modules, and exploit paths exist with contributed modules.\n\nSubscribe to the SecurityWeek Email Briefing for the latest cybersecurity threats, trends, and expert insights.\n\nSubscribe to the SecurityWeek Email Briefing to stay informed on the latest threats, trends, and technology, along with insightful columns from industry experts.\n\nAI tools connected to Google Workspace can access millions of sensitive emails and files. Join this session to uncover your organization’s risk and learn a framework to manage AI access.\n\nJoin as we bring together CISOs, senior cybersecurity executives, practitioners, industry experts, and other security leaders to share practical experience and examine the issues shaping enterprise cybersecurity strategy.\n\nDarktrace has named Adam Towns as CFOO, Mike McGuinness as CRO, and Beth Shea as CCO.",
+          "action": "Vérifier l'exposition du parc et appliquer le correctif éditeur dès sa disponibilité.",
+          "image": "https://www.securityweek.com/wp-content/uploads/2026/05/Drupal.jpg",
+          "sources": [
+            {
+              "url": "https://www.securityweek.com/drupal-warns-of-fast-exploitation-risk-for-critical-core-rce-flaw/",
+              "label": "SecurityWeek"
+            }
+          ],
+          "url": "https://www.securityweek.com/drupal-warns-of-fast-exploitation-risk-for-critical-core-rce-flaw/",
+          "pubDate": "2026-10-19T15:47:50.000Z"
+        },
+        {
+          "title": "F5 releases out-of-band patches for critical NGINX vulnerabilities",
+          "cve": null,
+          "severity": "critical",
+          "score": 49,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Vulnérabilité critique affectant F5.\n\nF5 has released out-of-band security patches to address multiple NGINX web server flaws, including three critical-severity vulnerabilities that can let attackers execute code on vulnerable systems.\n\nBullhorn takes staffing platform offline to contain cyberattack\n\nF5 releases out-of-band patches for critical NGINX vulnerabilities\n\nMicrosoft: October Windows Server updates break Exchange sign-in, mail flow\n\nNikkei discloses third data breach in a month, 1.8M…",
+          "detail": "Vulnérabilité critique affectant F5.\n\nF5 has released out-of-band security patches to address multiple NGINX web server flaws, including three critical-severity vulnerabilities that can let attackers execute code on vulnerable systems.\n\nBullhorn takes staffing platform offline to contain cyberattack\n\nF5 releases out-of-band patches for critical NGINX vulnerabilities\n\nMicrosoft: October Windows Server updates break Exchange sign-in, mail flow\n\nNikkei discloses third data breach in a month, 1.8M records exposed\n\nWordPress SEO plugin Rank Math compromised to backdoor websites\n\nHackers hijack AOMEI update servers to secretly spread malware",
+          "action": "Vérifier l'exposition du parc et appliquer le correctif éditeur dès sa disponibilité.",
+          "image": "https://www.bleepstatic.com/content/hl-images/2026/10/19/F5-headpic.jpg",
+          "sources": [
+            {
+              "url": "https://www.bleepingcomputer.com/news/security/f5-releases-out-of-band-patches-for-critical-nginx-vulnerabilities/",
+              "label": "BleepingComputer"
+            }
+          ],
+          "url": "https://www.bleepingcomputer.com/news/security/f5-releases-out-of-band-patches-for-critical-nginx-vulnerabilities/",
+          "pubDate": "2026-10-19T13:49:24.000Z"
+        },
+        {
+          "title": "Drupal Warns Critical RCE Flaw Could Let Unauthenticated Attackers Compromise Websites",
+          "cve": "CVE-2026-108097",
+          "severity": "critical",
+          "score": 49,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Vulnérabilité critique CVE-2026-108097 affectant Drupal.\n\nDrupal has warned of a critical remote code execution vulnerability that could let attackers compromise affected websites without logging in. Tracked as CVE-2026-108097, the flaw affects the Field UI module in Drupal core and received a security risk score of 19 out of 25 in an advisory published on October 14, 2026.",
+          "detail": "Vulnérabilité critique CVE-2026-108097 affectant Drupal.\n\nDrupal has warned of a critical remote code execution vulnerability that could let attackers compromise affected websites without logging in. Tracked as CVE-2026-108097, the flaw affects the Field UI module in Drupal core and received a security risk score of 19 out of 25 in an advisory published on October 14, 2026. The key detail [&#8230;] The post Drupal Warns Critical RCE Flaw Could Let Unauthenticated Attackers Compromise Websites appeared first on GBHackers Security | #1 Globally Trusted Cyber Security News Platform .",
+          "action": "Vérifier l'exposition du parc et appliquer le correctif éditeur dès sa disponibilité.",
+          "image": "https://gbhackers.com/wp-content/uploads/2026/10/Drupal-Warns-Critical-RCE-Flaw-Could-Let-Unauthenticated-Attackers-Compromise-Websites.webp",
+          "sources": [
+            {
+              "url": "https://gbhackers.com/drupal-warns-critical-rce-flaw/",
+              "label": "GBHackers"
+            }
+          ],
+          "url": "https://gbhackers.com/drupal-warns-critical-rce-flaw/",
+          "pubDate": "2026-10-19T12:39:52.000Z"
+        },
+        {
+          "title": "Microsoft Pays Researcher $4,000 for Discovering Critical VS Code Security Bypass Flaw",
+          "cve": "CVE-2026-81376",
+          "severity": "critical",
+          "score": 49,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Vulnérabilité critique CVE-2026-81376 affectant Microsoft.\n\nMicrosoft awarded security researcher Sam Chen US$4,000 for reporting a flaw in Visual Studio Code that could let an attacker bypass Workspace Trust protections. The issue, tracked as CVE-2026-81376, affects VS Code versions earlier than 1.136.2 and has a critical CVSS score of 9.6.",
+          "detail": "Vulnérabilité critique CVE-2026-81376 affectant Microsoft.\n\nMicrosoft awarded security researcher Sam Chen US$4,000 for reporting a flaw in Visual Studio Code that could let an attacker bypass Workspace Trust protections. The issue, tracked as CVE-2026-81376, affects VS Code versions earlier than 1.136.2 and has a critical CVSS score of 9.6. Microsoft has fixed the flaw; users should update to version 1.136.2 [&#8230;] The post Microsoft Pays Researcher $4,000 for Discovering Critical VS Code Security Bypass Flaw appeared first on GBHackers Security | #1 Globally Trusted Cyber Security News Platform .",
+          "action": "Vérifier l'exposition du parc et appliquer le correctif éditeur dès sa disponibilité.",
+          "image": "https://gbhackers.com/wp-content/uploads/2026/10/Microsoft-Pays-Researcher-4000-for-Discovering-Critical-VS-Code-Security-Bypass-Flaw.webp",
+          "sources": [
+            {
+              "url": "https://gbhackers.com/critical-vs-code-security-bypass-flaw/",
+              "label": "GBHackers"
+            }
+          ],
+          "url": "https://gbhackers.com/critical-vs-code-security-bypass-flaw/",
+          "pubDate": "2026-10-19T07:49:29.000Z"
+        },
+        {
+          "title": "⚡ Weekly Recap: 98 Zero-Days, Rogue AI Agents, $100M Crypto Theft, 700 Supermarkets Hit and More",
+          "cve": null,
+          "severity": "critical",
+          "score": 46,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Vulnérabilité critique.\n\nThe worst problems don't always come with a warning. Sometimes they arrive through a service everyone trusts, a device someone bought, or a system nobody thought to check. By the time something looks wrong, the damage may already be done. This week had plenty of that. Trusted connections became a problem. Hardware wasn't as safe as it looked. Old bugs found new victims, and some systems were",
+          "detail": "Vulnérabilité critique.\n\nThe worst problems don't always come with a warning. Sometimes they arrive through a service everyone trusts, a device someone bought, or a system nobody thought to check. By the time something looks wrong, the damage may already be done. This week had plenty of that. Trusted connections became a problem. Hardware wasn't as safe as it looked. Old bugs found new victims, and some systems were",
+          "action": "Vérifier l'exposition du parc et appliquer le correctif éditeur dès sa disponibilité.",
+          "image": "https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEhTvDNJzlrpPvCifQ9zNcdkc0vjmmRwGCap_kODFlX5W_IimpUgTyObjSefO7gHjXKUMhEkIlmgnH1GbbbWna6eZWa8xcRDLXeRmYX0oSrhAgS8YXth6_T2CPXMMnZvgsf1Psq_DUB9JkjeELLHjnB2xFl9-8bM5BW19fJ1aHcOruzwKErZJkjwRBSRedBq/s1600/recap-1.jpg",
+          "sources": [
+            {
+              "url": "https://thehackernews.com/2026/10/weekly-recap-98-zero-days-rogue-ai.html",
+              "label": "The Hacker News"
+            }
+          ],
+          "url": "https://thehackernews.com/2026/10/weekly-recap-98-zero-days-rogue-ai.html",
+          "pubDate": "2026-10-19T14:14:07.000Z"
+        },
+        {
+          "title": "Multiples vulnérabilités dans Stormshield Network Security (19 octobre 2026)",
+          "cve": null,
+          "severity": "high",
+          "score": 39,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Vulnérabilité élevée affectant Linux.\n\nDe multiples vulnérabilités ont été découvertes dans Stormshield Network Security. Certaines d'entre elles permettent à un attaquant de provoquer une atteinte à l'intégrité des données, une injection de code indirecte à distance (XSS) et un contournement de la politique de sécurité. Voir en ligne : https://www.cert.ssi.gouv.fr/avis/C...",
+          "detail": "Vulnérabilité élevée affectant Linux.\n\nDe multiples vulnérabilités ont été découvertes dans Stormshield Network Security. Certaines d'entre elles permettent à un attaquant de provoquer une atteinte à l'intégrité des données, une injection de code indirecte à distance (XSS) et un contournement de la politique de sécurité. Voir en ligne : https://www.cert.ssi.gouv.fr/avis/C...",
+          "action": "Vérifier l'exposition du parc et appliquer le correctif éditeur dès sa disponibilité.",
+          "image": null,
+          "sources": [
+            {
+              "url": "https://www.globalsecuritymag.fr/multiples-vulnerabilites-dans-stormshield-network-security-19-octobre-2026.html",
+              "label": "Global Sec Mag"
+            }
+          ],
+          "url": "https://www.globalsecuritymag.fr/multiples-vulnerabilites-dans-stormshield-network-security-19-octobre-2026.html",
+          "pubDate": "2026-10-20T04:01:09.731Z"
+        },
+        {
+          "title": "Vigilance.fr - Cisco Unified Contact Center : Server-Side Request Forgery du 19/08/2026",
+          "cve": null,
+          "severity": "high",
+          "score": 39,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Vulnérabilité élevée affectant Cisco.\n\nAn attacker can trigger a Server-Side Request Forgery of Cisco Unified Contact Center, dated 19/08/2026, in order to force the server to send queries.\n\nCybersécurité Sécurité informatique Global Security Mag Magazine Online antivirus spywares offres emploi sécurité télécom réseau SOC CERT CSIRT DATA CENTERS Stockage Sauvegarde Archivage Restauration\n\nAn attacker can trigger a Server-Side Request Forgery of Cisco Unified Contact Center, dated 19/08/2026, in…",
+          "detail": "Vulnérabilité élevée affectant Cisco.\n\nAn attacker can trigger a Server-Side Request Forgery of Cisco Unified Contact Center, dated 19/08/2026, in order to force the server to send queries.\n\nCybersécurité Sécurité informatique Global Security Mag Magazine Online antivirus spywares offres emploi sécurité télécom réseau SOC CERT CSIRT DATA CENTERS Stockage Sauvegarde Archivage Restauration\n\nAn attacker can trigger a Server-Side Request Forgery of Cisco Unified Contact Center, dated 19/08/2026, in order to force the server to send queries.",
+          "action": "Vérifier l'exposition du parc et appliquer le correctif éditeur dès sa disponibilité.",
+          "image": null,
+          "sources": [
+            {
+              "url": "https://www.globalsecuritymag.fr/vigilance-fr-cisco-unified-contact-center-server-side-request-forgery-dated-19.html",
+              "label": "Global Sec Mag"
+            }
+          ],
+          "url": "https://www.globalsecuritymag.fr/vigilance-fr-cisco-unified-contact-center-server-side-request-forgery-dated-19.html",
+          "pubDate": "2026-10-20T04:01:09.728Z"
+        },
+        {
+          "title": "Security patches need patches now that attackers have AI",
+          "cve": "CVE-2026-21510",
+          "severity": "critical",
+          "score": 39,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Vulnérabilité critique CVE-2026-21510.\n\nUpdating your software only gets you so far. A scary scenario - security fixes themselves being bypassed - is becoming more common, according to AI penetration-testing startup Terra Security, which found a sharp rise in reported patch failures in 2026 after years of relatively low numbers. And no, it’s not a coincidence that AI vulnerability discovery and patching also exploded this year.",
+          "detail": "Vulnérabilité critique CVE-2026-21510.\n\nUpdating your software only gets you so far. A scary scenario - security fixes themselves being bypassed - is becoming more common, according to AI penetration-testing startup Terra Security, which found a sharp rise in reported patch failures in 2026 after years of relatively low numbers. And no, it’s not a coincidence that AI vulnerability discovery and patching also exploded this year. For example, Russian government cyberspies exploited a zero-day Windows Shell security bypass bug, CVE-2026-21510, at least a month before Microsoft patched the flaw in February. Redmond’s patch, however, was incomplete, and left a second flaw - a zero-click authentication coercion vulnerability (CVE-2026-32202) - that was also found and abused before Microsoft fixed it in April. Terra researchers reviewed every published CVE record and GitHub-reviewed advisory looking for broken fixes, and found a distinct pattern. After six years of relatively few patch bypasses, this changed in 2026: “A fix would ship, a bypass would be found, and another fix would go out.” The share of GitHub security fixes that required a follow-up advisory reporting a failed patch within 90 days remained at about 0.2 percent between 2019 and 2025. This year, this figure had jumped to 2.3 percent, according to the researchers. Meanwhile, vulnerabilities whose fixes were later bypassed were about four times as likely to ap",
+          "action": "Vérifier l'exposition du parc et appliquer le correctif éditeur dès sa disponibilité.",
+          "image": "https://image.theregister.com/5303945.jpg?imageId=5303945&x=0&y=0&cropw=100&croph=100&panox=0&panoy=0&panow=100&panoh=100&width=1200&height=683",
+          "sources": [
+            {
+              "url": "https://www.theregister.com/patches/2026/10/19/security-patches-need-patches-now-that-attackers-have-ai/5303927",
+              "label": "The Register"
+            }
+          ],
+          "url": "https://www.theregister.com/patches/2026/10/19/security-patches-need-patches-now-that-attackers-have-ai/5303927",
+          "pubDate": "2026-10-19T18:23:40.000Z"
+        },
+        {
+          "title": "Siemens Software Center Vulnerability Exploited in ClickFix Malware Attacks",
+          "cve": null,
+          "severity": "high",
+          "score": 39,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Vulnérabilité élevée affectant Windows.\n\nSiemens confirmed in-the-wild exploitation of CVE-2026-110936, a DLL side-loading flaw in Software Center, in ClickFix malware attacks.\n\nAttackers paired a genuine, signed copy of Siemens Software Center with malicious DLLs to infect Windows PCs via ClickFix lures.\n\nSubscribe to the SecurityWeek Email Briefing for the latest cybersecurity threats, trends, and expert insights.\n\nSubscribe to the SecurityWeek Email Briefing to stay informed on the latest thre…",
+          "detail": "Vulnérabilité élevée affectant Windows.\n\nSiemens confirmed in-the-wild exploitation of CVE-2026-110936, a DLL side-loading flaw in Software Center, in ClickFix malware attacks.\n\nAttackers paired a genuine, signed copy of Siemens Software Center with malicious DLLs to infect Windows PCs via ClickFix lures.\n\nSubscribe to the SecurityWeek Email Briefing for the latest cybersecurity threats, trends, and expert insights.\n\nSubscribe to the SecurityWeek Email Briefing to stay informed on the latest threats, trends, and technology, along with insightful columns from industry experts.\n\nAI tools connected to Google Workspace can access millions of sensitive emails and files. Join this session to uncover your organization’s risk and learn a framework to manage AI access.\n\nJoin as we bring together CISOs, senior cybersecurity executives, practitioners, industry experts, and other security leaders to share practical experience and examine the issues shaping enterprise cybersecurity strategy.\n\nDarktrace has named Adam Towns as CFOO, Mike McGuinness as CRO, and Beth Shea as CCO.",
+          "action": "Vérifier l'exposition du parc et appliquer le correctif éditeur dès sa disponibilité.",
+          "image": "https://www.securityweek.com/wp-content/uploads/2024/04/Siemens.jpeg",
+          "sources": [
+            {
+              "url": "https://www.securityweek.com/siemens-software-center-vulnerability-exploited-in-clickfix-malware-attacks/",
+              "label": "SecurityWeek"
+            }
+          ],
+          "url": "https://www.securityweek.com/siemens-software-center-vulnerability-exploited-in-clickfix-malware-attacks/",
+          "pubDate": "2026-10-19T18:15:39.000Z"
+        },
+        {
+          "title": "Hackers Exploit Plex2Shell Flaws to Install Crypto Miners and Linux Proxy Backdoor",
+          "cve": null,
+          "severity": "high",
+          "score": 39,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Vulnérabilité élevée affectant Linux.\n\nThreat actors have begun to exploit a chain of vulnerabilities in Plex Media Server to deploy cryptocurrency miners and reverse proxy software, a day after a proof-of-concept (PoC) went public. According to a researcher who goes by the online alias boredhackerblog, the exploitation activity involves chaining four different vulnerabilities, collectively called Plex2Shell. The vulnerabilities",
+          "detail": "Vulnérabilité élevée affectant Linux.\n\nThreat actors have begun to exploit a chain of vulnerabilities in Plex Media Server to deploy cryptocurrency miners and reverse proxy software, a day after a proof-of-concept (PoC) went public. According to a researcher who goes by the online alias boredhackerblog, the exploitation activity involves chaining four different vulnerabilities, collectively called Plex2Shell. The vulnerabilities",
+          "action": "Vérifier l'exposition du parc et appliquer le correctif éditeur dès sa disponibilité.",
+          "image": "https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEjF_Xo8mH5AxIDYx4hFrS1_uhblD0IoGUTo6bioM38mwy-whZAbcq1aaGeH1iZrS8nmk5Ow25NfX67HRXKiWFfzLc8C1A2zs2n948DwyW_NSSkowFDnEzxUofGxhNV72vTEWkgPmbO6XJyDUPwBR-lzSekj5_m8tY3JHjozUXETGEBg6GrLZrekhilW9W_R/s1600/plex-hack.jpg",
+          "sources": [
+            {
+              "url": "https://thehackernews.com/2026/10/hackers-exploit-plex2shell-flaws-to.html",
+              "label": "The Hacker News"
+            }
+          ],
+          "url": "https://thehackernews.com/2026/10/hackers-exploit-plex2shell-flaws-to.html",
+          "pubDate": "2026-10-19T17:32:13.000Z"
+        },
+        {
+          "title": "Exploited Fortinet Bug Linked to Stealthy FortiGate Implant in Telecom Hack",
+          "cve": null,
+          "severity": "high",
+          "score": 39,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Vulnérabilité élevée affectant Fortinet.\n\nState-sponsored attackers exploited Fortinet vulnerabilities to deploy PeerStitch against a telecommunications organization.\n\nThe persistent, stealthy FortiGate implant was deployed against a telecommunications organization.\n\nSubscribe to the SecurityWeek Email Briefing for the latest cybersecurity threats, trends, and expert insights.\n\nSubscribe to the SecurityWeek Email Briefing to stay informed on the latest threats, trends, and technology, along with i…",
+          "detail": "Vulnérabilité élevée affectant Fortinet.\n\nState-sponsored attackers exploited Fortinet vulnerabilities to deploy PeerStitch against a telecommunications organization.\n\nThe persistent, stealthy FortiGate implant was deployed against a telecommunications organization.\n\nSubscribe to the SecurityWeek Email Briefing for the latest cybersecurity threats, trends, and expert insights.\n\nSubscribe to the SecurityWeek Email Briefing to stay informed on the latest threats, trends, and technology, along with insightful columns from industry experts.\n\nAI tools connected to Google Workspace can access millions of sensitive emails and files. Join this session to uncover your organization’s risk and learn a framework to manage AI access.\n\nJoin as we bring together CISOs, senior cybersecurity executives, practitioners, industry experts, and other security leaders to share practical experience and examine the issues shaping enterprise cybersecurity strategy.\n\nDarktrace has named Adam Towns as CFOO, Mike McGuinness as CRO, and Beth Shea as CCO.",
+          "action": "Vérifier l'exposition du parc et appliquer le correctif éditeur dès sa disponibilité.",
+          "image": "https://www.securityweek.com/wp-content/uploads/2024/06/fortinet.jpg",
+          "sources": [
+            {
+              "url": "https://www.securityweek.com/exploited-fortinet-bug-linked-to-stealthy-fortigate-implant-in-telecom-hack/",
+              "label": "SecurityWeek"
+            }
+          ],
+          "url": "https://www.securityweek.com/exploited-fortinet-bug-linked-to-stealthy-fortigate-implant-in-telecom-hack/",
+          "pubDate": "2026-10-19T11:13:23.000Z"
+        },
+        {
+          "title": "Cloud, IA, S/4HANA… Les coûts, problème transversal pour les clients SAP",
+          "cve": null,
+          "severity": "high",
+          "score": 39,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Vulnérabilité élevée.\n\nMigrer vers S/4HANA apportera-t-il des bénéfices métier ? Chez les clients francophones de SAP*, on s&rsquo;y attend de moins en moins. En tout cas d&rsquo;après les enquêtes de satisfaction menées par leur association représentative (l&rsquo;USF). En 2022, ils avaient été 26 % à affirmer envisager S/4HANA pour cette raison. Deux ans plus tard, ils n&rsquo;étaient plus que 23 %. Cette année , ils sont 20 %.",
+          "detail": "Vulnérabilité élevée.\n\nMigrer vers S/4HANA apportera-t-il des bénéfices métier ? Chez les clients francophones de SAP*, on s&rsquo;y attend de moins en moins. En tout cas d&rsquo;après les enquêtes de satisfaction menées par leur association représentative (l&rsquo;USF). En 2022, ils avaient été 26 % à affirmer envisager S/4HANA pour cette raison. Deux ans plus tard, ils n&rsquo;étaient plus que 23 %. Cette année , ils sont 20 %. Sur l&rsquo;offre ERP Cloud , autre angle, mais même tendance. Les bénéfices métier ne constituent la motivation principale que pour 6 % des répondants. La plupart (61 %) déclarent qu&rsquo;il s&rsquo;agit avant tout de suivre la stratégie de SAP. Ils sont 67 % a dire de même à propos de S/4HANA ; 44 % invoquent l&rsquo;obsolescence des systèmes SAP existants (+ 3 points par rapport à 2024). Quoi qu&rsquo;il en soit, 31 % ont désormais achevé leur migration, contre 14 % deux ans plus tôt. En toile de fond, la fin de maintenance d&rsquo;ECC 6 en 2030. Lors de l&rsquo;enquête précédente, 48 % des organisations avaient jugé cette échéance inadaptée. Elles sont aujourd&rsquo;hui à peine moins nombreuses (45 %). L&rsquo;inquiétude sur les coûts est de plus en plus manifeste Lorsqu&rsquo;on demande aux utilisateurs SAP de citer les freins à la migration vers S/4HANA, les coûts réunissent systématiquement le plus de suffrages. Et cela va croissant : de 63 % en 2022 , on est passé à",
+          "action": "Vérifier l'exposition du parc et appliquer le correctif éditeur dès sa disponibilité.",
+          "image": "https://www.silicon.fr/wp-content/uploads/2026/05/SAP-Joule-2026-scaled.jpg",
+          "sources": [
+            {
+              "url": "https://www.silicon.fr/cloud-1370/sap-couts-usf-enquete-229733",
+              "label": "Silicon.fr"
+            }
+          ],
+          "url": "https://www.silicon.fr/cloud-1370/sap-couts-usf-enquete-229733",
+          "pubDate": "2026-10-19T09:20:49.000Z"
+        },
+        {
+          "title": "Bulletin d'actualité CERTFR-2026-ACT-044 (19 octobre 2026)",
+          "cve": null,
+          "severity": "culture",
+          "score": 12,
+          "corroboration": 1,
+          "region": "fr",
+          "body": "Vulnérabilité élevée.\n\nCe bulletin d'actualité du CERT-FR revient sur les vulnérabilités significatives de la semaine passée pour souligner leurs criticités. Il ne remplace pas l'analyse de l'ensemble des avis et alertes publiés par le CERT-FR dans le cadre d'une analyse de risques pour prioriser l'application des... Voir en ligne : https://www.cert.ssi.gouv.fr/actual...",
+          "detail": "Vulnérabilité élevée.\n\nCe bulletin d'actualité du CERT-FR revient sur les vulnérabilités significatives de la semaine passée pour souligner leurs criticités. Il ne remplace pas l'analyse de l'ensemble des avis et alertes publiés par le CERT-FR dans le cadre d'une analyse de risques pour prioriser l'application des... Voir en ligne : https://www.cert.ssi.gouv.fr/actual...",
+          "action": "Vérifier l'exposition du parc et appliquer le correctif éditeur dès sa disponibilité.",
+          "image": null,
+          "sources": [
+            {
+              "url": "https://www.globalsecuritymag.fr/bulletin-d-actualite-certfr-2026-act-044-19-octobre-2026.html",
+              "label": "Global Sec Mag"
+            }
+          ],
+          "url": "https://www.globalsecuritymag.fr/bulletin-d-actualite-certfr-2026-act-044-19-octobre-2026.html",
+          "pubDate": "2026-10-20T04:01:09.729Z"
+        }
+      ]
+    },
+    {
+      "id": "attacks",
+      "items": [
+        {
+          "title": "Feds Suspect Ransom Negotiator Ran ShinyHunters Extortion Site",
+          "cve": null,
+          "severity": "high",
+          "score": 90,
+          "corroboration": 1,
+          "region": "fr",
+          "body": "Incident de sécurité rapporté par Krebs on Security.\n\nU.S. federal investigators pursuing the ShinyHunters hacking group that recently stole highly sensitive data from the FBI have identified executives at two different ransomware negotiation firms who maintained unusually close relations with the extortion group, KrebsOnSecurity has learned. Sources close to the investigation say one of the executives in the United States even helped ShinyHunters operate a website that pressured victims into paying a ransom.",
+          "detail": "Incident de sécurité rapporté par Krebs on Security.\n\nU.S. federal investigators pursuing the ShinyHunters hacking group that recently stole highly sensitive data from the FBI have identified executives at two different ransomware negotiation firms who maintained unusually close relations with the extortion group, KrebsOnSecurity has learned. Sources close to the investigation say one of the executives in the United States even helped ShinyHunters operate a website that pressured victims into paying a ransom. Hackers aligned with ShinyHunters have claimed credit for dozens of major data breaches since 2019, when the group was primarily operated by cybercriminals living in France. As those original members were arrested or jailed one by one, control over the ShinyHunters brand eventually passed to &#8220; Rey ,&#8221; identified last year as a teenage hacker from Amman, Jordan. According to the FBI, ShinyHunters has extorted more than $70 million from victims so far this year. In late September, ShinyHunters hacked the FBI recruitment website fbijobs.gov and taunted the agency by threatening to publish the stolen files, which reportedly included medical and psychological records, Social Security numbers and home addresses, and information about each employee&#8217;s unit and specialization. The FBI jobs site hack has prompted the agency to move with uncommon speed to arrest, detain and question people who had any communications wit",
+          "action": "Surveiller les indicateurs de compromission associés et contrôler les actifs exposés.",
+          "image": null,
+          "sources": [
+            {
+              "url": "https://krebsonsecurity.com/2026/10/feds-suspect-ransom-negotiator-ran-shinyhunters-extortion-site/",
+              "label": "Krebs on Security"
+            }
+          ],
+          "url": "https://krebsonsecurity.com/2026/10/feds-suspect-ransom-negotiator-ran-shinyhunters-extortion-site/",
+          "pubDate": "2026-10-19T13:48:56.000Z"
+        },
+        {
+          "title": "ConnectWise suspends Cloud Backup service after supply chain attack",
+          "cve": null,
+          "severity": "news",
+          "score": 79,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Incident de sécurité rapporté par The Record.\n\nConnectWise initially said on Friday that it was investigating “attempts of unauthorized access associated with the ConnectWise Cloud Backup environment,” and confirmed such access on Saturday.\n\nIT management software company ConnectWise shut down several of its services this weekend after Microsoft and other cybersecurity companies warned of a supply chain attack impacting its cloud backup system.\n\nConnectWise initially said on Friday that it was investig…",
+          "detail": "Incident de sécurité rapporté par The Record.\n\nConnectWise initially said on Friday that it was investigating “attempts of unauthorized access associated with the ConnectWise Cloud Backup environment,” and confirmed such access on Saturday.\n\nIT management software company ConnectWise shut down several of its services this weekend after Microsoft and other cybersecurity companies warned of a supply chain attack impacting its cloud backup system.\n\nConnectWise initially said on Friday that it was investigating “attempts of unauthorized access associated with the ConnectWise Cloud Backup environment,” and confirmed such access on Saturday.\n\nIncident responders at cybersecurity firm Huntress said a credential belonging to ConnectWise Cloud Backup was compromised and used to gain access to the customers’ Microsoft 365 environment.\n\nMicrosoft confirmed in its own statement that threat actors “likely abused permissions previously granted by customers to the application, including highly elevated permissions like Directory.ReadWrite.All.”\n\nConnectWise Cloud Backup is a cloud-based backup and recovery service designed to help protect data in Microsoft 365 and Google Workspace. The tool needs broad access to mailboxes, OneDrive, SharePoint, Teams and other data, according to Huntress.\n\nAn attacker using stolen ConnectWise Cloud Backup credentials will inherently have wide access to any systems where the app is installed, including places where no trail of evidence will be left.",
+          "action": "Surveiller les indicateurs de compromission associés et contrôler les actifs exposés.",
+          "image": "https://cms.therecord.media/uploads/fernand_de_canne_Apfy_Uz5c5_Q0_unsplash_0367b9f48a.jpg",
+          "sources": [
+            {
+              "url": "https://therecord.media/connectwise-suspends-cloud-backup-service-supply-chain-attack",
+              "label": "The Record"
+            }
+          ],
+          "url": "https://therecord.media/connectwise-suspends-cloud-backup-service-supply-chain-attack",
+          "pubDate": "2026-10-19T19:45:00.000Z"
+        },
+        {
+          "title": "Judge denies WhatsApp’s bid to hold spyware maker in contempt for allegedly targeting users",
+          "cve": null,
+          "severity": "news",
+          "score": 78,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Incident de sécurité rapporté par The Record.\n\nWhatsApp argued that NSO Group violated a 2025 injunction against using the messaging app to spread spyware. A federal judge said WhatsApp hurt its case by not revealing enough information.\n\nA Northern California federal judge ruled that WhatsApp failed to prove a prominent spyware company violated a court injunction requiring it to stop using the messaging app’s infrastructure to mount snooping attacks on customers.\n\nThe ruling Friday by Judge Phyllis Ham…",
+          "detail": "Incident de sécurité rapporté par The Record.\n\nWhatsApp argued that NSO Group violated a 2025 injunction against using the messaging app to spread spyware. A federal judge said WhatsApp hurt its case by not revealing enough information.\n\nA Northern California federal judge ruled that WhatsApp failed to prove a prominent spyware company violated a court injunction requiring it to stop using the messaging app’s infrastructure to mount snooping attacks on customers.\n\nThe ruling Friday by Judge Phyllis Hamilton was in response to an appeal WhatsApp filed in June. The Meta-owned messaging service wanted the judge to hold the NSO Group — maker of the powerful zero-click Pegasus spyware deployed against 1,400 app users in 2019 — in contempt for what WhatsApp called spearphishing attacks against individuals.\n\nDespite winning the overall case, however, WhatsApp failed to convince Hamilton that NSO had violated the injunction because it did not provide enough “clear and convincing evidence” of the alleged misbehavior, the judge said.\n\n“In the court’s view, plaintiffs took a calculated risk in choosing to limit the level of detail in their supporting evidence,” Hamilton’s opinion said.\n\nWhatsApp put forward evidence that solely relied on the testimony of Andrew Blaich, a security engineer investigator on Meta’s threat intelligence team.\n\nBlaich submitted a declaration that alleged he found 23 new Whatsapp accounts carrying",
+          "action": "Surveiller les indicateurs de compromission associés et contrôler les actifs exposés.",
+          "image": "https://cms.therecord.media/uploads/pexels_pixabay_267392_ca335be18c.jpg",
+          "sources": [
+            {
+              "url": "https://therecord.media/whatsapp-denied-appeal-alleged-nso-group-violation-injunction",
+              "label": "The Record"
+            }
+          ],
+          "url": "https://therecord.media/whatsapp-denied-appeal-alleged-nso-group-violation-injunction",
+          "pubDate": "2026-10-19T19:49:00.000Z"
+        },
+        {
+          "title": "Two more Serbian opposition figures targeted with spyware, researchers say",
+          "cve": null,
+          "severity": "news",
+          "score": 78,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Incident de sécurité rapporté par The Record.\n\nA phone belonging to the rector of the University of Belgrade was discovered to have been infected with Pegasus spyware, the latest in a series of such discoveries in the lead-up to Serbia's national elections.\n\nAnother Serbian opposition leader’s phone was discovered to have been infected with powerful spyware, the latest in a series of such discoveries in the lead-up to national elections next week.\n\nThe digital forensics research institute the Citizen L…",
+          "detail": "Incident de sécurité rapporté par The Record.\n\nA phone belonging to the rector of the University of Belgrade was discovered to have been infected with Pegasus spyware, the latest in a series of such discoveries in the lead-up to Serbia's national elections.\n\nAnother Serbian opposition leader’s phone was discovered to have been infected with powerful spyware, the latest in a series of such discoveries in the lead-up to national elections next week.\n\nThe digital forensics research institute the Citizen Lab confirmed on Monday that University of Belgrade Rector Vladan Đokić’s phone was infected with Pegasus spyware sometime this year. Đokić has been a vocal supporter of a student protest movement calling for the permanent removal from government of Serbia’s former president, Aleksandar Vučić.\n\nVučić, who left the presidency just weeks ago due to term limits, is running for prime minister in elections to be held on October 25 and is widely expected to wrest back control of the country if reelected to a role he previously held from 2014-2017.\n\nA second suspected victim’s device is still being analyzed by the Citizen Lab. Rade Bajić, a prosecutor who investigated alleged corruption involving a Vučić effort to sell a protected historic building to U.S. President Donald Trump’s son-in-law Jared Kushner, received an Apple threat notification in August, according to a press release from Serbia’s SHARE Foundation.\n\nApple notifications are widely considered high-confidence indicators of commercial spyware targeting.\n\nThe Serbian authorities have been using NSO Group’s Pegasus against regime opponents for some time. In 2026, the SHARE Foundation, along with the Citizen Lab and Amnesty International, have so far found that at least 15 people have been targeted with advanced spyware,",
+          "action": "Surveiller les indicateurs de compromission associés et contrôler les actifs exposés.",
+          "image": "https://cms.therecord.media/uploads/Vladan_Dokic_PP_413d939ccc.jpg",
+          "sources": [
+            {
+              "url": "https://therecord.media/serbia-spyware-pegasus-elections",
+              "label": "The Record"
+            }
+          ],
+          "url": "https://therecord.media/serbia-spyware-pegasus-elections",
+          "pubDate": "2026-10-19T18:45:00.000Z"
+        },
+        {
+          "title": "Nikkei discloses third data breach in a month, 1.8M records exposed",
+          "cve": null,
+          "severity": "news",
+          "score": 77,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Incident de sécurité rapporté par BleepingComputer.\n\nNikkei Inc. disclosed a new data breach, the third in about a month, that exposed 1.83 million personal information records.\n\nBullhorn takes staffing platform offline to contain cyberattack\n\nF5 releases out-of-band patches for critical NGINX vulnerabilities\n\nMicrosoft: October Windows Server updates break Exchange sign-in, mail flow\n\nNikkei discloses third data breach in a month, 1.8M records exposed\n\nWordPress SEO plugin Rank Math compromised to backdoor…",
+          "detail": "Incident de sécurité rapporté par BleepingComputer.\n\nNikkei Inc. disclosed a new data breach, the third in about a month, that exposed 1.83 million personal information records.\n\nBullhorn takes staffing platform offline to contain cyberattack\n\nF5 releases out-of-band patches for critical NGINX vulnerabilities\n\nMicrosoft: October Windows Server updates break Exchange sign-in, mail flow\n\nNikkei discloses third data breach in a month, 1.8M records exposed\n\nWordPress SEO plugin Rank Math compromised to backdoor websites\n\nHackers hijack AOMEI update servers to secretly spread malware",
+          "action": "Surveiller les indicateurs de compromission associés et contrôler les actifs exposés.",
+          "image": "https://www.bleepstatic.com/content/hl-images/2026/10/19/nikkei.jpg",
+          "sources": [
+            {
+              "url": "https://www.bleepingcomputer.com/news/security/nikkei-discloses-third-data-breach-in-a-month-18m-records-exposed/",
+              "label": "BleepingComputer"
+            }
+          ],
+          "url": "https://www.bleepingcomputer.com/news/security/nikkei-discloses-third-data-breach-in-a-month-18m-records-exposed/",
+          "pubDate": "2026-10-19T21:49:48.000Z"
+        },
+        {
+          "title": "WordPress SEO plugin Rank Math compromised to backdoor websites",
+          "cve": null,
+          "severity": "news",
+          "score": 77,
+          "corroboration": 3,
+          "region": "intl",
+          "body": "Incident de sécurité rapporté par BleepingComputer.\n\nSome downloads of the Rank Math PRO WordPress plugin from the vendor's official website carried malware that planted hidden backdoors in a supply-chain attack last week.\n\nBullhorn takes staffing platform offline to contain cyberattack\n\nF5 releases out-of-band patches for critical NGINX vulnerabilities\n\nMicrosoft: October Windows Server updates break Exchange sign-in, mail flow\n\nNikkei discloses third data breach in a month, 1.8M records exposed\n\nWordPress…",
+          "detail": "Incident de sécurité rapporté par BleepingComputer.\n\nSome downloads of the Rank Math PRO WordPress plugin from the vendor's official website carried malware that planted hidden backdoors in a supply-chain attack last week.\n\nBullhorn takes staffing platform offline to contain cyberattack\n\nF5 releases out-of-band patches for critical NGINX vulnerabilities\n\nMicrosoft: October Windows Server updates break Exchange sign-in, mail flow\n\nNikkei discloses third data breach in a month, 1.8M records exposed\n\nWordPress SEO plugin Rank Math compromised to backdoor websites\n\nHackers hijack AOMEI update servers to secretly spread malware",
+          "action": "Surveiller les indicateurs de compromission associés et contrôler les actifs exposés.",
+          "image": "https://www.bleepstatic.com/content/hl-images/2026/06/18/WordPress.jpg",
+          "sources": [
+            {
+              "url": "https://www.bleepingcomputer.com/news/security/wordpress-seo-plugin-rank-math-compromised-to-backdoor-websites/",
+              "label": "BleepingComputer"
+            },
+            {
+              "url": "https://thehackernews.com/2026/10/popular-wordpress-seo-plugin-rank-math.html",
+              "label": "The Hacker News"
+            },
+            {
+              "url": "https://www.securityweek.com/rank-math-pro-wordpress-plugin-compromised-in-supply-chain-attack/",
+              "label": "SecurityWeek"
+            }
+          ],
+          "url": "https://www.bleepingcomputer.com/news/security/wordpress-seo-plugin-rank-math-compromised-to-backdoor-websites/",
+          "pubDate": "2026-10-19T21:24:51.000Z"
+        },
+        {
+          "title": "GhostAction Attackers Plant Credential Stealer Disguised as Font in 94 GitHub Repositories",
+          "cve": null,
+          "severity": "high",
+          "score": 68,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Incident de sécurité rapporté par The Hacker News.\n\nThe threat actor behind the GhostAction supply chain attack has expanded beyond injecting malicious GitHub Actions workflows into compromised projects to phish open-source developers and deliver a stealer malware disguised within a fake font file. The latest evolution, detailed by OpenSourceMalware, signals that the attackers are actively refining their modus operandi in response to steps",
+          "detail": "Incident de sécurité rapporté par The Hacker News.\n\nThe threat actor behind the GhostAction supply chain attack has expanded beyond injecting malicious GitHub Actions workflows into compromised projects to phish open-source developers and deliver a stealer malware disguised within a fake font file. The latest evolution, detailed by OpenSourceMalware, signals that the attackers are actively refining their modus operandi in response to steps",
+          "action": "Surveiller les indicateurs de compromission associés et contrôler les actifs exposés.",
+          "image": "https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEhtAKfaW5dHhlv9lpzzAju1Cm_EjO4wOkhGQEMspSKCVFUCA_eaanAXGHkb-Dv3c9zSXWHW45I50Fp_bqX6ydaNlPWixkd39bl4IOeYv8xQ0oviE4d6SZcQmQ27ztf-tVV7BozEDeFYi2Fde0LpJAJ9gTHUGSOvc46MtgawesAd5-wljApeBpLyUYnczZnR/s1600/git-font.jpg",
+          "sources": [
+            {
+              "url": "https://thehackernews.com/2026/10/ghostaction-attackers-plant-credential.html",
+              "label": "The Hacker News"
+            }
+          ],
+          "url": "https://thehackernews.com/2026/10/ghostaction-attackers-plant-credential.html",
+          "pubDate": "2026-10-19T13:05:45.000Z"
+        },
+        {
+          "title": "Ahold Delhaize confirms 'malicious actions' behind cyber outages affecting grocery brands",
+          "cve": null,
+          "severity": "high",
+          "score": 66,
+          "corroboration": 2,
+          "region": "intl",
+          "body": "Incident de sécurité rapporté par The Register.\n\nSecond security snafu in two years\n\nDutch grocery giant Ahold Delhaize, which operates US supermarket chains Food Lion, Giant Food, and Stop & Shop, said it proactively took IT systems offline following a cyberattack, affecting most of its US and European brands.\n\nThe multinational chain originally disclosed the incident on October 12.",
+          "detail": "Incident de sécurité rapporté par The Register.\n\nSecond security snafu in two years\n\nDutch grocery giant Ahold Delhaize, which operates US supermarket chains Food Lion, Giant Food, and Stop & Shop, said it proactively took IT systems offline following a cyberattack, affecting most of its US and European brands.\n\nThe multinational chain originally disclosed the incident on October 12. “Ahold Delhaize is experiencing a security issue within its network,” it said at the time, adding that security teams, working to mitigate the issues, took “some” IT systems offline.\n\nOn Monday, the company confirmed that it proactively took certain IT systems, including websites and apps, offline, affecting most of its brands, and said that “malicious actions of others” caused the security issue.\n\n“Taking systems offline to help protect them was a precautionary measure that affected most of our brands across Europe and the United States,” Frans Muller, president and CEO of Ahold Delhaize, said in a Monday statement. “The investigation to date confirms this was the right decision.”\n\nAt this time, all of the physical stores remain open, and the investigation hasn’t uncovered any evidence to suggest the miscreants stole any “sensitive customer, associate, or partner data,” the disclosure said.\n\nThe company last week notified the Dutch National Cyber Security Centre about the digital intruders, and on Monday filed a report with the Dutch police, according to the statement.",
+          "action": "Surveiller les indicateurs de compromission associés et contrôler les actifs exposés.",
+          "image": "https://image.theregister.com/249284.jpg?imageId=249284&x=0&y=0&cropw=100&croph=100&panox=0&panoy=0&panow=100&panoh=100&width=1200&height=683",
+          "sources": [
+            {
+              "url": "https://www.theregister.com/security/2026/10/19/grocery-giant-ahold-delhaize-confirms-cyberattack-forced-us-and-european-systems-offline/5303970",
+              "label": "The Register"
+            },
+            {
+              "url": "https://therecord.media/ahold-delhaize-cyberattack-grocery",
+              "label": "The Record"
+            }
+          ],
+          "url": "https://www.theregister.com/security/2026/10/19/grocery-giant-ahold-delhaize-confirms-cyberattack-forced-us-and-european-systems-offline/5303970",
+          "pubDate": "2026-10-19T20:26:21.000Z"
+        },
+        {
+          "title": "Fake Web3 Accelerator Uses npm Packages to Spread Malware and Hijack AI Agent Traffic",
+          "cve": null,
+          "severity": "news",
+          "score": 64,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Incident de sécurité rapporté par The Hacker News.\n\nA fake Web3 accelerator has been observed pushing information stealers and backdoors to Windows and macOS systems using malicious npm packages under the pretext of offering free artificial intelligence (AI) credits for Anthropic Claude and Google Gemini, coding tools, and security audits. \"The tools delivered information-stealing malware and backdoors for macOS and Windows machines,\" Elastic",
+          "detail": "Incident de sécurité rapporté par The Hacker News.\n\nA fake Web3 accelerator has been observed pushing information stealers and backdoors to Windows and macOS systems using malicious npm packages under the pretext of offering free artificial intelligence (AI) credits for Anthropic Claude and Google Gemini, coding tools, and security audits. \"The tools delivered information-stealing malware and backdoors for macOS and Windows machines,\" Elastic",
+          "action": "Surveiller les indicateurs de compromission associés et contrôler les actifs exposés.",
+          "image": "https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEgAw5A6yrE0NkMreq5lBZaS4ndrFrorAZaVrjJ218aS1RcJoQVYOJOVejIn8rBH5RHIIZ_cpvtzHnQMwMMWVOFbpfcs01tolLCmlYAY3qy-onWaOUQhzB6H2VjlWaUgBCL_0vAjRB7VmumClnaiIxDds6j9wD3lt9vD-kptWl6bUft29O6Z0cTNgBQV6t76/s1600/npm-apex.jpg",
+          "sources": [
+            {
+              "url": "https://thehackernews.com/2026/10/fake-web3-accelerator-uses-npm-packages.html",
+              "label": "The Hacker News"
+            }
+          ],
+          "url": "https://thehackernews.com/2026/10/fake-web3-accelerator-uses-npm-packages.html",
+          "pubDate": "2026-10-19T10:06:40.000Z"
+        },
+        {
+          "title": "Hackers hijack AOMEI update servers to secretly spread malware",
+          "cve": null,
+          "severity": "news",
+          "score": 63,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Incident de sécurité rapporté par BleepingComputer.\n\nHackers reportedly compromised AOMEI's servers to distribute malware through a built-in promotional feature in its backup software, briefly tampering with configuration files before restoring them to their original state to hide the attacks.a\n\nBullhorn takes staffing platform offline to contain cyberattack\n\nF5 releases out-of-band patches for critical NGINX vulnerabilities\n\nMicrosoft: October Windows Server updates break Exchange sign-in, mail flow\n\nNikkei…",
+          "detail": "Incident de sécurité rapporté par BleepingComputer.\n\nHackers reportedly compromised AOMEI's servers to distribute malware through a built-in promotional feature in its backup software, briefly tampering with configuration files before restoring them to their original state to hide the attacks.a\n\nBullhorn takes staffing platform offline to contain cyberattack\n\nF5 releases out-of-band patches for critical NGINX vulnerabilities\n\nMicrosoft: October Windows Server updates break Exchange sign-in, mail flow\n\nNikkei discloses third data breach in a month, 1.8M records exposed\n\nWordPress SEO plugin Rank Math compromised to backdoor websites\n\nHackers hijack AOMEI update servers to secretly spread malware",
+          "action": "Surveiller les indicateurs de compromission associés et contrôler les actifs exposés.",
+          "image": "https://www.bleepstatic.com/content/hl-images/2026/10/19/backupper-supply-chain-attack.jpg",
+          "sources": [
+            {
+              "url": "https://www.bleepingcomputer.com/news/security/hackers-hijack-aomei-update-servers-to-secretly-spread-malware/",
+              "label": "BleepingComputer"
+            }
+          ],
+          "url": "https://www.bleepingcomputer.com/news/security/hackers-hijack-aomei-update-servers-to-secretly-spread-malware/",
+          "pubDate": "2026-10-19T19:40:58.000Z"
+        },
+        {
+          "title": "Bullhorn takes staffing platform offline to contain cyberattack",
+          "cve": null,
+          "severity": "news",
+          "score": 63,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Incident de sécurité rapporté par BleepingComputer.\n\nStaffing software company Bullhorn has disabled access to its platform to contain a cyberattack that caused a system-wide outage.\n\nBullhorn takes staffing platform offline to contain cyberattack\n\nF5 releases out-of-band patches for critical NGINX vulnerabilities\n\nMicrosoft: October Windows Server updates break Exchange sign-in, mail flow\n\nNikkei discloses third data breach in a month, 1.8M records exposed\n\nWordPress SEO plugin Rank Math compromised to back…",
+          "detail": "Incident de sécurité rapporté par BleepingComputer.\n\nStaffing software company Bullhorn has disabled access to its platform to contain a cyberattack that caused a system-wide outage.\n\nBullhorn takes staffing platform offline to contain cyberattack\n\nF5 releases out-of-band patches for critical NGINX vulnerabilities\n\nMicrosoft: October Windows Server updates break Exchange sign-in, mail flow\n\nNikkei discloses third data breach in a month, 1.8M records exposed\n\nWordPress SEO plugin Rank Math compromised to backdoor websites\n\nHackers hijack AOMEI update servers to secretly spread malware",
+          "action": "Surveiller les indicateurs de compromission associés et contrôler les actifs exposés.",
+          "image": "https://www.bleepstatic.com/content/hl-images/2026/10/19/bullhorn.jpg",
+          "sources": [
+            {
+              "url": "https://www.bleepingcomputer.com/news/security/bullhorn-takes-staffing-platform-offline-to-contain-cyberattack/",
+              "label": "BleepingComputer"
+            }
+          ],
+          "url": "https://www.bleepingcomputer.com/news/security/bullhorn-takes-staffing-platform-offline-to-contain-cyberattack/",
+          "pubDate": "2026-10-19T18:51:13.000Z"
+        },
+        {
+          "title": "OpenCode hack exposes API keys amid AI distillation attacks",
+          "cve": null,
+          "severity": "high",
+          "score": 63,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Incident de sécurité rapporté par BleepingComputer.\n\nThe open-source AI coding project OpenCode has notified a small number of users that API keys they used with external providers were exposed in a security breach.\n\nBullhorn takes staffing platform offline to contain cyberattack\n\nF5 releases out-of-band patches for critical NGINX vulnerabilities\n\nMicrosoft: October Windows Server updates break Exchange sign-in, mail flow\n\nNikkei discloses third data breach in a month, 1.8M records exposed\n\nWordPress SEO plu…",
+          "detail": "Incident de sécurité rapporté par BleepingComputer.\n\nThe open-source AI coding project OpenCode has notified a small number of users that API keys they used with external providers were exposed in a security breach.\n\nBullhorn takes staffing platform offline to contain cyberattack\n\nF5 releases out-of-band patches for critical NGINX vulnerabilities\n\nMicrosoft: October Windows Server updates break Exchange sign-in, mail flow\n\nNikkei discloses third data breach in a month, 1.8M records exposed\n\nWordPress SEO plugin Rank Math compromised to backdoor websites\n\nHackers hijack AOMEI update servers to secretly spread malware",
+          "action": "Surveiller les indicateurs de compromission associés et contrôler les actifs exposés.",
+          "image": "https://www.bleepstatic.com/content/hl-images/2026/10/19/key.jpg",
+          "sources": [
+            {
+              "url": "https://www.bleepingcomputer.com/news/security/opencode-hack-exposes-api-keys-amid-ai-distillation-attacks/",
+              "label": "BleepingComputer"
+            }
+          ],
+          "url": "https://www.bleepingcomputer.com/news/security/opencode-hack-exposes-api-keys-amid-ai-distillation-attacks/",
+          "pubDate": "2026-10-19T17:27:15.000Z"
+        },
+        {
+          "title": "One Compromised Login Exposed Millions of California Students’ Records",
+          "cve": null,
+          "severity": "news",
+          "score": 63,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Incident de sécurité rapporté par SecurityWeek.\n\nA data breach at testing contractor ETS exposed millions of California student records after hackers accessed an SFTP server.\n\nIntruders used compromised credentials to access an ETS SFTP server, copying records of California students back to 2006.\n\nSubscribe to the SecurityWeek Email Briefing for the latest cybersecurity threats, trends, and expert insights.\n\nSubscribe to the SecurityWeek Email Briefing to stay informed on the latest threats, trends, and…",
+          "detail": "Incident de sécurité rapporté par SecurityWeek.\n\nA data breach at testing contractor ETS exposed millions of California student records after hackers accessed an SFTP server.\n\nIntruders used compromised credentials to access an ETS SFTP server, copying records of California students back to 2006.\n\nSubscribe to the SecurityWeek Email Briefing for the latest cybersecurity threats, trends, and expert insights.\n\nSubscribe to the SecurityWeek Email Briefing to stay informed on the latest threats, trends, and technology, along with insightful columns from industry experts.\n\nAI tools connected to Google Workspace can access millions of sensitive emails and files. Join this session to uncover your organization’s risk and learn a framework to manage AI access.\n\nJoin as we bring together CISOs, senior cybersecurity executives, practitioners, industry experts, and other security leaders to share practical experience and examine the issues shaping enterprise cybersecurity strategy.\n\nDarktrace has named Adam Towns as CFOO, Mike McGuinness as CRO, and Beth Shea as CCO.",
+          "action": "Surveiller les indicateurs de compromission associés et contrôler les actifs exposés.",
+          "image": "https://www.securityweek.com/wp-content/uploads/2025/03/school-education.jpeg",
+          "sources": [
+            {
+              "url": "https://www.securityweek.com/one-compromised-login-exposed-millions-of-california-students-records/",
+              "label": "SecurityWeek"
+            }
+          ],
+          "url": "https://www.securityweek.com/one-compromised-login-exposed-millions-of-california-students-records/",
+          "pubDate": "2026-10-19T11:55:50.000Z"
+        },
+        {
+          "title": "Conduent Agrees to Pay $80m to Settle Data Breach Class Action",
+          "cve": null,
+          "severity": "news",
+          "score": 62,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Incident de sécurité rapporté par Infosecurity Mag.\n\nThe 2024 cyber incident affected the healthcare data of 62 million people, who launched a class action lawsuit against the business services firm\n\nThe money will be divided up into covering material losses experienced by individual claimants whose personal data was breached, the costs of credit monitoring and medical data monitoring services for each of the claimants and the plaintiff’s legal fees.\n\nA filing submitted to the US District Court for the Distr…",
+          "detail": "Incident de sécurité rapporté par Infosecurity Mag.\n\nThe 2024 cyber incident affected the healthcare data of 62 million people, who launched a class action lawsuit against the business services firm\n\nThe money will be divided up into covering material losses experienced by individual claimants whose personal data was breached, the costs of credit monitoring and medical data monitoring services for each of the claimants and the plaintiff’s legal fees.\n\nA filing submitted to the US District Court for the District of New Jersey on October 16, 2026 explained that the agreement divides the claimants into two subclasses.\n\nOne consists of around 40 million individuals whose stolen data was stored in complex backup files that were not readily accessible to third party actors. The second relates to 22 million individuals who stolen data was stored in files that were readily accessible.\n\nIf the settlement receives final approval from the Court, Conduent will no longer be liable for civil claims relating to the cyber incident.\n\nThe business services firm has also agreed to strengthen its data security practices as part of the settlement.\n\nThe settlement agreement was confirmed by Conduent in an 8-K filing form submitted to the US Securities and Exchange Commission (SEC) on October 16.",
+          "action": "Surveiller les indicateurs de compromission associés et contrôler les actifs exposés.",
+          "image": "https://assets.infosecurity-magazine.com/webpage/og/abe2a45a-b447-4641-b846-88ce976b3e5d.jpeg",
+          "sources": [
+            {
+              "url": "https://www.infosecurity-magazine.com/news/conduent-settle-data-breach-action/",
+              "label": "Infosecurity Mag"
+            }
+          ],
+          "url": "https://www.infosecurity-magazine.com/news/conduent-settle-data-breach-action/",
+          "pubDate": "2026-10-19T14:15:00.000Z"
+        },
+        {
+          "title": "Froggys Fog — rançongiciel N0n (États-Unis)",
+          "cve": null,
+          "severity": "news",
+          "score": 61,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Incident de sécurité rapporté par ransomware.live.\n\nVictime revendiquée par le groupe de rançongiciel N0n. Pays : États-Unis. Secteur : Retail & E-Commerce. special-effects fog fluid manufacturer and distributor (order management and shipping operations) · Tennessee, USA | The complete shipping and order management database of a specialty fluid manufacturer, including full nightly backup copies from January 2026 to present; Employee account directory for the company domain; Shipping software and remote acce…",
+          "detail": "Incident de sécurité rapporté par ransomware.live.\n\nVictime revendiquée par le groupe de rançongiciel N0n.\n\nPays : États-Unis.\n\nSecteur : Retail & E-Commerce.\n\nspecial-effects fog fluid manufacturer and distributor (order management and shipping operations) · Tennessee, USA | The complete shipping and order management database of a specialty fluid manufacturer, including full nightly backup copies from January 2026 to present; Employee account directory for the company domain; Shipping software and remote access configuration for their warehouse servers | [NOT PAID — EXPOSED]",
+          "action": "Surveiller les indicateurs de compromission associés et contrôler les actifs exposés.",
+          "image": "https://images.ransomware.live/victims/6c81942f08bcb6f9bc854da3273c6f67.png",
+          "sources": [
+            {
+              "url": "https://www.ransomware.live/id/Um9zZW5iZXJnICYgUGl0dGluc2t5QEdsb2JhbCBTZWNyZXQgR3JvdXA=",
+              "label": "ransomware.live"
+            }
+          ],
+          "url": "https://www.ransomware.live/id/Um9zZW5iZXJnICYgUGl0dGluc2t5QEdsb2JhbCBTZWNyZXQgR3JvdXA=",
+          "pubDate": "2026-10-19T22:22:33.844Z"
+        },
+        {
+          "title": "Cybersécurité : Le Creusot accueille le Forum INCYBER des Territoires du 21 au 23 octobre 2026",
+          "cve": null,
+          "severity": "critical",
+          "score": 54,
+          "corroboration": 1,
+          "region": "fr",
+          "body": "Incident de sécurité rapporté par Global Sec Mag.\n\nLa Communauté Urbaine du Creusot Montceau, territoire historique de la métallurgie et de l'industrie, accueillera du 21 au 23 octobre 2026 le Forum INCYBER des Territoires, en présence d'Anne Le Hénanff, Ministre déléguée chargée de l'Intelligence artificielle et du Numérique.",
+          "detail": "Incident de sécurité rapporté par Global Sec Mag.\n\nLa Communauté Urbaine du Creusot Montceau, territoire historique de la métallurgie et de l'industrie, accueillera du 21 au 23 octobre 2026 le Forum INCYBER des Territoires, en présence d'Anne Le Hénanff, Ministre déléguée chargée de l'Intelligence artificielle et du Numérique. Cet événement réunira 250 décideurs, RSSI, DSI, élus et industriels autour d'un objectif : renforcer la cybersécurité industrielle et accompagner la transformation numérique des territoires. La journée professionnelle du 22 octobre s'ouvrira sur un regard prospectif sur l'IA, porté par Flavien Chervet, auteur de Cyberarme ( Prix du livre Cyber, Forum INCYBER 2026 ). Au fil de la journée, plusieurs temps forts animeront les débats : l'IA, accélérateur de défense et arme de disruption ; le Wallet d'identité numérique introduit par le règlement européen eIDAS 2.0 ; la mutualisation de la cybersécurité avec des spécialistes de l'ANSSI et Jérôme Notin, Directeur Général de Cybermalveillance, qui présentera le service public d'assistance 17Cyber.gouv.fr ; ou encore la cybersécurité des infrastructures critiques, avec notamment Jean-Marc Autret, ( CISO OT Groupe EDF ). La Communauté Urbaine Creusot Montceau illustrera également comment le numérique peut devenir un levier d'attractivité et de développement territorial. « Solitaires ou solidaires ? Face à des menaces cyber de plus en plus fréquentes et violentes,",
+          "action": "Surveiller les indicateurs de compromission associés et contrôler les actifs exposés.",
+          "image": "https://www.globalsecuritymag.fr/local/cache-vignettes/L160xH84/9483a5dec70ca7964222425f46821b-586f3.jpg",
+          "sources": [
+            {
+              "url": "https://www.globalsecuritymag.fr/cybersecurite-le-creusot-accueille-le-forum-incyber-des-territoires-du-21-au-23.html",
+              "label": "Global Sec Mag"
+            }
+          ],
+          "url": "https://www.globalsecuritymag.fr/cybersecurite-le-creusot-accueille-le-forum-incyber-des-territoires-du-21-au-23.html",
+          "pubDate": "2026-10-20T04:01:09.729Z"
+        }
+      ]
+    },
+    {
+      "id": "culture",
+      "items": [
+        {
+          "title": "Russian social media giant VK faces disruptions after data center drone strike",
+          "cve": null,
+          "severity": "culture",
+          "score": 70,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Signal de veille — The Record.\n\nThe disruptions began Sunday, when users complained of difficulties loading news feeds, playing music and accessing other features of VK's platforms.\n\nThousands of Russian users reported problems accessing the country's largest social network, VKontakte, and its music streaming service over the weekend following a Ukrainian drone strike on a data center near St.",
+          "detail": "Signal de veille — The Record.\n\nThe disruptions began Sunday, when users complained of difficulties loading news feeds, playing music and accessing other features of VK's platforms.\n\nThousands of Russian users reported problems accessing the country's largest social network, VKontakte, and its music streaming service over the weekend following a Ukrainian drone strike on a data center near St. Petersburg.\n\nThe disruptions began Sunday, when users complained of difficulties loading news feeds, playing music and accessing other features of VK's platforms.\n\nVK confirmed that its facility in the Leningrad region was targeted in the overnight attack on October 18 but denied that the incident had affected its services, saying they remained available as usual. The company did not disclose the extent of the damage or how many servers were affected.\n\nIndependent monitoring services, however, recorded a surge in user complaints and a decline in VK's network connectivity. It was not immediately clear whether the disruptions were caused by the strike.\n\nOutage-tracking website Downdetector received approximately 6,600 reports of problems with VK's services on Sunday, including about 600 within a single hour. Another Russian monitoring service, Sboy , registered roughly 2,100 complaints. Internet monitoring organization NetBlocks reported that connectivity associated with VK had fallen to 56% of normal levels during the incident.\n\nBy Monday, the number of complaints had declined, according to Russian monitoring service Detector404 , although users continued to report problems uploading photos and videos, streaming music, logging into their accounts and sending messages.",
+          "action": null,
+          "image": "https://cms.therecord.media/uploads/vkonkate_1_f20f84f5e3.jpg",
+          "sources": [
+            {
+              "url": "https://therecord.media/russian-social-media-giant-vk-faces-disruptions-drone-strike-data-center",
+              "label": "The Record"
+            }
+          ],
+          "url": "https://therecord.media/russian-social-media-giant-vk-faces-disruptions-drone-strike-data-center",
+          "pubDate": "2026-10-19T15:55:00.000Z"
+        },
+        {
+          "title": "Microsoft: October Windows Server updates break Exchange sign-in, mail flow",
+          "cve": null,
+          "severity": "high",
+          "score": 63,
+          "corroboration": 4,
+          "region": "intl",
+          "body": "Signal de veille — Global Sec Mag.\n\nAn attacker can bypass restrictions of Microsoft Malware Protection Engine, via ShieldBreak, in order to escalate his privileges.\n\nCybersécurité Sécurité informatique Global Security Mag Magazine Online antivirus spywares offres emploi sécurité télécom réseau SOC CERT CSIRT DATA CENTERS Stockage Sauvegarde Archivage Restauration\n\nAn attacker can bypass restrictions of Microsoft Malware Protection Engine, via ShieldBreak, in order to escalate his privileges…",
+          "detail": "Signal de veille — Global Sec Mag.\n\nAn attacker can bypass restrictions of Microsoft Malware Protection Engine, via ShieldBreak, in order to escalate his privileges.\n\nCybersécurité Sécurité informatique Global Security Mag Magazine Online antivirus spywares offres emploi sécurité télécom réseau SOC CERT CSIRT DATA CENTERS Stockage Sauvegarde Archivage Restauration\n\nAn attacker can bypass restrictions of Microsoft Malware Protection Engine, via ShieldBreak, in order to escalate his privileges.",
+          "action": null,
+          "image": null,
+          "sources": [
+            {
+              "url": "https://www.globalsecuritymag.fr/vigilance-fr-microsoft-malware-protection-engine-privilege-escalation-via.html",
+              "label": "Global Sec Mag"
+            },
+            {
+              "url": "https://www.it-connect.fr/exchange-server-mises-a-jour-windows-server-owa-endpoint-mapper/",
+              "label": "IT-Connect"
+            },
+            {
+              "url": "https://gbhackers.com/researchers-hack-snowflake/",
+              "label": "GBHackers"
+            },
+            {
+              "url": "https://www.bleepingcomputer.com/news/microsoft/microsoft-october-windows-server-updates-cause-exchange-issues/",
+              "label": "BleepingComputer"
+            }
+          ],
+          "url": "https://www.globalsecuritymag.fr/vigilance-fr-microsoft-malware-protection-engine-privilege-escalation-via.html",
+          "pubDate": "2026-10-20T04:01:09.731Z"
+        },
+        {
+          "title": "Microsoft fixes game, app crashes caused by recent Windows update",
+          "cve": null,
+          "severity": "culture",
+          "score": 63,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Signal de veille — BleepingComputer.\n\nMicrosoft has resolved a bug that caused games and apps using AC-3 (Dolby Digital) audio decoding to crash after installing the September 2026 Windows 11 preview update (KB5124010).\n\nBullhorn takes staffing platform offline to contain cyberattack\n\nF5 releases out-of-band patches for critical NGINX vulnerabilities\n\nMicrosoft: October Windows Server updates break Exchange sign-in, mail flow\n\nNikkei discloses third data breach in a month, 1.8M records exposed…",
+          "detail": "Signal de veille — BleepingComputer.\n\nMicrosoft has resolved a bug that caused games and apps using AC-3 (Dolby Digital) audio decoding to crash after installing the September 2026 Windows 11 preview update (KB5124010).\n\nBullhorn takes staffing platform offline to contain cyberattack\n\nF5 releases out-of-band patches for critical NGINX vulnerabilities\n\nMicrosoft: October Windows Server updates break Exchange sign-in, mail flow\n\nNikkei discloses third data breach in a month, 1.8M records exposed\n\nWordPress SEO plugin Rank Math compromised to backdoor websites\n\nHackers hijack AOMEI update servers to secretly spread malware",
+          "action": null,
+          "image": "https://www.bleepstatic.com/content/hl-images/2026/10/15/Windows.jpg",
+          "sources": [
+            {
+              "url": "https://www.bleepingcomputer.com/news/microsoft/microsoft-fixes-game-app-crashes-caused-by-windows-kb5124010-preview-update/",
+              "label": "BleepingComputer"
+            }
+          ],
+          "url": "https://www.bleepingcomputer.com/news/microsoft/microsoft-fixes-game-app-crashes-caused-by-windows-kb5124010-preview-update/",
+          "pubDate": "2026-10-19T14:55:23.000Z"
+        },
+        {
+          "title": "Microsoft fixes classic Outlook bug that hid Copilot buttons",
+          "cve": null,
+          "severity": "culture",
+          "score": 63,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Signal de veille — BleepingComputer.\n\nMicrosoft has fixed a known issue that removed the Copilot Chat and Copilot buttons in the classic Outlook desktop mail client for some Windows users.\n\nBullhorn takes staffing platform offline to contain cyberattack\n\nF5 releases out-of-band patches for critical NGINX vulnerabilities\n\nMicrosoft: October Windows Server updates break Exchange sign-in, mail flow\n\nNikkei discloses third data breach in a month, 1.8M records exposed\n\nWordPress SEO plugin Rank Mat…",
+          "detail": "Signal de veille — BleepingComputer.\n\nMicrosoft has fixed a known issue that removed the Copilot Chat and Copilot buttons in the classic Outlook desktop mail client for some Windows users.\n\nBullhorn takes staffing platform offline to contain cyberattack\n\nF5 releases out-of-band patches for critical NGINX vulnerabilities\n\nMicrosoft: October Windows Server updates break Exchange sign-in, mail flow\n\nNikkei discloses third data breach in a month, 1.8M records exposed\n\nWordPress SEO plugin Rank Math compromised to backdoor websites\n\nHackers hijack AOMEI update servers to secretly spread malware",
+          "action": null,
+          "image": "https://www.bleepstatic.com/content/hl-images/2026/10/19/Microsoft-Copilot.jpg",
+          "sources": [
+            {
+              "url": "https://www.bleepingcomputer.com/news/microsoft/microsoft-fixes-bug-that-hid-copilot-buttons-in-classic-outlook/",
+              "label": "BleepingComputer"
+            }
+          ],
+          "url": "https://www.bleepingcomputer.com/news/microsoft/microsoft-fixes-bug-that-hid-copilot-buttons-in-classic-outlook/",
+          "pubDate": "2026-10-19T12:44:44.000Z"
+        },
+        {
+          "title": "From Email-to-Case to the Boardroom: How Inherited Agents Break Governance Built for Software",
+          "cve": null,
+          "severity": "high",
+          "score": 63,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Signal de veille — The Hacker News.\n\nIn Salesforce Agentforce, the recommended way to make an agent respond to events is a Flow: a record is created or a case is updated, and the Flow passes data into the agent's prompt. Separately, Email-to-Case and Web-to-Case turn inbound customer messages into case records; it is how airlines and hotels run support intake. Both are standard, documented, as-designed features. Chained together,",
+          "detail": "Signal de veille — The Hacker News.\n\nIn Salesforce Agentforce, the recommended way to make an agent respond to events is a Flow: a record is created or a case is updated, and the Flow passes data into the agent's prompt. Separately, Email-to-Case and Web-to-Case turn inbound customer messages into case records; it is how airlines and hotels run support intake. Both are standard, documented, as-designed features. Chained together,",
+          "action": null,
+          "image": "https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEg1uAZRypeHl_8TjAU-3mwmvjdbCH0SZJwZBZOoEXcehaQfod9rpBvAl72JCjV8xF2KF4VbSVzWezAmkXjmbaxdIkK854Pa-yV4nkkRNe-l82mPM_VW1fLSE5Ib-RhyphenhypheneGga3KZ_9wQu76clTABJwGp_3N_M-6QBZMXFSISC56JWHVHpylO-uTenNO3kRlg/s1600/reco.gif",
+          "sources": [
+            {
+              "url": "https://thehackernews.com/2026/10/from-email-to-case-to-boardroom-how.html",
+              "label": "The Hacker News"
+            }
+          ],
+          "url": "https://thehackernews.com/2026/10/from-email-to-case-to-boardroom-how.html",
+          "pubDate": "2026-10-19T11:50:00.000Z"
+        },
+        {
+          "title": "Wyden seeks adoption of encryption tech at hundreds of federal agencies to protect visitors’ sensitive traffic",
+          "cve": null,
+          "severity": "high",
+          "score": 59,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Signal de veille — CyberScoop.\n\nHundreds of federal agencies should adopt an encryption tool to protect whistleblowers, veterans suffering from mental health crises and others from hackers who might target them when they reach out via agency websites, Sen. Ron Wyden said Monday.",
+          "detail": "Signal de veille — CyberScoop.\n\nHundreds of federal agencies should adopt an encryption tool to protect whistleblowers, veterans suffering from mental health crises and others from hackers who might target them when they reach out via agency websites, Sen. Ron Wyden said Monday. The Oregon Democrat urged the Cybersecurity and Infrastructure Security Agency and Office of Management and Budget to take steps to adopt Encrypted Client Hello — a cybersecurity technology that protects the name of the website visited by a user — in a letter to the two agencies. His office identified at least 350 sites that don’t use its protections. While almost all federal agency websites are encrypted, standard web encryption doesn’t secure some website names, Wyden said, using reportfraud.ftc.gov as an example. “As data travels across the internet, hackers and foreign actors monitoring network connections can easily see these exposed website names,” he wrote. “This visibility could lead to malicious eavesdroppers identifying whistleblowers, profiling cleared federal personnel, tracking Americans seeking crisis support, and mapping interactions between agencies.” Wyden wrote that Encrypted Client Hello (ECH) is especially effective with Content Delivery Networks (CDNs) that connect hundreds of thousands of websites to the internet. For websites delivered by a CDN, ECH makes it so anyone intercepting user web traffic can view the n",
+          "action": null,
+          "image": "https://cyberscoop.com/wp-content/uploads/sites/3/2026/10/GettyImages-2251428926.jpg",
+          "sources": [
+            {
+              "url": "https://cyberscoop.com/wyden-urges-federal-adoption-encrypted-client-hello/",
+              "label": "CyberScoop"
+            }
+          ],
+          "url": "https://cyberscoop.com/wyden-urges-federal-adoption-encrypted-client-hello/",
+          "pubDate": "2026-10-19T18:27:32.000Z"
+        },
+        {
+          "title": "Meta wants to scrape your website to train its AI, and you can’t say no",
+          "cve": null,
+          "severity": "culture",
+          "score": 59,
+          "corroboration": 2,
+          "region": "intl",
+          "body": "Signal de veille — Security Affairs.\n\nMeta wants the right to scrape your website for AI training. If you have a business account, that includes you. At the end of the month, Meta plans to change its commercial terms in a way that matters to every company advertising or selling through its platforms. The new language takes effect on October 30, 2026.",
+          "detail": "Signal de veille — Security Affairs.\n\nMeta wants the right to scrape your website for AI training. If you have a business account, that includes you. At the end of the month, Meta plans to change its commercial terms in a way that matters to every company advertising or selling through its platforms. The new language takes effect on October 30, 2026. It lets Meta collect content from websites associated with business customers and use it to train AI models or otherwise improve its products, according to The Register . Meta defines &#8220;business customer&#8221; broadly. It includes anyone who uses ads or marketing messages, sells or lists products, develops apps, uses a product catalog, manages a Page, runs a Group for business purposes, or uses tools such as Ads Manager or Meta Business Suite. At least one million businesses already use Meta&#8217;s AI agents in WhatsApp and Messenger. Nieman Lab also points out that almost every news publisher has at least one Meta business account. The contract clearly explains which tools Meta can use. By accepting the terms, you allow Meta, or anyone working on its behalf, to use automated tools such as web scrapers, bots, spiders and crawlers to access and index your websites, pages and URLs. These tools can also revisit your sites regularly to collect updates. &#8220;You authorise us (or any entity acting on our behalf) to use automated software (such as web scrapers, bots,",
+          "action": null,
+          "image": "https://securityaffairs.com/wp-content/uploads/2026/08/meta-logo.jpg",
+          "sources": [
+            {
+              "url": "https://securityaffairs.com/201300/ai/meta-wants-to-scrape-your-website-to-train-its-ai-and-you-cant-say-no.html",
+              "label": "Security Affairs"
+            },
+            {
+              "url": "https://www.helpnetsecurity.com/2026/10/19/datadome-ai-agent-traffic-report/",
+              "label": "Help Net Security"
+            }
+          ],
+          "url": "https://securityaffairs.com/201300/ai/meta-wants-to-scrape-your-website-to-train-its-ai-and-you-cant-say-no.html",
+          "pubDate": "2026-10-19T13:32:09.000Z"
+        },
+        {
+          "title": "Training AIs to Solve CAPTCHAs",
+          "cve": null,
+          "severity": "culture",
+          "score": 59,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Signal de veille — Schneier on Sec..\n\nInteresting research : Abstract : Vision-language models (VLMs) can solve visual CAPTCHAs without task-specific training, but the agents built on them approach every challenge from scratch. For such an agent, the hundredth instance of a familiar puzzle costs as much time and compute as the first. Specialized detectors invert the trade-off, answering in milliseconds but only for categories they were trained on. Neither improves with exposure.",
+          "detail": "Signal de veille — Schneier on Sec..\n\nInteresting research : Abstract : Vision-language models (VLMs) can solve visual CAPTCHAs without task-specific training, but the agents built on them approach every challenge from scratch. For such an agent, the hundredth instance of a familiar puzzle costs as much time and compute as the first. Specialized detectors invert the trade-off, answering in milliseconds but only for categories they were trained on. Neither improves with exposure. We study what changes when a solver improves with use. Our system pairs a fine-tuned YOLOv8 detector with an open-weight VLM behind a confidence-based router, and runs entirely from screenshots and operating-system input events, with no browser automation or DOM access. It reaches 85.4% overall and 84.2% macro accuracy across 16 classes, exceeding either component alone. Every answer VLM produces also serves as a training label, so the detector absorbs categories it was never trained for, typically after one or two encounters and without human annotation. The same loop also repairs it. A CAPTCHA operator can perturb images against the publicly released detector and drive its accuracy to 0%, but the perturbations leave VLM untouched, and its labels let the detector recover. Under a year-long simulated arms race in which the CAPTCHA operator re-crafts its perturbations each month, the solver recovers every round, and a cheap ~70%-accurate ope",
+          "action": null,
+          "image": null,
+          "sources": [
+            {
+              "url": "https://www.schneier.com/blog/archives/2026/10/training-ais-to-solve-captchas.html",
+              "label": "Schneier on Sec."
+            }
+          ],
+          "url": "https://www.schneier.com/blog/archives/2026/10/training-ais-to-solve-captchas.html",
+          "pubDate": "2026-10-19T11:07:43.000Z"
+        },
+        {
+          "title": "Anthropic Acquires Confidential AI Startup Opaque Systems",
+          "cve": null,
+          "severity": "culture",
+          "score": 59,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Signal de veille — SecurityWeek.\n\nAnthropic has acquired Opaque, a company that turned its confidential computing research into technology used in production AI deployments.\n\nOpaque Systems has developed technology that lets AI systems use sensitive data while keeping it protected by the underlying hardware.\n\nSubscribe to the SecurityWeek Email Briefing for the latest cybersecurity threats, trends, and expert insights.\n\nSubscribe to the SecurityWeek Email Briefing to stay informed on the l…",
+          "detail": "Signal de veille — SecurityWeek.\n\nAnthropic has acquired Opaque, a company that turned its confidential computing research into technology used in production AI deployments.\n\nOpaque Systems has developed technology that lets AI systems use sensitive data while keeping it protected by the underlying hardware.\n\nSubscribe to the SecurityWeek Email Briefing for the latest cybersecurity threats, trends, and expert insights.\n\nSubscribe to the SecurityWeek Email Briefing to stay informed on the latest threats, trends, and technology, along with insightful columns from industry experts.\n\nAI tools connected to Google Workspace can access millions of sensitive emails and files. Join this session to uncover your organization’s risk and learn a framework to manage AI access.\n\nJoin as we bring together CISOs, senior cybersecurity executives, practitioners, industry experts, and other security leaders to share practical experience and examine the issues shaping enterprise cybersecurity strategy.\n\nDarktrace has named Adam Towns as CFOO, Mike McGuinness as CRO, and Beth Shea as CCO.",
+          "action": null,
+          "image": "https://www.securityweek.com/wp-content/uploads/2026/02/Anthropic-AI_Military.jpg",
+          "sources": [
+            {
+              "url": "https://www.securityweek.com/anthropic-acquires-confidential-ai-startup-opaque-systems/",
+              "label": "SecurityWeek"
+            }
+          ],
+          "url": "https://www.securityweek.com/anthropic-acquires-confidential-ai-startup-opaque-systems/",
+          "pubDate": "2026-10-19T07:45:25.000Z"
+        },
+        {
+          "title": "Researchers Infiltrate Microsoft Tech Support Scam Operation",
+          "cve": null,
+          "severity": "culture",
+          "score": 55,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Signal de veille — Dark Reading.\n\nA large-scale scam operation impersonating Microsoft uses a malicious traffic distribution system (TDS) run by a Russian organization and abuses thousands of Cloudflare links.",
+          "detail": "Signal de veille — Dark Reading.\n\nA large-scale scam operation impersonating Microsoft uses a malicious traffic distribution system (TDS) run by a Russian organization and abuses thousands of Cloudflare links.",
+          "action": null,
+          "image": null,
+          "sources": [
+            {
+              "url": "https://www.darkreading.com/threat-intelligence/microsoft-tech-support-scam-operation",
+              "label": "Dark Reading"
+            }
+          ],
+          "url": "https://www.darkreading.com/threat-intelligence/microsoft-tech-support-scam-operation",
+          "pubDate": "2026-10-19T21:13:41.000Z"
+        },
+        {
+          "title": "US Cybersecurity Job Postings Fall 26%, Hitting Four Year Low",
+          "cve": null,
+          "severity": "culture",
+          "score": 52,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Signal de veille — Infosecurity Mag.\n\nCyberSN observed a particularly big dip in cybersecurity leadership positions such as CISO and Cybersecurity Director in 2026 compared to 2025\n\nCybersecurity job postings in the US fell by 26.4% year-over-year from January to September 2026, according to analysis by CyberSN.\n\nA total of 235,786 cybersecurity roles were posted on the job market intelligence platform JobSpikr in 2026.",
+          "detail": "Signal de veille — Infosecurity Mag.\n\nCyberSN observed a particularly big dip in cybersecurity leadership positions such as CISO and Cybersecurity Director in 2026 compared to 2025\n\nCybersecurity job postings in the US fell by 26.4% year-over-year from January to September 2026, according to analysis by CyberSN.\n\nA total of 235,786 cybersecurity roles were posted on the job market intelligence platform JobSpikr in 2026. This is the lowest amount of US-based cybersecurity jobs advertised in the four years CyberSN has undertaken its analysis, compared to 273,498 in 2023, 244,911 in 2024 and 320,210 in 2025.\n\nThere was a particularly significant drop in leadership roles. CISO postings fell from 4632 in January to September 2025 to 2832 in the same period in 2026, a 38.9% reduction.\n\nOther leadership roles that saw substantial dips included cybersecurity director (a 32.5% fall), cybersecurity lead (41% fall) and cybersecurity manager (24.4% fall).\n\nOverall, nine of the 10 cybersecurity functions tracked by the researchers had fewer postings in 2026 compared to 2025. The only exception was research roles, which grew by 26.1%.\n\nThe CyberSN researchers said it is not clear whether the sharp decline in job postings reflects less demand for cybersecurity roles from employers or is simply a return from an unusually strong year in 2025.",
+          "action": null,
+          "image": "https://assets.infosecurity-magazine.com/webpage/og/6dfa960a-fd65-4feb-b08c-9247443ef72f.jpeg",
+          "sources": [
+            {
+              "url": "https://www.infosecurity-magazine.com/news/cybersecurity-job-postings-fall/",
+              "label": "Infosecurity Mag"
+            }
+          ],
+          "url": "https://www.infosecurity-magazine.com/news/cybersecurity-job-postings-fall/",
+          "pubDate": "2026-10-19T10:00:00.000Z"
+        },
+        {
+          "title": "Plex vulnerabilities being exploited in the wild to drop a cryptominer",
+          "cve": null,
+          "severity": "culture",
+          "score": 51,
+          "corroboration": 2,
+          "region": "intl",
+          "body": "Signal de veille — Hacker News.\n\n168 points · 84 commentaires sur Hacker News.",
+          "detail": "Signal de veille — Hacker News.\n\n168 points · 84 commentaires sur Hacker News.\n\nLien : http://www.boredhackerblog.info/2026/10/plex-vulnerabilities-being-exploited-in.html",
+          "action": null,
+          "image": null,
+          "sources": [
+            {
+              "url": "http://www.boredhackerblog.info/2026/10/plex-vulnerabilities-being-exploited-in.html",
+              "label": "Hacker News"
+            },
+            {
+              "url": "https://news.ycombinator.com/item?id=50152321",
+              "label": "Discussion HN"
+            }
+          ],
+          "url": "http://www.boredhackerblog.info/2026/10/plex-vulnerabilities-being-exploited-in.html",
+          "pubDate": "2026-10-19T13:36:43.000Z"
+        },
+        {
+          "title": "Hexatrust ouvre les candidatures de son Accélérateur 2027",
+          "cve": null,
+          "severity": "culture",
+          "score": 49,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Signal de veille — Silicon.fr.\n\nHexatrust ouvre les candidatures pour la promotion 2027 de la 6ème édition de son programme Accélérateur. Lancé en 2021, il part d&rsquo;un principe simple : bâtir une filière souveraine suppose aussi de faire grandir ses jeunes entreprises, en les mettant en contact avec ceux qui ont déjà franchi le cap du passage à l&rsquo;échelle.",
+          "detail": "Signal de veille — Silicon.fr.\n\nHexatrust ouvre les candidatures pour la promotion 2027 de la 6ème édition de son programme Accélérateur. Lancé en 2021, il part d&rsquo;un principe simple : bâtir une filière souveraine suppose aussi de faire grandir ses jeunes entreprises, en les mettant en contact avec ceux qui ont déjà franchi le cap du passage à l&rsquo;échelle. Deux mentors par start-up, pendant un an Les start-ups retenues sont suivies pendant douze mois par des dirigeants et entrepreneurs issus des rangs d &lsquo;Hexatrust . Chaque lauréat se voit attribuer un binôme de mentors, qui prêtent leur expérience et leur réseau à titre bénévole. Des rendez-vous réguliers permettent de travailler sur les questions stratégiques et opérationnelles du moment : trouver les premiers clients, affiner le positionnement, structurer l&rsquo;offre, identifier des partenaires ou financer la croissance. Les lauréats gagnent en visibilité au sein de l&rsquo;écosystème Hexatrust, accèdent à la communauté de ses membres et partenaires, bénéficient de mises en relation ciblées et sont aidés dans la recherche de dispositifs de financement et de soutien à l&rsquo;innovation. Ils profitent également de l&rsquo;ensemble des services du groupement. Une dizaine de jeunes pousses déjà accompagnées Depuis 2021, le programme a épaulé une dizaine de start-ups. La promotion 2026 compte notamment Daspren , qui propose une solution de prot",
+          "action": null,
+          "image": "https://www.silicon.fr/wp-content/uploads/2025/09/cybersecurite-hexatrust-mobilise-face-coronavirus-F.jpg",
+          "sources": [
+            {
+              "url": "https://www.silicon.fr/cybersecurite-1371/hexatrust-ouvre-les-candidatures-de-son-accelerateur-2027-229758",
+              "label": "Silicon.fr"
+            }
+          ],
+          "url": "https://www.silicon.fr/cybersecurite-1371/hexatrust-ouvre-les-candidatures-de-son-accelerateur-2027-229758",
+          "pubDate": "2026-10-19T15:36:44.000Z"
+        },
+        {
+          "title": "Cloudflare bets you’re overpaying an LLM to read your invoices",
+          "cve": null,
+          "severity": "culture",
+          "score": 48,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Signal de veille — Help Net Security.\n\nCloudflare released a preview of Clairic, an extraction model that pulls typed values out of messy text and images in one pass without generating tokens. In Cloudflare’s test on a damaged-product support claim, a pipeline built around Clairic finished in 19.3 seconds, against 61.7 seconds for a version that used an LLM at every step, and cost 49% less.",
+          "detail": "Signal de veille — Help Net Security.\n\nCloudflare released a preview of Clairic, an extraction model that pulls typed values out of messy text and images in one pass without generating tokens. In Cloudflare’s test on a damaged-product support claim, a pipeline built around Clairic finished in 19.3 seconds, against 61.7 seconds for a version that used an LLM at every step, and cost 49% less. Clairic goes after a job developers routinely hand to large language models: read this invoice and &#8230; More &#8594; The post Cloudflare bets you&#8217;re overpaying an LLM to read your invoices appeared first on Help Net Security .",
+          "action": null,
+          "image": "https://img.helpnetsecurity.com/wp-content/uploads/2026/10/20054404/cloudflare-servers.webp",
+          "sources": [
+            {
+              "url": "https://www.helpnetsecurity.com/2026/10/20/cloudflare-ai-clairic-extraction-model/",
+              "label": "Help Net Security"
+            }
+          ],
+          "url": "https://www.helpnetsecurity.com/2026/10/20/cloudflare-ai-clairic-extraction-model/",
+          "pubDate": "2026-10-20T03:45:03.000Z"
+        },
+        {
+          "title": "Bright Security Introduces STAR Fuzzer, Agentic Fuzzing That Writes Its Own Harnesses and Proves Every Finding",
+          "cve": null,
+          "severity": "critical",
+          "score": 48,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Signal de veille — GBHackers.\n\nSan Rafael, United States, October 19th, 2026, CyberNewswire Built on an evolutionary engine first released in 2018, STAR Fuzzer by Bright Security finds crashes, memory exhaustion and memory-safety bugs in security-critical code without a running application.",
+          "detail": "Signal de veille — GBHackers.\n\nSan Rafael, United States, October 19th, 2026, CyberNewswire Built on an evolutionary engine first released in 2018, STAR Fuzzer by Bright Security finds crashes, memory exhaustion and memory-safety bugs in security-critical code without a running application. In its first open source research run, it found High or Critical issues in 45% of the projects tested, [&#8230;] The post Bright Security Introduces STAR Fuzzer, Agentic Fuzzing That Writes Its Own Harnesses and Proves Every Finding appeared first on GBHackers Security | #1 Globally Trusted Cyber Security News Platform .",
+          "action": null,
+          "image": "https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEgsGCsD2tSPkES2TpGHmakSaEtOSSVV3ANJJxK5SfNyYMzCK4DE9BSg1HdFHlk6e2JQvE-9jDoX4mbUMmeH9aYvh37sbVfPBE2IVUqI63Ph22fwbjUfGSCXwJ2zrQWeJkQknTBazbm4vor4rxV3kbYWgNnPmkj4QsNkoenNFdgkfUlSuRdacK8WzpBGi1U/s1600/Insignary%20Launches%20Clarity%20On-Demand%20SBOMs,%20No%20Annual%20Commitment%20Required%20Toronto,%20Canada,%20July%2015th,%202026,%20CyberNewswire%20Enterprise-grade%20binary%20software%20verification%20for%20one%20proj%20-%202026-10-19T194625.64.webp",
+          "sources": [
+            {
+              "url": "https://gbhackers.com/bright-security-introduces-star-fuzzer-agentic-fuzzing-that-writes-its-own-harnesses-and-proves-every-finding/",
+              "label": "GBHackers"
+            }
+          ],
+          "url": "https://gbhackers.com/bright-security-introduces-star-fuzzer-agentic-fuzzing-that-writes-its-own-harnesses-and-proves-every-finding/",
+          "pubDate": "2026-10-19T17:11:46.000Z"
+        },
+        {
+          "title": "eFutura : 11ème Journée de la Transition Numérique",
+          "cve": null,
+          "severity": "culture",
+          "score": 45,
+          "corroboration": 1,
+          "region": "fr",
+          "body": "Signal de veille — Global Sec Mag.\n\neFutura : PROSPECTIVE 2035 DU NUMERIQUE https://www.efutura.fr/11eme-journee-de-la-transition-numerique-edition-2026-prospective-2035-du-numerique/ 5 novembre 2026 - 8h30/14h30 PROSPECTIVE 2035 DU NUMERIQUE 2035 se dessine dès aujourd'hui. Entre accélérations technologiques, tensions géopolitiques et transformations sociétales, le numérique redéfinit les équilibres économiques, politiques et humains.",
+          "detail": "Signal de veille — Global Sec Mag.\n\neFutura : PROSPECTIVE 2035 DU NUMERIQUE https://www.efutura.fr/11eme-journee-de-la-transition-numerique-edition-2026-prospective-2035-du-numerique/ 5 novembre 2026 - 8h30/14h30 PROSPECTIVE 2035 DU NUMERIQUE 2035 se dessine dès aujourd'hui. Entre accélérations technologiques, tensions géopolitiques et transformations sociétales, le numérique redéfinit les équilibres économiques, politiques et humains. Cette journée propose un temps fort pour anticiper, questionner et éclairer les décisions d'aujourd'hui face aux incertitudes de demain. Lieu : Hôtel Bedford - 17 rue de l'Arcade - 75008 Paris",
+          "action": null,
+          "image": "https://www.globalsecuritymag.fr/local/cache-vignettes/L160xH84/a65f4f99644260c2aac69ff1add49a-106e3.jpg",
+          "sources": [
+            {
+              "url": "https://www.globalsecuritymag.fr/efutura-11eme-journee-de-la-transition-numerique.html",
+              "label": "Global Sec Mag"
+            }
+          ],
+          "url": "https://www.globalsecuritymag.fr/efutura-11eme-journee-de-la-transition-numerique.html",
+          "pubDate": "2026-10-20T04:01:09.729Z"
+        }
+      ]
+    }
+  ]
+}
