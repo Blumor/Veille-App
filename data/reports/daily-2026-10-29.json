@@ -1,0 +1,1229 @@
+{
+  "id": "daily-2026-10-29",
+  "type": "daily",
+  "date": "2026-10-29",
+  "title": "Rapport quotidien - jeudi 29 octobre 2026",
+  "summary": "Sur les dernières 24 heures, la veille recense 28 vulnérabilités critiques, 44 incidents ou compromissions et 35 signaux de fond. Acteurs et produits les plus exposés : highcharts (npm), Microsoft et Oracle.",
+  "generatedAt": "2026-10-29T05:01:18.467Z",
+  "sections": [
+    {
+      "id": "vulns",
+      "items": [
+        {
+          "title": "CVE-2026-109516 — The Bot for Telegram on WooCommerce plugin for WordPress is vulnerable to Authentication B…",
+          "cve": "CVE-2026-109516",
+          "severity": "critical",
+          "score": 74,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Vulnérabilité critique CVE-2026-109516 (score CVSS 9.8).\n\nThe Bot for Telegram on WooCommerce plugin for WordPress is vulnerable to Authentication Bypass leading to Account Takeover in all versions up to, and including, 1.3.0. The `/wp-json/woo-telegram/v1/main/` REST endpoint is registered with `permission_callback => '__return_true'` and performs no Telegram webhook signature verification, allowing an unauthenticated attacker to POST a forged bot update with a `message.chat.id` set to any WordPress login name;…",
+          "detail": "Vulnérabilité critique CVE-2026-109516 (score CVSS 9.8).\n\nThe Bot for Telegram on WooCommerce plugin for WordPress is vulnerable to Authentication Bypass leading to Account Takeover in all versions up to, and including, 1.3.0. The `/wp-json/woo-telegram/v1/main/` REST endpoint is registered with `permission_callback => '__return_true'` and performs no Telegram webhook signature verification, allowing an unauthenticated attacker to POST a forged bot update with a `message.chat.id` set to any WordPress login name; `bftow_get_user_system_id()` resolves this attacker-supplied value to the targeted account via `get_user_by('login', $tgId)` with no ownership proof, and writes a login token computed as `md5($_SERVER['HTTP_USER_AGENT'] . time())` — both inputs are fully attacker-controlled or bounded within seconds using the response's own `Date` header. The resulting token is redeemable at the unauthenticated, capability-check-free, and nonce-less `?action=bftow_create_order&bftow_token=` endpoint, which calls `wp_set_auth_cookie()` unconditionally via `login_user_by_id`, issuing a persistent authenticated session cookie for the targeted account to the attacker. This makes it possible for unauthenticated attackers to log in as any WordPress user, including administrators, given only that user's username.\n\nScore CVSS : 9.8\n\nType de faiblesse (CWE) : CWE-287",
+          "action": "Vérifier l'exposition du parc et appliquer le correctif éditeur dès sa disponibilité.",
+          "image": null,
+          "sources": [
+            {
+              "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-109516",
+              "label": "NVD"
+            },
+            {
+              "url": "https://www.cvedetails.com/cve/CVE-2026-109516/",
+              "label": "CVE Details"
+            }
+          ],
+          "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-109516",
+          "pubDate": "2026-10-29T04:18:22.763Z"
+        },
+        {
+          "title": "CVE-2026-103409 — A Missing authentication for critical function vulnerability in Juniper Networks Session S…",
+          "cve": "CVE-2026-103409",
+          "severity": "critical",
+          "score": 74,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Vulnérabilité critique CVE-2026-103409 (score CVSS 9.8).\n\nA Missing authentication for critical function vulnerability in Juniper Networks Session Smart Router allows an unauthenticated network-based attacker to obtain administrative privileges by passing crafted URL parameters to an insecure endpoint running as root. Note that this vulnerability can only be exploited prior to the device being onboarded to Mist/Conductor. The issue can no longer be exploited once a device is onboarded to Mist/Conductor.",
+          "detail": "Vulnérabilité critique CVE-2026-103409 (score CVSS 9.8).\n\nA Missing authentication for critical function vulnerability in Juniper Networks Session Smart Router allows an unauthenticated network-based attacker to obtain administrative privileges by passing crafted URL parameters to an insecure endpoint running as root.\n\nNote that this vulnerability can only be exploited prior to the device being onboarded to Mist/Conductor. The issue can no longer be exploited once a device is onboarded to Mist/Conductor.\n\nScore CVSS : 9.8\n\nType de faiblesse (CWE) : CWE-306",
+          "action": "Vérifier l'exposition du parc et appliquer le correctif éditeur dès sa disponibilité.",
+          "image": null,
+          "sources": [
+            {
+              "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-103409",
+              "label": "NVD"
+            },
+            {
+              "url": "https://www.cvedetails.com/cve/CVE-2026-103409/",
+              "label": "CVE Details"
+            }
+          ],
+          "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-103409",
+          "pubDate": "2026-10-28T17:17:27.840Z"
+        },
+        {
+          "title": "OffSec Launches Free PHP2Shell Lab Following Critical Vulnerability Discovery",
+          "cve": "CVE-2026-109618",
+          "severity": "critical",
+          "score": 69,
+          "corroboration": 2,
+          "region": "intl",
+          "body": "Vulnérabilité critique CVE-2026-109618 affectant Palo Alto.\n\nNew York, United States, October 28th, 2026, CyberNewswire New hands-on lab lets security practitioners explore PHP2Shell exploitation firsthand as AI-assisted research reshapes vulnerability discovery. OffSec today announced the release of a free, interactive hands-on lab in Proving Grounds Play (PG Play) to help security practitioners examine and defend against the critical &#8220;PHP2Shell&#8221; vulnerabilities (CVE-2026-109618 and [&#8230;] The post O…",
+          "detail": "Vulnérabilité critique CVE-2026-109618 affectant Palo Alto.\n\nNew York, United States, October 28th, 2026, CyberNewswire New hands-on lab lets security practitioners explore PHP2Shell exploitation firsthand as AI-assisted research reshapes vulnerability discovery. OffSec today announced the release of a free, interactive hands-on lab in Proving Grounds Play (PG Play) to help security practitioners examine and defend against the critical &#8220;PHP2Shell&#8221; vulnerabilities (CVE-2026-109618 and [&#8230;] The post OffSec Launches Free PHP2Shell Lab Following Critical Vulnerability Discovery appeared first on GBHackers Security | #1 Globally Trusted Cyber Security News Platform .",
+          "action": "Vérifier l'exposition du parc et appliquer le correctif éditeur dès sa disponibilité.",
+          "image": null,
+          "sources": [
+            {
+              "url": "https://gbhackers.com/offsec-launches-free-php2shell-lab-following-critical-vulnerability-discovery/",
+              "label": "GBHackers"
+            },
+            {
+              "url": "https://www.globalsecuritymag.fr/multiples-vulnerabilites-dans-palo-alto-networks-pan-os-28-octobre-2026.html",
+              "label": "Global Sec Mag"
+            }
+          ],
+          "url": "https://gbhackers.com/offsec-launches-free-php2shell-lab-following-critical-vulnerability-discovery/",
+          "pubDate": "2026-10-29T05:01:06.485Z"
+        },
+        {
+          "title": "ShinyHunters-Exploited Oracle PeopleSoft Zero-Day Turns Out to Be Three Chained Flaws",
+          "cve": "CVE-2026-35273",
+          "severity": "critical",
+          "score": 68,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Vulnérabilité critique CVE-2026-35273 affectant Oracle.\n\nThe critical Oracle PeopleSoft bug that ShinyHunters has exploited since May is not one flaw but three chained together, the researchers who reported it said this week. Oracle patched all three under a single identifier,&nbsp;CVE-2026-35273, in June. Its root is a server-side request forgery (SSRF) that reaches an internal management interface because PeopleSoft trusts its own loopback address",
+          "detail": "Vulnérabilité critique CVE-2026-35273 affectant Oracle.\n\nThe critical Oracle PeopleSoft bug that ShinyHunters has exploited since May is not one flaw but three chained together, the researchers who reported it said this week. Oracle patched all three under a single identifier,&nbsp;CVE-2026-35273, in June. Its root is a server-side request forgery (SSRF) that reaches an internal management interface because PeopleSoft trusts its own loopback address",
+          "action": "Vérifier l'exposition du parc et appliquer le correctif éditeur dès sa disponibilité.",
+          "image": "https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEjgiU-iVEycp9z-2dprGJhgl046M9ZvG7kGGwaXNzgFJg7XDubOoWWLvEuKAOczIcGuXU04db46Xa6pRMKO36ZS7Fu8Xkv7mNuPjHUS0zLTHkGlNWNRD2DLCznPf6jqvqamZSZGMBXSzh9gMYm-9sR-y7OgN7i7n6x0dfYxyl9QftWlfuQw0mpTteHy57k/s1600/sh.jpg",
+          "sources": [
+            {
+              "url": "https://thehackernews.com/2026/10/shinyhunters-exploited-oracle.html",
+              "label": "The Hacker News"
+            }
+          ],
+          "url": "https://thehackernews.com/2026/10/shinyhunters-exploited-oracle.html",
+          "pubDate": "2026-10-28T06:04:58.000Z"
+        },
+        {
+          "title": "U.S. CISA adds Google Brotli and Adobe Commerce and Magento flaws to its Known Exploited Vulnerabilities catalog",
+          "cve": "CVE-2026-111497",
+          "severity": "critical",
+          "score": 67,
+          "corroboration": 3,
+          "region": "fr",
+          "body": "Vulnérabilité critique CVE-2026-111497 affectant Adobe.\n\nU.S. Cybersecurity and Infrastructure Security Agency (CISA) adds Google Brotli&nbsp;and Adobe Commerce and Magento flaws to its Known Exploited Vulnerabilities catalog. The U.S. Cybersecurity and Infrastructure Security Agency (CISA) added Google Brotli and Adobe Commerce and Magento vulnerabilities to its Known Exploited Vulnerabilities (KEV) catalog : Below are the flaws added to the catalog: CVE-2026-111497 (CVSS score: 9.2) &#8211; An unchecked return…",
+          "detail": "Vulnérabilité critique CVE-2026-111497 affectant Adobe.\n\nU.S. Cybersecurity and Infrastructure Security Agency (CISA) adds Google Brotli&nbsp;and Adobe Commerce and Magento flaws to its Known Exploited Vulnerabilities catalog. The U.S. Cybersecurity and Infrastructure Security Agency (CISA) added Google Brotli and Adobe Commerce and Magento vulnerabilities to its Known Exploited Vulnerabilities (KEV) catalog : Below are the flaws added to the catalog: CVE-2026-111497 (CVSS score: 9.2) &#8211; An unchecked return value vulnerability in Google Brotli that could allow a remote, unauthenticated attacker to corrupt decoder memory, expose sensitive information, cause a denial-of-service, or potentially execute arbitrary code by sending a specially crafted Brotli-compressed stream. CVE-2026-48356 (CVSS score: 9.3) &#8211; An unrestricted file upload vulnerability in Adobe Commerce and Magento that could allow an attacker to execute arbitrary code with the privileges of the current user, potentially gaining elevated access or taking control of the victim&#8217;s account or session. Brotli is a data-compression algorithm developed by Google.It reduces the size of web content, such as HTML, CSS, JavaScript, and other text-based resources. Security researchers have observed exploitation attempts targeting CVE-2026-111497 (aka Node2Shell), a critical flaw in Google&#8217;s Brotli library. Previdian recorded one attempt by October 27, while ELLIO",
+          "action": "Vérifier l'exposition du parc et appliquer le correctif éditeur dès sa disponibilité.",
+          "image": "https://securityaffairs.com/wp-content/uploads/2020/07/CISA.jpeg",
+          "sources": [
+            {
+              "url": "https://securityaffairs.com/201922/security/u-s-cisa-adds-google-brotli-and-adobe-commerce-and-magento-flaws-to-its-known-exploited-vulnerabilities-catalog.html",
+              "label": "Security Affairs"
+            },
+            {
+              "url": "https://www.cyberattaque.org/node2shell-la-faille-critique-de-node-js-desormais-exploitee-par-des-hackers/",
+              "label": "Cyberattaque.org"
+            },
+            {
+              "url": "https://thehackernews.com/2026/10/adobe-commerce-polyshell-attacks-breach.html",
+              "label": "The Hacker News"
+            }
+          ],
+          "url": "https://securityaffairs.com/201922/security/u-s-cisa-adds-google-brotli-and-adobe-commerce-and-magento-flaws-to-its-known-exploited-vulnerabilities-catalog.html",
+          "pubDate": "2026-10-28T10:05:15.000Z"
+        },
+        {
+          "title": "InfraTrust report warns of exploited flaws in critical network infrastructure",
+          "cve": null,
+          "severity": "critical",
+          "score": 61,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Vulnérabilité critique affectant PHP.\n\nAttackers are actively exploiting vulnerabilities across critical network infrastructure, and PHP flaws known as \"PHP2Shell\" put the web management interfaces of firewalls, VPNs, application delivery controllers, and other appliances at risk.\n\nPHP2Shell security flaws now sucessfully exploited in the wild\n\nCritical 'HTTP2Shell' Brotli vulnerability triggers emergency patches\n\nPolice seize Virtualine bulletproof service tied to ransowmare, cybercrime\n\nSony…",
+          "detail": "Vulnérabilité critique affectant PHP.\n\nAttackers are actively exploiting vulnerabilities across critical network infrastructure, and PHP flaws known as \"PHP2Shell\" put the web management interfaces of firewalls, VPNs, application delivery controllers, and other appliances at risk.\n\nPHP2Shell security flaws now sucessfully exploited in the wild\n\nCritical 'HTTP2Shell' Brotli vulnerability triggers emergency patches\n\nPolice seize Virtualine bulletproof service tied to ransowmare, cybercrime\n\nSony ISP subsidiary data breach exposes 2.5 million customer records\n\nHow to enable Kernel-mode Hardware-enforced Stack Protection in Windows 11\n\nAttackers are actively exploiting vulnerabilities across critical network infrastructure, and PHP flaws known as \"PHP2Shell\" put the web management interfaces of firewalls, VPNs, application delivery controllers, and other appliances at risk.",
+          "action": "Vérifier l'exposition du parc et appliquer le correctif éditeur dès sa disponibilité.",
+          "image": "https://www.bleepstatic.com/content/hl-images/2026/07/21/infratrust.jpg",
+          "sources": [
+            {
+              "url": "https://www.bleepingcomputer.com/news/security/infratrust-report-warns-of-exploited-flaws-in-critical-network-infrastructure/",
+              "label": "BleepingComputer"
+            }
+          ],
+          "url": "https://www.bleepingcomputer.com/news/security/infratrust-report-warns-of-exploited-flaws-in-critical-network-infrastructure/",
+          "pubDate": "2026-10-28T14:00:00.000Z"
+        },
+        {
+          "title": "PHP2Shell tourne à la course à l’échalote",
+          "cve": null,
+          "severity": "critical",
+          "score": 61,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Vulnérabilité critique.\n\nMalgré les revendications, il n&rsquo;existe toujours pas de preuve publique d&rsquo;un exploit générique pour PHP2Shell. Un ingénieur de HubSpot a compilé &#8211; avec l&rsquo;aide de l&rsquo;IA et sans vérification intégrale, admet-il &#8211; une chronologie récapitulative. Elle donne un aperçu de l&rsquo;enchaînement des annonces&#8230; et des rétractations.",
+          "detail": "Vulnérabilité critique.\n\nMalgré les revendications, il n&rsquo;existe toujours pas de preuve publique d&rsquo;un exploit générique pour PHP2Shell. Un ingénieur de HubSpot a compilé &#8211; avec l&rsquo;aide de l&rsquo;IA et sans vérification intégrale, admet-il &#8211; une chronologie récapitulative. Elle donne un aperçu de l&rsquo;enchaînement des annonces&#8230; et des rétractations. Une divulgation pas si coordonnée Avant d&rsquo;en arriver là, il y eut la procédure de divulgation coordonnée des deux vulnérabilités. Et la mauvaise gestion de l&#8217;embargo associé. Chainguard l&rsquo;a effectivement rompu. Une dizaine d&rsquo;heures avant l&rsquo;échéance convenue, il a publié des versions patchées de sa distro Wolfi. Son patron présente ce choix comme une réaction à des signalements d&rsquo;exploitation active sur les canaux de coordination. Une décision renforcée, ajoute-t-il, par la « facilité » que l&rsquo;entreprise avait eue à développer elle-même un PoC. Une foule de PoC&#8230; « de laboratoire » VulnCheck fait partie des entreprises de la cyber qui ont revendiqué un PoC « de laboratoire ». Il l&rsquo;a d&rsquo;abord dit fonctionnel contre PHP 8.4.26 (mod_php) sur x86-64 avec ASLR activé et display_errors = off. Depuis, le rayon s&rsquo;est étendu à l&rsquo;essentiel des versions non patchées sur les branches 8.2 à 8.5. Et, pour certaines, à l&rsquo;architecture ARM. Trail of Bits y est auss",
+          "action": "Vérifier l'exposition du parc et appliquer le correctif éditeur dès sa disponibilité.",
+          "image": "https://www.silicon.fr/wp-content/uploads/2026/10/PHP2Shell-course-a-lechalote-scaled.jpg",
+          "sources": [
+            {
+              "url": "https://www.silicon.fr/cybersecurite-1371/php2shell-course-echalote-229964",
+              "label": "Silicon.fr"
+            }
+          ],
+          "url": "https://www.silicon.fr/cybersecurite-1371/php2shell-course-echalote-229964",
+          "pubDate": "2026-10-28T07:19:32.000Z"
+        },
+        {
+          "title": "CVE-2026-42922 — A authorization bypass vulnerability exists in the /nodered functionality of FUXA (version…",
+          "cve": "CVE-2026-42922",
+          "severity": "critical",
+          "score": 59,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Vulnérabilité critique CVE-2026-42922 (score CVSS 9.8).\n\nA authorization bypass vulnerability exists in the /nodered functionality of FUXA (version(s): 1.3.2-2809). A specially crafted HTTP request can lead to a arbitrary code execution. An attacker can make an unauthenticated HTTP request to trigger this vulnerability.",
+          "detail": "Vulnérabilité critique CVE-2026-42922 (score CVSS 9.8).\n\nA authorization bypass vulnerability exists in the /nodered functionality of FUXA (version(s): 1.3.2-2809). A specially crafted HTTP request can lead to a arbitrary code execution. An attacker can make an unauthenticated HTTP request to trigger this vulnerability.\n\nScore CVSS : 9.8\n\nType de faiblesse (CWE) : CWE-285",
+          "action": "Vérifier l'exposition du parc et appliquer le correctif éditeur dès sa disponibilité.",
+          "image": null,
+          "sources": [
+            {
+              "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-42922",
+              "label": "NVD"
+            },
+            {
+              "url": "https://www.cvedetails.com/cve/CVE-2026-42922/",
+              "label": "CVE Details"
+            }
+          ],
+          "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-42922",
+          "pubDate": "2026-10-29T04:18:36.777Z"
+        },
+        {
+          "title": "CVE-2026-118579 — A weakness has been identified in D-Link DIR-505 1.10B02. The impacted element is the func…",
+          "cve": "CVE-2026-118579",
+          "severity": "critical",
+          "score": 59,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Vulnérabilité critique CVE-2026-118579 (score CVSS 9.8).\n\nA weakness has been identified in D-Link DIR-505 1.10B02. The impacted element is the function main of the file /secmark1524.cgi of the component Web Management CGI. This manipulation of the argument accu/pass/code/hash/cmds causes backdoor. The attack is possible to be carried out remotely. The exploit has been made available to the public and could be used for attacks.",
+          "detail": "Vulnérabilité critique CVE-2026-118579 (score CVSS 9.8).\n\nA weakness has been identified in D-Link DIR-505 1.10B02. The impacted element is the function main of the file /secmark1524.cgi of the component Web Management CGI. This manipulation of the argument accu/pass/code/hash/cmds causes backdoor. The attack is possible to be carried out remotely. The exploit has been made available to the public and could be used for attacks.\n\nScore CVSS : 9.8\n\nType de faiblesse (CWE) : CWE-912",
+          "action": "Vérifier l'exposition du parc et appliquer le correctif éditeur dès sa disponibilité.",
+          "image": null,
+          "sources": [
+            {
+              "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-118579",
+              "label": "NVD"
+            },
+            {
+              "url": "https://www.cvedetails.com/cve/CVE-2026-118579/",
+              "label": "CVE Details"
+            }
+          ],
+          "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-118579",
+          "pubDate": "2026-10-28T23:17:09.940Z"
+        },
+        {
+          "title": "CVE-2026-116576 — systeminformation vulnerable to Windows command injection in services() through Unicode quotation marks",
+          "cve": "CVE-2026-116576",
+          "severity": "high",
+          "score": 59,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Vulnérabilité élevée CVE-2026-116576 affectant systeminformation (npm) (score CVSS 7.8).\n\nsysteminformation vulnerable to Windows command injection in services() through Unicode quotation marks\n\nThis report confirms version 5.33.15 . Other package versions have not been checked.\n\nIn lib/processes.js , services() sanitizes the caller's string with sanitizeShellString() and later inserts each resulting name into a Get-CimInstance Win32_Service -Filter command.",
+          "detail": "Vulnérabilité élevée CVE-2026-116576 affectant systeminformation (npm) (score CVSS 7.8).\n\nsysteminformation vulnerable to Windows command injection in services() through Unicode quotation marks\n\nThis report confirms version 5.33.15 . Other package versions have not been checked.\n\nIn lib/processes.js , services() sanitizes the caller's string with sanitizeShellString() and later inserts each resulting name into a Get-CimInstance Win32_Service -Filter command. The Windows branch passes that command to util.powerShell() .\n\nThe sanitizer in lib/util.js removes the ASCII double quote, but it does not remove U+201C or U+201D, the left and right curly double quotation marks. It also permits spaces and parentheses when called in its default, non-strict mode. PowerShell accepts the curly marks as string delimiters, so an input can end the filter string and place a command expression in the generated command.\n\nFor example, the input below uses curly quotation marks to end the generated filter string and execute New-Item . I reproduced this call on Windows against the checked-out systeminformation@5.33.15 source; it created a marker file with the Node.js process account.\n\nRun this on Windows in a disposable directory with Node.js and PowerShell available:\n\nmkdir si - command - injection - repro cd si - command - injection - repro npm init - y npm install systeminformation @5 .33.15 Save the following as poc.cjs , then run node poc.cjs :",
+          "action": "Vérifier l'exposition du parc et appliquer le correctif éditeur dès sa disponibilité.",
+          "image": "https://github.githubassets.com/assets/advisory-database-show-f32c8207dfb2.png",
+          "sources": [
+            {
+              "url": "https://github.com/advisories/GHSA-3f7j-7jwc-fxfj",
+              "label": "GitHub Advisory"
+            }
+          ],
+          "url": "https://github.com/advisories/GHSA-3f7j-7jwc-fxfj",
+          "pubDate": "2026-10-28T22:42:49.000Z"
+        },
+        {
+          "title": "CVE-2026-118690 — Signal K Server before 2.33.0 contains a missing authentication vulnerability that allows …",
+          "cve": "CVE-2026-118690",
+          "severity": "critical",
+          "score": 59,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Vulnérabilité critique CVE-2026-118690 (score CVSS 9.8).\n\nSignal K Server before 2.33.0 contains a missing authentication vulnerability that allows unauthenticated remote attackers to download log archives via the /skServer/ziplogs endpoint. Attackers can extract the JWT secretKey from security.json in the ZIP, forge administrator tokens, and create persistent admin accounts for full server control.",
+          "detail": "Vulnérabilité critique CVE-2026-118690 (score CVSS 9.8).\n\nSignal K Server before 2.33.0 contains a missing authentication vulnerability that allows unauthenticated remote attackers to download log archives via the /skServer/ziplogs endpoint. Attackers can extract the JWT secretKey from security.json in the ZIP, forge administrator tokens, and create persistent admin accounts for full server control.\n\nScore CVSS : 9.8\n\nType de faiblesse (CWE) : CWE-306",
+          "action": "Vérifier l'exposition du parc et appliquer le correctif éditeur dès sa disponibilité.",
+          "image": null,
+          "sources": [
+            {
+              "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-118690",
+              "label": "NVD"
+            },
+            {
+              "url": "https://www.cvedetails.com/cve/CVE-2026-118690/",
+              "label": "CVE Details"
+            }
+          ],
+          "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-118690",
+          "pubDate": "2026-10-28T22:17:13.070Z"
+        },
+        {
+          "title": "CVE-2026-115893 — Wasmtime: Cranelift backend on aarch64 can jump to incorrect target on large Wasm `br_table` instruction",
+          "cve": "CVE-2026-115893",
+          "severity": "critical",
+          "score": 59,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Vulnérabilité critique CVE-2026-115893 affectant wasmtime (rust) (score CVSS 9.9).\n\nWasmtime: Cranelift backend on aarch64 can jump to incorrect target on large Wasm `br_table` instruction\n\nAny Wasmtime engine running on aarch64 with default settings can be forced to jump to arbitrary code by a user-controlled Wasm module.",
+          "detail": "Vulnérabilité critique CVE-2026-115893 affectant wasmtime (rust) (score CVSS 9.9).\n\nWasmtime: Cranelift backend on aarch64 can jump to incorrect target on large Wasm `br_table` instruction\n\nAny Wasmtime engine running on aarch64 with default settings can be forced to jump to arbitrary code by a user-controlled Wasm module. All versions of Wasmtime/Cranelift that support aarch64, since the initial release of that support in 2020 (before Wasmtime v1.0), are affected.\n\nWasmtime v36.0.19, v48.0.7, and v49.0.4 have been released which all fix this issue.\n\npchickey published to bytecodealliance/wasmtime Oct 19, 2026 Published by the National Vulnerability Database Oct 23, 2026 Published to the GitHub Advisory Database Oct 28, 2026 Reviewed Oct 28, 2026 Last updated Oct 28, 2026 Severity Critical 9.9 CVSS overall score This score calculates overall vulnerability severity from 0 to 10 and is based on the Common Vulnerability Scoring System (CVSS). / 10 CVSS v3 base metrics Attack vector Network Attack complexity Low Privileges required Low User interaction None Scope Changed Confidentiality High Integrity High Availability High Learn more about base metrics CVSS v3 base metrics Attack vector: More severe the more the remote (logically and physically) an attacker can be in order to exploit the vulnerability. Attack complexity: More severe for the least complex attacks. Privileges required: More severe if no privileges are required. User interaction: More severe when no user interaction is required. Scope: More severe when a scope change occurs, e.g. one vulnerable component impacts resources in components beyond its security scope. Confidentiality: More severe when loss of data confidentiality is highest, measuring the level of data access available to an unauthorized user. Inte",
+          "action": "Vérifier l'exposition du parc et appliquer le correctif éditeur dès sa disponibilité.",
+          "image": "https://github.githubassets.com/assets/advisory-database-show-f32c8207dfb2.png",
+          "sources": [
+            {
+              "url": "https://github.com/advisories/GHSA-mghf-wjfp-p5xm",
+              "label": "GitHub Advisory"
+            }
+          ],
+          "url": "https://github.com/advisories/GHSA-mghf-wjfp-p5xm",
+          "pubDate": "2026-10-28T21:14:14.000Z"
+        },
+        {
+          "title": "CVE-2026-103406 — An Improper Neutralization of Special Elements used in an OS Command vulnerability in the …",
+          "cve": "CVE-2026-103406",
+          "severity": "critical",
+          "score": 59,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Vulnérabilité critique CVE-2026-103406 (score CVSS 9.8).\n\nAn Improper Neutralization of Special Elements used in an OS Command vulnerability in the AutomatedProvisioner in Juniper Networks Session Smart Conductor allows a remote attacker to execute arbitrary commands as root via a specially crafted salt minion ID.",
+          "detail": "Vulnérabilité critique CVE-2026-103406 (score CVSS 9.8).\n\nAn Improper Neutralization of Special Elements used in an OS Command vulnerability in the AutomatedProvisioner in Juniper Networks Session Smart Conductor allows a remote attacker to execute arbitrary commands as root via a specially crafted salt minion ID.\n\nScore CVSS : 9.8\n\nType de faiblesse (CWE) : CWE-78",
+          "action": "Vérifier l'exposition du parc et appliquer le correctif éditeur dès sa disponibilité.",
+          "image": null,
+          "sources": [
+            {
+              "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-103406",
+              "label": "NVD"
+            },
+            {
+              "url": "https://www.cvedetails.com/cve/CVE-2026-103406/",
+              "label": "CVE Details"
+            }
+          ],
+          "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-103406",
+          "pubDate": "2026-10-28T17:17:25.830Z"
+        },
+        {
+          "title": "Inside KeyDrift: Analyzing historical UAT-11473 activity on Cisco SD-WAN",
+          "cve": "CVE-2026-20127",
+          "severity": "high",
+          "score": 57,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Vulnérabilité élevée CVE-2026-20127 affectant Cisco.\n\nCisco Talos has identified UAT-11473, a highly sophisticated advanced persistent threat (APT) actor, who exploited CVE-2026-20127 , an authentication bypass vulnerability in Cisco SD-WAN Catalyst Controller instances to bypass authentication and gain unauthorized access to affected systems.",
+          "detail": "Vulnérabilité élevée CVE-2026-20127 affectant Cisco.\n\nCisco Talos has identified UAT-11473, a highly sophisticated advanced persistent threat (APT) actor, who exploited CVE-2026-20127 , an authentication bypass vulnerability in Cisco SD-WAN Catalyst Controller instances to bypass authentication and gain unauthorized access to affected systems. UAT-11473 then installed a custom malware framework we track as &#x201c;KeyDrift&#x201d; consisting of multiple components geared towards collecting sensitive keying information, acting as backdoors and intermediate command-and-control (C2) hosts. Observed targeting spans across space and satellite services, defense and aerospace technology, and policy research. Talos assesses with high confidence that UAT-11473&#x2019;s operating infrastructure overlaps considerably with Volt Typhoon&#x2019;s &#x201c;Silent Train&#x201d; covert access network . KeyDrift is a custom malware framework that is designed to operate in Cisco SD-WAN controller environments. Talos assesses with high confidence that the framework is designed to provide long-term persistent access and automated exfiltration of sensitive keying material. KeyDrift operates inside SD-WAN control-plane processes and is capable of intercepting decrypted control traffic, extracting control-session metadata and data-plane keying material, and staging or transmitting the collected material using encrypted records. The framework&apos;s primar",
+          "action": "Vérifier l'exposition du parc et appliquer le correctif éditeur dès sa disponibilité.",
+          "image": "https://storage.ghost.io/c/af/a0/afa04ee3-414f-4481-8d23-7e7c146f192e/content/images/size/w1200/2026/10/threat_advisory-1.jpg",
+          "sources": [
+            {
+              "url": "https://blog.talosintelligence.com/uat-11473-keydrift/",
+              "label": "Cisco Talos"
+            }
+          ],
+          "url": "https://blog.talosintelligence.com/uat-11473-keydrift/",
+          "pubDate": "2026-10-28T21:32:02.000Z"
+        },
+        {
+          "title": "CVE-2026-117574 — A flaw was found in ai-gateway-payload-processing. An authenticated remote attacker can ex…",
+          "cve": "CVE-2026-117574",
+          "severity": "critical",
+          "score": 57,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Vulnérabilité critique CVE-2026-117574 (score CVSS 9.1).\n\nA flaw was found in ai-gateway-payload-processing. An authenticated remote attacker can exploit this vulnerability by submitting a request specifying another tenant's model identifier in the request body or header. Because the service does not verify authorization before retrieving credentials from the shared store, it injects the target tenant's application programming interface (API) keys into the request.",
+          "detail": "Vulnérabilité critique CVE-2026-117574 (score CVSS 9.1).\n\nA flaw was found in ai-gateway-payload-processing. An authenticated remote attacker can exploit this vulnerability by submitting a request specifying another tenant's model identifier in the request body or header. Because the service does not verify authorization before retrieving credentials from the shared store, it injects the target tenant's application programming interface (API) keys into the request. This flaw allows an attacker to perform unauthorized requests and consume another tenant's large language model (LLM) resources and quotas.\n\nScore CVSS : 9.1\n\nType de faiblesse (CWE) : CWE-639",
+          "action": "Vérifier l'exposition du parc et appliquer le correctif éditeur dès sa disponibilité.",
+          "image": null,
+          "sources": [
+            {
+              "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-117574",
+              "label": "NVD"
+            },
+            {
+              "url": "https://www.cvedetails.com/cve/CVE-2026-117574/",
+              "label": "CVE Details"
+            }
+          ],
+          "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-117574",
+          "pubDate": "2026-10-28T20:17:21.417Z"
+        },
+        {
+          "title": "PHP2Shell - pourquoi corriger les failles ne suffit plus",
+          "cve": null,
+          "severity": "critical",
+          "score": 49,
+          "corroboration": 1,
+          "region": "fr",
+          "body": "Vulnérabilité critique.\n\nAvec des millions de tentatives d'exploitation recensées, les vulnérabilités critiques PHP2Shell exposent les entreprises à des risques de compromission de leurs systèmes et de leurs données. Dans ce contexte, un commentaire de Rodolphe Barnault, Vice-Président Europe du Sud chez Rubrik https://www.rubrik.com/ , sur l'ampleur de la menace, le rôle de l'IA dans l'accélération des attaques et les enjeux de cyberrésilience, au-delà du seul déploiement des cor…",
+          "detail": "Vulnérabilité critique.\n\nAvec des millions de tentatives d'exploitation recensées, les vulnérabilités critiques PHP2Shell exposent les entreprises à des risques de compromission de leurs systèmes et de leurs données. Dans ce contexte, un commentaire de Rodolphe Barnault, Vice-Président Europe du Sud chez Rubrik https://www.rubrik.com/ , sur l'ampleur de la menace, le rôle de l'IA dans l'accélération des attaques et les enjeux de cyberrésilience, au-delà du seul déploiement des correctifs. Rodolphe Barnault Vice-Président Europe du Sud, Rubrik « Les millions de tentatives d'exploitation recensées autour de PHP2Shell, selon les informations rapportées par Reuters https://www.reuters.com/world/asia-pacific/cloudflare-sees-millions-exploit-attempts-after-php-disclosure-2026-10-22/ , témoignent de l'ampleur de la menace. Le 26 octobre, le CERT-FR https://cert.cyber.gouv.fr/alerte/CERTFR-2026-ALE-014/ de l'ANSSI a également confirmé des tentatives d'exploitation ciblant certains déploiements de PHP. Toutefois, une tentative d'attaque ne signifie pas nécessairement qu'un système a été compromis. Selon la PHP Foundation https://thephp.foundation/blog/2026/10/21/todays-php-security-release-and-how-were-strengthening-php-security/ , les deux vulnérabilités de PHP2Shell ont chacune reçu un score de gravité de 9,2 sur 10. Pour les entreprises, la priorité immédiate est d'identifier les systèmes exposés, notamment",
+          "action": "Vérifier l'exposition du parc et appliquer le correctif éditeur dès sa disponibilité.",
+          "image": "https://www.globalsecuritymag.fr/local/cache-vignettes/L450xH236/03fee9159d1c4343c67e73364df8bd-75684.jpg",
+          "sources": [
+            {
+              "url": "https://www.globalsecuritymag.fr/php2shell-pourquoi-corriger-les-failles-ne-suffit-plus.html",
+              "label": "Global Sec Mag"
+            }
+          ],
+          "url": "https://www.globalsecuritymag.fr/php2shell-pourquoi-corriger-les-failles-ne-suffit-plus.html",
+          "pubDate": "2026-10-29T05:01:06.484Z"
+        },
+        {
+          "title": "Renfe : une cyberattaque expose les données de ses voyageurs français",
+          "cve": null,
+          "severity": "high",
+          "score": 24,
+          "corroboration": 1,
+          "region": "fr",
+          "body": "Vulnérabilité élevée.\n\nRenfe, la compagnie ferroviaire espagnole qui exploite également des trains en France, confirme une cyberattaque ayant potentiellement compromis les\n\nAttaque Mis à jour le 28 octobre 2026 à 15h50 Renfe : une cyberattaque expose les données de ses voyageurs français Renfe, la compagnie ferroviaire espagnole qui exploite également des trains en France, confirme une cyberattaque ayant potentiellement compromis les données personnelles de ses voyageurs.",
+          "detail": "Vulnérabilité élevée.\n\nRenfe, la compagnie ferroviaire espagnole qui exploite également des trains en France, confirme une cyberattaque ayant potentiellement compromis les\n\nAttaque Mis à jour le 28 octobre 2026 à 15h50 Renfe : une cyberattaque expose les données de ses voyageurs français Renfe, la compagnie ferroviaire espagnole qui exploite également des trains en France, confirme une cyberattaque ayant potentiellement compromis les données personnelles de ses voyageurs. L&rsquo;incident, survenu le 24 septembre 2026, pourrait concerner des informations d&rsquo;identité, des historiques de voyages, des billets achetés et même des mots de passe protégés par chiffrement.\n\nLes voyageurs français pourraient également être concernés. Depuis juillet 2023, Renfe commercialise des trajets à grande vitesse entre la France et l&rsquo;Espagne, notamment depuis Lyon, Marseille, Montpellier, Nîmes ou Perpignan. L&rsquo;entreprise ne précise toutefois pas si les données de clients français figurent parmi celles auxquelles les attaquants ont pu accéder.\n\nRenfe est l&rsquo;opérateur ferroviaire public espagnol. Au-delà de ses services nationaux, la compagnie exploite des trains AVE internationaux reliant notamment Barcelone à Lyon et Madrid à Marseille, et commercialise également des trajets entre plusieurs villes françaises.\n\nDans une notification officielle publiée en français, Renfe Viajeros reconnaît qu&rsquo;un tiers non autorisé a accédé à certains systèmes informatiques de l&rsquo;entreprise le 24 septembre 2026 .\n\nL&rsquo;intrusion a été détectée grâce aux outils internes de surveillance. Les premières investigations indiquent que les systèmes concernés étaient notamment liés aux processus de vente de billets de train .\n\nDans un premier communiqué publié le 25 septembre, Renfe",
+          "action": "Vérifier l'exposition du parc et appliquer le correctif éditeur dès sa disponibilité.",
+          "image": "https://www.cyberattaque.org/wp-content/uploads/2026/10/IMG_3586.jpeg",
+          "sources": [
+            {
+              "url": "https://www.cyberattaque.org/renfe-une-cyberattaque-pourrait-expose-les-donnees-de-ses-voyageurs-francais/",
+              "label": "Cyberattaque.org"
+            }
+          ],
+          "url": "https://www.cyberattaque.org/renfe-une-cyberattaque-pourrait-expose-les-donnees-de-ses-voyageurs-francais/",
+          "pubDate": "2026-10-28T11:41:35.000Z"
+        }
+      ]
+    },
+    {
+      "id": "attacks",
+      "items": [
+        {
+          "title": "Unwrapping Retail Peak Season Cyber Threats",
+          "cve": null,
+          "severity": "news",
+          "score": 87,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Incident de sécurité rapporté par Unit 42.\n\nUnit 42 explores key peak shopping season retail cyber threats, from ransomware to AI attacks, and shares how to defend operations and customer trust. Unit 42 explores key peak shopping season retail cyber threats, from ransomware to AI attacks, and shares how to defend operations and customer trust.\n\nThis blog explores the main cyber threats that retail organizations need to be aware of and prepared to defend against as we approach peak shopping season in…",
+          "detail": "Incident de sécurité rapporté par Unit 42.\n\nUnit 42 explores key peak shopping season retail cyber threats, from ransomware to AI attacks, and shares how to defend operations and customer trust. Unit 42 explores key peak shopping season retail cyber threats, from ransomware to AI attacks, and shares how to defend operations and customer trust.\n\nThis blog explores the main cyber threats that retail organizations need to be aware of and prepared to defend against as we approach peak shopping season in 2026. We highlight notable security events that occurred in prior years during this time period. We also examine relevant threats from both an enterprise and guest point of view and provide examples of the evolving trend of autonomous attacks that could impact retailers.\n\nSince 2020, there have been several notable security events disclosed toward the end of peak shopping season. This includes the SolarWinds software supply chain compromise in December 2020 and the exploitation of a Log4j zero-day vulnerability in December 2021. Both events posed complexities for retail security teams as they occurred during a period where code freezes were likely in place. This limited the ability for organizations to make changes to critical technology systems to prevent any operational disruption to core technology infrastructure.\n\nIn addition to these broader threat landscape events, retailers typically face an increase in many types of financially-motivated attacks during this time period. This includes tactics and techniques designed to target both enterprises and guests alike.\n\nBased on years of previous activity against Fortune 100 retailers from cyber threats during peak shopping season, these are the types of attacks that retailers should be primarily focused on detecting and respo",
+          "action": "Surveiller les indicateurs de compromission associés et contrôler les actifs exposés.",
+          "image": "https://unit42.paloaltonetworks.com/wp-content/uploads/2025/11/07_Listicle_Category_1505x922.jpg",
+          "sources": [
+            {
+              "url": "https://unit42.paloaltonetworks.com/unwrapping-retail-cyber-threats/",
+              "label": "Unit 42"
+            }
+          ],
+          "url": "https://unit42.paloaltonetworks.com/unwrapping-retail-cyber-threats/",
+          "pubDate": "2026-10-28T18:00:10.000Z"
+        },
+        {
+          "title": "Nefilim and Hive ransomware affiliate gets 70 months in prison",
+          "cve": null,
+          "severity": "critical",
+          "score": 82,
+          "corroboration": 4,
+          "region": "intl",
+          "body": "Incident de sécurité rapporté par Security Affairs.\n\nArtem Stryzhak gets 70 months in prison for Hive and Nefilim ransomware attacks, while the FBI offers $11M for his alleged co-conspirator.\n\nAds or Surveillance? Researchers Flag Suspicious Targeting of Starlink Users\n\nU.S. CISA adds Google Brotli and Adobe Commerce and Magento flaws to its Known Exploited Vulnerabilities catalog\n\nItaly ’s Parliament Under Cyber Pressure: Why the Attack on the Chamber Matters\n\nAustralia's Cyber Spy Chief: Expect More Disrup…",
+          "detail": "Incident de sécurité rapporté par Security Affairs.\n\nArtem Stryzhak gets 70 months in prison for Hive and Nefilim ransomware attacks, while the FBI offers $11M for his alleged co-conspirator.\n\nAds or Surveillance? Researchers Flag Suspicious Targeting of Starlink Users\n\nU.S. CISA adds Google Brotli and Adobe Commerce and Magento flaws to its Known Exploited Vulnerabilities catalog\n\nItaly ’s Parliament Under Cyber Pressure: Why the Attack on the Chamber Matters\n\nAustralia's Cyber Spy Chief: Expect More Disruption as AI Accelerates Hacking\n\nU.S. CISA adds PHP flaws PHP2Shell to its Known Exploited Vulnerabilities catalog\n\nAttackers Take Control of Dahua Cameras and Video Recorders Via Easy4IP",
+          "action": "Surveiller les indicateurs de compromission associés et contrôler les actifs exposés.",
+          "image": "https://securityaffairs.com/wp-content/uploads/2015/03/DoJ.jpg",
+          "sources": [
+            {
+              "url": "https://securityaffairs.com/201960/cyber-crime/hive-and-nefilim-ransomware-affiliate-gets-70-months-in-jail.html",
+              "label": "Security Affairs"
+            },
+            {
+              "url": "https://www.theregister.com/cyber-crime/2026/10/28/serial-ransomware-crook-gets-70-months-behind-bars-for-nefilim-hive-roles/5306050",
+              "label": "The Register"
+            },
+            {
+              "url": "https://www.bleepingcomputer.com/news/security/nefilim-and-hive-ransomware-affiliate-gets-70-months-in-prison/",
+              "label": "BleepingComputer"
+            },
+            {
+              "url": "https://www.securityweek.com/ukrainian-hive-and-nefilim-ransomware-affiliate-gets-70-months-in-us-prison/",
+              "label": "SecurityWeek"
+            }
+          ],
+          "url": "https://securityaffairs.com/201960/cyber-crime/hive-and-nefilim-ransomware-affiliate-gets-70-months-in-jail.html",
+          "pubDate": "2026-10-28T20:19:06.000Z"
+        },
+        {
+          "title": "Sony ISP subsidiary data breach exposes 2.5 million customer records",
+          "cve": null,
+          "severity": "news",
+          "score": 77,
+          "corroboration": 2,
+          "region": "intl",
+          "body": "Incident de sécurité rapporté par BleepingComputer.\n\nSony Network Communications has confirmed a data breach that compromised approximately 2.5 million records containing current and former customers' personal information.\n\nPHP2Shell security flaws now sucessfully exploited in the wild\n\nCritical 'HTTP2Shell' Brotli vulnerability triggers emergency patches\n\nPolice seize Virtualine bulletproof service tied to ransowmare, cybercrime\n\nSony ISP subsidiary data breach exposes 2.5 million customer records\n\nHow to e…",
+          "detail": "Incident de sécurité rapporté par BleepingComputer.\n\nSony Network Communications has confirmed a data breach that compromised approximately 2.5 million records containing current and former customers' personal information.\n\nPHP2Shell security flaws now sucessfully exploited in the wild\n\nCritical 'HTTP2Shell' Brotli vulnerability triggers emergency patches\n\nPolice seize Virtualine bulletproof service tied to ransowmare, cybercrime\n\nSony ISP subsidiary data breach exposes 2.5 million customer records\n\nHow to enable Kernel-mode Hardware-enforced Stack Protection in Windows 11\n\nSony Network Communications has confirmed a data breach that compromised approximately 2.5 million records containing current and former customers&rsquo; personal information.",
+          "action": "Surveiller les indicateurs de compromission associés et contrôler les actifs exposés.",
+          "image": "https://www.bleepstatic.com/content/hl-images/2026/10/28/sony.jpg",
+          "sources": [
+            {
+              "url": "https://www.bleepingcomputer.com/news/security/sony-isp-subsidiary-data-breach-exposes-25-million-customer-records/",
+              "label": "BleepingComputer"
+            },
+            {
+              "url": "https://gbhackers.com/sony-data-breach-exposes-2-58-million-customer-records/",
+              "label": "GBHackers"
+            }
+          ],
+          "url": "https://www.bleepingcomputer.com/news/security/sony-isp-subsidiary-data-breach-exposes-25-million-customer-records/",
+          "pubDate": "2026-10-28T16:45:47.000Z"
+        },
+        {
+          "title": "Japan Airlines warns of data breach as country grapples with multiple cyber incidents",
+          "cve": null,
+          "severity": "news",
+          "score": 75,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Incident de sécurité rapporté par The Record.\n\nHackers stole passport numbers, frequent flyer numbers, email addresses and phone numbers for about 2,000 customers.\n\nJapan Airlines said one of its IT providers suffered a data breach that leaked the personal records of more than 90,000 customers, adding to a series of cyberattacks on Japanese firms that has prompted government action in recent days.\n\nThe company published a notice on Wednesday saying Amadeus IT Group, the company that runs its flight res…",
+          "detail": "Incident de sécurité rapporté par The Record.\n\nHackers stole passport numbers, frequent flyer numbers, email addresses and phone numbers for about 2,000 customers.\n\nJapan Airlines said one of its IT providers suffered a data breach that leaked the personal records of more than 90,000 customers, adding to a series of cyberattacks on Japanese firms that has prompted government action in recent days.\n\nThe company published a notice on Wednesday saying Amadeus IT Group, the company that runs its flight reservation, ticketing and check-in systems, informed the firm last week that hackers accessed a “portion of customer reservation data” for Japan Airlines and Japan Transocean Air flights. In total, 92,000 customers were impacted, with hackers accessing names, reservation codes and flight information.\n\nFor about 2,000 Japan Airlines customers, the hackers stole passport numbers, frequent flyer numbers, email addresses and phone numbers.\n\nJapan Airlines said the breach never impacted flight operations and credit card numbers were not compromised.\n\n“We will contact the affected customers individually to provide necessary assistance, including reminders to remain vigilant against phishing emails, fraudulent phone calls, and suspicious websites impersonating the JAL Group,” the company said.\n\nThe data breach follows multiple high-profile data breaches impacting Japanese companies over the last two weeks. On Tuesday, an internet service provider owned by Sony Network Communications said more than 2.5 million people had information stolen during a data breach earlier this month.",
+          "action": "Surveiller les indicateurs de compromission associés et contrôler les actifs exposés.",
+          "image": "https://cms.therecord.media/uploads/japan_airlines_cb02768a19.jpg",
+          "sources": [
+            {
+              "url": "https://therecord.media/japan-airlines-warns-of-breach-country-grapples-with-incidents",
+              "label": "The Record"
+            }
+          ],
+          "url": "https://therecord.media/japan-airlines-warns-of-breach-country-grapples-with-incidents",
+          "pubDate": "2026-10-28T20:33:00.000Z"
+        },
+        {
+          "title": "Moldova investigates possible foreign involvement in major government cyberattack",
+          "cve": null,
+          "severity": "news",
+          "score": 75,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Incident de sécurité rapporté par The Record.\n\nPrime Minister Vasile Tofan said the incident may be part of a broader campaign targeting both citizens' personal data and government digital infrastructure, according to local media reports.\n\nMoldova is investigating whether foreign state actors were involved in a major cyberattack on its government systems that exposed sensitive personal information and disrupted dozens of public services, the country's prime minister said Wednesday.\n\nPrime Minister Vasi…",
+          "detail": "Incident de sécurité rapporté par The Record.\n\nPrime Minister Vasile Tofan said the incident may be part of a broader campaign targeting both citizens' personal data and government digital infrastructure, according to local media reports.\n\nMoldova is investigating whether foreign state actors were involved in a major cyberattack on its government systems that exposed sensitive personal information and disrupted dozens of public services, the country's prime minister said Wednesday.\n\nPrime Minister Vasile Tofan said the incident may be part of a broader campaign targeting both citizens' personal data and government digital infrastructure, according to local media reports.\n\n\"Our country is the target of coordinated and large-scale cyberattacks. We are not talking about an isolated incident,\" Tofan said, adding that authorities were examining the possible involvement of foreign state actors.\n\nMoldova has not publicly attributed the attack to any country or hacking group.\n\nTofan's statement came a day after Moldova's Electronic Governance Agency (AGE) disclosed that hackers had exploited vulnerabilities in government services to extract large volumes of personal information between October 19 and 23.\n\nThe attackers made approximately 11 million requests to access data through government services. Preliminary findings indicate that information linked to about 750,000 identification numbers was extracted, although not every affected individual had all categories of personal data exposed.",
+          "action": "Surveiller les indicateurs de compromission associés et contrôler les actifs exposés.",
+          "image": "https://cms.therecord.media/uploads/moldova_1_5f60dac3c7.jpg",
+          "sources": [
+            {
+              "url": "https://therecord.media/moldova-investigates-possible-foreign-involvement-cyberattacks",
+              "label": "The Record"
+            }
+          ],
+          "url": "https://therecord.media/moldova-investigates-possible-foreign-involvement-cyberattacks",
+          "pubDate": "2026-10-28T16:37:00.000Z"
+        },
+        {
+          "title": "Noelker and Hull — rançongiciel rhysida (États-Unis)",
+          "cve": null,
+          "severity": "news",
+          "score": 69,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Incident de sécurité rapporté par ransomware.live.\n\nVictime revendiquée par le groupe de rançongiciel rhysida. Pays : États-Unis. Secteur : Professional Services. Noelker and Hull NHA-FULL � US ARCHITECTURE FIRM (est. 1971) - HEALTHCARE / SENIOR-LIVING DESIGN - COMPLETE INTERNAL FILE-SERVER - FRESH TO 2026No credentials in this lot (excluded by decision). Focus: identity and familypackages, payroll SQL, tax/bank pipes, litigation, seals & signatures, 26 GB mail.SUBJECT - Noelker and Hull Associates, Inc.",
+          "detail": "Incident de sécurité rapporté par ransomware.live.\n\nVictime revendiquée par le groupe de rançongiciel rhysida.\n\nPays : États-Unis.\n\nSecteur : Professional Services.\n\nNoelker and Hull NHA-FULL � US ARCHITECTURE FIRM (est. 1971) - HEALTHCARE / SENIOR-LIVING DESIGN - COMPLETE INTERNAL FILE-SERVER - FRESH TO 2026No credentials in this lot (excluded by decision). Focus: identity and familypackages, payroll SQL, tax/bank pipes, litigation, seals & signatures, 26 GB mail.SUBJECT - Noelker and Hull Associates, Inc. (Chambersburg PA, est. 1971) + KAPClegacy (Frederick MD). ~41 employees, 9 shareholders. Revenue $8.56M -> $7.01M.~990 delivered projects: Penn State Health, WellSpan, Meritus, UPMC, SelectMedical, Tower Health, Holland America, Hershey, Gettysburg College - incl.hospital & crisis-center plans.KEY NUMBERS: 990 project folders | 30+ healthcare clients | 26 GB mail |60+ SSN rows | exec passports+DL x4 | edge 2026.INVENTORY - raw files from the firm's servers, values masked, full set on close.[1] IDENTITY & FAMILY PACKAGES - FULLZ - ~80-100 PA residentsPassports+DL of the President and VP (x4); W-2 with full SSN (SSA TY2024),pay stubs (VP, YTD ~$116K, 07/2026), 401(k) x2, I-9; background checks -MD Criminal History + FBI Identity History + fingerprints.'Kennedy': SSN, mortgage 03/2024, 3 child birth certs, child medical.'Karpowicz' (employee's mother, dementia): Medicare MBI, bank accounts,Morgan Stanley check $86,650.68, returns 2022-2025, IRS POA.'Hoffman': UPMC/WellSpan medical, custody. + ~62 resumes, phones ~45.Below PA AG >500 bar - but every name is a plaintiff (Dittman) + a victim.[2] PAYROLL - Ajera ERP SQL backups, 140 tablesSSN x61+ | Salary x459 | W-2 x1151 | 1099 x991 | DirectDeposit x176 |BankAccount x1503. Full compensation/bank anatomy for payroll-diversion.[3] TAX & FINANCE - Form 1120 x4 yrs, QuickBooks (KAPC); PPP $802,480 +$803,347.83 forgiven; IRS audit TY2020 closed no-change; BlueRidge acct104729, positive-pay exports. Fraud precedent: forged checks $45.5K (2022)+ fraudulent SBA EIDL #7672918108 in the firm's name - scheme proven.[4] LITIGATION - ACTIVE: PJ Dick v. Lehigh No. 2026-C-2439, $13M+, 'designerrors, omissions' against NHA � internal assessments, stop-work, delayclaims. Fleet Landing demand ~$1.41M. Vincentian 'DO NOT MOVE OR DELETE'hold; SpiriTrust privileged folder; CIA subpoena response.[5] FORGERY KIT - signatures of 14 employees + architect seals (MD/PA); ~140Certificates of Insurance; license keys (Autodesk/Adobe) bonus.[6] COMMERCIAL SECRETS - fee pipeline 2010-2026 (5.00-8.50%, markup 10%,Hourly Rates, Past-Due notices); Meritus master specs; CAD Standards37.7 GB; aborted Olsen merger docs.[7] MAIL - ~26 GB, into 2026. Indexed sample: 6,195 msgs - 401(k)/ERISA/PHI.Rest as-is, unprobed.[+] AS-IS - encrypted browser stores x3 (OWA/banks/PayPal/USCIS listed),Credential Manager x91, .pfx, ACT! DB. Unproven, not in the price.FRESHNESS - A�live: pay stubs 07/2026, COI to 05/2027, case 2026-C-2439, mail.B�recent: Ajera, pipeline, returns 2022-25, litigation. C�archival (KAPC2009-14): W-2, background - SSN/biometrics don't expire.BUYERS - elder-fraud/fullz (1); BEC/payroll-diversion (2+3); competitor AEC (6);PA/MD plaintiff bar (1+4); contractor scams (5).DEAL - mockup only. 1. Sample: masked docs, table-list screenshot, watermarkedseal, SHA-256 manifest. 2. Escrow, multi-sig; whole lot or per-section split.3. Dead-drop container, hash check vs. manifest, proof-of-deletion on exclusive.DISCLAIMER - HYPOTHETICAL RED-TEAM SCENARIO from a confirmed forensic inventory(60 findings). Nothing is offered for sale. Credential rotation = UNVERIFIEDassumption (artifacts dated 2026). '~' = enumerated; unparsed = unproven.    More",
+          "action": "Surveiller les indicateurs de compromission associés et contrôler les actifs exposés.",
+          "image": "https://images.ransomware.live/victims/c08bb45691a2c8a7cf59133fc89b945f.png",
+          "sources": [
+            {
+              "url": "https://www.ransomware.live/id/U2FudGlhbSBIb3NwaXRhbCAmIENsaW5pY3NAYW51Ymlz",
+              "label": "ransomware.live"
+            }
+          ],
+          "url": "https://www.ransomware.live/id/U2FudGlhbSBIb3NwaXRhbCAmIENsaW5pY3NAYW51Ymlz",
+          "pubDate": "2026-10-28T23:31:54.432Z"
+        },
+        {
+          "title": "Leak site publishes data on more than 41,000 DHS employees obtained by hacktivists",
+          "cve": null,
+          "severity": "high",
+          "score": 69,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Incident de sécurité rapporté par CyberScoop.\n\nA leak website was published Wednesday, showcasing internal data on more than 41,000 Department of Homeland Security employees and contractors after it was obtained by hackers who claimed to have breached an identity service used by the agency.&nbsp;&nbsp; The transparency nonprofit Distributed Denial of Secrets and the hacker maia arson crimew got the data from a hacktivist outfit known as the Department of Peace.",
+          "detail": "Incident de sécurité rapporté par CyberScoop.\n\nA leak website was published Wednesday, showcasing internal data on more than 41,000 Department of Homeland Security employees and contractors after it was obtained by hackers who claimed to have breached an identity service used by the agency.&nbsp;&nbsp; The transparency nonprofit Distributed Denial of Secrets and the hacker maia arson crimew got the data from a hacktivist outfit known as the Department of Peace. ”The leak is extraordinary but deceptive in [its] simplicity as it identifies the officials responsible for overseeing covert and undercover operations, the government’s hunt for leakers and the failed BlueLeaks investigation — along with key personnel in DHS’s ever-escalating rendition and deportation programs,” said Emma Best, founder of DDoSecrets. CyberScoop was able to verify numerous current Cybersecurity and Infrastructure Agency employees are listed in the data, along with some former leadership members who left the agency years ago. The data goes back years, with various group names listed in the database making reference to COVID-19 planning and internal summits in 2023. The hacktivists said the breach was a response to the promise of stepped-up operations from Immigrations and Customs Enforcement by DHS Secretary Markwayne Mullin. ”On July 17th, Markwayne Mullin said he was ’turning up the heat.’ This is what happens to ICE when you do that,” said a spokes",
+          "action": "Surveiller les indicateurs de compromission associés et contrôler les actifs exposés.",
+          "image": "https://cyberscoop.com/wp-content/uploads/sites/3/2026/10/GettyImages-2261368896-1.jpg",
+          "sources": [
+            {
+              "url": "https://cyberscoop.com/dhs-employee-data-leak-ddosecrets/",
+              "label": "CyberScoop"
+            }
+          ],
+          "url": "https://cyberscoop.com/dhs-employee-data-leak-ddosecrets/",
+          "pubDate": "2026-10-28T21:33:00.000Z"
+        },
+        {
+          "title": "Energy Giant Engie Notifies Customers of Supply Chain Breach",
+          "cve": null,
+          "severity": "news",
+          "score": 69,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Incident de sécurité rapporté par Infosecurity Mag.\n\nAn undisclosed number of Engie customers have had their data compromised after a supply chain incident\n\nOne of the world’s largest natural gas suppliers has notified an undisclosed number of customers that their personal data may have been compromised in a recent breach.\n\nAccording to screenshots of the customer notification posted to X, the compromised data could include: full name, postal and email address, telephone number, unique IDs for energy supply…",
+          "detail": "Incident de sécurité rapporté par Infosecurity Mag.\n\nAn undisclosed number of Engie customers have had their data compromised after a supply chain incident\n\nOne of the world’s largest natural gas suppliers has notified an undisclosed number of customers that their personal data may have been compromised in a recent breach.\n\nAccording to screenshots of the customer notification posted to X, the compromised data could include: full name, postal and email address, telephone number, unique IDs for energy supply (PCE/PDL), customer ID, and contract number.\n\nThe firm confirmed that no banking data was involved in the breach.\n\nRead more on cyber-attacks impacting French firms: French Supermarket Cyber-Attack Impacts More Refrigeration Controllers\n\nEngie urged customers to be on the lookout for potential fraud and phishing stemming from the incident.\n\n“A malicious person could use the information mentioned above to impersonate you or use your personal details to contact another organization in your name, obtain additional information, or attempt to make a payment,” it warned. “Fraudulent emails may appear to come from trusted sources, such as organisations you know, in order to deceive you.”",
+          "action": "Surveiller les indicateurs de compromission associés et contrôler les actifs exposés.",
+          "image": "https://assets.infosecurity-magazine.com/webpage/og/08d67ab0-b31a-4910-b9f2-28cbe99561fe.jpg",
+          "sources": [
+            {
+              "url": "https://www.infosecurity-magazine.com/news/energy-giant-engie-supply-chain/",
+              "label": "Infosecurity Mag"
+            }
+          ],
+          "url": "https://www.infosecurity-magazine.com/news/energy-giant-engie-supply-chain/",
+          "pubDate": "2026-10-28T14:05:00.000Z"
+        },
+        {
+          "title": "Yet Another ClickFix Campaign, (Wed, Oct 28th)",
+          "cve": null,
+          "severity": "news",
+          "score": 66,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Incident de sécurité rapporté par SANS ISC.\n\nIntroduction On Wednesday, 2026-10-28, I ran across a ClickFix campaign I haven&#39;t seen before. Like several other ClickFix campaigns, this one uses a fake Cloudflare verification page. It targets both macOS and Windows. I don&#39;t yet have a name for this specific activity, but this diary shares some screenshots and indicators. Unfortunately, I was unable to get the macOS or Windows malware distributed through this particular ClickFix campaign.",
+          "detail": "Incident de sécurité rapporté par SANS ISC.\n\nIntroduction On Wednesday, 2026-10-28, I ran across a ClickFix campaign I haven&#39;t seen before. Like several other ClickFix campaigns, this one uses a fake Cloudflare verification page. It targets both macOS and Windows. I don&#39;t yet have a name for this specific activity, but this diary shares some screenshots and indicators. Unfortunately, I was unable to get the macOS or Windows malware distributed through this particular ClickFix campaign. Screenshots of the Activity Shown above: Fake verification page with ClickFix instructions when viewed on a Windows host. When I ran the command on a Windows host, the server hosting the malware responded with a 403 Forbidden error, and I was unable to proceed any further. Shown above: Fake verification page with ClickFix instructions when viewed on a macOS host. When I ran the ClickFix command on a macOS host, the domain for the server hosting the malware did not resolve, and I was unable to proceed any further. Shown above: The domain in the ClickFix command for macOS didn&#39;t resolve. Indicators From the Activity on Wednesday, 2026-10-28 The following is the chain of URLs that I saw from the domain hosting the fake verification page, js-static[.]cfd : hxxps[:]//js-static[.]cfd/embed.js?v=24 hxxps[:]//js-static[.]cfd/api/s/on?site=[information removed].com hxxps[:]//js-static[.]cfd/api/s/hit hxxps[:]//js-static[.]cfd/api/s/hit h",
+          "action": "Surveiller les indicateurs de compromission associés et contrôler les actifs exposés.",
+          "image": "https://isc.sans.edu/diaryimages/images/2026-10-28a-ISC-diary-image-01.png",
+          "sources": [
+            {
+              "url": "https://isc.sans.edu/diary/rss/33466",
+              "label": "SANS ISC"
+            }
+          ],
+          "url": "https://isc.sans.edu/diary/rss/33466",
+          "pubDate": "2026-10-29T00:42:15.000Z"
+        },
+        {
+          "title": "The Anglican International School — rançongiciel Global Secret Group (IL)",
+          "cve": null,
+          "severity": "news",
+          "score": 66,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Incident de sécurité rapporté par ransomware.live.\n\nRansomware.live discovered on 2026-10-28 that The Anglican International School has been claimed by Global Secret Group ransomware group\n\nSponsored by Hudson Rock – Use Hudson Rock's free cybercrime intelligence tools to learn how Infostealer infections are leading to ransomware attacks\n\nThe following DNS records were found for the victim's domain.\n\nLegal Disclaimer: Ransomware.live does not engage in the acquisition, exfiltration, downloading, possession,…",
+          "detail": "Incident de sécurité rapporté par ransomware.live.\n\nRansomware.live discovered on 2026-10-28 that The Anglican International School has been claimed by Global Secret Group ransomware group\n\nSponsored by Hudson Rock – Use Hudson Rock's free cybercrime intelligence tools to learn how Infostealer infections are leading to ransomware attacks\n\nThe following DNS records were found for the victim's domain.\n\nLegal Disclaimer: Ransomware.live does not engage in the acquisition, exfiltration, downloading, possession, hosting, access, consultation, redistribution, or disclosure of unlawfully obtained data. This platform indexes only publicly visible information posted by ransomware operators and open web sources without accessing or obtaining the underlying stolen content . The service is provided to support public awareness, legitimate research, and cyber-resilience. No stolen personal or confidential data is collected or distributed via this site.\n\nSession: 057726c909af65969646b040bbbfa5c4df67f5166a33cbac6cd9e1302b0b3ca148\n\nTox: 50DADDED26D859469371938B793456D8210A5AE02DD3C42979F5E52411BCB648F1CA68A5EDE5",
+          "action": "Surveiller les indicateurs de compromission associés et contrôler les actifs exposés.",
+          "image": "https://images.ransomware.live/victims/40636332ca458fc15f25291d9511a0fc.png",
+          "sources": [
+            {
+              "url": "https://www.ransomware.live/id/VGhlIEFuZ2xpY2FuIEludGVybmF0aW9uYWwgU2Nob29sQEdsb2JhbCBTZWNyZXQgR3JvdXA=",
+              "label": "ransomware.live"
+            }
+          ],
+          "url": "https://www.ransomware.live/id/VGhlIEFuZ2xpY2FuIEludGVybmF0aW9uYWwgU2Nob29sQEdsb2JhbCBTZWNyZXQgR3JvdXA=",
+          "pubDate": "2026-10-28T20:23:33.870Z"
+        },
+        {
+          "title": "PQE Group — rançongiciel Panzer",
+          "cve": null,
+          "severity": "news",
+          "score": 66,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Incident de sécurité rapporté par ransomware.live.\n\nVictime revendiquée par le groupe de rançongiciel Panzer. Secteur : Professional Services. Founded in 1998, PQE Group provides technology solutions and compliance consulting services to the Life Sciences industry. The company is headquartered in Reggello, Florence.",
+          "detail": "Incident de sécurité rapporté par ransomware.live.\n\nVictime revendiquée par le groupe de rançongiciel Panzer.\n\nSecteur : Professional Services.\n\nFounded in 1998, PQE Group provides technology solutions and compliance consulting services to the Life Sciences industry. The company is headquartered in Reggello, Florence. Note : The Full Data volume is coming as duplicati (dindex.zip.aes), Our Team with our Affiliates will try to enum the PassPhrase From the Target Network and Crack it with a Custom Pass lists and custom tools, We Also Gonna Share the Guide to how you as a hacker can get the hash with aescrypt2hashcat.pl and Crack it using hashcat, The Rest will depend on your Crack process to see the full data volume, We also available to Recover the data to the company when they contact us via official channels and stop the leak process, Thank you.",
+          "action": "Surveiller les indicateurs de compromission associés et contrôler les actifs exposés.",
+          "image": "https://images.ransomware.live/victims/57a526244c9841feb4eab4983ad2cd62.png",
+          "sources": [
+            {
+              "url": "https://www.ransomware.live/id/UFFFIEdyb3VwQFBhbnplcg==",
+              "label": "ransomware.live"
+            }
+          ],
+          "url": "https://www.ransomware.live/id/UFFFIEdyb3VwQFBhbnplcg==",
+          "pubDate": "2026-10-28T17:30:37.000Z"
+        },
+        {
+          "title": "GhostAction Hacking Wave Fizzles, But Attackers Lurk on in GitHub",
+          "cve": null,
+          "severity": "news",
+          "score": 64,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Incident de sécurité rapporté par Dark Reading.\n\nThe supply chain attack campaign's shift toward developer endpoints and cloud access signals what could be next for the cybercrime outfit.",
+          "detail": "Incident de sécurité rapporté par Dark Reading.\n\nThe supply chain attack campaign's shift toward developer endpoints and cloud access signals what could be next for the cybercrime outfit.",
+          "action": "Surveiller les indicateurs de compromission associés et contrôler les actifs exposés.",
+          "image": null,
+          "sources": [
+            {
+              "url": "https://www.darkreading.com/application-security/ghostaction-hacking-wave-fizzles-attackers-github",
+              "label": "Dark Reading"
+            }
+          ],
+          "url": "https://www.darkreading.com/application-security/ghostaction-hacking-wave-fizzles-attackers-github",
+          "pubDate": "2026-10-28T19:39:00.000Z"
+        },
+        {
+          "title": "Japan's GMO Offers $1 Million Bounty to Catch Hackers Behind FX Trading Cloud Breach",
+          "cve": null,
+          "severity": "news",
+          "score": 64,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Incident de sécurité rapporté par The Hacker News.\n\nJapan's GMO Internet Group is&nbsp;offering up to $1 million in total&nbsp;for tips that help catch the attackers who breached its Onamae.com Desktop Cloud service, after refusing to pay an extortion demand. The reward program opened on October 28 and pays only if a tip helps lead to an arrest or an international wanted notice. The service&nbsp;hosts Windows desktops&nbsp;used for FX trading,",
+          "detail": "Incident de sécurité rapporté par The Hacker News.\n\nJapan's GMO Internet Group is&nbsp;offering up to $1 million in total&nbsp;for tips that help catch the attackers who breached its Onamae.com Desktop Cloud service, after refusing to pay an extortion demand. The reward program opened on October 28 and pays only if a tip helps lead to an arrest or an international wanted notice. The service&nbsp;hosts Windows desktops&nbsp;used for FX trading,",
+          "action": "Surveiller les indicateurs de compromission associés et contrôler les actifs exposés.",
+          "image": "https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEguDDZZalFBPLgf4YxDU_9FK46XXVkU3x0GKHeZHFd2WTdJ0cK5n1KCWDEOIvSgzHP4R14xmwLygLnnmyuBEVcHRVO7b9nIUZVcp5ehxIgFGrPyXZ3hZGwNa2bg8k4e_kkSHa2tyo05yPortQqRR_9g3yr-T0k0Tga9_26Pr0rs_MNIU8RndHMeq9r5Rr0/s1600/gmo.jpg",
+          "sources": [
+            {
+              "url": "https://thehackernews.com/2026/10/japans-gmo-offers-1-million-bounty-to.html",
+              "label": "The Hacker News"
+            }
+          ],
+          "url": "https://thehackernews.com/2026/10/japans-gmo-offers-1-million-bounty-to.html",
+          "pubDate": "2026-10-28T07:13:21.000Z"
+        },
+        {
+          "title": "Microsoft urges Entra ID admins to migrate users to passkeys",
+          "cve": null,
+          "severity": "news",
+          "score": 63,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Incident de sécurité rapporté par BleepingComputer.\n\nMicrosoft again asked Entra ID administrators to migrate users to phishing-resistant methods to avoid sign-in disruptions before it retires SMS and voice authentication in February 2027.\n\nPHP2Shell security flaws now sucessfully exploited in the wild\n\nCritical 'HTTP2Shell' Brotli vulnerability triggers emergency patches\n\nPolice seize Virtualine bulletproof service tied to ransowmare, cybercrime\n\nSony ISP subsidiary data breach exposes 2.5 million customer…",
+          "detail": "Incident de sécurité rapporté par BleepingComputer.\n\nMicrosoft again asked Entra ID administrators to migrate users to phishing-resistant methods to avoid sign-in disruptions before it retires SMS and voice authentication in February 2027.\n\nPHP2Shell security flaws now sucessfully exploited in the wild\n\nCritical 'HTTP2Shell' Brotli vulnerability triggers emergency patches\n\nPolice seize Virtualine bulletproof service tied to ransowmare, cybercrime\n\nSony ISP subsidiary data breach exposes 2.5 million customer records\n\nHow to enable Kernel-mode Hardware-enforced Stack Protection in Windows 11\n\nMicrosoft again asked Entra ID administrators to migrate users to phishing-resistant methods to avoid sign-in disruptions before it retires SMS and voice authentication in February 2027.",
+          "action": "Surveiller les indicateurs de compromission associés et contrôler les actifs exposés.",
+          "image": "https://www.bleepstatic.com/content/hl-images/2026/10/28/Microsoft-logo.jpg",
+          "sources": [
+            {
+              "url": "https://www.bleepingcomputer.com/news/microsoft/microsoft-reminds-entra-id-admins-to-migrate-users-to-passkeys/",
+              "label": "BleepingComputer"
+            }
+          ],
+          "url": "https://www.bleepingcomputer.com/news/microsoft/microsoft-reminds-entra-id-admins-to-migrate-users-to-passkeys/",
+          "pubDate": "2026-10-28T14:48:32.000Z"
+        },
+        {
+          "title": "T... E... — rançongiciel SilentRansomGroup",
+          "cve": null,
+          "severity": "news",
+          "score": 61,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Incident de sécurité rapporté par ransomware.live.\n\nRansomware.live discovered on 2026-10-28 that T... E... has been claimed by Silentransomgroup ransomware group\n\nSponsored by Hudson Rock – Use Hudson Rock's free cybercrime intelligence tools to learn how Infostealer infections are leading to ransomware attacks\n\nLegal Disclaimer: Ransomware.live does not engage in the acquisition, exfiltration, downloading, possession, hosting, access, consultation, redistribution, or disclosure of unlawfully obtained data…",
+          "detail": "Incident de sécurité rapporté par ransomware.live.\n\nRansomware.live discovered on 2026-10-28 that T... E... has been claimed by Silentransomgroup ransomware group\n\nSponsored by Hudson Rock – Use Hudson Rock's free cybercrime intelligence tools to learn how Infostealer infections are leading to ransomware attacks\n\nLegal Disclaimer: Ransomware.live does not engage in the acquisition, exfiltration, downloading, possession, hosting, access, consultation, redistribution, or disclosure of unlawfully obtained data. This platform indexes only publicly visible information posted by ransomware operators and open web sources without accessing or obtaining the underlying stolen content . The service is provided to support public awareness, legitimate research, and cyber-resilience. No stolen personal or confidential data is collected or distributed via this site.\n\nSession: 057726c909af65969646b040bbbfa5c4df67f5166a33cbac6cd9e1302b0b3ca148\n\nTox: 50DADDED26D859469371938B793456D8210A5AE02DD3C42979F5E52411BCB648F1CA68A5EDE5",
+          "action": "Surveiller les indicateurs de compromission associés et contrôler les actifs exposés.",
+          "image": "https://images.ransomware.live/victims/719e5d82e703e5fd05ec0832541dea52.png",
+          "sources": [
+            {
+              "url": "https://www.ransomware.live/id/VC4uLiBFLi4uQFNpbGVudFJhbnNvbUdyb3Vw",
+              "label": "ransomware.live"
+            }
+          ],
+          "url": "https://www.ransomware.live/id/VC4uLiBFLi4uQFNpbGVudFJhbnNvbUdyb3Vw",
+          "pubDate": "2026-10-28T21:29:15.760Z"
+        },
+        {
+          "title": "CTS Strasbourg : les données de 230 000 comptes clients dérobées lors d’une cyberattaque",
+          "cve": null,
+          "severity": "news",
+          "score": 61,
+          "corroboration": 1,
+          "region": "fr",
+          "body": "Incident de sécurité rapporté par Cyberattaque.org.\n\nLa Compagnie des Transports Strasbourgeois (CTS) confirme une importante fuite de données personnelles concernant 230 000 comptes clients. Des\n\nAttaque Mis à jour le 28 octobre 2026 à 18h17 CTS Strasbourg : les données de 230 000 comptes clients dérobées lors d’une cyberattaque La Compagnie des Transports Strasbourgeois (CTS) confirme une importante fuite de données personnelles concernant 230 000 comptes clients.",
+          "detail": "Incident de sécurité rapporté par Cyberattaque.org.\n\nLa Compagnie des Transports Strasbourgeois (CTS) confirme une importante fuite de données personnelles concernant 230 000 comptes clients. Des\n\nAttaque Mis à jour le 28 octobre 2026 à 18h17 CTS Strasbourg : les données de 230 000 comptes clients dérobées lors d’une cyberattaque La Compagnie des Transports Strasbourgeois (CTS) confirme une importante fuite de données personnelles concernant 230 000 comptes clients. Des cybercriminels sont parvenus à extraire des informations depuis son site Internet, notamment les noms, prénoms, dates de naissance, adresses et identifiants de comptes.\n\nRévélée le 28 octobre 2026 , cette cyberattaque concerne environ 40 % des comptes clients de la CTS . La compagnie annonce le dépôt d&rsquo;une plainte et appelle ses usagers à la vigilance.\n\nLa Compagnie des Transports Strasbourgeois exploite le réseau de tramways et de bus de Strasbourg et de son Eurométropole, dans le Bas-Rhin. Chaque jour, ses services permettent à des milliers d&rsquo;habitants, d&rsquo;étudiants et de voyageurs de se déplacer dans l&rsquo;agglomération.\n\nL&rsquo;ampleur de cette fuite est particulièrement importante. Selon les informations communiquées par la CTS, 230 000 comptes clients ont été concernés par une extraction frauduleuse de données personnelles .\n\nCela représente environ quatre comptes sur dix enregistrés sur le site de l&rsquo;opérateur strasbourgeois.\n\nIl convient toutefois de distinguer les comptes concernés du nombre de personnes physiques touchées. Un compte ne correspond pas nécessairement à un voyageur unique, et le nombre exact de personnes distinctes n&rsquo;a pas été précisé.",
+          "action": "Surveiller les indicateurs de compromission associés et contrôler les actifs exposés.",
+          "image": "https://www.cyberattaque.org/wp-content/uploads/2026/10/CTS-cyberattaque.jpg",
+          "sources": [
+            {
+              "url": "https://www.cyberattaque.org/cts-strasbourg-les-donnees-de-230-000-comptes-clients-derobees-lors-dune-cyberattaque/",
+              "label": "Cyberattaque.org"
+            }
+          ],
+          "url": "https://www.cyberattaque.org/cts-strasbourg-les-donnees-de-230-000-comptes-clients-derobees-lors-dune-cyberattaque/",
+          "pubDate": "2026-10-28T17:16:03.000Z"
+        },
+        {
+          "title": "Auto-Planning : 14 millions de plaques d’immatriculation revendiquées par des pirates",
+          "cve": null,
+          "severity": "news",
+          "score": 57,
+          "corroboration": 1,
+          "region": "fr",
+          "body": "Incident de sécurité rapporté par Cyberattaque.org.\n\nAuto-Planning, une entreprise française spécialisée dans la prise de rendez-vous en ligne, est visée par une importante revendication de cyberattaque ce\n\nAttaque Mis à jour le 29 octobre 2026 à 5h57 Auto-Planning : 14 millions de plaques d’immatriculation revendiquées par des pirates Auto-Planning, une entreprise française spécialisée dans la prise de rendez-vous en ligne, est visée par une importante revendication de cyberattaque ce 29 octobre 2026.",
+          "detail": "Incident de sécurité rapporté par Cyberattaque.org.\n\nAuto-Planning, une entreprise française spécialisée dans la prise de rendez-vous en ligne, est visée par une importante revendication de cyberattaque ce\n\nAttaque Mis à jour le 29 octobre 2026 à 5h57 Auto-Planning : 14 millions de plaques d’immatriculation revendiquées par des pirates Auto-Planning, une entreprise française spécialisée dans la prise de rendez-vous en ligne, est visée par une importante revendication de cyberattaque ce 29 octobre 2026. Les attaquants affirment détenir des données concernant jusqu&rsquo;à 18 millions de personnes et 14 millions de plaques d&rsquo;immatriculation . Une demande de rançon est également évoquée.\n\nBasée à Boulogne-Billancourt, dans les Hauts-de-Seine, Auto-Planning développe depuis 2007 des solutions de réservation pour les professionnels. L&rsquo;entreprise travaille notamment avec des centres de contrôle technique, des garages, des auto-écoles et d&rsquo;autres commerces. Elle exploite également le service Auto Contrôle Paris, permettant de réserver un contrôle technique dans de nombreux établissements franciliens.\n\nAu 29 octobre 2026, le site Internet d&rsquo;Auto-Planning affiche également un message de maintenance.\n\nLa revendication porte sur un volume particulièrement important : 18 millions de personnes et 14 millions de plaques d&rsquo;immatriculation . Ces chiffres n&rsquo;ont pas été confirmés par Auto-Planning et ne permettent pas, à eux seuls, d&rsquo;établir le nombre de victimes ou le volume de données réellement dérobées.\n\nL&rsquo;enjeu dépasse néanmoins les seuls clients d&rsquo;Auto Contrôle Paris. Sur son site officiel, Auto-Planning indique travailler avec plus de 450 centres de contrôle technique , notamment des établissements affiliés aux réseaux Autovisi",
+          "action": "Surveiller les indicateurs de compromission associés et contrôler les actifs exposés.",
+          "image": "https://www.cyberattaque.org/wp-content/uploads/2026/10/garage-cyberattaque-2.jpg",
+          "sources": [
+            {
+              "url": "https://www.cyberattaque.org/auto-planning-14-millions-de-plaques-dimmatriculation-revendiquees-par-des-pirates/",
+              "label": "Cyberattaque.org"
+            }
+          ],
+          "url": "https://www.cyberattaque.org/auto-planning-14-millions-de-plaques-dimmatriculation-revendiquees-par-des-pirates/",
+          "pubDate": "2026-10-29T04:55:46.000Z"
+        },
+        {
+          "title": "AGSI : un hacker revendique la fuite de 5 000 contacts et prospects",
+          "cve": null,
+          "severity": "news",
+          "score": 52,
+          "corroboration": 1,
+          "region": "fr",
+          "body": "Incident de sécurité rapporté par Cyberattaque.org.\n\nAGSI Computer, une entreprise informatique française spécialisée notamment dans la maintenance et la cybersécurité, est visée par une fuite de données\n\nAttaque Mis à jour le 29 octobre 2026 à 5h45 AGSI : un hacker revendique la fuite de 5 000 contacts et prospects AGSI Computer, une entreprise informatique française spécialisée notamment dans la maintenance et la cybersécurité, est visée par une fuite de données revendiquée ce 29 octobre 2026.",
+          "detail": "Incident de sécurité rapporté par Cyberattaque.org.\n\nAGSI Computer, une entreprise informatique française spécialisée notamment dans la maintenance et la cybersécurité, est visée par une fuite de données\n\nAttaque Mis à jour le 29 octobre 2026 à 5h45 AGSI : un hacker revendique la fuite de 5 000 contacts et prospects AGSI Computer, une entreprise informatique française spécialisée notamment dans la maintenance et la cybersécurité, est visée par une fuite de données revendiquée ce 29 octobre 2026. Un hacker utilisant le pseudonyme 4me1 annonce avoir diffusé une base contenant environ 5 000 fiches de contacts et de prospects associés à l&rsquo;entreprise.\n\nFondée en 1998 et implantée à Saint-Ouen-l&rsquo;Aumône, dans le Val-d&rsquo;Oise , AGSI Computer accompagne les particuliers et les entreprises dans la vente, la réparation et la maintenance de matériel informatique. Elle propose également des prestations de sécurisation des données, de sauvegarde et d&rsquo;assistance aux PME.\n\nLe hacker 4me1 affirme avoir récupéré deux catégories de données : un répertoire de contacts et un historique de prospects commerciaux.\n\nLes exemples examinés par Cyberattaque.org présentent plusieurs fiches de prospects datées de septembre et octobre 2025. Ils contiennent des coordonnées personnelles, des références de projets et des indications sur l&rsquo;origine des demandes, comme le référencement naturel ou une création manuelle.\n\nCertains enregistrements sont néanmoins incomplets ou présentent des coordonnées au format inhabituel. Le volume de 5 000 fiches avancé par le hacker ne permet donc pas de déterminer le nombre exact de personnes distinctes concernées.\n\nLa structure des informations diffusées évoque un outil de gestion de la relation client (CRM) , utilisé pour centraliser les con",
+          "action": "Surveiller les indicateurs de compromission associés et contrôler les actifs exposés.",
+          "image": "https://www.cyberattaque.org/wp-content/uploads/2026/04/cyberattaque_17-2.jpg",
+          "sources": [
+            {
+              "url": "https://www.cyberattaque.org/agsi-un-hacker-revendique-la-fuite-de-5-000-contacts-et-prospects/",
+              "label": "Cyberattaque.org"
+            }
+          ],
+          "url": "https://www.cyberattaque.org/agsi-un-hacker-revendique-la-fuite-de-5-000-contacts-et-prospects/",
+          "pubDate": "2026-10-29T04:45:16.000Z"
+        },
+        {
+          "title": "Liberté FM : une cyberattaque frappe la radio de Dordogne",
+          "cve": null,
+          "severity": "news",
+          "score": 52,
+          "corroboration": 1,
+          "region": "fr",
+          "body": "Incident de sécurité rapporté par Cyberattaque.org.\n\nLiberté FM, la radio associative de Ribérac, en Dordogne, a été victime d'une cyberattaque ce mercredi 28 octobre 2026. Jérémy Grégoire, l'un de ses\n\nAttaque Mis à jour le 28 octobre 2026 à 22h45 Liberté FM : une cyberattaque frappe la radio de Dordogne Liberté FM, la radio associative de Ribérac, en Dordogne, a été victime d&rsquo;une cyberattaque ce mercredi 28 octobre 2026.",
+          "detail": "Incident de sécurité rapporté par Cyberattaque.org.\n\nLiberté FM, la radio associative de Ribérac, en Dordogne, a été victime d'une cyberattaque ce mercredi 28 octobre 2026. Jérémy Grégoire, l'un de ses\n\nAttaque Mis à jour le 28 octobre 2026 à 22h45 Liberté FM : une cyberattaque frappe la radio de Dordogne Liberté FM, la radio associative de Ribérac, en Dordogne, a été victime d&rsquo;une cyberattaque ce mercredi 28 octobre 2026. Jérémy Grégoire, l&rsquo;un de ses animateurs, a annoncé l&rsquo;incident sur Facebook, exprimant sa colère face à ce qu&rsquo;il décrit comme plus de dix années de travail anéanties.\n\nCréée en 2016, Liberté FM diffuse ses programmes sur 96,1 MHz dans le Périgord ribéracois . La station couvre l&rsquo;actualité locale, la culture, le sport et les événements associatifs. Elle réalise également des interviews, des reportages et des émissions disponibles en podcast.\n\nJérémy Grégoire témoigne de l&rsquo;émotion suscitée par cette cyberattaque. L&rsquo;animateur évoque les années d&rsquo;émissions, de rencontres et de souvenirs accumulés depuis la création de la radio.\n\nDerrière cette station locale se trouve une équipe particulièrement investie. Selon le Club de la presse du Périgord, Liberté FM réunissait en 2024 trois salariés et une trentaine de bénévoles, produisant plus de 50 heures de programmes originaux par semaine .\n\nCes productions constituent une véritable mémoire du territoire : témoignages d&rsquo;habitants, interviews de personnalités locales, événements sportifs, initiatives associatives et rencontres culturelles.\n\nLa cyberattaque menace donc potentiellement un patrimoine sonore constitué pendant une décennie, dont certaines séquences pourraient être impossibles à enregistrer de nouveau.",
+          "action": "Surveiller les indicateurs de compromission associés et contrôler les actifs exposés.",
+          "image": "https://www.cyberattaque.org/wp-content/uploads/2026/04/cyberattaque_16-2.jpg",
+          "sources": [
+            {
+              "url": "https://www.cyberattaque.org/liberte-fm-une-cyberattaque-frappe-la-radio-de-dordogne/",
+              "label": "Cyberattaque.org"
+            }
+          ],
+          "url": "https://www.cyberattaque.org/liberte-fm-une-cyberattaque-frappe-la-radio-de-dordogne/",
+          "pubDate": "2026-10-28T21:45:31.000Z"
+        },
+        {
+          "title": "Le Crestois : les données personnelles de ses lecteurs exposées après une cyberattaque",
+          "cve": null,
+          "severity": "news",
+          "score": 52,
+          "corroboration": 1,
+          "region": "fr",
+          "body": "Incident de sécurité rapporté par Cyberattaque.org.\n\nLe Crestois, journal hebdomadaire de la Drôme, confirme une intrusion dans l'interface d'administration de son site Internet le 13 octobre 2026.\n\nAttaque Mis à jour le 28 octobre 2026 à 18h34 Le Crestois : les données personnelles de ses lecteurs exposées après une cyberattaque Le Crestois, journal hebdomadaire de la Drôme, confirme une intrusion dans l&rsquo;interface d&rsquo;administration de son site Internet le 13 octobre 2026.",
+          "detail": "Incident de sécurité rapporté par Cyberattaque.org.\n\nLe Crestois, journal hebdomadaire de la Drôme, confirme une intrusion dans l'interface d'administration de son site Internet le 13 octobre 2026.\n\nAttaque Mis à jour le 28 octobre 2026 à 18h34 Le Crestois : les données personnelles de ses lecteurs exposées après une cyberattaque Le Crestois, journal hebdomadaire de la Drôme, confirme une intrusion dans l&rsquo;interface d&rsquo;administration de son site Internet le 13 octobre 2026. L&rsquo;incident pourrait avoir permis à une personne malveillante de consulter des informations personnelles, notamment les noms, prénoms et adresses email des utilisateurs.\n\nDans une notification envoyée le 26 octobre 2026 dont Cyberattaque.org s&rsquo;est procuré une copie, l&rsquo;équipe du journal reconnaît l&rsquo;accès non autorisé et confirme avoir signalé l&rsquo;incident à la CNIL.\n\nFondé en 1900 à Crest , Le Crestois est un hebdomadaire historique consacré à l&rsquo;actualité de la vallée de la Drôme. Il couvre notamment la vie municipale, associative, culturelle et économique du territoire. Le journal dispose également d&rsquo;un site Internet, le-crestois.fr, proposant des contenus et des services d&rsquo;abonnement.\n\nSelon la communication du journal, un individu non autorisé a réussi à accéder à l&rsquo;interface de gestion de son site Internet le mardi 13 octobre 2026 .\n\nCette interface permet normalement aux personnes habilitées d&rsquo;administrer le site et certains de ses contenus ou fonctionnalités. Un accès frauduleux peut donc représenter un risque pour les informations accessibles depuis cet environnement.\n\nLe Crestois ne précise toutefois pas comment l&rsquo;attaquant est parvenu à s&rsquo;introduire dans le système. L&rsquo;exploitation d&rsquo;une vulnérabilité du",
+          "action": "Surveiller les indicateurs de compromission associés et contrôler les actifs exposés.",
+          "image": "https://www.cyberattaque.org/wp-content/uploads/2026/10/le-crestois-cyberattaque-2.jpg",
+          "sources": [
+            {
+              "url": "https://www.cyberattaque.org/le-crestois-les-donnees-personnelles-de-ses-lecteurs-exposees-apres-une-cyberattaque/",
+              "label": "Cyberattaque.org"
+            }
+          ],
+          "url": "https://www.cyberattaque.org/le-crestois-les-donnees-personnelles-de-ses-lecteurs-exposees-apres-une-cyberattaque/",
+          "pubDate": "2026-10-28T17:34:16.000Z"
+        },
+        {
+          "title": "Belgique : le fisc frappé par une cyberattaque, MyMinfin hors ligne à trois jours d’une échéance fiscale",
+          "cve": null,
+          "severity": "news",
+          "score": 52,
+          "corroboration": 1,
+          "region": "fr",
+          "body": "Incident de sécurité rapporté par Cyberattaque.org.\n\nLe Service public fédéral (SPF) Finances belge confirme être victime d&#8217;une cyberattaque ce mercredi 28 octobre 2026. L&#8217;administration... L’article Belgique : le fisc frappé par une cyberattaque, MyMinfin hors ligne à trois jours d’une échéance fiscale est apparu en premier sur Cyberattaque.org .",
+          "detail": "Incident de sécurité rapporté par Cyberattaque.org.\n\nLe Service public fédéral (SPF) Finances belge confirme être victime d&#8217;une cyberattaque ce mercredi 28 octobre 2026. L&#8217;administration... L’article Belgique : le fisc frappé par une cyberattaque, MyMinfin hors ligne à trois jours d’une échéance fiscale est apparu en premier sur Cyberattaque.org .",
+          "action": "Surveiller les indicateurs de compromission associés et contrôler les actifs exposés.",
+          "image": "https://www.cyberattaque.org/wp-content/uploads/2026/10/SPF-cyberattaque-2.jpg",
+          "sources": [
+            {
+              "url": "https://www.cyberattaque.org/belgique-le-fisc-frappe-par-une-cyberattaque-myminfin-hors-ligne-a-trois-jours-dune-echeance-fiscale/",
+              "label": "Cyberattaque.org"
+            }
+          ],
+          "url": "https://www.cyberattaque.org/belgique-le-fisc-frappe-par-une-cyberattaque-myminfin-hors-ligne-a-trois-jours-dune-echeance-fiscale/",
+          "pubDate": "2026-10-28T17:23:25.000Z"
+        },
+        {
+          "title": "Portes du Berry : une cyberattaque menace les dossiers personnels des habitants",
+          "cve": null,
+          "severity": "news",
+          "score": 52,
+          "corroboration": 1,
+          "region": "fr",
+          "body": "Incident de sécurité rapporté par Cyberattaque.org.\n\nLa Communauté de communes des Portes du Berry, dans le Cher, confirme avoir été victime d'une cyberattaque détectée le 12 octobre 2026. L'intrusion a\n\nAttaque Mis à jour le 28 octobre 2026 à 16h58 Portes du Berry : une cyberattaque menace les dossiers personnels des habitants La Communauté de communes des Portes du Berry, dans le Cher, confirme avoir été victime d&rsquo;une cyberattaque détectée le 12 octobre 2026.",
+          "detail": "Incident de sécurité rapporté par Cyberattaque.org.\n\nLa Communauté de communes des Portes du Berry, dans le Cher, confirme avoir été victime d'une cyberattaque détectée le 12 octobre 2026. L'intrusion a\n\nAttaque Mis à jour le 28 octobre 2026 à 16h58 Portes du Berry : une cyberattaque menace les dossiers personnels des habitants La Communauté de communes des Portes du Berry, dans le Cher, confirme avoir été victime d&rsquo;une cyberattaque détectée le 12 octobre 2026. L&rsquo;intrusion a rendu certaines données informatiques inaccessibles et pourrait avoir compromis des informations personnelles transmises par les administrés, notamment dans le cadre de démarches d&rsquo;urbanisme et d&rsquo;assainissement.\n\nDans une communication officielle publiée sur son site Internet, la collectivité reconnaît une violation de données personnelles, tout en précisant qu&rsquo; aucun vol de données n&rsquo;est confirmé à ce stade . Elle n&rsquo;est cependant pas en mesure d&rsquo;exclure une extraction d&rsquo;informations par les attaquants.\n\nCréée en 2007, la Communauté de communes des Portes du Berry entre Loire et Val d&rsquo;Aubois regroupe 12 communes du département du Cher, dont La Guerche-sur-l&rsquo;Aubois, Jouet-sur-l&rsquo;Aubois, Cuffy et Cours-les-Barres. L&rsquo;intercommunalité, dont le siège se trouve à Jouet-sur-l&rsquo;Aubois, dessert un territoire d&rsquo;environ 9 700 habitants.\n\nSelon les informations publiées par la collectivité, son système informatique a été victime d&rsquo;une cyberattaque détectée le 12 octobre 2026 . L&rsquo;incident a entraîné l&rsquo;indisponibilité de certaines données.\n\nLa collectivité ne précise ni la nature de l&rsquo;attaque, ni les systèmes directement touchés, ni la durée de l&rsquo;interruption d&rsquo;accès aux informations.\n\nCe ty",
+          "action": "Surveiller les indicateurs de compromission associés et contrôler les actifs exposés.",
+          "image": "https://www.cyberattaque.org/wp-content/uploads/2026/10/porte-du-berry-cyberattaque.jpg",
+          "sources": [
+            {
+              "url": "https://www.cyberattaque.org/portes-du-berry-une-cyberattaque-menace-les-dossiers-personnels-des-habitants/",
+              "label": "Cyberattaque.org"
+            }
+          ],
+          "url": "https://www.cyberattaque.org/portes-du-berry-une-cyberattaque-menace-les-dossiers-personnels-des-habitants/",
+          "pubDate": "2026-10-28T15:58:24.000Z"
+        }
+      ]
+    },
+    {
+      "id": "culture",
+      "items": [
+        {
+          "title": "Court strikes down West Virginia law barring disclosure of public officials’ personal data",
+          "cve": null,
+          "severity": "culture",
+          "score": 70,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Signal de veille — The Record.\n\nA federal appellate court panel said West Virginia's version of Daniel's Law — meant to shield the personal data of police and other officials — is unconstitutional.\n\nA federal appeals court on Tuesday ruled that a West Virginia law meant to shield law enforcement officers and judges from over-exposure of their personal information is unconstitutional.\n\nThe 4th U.S.",
+          "detail": "Signal de veille — The Record.\n\nA federal appellate court panel said West Virginia's version of Daniel's Law — meant to shield the personal data of police and other officials — is unconstitutional.\n\nA federal appeals court on Tuesday ruled that a West Virginia law meant to shield law enforcement officers and judges from over-exposure of their personal information is unconstitutional.\n\nThe 4th U.S. Circuit Court of Appeals upheld a lower court’s August 2025 decision nullifying the state’s version of Daniel’s Law, which the opinion said is notably different from similar laws on the books in more than a dozen other states.\n\nThe statutes are aimed at keeping disgruntled residents from obtaining officials’ addresses and phone numbers, particularly through data brokers.\n\nThe panel of judges found the West Virginia statute unlawfully restricts speech based solely on the topic, message, or subject matter of what is being said — also known as content-based speech — and holds data brokers liable in too many circumstances.\n\nThe decision is a significant win for data brokers, which have increasingly been targeted by lawsuits seeking to punish them for business tactics they rely on to operate.\n\nThe ruling could influence a court ruling on ongoing Daniel’s Law litigation in New Jersey and impact similar statutes in other states, according to a blog post from the international law firm Clark Hill.",
+          "action": null,
+          "image": "https://cms.therecord.media/uploads/Richmond_Federal_Appeals_Court_and_skyline_VA_1_aa3974ad1e.jpg",
+          "sources": [
+            {
+              "url": "https://therecord.media/west-virginia-daniels-law-struck-down-appellate-court",
+              "label": "The Record"
+            }
+          ],
+          "url": "https://therecord.media/west-virginia-daniels-law-struck-down-appellate-court",
+          "pubDate": "2026-10-28T20:50:00.000Z"
+        },
+        {
+          "title": "European digital rights nonprofit noyb sues Scale AI for ‘invasive’ worker surveillance",
+          "cve": null,
+          "severity": "culture",
+          "score": 70,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Signal de veille — The Record.\n\nNoyb alleges the platform in some cases records freelancers’ mouse clicks and keystrokes every few seconds and claims the collected information can be used to generate video documenting freelancers’ entire workday.\n\nThe Austria-based digital privacy advocacy group noyb on Tuesday filed five complaints against a major artificial intelligence company alleging that its practices violate European law by tracking freelance workers’ web activity as they generate…",
+          "detail": "Signal de veille — The Record.\n\nNoyb alleges the platform in some cases records freelancers’ mouse clicks and keystrokes every few seconds and claims the collected information can be used to generate video documenting freelancers’ entire workday.\n\nThe Austria-based digital privacy advocacy group noyb on Tuesday filed five complaints against a major artificial intelligence company alleging that its practices violate European law by tracking freelance workers’ web activity as they generate AI model training data.\n\nThe complaints — filed in France , Italy , the Netherlands and Austria against Scale AI – also allege the firm illegally requires workers’ to submit biometric data.\n\nNoyb’s complaints focused on Scale’s Outlier platform, which is used by tech giants such as Google, Meta and OpenAI. Meta owns nearly half of Scale.\n\nScale has worked with more than 900,00 people to create the training data. Noyb alleges the platform in some cases records freelancers’ mouse clicks and keystrokes every few seconds and claims the collected information can be used to generate video documenting freelancers’ entire workday.\n\nThe data collected by the trackers includes IP addresses, contact details, unique identifiers and “information about the visited page,” noyb said in a press release, and can be used for targeted advertising.\n\nNoyb spokesperson Mickey Manakas said an analysis identified 18 third-party trackers used by Scale to track French freelancers’ data.",
+          "action": null,
+          "image": "https://cms.therecord.media/uploads/lawyer_computer_5dfad16e42.jpg",
+          "sources": [
+            {
+              "url": "https://therecord.media/noyb-sues-scale-ai-for-worker-surveillance",
+              "label": "The Record"
+            }
+          ],
+          "url": "https://therecord.media/noyb-sues-scale-ai-for-worker-surveillance",
+          "pubDate": "2026-10-28T18:02:00.000Z"
+        },
+        {
+          "title": "US sanctions Russians, North Koreans for laundering IT worker earnings",
+          "cve": null,
+          "severity": "culture",
+          "score": 70,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Signal de veille — The Record.\n\nThe U.S. Treasury Department sanctioned Russian and North Korean nationals for allegedly laundering the earnings of illicit IT workers on behalf of Pyongyang.\n\nThe Treasury Department on Wednesday sanctioned Russian and North Korean nationals and companies in the latest round of actions targeting Pyongyang's illicit IT worker campaign.\n\nRussian nationals Ilya Aleksandrovich Boykov and Vitold Viktorovich Obertas are accused of helping North Korea launder mi…",
+          "detail": "Signal de veille — The Record.\n\nThe U.S. Treasury Department sanctioned Russian and North Korean nationals for allegedly laundering the earnings of illicit IT workers on behalf of Pyongyang.\n\nThe Treasury Department on Wednesday sanctioned Russian and North Korean nationals and companies in the latest round of actions targeting Pyongyang's illicit IT worker campaign.\n\nRussian nationals Ilya Aleksandrovich Boykov and Vitold Viktorovich Obertas are accused of helping North Korea launder millions in cryptocurrency payments earned by North Koreans based in Russia working in IT roles at U.S. companies.\n\nTreasury Secretary Scott Bessent said North Korea’s government “continues targeting and exploiting American companies through fraudulent activities conducted by its overseas IT operatives, who weaponize sensitive data and extort businesses for substantial payments.”\n\nWednesday’s sanctions also include multiple North Koreans, including Kim Hyo Dong and Kim Ki Hyok, a senior Alis employee.\n\nNorth Korean company First Financial and Technical Development Center was also sanctioned on Wednesday for its alleged role in managing millions of dollars earned by North Koreans based in Russia.\n\nThe company has helped IT workers use artificial intelligence as they attempt to get hired at U.S. companies, the Treasury said, and has used sophisticated money laundering methods to conceal the money earned by the workers.",
+          "action": null,
+          "image": "https://cms.therecord.media/uploads/north_korea_flags_roman_harak_d05b7549c5.jpg",
+          "sources": [
+            {
+              "url": "https://therecord.media/north-korea-russia-sanctions",
+              "label": "The Record"
+            }
+          ],
+          "url": "https://therecord.media/north-korea-russia-sanctions",
+          "pubDate": "2026-10-28T17:45:00.000Z"
+        },
+        {
+          "title": "Upwind Security Raises $400 Million at $3.8 Billion Valuation",
+          "cve": null,
+          "severity": "culture",
+          "score": 69,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Signal de veille — SecurityWeek.\n\nUpwind Security announced a $400 million Series C funding round at a $3.8 billion valuation and has now raised over $800 million.\n\nThe massive funding round comes just days after reports emerged that Upwind had attracted acquisition interest from several companies, including Datadog\n\nSubscribe to the SecurityWeek Email Briefing for the latest cybersecurity threats, trends, and expert insights.\n\nSubscribe to the SecurityWeek Email Briefing to stay informed…",
+          "detail": "Signal de veille — SecurityWeek.\n\nUpwind Security announced a $400 million Series C funding round at a $3.8 billion valuation and has now raised over $800 million.\n\nThe massive funding round comes just days after reports emerged that Upwind had attracted acquisition interest from several companies, including Datadog\n\nSubscribe to the SecurityWeek Email Briefing for the latest cybersecurity threats, trends, and expert insights.\n\nSubscribe to the SecurityWeek Email Briefing to stay informed on the latest threats, trends, and technology, along with insightful columns from industry experts.\n\nClose the security gaps between pentests. Join this session to explore agentic pentesting and gain a practical framework for continuous exposure validation in your CTEM program.\n\nJoin as we bring together CISOs, senior cybersecurity executives, practitioners, industry experts, and other security leaders to share practical experience and examine the issues shaping enterprise cybersecurity strategy.\n\nNoma Security has named Bobby Shoker as CFO and Alberto Rodrigues as CCO.",
+          "action": null,
+          "image": "https://www.securityweek.com/wp-content/uploads/2023/01/Cybersecurity_News-SecurityWeek.jpg",
+          "sources": [
+            {
+              "url": "https://www.securityweek.com/upwind-security-raises-400-million-at-3-8-billion-valuation/",
+              "label": "SecurityWeek"
+            }
+          ],
+          "url": "https://www.securityweek.com/upwind-security-raises-400-million-at-3-8-billion-valuation/",
+          "pubDate": "2026-10-28T13:56:50.000Z"
+        },
+        {
+          "title": "ISC Stormcast For Thursday, October 29th, 2026 https://isc.sans.edu/podcastdetail/10156, (Thu, Oct 29th)",
+          "cve": null,
+          "severity": "culture",
+          "score": 66,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Signal de veille — SANS ISC.\n\nISC Stormcast For Thursday, October 29th, 2026 https://isc.sans.edu/podcastdetail/10156, Author: Johannes Ullrich\n\nInternet Storm Center Sign In Sign Up Handler on Duty: Xavier Mertens Threat Level: green previous Click HERE to learn more about classes Johannes is teaching for SANS ISC Stormcast For Thursday, October 29th, 2026 https://isc.sans.edu/podcastdetail/10156 Click HERE to learn more about classes Johannes is teaching for SANS previous Comments Lo…",
+          "detail": "Signal de veille — SANS ISC.\n\nISC Stormcast For Thursday, October 29th, 2026 https://isc.sans.edu/podcastdetail/10156, Author: Johannes Ullrich\n\nInternet Storm Center Sign In Sign Up Handler on Duty: Xavier Mertens Threat Level: green previous Click HERE to learn more about classes Johannes is teaching for SANS ISC Stormcast For Thursday, October 29th, 2026 https://isc.sans.edu/podcastdetail/10156 Click HERE to learn more about classes Johannes is teaching for SANS previous Comments Login here to join the discussion.",
+          "action": null,
+          "image": "https://isc.sans.edu/images/logos/isc/large.png",
+          "sources": [
+            {
+              "url": "https://isc.sans.edu/diary/rss/33468",
+              "label": "SANS ISC"
+            }
+          ],
+          "url": "https://isc.sans.edu/diary/rss/33468",
+          "pubDate": "2026-10-29T03:10:12.000Z"
+        },
+        {
+          "title": "Secrets Management Firm Infisical Valued at $600 Million After $40 Million Raise",
+          "cve": null,
+          "severity": "culture",
+          "score": 64,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Signal de veille — SecurityWeek.\n\nInfisical has raised $40 million in a Series B round led by investor Elad Gil that values the secrets management company at $600 million.\n\nThe company will use the Series B funds to expand its platform for securing AI agents’ access to sensitive systems.\n\nSubscribe to the SecurityWeek Email Briefing for the latest cybersecurity threats, trends, and expert insights.\n\nSubscribe to the SecurityWeek Email Briefing to stay informed on the latest threats, trends…",
+          "detail": "Signal de veille — SecurityWeek.\n\nInfisical has raised $40 million in a Series B round led by investor Elad Gil that values the secrets management company at $600 million.\n\nThe company will use the Series B funds to expand its platform for securing AI agents’ access to sensitive systems.\n\nSubscribe to the SecurityWeek Email Briefing for the latest cybersecurity threats, trends, and expert insights.\n\nSubscribe to the SecurityWeek Email Briefing to stay informed on the latest threats, trends, and technology, along with insightful columns from industry experts.\n\nClose the security gaps between pentests. Join this session to explore agentic pentesting and gain a practical framework for continuous exposure validation in your CTEM program.\n\nJoin as we bring together CISOs, senior cybersecurity executives, practitioners, industry experts, and other security leaders to share practical experience and examine the issues shaping enterprise cybersecurity strategy.\n\nNoma Security has named Bobby Shoker as CFO and Alberto Rodrigues as CCO.",
+          "action": null,
+          "image": "https://www.securityweek.com/wp-content/uploads/2025/12/funding-round.jpeg",
+          "sources": [
+            {
+              "url": "https://www.securityweek.com/secrets-management-firm-infisical-valued-at-600-million-after-40-million-raise/",
+              "label": "SecurityWeek"
+            }
+          ],
+          "url": "https://www.securityweek.com/secrets-management-firm-infisical-valued-at-600-million-after-40-million-raise/",
+          "pubDate": "2026-10-28T09:48:24.000Z"
+        },
+        {
+          "title": "Police seize Virtualine bulletproof service tied to ransowmare, cybercrime",
+          "cve": null,
+          "severity": "high",
+          "score": 63,
+          "corroboration": 3,
+          "region": "intl",
+          "body": "Signal de veille — CyberScoop.\n\nThe Russian-speaking cybercrime storefront was among the most active bulletproof hosting providers this year to date, receiving almost one-fifth of all illicit-attributed inflow tracked by researchers.\n\nClose Cybercrime Officials seize domain of top bulletproof hosting provider Virtualine The Russian-speaking cybercrime storefront was among the most active bulletproof hosting providers this year to date, receiving almost one-fifth of all illicit-attributed…",
+          "detail": "Signal de veille — CyberScoop.\n\nThe Russian-speaking cybercrime storefront was among the most active bulletproof hosting providers this year to date, receiving almost one-fifth of all illicit-attributed inflow tracked by researchers.\n\nClose Cybercrime Officials seize domain of top bulletproof hosting provider Virtualine The Russian-speaking cybercrime storefront was among the most active bulletproof hosting providers this year to date, receiving almost one-fifth of all illicit-attributed inflow tracked by researchers. By Matt Kapko\n\nListen to this article 0:00 Learn more. This feature uses an automated voice, which may result in occasional errors in pronunciation, tone, or sentiment. The Department of Justice building in Washington, DC, on February 9, 2022. (Photo by STEFANI REYNOLDS/AFP via Getty Images) Authorities seized the domain of Virtualine , a bulletproof hosting provider that cybercriminals used to commit a large-scale sextortion scheme, ransomware, data theft, malware hosting and money laundering, the Justice Department said Tuesday.\n\nVirtualine facilitated prolific criminal activity, including the distribution of child sexual abuse material (CSAM), the Justice Department said. The Russian-speaking bulletproof hosting provider was among the most active this year in crypto-related crime in particular, researchers said.\n\nThe site and its associated infrastructure stands out among the dozens of bulletproof hosting providers currently tracked by TRM Labs. &ldquo;It was not among the largest by total inflows, but it received the most illicit-attributed value in 2026 to date,&rdquo; the blockchain and cryptocrime research firm wrote in a blog post .\n\nVirtualine received almost one-fifth of all illicit-attributed inflow among bulletproof hosting providers tracked by",
+          "action": null,
+          "image": "https://cyberscoop.com/wp-content/uploads/sites/3/2022/07/GettyImages-1238326969.jpg",
+          "sources": [
+            {
+              "url": "https://cyberscoop.com/virtualine-bulletproof-hosting-provider-seized/",
+              "label": "CyberScoop"
+            },
+            {
+              "url": "https://www.bleepingcomputer.com/news/security/police-seize-virtualine-bulletproof-service-tied-to-ransowmare-cybercrime/",
+              "label": "BleepingComputer"
+            },
+            {
+              "url": "https://thehackernews.com/2026/10/fbi-seizes-virtualine-domain-over.html",
+              "label": "The Hacker News"
+            }
+          ],
+          "url": "https://cyberscoop.com/virtualine-bulletproof-hosting-provider-seized/",
+          "pubDate": "2026-10-29T00:38:19.000Z"
+        },
+        {
+          "title": "Discord to let search engines index public server messages",
+          "cve": null,
+          "severity": "culture",
+          "score": 63,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Signal de veille — BleepingComputer.\n\nDiscord will allow search engines to index discussions in Discoverable Servers and make them accessible on the web to users outside the platform without an account or invitation.\n\nPHP2Shell security flaws now sucessfully exploited in the wild\n\nCritical 'HTTP2Shell' Brotli vulnerability triggers emergency patches\n\nPolice seize Virtualine bulletproof service tied to ransowmare, cybercrime\n\nSony ISP subsidiary data breach exposes 2.5 million customer records…",
+          "detail": "Signal de veille — BleepingComputer.\n\nDiscord will allow search engines to index discussions in Discoverable Servers and make them accessible on the web to users outside the platform without an account or invitation.\n\nPHP2Shell security flaws now sucessfully exploited in the wild\n\nCritical 'HTTP2Shell' Brotli vulnerability triggers emergency patches\n\nPolice seize Virtualine bulletproof service tied to ransowmare, cybercrime\n\nSony ISP subsidiary data breach exposes 2.5 million customer records\n\nHow to enable Kernel-mode Hardware-enforced Stack Protection in Windows 11\n\nDiscord will allow search engines to index discussions in Discoverable Servers and make them accessible on the web to users outside the platform without an account or invitation.",
+          "action": null,
+          "image": "https://www.bleepstatic.com/content/hl-images/2026/10/28/discord.jpg",
+          "sources": [
+            {
+              "url": "https://www.bleepingcomputer.com/news/security/discord-to-let-search-engines-index-public-server-messages/",
+              "label": "BleepingComputer"
+            }
+          ],
+          "url": "https://www.bleepingcomputer.com/news/security/discord-to-let-search-engines-index-public-server-messages/",
+          "pubDate": "2026-10-28T18:44:16.000Z"
+        },
+        {
+          "title": "Third Serengeti Sweep Tops 1,400 Arrests as Investigations Mature",
+          "cve": null,
+          "severity": "culture",
+          "score": 60,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Signal de veille — Dark Reading.\n\nInterpol's annual Operation Serengeti, now in its third iteration, led to 1,462 arrests across 20 African countries and the US, recovering $105 million in stolen funds.",
+          "detail": "Signal de veille — Dark Reading.\n\nInterpol's annual Operation Serengeti, now in its third iteration, led to 1,462 arrests across 20 African countries and the US, recovering $105 million in stolen funds.",
+          "action": null,
+          "image": null,
+          "sources": [
+            {
+              "url": "https://www.darkreading.com/cybersecurity-operations/third-serengeti-sweep-1400-arrests-investigations-mature",
+              "label": "Dark Reading"
+            }
+          ],
+          "url": "https://www.darkreading.com/cybersecurity-operations/third-serengeti-sweep-1400-arrests-investigations-mature",
+          "pubDate": "2026-10-28T06:00:00.000Z"
+        },
+        {
+          "title": "Lawsuit against Ex-Overstock CEO tied to 2020 election film falls apart over question of ‘actual malice’",
+          "cve": null,
+          "severity": "culture",
+          "score": 59,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Signal de veille — CyberScoop.\n\nA Florida judge ruled this week that ex-Overstock CEO Patrick Byrne is not liable in a lawsuit brought by a Dominion Voting Systems executive over a film that accuses the former electronic voting hardware and software company&nbsp; executive of saying he “made sure” that Republican presidential candidate Donald Trump wouldn’t win reelection in 2020.",
+          "detail": "Signal de veille — CyberScoop.\n\nA Florida judge ruled this week that ex-Overstock CEO Patrick Byrne is not liable in a lawsuit brought by a Dominion Voting Systems executive over a film that accuses the former electronic voting hardware and software company&nbsp; executive of saying he “made sure” that Republican presidential candidate Donald Trump wouldn’t win reelection in 2020. The lawsuit, brought in 2022 by Eric Coomer, a former director of product strategy and security at Dominion Voting Systems, concerns comments made in a 2020 film produced by Byrne titled “The Deep Rig.” In the film, which alleges a conspiracy to manipulate 2020 election results in favor of Democrat Joe Biden, a man identified as Joseph Oltmann claimed he listened to a conference call led by organizers of “Antifa,” wherein another participant mentioned that “Eric” “The Dominion Guy” was also on the call. In the film, Oltmann says a man identified as “Eric” told others on the call that Trump wouldn’t win reelection because he had “made sure of it.” Coomer denies taking part in any such call, and filed a lawsuit against Byrne and seven other individuals and entities for defamation. U.S. District Judge Tom Barber’s decision did not address most of the substantive claims in the lawsuit, such as Byrne’s ultimate legal responsibility for the statements by Oltmann that made it into the film. Because the lawsuit was originally filed in Color",
+          "action": null,
+          "image": "https://cyberscoop.com/wp-content/uploads/sites/3/2026/10/Patrick-Byrne-FreedomFest.jpeg",
+          "sources": [
+            {
+              "url": "https://cyberscoop.com/patrick-byrne-dominion-defamation-lawsuit-actual-malice/",
+              "label": "CyberScoop"
+            }
+          ],
+          "url": "https://cyberscoop.com/patrick-byrne-dominion-defamation-lawsuit-actual-malice/",
+          "pubDate": "2026-10-28T18:58:55.000Z"
+        },
+        {
+          "title": "Researcher Reveals How Logic Bugs Alone Cracked Microsoft Edge in $175,000 Pwn2Own Win",
+          "cve": null,
+          "severity": "culture",
+          "score": 59,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Signal de veille — The Hacker News.\n\nA chain of logic flaws, with no memory corruption, can turn a malicious web page into code running on a Windows computer outside Microsoft Edge's sandbox, a security researcher has shown. Orange Tsai of DEVCORE published the full method on October 28, five months after the chain won $175,000 at the&nbsp;Pwn2Own Berlin contest&nbsp;in May. Microsoft fixed the Edge bugs the day after the contest,",
+          "detail": "Signal de veille — The Hacker News.\n\nA chain of logic flaws, with no memory corruption, can turn a malicious web page into code running on a Windows computer outside Microsoft Edge's sandbox, a security researcher has shown. Orange Tsai of DEVCORE published the full method on October 28, five months after the chain won $175,000 at the&nbsp;Pwn2Own Berlin contest&nbsp;in May. Microsoft fixed the Edge bugs the day after the contest,",
+          "action": null,
+          "image": "https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEjAGi2cGlEYo6PNV9aaEulhQB9MtbWjCBFhi3MugyJf4kGwtSPjq9F9wxhlptAUKuipSCQ0_NhE5eyEbHzMWnT6hVLsXtqrIQImq0QndxbKoKMz_gzxJonZa2jnvwHGEqjN_J7uyi5BPaqlGmtMn1y9xzJQywFZB_FNgKV-GR7qtBQfVmrLxdoUlyhPTiA/s1600/edge.jpg",
+          "sources": [
+            {
+              "url": "https://thehackernews.com/2026/10/researcher-reveals-how-logic-bugs-alone.html",
+              "label": "The Hacker News"
+            }
+          ],
+          "url": "https://thehackernews.com/2026/10/researcher-reveals-how-logic-bugs-alone.html",
+          "pubDate": "2026-10-28T16:23:34.000Z"
+        },
+        {
+          "title": "Prosecutors charge Madagascar scammers in NFT-stealing scheme based on fake online dating profiles",
+          "cve": null,
+          "severity": "high",
+          "score": 59,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Signal de veille — CyberScoop.\n\nProsecutors announced charges against six alleged scammers based out of Africa who targeted Americans with fake non-fungible token (NFT) investment scams by posing as women on dating websites, netting hundreds of victims. According to an affidavit for the arrest of of the six people — Chui Kok Wa, Gislen Neukeu, Shamusa Ninsiima, Clement Mugiraneza, Merveille Mudacumura and Nicodemus Hingima Monyancha — the criminal group with connections to China and Mala…",
+          "detail": "Signal de veille — CyberScoop.\n\nProsecutors announced charges against six alleged scammers based out of Africa who targeted Americans with fake non-fungible token (NFT) investment scams by posing as women on dating websites, netting hundreds of victims. According to an affidavit for the arrest of of the six people — Chui Kok Wa, Gislen Neukeu, Shamusa Ninsiima, Clement Mugiraneza, Merveille Mudacumura and Nicodemus Hingima Monyancha — the criminal group with connections to China and Malaysia opened a scam compound in Madagascar early last year. “In the scheme, scammers posed as beautiful women who met victims on dating websites, eventually enlisting them to connect their cryptocurrency wallets to fraudulent websites associated with the NFT investments,” the Justice Department said in a news release Tuesday. “Once connected, the scammers willed the victims to continue to fund their cryptocurrency wallets, and then surreptitiously pulled money from the victims’ wallets without their knowledge.” The FBI identified approximately 74 cryptocurrency wallets associated with approximately 800 victims in the scheme, for an estimated loss of at least approximately $516,695, according to the affidavit and news release. The U.S. District of Columbia&#8217;s Scam Center Task Force, the FBI&#8217;s field office in Honolulu and the U.S. Attorney&#8217;s Office for the District of Alaska made a trip to Madagascar in August to",
+          "action": null,
+          "image": "https://cyberscoop.com/wp-content/uploads/sites/3/2026/10/GettyImages-2294188115-1.jpg",
+          "sources": [
+            {
+              "url": "https://cyberscoop.com/madagascar-nft-dating-scam-charges/",
+              "label": "CyberScoop"
+            }
+          ],
+          "url": "https://cyberscoop.com/madagascar-nft-dating-scam-charges/",
+          "pubDate": "2026-10-28T15:36:36.000Z"
+        },
+        {
+          "title": "TLS Flaws Found in GoAhead Web Server Used in Hundreds of Millions of Devices",
+          "cve": null,
+          "severity": "culture",
+          "score": 59,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Signal de veille — SecurityWeek.\n\nThree GoAhead TLS flaws can let revoked client certificates through, bypass a chain-depth limit, or expose some encrypted sessions.\n\nFoxIO disclosed three GoAhead TLS bugs that can let revoked certificates through or expose some encrypted sessions to eavesdroppers.\n\nSubscribe to the SecurityWeek Email Briefing for the latest cybersecurity threats, trends, and expert insights.\n\nSubscribe to the SecurityWeek Email Briefing to stay informed on the latest thre…",
+          "detail": "Signal de veille — SecurityWeek.\n\nThree GoAhead TLS flaws can let revoked client certificates through, bypass a chain-depth limit, or expose some encrypted sessions.\n\nFoxIO disclosed three GoAhead TLS bugs that can let revoked certificates through or expose some encrypted sessions to eavesdroppers.\n\nSubscribe to the SecurityWeek Email Briefing for the latest cybersecurity threats, trends, and expert insights.\n\nSubscribe to the SecurityWeek Email Briefing to stay informed on the latest threats, trends, and technology, along with insightful columns from industry experts.\n\nClose the security gaps between pentests. Join this session to explore agentic pentesting and gain a practical framework for continuous exposure validation in your CTEM program.\n\nJoin as we bring together CISOs, senior cybersecurity executives, practitioners, industry experts, and other security leaders to share practical experience and examine the issues shaping enterprise cybersecurity strategy.\n\nNoma Security has named Bobby Shoker as CFO and Alberto Rodrigues as CCO.",
+          "action": null,
+          "image": "https://www.securityweek.com/wp-content/uploads/2024/09/internet-routing-bgp.jpeg",
+          "sources": [
+            {
+              "url": "https://www.securityweek.com/tls-flaws-found-in-goahead-web-server-used-in-hundreds-of-millions-of-devices/",
+              "label": "SecurityWeek"
+            }
+          ],
+          "url": "https://www.securityweek.com/tls-flaws-found-in-goahead-web-server-used-in-hundreds-of-millions-of-devices/",
+          "pubDate": "2026-10-28T13:10:34.000Z"
+        },
+        {
+          "title": "Studying Fraudulent North Korean IT Workers",
+          "cve": null,
+          "severity": "culture",
+          "score": 59,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Signal de veille — Schneier on Sec..\n\nResearchers set up a fake start-up company to study fraudulent North Korean IT workers.",
+          "detail": "Signal de veille — Schneier on Sec..\n\nResearchers set up a fake start-up company to study fraudulent North Korean IT workers.",
+          "action": null,
+          "image": null,
+          "sources": [
+            {
+              "url": "https://www.schneier.com/blog/archives/2026/10/studying-fraudulent-north-korean-it-workers.html",
+              "label": "Schneier on Sec."
+            }
+          ],
+          "url": "https://www.schneier.com/blog/archives/2026/10/studying-fraudulent-north-korean-it-workers.html",
+          "pubDate": "2026-10-28T11:05:00.000Z"
+        },
+        {
+          "title": "Nobody Trusts the Security Questionnaire. We Rely on It Anyway.",
+          "cve": null,
+          "severity": "culture",
+          "score": 59,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Signal de veille — SecurityWeek.\n\nSecurity Questionnaire: The process that gates nearly every B2B deal is a self-assessment the sender distrusts and the receiver accepts.\n\nThe process that gates nearly every B2B deal is a self-assessment the sender distrusts and the receiver accepts.",
+          "detail": "Signal de veille — SecurityWeek.\n\nSecurity Questionnaire: The process that gates nearly every B2B deal is a self-assessment the sender distrusts and the receiver accepts.\n\nThe process that gates nearly every B2B deal is a self-assessment the sender distrusts and the receiver accepts. There is finally a better basis for trust between companies.\n\nSubscribe to the SecurityWeek Email Briefing for the latest cybersecurity threats, trends, and expert insights.\n\nSubscribe to the SecurityWeek Email Briefing to stay informed on the latest threats, trends, and technology, along with insightful columns from industry experts.\n\nClose the security gaps between pentests. Join this session to explore agentic pentesting and gain a practical framework for continuous exposure validation in your CTEM program.\n\nJoin as we bring together CISOs, senior cybersecurity executives, practitioners, industry experts, and other security leaders to share practical experience and examine the issues shaping enterprise cybersecurity strategy.\n\nNoma Security has named Bobby Shoker as CFO and Alberto Rodrigues as CCO.",
+          "action": null,
+          "image": "https://www.securityweek.com/wp-content/uploads/2025/10/AI_Trust-Governance.jpg",
+          "sources": [
+            {
+              "url": "https://www.securityweek.com/nobody-trusts-the-security-questionnaire-we-rely-on-it-anyway/",
+              "label": "SecurityWeek"
+            }
+          ],
+          "url": "https://www.securityweek.com/nobody-trusts-the-security-questionnaire-we-rely-on-it-anyway/",
+          "pubDate": "2026-10-28T10:30:00.000Z"
+        },
+        {
+          "title": "Discord va-t-il vraiment publier vos messages sur Google ? Voici ce qui change réellement",
+          "cve": null,
+          "severity": "culture",
+          "score": 55,
+          "corroboration": 1,
+          "region": "fr",
+          "body": "Signal de veille — Numerama.\n\nDepuis l’annonce de Discord, beaucoup d’utilisateurs craignent de voir leurs conversations atterrir sur Google. Pour un utilisateur français, la réalité est plus limitée, mais une partie du dispositif échappe bien à son contrôle.\n\nWatt Else, ToujoursPlus, Artificielles, Le Récap : votre dose hebdo d’infos exclusives et d’éditos endiablés !\n\nFrandroid Clubic Lemon Humanoid Mon compte Thème Clair Sombre Système 39,90 € /an\n\nNous générons pour vous un résumé…",
+          "detail": "Signal de veille — Numerama.\n\nDepuis l’annonce de Discord, beaucoup d’utilisateurs craignent de voir leurs conversations atterrir sur Google. Pour un utilisateur français, la réalité est plus limitée, mais une partie du dispositif échappe bien à son contrôle.\n\nWatt Else, ToujoursPlus, Artificielles, Le Récap : votre dose hebdo d’infos exclusives et d’éditos endiablés !\n\nFrandroid Clubic Lemon Humanoid Mon compte Thème Clair Sombre Système 39,90 € /an\n\nNous générons pour vous un résumé de l’article grâce à une IA et nous le vérifions afin de nous assurer qu’il n’y ait aucune erreur, pour garantir l’authenticité de l’info.\n\nRecevez tous les soirs un résumé de l’actu importante avec Le Récap’\n\nDiscord a annoncé mardi 27 octobre 2026 que des messages issus de certains de ses serveurs pourraient s’afficher dans les moteurs de recherche à partir de la mi-décembre.\n\nSur les réseaux sociaux, l’annonce a vite été résumée par l’idée que les conversations Discord allaient devenir publiques, ce qui ne correspond qu’à une petite partie de ce que la plateforme prévoit réellement.",
+          "action": null,
+          "image": "https://img.numerama.com/www.numerama.com/wp-content/uploads/2026/09/1-9.png?resize=1600,900&key=1f309d73",
+          "sources": [
+            {
+              "url": "https://www.numerama.com/cyberguerre/2362863-discord-va-t-il-vraiment-publier-vos-messages-sur-google-voici-ce-qui-change-reellement.html",
+              "label": "Numerama"
+            }
+          ],
+          "url": "https://www.numerama.com/cyberguerre/2362863-discord-va-t-il-vraiment-publier-vos-messages-sur-google-voici-ce-qui-change-reellement.html",
+          "pubDate": "2026-10-28T17:08:37.000Z"
+        },
+        {
+          "title": "Discord : les messages des serveurs publics vont apparaître dans les moteurs de recherche",
+          "cve": null,
+          "severity": "culture",
+          "score": 48,
+          "corroboration": 1,
+          "region": "fr",
+          "body": "Signal de veille — IT-Connect.\n\nDès la mi-décembre 2026, Discord publiera sur le Web, notamment sur Google, des messages de ses serveurs publics. En France, l'option est désactivée par défaut.\n\nActualités IT & Tech, tutoriels en administration système, réseau et cybersécurité.\n\nArchitecture Réseau Cybersécurité Linux & Logiciels Libres Microsoft (On-Premise) Microsoft 365 & Azure Self-Hosting & Open Source Stockage & NAS Cours IT Actualités Entreprise Actu Cybersécurité Web Logiciel – OS…",
+          "detail": "Signal de veille — IT-Connect.\n\nDès la mi-décembre 2026, Discord publiera sur le Web, notamment sur Google, des messages de ses serveurs publics. En France, l'option est désactivée par défaut.\n\nActualités IT & Tech, tutoriels en administration système, réseau et cybersécurité.\n\nArchitecture Réseau Cybersécurité Linux & Logiciels Libres Microsoft (On-Premise) Microsoft 365 & Azure Self-Hosting & Open Source Stockage & NAS Cours IT Actualités Entreprise Actu Cybersécurité Web Logiciel – OS Matériel Réseaux sociaux Mobile Bons Plans Tests Débutants Livres Vidéos IT-Connect » Actualités » Web » Discord : les messages des serveurs publics vont apparaître dans les moteurs de recherche Web Discord : les messages des serveurs publics vont apparaître dans les moteurs de recherche 28/10/2026 Florian BURNEL 0 commentaire Discord Vous discutez sur des serveurs Discord publics ? Dès la mi-décembre 2026, une partie de ces messages pourra apparaître dans les résultats des moteurs de recherche comme Google. Discord a décidé d'ouvrir ses communautés au Web, avec des réglages par défaut qui changent selon le pays. Voici ce qu'il faut savoir.\n\nLe 27 octobre 2026, Discord a annoncé ce changement important via un article de blog signé Kelsey Duncombe-Smith, Group Product Manager. Il concerne uniquement les serveurs dits « découvrables », c'est-à-dire ceux listés dans l'annuaire de Discord et que n'importe qui peut rejoindre sans lien d'invitation. Pour obtenir ce statut, un serveur doit compter au moins 1 000 membres, exister depuis au moins huit semaines et respecter des exigences d'activité et de sécurité (fort heureusement, sinon avec cette nouveauté, ça aurait vrillé). À ce jour, Discord en dénombre plus de 63 000.\n\nL'argument de Discord est le suivant : une bonne partie des forums d'en",
+          "action": null,
+          "image": "https://www.it-connect.fr/wp-content-itc/uploads/2026/10/discord-indexation-google-des-messages-des-serveurs-publics.jpg",
+          "sources": [
+            {
+              "url": "https://www.it-connect.fr/discord-messages-serveurs-publics-moteurs-recherche/",
+              "label": "IT-Connect"
+            }
+          ],
+          "url": "https://www.it-connect.fr/discord-messages-serveurs-publics-moteurs-recherche/",
+          "pubDate": "2026-10-28T16:40:54.000Z"
+        },
+        {
+          "title": "Souveraineté & sécurité : « Hébergé en France » ne protège plus vos prompts",
+          "cve": null,
+          "severity": "culture",
+          "score": 45,
+          "corroboration": 1,
+          "region": "fr",
+          "body": "Signal de veille — Global Sec Mag.\n\nIl y a encore quelques années, la sécurité des données tenait à une question : où sont mes bases ? L'IA en ajoute une seconde. Chaque question posée à ChatGPT, Claude ou Gemini part chez son fournisseur, sur ses serveurs, dans son pays, sous ses lois, avec tout ce qu'on y a collé : un contrat, un tableau client, un CV. Les bases peuvent rester en France. Les questions, elles, voyagent.",
+          "detail": "Signal de veille — Global Sec Mag.\n\nIl y a encore quelques années, la sécurité des données tenait à une question : où sont mes bases ? L'IA en ajoute une seconde. Chaque question posée à ChatGPT, Claude ou Gemini part chez son fournisseur, sur ses serveurs, dans son pays, sous ses lois, avec tout ce qu'on y a collé : un contrat, un tableau client, un CV. Les bases peuvent rester en France. Les questions, elles, voyagent. Yaniv Adjedj, CEO de Reboot Conseil https://reboot-conseil.com/ (cabinet de conseil en IT, IA et cybersécurité) et de Lamalo.ai https://lamalo.ai/fr ((plateforme d'orchestration IA agnostique et souveraine) observe ce basculement : « La souveraineté des données ne se résume plus à leur lieu de stockage. Avec l'IA, les entreprises doivent aussi maîtriser leur circulation, les conditions de leur traitement et les législations qui s'appliquent. Ces enjeux doivent désormais peser autant que la performance dans le choix d'un modèle. » Deux exemples illustratifs : • Le CLOUD Act oblige les entreprises américaines à livrer les données qu'elles contrôlent, même stockées en France. Sous serment devant le Sénat, le directeur juridique de Microsoft France a répondu : « Non, je ne peux pas le garantir. » Ainsi « hébergé en France » chez un acteur américain ne veut pas dire « protégé par le droit français », y compris pour le contrat ou le tableau client collé dans un prompt. Comment justifier que nos entrepr",
+          "action": null,
+          "image": null,
+          "sources": [
+            {
+              "url": "https://www.globalsecuritymag.fr/souverainete-securite-heberge-en-france-ne-protege-plus-vos-prompts.html",
+              "label": "Global Sec Mag"
+            }
+          ],
+          "url": "https://www.globalsecuritymag.fr/souverainete-securite-heberge-en-france-ne-protege-plus-vos-prompts.html",
+          "pubDate": "2026-10-29T05:01:06.484Z"
+        }
+      ]
+    }
+  ]
+}
