@@ -1,0 +1,1021 @@
+{
+  "id": "daily-2026-11-01",
+  "type": "daily",
+  "date": "2026-11-01",
+  "title": "Rapport quotidien - dimanche 1 novembre 2026",
+  "summary": "Sur les dernières 24 heures, la veille recense 16 vulnérabilités critiques, 35 incidents ou compromissions et 7 signaux de fond. Acteurs et produits les plus exposés : Microsoft, Ivanti et Drupal.",
+  "generatedAt": "2026-11-01T05:01:15.034Z",
+  "sections": [
+    {
+      "id": "vulns",
+      "items": [
+        {
+          "title": "CVE-2026-119096 — The Uncanny Toolkit for LearnDash plugin for WordPress is vulnerable to Authentication Byp…",
+          "cve": "CVE-2026-119096",
+          "severity": "critical",
+          "score": 74,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Vulnérabilité critique CVE-2026-119096 (score CVSS 9.8).\n\nThe Uncanny Toolkit for LearnDash plugin for WordPress is vulnerable to Authentication Bypass in versions up to, and including, 3.8.2 via the `email` parameter of the `uo_login_action()` function. This is due to a parser-differential flaw in which the plugin's account-verification gate resolves the submitted `email` value using the raw, unsanitized string passed to `get_user_by()`, while the subsequent `wp_signon()` call relies on WordPress core's internal…",
+          "detail": "Vulnérabilité critique CVE-2026-119096 (score CVSS 9.8).\n\nThe Uncanny Toolkit for LearnDash plugin for WordPress is vulnerable to Authentication Bypass in versions up to, and including, 3.8.2 via the `email` parameter of the `uo_login_action()` function. This is due to a parser-differential flaw in which the plugin's account-verification gate resolves the submitted `email` value using the raw, unsanitized string passed to `get_user_by()`, while the subsequent `wp_signon()` call relies on WordPress core's internal `sanitize_user()` to strip appended junk characters — causing the gate lookup to fail and be skipped entirely while the real account is still resolved and authenticated. This makes it possible for unauthenticated attackers to log in to unverified or administrator-suspended accounts whose credentials they already possess, obtaining a valid `wordpress_logged_in` session cookie and defeating the plugin's account-approval and account-suspension controls. The nonce required to reach the handler is freely obtainable in the same request from the unauthenticated `ult-refresh-nonce` endpoint, making exploitation trivial for any attacker with network access to the site and knowledge of a target account's credentials.\n\nScore CVSS : 9.8\n\nType de faiblesse (CWE) : CWE-287",
+          "action": "Vérifier l'exposition du parc et appliquer le correctif éditeur dès sa disponibilité.",
+          "image": null,
+          "sources": [
+            {
+              "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-119096",
+              "label": "NVD"
+            },
+            {
+              "url": "https://www.cvedetails.com/cve/CVE-2026-119096/",
+              "label": "CVE Details"
+            }
+          ],
+          "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-119096",
+          "pubDate": "2026-10-31T08:16:49.043Z"
+        },
+        {
+          "title": "CVE-2026-109220 — The PDF Invoice for WooCommerce + Drag and Drop Template Builder plugin for WordPress is v…",
+          "cve": "CVE-2026-109220",
+          "severity": "critical",
+          "score": 74,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Vulnérabilité critique CVE-2026-109220 (score CVSS 9.8).\n\nThe PDF Invoice for WooCommerce + Drag and Drop Template Builder plugin for WordPress is vulnerable to PHP Object Injection in all versions up to, and including, 7.1.1 via the 'customer_note' parameter parameter. This is due to insufficient sanitization of the customer_note checkout field, which is inlined verbatim into invoice HTML, entity-decoded back into a live tag by simplehtmldom, reassembled into raw bytes by mPDF, and passed to unserialize() in _ge…",
+          "detail": "Vulnérabilité critique CVE-2026-109220 (score CVSS 9.8).\n\nThe PDF Invoice for WooCommerce + Drag and Drop Template Builder plugin for WordPress is vulnerable to PHP Object Injection in all versions up to, and including, 7.1.1 via the 'customer_note' parameter parameter. This is due to insufficient sanitization of the customer_note checkout field, which is inlined verbatim into invoice HTML, entity-decoded back into a live tag by simplehtmldom, reassembled into raw bytes by mPDF, and passed to unserialize() in _getObjAttr without validation. This makes it possible for unauthenticated attackers to execute code on the server. An unauthenticated attacker can trigger the vulnerable code path on a default install by placing an anonymous WooCommerce checkout via the public Store API (POST /wc/store/v1/checkout) using a Direct Bank Transfer or cheque payment method, which automatically transitions the order to 'on-hold' status and fires the plugin's invoice-generation hook.\n\nScore CVSS : 9.8\n\nType de faiblesse (CWE) : CWE-502",
+          "action": "Vérifier l'exposition du parc et appliquer le correctif éditeur dès sa disponibilité.",
+          "image": null,
+          "sources": [
+            {
+              "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-109220",
+              "label": "NVD"
+            },
+            {
+              "url": "https://www.cvedetails.com/cve/CVE-2026-109220/",
+              "label": "CVE Details"
+            }
+          ],
+          "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-109220",
+          "pubDate": "2026-10-31T07:16:34.367Z"
+        },
+        {
+          "title": "CVE-2026-103882 — The Acadlix LMS – AI Quiz Maker, Online Exam & Course Plugin for WordPress plugin for Word…",
+          "cve": "CVE-2026-103882",
+          "severity": "critical",
+          "score": 72,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Vulnérabilité critique CVE-2026-103882 (score CVSS 9.1).\n\nThe Acadlix LMS – AI Quiz Maker, Online Exam & Course Plugin for WordPress plugin for WordPress is vulnerable to arbitrary file deletion due to insufficient file path validation in the post_delete_assessment_file_by_id function in all versions up to, and including, 1.1.9.",
+          "detail": "Vulnérabilité critique CVE-2026-103882 (score CVSS 9.1).\n\nThe Acadlix LMS – AI Quiz Maker, Online Exam & Course Plugin for WordPress plugin for WordPress is vulnerable to arbitrary file deletion due to insufficient file path validation in the post_delete_assessment_file_by_id function in all versions up to, and including, 1.1.9. This makes it possible for authenticated attackers, with subscriber-level access and above, to delete arbitrary files on the server, which can easily lead to remote code execution when the right file is deleted (such as wp-config.php). The route's permission callback only verifies a generic wp_rest nonce that the plugin itself emits inside the public acadlixOptions JavaScript object on every frontend page, effectively reducing the authentication requirement to unauthenticated.\n\nScore CVSS : 9.1\n\nType de faiblesse (CWE) : CWE-22",
+          "action": "Vérifier l'exposition du parc et appliquer le correctif éditeur dès sa disponibilité.",
+          "image": null,
+          "sources": [
+            {
+              "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-103882",
+              "label": "NVD"
+            },
+            {
+              "url": "https://www.cvedetails.com/cve/CVE-2026-103882/",
+              "label": "CVE Details"
+            }
+          ],
+          "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-103882",
+          "pubDate": "2026-10-31T09:16:32.510Z"
+        },
+        {
+          "title": "CVE-2026-116557 — The WP Booking System - Booking Calendar plugin for WordPress is vulnerable to unauthorize…",
+          "cve": "CVE-2026-116557",
+          "severity": "critical",
+          "score": 72,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Vulnérabilité critique CVE-2026-116557 (score CVSS 9.1).\n\nThe WP Booking System - Booking Calendar plugin for WordPress is vulnerable to unauthorized modification of data due to a missing capability check on the wpbs_action_ajax_calendar_remove_note() function in versions up to, and including, 2.1.0.5 This makes it possible for authenticated attackers, with Subscriber-level access and above, to delete arbitrary calendar notes belonging to any calendar.",
+          "detail": "Vulnérabilité critique CVE-2026-116557 (score CVSS 9.1).\n\nThe WP Booking System - Booking Calendar plugin for WordPress is vulnerable to unauthorized modification of data due to a missing capability check on the wpbs_action_ajax_calendar_remove_note() function in versions up to, and including, 2.1.0.5 This makes it possible for authenticated attackers, with Subscriber-level access and above, to delete arbitrary calendar notes belonging to any calendar.\n\nScore CVSS : 9.1\n\nType de faiblesse (CWE) : CWE-862",
+          "action": "Vérifier l'exposition du parc et appliquer le correctif éditeur dès sa disponibilité.",
+          "image": null,
+          "sources": [
+            {
+              "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-116557",
+              "label": "NVD"
+            },
+            {
+              "url": "https://www.cvedetails.com/cve/CVE-2026-116557/",
+              "label": "CVE Details"
+            }
+          ],
+          "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-116557",
+          "pubDate": "2026-10-31T07:16:35.857Z"
+        },
+        {
+          "title": "CVE-2026-120197 — A flaw has been found in WAVLINK WL-WN530HG4B M_V260724. This impacts the function port_fo…",
+          "cve": "CVE-2026-120197",
+          "severity": "critical",
+          "score": 59,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Vulnérabilité critique CVE-2026-120197 (score CVSS 9.9).\n\nA flaw has been found in WAVLINK WL-WN530HG4B M_V260724. This impacts the function port_forward of the file /cgi-bin/wapi.cgi. This manipulation of the argument Name causes os command injection. It is possible to initiate the attack remotely. The exploit has been published and may be used. The vendor was contacted early about this disclosure.",
+          "detail": "Vulnérabilité critique CVE-2026-120197 (score CVSS 9.9).\n\nA flaw has been found in WAVLINK WL-WN530HG4B M_V260724. This impacts the function port_forward of the file /cgi-bin/wapi.cgi. This manipulation of the argument Name causes os command injection. It is possible to initiate the attack remotely. The exploit has been published and may be used. The vendor was contacted early about this disclosure.\n\nScore CVSS : 9.9\n\nType de faiblesse (CWE) : CWE-77, CWE-78",
+          "action": "Vérifier l'exposition du parc et appliquer le correctif éditeur dès sa disponibilité.",
+          "image": null,
+          "sources": [
+            {
+              "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-120197",
+              "label": "NVD"
+            },
+            {
+              "url": "https://www.cvedetails.com/cve/CVE-2026-120197/",
+              "label": "CVE Details"
+            }
+          ],
+          "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-120197",
+          "pubDate": "2026-11-01T04:18:47.147Z"
+        },
+        {
+          "title": "CVE-2026-120196 — A vulnerability was detected in WAVLINK WN579X3-D V250402. This affects the function port_…",
+          "cve": "CVE-2026-120196",
+          "severity": "critical",
+          "score": 59,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Vulnérabilité critique CVE-2026-120196 (score CVSS 9.9).\n\nA vulnerability was detected in WAVLINK WN579X3-D V250402. This affects the function port_forward of the file /cgi-bin/wapi.cgi. The manipulation of the argument Name results in os command injection. The attack may be performed from remote. The exploit is now public and may be used. The vendor was contacted early about this disclosure.",
+          "detail": "Vulnérabilité critique CVE-2026-120196 (score CVSS 9.9).\n\nA vulnerability was detected in WAVLINK WN579X3-D V250402. This affects the function port_forward of the file /cgi-bin/wapi.cgi. The manipulation of the argument Name results in os command injection. The attack may be performed from remote. The exploit is now public and may be used. The vendor was contacted early about this disclosure.\n\nScore CVSS : 9.9\n\nType de faiblesse (CWE) : CWE-77, CWE-78",
+          "action": "Vérifier l'exposition du parc et appliquer le correctif éditeur dès sa disponibilité.",
+          "image": null,
+          "sources": [
+            {
+              "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-120196",
+              "label": "NVD"
+            },
+            {
+              "url": "https://www.cvedetails.com/cve/CVE-2026-120196/",
+              "label": "CVE Details"
+            }
+          ],
+          "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-120196",
+          "pubDate": "2026-11-01T04:18:46.943Z"
+        },
+        {
+          "title": "CVE-2026-120195 — A security vulnerability has been detected in WAVLINK WL-WN579A3-A 2026-03-10-94f93d4. The…",
+          "cve": "CVE-2026-120195",
+          "severity": "critical",
+          "score": 59,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Vulnérabilité critique CVE-2026-120195 (score CVSS 10).\n\nA security vulnerability has been detected in WAVLINK WL-WN579A3-A 2026-03-10-94f93d4. The impacted element is the function set_wzdgwMesh of the file /cgi-bin/adm.cgi of the component Initial Setup Wizard. The manipulation of the argument wlan_ssid leads to os command injection. The attack is possible to be carried out remotely. The exploit has been disclosed publicly and may be used. The vendor was contacted early about this disclosure.",
+          "detail": "Vulnérabilité critique CVE-2026-120195 (score CVSS 10).\n\nA security vulnerability has been detected in WAVLINK WL-WN579A3-A 2026-03-10-94f93d4. The impacted element is the function set_wzdgwMesh of the file /cgi-bin/adm.cgi of the component Initial Setup Wizard. The manipulation of the argument wlan_ssid leads to os command injection. The attack is possible to be carried out remotely. The exploit has been disclosed publicly and may be used. The vendor was contacted early about this disclosure.\n\nScore CVSS : 10\n\nType de faiblesse (CWE) : CWE-77, CWE-78",
+          "action": "Vérifier l'exposition du parc et appliquer le correctif éditeur dès sa disponibilité.",
+          "image": null,
+          "sources": [
+            {
+              "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-120195",
+              "label": "NVD"
+            },
+            {
+              "url": "https://www.cvedetails.com/cve/CVE-2026-120195/",
+              "label": "CVE Details"
+            }
+          ],
+          "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-120195",
+          "pubDate": "2026-11-01T04:18:46.687Z"
+        },
+        {
+          "title": "CVE-2026-120189 — A vulnerability was identified in D-Link DIR-505 1.10B02. Affected is the function save_up…",
+          "cve": "CVE-2026-120189",
+          "severity": "critical",
+          "score": 59,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Vulnérabilité critique CVE-2026-120189 (score CVSS 10).\n\nA vulnerability was identified in D-Link DIR-505 1.10B02. Affected is the function save_upload_file/mp_upload_file of the file /usr/bin/tftpd of the component TFTP Upload Filename Handler. The manipulation leads to stack-based buffer overflow. The attack is possible to be carried out remotely. The exploit is publicly available and might be used.",
+          "detail": "Vulnérabilité critique CVE-2026-120189 (score CVSS 10).\n\nA vulnerability was identified in D-Link DIR-505 1.10B02. Affected is the function save_upload_file/mp_upload_file of the file /usr/bin/tftpd of the component TFTP Upload Filename Handler. The manipulation leads to stack-based buffer overflow. The attack is possible to be carried out remotely. The exploit is publicly available and might be used.\n\nScore CVSS : 10\n\nType de faiblesse (CWE) : CWE-119, CWE-121",
+          "action": "Vérifier l'exposition du parc et appliquer le correctif éditeur dès sa disponibilité.",
+          "image": null,
+          "sources": [
+            {
+              "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-120189",
+              "label": "NVD"
+            },
+            {
+              "url": "https://www.cvedetails.com/cve/CVE-2026-120189/",
+              "label": "CVE Details"
+            }
+          ],
+          "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-120189",
+          "pubDate": "2026-11-01T01:17:16.877Z"
+        },
+        {
+          "title": "CVE-2026-120209 — AJ-Report through 1.7.1 signs share tokens with a hard-coded JWT secret, allowing attacker…",
+          "cve": "CVE-2026-120209",
+          "severity": "critical",
+          "score": 59,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Vulnérabilité critique CVE-2026-120209 (score CVSS 9.8).\n\nAJ-Report through 1.7.1 signs share tokens with a hard-coded JWT secret, allowing attackers to forge valid Share-Tokens offline. Attackers can mint a token with reportCode 'dataSet' to access the testTransform endpoint, which passes scripts to GroovyClassLoader for unauthenticated remote code execution.",
+          "detail": "Vulnérabilité critique CVE-2026-120209 (score CVSS 9.8).\n\nAJ-Report through 1.7.1 signs share tokens with a hard-coded JWT secret, allowing attackers to forge valid Share-Tokens offline. Attackers can mint a token with reportCode 'dataSet' to access the testTransform endpoint, which passes scripts to GroovyClassLoader for unauthenticated remote code execution.\n\nScore CVSS : 9.8\n\nType de faiblesse (CWE) : CWE-321",
+          "action": "Vérifier l'exposition du parc et appliquer le correctif éditeur dès sa disponibilité.",
+          "image": null,
+          "sources": [
+            {
+              "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-120209",
+              "label": "NVD"
+            },
+            {
+              "url": "https://www.cvedetails.com/cve/CVE-2026-120209/",
+              "label": "CVE Details"
+            }
+          ],
+          "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-120209",
+          "pubDate": "2026-10-31T18:17:09.263Z"
+        },
+        {
+          "title": "CVE-2026-120201 — Jpom 2.10.0 through 2.11.12 contains an authentication bypass vulnerability that allows un…",
+          "cve": "CVE-2026-120201",
+          "severity": "critical",
+          "score": 59,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Vulnérabilité critique CVE-2026-120201 (score CVSS 9.8).\n\nJpom 2.10.0 through 2.11.12 contains an authentication bypass vulnerability that allows unauthenticated attackers to gain super-administrator access by injecting query conditions into the JPOM-USER-TOKEN header. Attackers can send a value like 'is not null', which Hutool's Condition parser treats as an operator, then execute commands through Jpom's script features.",
+          "detail": "Vulnérabilité critique CVE-2026-120201 (score CVSS 9.8).\n\nJpom 2.10.0 through 2.11.12 contains an authentication bypass vulnerability that allows unauthenticated attackers to gain super-administrator access by injecting query conditions into the JPOM-USER-TOKEN header. Attackers can send a value like 'is not null', which Hutool's Condition parser treats as an operator, then execute commands through Jpom's script features.\n\nScore CVSS : 9.8\n\nType de faiblesse (CWE) : CWE-943",
+          "action": "Vérifier l'exposition du parc et appliquer le correctif éditeur dès sa disponibilité.",
+          "image": null,
+          "sources": [
+            {
+              "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-120201",
+              "label": "NVD"
+            },
+            {
+              "url": "https://www.cvedetails.com/cve/CVE-2026-120201/",
+              "label": "CVE Details"
+            }
+          ],
+          "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-120201",
+          "pubDate": "2026-10-31T18:17:07.890Z"
+        },
+        {
+          "title": "CVE-2026-118235 — The SimpleForm – Form Maker to Chat Apps with Quiz, Poll and Multi Lead Notifications plug…",
+          "cve": "CVE-2026-118235",
+          "severity": "critical",
+          "score": 59,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Vulnérabilité critique CVE-2026-118235 (score CVSS 9.8).\n\nThe SimpleForm – Form Maker to Chat Apps with Quiz, Poll and Multi Lead Notifications plugin for WordPress is vulnerable to Arbitrary File Upload in all versions up to, and including, 3.10.2 via the handle_upload function. This is due to missing server-side file key allowlist and pre-sanitization extension derivation that allows a trailing-dot filename to bypass all extension and MIME validation in handle_upload.",
+          "detail": "Vulnérabilité critique CVE-2026-118235 (score CVSS 9.8).\n\nThe SimpleForm – Form Maker to Chat Apps with Quiz, Poll and Multi Lead Notifications plugin for WordPress is vulnerable to Arbitrary File Upload in all versions up to, and including, 3.10.2 via the handle_upload function. This is due to missing server-side file key allowlist and pre-sanitization extension derivation that allows a trailing-dot filename to bypass all extension and MIME validation in handle_upload. This makes it possible for unauthenticated attackers to upload files that may be executable, which makes remote code execution possible. The only access control is a nonce that is printed into every public form's data-nonce attribute, making it trivially obtainable by any unauthenticated visitor on a page embedding the form shortcode.\n\nScore CVSS : 9.8\n\nType de faiblesse (CWE) : CWE-434",
+          "action": "Vérifier l'exposition du parc et appliquer le correctif éditeur dès sa disponibilité.",
+          "image": null,
+          "sources": [
+            {
+              "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-118235",
+              "label": "NVD"
+            },
+            {
+              "url": "https://www.cvedetails.com/cve/CVE-2026-118235/",
+              "label": "CVE Details"
+            }
+          ],
+          "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-118235",
+          "pubDate": "2026-10-31T09:16:33.620Z"
+        },
+        {
+          "title": "CVE-2026-116512 — The Project Manager – AI Powered Project Management, Task Management, Kanban Board & Time …",
+          "cve": "CVE-2026-116512",
+          "severity": "critical",
+          "score": 59,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Vulnérabilité critique CVE-2026-116512 (score CVSS 9.8).\n\nThe Project Manager – AI Powered Project Management, Task Management, Kanban Board & Time Tracker plugin for WordPress is vulnerable to Remote Code Execution in all versions up to, and including, 4.1.1 via the 'id' parameter parameter. This is due to unsanitized 'id' parameter value concatenated directly into the pipe-delimited validation rule string, which is then split and each token invoked as a dynamic PHP function with no allowlist check.",
+          "detail": "Vulnérabilité critique CVE-2026-116512 (score CVSS 9.8).\n\nThe Project Manager – AI Powered Project Management, Task Management, Kanban Board & Time Tracker plugin for WordPress is vulnerable to Remote Code Execution in all versions up to, and including, 4.1.1 via the 'id' parameter parameter. This is due to unsanitized 'id' parameter value concatenated directly into the pipe-delimited validation rule string, which is then split and each token invoked as a dynamic PHP function with no allowlist check. This makes it possible for unauthenticated attackers to execute code on the server. This is exploitable by unauthenticated attackers because WordPress core executes the route argument's validate_callback inside WP_REST_Server::dispatch() before the route's permission_callback is invoked, meaning the Project_Manage_Capability authorization gate is never reached on the vulnerable code path.\n\nScore CVSS : 9.8\n\nType de faiblesse (CWE) : CWE-434",
+          "action": "Vérifier l'exposition du parc et appliquer le correctif éditeur dès sa disponibilité.",
+          "image": null,
+          "sources": [
+            {
+              "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-116512",
+              "label": "NVD"
+            },
+            {
+              "url": "https://www.cvedetails.com/cve/CVE-2026-116512/",
+              "label": "CVE Details"
+            }
+          ],
+          "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-116512",
+          "pubDate": "2026-10-31T08:16:48.603Z"
+        },
+        {
+          "title": "CVE-2026-89270 — The Popup Builder – Create highly converting, mobile friendly marketing popups. plugin for…",
+          "cve": "CVE-2026-89270",
+          "severity": "critical",
+          "score": 57,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Vulnérabilité critique CVE-2026-89270 (score CVSS 9.1).\n\nThe Popup Builder – Create highly converting, mobile friendly marketing popups. plugin for WordPress is vulnerable to authorization bypass in all versions up to, and including, 4.4.5 This is due to the plugin not properly verifying that a user is authorized to perform an action. This makes it possible for unauthenticated attackers to trash all published popups on the site with a single unauthenticated GET request.",
+          "detail": "Vulnérabilité critique CVE-2026-89270 (score CVSS 9.1).\n\nThe Popup Builder – Create highly converting, mobile friendly marketing popups. plugin for WordPress is vulnerable to authorization bypass in all versions up to, and including, 4.4.5 This is due to the plugin not properly verifying that a user is authorized to perform an action. This makes it possible for unauthenticated attackers to trash all published popups on the site with a single unauthenticated GET request. The attack is amplified by a second flaw in SGPopup::find(), which returns false for every normally published popup when the sg_popup_preview_id parameter is present, causing the trash branch to fire against every popup on the site simultaneously.\n\nScore CVSS : 9.1\n\nType de faiblesse (CWE) : CWE-862",
+          "action": "Vérifier l'exposition du parc et appliquer le correctif éditeur dès sa disponibilité.",
+          "image": null,
+          "sources": [
+            {
+              "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-89270",
+              "label": "NVD"
+            },
+            {
+              "url": "https://www.cvedetails.com/cve/CVE-2026-89270/",
+              "label": "CVE Details"
+            }
+          ],
+          "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-89270",
+          "pubDate": "2026-10-31T07:16:37.707Z"
+        },
+        {
+          "title": "U.S. CISA adds Ivanti Connect Secure flaws to its Known Exploited Vulnerabilities catalog",
+          "cve": "CVE-2026-111357",
+          "severity": "critical",
+          "score": 49,
+          "corroboration": 2,
+          "region": "intl",
+          "body": "Vulnérabilité critique CVE-2026-111357 affectant Ivanti.\n\nU.S. Cybersecurity and Infrastructure Security Agency (CISA) adds Ivanti Connect Secure flaws to its Known Exploited Vulnerabilities catalog. The U.S. Cybersecurity and Infrastructure Security Agency (CISA) added the following Ivanti Connect Secure vulnerabilities to its Known Exploited Vulnerabilities (KEV) catalog : CVE-2026-111357 (CVSS score of 8.8) &#8211; A missing authentication check for a critical function that could allow an authenticated local a…",
+          "detail": "Vulnérabilité critique CVE-2026-111357 affectant Ivanti.\n\nU.S. Cybersecurity and Infrastructure Security Agency (CISA) adds Ivanti Connect Secure flaws to its Known Exploited Vulnerabilities catalog. The U.S. Cybersecurity and Infrastructure Security Agency (CISA) added the following Ivanti Connect Secure vulnerabilities to its Known Exploited Vulnerabilities (KEV) catalog : CVE-2026-111357 (CVSS score of 8.8) &#8211; A missing authentication check for a critical function that could allow an authenticated local attacker to gain higher privileges. CVE-2026-118527 (CVSS score of 4.3) &#8211; A predictable identifier vulnerability that could allow an authenticated remote attacker to upload files containing malicious content to a known location on the system. The vulnerabilities are part of an exploit chain that cybersecurity firm Volexity first documented in mid-October. &#8220; Volexity has identified active in-the-wild exploitation of a vulnerability chain allowing unauthenticated remote code execution in Ivanti Connect Secure VPN devices. Ivanti has published an advisory providing upgrade instructions to customers.&#8221; states Volexity . &#8220;Systems exhibiting signs of compromise, such as attempts to move laterally originating from the ICS VPN device, should be forensically investigated to ensure no breach has occurred. &#8220; The attacks combined these vulnerabilities with an authentication bypass vulnerability, tracked as CVE-",
+          "action": "Vérifier l'exposition du parc et appliquer le correctif éditeur dès sa disponibilité.",
+          "image": "https://securityaffairs.com/wp-content/uploads/2020/07/CISA.jpeg",
+          "sources": [
+            {
+              "url": "https://securityaffairs.com/202175/security/u-s-cisa-adds-ivanti-connect-secure-flaws-to-its-known-exploited-vulnerabilities-catalog.html",
+              "label": "Security Affairs"
+            },
+            {
+              "url": "https://thehackernews.com/2026/10/attackers-chain-three-ivanti-connect.html",
+              "label": "The Hacker News"
+            }
+          ],
+          "url": "https://securityaffairs.com/202175/security/u-s-cisa-adds-ivanti-connect-secure-flaws-to-its-known-exploited-vulnerabilities-catalog.html",
+          "pubDate": "2026-10-31T19:33:36.000Z"
+        },
+        {
+          "title": "Attackers Exploit Critical Drupal Commerce Core Vulnerability CVE-2026-118539",
+          "cve": "CVE-2026-118539",
+          "severity": "critical",
+          "score": 49,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Vulnérabilité critique CVE-2026-118539 affectant Drupal.\n\nDrupal warns that attackers are exploiting a critical authorization flaw in Commerce Core, putting vulnerable online stores at risk. Drupal warns that threat actors are exploiting a highly critical security flaw, tracked as CVE-2026-118539 , in its Commerce Core module. The vulnerability is caused by missing authorization checks.",
+          "detail": "Vulnérabilité critique CVE-2026-118539 affectant Drupal.\n\nDrupal warns that attackers are exploiting a critical authorization flaw in Commerce Core, putting vulnerable online stores at risk. Drupal warns that threat actors are exploiting a highly critical security flaw, tracked as CVE-2026-118539 , in its Commerce Core module. The vulnerability is caused by missing authorization checks. &#8220;This module enables you to sell goods and services to customers through an included shopping cart and checkout form or through decoupled applications via APIs. The module doesn&#8217;t sufficiently protect certain routes and entity fields, leading to an access bypass that may financially impact the vendor.&#8221; reads the advisory . This vulnerability is being actively exploited in the wild.&#8221; The module allows websites to sell products and services through shopping carts, checkout forms, and APIs. &#8220;Missing Authorization vulnerability in Drupal Commerce Core allows Forceful Browsing. This issue affects Commerce Core versions: from 0.0.0 to 2.41, from 3.0.0 to 3.3.13.&#8221; reads the advisory. Researchers Dan Puccetti (dpuccetti), Marcus Johansson (marcus_johansson), and Robert Snyder (rsnyd) reported the vulnerability. The maintainers at the open-source project confirmed that the vulnerability is being actively exploited in the wild. Drupal recommends that users update their installations to the latest available release. Those runni",
+          "action": "Vérifier l'exposition du parc et appliquer le correctif éditeur dès sa disponibilité.",
+          "image": "https://securityaffairs.com/wp-content/uploads/2014/10/drupal.jpg",
+          "sources": [
+            {
+              "url": "https://securityaffairs.com/202162/security/attackers-exploit-critical-drupal-commerce-core-vulnerability-cve-2026-118539.html",
+              "label": "Security Affairs"
+            }
+          ],
+          "url": "https://securityaffairs.com/202162/security/attackers-exploit-critical-drupal-commerce-core-vulnerability-cve-2026-118539.html",
+          "pubDate": "2026-10-31T09:08:58.000Z"
+        }
+      ]
+    },
+    {
+      "id": "attacks",
+      "items": [
+        {
+          "title": "Gamdom V2 — rançongiciel Whitearmor",
+          "cve": null,
+          "severity": "news",
+          "score": 75,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Incident de sécurité rapporté par ransomware.live.\n\nVictime revendiquée par le groupe de rançongiciel Whitearmor. Secteur : Other. An Insight into Gamdom's Lies We have given Gamdom multiple chances to communicate, to no avail. They didn't even try to see how much data I have on the people, and have already decided that they will not pay the amount. What does this mean? - The 15.4 million entries will be leaked in the same format as below.",
+          "detail": "Incident de sécurité rapporté par ransomware.live.\n\nVictime revendiquée par le groupe de rançongiciel Whitearmor.\n\nSecteur : Other.\n\nAn Insight into Gamdom's Lies\n\nWe have given Gamdom multiple chances to communicate, to no avail. They didn't even try to see how much data I have on the people, and have already decided that they will not pay the amount. What does this mean?\n\n- The 15.4 million entries will be leaked in the same format as below.\n- The Perabet data (userid | email | password) will also be leaked along with the Gamdom leak. See sample for the format.\n- All support chats and photos shared in the support chat are in my possession; see the samples below.\n- The lies within Gamdom's Provably Fair, part 1 is being leaked today, and part 2 when they choose not to pay (with reproducible evidence).\n\nA larger data sample of the original breach will also be attached, since some people are doubting the severity of this case.\n\nFELIX ROEMER — Founder\n- Admin uid 16259643 \"Felix aka Howly\" · last IP 13.250.207.55 (Aug 19) · net +859,966,343 sats\n- Legacy supadm uid 3356423 - PHONE +49175804570\n- Personal player uid 48242366 (\"Felix Roemer\", duel4rs@gmail.com, same phone)\n\n+49175804570 He changed his number 24 hours ago, as a result of this breach. This was his main number prior.\n\nPF: \n\nWhat their own code actually shows:\n1. The crash game has no player seed. Provably fair normally means you add your own seed and results are computed from your seed plus theirs. In Gamdom's crash game the seed is one fixed constant hardcoded into the game file. It is the same for every player, every round, forever. Nothing about a round depends on you, and the house can know every upcoming result before anyone places a bet.\n2. The crash formula carries a hidden house cut. The math in their code includes a term (a divide by 50) that is not part of the fair formula they describe publicly. There is also a built-in 1 in 100 chance that every round instantly crashes at 1.00x. Running their own formula, the real average return to players is about 97.8 percent, and it gets worse depending on where you cash out.\n3. The payout rate is a live setting, not a fixed rule. Admins can change the house edge from a control panel, and the change even overrides the payout rate advertised by game providers. A game can be listed at one payout number and quietly repriced later.\n4. For roulette and hilo, their own code comment admits the result mapping is \"slightly biased because of modulo.\" They knew and wrote it down.\n5. For dice, the player's seed is never saved to the database, so the \"verify your result\" feature cannot actually be used after the round.\n6. The code also lets the system cut a crash round short and force-cash everyone out when total payouts hit a cap calculated from the live bets on the table.\n\nTL;DR: The help page promises \"the server seed is secret until reveal, nobody, the house included, can know your next result\". Reality: the database stored the raw seed next to the hash, the crash game shipped with a fixed public seed so the house could see every result in advance, and the house edge was a runtime dial. That is not provably fair. That is trust-me with extra steps.\n\nThe live crash game file at gamdom.com/build/Crash.route.BBLHNSNC.js contains the fixed seed and the formula. Download it and read it yourself. Perabet serves the same file on perabet.com with only the logo changed. <- which they might have changed after I called them out, but I hold artifacts from 13 October. This means they had been running unfairly, while knowing the outcome of EVERY roll/bet (besides Live Casino) from 2016 until October 2026.\n\nFinding: 51 dice rolls across 3 accounts, plus 18 and 16 rolls on 2 more, every outcome predicted correctly before the round finished; any staff member with read access can see the same data and act on it. Sample of their own code attached. All arti\n\nOriginals from the live system, captured and SHA-256 sealed at the time, independently recomputable by anyone. Changes made now cannot rewrite a timestamped capture, they only add to the record. The full evidence package goes to independent journalists and researchers for re-verification. \n\nMaybe all of this is the reason why out of the ~16 million entries only 199 users (with around 30% being streamers/staff members) have realized a net profit of 1 BTC+\n\nThis is your last chance to reach out to us, Gamdom.",
+          "action": "Surveiller les indicateurs de compromission associés et contrôler les actifs exposés.",
+          "image": "https://images.ransomware.live/victims/716108c3c9ba2b1421f15ec8afef3956.png",
+          "sources": [
+            {
+              "url": "https://www.ransomware.live/id/R2FtZG9tIFYyQFdoaXRlYXJtb3I=",
+              "label": "ransomware.live"
+            }
+          ],
+          "url": "https://www.ransomware.live/id/R2FtZG9tIFYyQFdoaXRlYXJtb3I=",
+          "pubDate": "2026-10-31T10:02:00.000Z"
+        },
+        {
+          "title": "Digital Triumph — rançongiciel N0n (MY)",
+          "cve": null,
+          "severity": "news",
+          "score": 70,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Incident de sécurité rapporté par ransomware.live.\n\nVictime revendiquée par le groupe de rançongiciel N0n. Pays : MY. Secteur : Technology. telecommunications services · Malaysia | Employee payroll records with names, national identity numbers and wages, statutory filings 2016 to 2025; Audited financial statements, tax filings and company bank account numbers; 2,552 customer invoices and delivery orders; The full customer service data room covering 309 organizations including banks, an embassy and governmen…",
+          "detail": "Incident de sécurité rapporté par ransomware.live.\n\nVictime revendiquée par le groupe de rançongiciel N0n.\n\nPays : MY.\n\nSecteur : Technology.\n\ntelecommunications services · Malaysia | Employee payroll records with names, national identity numbers and wages, statutory filings 2016 to 2025; Audited financial statements, tax filings and company bank account numbers; 2,552 customer invoices and delivery orders; The full customer service data room covering 309 organizations including banks, an embassy and government offices; The CRM customer database and the company mail archive, 8,700+ verified business emails with customer correspondence | [NOT PAID — EXPOSED]",
+          "action": "Surveiller les indicateurs de compromission associés et contrôler les actifs exposés.",
+          "image": "https://images.ransomware.live/victims/ad7fafe229581dc6f19e9f63fd6a2c52.png",
+          "sources": [
+            {
+              "url": "https://www.ransomware.live/id/RGlnaXRhbCBUcml1bXBoQE4wbg==",
+              "label": "ransomware.live"
+            }
+          ],
+          "url": "https://www.ransomware.live/id/RGlnaXRhbCBUcml1bXBoQE4wbg==",
+          "pubDate": "2026-10-31T07:57:54.818Z"
+        },
+        {
+          "title": "Chainalysis discloses data breach from \"offensive agentic techniques\"",
+          "cve": null,
+          "severity": "news",
+          "score": 68,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Incident de sécurité rapporté par BleepingComputer.\n\nBlockchain analytics firm Chainalysis disclosed a data breach after attackers used \"offensive agentic techniques\" to access internal systems and tools, exposing customer names, email addresses, user IDs, and organizational roles.\n\nNew Android SMS of Death exploit can remotely crash unpatched phones\n\nCritical Linux kernel flaw allows remote root attacks on MPTCP servers\n\nTrezor warns of suspected crypto-theft implant in hardware wallet\n\nNorthflank security…",
+          "detail": "Incident de sécurité rapporté par BleepingComputer.\n\nBlockchain analytics firm Chainalysis disclosed a data breach after attackers used \"offensive agentic techniques\" to access internal systems and tools, exposing customer names, email addresses, user IDs, and organizational roles.\n\nNew Android SMS of Death exploit can remotely crash unpatched phones\n\nCritical Linux kernel flaw allows remote root attacks on MPTCP servers\n\nTrezor warns of suspected crypto-theft implant in hardware wallet\n\nNorthflank security breach leads to abuse of customers' AI API keys\n\nNew Android SMS of Death exploit can remotely crash unpatched phones\n\nFrom Beginner to Bug Hunter: Learning Cybersecurity in the AI Era.",
+          "action": "Surveiller les indicateurs de compromission associés et contrôler les actifs exposés.",
+          "image": "https://www.bleepstatic.com/content/hl-images/2025/03/18/Blockchain-2.jpg",
+          "sources": [
+            {
+              "url": "https://www.bleepingcomputer.com/news/security/chainalysis-discloses-data-breach-from-offensive-agentic-techniques/",
+              "label": "BleepingComputer"
+            }
+          ],
+          "url": "https://www.bleepingcomputer.com/news/security/chainalysis-discloses-data-breach-from-offensive-agentic-techniques/",
+          "pubDate": "2026-10-31T12:50:09.000Z"
+        },
+        {
+          "title": "Holcim — rançongiciel emperador (Suisse)",
+          "cve": null,
+          "severity": "news",
+          "score": 67,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Incident de sécurité rapporté par ransomware.live.\n\nVictime revendiquée par le groupe de rançongiciel emperador. Pays : Suisse. Secteur : Manufacturing. Holcim is a global building-materials and building-solutions company founded in Switzerland in 1912. It provides cement, aggregates, ready-mix concrete and high-value building solutions for infrastructure, buildings and industrial applications. Holcim focuses on sustainable construction through solutions such as ECOPact, ECOPlanet and ECOCycle.",
+          "detail": "Incident de sécurité rapporté par ransomware.live.\n\nVictime revendiquée par le groupe de rançongiciel emperador.\n\nPays : Suisse.\n\nSecteur : Manufacturing.\n\nHolcim is a global building-materials and building-solutions company founded in Switzerland in 1912. It provides cement, aggregates, ready-mix concrete and high-value building solutions for infrastructure, buildings and industrial applications. Holcim focuses on sustainable construction through solutions such as ECOPact, ECOPlanet and ECOCycle. In 2025, the company generated CHF 15.7 billion in net sales and operated across 43 markets. [Sector: Manufacturing, Construction]",
+          "action": "Surveiller les indicateurs de compromission associés et contrôler les actifs exposés.",
+          "image": "https://images.ransomware.live/victims/76e62b85a5f84b8ad98f52f42b3e7e32.png",
+          "sources": [
+            {
+              "url": "https://www.ransomware.live/id/SG9sY2ltQGVtcGVyYWRvcg==",
+              "label": "ransomware.live"
+            }
+          ],
+          "url": "https://www.ransomware.live/id/SG9sY2ltQGVtcGVyYWRvcg==",
+          "pubDate": "2026-10-31T09:31:00.000Z"
+        },
+        {
+          "title": "SALEG (Sachsen-Anhaltische Landesentwicklungsgesellschaft mbH) — rançongiciel payload (Allemagne)",
+          "cve": null,
+          "severity": "news",
+          "score": 66,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Incident de sécurité rapporté par ransomware.live.\n\nVictime revendiquée par le groupe de rançongiciel payload. Pays : Allemagne. Secteur : Government & Defense. SALEG (Sachsen-Anhaltische Landesentwicklungsgesellschaft mbH) is a state-owned land development company belonging to the German federal state of Saxony-Anhalt. The organization specializes in urban and regional planning, brownfield redevelopment, land resource management, and the support of infrastructure projects.",
+          "detail": "Incident de sécurité rapporté par ransomware.live.\n\nVictime revendiquée par le groupe de rançongiciel payload.\n\nPays : Allemagne.\n\nSecteur : Government & Defense.\n\nSALEG (Sachsen-Anhaltische Landesentwicklungsgesellschaft mbH) is a state-owned land development company belonging to the German federal state of Saxony-Anhalt. The organization specializes in urban and regional planning, brownfield redevelopment, land resource management, and the support of infrastructure projects. It operates as a service partner for local municipalities, coordinating and implementing spatial development programs in the interests of the public sector.",
+          "action": "Surveiller les indicateurs de compromission associés et contrôler les actifs exposés.",
+          "image": "https://images.ransomware.live/victims/1107b073b6c9a4d974ea70bfb7aec6e0.png",
+          "sources": [
+            {
+              "url": "https://www.ransomware.live/id/S3JhZnQgTGVybmVuQHBheWxvYWQ=",
+              "label": "ransomware.live"
+            }
+          ],
+          "url": "https://www.ransomware.live/id/S3JhZnQgTGVybmVuQHBheWxvYWQ=",
+          "pubDate": "2026-10-31T14:29:00.765Z"
+        },
+        {
+          "title": "Ivan Smith Furniture — rançongiciel sarcoma (PH)",
+          "cve": null,
+          "severity": "news",
+          "score": 66,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Incident de sécurité rapporté par ransomware.live.\n\nVictime revendiquée par le groupe de rançongiciel sarcoma. Pays : PH. Secteur : Retail & E-Commerce. For 65 years, Ivan Smith Furniture has believed that great service starts with treating people like neighbors. What began as a small-town furniture store has grown to 40 locations across Louisiana, Texas, and Arkansas, but the values that built our business remain the same.Geo: USA - Leak size: 500 gb - Contains: Files and data bases",
+          "detail": "Incident de sécurité rapporté par ransomware.live.\n\nVictime revendiquée par le groupe de rançongiciel sarcoma.\n\nPays : PH.\n\nSecteur : Retail & E-Commerce.\n\nFor 65 years, Ivan Smith Furniture has believed that great service starts with treating people like neighbors. What began as a small-town furniture store has grown to 40 locations across Louisiana, Texas, and Arkansas, but the values that built our business remain the same.Geo: USA - Leak size: 500 gb - Contains: Files and data bases",
+          "action": "Surveiller les indicateurs de compromission associés et contrôler les actifs exposés.",
+          "image": "https://images.ransomware.live/ransomware.png",
+          "sources": [
+            {
+              "url": "https://www.ransomware.live/id/SXZhbiBTbWl0aCBGdXJuaXR1cmVAc2FyY29tYQ==",
+              "label": "ransomware.live"
+            }
+          ],
+          "url": "https://www.ransomware.live/id/SXZhbiBTbWl0aCBGdXJuaXR1cmVAc2FyY29tYQ==",
+          "pubDate": "2026-10-31T10:31:37.349Z"
+        },
+        {
+          "title": "Phoenix Charter Academy — rançongiciel rhysida (États-Unis)",
+          "cve": null,
+          "severity": "news",
+          "score": 65,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Incident de sécurité rapporté par ransomware.live.\n\nVictime revendiquée par le groupe de rançongiciel rhysida. Pays : États-Unis. Secteur : Education. Phoenix Charter Academy Phoenix Charter Academy Network is a public charter school network in Massachusetts, USA, operating three campuses (Chelsea, Lawrence, Springfield) and serving mainly low-income and immigrant families.36,829 files, 445.1 GB of data.Domain controller (password hashes of ~170+ staff accounts)File server, helpdesk server, print serverPowe…",
+          "detail": "Incident de sécurité rapporté par ransomware.live.\n\nVictime revendiquée par le groupe de rançongiciel rhysida.\n\nPays : États-Unis.\n\nSecteur : Education.\n\nPhoenix Charter Academy Phoenix Charter Academy Network is a public charter school network in Massachusetts, USA, operating three campuses (Chelsea, Lawrence, Springfield) and serving mainly low-income and immigrant families.36,829 files, 445.1 GB of data.Domain controller (password hashes of ~170+ staff accounts)File server, helpdesk server, print serverPowerSchool test server � the student databaseStudent special-education records of named minors: signed IEP/504 plans for the 2025�2026 school year, BASC-3 psychological protocols, three-year re-evaluations, speech-therapy files, discipline recordsImmigration records of students' families: official CBP I-94 entry records, parole application statements, immigration cover lettersStaff personal and financial data: W-2 forms with SSNs and salaries, US passport card and foreign passport scans, bank statements with account numbers (Bank of America / Tremont Credit Union), signed direct deposit authorizations, CORI background-check filesMedical data: MassHealth cards and applications, immunization recordsMunicipal compliance files: Lawrence Board of Health licenses and inspections (2022�2024), Fire Department inspection certificatesInternal HR material: network-wide salary bands    More",
+          "action": "Surveiller les indicateurs de compromission associés et contrôler les actifs exposés.",
+          "image": "https://images.ransomware.live/victims/f8b10bafbfdb5827fe15b8743507f52a.png",
+          "sources": [
+            {
+              "url": "https://www.ransomware.live/id/RGFuc2VyQHFpbGlu",
+              "label": "ransomware.live"
+            }
+          ],
+          "url": "https://www.ransomware.live/id/RGFuc2VyQHFpbGlu",
+          "pubDate": "2026-11-01T00:00:00.000Z"
+        },
+        {
+          "title": "Syrian Hacker Gets Prison Time in US After Over a Decade on the Run",
+          "cve": null,
+          "severity": "news",
+          "score": 64,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Incident de sécurité rapporté par SecurityWeek.\n\nSyrian Electronic Army hacker Ahmad Umar Agha, who hijacked AP’s Twitter account in 2013, gets 42 months after a decade on the run.\n\nA US court sentenced Syrian hacker Ahmad Umar Agha to 42 months for pro-Assad attacks on media, businesses, and government entities.\n\nSubscribe to the SecurityWeek Email Briefing for the latest cybersecurity threats, trends, and expert insights.\n\nSubscribe to the SecurityWeek Email Briefing to stay informed on the latest thre…",
+          "detail": "Incident de sécurité rapporté par SecurityWeek.\n\nSyrian Electronic Army hacker Ahmad Umar Agha, who hijacked AP’s Twitter account in 2013, gets 42 months after a decade on the run.\n\nA US court sentenced Syrian hacker Ahmad Umar Agha to 42 months for pro-Assad attacks on media, businesses, and government entities.\n\nSubscribe to the SecurityWeek Email Briefing for the latest cybersecurity threats, trends, and expert insights.\n\nSubscribe to the SecurityWeek Email Briefing to stay informed on the latest threats, trends, and technology, along with insightful columns from industry experts.\n\nClose the security gaps between pentests. Join this session to explore agentic pentesting and gain a practical framework for continuous exposure validation in your CTEM program.\n\nJoin as we bring together CISOs, senior cybersecurity executives, practitioners, industry experts, and other security leaders to share practical experience and examine the issues shaping enterprise cybersecurity strategy.\n\nGeneral Paul M. Nakasone has joined Armadin’s Board of Directors.",
+          "action": "Surveiller les indicateurs de compromission associés et contrôler les actifs exposés.",
+          "image": "https://www.securityweek.com/wp-content/uploads/2024/03/hacker-sentenced-prison.jpeg",
+          "sources": [
+            {
+              "url": "https://www.securityweek.com/syrian-hacker-gets-prison-time-in-us-after-over-a-decade-on-the-run/",
+              "label": "SecurityWeek"
+            }
+          ],
+          "url": "https://www.securityweek.com/syrian-hacker-gets-prison-time-in-us-after-over-a-decade-on-the-run/",
+          "pubDate": "2026-10-31T11:00:00.000Z"
+        },
+        {
+          "title": "Northflank security breach leads to abuse of customers' AI API keys",
+          "cve": null,
+          "severity": "news",
+          "score": 63,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Incident de sécurité rapporté par BleepingComputer.\n\nCloud application hosting platform Northflank is warning customers to rotate all credentials and secrets stored on its platform after a security breach led to unauthorized use of customers' AI API keys.\n\nNew Android SMS of Death exploit can remotely crash unpatched phones\n\nCritical Linux kernel flaw allows remote root attacks on MPTCP servers\n\nTrezor warns of suspected crypto-theft implant in hardware wallet\n\nNorthflank security breach leads to abuse of cu…",
+          "detail": "Incident de sécurité rapporté par BleepingComputer.\n\nCloud application hosting platform Northflank is warning customers to rotate all credentials and secrets stored on its platform after a security breach led to unauthorized use of customers' AI API keys.\n\nNew Android SMS of Death exploit can remotely crash unpatched phones\n\nCritical Linux kernel flaw allows remote root attacks on MPTCP servers\n\nTrezor warns of suspected crypto-theft implant in hardware wallet\n\nNorthflank security breach leads to abuse of customers' AI API keys\n\nNew Android SMS of Death exploit can remotely crash unpatched phones\n\nFrom Beginner to Bug Hunter: Learning Cybersecurity in the AI Era.",
+          "action": "Surveiller les indicateurs de compromission associés et contrôler les actifs exposés.",
+          "image": "https://www.bleepstatic.com/content/hl-images/2026/10/31/northflank-header.jpg",
+          "sources": [
+            {
+              "url": "https://www.bleepingcomputer.com/news/security/northflank-security-breach-leads-to-abuse-of-customers-ai-api-keys/",
+              "label": "BleepingComputer"
+            }
+          ],
+          "url": "https://www.bleepingcomputer.com/news/security/northflank-security-breach-leads-to-abuse-of-customers-ai-api-keys/",
+          "pubDate": "2026-10-31T18:01:12.000Z"
+        },
+        {
+          "title": "JHAMF Group — rançongiciel Vexy Ransomware (BD)",
+          "cve": null,
+          "severity": "news",
+          "score": 61,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Incident de sécurité rapporté par ransomware.live.\n\nVictime revendiquée par le groupe de rançongiciel Vexy Ransomware. Pays : BD. JHAMF Group is a Colombian IT services company specializing in IT infrastructure, telecommunications, software licensing and implementation, network installation and certification, technical support outsourcing, and cloud infrastructure solutions, including Microsoft Azure.",
+          "detail": "Incident de sécurité rapporté par ransomware.live.\n\nVictime revendiquée par le groupe de rançongiciel Vexy Ransomware.\n\nPays : BD.\n\nJHAMF Group is a Colombian IT services company specializing in IT infrastructure, telecommunications, software licensing and implementation, network installation and certification, technical support outsourcing, and cloud infrastructure solutions, including Microsoft Azure.",
+          "action": "Surveiller les indicateurs de compromission associés et contrôler les actifs exposés.",
+          "image": "https://images.ransomware.live/ransomware.png",
+          "sources": [
+            {
+              "url": "https://www.ransomware.live/id/SkhBTUYgR3JvdXBAVmV4eSBSYW5zb213YXJl",
+              "label": "ransomware.live"
+            }
+          ],
+          "url": "https://www.ransomware.live/id/SkhBTUYgR3JvdXBAVmV4eSBSYW5zb213YXJl",
+          "pubDate": "2026-10-31T18:43:45.000Z"
+        },
+        {
+          "title": "Punta Shopping — rançongiciel emperador (BR)",
+          "cve": null,
+          "severity": "news",
+          "score": 61,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Incident de sécurité rapporté par ransomware.live.\n\nVictime revendiquée par le groupe de rançongiciel emperador. Pays : BR. Secteur : Retail & E-Commerce. Commercial organization in Uruguay, located in the city of Punta del Este Field of activity: shopping center management, rental of commercial space, retail trade and services. The archive contains the most important personal data and customer data. [Sector: Finance]",
+          "detail": "Incident de sécurité rapporté par ransomware.live.\n\nVictime revendiquée par le groupe de rançongiciel emperador.\n\nPays : BR.\n\nSecteur : Retail & E-Commerce.\n\nCommercial organization in Uruguay, located in the city of Punta del Este\nField of activity: shopping center management, rental of commercial space, retail trade and services.\nThe archive contains the most important personal data and customer data. [Sector: Finance]",
+          "action": "Surveiller les indicateurs de compromission associés et contrôler les actifs exposés.",
+          "image": "https://images.ransomware.live/victims/c2b252ea310415bd82ecd327cee50db1.png",
+          "sources": [
+            {
+              "url": "https://www.ransomware.live/id/UHVudGEgU2hvcHBpbmdAZW1wZXJhZG9y",
+              "label": "ransomware.live"
+            }
+          ],
+          "url": "https://www.ransomware.live/id/UHVudGEgU2hvcHBpbmdAZW1wZXJhZG9y",
+          "pubDate": "2026-10-31T17:31:00.000Z"
+        },
+        {
+          "title": "Straze Garden Center — rançongiciel payload",
+          "cve": null,
+          "severity": "news",
+          "score": 61,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Incident de sécurité rapporté par ransomware.live.\n\nVictime revendiquée par le groupe de rançongiciel payload. Secteur : Retail & E-Commerce. Straze Garden Center is a German company operating a garden center and an online store for gardening supplies. The business specializes in selling indoor and outdoor plants, planting materials, soils, fertilizers, and garden tools. It provides on-site retail sales as well as order delivery across Germany.",
+          "detail": "Incident de sécurité rapporté par ransomware.live.\n\nVictime revendiquée par le groupe de rançongiciel payload.\n\nSecteur : Retail & E-Commerce.\n\nStraze Garden Center is a German company operating a garden center and an online store for gardening supplies. The business specializes in selling indoor and outdoor plants, planting materials, soils, fertilizers, and garden tools. It provides on-site retail sales as well as order delivery across Germany.",
+          "action": "Surveiller les indicateurs de compromission associés et contrôler les actifs exposés.",
+          "image": "https://images.ransomware.live/victims/e8b19396988a4b455b8a67dfffb8f59a.png",
+          "sources": [
+            {
+              "url": "https://www.ransomware.live/id/U3RyYXplIEdhcmRlbiBDZW50ZXJAcGF5bG9hZA==",
+              "label": "ransomware.live"
+            }
+          ],
+          "url": "https://www.ransomware.live/id/U3RyYXplIEdhcmRlbiBDZW50ZXJAcGF5bG9hZA==",
+          "pubDate": "2026-10-31T14:30:23.872Z"
+        },
+        {
+          "title": "quevedo-ponce.com — rançongiciel safepay (EC)",
+          "cve": null,
+          "severity": "news",
+          "score": 61,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Incident de sécurité rapporté par ransomware.live.\n\nRansomware.live discovered on 2026-10-31 that quevedo-ponce.com has been claimed by Safepay ransomware group\n\nSponsored by Hudson Rock – Use Hudson Rock's free cybercrime intelligence tools to learn how Infostealer infections are leading to ransomware attacks\n\nThe following DNS records were found for the victim's domain.\n\nLegal Disclaimer: Ransomware.live does not engage in the acquisition, exfiltration, downloading, possession, hosting, access, consultati…",
+          "detail": "Incident de sécurité rapporté par ransomware.live.\n\nRansomware.live discovered on 2026-10-31 that quevedo-ponce.com has been claimed by Safepay ransomware group\n\nSponsored by Hudson Rock – Use Hudson Rock's free cybercrime intelligence tools to learn how Infostealer infections are leading to ransomware attacks\n\nThe following DNS records were found for the victim's domain.\n\nLegal Disclaimer: Ransomware.live does not engage in the acquisition, exfiltration, downloading, possession, hosting, access, consultation, redistribution, or disclosure of unlawfully obtained data. This platform indexes only publicly visible information posted by ransomware operators and open web sources without accessing or obtaining the underlying stolen content . The service is provided to support public awareness, legitimate research, and cyber-resilience. No stolen personal or confidential data is collected or distributed via this site.\n\nSession: 057726c909af65969646b040bbbfa5c4df67f5166a33cbac6cd9e1302b0b3ca148\n\nTox: 50DADDED26D859469371938B793456D8210A5AE02DD3C42979F5E52411BCB648F1CA68A5EDE5",
+          "action": "Surveiller les indicateurs de compromission associés et contrôler les actifs exposés.",
+          "image": "https://images.ransomware.live/victims/832f33dbd79ce6606827652182b1ddec.png",
+          "sources": [
+            {
+              "url": "https://www.ransomware.live/id/cXVldmVkby1wb25jZS5jb21Ac2FmZXBheQ==",
+              "label": "ransomware.live"
+            }
+          ],
+          "url": "https://www.ransomware.live/id/cXVldmVkby1wb25jZS5jb21Ac2FmZXBheQ==",
+          "pubDate": "2026-10-31T08:03:49.715Z"
+        },
+        {
+          "title": "mars-semi.com.tw — rançongiciel safepay (TW)",
+          "cve": null,
+          "severity": "news",
+          "score": 61,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Incident de sécurité rapporté par ransomware.live.\n\nRansomware.live discovered on 2026-10-31 that mars-semi.com.tw has been claimed by Safepay ransomware group\n\nSponsored by Hudson Rock – Use Hudson Rock's free cybercrime intelligence tools to learn how Infostealer infections are leading to ransomware attacks\n\nThe following DNS records were found for the victim's domain.\n\nLegal Disclaimer: Ransomware.live does not engage in the acquisition, exfiltration, downloading, possession, hosting, access, consultatio…",
+          "detail": "Incident de sécurité rapporté par ransomware.live.\n\nRansomware.live discovered on 2026-10-31 that mars-semi.com.tw has been claimed by Safepay ransomware group\n\nSponsored by Hudson Rock – Use Hudson Rock's free cybercrime intelligence tools to learn how Infostealer infections are leading to ransomware attacks\n\nThe following DNS records were found for the victim's domain.\n\nLegal Disclaimer: Ransomware.live does not engage in the acquisition, exfiltration, downloading, possession, hosting, access, consultation, redistribution, or disclosure of unlawfully obtained data. This platform indexes only publicly visible information posted by ransomware operators and open web sources without accessing or obtaining the underlying stolen content . The service is provided to support public awareness, legitimate research, and cyber-resilience. No stolen personal or confidential data is collected or distributed via this site.\n\nSession: 057726c909af65969646b040bbbfa5c4df67f5166a33cbac6cd9e1302b0b3ca148\n\nTox: 50DADDED26D859469371938B793456D8210A5AE02DD3C42979F5E52411BCB648F1CA68A5EDE5",
+          "action": "Surveiller les indicateurs de compromission associés et contrôler les actifs exposés.",
+          "image": "https://images.ransomware.live/victims/4211ef87bcb1602ded3850147910230d.png",
+          "sources": [
+            {
+              "url": "https://www.ransomware.live/id/bWFycy1zZW1pLmNvbS50d0BzYWZlcGF5",
+              "label": "ransomware.live"
+            }
+          ],
+          "url": "https://www.ransomware.live/id/bWFycy1zZW1pLmNvbS50d0BzYWZlcGF5",
+          "pubDate": "2026-10-31T08:03:16.272Z"
+        },
+        {
+          "title": "grifosespinoza.com — rançongiciel safepay (PE)",
+          "cve": null,
+          "severity": "news",
+          "score": 61,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Incident de sécurité rapporté par ransomware.live.\n\nRansomware.live discovered on 2026-10-31 that grifosespinoza.com has been claimed by Safepay ransomware group\n\nSponsored by Hudson Rock – Use Hudson Rock's free cybercrime intelligence tools to learn how Infostealer infections are leading to ransomware attacks\n\nThe following DNS records were found for the victim's domain.\n\nLegal Disclaimer: Ransomware.live does not engage in the acquisition, exfiltration, downloading, possession, hosting, access, consultat…",
+          "detail": "Incident de sécurité rapporté par ransomware.live.\n\nRansomware.live discovered on 2026-10-31 that grifosespinoza.com has been claimed by Safepay ransomware group\n\nSponsored by Hudson Rock – Use Hudson Rock's free cybercrime intelligence tools to learn how Infostealer infections are leading to ransomware attacks\n\nThe following DNS records were found for the victim's domain.\n\nLegal Disclaimer: Ransomware.live does not engage in the acquisition, exfiltration, downloading, possession, hosting, access, consultation, redistribution, or disclosure of unlawfully obtained data. This platform indexes only publicly visible information posted by ransomware operators and open web sources without accessing or obtaining the underlying stolen content . The service is provided to support public awareness, legitimate research, and cyber-resilience. No stolen personal or confidential data is collected or distributed via this site.\n\nSession: 057726c909af65969646b040bbbfa5c4df67f5166a33cbac6cd9e1302b0b3ca148\n\nTox: 50DADDED26D859469371938B793456D8210A5AE02DD3C42979F5E52411BCB648F1CA68A5EDE5",
+          "action": "Surveiller les indicateurs de compromission associés et contrôler les actifs exposés.",
+          "image": "https://images.ransomware.live/victims/05faf2f95f98524ecf0f30cf819c3237.png",
+          "sources": [
+            {
+              "url": "https://www.ransomware.live/id/Z3JpZm9zZXNwaW5vemEuY29tQHNhZmVwYXk=",
+              "label": "ransomware.live"
+            }
+          ],
+          "url": "https://www.ransomware.live/id/Z3JpZm9zZXNwaW5vemEuY29tQHNhZmVwYXk=",
+          "pubDate": "2026-10-31T08:02:10.127Z"
+        },
+        {
+          "title": "Terre de Son : un piratage expose les données de 95 000 clients",
+          "cve": null,
+          "severity": "news",
+          "score": 59,
+          "corroboration": 1,
+          "region": "fr",
+          "body": "Incident de sécurité rapporté par Cyberattaque.org.\n\nDes années d'achats, des identités et des adresses personnelles : la boutique française Terre de Son fait l'objet d'une importante revendication de fuite\n\nAttaque Mis à jour le 1 novembre 2026 à 0h23 Terre de Son : un piratage expose les données de 95 000 clients Des années d&rsquo;achats, des identités et des adresses personnelles : la boutique française Terre de Son fait l&rsquo;objet d&rsquo;une importante revendication de fuite de données.",
+          "detail": "Incident de sécurité rapporté par Cyberattaque.org.\n\nDes années d'achats, des identités et des adresses personnelles : la boutique française Terre de Son fait l'objet d'une importante revendication de fuite\n\nAttaque Mis à jour le 1 novembre 2026 à 0h23 Terre de Son : un piratage expose les données de 95 000 clients Des années d&rsquo;achats, des identités et des adresses personnelles : la boutique française Terre de Son fait l&rsquo;objet d&rsquo;une importante revendication de fuite de données. Le 31 octobre 2026, le hacker ChimeraZ a annoncé la mise en vente de 309 100 enregistrements, comprenant les informations de 95 228 clients et plus de 100 000 commandes.\n\nCyberattaque.org s&rsquo;est procuré et a analysé trois échantillons totalisant 997 enregistrements . Les fichiers contiennent des noms, prénoms, adresses email, coordonnées postales, références de commandes, montants dépensés et moyens de paiement.\n\nTerre de Son est une enseigne française spécialisée dans la vente de matériel de sonorisation, d&rsquo;éclairage, d&rsquo;équipements DJ et de home-studio. Présente en ligne et dans plusieurs magasins, elle s&rsquo;adresse aussi bien aux particuliers qu&rsquo;aux professionnels du spectacle et de l&rsquo;événementiel.\n\nChimeraZ affirme avoir récupéré une base de 28 Mo contenant des informations enregistrées entre 2013 et 2026. Il présente trois principaux ensembles : environ 110 000 adresses, 103 000 commandes et 95 000 comptes clients .\n\nDans les échantillons examinés, Cyberattaque.org a identifié :\n\nLes deux fichiers de clients et d&rsquo;adresses comportent au total 748 adresses email distinctes dans les extraits étudiés.",
+          "action": "Surveiller les indicateurs de compromission associés et contrôler les actifs exposés.",
+          "image": "https://www.cyberattaque.org/wp-content/uploads/2026/04/cyberattaque_12-2.jpg",
+          "sources": [
+            {
+              "url": "https://www.cyberattaque.org/terre-de-son-un-piratage-expose-les-donnees-de-95-000-clients/",
+              "label": "Cyberattaque.org"
+            }
+          ],
+          "url": "https://www.cyberattaque.org/terre-de-son-un-piratage-expose-les-donnees-de-95-000-clients/",
+          "pubDate": "2026-10-31T23:23:55.000Z"
+        },
+        {
+          "title": "Près de 3 millions de plaques d’immatriculation françaises en fuite",
+          "cve": null,
+          "severity": "news",
+          "score": 57,
+          "corroboration": 1,
+          "region": "fr",
+          "body": "Incident de sécurité rapporté par Cyberattaque.org.\n\nConnaître une plaque d'immatriculation pourrait désormais permettre de retrouver l'identité et les coordonnées de son propriétaire présumé dans une\n\nAttaque Mis à jour le 31 octobre 2026 à 22h29 Près de 3 millions de plaques d’immatriculation françaises en fuite Connaître une plaque d&rsquo;immatriculation pourrait désormais permettre de retrouver l&rsquo;identité et les coordonnées de son propriétaire présumé dans une immense base de données proposée à la…",
+          "detail": "Incident de sécurité rapporté par Cyberattaque.org.\n\nConnaître une plaque d'immatriculation pourrait désormais permettre de retrouver l'identité et les coordonnées de son propriétaire présumé dans une\n\nAttaque Mis à jour le 31 octobre 2026 à 22h29 Près de 3 millions de plaques d’immatriculation françaises en fuite Connaître une plaque d&rsquo;immatriculation pourrait désormais permettre de retrouver l&rsquo;identité et les coordonnées de son propriétaire présumé dans une immense base de données proposée à la vente. Le hacker ChimeraZ affirme détenir les informations de près de 1,9 million de personnes, associées à 2,9 millions de véhicules immatriculés en France.\n\nLa revendication, publiée le 31 octobre 2026 , porte sur un fichier de plus de 2 Go. Cyberattaque.org s&rsquo;est procuré deux échantillons totalisant 2 000 lignes. Leur analyse confirme la présence de plaques d&rsquo;immatriculation associées à des noms, des numéros de téléphone, des adresses email et des caractéristiques de véhicules.\n\nChimeraZ annonce précisément 2 930 924 enregistrements , répartis entre deux ensembles de données. Il revendique également 1 885 344 numéros de téléphone distincts et 1 534 952 adresses email.\n\nLes premiers fichiers examinés présentent une différence intéressante :\n\nLes informations comprennent notamment les immatriculations, les marques, les modèles, les catégories de véhicules, les identifiants clients et, selon les fiches, les dates de première mise en circulation.\n\nCette diversité suggère que la fuite pourrait provenir d&rsquo;un outil professionnel utilisé pour gérer plusieurs catégories de véhicules , plutôt que d&rsquo;une simple liste de particuliers.",
+          "action": "Surveiller les indicateurs de compromission associés et contrôler les actifs exposés.",
+          "image": "https://www.cyberattaque.org/wp-content/uploads/2026/10/plaque-immatriculation-cyberattaque-2.jpg",
+          "sources": [
+            {
+              "url": "https://www.cyberattaque.org/pres-de-3-millions-de-plaques-dimmatriculation-francaises-en-fuite/",
+              "label": "Cyberattaque.org"
+            }
+          ],
+          "url": "https://www.cyberattaque.org/pres-de-3-millions-de-plaques-dimmatriculation-francaises-en-fuite/",
+          "pubDate": "2026-10-31T21:20:00.000Z"
+        },
+        {
+          "title": "Ma Déco de Fête : 45 000 fiches en fuite, jusqu’aux codes d’immeuble des clients",
+          "cve": null,
+          "severity": "news",
+          "score": 56,
+          "corroboration": 1,
+          "region": "fr",
+          "body": "Incident de sécurité rapporté par Cyberattaque.org.\n\nDes coordonnées personnelles, des historiques de paiement, des mots de passe hachés et même des codes d'accès à des immeubles. Voilà ce que contiennent\n\nAttaque Mis à jour le 31 octobre 2026 à 22h08 Ma Déco de Fête : 45 000 fiches en fuite, jusqu’aux codes d’immeuble des clients Des coordonnées personnelles, des historiques de paiement, des mots de passe hachés et même des codes d&rsquo;accès à des immeubles.",
+          "detail": "Incident de sécurité rapporté par Cyberattaque.org.\n\nDes coordonnées personnelles, des historiques de paiement, des mots de passe hachés et même des codes d'accès à des immeubles. Voilà ce que contiennent\n\nAttaque Mis à jour le 31 octobre 2026 à 22h08 Ma Déco de Fête : 45 000 fiches en fuite, jusqu’aux codes d’immeuble des clients Des coordonnées personnelles, des historiques de paiement, des mots de passe hachés et même des codes d&rsquo;accès à des immeubles. Voilà ce que contiennent les fichiers attribués à madecofete.com, une boutique française spécialisée dans les décorations de mariage, d&rsquo;anniversaire et de baptême. Les données ont été diffusées le 31 octobre 2026 par un hacker utilisant le pseudonyme ChimeraZ .\n\nLe pirate annonce 45 156 enregistrements concernant environ 13 000 personnes . Cyberattaque.org s&rsquo;est procuré et a analysé cinq fichiers représentant 45 118 lignes. Leur contenu révèle une exposition particulièrement préoccupante, notamment en raison de la présence de données de paiement et d&rsquo;anciennes informations d&rsquo;authentification.\n\nMa Déco de Fête est une boutique en ligne exploitée par Prestanim France , proposant des faire-part personnalisés, des décorations de table, des accessoires de réception et des articles destinés aux événements familiaux. L&rsquo;entreprise est notamment implantée à Vert-Saint-Denis, en Seine-et-Marne.\n\nContrairement à une simple liste d&rsquo;adresses email, les informations publiées correspondent à plusieurs catégories de données issues du fonctionnement d&rsquo;un site de commerce électronique.\n\nCes fichiers partagent plusieurs identifiants permettant de rapprocher les informations d&rsquo;un compte client avec ses adresses, ses livraisons et certains échanges commerciaux.\n\nLes 45 118 lignes ne cor",
+          "action": "Surveiller les indicateurs de compromission associés et contrôler les actifs exposés.",
+          "image": "https://www.cyberattaque.org/wp-content/uploads/2026/05/cyberattaque_hacker20.jpg",
+          "sources": [
+            {
+              "url": "https://www.cyberattaque.org/ma-deco-de-fete-45-000-fiches-en-fuite-jusquaux-codes-dimmeuble-des-clients/",
+              "label": "Cyberattaque.org"
+            }
+          ],
+          "url": "https://www.cyberattaque.org/ma-deco-de-fete-45-000-fiches-en-fuite-jusquaux-codes-dimmeuble-des-clients/",
+          "pubDate": "2026-10-31T21:08:11.000Z"
+        },
+        {
+          "title": "Pharmacie de la Cigogne à Strasbourg : 110 000 patients exposés après une cyberattaque",
+          "cve": null,
+          "severity": "news",
+          "score": 56,
+          "corroboration": 1,
+          "region": "fr",
+          "body": "Incident de sécurité rapporté par Cyberattaque.org.\n\nUne deuxième pharmacie française visée en quelques heures, et cette fois, le volume revendiqué atteint 110 000 patients. Ce samedi 31 octobre 2026, un\n\nAttaque Mis à jour le 31 octobre 2026 à 17h48 Pharmacie de la Cigogne à Strasbourg : 110 000 patients exposés après une cyberattaque Une deuxième pharmacie française visée en quelques heures, et cette fois, le volume revendiqué atteint 110 000 patients.",
+          "detail": "Incident de sécurité rapporté par Cyberattaque.org.\n\nUne deuxième pharmacie française visée en quelques heures, et cette fois, le volume revendiqué atteint 110 000 patients. Ce samedi 31 octobre 2026, un\n\nAttaque Mis à jour le 31 octobre 2026 à 17h48 Pharmacie de la Cigogne à Strasbourg : 110 000 patients exposés après une cyberattaque Une deuxième pharmacie française visée en quelques heures, et cette fois, le volume revendiqué atteint 110 000 patients. Ce samedi 31 octobre 2026, un hacker utilisant le pseudonyme injecteur annonce avoir compromis le système informatique de la Pharmacie de la Cigogne, à Strasbourg. Il affirme détenir les dossiers des patients, des ordonnances, des documents liés à l&rsquo;Assurance Maladie et des accès informatiques qu&rsquo;il propose désormais à la vente.\n\nCyberattaque.org s&rsquo;est procuré et a analysé un échantillon de 1 069 fiches. Les informations examinées comprennent notamment 967 numéros de Sécurité sociale renseignés, 967 dates de naissance valides et 708 références à une mutuelle . Plus préoccupant, 283 enregistrements concernent des personnes mineures au 31 octobre 2026, dont des enfants nés en 2025 et 2026.\n\nSituée au 1 Grand&rsquo;Rue, dans le centre de Strasbourg , la Pharmacie de la Cigogne est une officine exploitée depuis 2004 sous la forme d&rsquo;une société d&rsquo;exercice libéral. Elle propose la délivrance de médicaments, des conseils pharmaceutiques, du matériel médical et différents produits de santé.\n\nDans une publication datée du 31 octobre 2026 à 17 h 41 , injecteur affirme avoir obtenu un accès à l&rsquo;infrastructure informatique de la pharmacie strasbourgeoise.\n\nLe pirate déclare avoir récupéré l&rsquo;intégralité d&rsquo;une base de données concernant environ 110 000 personnes , ainsi que des ordonnan",
+          "action": "Surveiller les indicateurs de compromission associés et contrôler les actifs exposés.",
+          "image": "https://www.cyberattaque.org/wp-content/uploads/2026/10/pharmacie-cigogne-strasbourg-cyberattaque-2.jpg",
+          "sources": [
+            {
+              "url": "https://www.cyberattaque.org/pharmacie-de-la-cigogne-a-strasbourg-110-000-patients-exposes-apres-une-cyberattaque/",
+              "label": "Cyberattaque.org"
+            }
+          ],
+          "url": "https://www.cyberattaque.org/pharmacie-de-la-cigogne-a-strasbourg-110-000-patients-exposes-apres-une-cyberattaque/",
+          "pubDate": "2026-10-31T16:48:37.000Z"
+        },
+        {
+          "title": "Verrières-en-Forez : une cyberattaque bloque la mairie, les pirates exigent une rançon",
+          "cve": null,
+          "severity": "news",
+          "score": 52,
+          "corroboration": 1,
+          "region": "fr",
+          "body": "Incident de sécurité rapporté par Cyberattaque.org.\n\nÀ Verrières-en-Forez, dans la Loire, les pirates informatiques ont réussi à prendre en otage les fichiers de la mairie. Dans la nuit du 28 octobre 2026,\n\nAttaque Mis à jour le 1 novembre 2026 à 0h28 Verrières-en-Forez : une cyberattaque bloque la mairie, les pirates exigent une rançon À Verrières-en-Forez, dans la Loire, les pirates informatiques ont réussi à prendre en otage les fichiers de la mairie.",
+          "detail": "Incident de sécurité rapporté par Cyberattaque.org.\n\nÀ Verrières-en-Forez, dans la Loire, les pirates informatiques ont réussi à prendre en otage les fichiers de la mairie. Dans la nuit du 28 octobre 2026,\n\nAttaque Mis à jour le 1 novembre 2026 à 0h28 Verrières-en-Forez : une cyberattaque bloque la mairie, les pirates exigent une rançon À Verrières-en-Forez, dans la Loire, les pirates informatiques ont réussi à prendre en otage les fichiers de la mairie. Dans la nuit du 28 octobre 2026, une cyberattaque a frappé le serveur de stockage de la commune, rendant une partie des données inaccessibles. Les cybercriminels ont ensuite exigé une rançon pour les débloquer, mais la municipalité a refusé de payer.\n\nSituée près de Montbrison, Verrières-en-Forez est une petite commune rurale d&rsquo;environ 800 habitants , membre de Loire Forez Agglomération. Son maire, Kévin Klein, a confirmé l&rsquo;incident, tandis que la municipalité a publié une alerte officielle concernant les risques pour les données personnelles des administrés.\n\nL&rsquo;intrusion s&rsquo;est produite le 28 octobre 2026 vers 3 h 40 . Les premières investigations orientent les soupçons vers une vulnérabilité du serveur de stockage municipal.\n\nLes attaquants ont procédé au chiffrement des fichiers hébergés sur ce serveur , empêchant les agents du secrétariat de travailler normalement. Ce mode opératoire correspond à une attaque de type rançongiciel : les données deviennent illisibles et les pirates réclament de l&rsquo;argent pour permettre leur récupération.\n\nSelon les premiers éléments communiqués, les postes de travail et les logiciels sensibles de la collectivité n&rsquo;ont pas été touchés . L&rsquo;identité des attaquants, le logiciel malveillant éventuellement utilisé et le montant de la rançon n&rsquo;ont",
+          "action": "Surveiller les indicateurs de compromission associés et contrôler les actifs exposés.",
+          "image": "https://www.cyberattaque.org/wp-content/uploads/2026/11/verrieres-en-forez-cyberattaque-2.jpg",
+          "sources": [
+            {
+              "url": "https://www.cyberattaque.org/verrieres-en-forez-une-cyberattaque-bloque-la-mairie-les-pirates-exigent-une-rancon/",
+              "label": "Cyberattaque.org"
+            }
+          ],
+          "url": "https://www.cyberattaque.org/verrieres-en-forez-une-cyberattaque-bloque-la-mairie-les-pirates-exigent-une-rancon/",
+          "pubDate": "2026-10-31T23:26:30.000Z"
+        },
+        {
+          "title": "Cyberattaque contre Autosur : près de 800 000 fiches clients mises en vente",
+          "cve": null,
+          "severity": "news",
+          "score": 52,
+          "corroboration": 1,
+          "region": "fr",
+          "body": "Incident de sécurité rapporté par Cyberattaque.org.\n\nPrès de 800 000 enregistrements attribués à Autosur sont proposés à la vente depuis le 31 octobre 2026. Derrière cette nouvelle revendication, un détail\n\nAttaque Mis à jour le 31 octobre 2026 à 22h00 Cyberattaque contre Autosur : près de 800 000 fiches clients mises en vente Près de 800 000 enregistrements attribués à Autosur sont proposés à la vente depuis le 31 octobre 2026.",
+          "detail": "Incident de sécurité rapporté par Cyberattaque.org.\n\nPrès de 800 000 enregistrements attribués à Autosur sont proposés à la vente depuis le 31 octobre 2026. Derrière cette nouvelle revendication, un détail\n\nAttaque Mis à jour le 31 octobre 2026 à 22h00 Cyberattaque contre Autosur : près de 800 000 fiches clients mises en vente Près de 800 000 enregistrements attribués à Autosur sont proposés à la vente depuis le 31 octobre 2026. Derrière cette nouvelle revendication, un détail attire particulièrement l&rsquo;attention : les premiers fichiers examinés semblent renvoyer à un centre de contrôle technique situé en Haute-Saône, et non directement à l&rsquo;ensemble du réseau national.\n\nLe hacker ChimeraZ affirme détenir les données de 615 233 personnes . Cyberattaque.org s&rsquo;est procuré deux échantillons totalisant 1 000 fiches, dans lesquels figurent des identités, des numéros de téléphone et des adresses email.\n\nCréé en 1990, Autosur est l&rsquo;un des principaux réseaux français de contrôle technique automobile, avec plus de 900 centres annoncés à travers le territoire. L&rsquo;enseigne appartient à la Société Européenne de Contrôle Technique Automobile (SECTA), qui supervise notamment les activités de contrôle des véhicules.\n\nDans son annonce publiée le 31 octobre 2026 à 21 h 38 , ChimeraZ revendique une extraction de 248 Mo contenant précisément 798 502 lignes, réparties entre deux fichiers au format JSONL.\n\nLe pirate avance plusieurs chiffres concernant les informations récupérées :\n\nCes volumes restent ceux annoncés par ChimeraZ. L&rsquo;analyse des échantillons permet d&rsquo;attester la présence de données personnelles, mais pas de confirmer les 615 233 personnes revendiquées.",
+          "action": "Surveiller les indicateurs de compromission associés et contrôler les actifs exposés.",
+          "image": "https://www.cyberattaque.org/wp-content/uploads/2026/10/autosur-cyberattaque-2.jpg",
+          "sources": [
+            {
+              "url": "https://www.cyberattaque.org/cyberattaque-contre-autosur-pres-de-800-000-fiches-clients-mises-en-vente/",
+              "label": "Cyberattaque.org"
+            }
+          ],
+          "url": "https://www.cyberattaque.org/cyberattaque-contre-autosur-pres-de-800-000-fiches-clients-mises-en-vente/",
+          "pubDate": "2026-10-31T21:00:06.000Z"
+        },
+        {
+          "title": "Une nouvelle cyberattaque contre la Fédération nationale des chasseurs",
+          "cve": null,
+          "severity": "news",
+          "score": 52,
+          "corroboration": 1,
+          "region": "fr",
+          "body": "Incident de sécurité rapporté par Cyberattaque.org.\n\nDes identifiants, des numéros de téléphone, des dates de naissance et même des empreintes de mots de passe appartenant à des comptes administrateurs.\n\nAttaque Mis à jour le 31 octobre 2026 à 17h57 Une nouvelle cyberattaque contre la Fédération nationale des chasseurs Des identifiants, des numéros de téléphone, des dates de naissance et même des empreintes de mots de passe appartenant à des comptes administrateurs.",
+          "detail": "Incident de sécurité rapporté par Cyberattaque.org.\n\nDes identifiants, des numéros de téléphone, des dates de naissance et même des empreintes de mots de passe appartenant à des comptes administrateurs.\n\nAttaque Mis à jour le 31 octobre 2026 à 17h57 Une nouvelle cyberattaque contre la Fédération nationale des chasseurs Des identifiants, des numéros de téléphone, des dates de naissance et même des empreintes de mots de passe appartenant à des comptes administrateurs. C&rsquo;est le contenu préoccupant d&rsquo;une base de données attribuée à Chasseur de France, le site officiel de la Fédération nationale des chasseurs (FNC), dont la vente a été annoncée ce samedi 31 octobre 2026.\n\nDerrière cette publication se trouve ChimeraZ , un hacker qui revendique 5 700 enregistrements concernant 4 978 personnes. Cyberattaque.org a pu examiner un échantillon de 199 comptes utilisateurs . Les informations observées révèlent notamment la présence de profils disposant de droits d&rsquo;administration, ce qui soulève des questions sur l&rsquo;origine et la portée de cette extraction.\n\nLa Fédération nationale des chasseurs , installée à Issy-les-Moulineaux, représente les intérêts des chasseurs français et coordonne les fédérations départementales et régionales. Son site Chasseur de France présente notamment les missions de la fédération, la réglementation, les démarches relatives au permis de chasser et les actions menées en faveur de la biodiversité.\n\nLa publication de ChimeraZ, datée du 31 octobre 2026 à 16 h 49 , propose à la vente une base partielle attribuée au domaine chasseurdefrance.com.\n\nLe hacker annonce un ensemble de 5 700 lignes, représentant environ 1,6 Mo de données , réparties entre plusieurs fichiers CSV et JSON. Il évoque notamment une liste d&rsquo;environ 4 900 utilis",
+          "action": "Surveiller les indicateurs de compromission associés et contrôler les actifs exposés.",
+          "image": "https://www.cyberattaque.org/wp-content/uploads/2026/09/naturabuy-cyberattaque-2.jpg",
+          "sources": [
+            {
+              "url": "https://www.cyberattaque.org/une-nouvelle-cyberattaque-contre-la-federation-nationale-des-chasseurs/",
+              "label": "Cyberattaque.org"
+            }
+          ],
+          "url": "https://www.cyberattaque.org/une-nouvelle-cyberattaque-contre-la-federation-nationale-des-chasseurs/",
+          "pubDate": "2026-10-31T16:57:10.000Z"
+        },
+        {
+          "title": "Canton de Vaud : 41 500 élèves et enseignants victimes d’une cyberattaque",
+          "cve": null,
+          "severity": "news",
+          "score": 52,
+          "corroboration": 1,
+          "region": "fr",
+          "body": "Incident de sécurité rapporté par Cyberattaque.org.\n\nEnviron 41 500 élèves et enseignants du canton de Vaud, en Suisse, sont concernés par une importante fuite de données personnelles. Le 31 octobre 2026,\n\ncyberactu Mis à jour le 31 octobre 2026 à 17h18 Canton de Vaud : 41 500 élèves et enseignants victimes d’une cyberattaque Environ 41 500 élèves et enseignants du canton de Vaud, en Suisse, sont concernés par une importante fuite de données personnelles.",
+          "detail": "Incident de sécurité rapporté par Cyberattaque.org.\n\nEnviron 41 500 élèves et enseignants du canton de Vaud, en Suisse, sont concernés par une importante fuite de données personnelles. Le 31 octobre 2026,\n\ncyberactu Mis à jour le 31 octobre 2026 à 17h18 Canton de Vaud : 41 500 élèves et enseignants victimes d’une cyberattaque Environ 41 500 élèves et enseignants du canton de Vaud, en Suisse, sont concernés par une importante fuite de données personnelles. Le 31 octobre 2026, les autorités cantonales ont officiellement confirmé qu&rsquo;une personne non autorisée avait accédé à la plateforme de support informatique des gymnases et des écoles professionnelles, avant de copier des informations sur ses utilisateurs.\n\nLes données dérobées comprennent les noms, prénoms et adresses email scolaires de 38 000 élèves et 3 500 enseignants . Plus inquiétant, les contenus des demandes d&rsquo;assistance informatique ont également été récupérés. Ces informations pourraient désormais être utilisées pour organiser des campagnes de phishing particulièrement crédibles.\n\nLa plateforme concernée dépend de la Direction générale de l&rsquo;enseignement postobligatoire (DGEP) du canton de Vaud. Cette administration supervise notamment les gymnases, équivalents des établissements préparant aux études supérieures, ainsi que les écoles professionnelles accueillant les jeunes en formation.\n\nC&rsquo;est le lundi 26 octobre 2026 que la DGEP a détecté un accès non autorisé à son outil d&rsquo;assistance informatique. Cette plateforme permet aux élèves et au personnel enseignant de signaler des problèmes techniques et d&rsquo;obtenir de l&rsquo;aide auprès des équipes informatiques.\n\nDès la découverte de l&rsquo;incident, le service a été immédiatement déconnecté d&rsquo;Internet . Les équipes techni",
+          "action": "Surveiller les indicateurs de compromission associés et contrôler les actifs exposés.",
+          "image": "https://www.cyberattaque.org/wp-content/uploads/2026/10/gymnase-vaudois-cyberattaque-2.jpg",
+          "sources": [
+            {
+              "url": "https://www.cyberattaque.org/suisse-canton-de-vaud-41-500-eleves-et-enseignants-victimes-dune-cyberattaque/",
+              "label": "Cyberattaque.org"
+            }
+          ],
+          "url": "https://www.cyberattaque.org/suisse-canton-de-vaud-41-500-eleves-et-enseignants-victimes-dune-cyberattaque/",
+          "pubDate": "2026-10-31T16:18:11.000Z"
+        },
+        {
+          "title": "SolNet : 6 804 données de messagerie du FAI Suisse mises en vente sur le darkweb",
+          "cve": null,
+          "severity": "news",
+          "score": 52,
+          "corroboration": 1,
+          "region": "fr",
+          "body": "Incident de sécurité rapporté par Cyberattaque.org.\n\nQui a envoyé un email, à qui, depuis quelle adresse IP et à quel moment ? Ce sont précisément les informations que pourrait révéler une fuite attribuée à\n\ncyberactu Mis à jour le 31 octobre 2026 à 16h29 SolNet : 6 804 données de messagerie du FAI Suisse mises en vente sur le darkweb Qui a envoyé un email, à qui, depuis quelle adresse IP et à quel moment ? Ce sont précisément les informations que pourrait révéler une fuite attribuée à SolNet, un fournisseur…",
+          "detail": "Incident de sécurité rapporté par Cyberattaque.org.\n\nQui a envoyé un email, à qui, depuis quelle adresse IP et à quel moment ? Ce sont précisément les informations que pourrait révéler une fuite attribuée à\n\ncyberactu Mis à jour le 31 octobre 2026 à 16h29 SolNet : 6 804 données de messagerie du FAI Suisse mises en vente sur le darkweb Qui a envoyé un email, à qui, depuis quelle adresse IP et à quel moment ? Ce sont précisément les informations que pourrait révéler une fuite attribuée à SolNet, un fournisseur suisse d&rsquo;accès à Internet et de services de messagerie . Ce samedi 31 octobre 2026, un hacker utilisant le pseudonyme ChimeraZ annonce la mise en vente de 6 804 enregistrements provenant de l&rsquo;opérateur.\n\nCyberattaque.org a examiné 496 lignes d&rsquo;échantillons réparties dans quatre fichiers CSV . Elles contiennent des adresses email, des identifiants de comptes, des adresses IP et des historiques de tentatives de connexion. Certaines informations permettent également de retrouver les destinataires de messages envoyés depuis des comptes de messagerie.\n\nFondé en 1996 par BSE Software GmbH , SolNet est un opérateur basé à Soleure, en Suisse. L&rsquo;entreprise propose des connexions Internet, de la téléphonie, de la télévision numérique, des services de messagerie et des solutions d&rsquo;hébergement destinées aux particuliers comme aux entreprises.\n\nLa revendication a été publiée le 31 octobre 2026 à 16 h 13 . ChimeraZ affirme disposer d&rsquo;une base de 665 Ko contenant 6 804 lignes, qui concerneraient environ 5 000 personnes.\n\nSelon sa présentation, les données sont réparties entre quatre ensembles :\n\nLe terme « transactions » ne désigne pas ici des opérations bancaires, mais des événements techniques liés à la transmission de messages électroniques.",
+          "action": "Surveiller les indicateurs de compromission associés et contrôler les actifs exposés.",
+          "image": "https://www.cyberattaque.org/wp-content/uploads/2026/05/cyberattaque_code4.jpg",
+          "sources": [
+            {
+              "url": "https://www.cyberattaque.org/solnet-messagerie-cyberattaque-darkweb/",
+              "label": "Cyberattaque.org"
+            }
+          ],
+          "url": "https://www.cyberattaque.org/solnet-messagerie-cyberattaque-darkweb/",
+          "pubDate": "2026-10-31T15:29:22.000Z"
+        },
+        {
+          "title": "Pharmacie des Congrès à Dijon : 23 000 dossiers de patients en fuite",
+          "cve": null,
+          "severity": "news",
+          "score": 52,
+          "corroboration": 1,
+          "region": "fr",
+          "body": "Incident de sécurité rapporté par Cyberattaque.org.\n\nLa Pharmacie des Congrès, située à Dijon en Côte-d'Or, est visée par une importante revendication de cyberattaque ce samedi 31 octobre 2026. Un hacker\n\nAttaque Mis à jour le 31 octobre 2026 à 16h33 Pharmacie des Congrès à Dijon : 23 000 dossiers de patients en fuite La Pharmacie des Congrès, située à Dijon en Côte-d&rsquo;Or, est visée par une importante revendication de cyberattaque ce samedi 31 octobre 2026.",
+          "detail": "Incident de sécurité rapporté par Cyberattaque.org.\n\nLa Pharmacie des Congrès, située à Dijon en Côte-d'Or, est visée par une importante revendication de cyberattaque ce samedi 31 octobre 2026. Un hacker\n\nAttaque Mis à jour le 31 octobre 2026 à 16h33 Pharmacie des Congrès à Dijon : 23 000 dossiers de patients en fuite La Pharmacie des Congrès, située à Dijon en Côte-d&rsquo;Or, est visée par une importante revendication de cyberattaque ce samedi 31 octobre 2026. Un hacker utilisant le pseudonyme necrozma affirme avoir compromis son infrastructure informatique et récupéré une base contenant les informations d&rsquo;environ 23 000 patients , ainsi que des ordonnances, des documents d&rsquo;assurance maladie et quatre sauvegardes de données.\n\nCyberattaque.org s&rsquo;est procuré et a analysé un échantillon de 1 000 fiches. Celui-ci contient effectivement des informations particulièrement sensibles : identités, dates de naissance, numéros de Sécurité sociale, caisses d&rsquo;assurance maladie, mutuelles et situations de remboursement. Des données concernant des enfants figurent également dans les fichiers.\n\nInstallée au 2 avenue Raymond-Poincaré à Dijon , la Pharmacie des Congrès est une officine proposant la délivrance de médicaments sur ordonnance, des conseils pharmaceutiques, du matériel médical et différents services de santé. Elle est exploitée sous la dénomination SNC Mariani.\n\nLe 31 octobre 2026 à 14 h 09, un hacker utilisant le pseudonyme necrozma publie une annonce proposant à la vente des données attribuées à la Pharmacie des Congrès de Dijon.\n\nIl affirme avoir obtenu un accès à l&rsquo;infrastructure informatique de l&rsquo;établissement et récupéré l&rsquo;intégralité de sa base de données, accompagnée de quatre sauvegardes . Il évoque un volume d&rsquo;environ",
+          "action": "Surveiller les indicateurs de compromission associés et contrôler les actifs exposés.",
+          "image": "https://www.cyberattaque.org/wp-content/uploads/2026/10/pharmacie-des-congres-cyberattaque-2.jpg",
+          "sources": [
+            {
+              "url": "https://www.cyberattaque.org/pharmacie-des-congres-a-dijon-23-000-dossiers-de-patients-en-fuite/",
+              "label": "Cyberattaque.org"
+            }
+          ],
+          "url": "https://www.cyberattaque.org/pharmacie-des-congres-a-dijon-23-000-dossiers-de-patients-en-fuite/",
+          "pubDate": "2026-10-31T15:16:16.000Z"
+        }
+      ]
+    },
+    {
+      "id": "culture",
+      "items": [
+        {
+          "title": "Wireshark 5.0.0rc1 Release, (Sat, Oct 31st)",
+          "cve": null,
+          "severity": "culture",
+          "score": 66,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Signal de veille — SANS ISC.\n\nWireshark Release Candidate 5.0.0 was published : soon&nbsp;we can expect a new major version of Wireshark. Didier Stevens Senior handler blog.DidierStevens.com (c) SANS Internet Storm Center. https://isc.sans.edu Creative Commons Attribution-Noncommercial 3.0 United States License.",
+          "detail": "Signal de veille — SANS ISC.\n\nWireshark Release Candidate 5.0.0 was published : soon&nbsp;we can expect a new major version of Wireshark. Didier Stevens Senior handler blog.DidierStevens.com (c) SANS Internet Storm Center. https://isc.sans.edu Creative Commons Attribution-Noncommercial 3.0 United States License.",
+          "action": null,
+          "image": "https://isc.sans.edu/images/logos/isc/large.png",
+          "sources": [
+            {
+              "url": "https://isc.sans.edu/diary/rss/33476",
+              "label": "SANS ISC"
+            }
+          ],
+          "url": "https://isc.sans.edu/diary/rss/33476",
+          "pubDate": "2026-10-31T10:52:53.000Z"
+        },
+        {
+          "title": "YARA-X 1.22.1 Release, (Sat, Oct 31st)",
+          "cve": null,
+          "severity": "culture",
+          "score": 66,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Signal de veille — SANS ISC.\n\nYARA-X&#39;s 1.22.1 &nbsp;is a bugfix version, it brings 2 bugfixes. Notice that there was also a release of YARA: 4.6.0 , and that this release does not include the YARA-X improvement that adds&nbsp;built-in functions to read 64-bit integers : int64, int64be, uint64, and uint64be. This shows that YARA-X has replaced YARA. &nbsp; Didier Stevens Senior handler blog.DidierStevens.com (c) SANS Internet Storm Center.",
+          "detail": "Signal de veille — SANS ISC.\n\nYARA-X&#39;s 1.22.1 &nbsp;is a bugfix version, it brings 2 bugfixes. Notice that there was also a release of YARA: 4.6.0 , and that this release does not include the YARA-X improvement that adds&nbsp;built-in functions to read 64-bit integers : int64, int64be, uint64, and uint64be. This shows that YARA-X has replaced YARA. &nbsp; Didier Stevens Senior handler blog.DidierStevens.com (c) SANS Internet Storm Center. https://isc.sans.edu Creative Commons Attribution-Noncommercial 3.0 United States License.",
+          "action": null,
+          "image": "https://isc.sans.edu/images/logos/isc/large.png",
+          "sources": [
+            {
+              "url": "https://isc.sans.edu/diary/rss/33474",
+              "label": "SANS ISC"
+            }
+          ],
+          "url": "https://isc.sans.edu/diary/rss/33474",
+          "pubDate": "2026-10-31T10:48:17.000Z"
+        },
+        {
+          "title": "YARA-X 1.22.0 Release, (Sun, Oct 25th)",
+          "cve": null,
+          "severity": "culture",
+          "score": 66,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Signal de veille — SANS ISC.\n\nYARA-X&#39;s 1.22.0 release brings 11 improvements and 9 bugfixes. One improvement adds&nbsp;built-in functions to read 64-bit integers: int64, int64be, uint64, and uint64be. Didier Stevens Senior handler blog.DidierStevens.com &nbsp; (c) SANS Internet Storm Center. https://isc.sans.edu Creative Commons Attribution-Noncommercial 3.0 United States License.",
+          "detail": "Signal de veille — SANS ISC.\n\nYARA-X&#39;s 1.22.0 release brings 11 improvements and 9 bugfixes. One improvement adds&nbsp;built-in functions to read 64-bit integers: int64, int64be, uint64, and uint64be. Didier Stevens Senior handler blog.DidierStevens.com &nbsp; (c) SANS Internet Storm Center. https://isc.sans.edu Creative Commons Attribution-Noncommercial 3.0 United States License.",
+          "action": null,
+          "image": "https://isc.sans.edu/images/logos/isc/large.png",
+          "sources": [
+            {
+              "url": "https://isc.sans.edu/diary/rss/33454",
+              "label": "SANS ISC"
+            }
+          ],
+          "url": "https://isc.sans.edu/diary/rss/33454",
+          "pubDate": "2026-10-31T10:45:40.000Z"
+        },
+        {
+          "title": "Reddit to lock content behind logins to fight scrapers",
+          "cve": null,
+          "severity": "culture",
+          "score": 63,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Signal de veille — BleepingComputer.\n\nReddit announced in a post by co-founder Steve Huffman that the site will gradually become a \"logged-in service,\" offering limited access to visitors without accounts.\n\nNew Android SMS of Death exploit can remotely crash unpatched phones\n\nCritical Linux kernel flaw allows remote root attacks on MPTCP servers\n\nTrezor warns of suspected crypto-theft implant in hardware wallet\n\nNorthflank security breach leads to abuse of customers' AI API keys\n\nNew Android S…",
+          "detail": "Signal de veille — BleepingComputer.\n\nReddit announced in a post by co-founder Steve Huffman that the site will gradually become a \"logged-in service,\" offering limited access to visitors without accounts.\n\nNew Android SMS of Death exploit can remotely crash unpatched phones\n\nCritical Linux kernel flaw allows remote root attacks on MPTCP servers\n\nTrezor warns of suspected crypto-theft implant in hardware wallet\n\nNorthflank security breach leads to abuse of customers' AI API keys\n\nNew Android SMS of Death exploit can remotely crash unpatched phones\n\nFrom Beginner to Bug Hunter: Learning Cybersecurity in the AI Era.",
+          "action": null,
+          "image": "https://www.bleepstatic.com/content/hl-images/2026/10/30/reddit.jpg",
+          "sources": [
+            {
+              "url": "https://www.bleepingcomputer.com/news/security/reddit-to-lock-content-behind-logins-to-fight-scrapers/",
+              "label": "BleepingComputer"
+            }
+          ],
+          "url": "https://www.bleepingcomputer.com/news/security/reddit-to-lock-content-behind-logins-to-fight-scrapers/",
+          "pubDate": "2026-10-31T14:05:15.000Z"
+        },
+        {
+          "title": "VFS365 : cet outil open source affiche SharePoint et OneDrive comme un lecteur réseau dans Windows",
+          "cve": null,
+          "severity": "high",
+          "score": 48,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Signal de veille — IT-Connect.\n\nVFS365 affiche OneDrive, SharePoint et Teams comme un lecteur réseau sous Windows, sans synchronisation. Fonctionnement, limites et risques à connaître.\n\nActualités IT & Tech, tutoriels en administration système, réseau et cybersécurité.\n\nArchitecture Réseau Cybersécurité Linux & Logiciels Libres Microsoft (On-Premise) Microsoft 365 & Azure Self-Hosting & Open Source Stockage & NAS Cours IT Actualités Entreprise Actu Cybersécurité Web Logiciel – OS Matérie…",
+          "detail": "Signal de veille — IT-Connect.\n\nVFS365 affiche OneDrive, SharePoint et Teams comme un lecteur réseau sous Windows, sans synchronisation. Fonctionnement, limites et risques à connaître.\n\nActualités IT & Tech, tutoriels en administration système, réseau et cybersécurité.\n\nArchitecture Réseau Cybersécurité Linux & Logiciels Libres Microsoft (On-Premise) Microsoft 365 & Azure Self-Hosting & Open Source Stockage & NAS Cours IT Actualités Entreprise Actu Cybersécurité Web Logiciel – OS Matériel Réseaux sociaux Mobile Bons Plans Tests Débutants Livres Vidéos IT-Connect » Cours - Tutoriels » Microsoft 365 & Cloud Azure » Microsoft 365 » VFS365 : cet outil open source affiche SharePoint et OneDrive comme un lecteur réseau dans Windows Microsoft 365 VFS365 : cet outil open source affiche SharePoint et OneDrive comme un lecteur réseau dans Windows 31/10/2026 Florian BURNEL 0 commentaire Microsoft 365 , OneDrive , Open Source Vos utilisateurs réclament toujours une lettre de lecteur pour accéder aux fichiers stockés dans SharePoint ? Jos Lieben, l'auteur de OneDriveMapper, a publié VFS365, un système de fichiers virtuel open source qui expose Microsoft 365 dans l'Explorateur de Windows, sans synchronisation.\n\nLors d'une migration des serveurs de fichiers vers SharePoint Online, les applications métiers historiques posent presque toujours problème. Elles attendent un chemin du type M:\\Comptabilite\\Budget.xlsx , pas une URL. Le client OneDrive, lui, repose sur la synchronisation et sur des adresses Web. Alors, que faire ?\n\nPendant des années, une partie des admins a contourné le problème avec OneDriveMapper , un script PowerShell de Jos Lieben qui associe des lettres de lecteur à SharePoint via WebDAV. Mais avec VFS365 , un logiciel libre publié sous licence GPLv3, il veut aller enco",
+          "action": null,
+          "image": "https://www.it-connect.fr/wp-content-itc/uploads/2026/10/vfs365-outil-open-source-microsoft-365.jpg",
+          "sources": [
+            {
+              "url": "https://www.it-connect.fr/vfs365-sharepoint-onedrive-lecteur-reseau/",
+              "label": "IT-Connect"
+            }
+          ],
+          "url": "https://www.it-connect.fr/vfs365-sharepoint-onedrive-lecteur-reseau/",
+          "pubDate": "2026-10-31T09:45:00.000Z"
+        },
+        {
+          "title": "Gruselig! Diese sieben KI-Horrorstories schocken an Halloween",
+          "cve": null,
+          "severity": "high",
+          "score": 45,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Signal de veille — Global Sec Mag.\n\nHalloween steht vor der Tür. Für Cloudian genau der richtige Zeitpunkt, um Gruselgeschichten rund um Künstliche Intelligenz zu erzählen. Spoiler Alert: Der führende Anbieter von Object Storage und zentrale Player bei modernen KI-Infrastrukturen hat natürlich für jede Horrorstory ein Happy End parat. Es gibt kaum etwas Schöneres, als sich bei Kerzenschein Geschichten zu erzählen.",
+          "detail": "Signal de veille — Global Sec Mag.\n\nHalloween steht vor der Tür. Für Cloudian genau der richtige Zeitpunkt, um Gruselgeschichten rund um Künstliche Intelligenz zu erzählen. Spoiler Alert: Der führende Anbieter von Object Storage und zentrale Player bei modernen KI-Infrastrukturen hat natürlich für jede Horrorstory ein Happy End parat. Es gibt kaum etwas Schöneres, als sich bei Kerzenschein Geschichten zu erzählen. Gerade die kalte und düstere Jahreszeit lädt allerdings eher zu gruseligen Anekdoten ein. Passend dazu hat auch Cloudian gleich sieben Horrorstories vorbereitet, mit der sich Unternehmen aktuell auseinandersetzen müssen. Shadow AI: Der Geist im Prompt Excel-Listen, Verträge und Kundendaten wandern in vielen Unternehmen „nur kurz zur Analyse” zu ChatGPT, Claude & Co. und damit in die USA. Lokal werden LLMs wegen Ressourcenmangel jedenfalls eher selten betrieben. Ob die Daten dann ins Training der KI der großen Anbieter einfließen und von ihr in zweiter Instanz Dritten bereitgestellt werden? Keiner weiß es, wenn der Geist erst einmal aus der Flasche gelassen wurde. Das Happy End für diese Gruselgeschichte sind freigegebene Enterprise-Zugänge mit klaren Datenverarbeitungsbedingungen und Richtlinien, die Mitarbeitende wirklich verstehen, sowie eine kontrollierte Datenbasis im eigenen Haus. Ramsomware XXVI: Vergiftete Daten Die Kompromittierung von Trainingsdaten durch Data Poisoning, Verschlüsselung und Man",
+          "action": null,
+          "image": "https://www.globalsecuritymag.fr/local/cache-vignettes/L1200xH630/2390f3034d16ae32ba9755288b8d2f-7f175.jpg",
+          "sources": [
+            {
+              "url": "https://www.globalsecuritymag.fr/gruselig-diese-sieben-ki-horrorstories-schocken-an-halloween.html",
+              "label": "Global Sec Mag"
+            }
+          ],
+          "url": "https://www.globalsecuritymag.fr/gruselig-diese-sieben-ki-horrorstories-schocken-an-halloween.html",
+          "pubDate": "2026-11-01T05:01:03.199Z"
+        },
+        {
+          "title": "Gefragt sind Maßnahmen, die nachhaltig wirken",
+          "cve": null,
+          "severity": "culture",
+          "score": 45,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Signal de veille — Global Sec Mag.\n\nLaut Trends in Acces Controllers Report 2026 prägen Interoperabilität, Cloud-Anbindung und KI langfristige Zutrittskontrollstrategien Mercury Security, ein weltweit führender Anbieter offener Hardware-Architekturen für Zutrittskontrollsysteme und eine Marke von HID, hat seinen Trends in Access Controllers Report 2026 veröffentlicht.",
+          "detail": "Signal de veille — Global Sec Mag.\n\nLaut Trends in Acces Controllers Report 2026 prägen Interoperabilität, Cloud-Anbindung und KI langfristige Zutrittskontrollstrategien Mercury Security, ein weltweit führender Anbieter offener Hardware-Architekturen für Zutrittskontrollsysteme und eine Marke von HID, hat seinen Trends in Access Controllers Report 2026 veröffentlicht. Er zeigt, wie veränderte Anforderungen an die Cybersicherheit, Interoperabilität, Cloud-Nutzung und neue Technologien die Rolle der Controller in der langfristigen Strategie für die physische Zutrittskontrolle stärker in den Fokus rücken. Der Bericht basiert auf einer weltweiten Umfrage unter 561 Fachleuten aus den Bereichen physische Sicherheit und Cybersecurity. Dazu zählen Administratoren, die für das Management der Zutrittskontrolle zuständig sind, Systemintegratoren, Installateure und Endanwender. Dem Report nach halten 78 % der Befragten den Controller für wichtig oder gar entscheidend für ihre Strategie zum physischen Zutrittskontrollsystem (Physical Access Control System, kurz: PACS), 2025 waren es noch 72 %. Diese Entwicklung spiegelt die wachsende Rolle des Controllers im Sicherheitsumfeld wider, der immer mehr Geräte, Systeme und Anwendungen verbindet. Entsprechend legen Organisationen mehr Wert auf eine Infrastruktur, die aktuelle Anforderungen erfüllt und zugleich im Zeitverlauf neue Funktionen unterstützt. Eine der deutlichsten Lücken",
+          "action": null,
+          "image": null,
+          "sources": [
+            {
+              "url": "https://www.globalsecuritymag.fr/gefragt-sind-massnahmen-die-nachhaltig-wirken.html",
+              "label": "Global Sec Mag"
+            }
+          ],
+          "url": "https://www.globalsecuritymag.fr/gefragt-sind-massnahmen-die-nachhaltig-wirken.html",
+          "pubDate": "2026-11-01T05:01:03.198Z"
+        }
+      ]
+    }
+  ]
+}
