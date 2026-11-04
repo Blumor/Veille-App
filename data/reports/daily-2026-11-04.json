@@ -1,0 +1,1177 @@
+{
+  "id": "daily-2026-11-04",
+  "type": "daily",
+  "date": "2026-11-04",
+  "title": "Rapport quotidien - mercredi 4 novembre 2026",
+  "summary": "Sur les dernières 24 heures, la veille recense 24 vulnérabilités critiques, 51 incidents ou compromissions et 24 signaux de fond. Acteurs et produits les plus exposés : Google, Linux et @enspirit/elo (npm).",
+  "generatedAt": "2026-11-04T05:01:24.411Z",
+  "sections": [
+    {
+      "id": "vulns",
+      "items": [
+        {
+          "title": "CVE-2026-44267 — Elo JavaScript emitter has sandbox escape to arbitrary Node.js / browser code execution via unfiltered `.constructor` member access",
+          "cve": "CVE-2026-44267",
+          "severity": "critical",
+          "score": 74,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Vulnérabilité critique CVE-2026-44267 affectant @enspirit/elo (npm) (score CVSS 9.8).\n\nElo JavaScript emitter has sandbox escape to arbitrary Node.js / browser code execution via unfiltered `.constructor` member access\n\nThree interacting sites in src/ produce the bug at commit 749af7b :\n\nAll three surfaces share the same root cause (no denylist in transform.ts ) and are addressed by the same one-file patch:\n\nnode bin/elo payload.elo # uid=1000(ultrasupara)… node bin/elo -e \" _ \" -d @payload.elo -f elo # uid=1000(ultrasupara)… Browser playgro…",
+          "detail": "Vulnérabilité critique CVE-2026-44267 affectant @enspirit/elo (npm) (score CVSS 9.8).\n\nElo JavaScript emitter has sandbox escape to arbitrary Node.js / browser code execution via unfiltered `.constructor` member access\n\nThree interacting sites in src/ produce the bug at commit 749af7b :\n\nAll three surfaces share the same root cause (no denylist in transform.ts ) and are addressed by the same one-file patch:\n\nnode bin/elo payload.elo # uid=1000(ultrasupara)… node bin/elo -e \" _ \" -d @payload.elo -f elo # uid=1000(ultrasupara)… Browser playground — 0-click XSS URL:\n\nThis finding is independent of the Medium-severity AST-API report (GHSA #3). That fix's identifier regex ^[a-zA-Z_][a-zA-Z0-9_]*$ happens to accept constructor , and its threat model requires an attacker-controlled AST object rather than a plain string. The current finding requires only a plain Elo string, which is a strictly weaker attacker model.\n\nblambeau published to enspirit/elo Oct 30, 2026 Published to the GitHub Advisory Database Nov 3, 2026 Reviewed Nov 3, 2026 Last updated Nov 3, 2026 Severity Critical 9.8 CVSS overall score This score calculates overall vulnerability severity from 0 to 10 and is based on the Common Vulnerability Scoring System (CVSS). / 10 CVSS v3 base metrics Attack vector Network Attack complexity Low Privileges required None User interaction None Scope Unchanged Confidentiality High Integrity High Availability High Learn more about base metrics CVSS v3 base metrics Attack vector: More severe the more the remote (logically and physically) an attacker can be in order to exploit the vulnerability. Attack complexity: More severe for the least complex attacks. Privileges required: More severe if no privileges are required. User interaction: More severe when no user interaction is requ",
+          "action": "Vérifier l'exposition du parc et appliquer le correctif éditeur dès sa disponibilité.",
+          "image": "https://github.githubassets.com/assets/advisory-database-show-f32c8207dfb2.png",
+          "sources": [
+            {
+              "url": "https://github.com/advisories/GHSA-33r5-xmm8-v6x5",
+              "label": "GitHub Advisory"
+            }
+          ],
+          "url": "https://github.com/advisories/GHSA-33r5-xmm8-v6x5",
+          "pubDate": "2026-11-03T17:53:42.000Z"
+        },
+        {
+          "title": "CVE-2026-120518 — The BuddyPress XProfile Image Field plugin for WordPress is vulnerable to arbitrary file d…",
+          "cve": "CVE-2026-120518",
+          "severity": "critical",
+          "score": 72,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Vulnérabilité critique CVE-2026-120518 (score CVSS 9.1).\n\nThe BuddyPress XProfile Image Field plugin for WordPress is vulnerable to arbitrary file deletion in all versions up to, and including, 3.1.0. This is due to bpxp_image_field_update_on_user_activation() calling unlink() on a path built from visitor-supplied signup metadata with no realpath() resolution, no containment check against the profile-image directory and no extension allow-list.",
+          "detail": "Vulnérabilité critique CVE-2026-120518 (score CVSS 9.1).\n\nThe BuddyPress XProfile Image Field plugin for WordPress is vulnerable to arbitrary file deletion in all versions up to, and including, 3.1.0. This is due to bpxp_image_field_update_on_user_activation() calling unlink() on a path built from visitor-supplied signup metadata with no realpath() resolution, no containment check against the profile-image directory and no extension allow-list. Submitting a zero-byte file with the 'field_N_hidden' parameter during registration makes the plugin store the raw value, which is then resolved against the document root when the pending signup is activated. This makes it possible for unauthenticated attackers to delete arbitrary files on the server, which can easily lead to remote code execution when the right file (such as wp-config.php) is deleted. Requires open registration and an image-type profile field on the signup form.\n\nScore CVSS : 9.1\n\nType de faiblesse (CWE) : CWE-22",
+          "action": "Vérifier l'exposition du parc et appliquer le correctif éditeur dès sa disponibilité.",
+          "image": null,
+          "sources": [
+            {
+              "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-120518",
+              "label": "NVD"
+            },
+            {
+              "url": "https://www.cvedetails.com/cve/CVE-2026-120518/",
+              "label": "CVE Details"
+            }
+          ],
+          "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-120518",
+          "pubDate": "2026-11-03T05:18:31.380Z"
+        },
+        {
+          "title": "Critical Node-RED Flaw Exploited in Attacks",
+          "cve": null,
+          "severity": "critical",
+          "score": 61,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Vulnérabilité critique affectant Linux.\n\nHackers are exploiting CVE-2026-58115, a critical-severity Node-RED vulnerability, to deploy various payloads.\n\nMultiple attacks from the same IP address attempted to deploy various payloads, including a Linux bot and webshells.\n\nSubscribe to the SecurityWeek Email Briefing for the latest cybersecurity threats, trends, and expert insights.\n\nSubscribe to the SecurityWeek Email Briefing to stay informed on the latest threats, trends, and technology, along wi…",
+          "detail": "Vulnérabilité critique affectant Linux.\n\nHackers are exploiting CVE-2026-58115, a critical-severity Node-RED vulnerability, to deploy various payloads.\n\nMultiple attacks from the same IP address attempted to deploy various payloads, including a Linux bot and webshells.\n\nSubscribe to the SecurityWeek Email Briefing for the latest cybersecurity threats, trends, and expert insights.\n\nSubscribe to the SecurityWeek Email Briefing to stay informed on the latest threats, trends, and technology, along with insightful columns from industry experts.\n\nClose the security gaps between pentests. Join this session to explore agentic pentesting and gain a practical framework for continuous exposure validation in your CTEM program.\n\nJoin as we bring together CISOs, senior cybersecurity executives, practitioners, industry experts, and other security leaders to share practical experience and examine the issues shaping enterprise cybersecurity strategy.\n\nGeneral Paul M. Nakasone has joined Armadin’s Board of Directors.",
+          "action": "Vérifier l'exposition du parc et appliquer le correctif éditeur dès sa disponibilité.",
+          "image": "https://www.securityweek.com/wp-content/uploads/2025/12/industrial-AI-OT-security.jpeg",
+          "sources": [
+            {
+              "url": "https://www.securityweek.com/critical-node-red-flaw-exploited-in-attacks/",
+              "label": "SecurityWeek"
+            }
+          ],
+          "url": "https://www.securityweek.com/critical-node-red-flaw-exploited-in-attacks/",
+          "pubDate": "2026-11-03T12:10:19.000Z"
+        },
+        {
+          "title": "CVE-2026-121615 — A vulnerability was determined in Linksys E5600 1.1.0.26. Affected is an unknown function …",
+          "cve": "CVE-2026-121615",
+          "severity": "critical",
+          "score": 59,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Vulnérabilité critique CVE-2026-121615 (score CVSS 10).\n\nA vulnerability was determined in Linksys E5600 1.1.0.26. Affected is an unknown function of the file /cgi-bin/mesh_login.cgi of the component Login Handler. Executing a manipulation can lead to improper authentication. The attack can be launched remotely. The exploit has been publicly disclosed and may be utilized. The vendor was contacted early about this disclosure but did not respond in any way.",
+          "detail": "Vulnérabilité critique CVE-2026-121615 (score CVSS 10).\n\nA vulnerability was determined in Linksys E5600 1.1.0.26. Affected is an unknown function of the file /cgi-bin/mesh_login.cgi of the component Login Handler. Executing a manipulation can lead to improper authentication. The attack can be launched remotely. The exploit has been publicly disclosed and may be utilized. The vendor was contacted early about this disclosure but did not respond in any way. This vulnerability only affects products that are no longer supported by the maintainer.\n\nScore CVSS : 10\n\nType de faiblesse (CWE) : CWE-287",
+          "action": "Vérifier l'exposition du parc et appliquer le correctif éditeur dès sa disponibilité.",
+          "image": null,
+          "sources": [
+            {
+              "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-121615",
+              "label": "NVD"
+            },
+            {
+              "url": "https://www.cvedetails.com/cve/CVE-2026-121615/",
+              "label": "CVE Details"
+            }
+          ],
+          "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-121615",
+          "pubDate": "2026-11-04T03:17:14.810Z"
+        },
+        {
+          "title": "CVE-2026-121609 — A vulnerability was identified in Qihoo 360 Whole Home Router M5 4.0.17.1566. This issue a…",
+          "cve": "CVE-2026-121609",
+          "severity": "critical",
+          "score": 59,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Vulnérabilité critique CVE-2026-121609 (score CVSS 10).\n\nA vulnerability was identified in Qihoo 360 Whole Home Router M5 4.0.17.1566. This issue affects the function Home of the file /etc/init.d/mpt of the component Boot Script. The manipulation leads to hard-coded credentials. Remote exploitation of the attack is possible. The exploit is publicly available and might be used. The vendor was contacted early about this disclosure but did not respond in any way.",
+          "detail": "Vulnérabilité critique CVE-2026-121609 (score CVSS 10).\n\nA vulnerability was identified in Qihoo 360 Whole Home Router M5 4.0.17.1566. This issue affects the function Home of the file /etc/init.d/mpt of the component Boot Script. The manipulation leads to hard-coded credentials. Remote exploitation of the attack is possible. The exploit is publicly available and might be used. The vendor was contacted early about this disclosure but did not respond in any way.\n\nScore CVSS : 10\n\nType de faiblesse (CWE) : CWE-259, CWE-798",
+          "action": "Vérifier l'exposition du parc et appliquer le correctif éditeur dès sa disponibilité.",
+          "image": null,
+          "sources": [
+            {
+              "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-121609",
+              "label": "NVD"
+            },
+            {
+              "url": "https://www.cvedetails.com/cve/CVE-2026-121609/",
+              "label": "CVE Details"
+            }
+          ],
+          "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-121609",
+          "pubDate": "2026-11-04T02:17:20.243Z"
+        },
+        {
+          "title": "CVE-2026-121607 — A vulnerability was found in Qihoo 360 D603-2, D600-2, D606-6 and D706 up to 6.4.9. This a…",
+          "cve": "CVE-2026-121607",
+          "severity": "critical",
+          "score": 59,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Vulnérabilité critique CVE-2026-121607 (score CVSS 10).\n\nA vulnerability was found in Qihoo 360 D603-2, D600-2, D606-6 and D706 up to 6.4.9. This affects the function testspeed_command of the file /fs2/bin/iscm. Performing a manipulation of the argument host results in os command injection. The attack may be initiated remotely. The exploit has been made public and could be used. The vendor was contacted early about this disclosure but did not respond in any way.",
+          "detail": "Vulnérabilité critique CVE-2026-121607 (score CVSS 10).\n\nA vulnerability was found in Qihoo 360 D603-2, D600-2, D606-6 and D706 up to 6.4.9. This affects the function testspeed_command of the file /fs2/bin/iscm. Performing a manipulation of the argument host results in os command injection. The attack may be initiated remotely. The exploit has been made public and could be used. The vendor was contacted early about this disclosure but did not respond in any way.\n\nScore CVSS : 10\n\nType de faiblesse (CWE) : CWE-77, CWE-78",
+          "action": "Vérifier l'exposition du parc et appliquer le correctif éditeur dès sa disponibilité.",
+          "image": null,
+          "sources": [
+            {
+              "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-121607",
+              "label": "NVD"
+            },
+            {
+              "url": "https://www.cvedetails.com/cve/CVE-2026-121607/",
+              "label": "CVE Details"
+            }
+          ],
+          "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-121607",
+          "pubDate": "2026-11-04T02:17:19.753Z"
+        },
+        {
+          "title": "CVE-2026-121606 — A vulnerability has been found in Qihoo 360 D621-2, D603-2, D600-2, D619, D606-6 and D706 …",
+          "cve": "CVE-2026-121606",
+          "severity": "critical",
+          "score": 59,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Vulnérabilité critique CVE-2026-121606 (score CVSS 10).\n\nA vulnerability has been found in Qihoo 360 D621-2, D603-2, D600-2, D619, D606-6 and D706 up to 6.4.9. Affected by this issue is the function verify_sign of the file fs2/bin/iscm of the component Firmware Signature Verification. Such manipulation of the argument sign leads to improper verification of cryptographic signature. The attack can be launched remotely. The exploit has been disclosed to the public and may be used.",
+          "detail": "Vulnérabilité critique CVE-2026-121606 (score CVSS 10).\n\nA vulnerability has been found in Qihoo 360 D621-2, D603-2, D600-2, D619, D606-6 and D706 up to 6.4.9. Affected by this issue is the function verify_sign of the file fs2/bin/iscm of the component Firmware Signature Verification. Such manipulation of the argument sign leads to improper verification of cryptographic signature. The attack can be launched remotely. The exploit has been disclosed to the public and may be used. The vendor was contacted early about this disclosure but did not respond in any way.\n\nScore CVSS : 10\n\nType de faiblesse (CWE) : CWE-345, CWE-347",
+          "action": "Vérifier l'exposition du parc et appliquer le correctif éditeur dès sa disponibilité.",
+          "image": null,
+          "sources": [
+            {
+              "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-121606",
+              "label": "NVD"
+            },
+            {
+              "url": "https://www.cvedetails.com/cve/CVE-2026-121606/",
+              "label": "CVE Details"
+            }
+          ],
+          "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-121606",
+          "pubDate": "2026-11-04T01:17:23.880Z"
+        },
+        {
+          "title": "CVE-2026-121600 — A flaw has been found in TOTOLINK A950RG 4.1.2cu.5268_B20221104. Affected by this vulnerab…",
+          "cve": "CVE-2026-121600",
+          "severity": "critical",
+          "score": 59,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Vulnérabilité critique CVE-2026-121600 (score CVSS 9.9).\n\nA flaw has been found in TOTOLINK A950RG 4.1.2cu.5268_B20221104. Affected by this vulnerability is the function setMacFilterRules of the file /cgi-bin/cstecgi.cgi of the component MAC Filter Handler. This manipulation of the argument addEffect causes stack-based buffer overflow. The attack can be initiated remotely. The exploit has been published and may be used.",
+          "detail": "Vulnérabilité critique CVE-2026-121600 (score CVSS 9.9).\n\nA flaw has been found in TOTOLINK A950RG 4.1.2cu.5268_B20221104. Affected by this vulnerability is the function setMacFilterRules of the file /cgi-bin/cstecgi.cgi of the component MAC Filter Handler. This manipulation of the argument addEffect causes stack-based buffer overflow. The attack can be initiated remotely. The exploit has been published and may be used.\n\nScore CVSS : 9.9\n\nType de faiblesse (CWE) : CWE-119, CWE-121",
+          "action": "Vérifier l'exposition du parc et appliquer le correctif éditeur dès sa disponibilité.",
+          "image": null,
+          "sources": [
+            {
+              "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-121600",
+              "label": "NVD"
+            },
+            {
+              "url": "https://www.cvedetails.com/cve/CVE-2026-121600/",
+              "label": "CVE Details"
+            }
+          ],
+          "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-121600",
+          "pubDate": "2026-11-04T01:17:23.647Z"
+        },
+        {
+          "title": "CVE-2026-121599 — A vulnerability was detected in TOTOLINK A950RG 4.1.2cu.5268_B20221104. Affected is the fu…",
+          "cve": "CVE-2026-121599",
+          "severity": "critical",
+          "score": 59,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Vulnérabilité critique CVE-2026-121599 (score CVSS 9.9).\n\nA vulnerability was detected in TOTOLINK A950RG 4.1.2cu.5268_B20221104. Affected is the function setWiFiMultipleConfig/delWiFiMultipleConfig of the file /cgi-bin/cstecgi.cgi of the component Multi-SSID Configuration. The manipulation of the argument wepkey2/wepkey3 results in stack-based buffer overflow. It is possible to launch the attack remotely. The exploit is now public and may be used.",
+          "detail": "Vulnérabilité critique CVE-2026-121599 (score CVSS 9.9).\n\nA vulnerability was detected in TOTOLINK A950RG 4.1.2cu.5268_B20221104. Affected is the function setWiFiMultipleConfig/delWiFiMultipleConfig of the file /cgi-bin/cstecgi.cgi of the component Multi-SSID Configuration. The manipulation of the argument wepkey2/wepkey3 results in stack-based buffer overflow. It is possible to launch the attack remotely. The exploit is now public and may be used.\n\nScore CVSS : 9.9\n\nType de faiblesse (CWE) : CWE-119, CWE-121",
+          "action": "Vérifier l'exposition du parc et appliquer le correctif éditeur dès sa disponibilité.",
+          "image": null,
+          "sources": [
+            {
+              "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-121599",
+              "label": "NVD"
+            },
+            {
+              "url": "https://www.cvedetails.com/cve/CVE-2026-121599/",
+              "label": "CVE Details"
+            }
+          ],
+          "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-121599",
+          "pubDate": "2026-11-04T01:17:23.413Z"
+        },
+        {
+          "title": "CVE-2026-121598 — A security vulnerability has been detected in TOTOLINK A950RG 4.1.2cu.5268_B20221104. This…",
+          "cve": "CVE-2026-121598",
+          "severity": "critical",
+          "score": 59,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Vulnérabilité critique CVE-2026-121598 (score CVSS 9.9).\n\nA security vulnerability has been detected in TOTOLINK A950RG 4.1.2cu.5268_B20221104. This impacts the function strcpy of the file /cgi-bin/cstecgi.cgi of the component Basic Wireless Configuration Handler. The manipulation of the argument wepkey leads to stack-based buffer overflow. It is possible to initiate the attack remotely. The exploit has been disclosed publicly and may be used.",
+          "detail": "Vulnérabilité critique CVE-2026-121598 (score CVSS 9.9).\n\nA security vulnerability has been detected in TOTOLINK A950RG 4.1.2cu.5268_B20221104. This impacts the function strcpy of the file /cgi-bin/cstecgi.cgi of the component Basic Wireless Configuration Handler. The manipulation of the argument wepkey leads to stack-based buffer overflow. It is possible to initiate the attack remotely. The exploit has been disclosed publicly and may be used.\n\nScore CVSS : 9.9\n\nType de faiblesse (CWE) : CWE-119, CWE-121",
+          "action": "Vérifier l'exposition du parc et appliquer le correctif éditeur dès sa disponibilité.",
+          "image": null,
+          "sources": [
+            {
+              "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-121598",
+              "label": "NVD"
+            },
+            {
+              "url": "https://www.cvedetails.com/cve/CVE-2026-121598/",
+              "label": "CVE Details"
+            }
+          ],
+          "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-121598",
+          "pubDate": "2026-11-04T01:17:23.160Z"
+        },
+        {
+          "title": "CVE-2026-121597 — A weakness has been identified in TOTOLINK A950RG 4.1.2cu.5268_B20221104. This affects the…",
+          "cve": "CVE-2026-121597",
+          "severity": "critical",
+          "score": 59,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Vulnérabilité critique CVE-2026-121597 (score CVSS 9.9).\n\nA weakness has been identified in TOTOLINK A950RG 4.1.2cu.5268_B20221104. This affects the function setAppEasyWizardConfig of the file /cgi-bin/cstecgi.cgi of the component Easy Setup Wizard Handler. Executing a manipulation of the argument functionType can lead to stack-based buffer overflow. The attack may be performed from remote. The exploit has been made available to the public and could be used for attacks.",
+          "detail": "Vulnérabilité critique CVE-2026-121597 (score CVSS 9.9).\n\nA weakness has been identified in TOTOLINK A950RG 4.1.2cu.5268_B20221104. This affects the function setAppEasyWizardConfig of the file /cgi-bin/cstecgi.cgi of the component Easy Setup Wizard Handler. Executing a manipulation of the argument functionType can lead to stack-based buffer overflow. The attack may be performed from remote. The exploit has been made available to the public and could be used for attacks.\n\nScore CVSS : 9.9\n\nType de faiblesse (CWE) : CWE-119, CWE-121",
+          "action": "Vérifier l'exposition du parc et appliquer le correctif éditeur dès sa disponibilité.",
+          "image": null,
+          "sources": [
+            {
+              "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-121597",
+              "label": "NVD"
+            },
+            {
+              "url": "https://www.cvedetails.com/cve/CVE-2026-121597/",
+              "label": "CVE Details"
+            }
+          ],
+          "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-121597",
+          "pubDate": "2026-11-04T00:17:27.410Z"
+        },
+        {
+          "title": "CVE-2026-112354 — Etrel INCH AC charging station management web interface prior to firmware versions 7.1.2 a…",
+          "cve": "CVE-2026-112354",
+          "severity": "critical",
+          "score": 59,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Vulnérabilité critique CVE-2026-112354 (score CVSS 9.8).\n\nEtrel INCH AC charging station management web interface prior to firmware versions 7.1.2 and 8.0.1 contains a hard-coded default credentials vulnerability that allows remote attackers to gain full Administrator access by authenticating with the factory-default account.",
+          "detail": "Vulnérabilité critique CVE-2026-112354 (score CVSS 9.8).\n\nEtrel INCH AC charging station management web interface prior to firmware versions 7.1.2 and 8.0.1 contains a hard-coded default credentials vulnerability that allows remote attackers to gain full Administrator access by authenticating with the factory-default account. Attackers can log in over cleartext HTTP to obtain complete charger configuration, OCPP ChargePoint Identity, and CSMS WebSocket connection details, enabling unauthorized administrative control of the charging station.\n\nScore CVSS : 9.8\n\nType de faiblesse (CWE) : CWE-1392",
+          "action": "Vérifier l'exposition du parc et appliquer le correctif éditeur dès sa disponibilité.",
+          "image": null,
+          "sources": [
+            {
+              "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-112354",
+              "label": "NVD"
+            },
+            {
+              "url": "https://www.cvedetails.com/cve/CVE-2026-112354/",
+              "label": "CVE Details"
+            }
+          ],
+          "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-112354",
+          "pubDate": "2026-11-03T22:17:44.660Z"
+        },
+        {
+          "title": "CVE-2026-44266 — Elo Ruby backend has Remote Code Execution via unescaped `#{...}` interpolation in emitted string literals and subtype-constraint labels",
+          "cve": "CVE-2026-44266",
+          "severity": "critical",
+          "score": 59,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Vulnérabilité critique CVE-2026-44266 affectant @enspirit/elo (npm) (score CVSS 9.8).\n\nElo Ruby backend has Remote Code Execution via unescaped `#{...}` interpolation in emitted string literals and subtype-constraint labels\n\nThe same Elo source compiled to JavaScript, Python, or SQL is benign, so the bug also breaks the cross-target portability guarantee the rest of the compiler honours.\n\nAll three surfaces share the same root cause (the missing # escape in the Ruby double-quoted-string emission path) and are addressed by the same patch:\n\nBo…",
+          "detail": "Vulnérabilité critique CVE-2026-44266 affectant @enspirit/elo (npm) (score CVSS 9.8).\n\nElo Ruby backend has Remote Code Execution via unescaped `#{...}` interpolation in emitted string literals and subtype-constraint labels\n\nThe same Elo source compiled to JavaScript, Python, or SQL is benign, so the bug also breaks the cross-target portability guarantee the rest of the compiler honours.\n\nAll three surfaces share the same root cause (the missing # escape in the Ruby double-quoted-string emission path) and are addressed by the same patch:\n\nBoth flows are automated in the reproduction script submitted with the original report and were verified against Ruby 3.x.\n\nThe Ruby-emitter's double-quoted-string escape routine omitted # from its character set, and one emission path (the subtype-constraint label branch) performed no escape pass at all.\n\nblambeau published to enspirit/elo Oct 30, 2026 Published to the GitHub Advisory Database Nov 3, 2026 Reviewed Nov 3, 2026 Severity Critical 9.8 CVSS overall score This score calculates overall vulnerability severity from 0 to 10 and is based on the Common Vulnerability Scoring System (CVSS). / 10 CVSS v3 base metrics Attack vector Network Attack complexity Low Privileges required None User interaction None Scope Unchanged Confidentiality High Integrity High Availability High Learn more about base metrics CVSS v3 base metrics Attack vector: More severe the more the remote (logically and physically) an attacker can be in order to exploit the vulnerability. Attack complexity: More severe for the least complex attacks. Privileges required: More severe if no privileges are required. User interaction: More severe when no user interaction is required. Scope: More severe when a scope change occurs, e.g. one vulnerable component impacts resou",
+          "action": "Vérifier l'exposition du parc et appliquer le correctif éditeur dès sa disponibilité.",
+          "image": "https://github.githubassets.com/assets/advisory-database-show-f32c8207dfb2.png",
+          "sources": [
+            {
+              "url": "https://github.com/advisories/GHSA-7w38-ggh5-v542",
+              "label": "GitHub Advisory"
+            }
+          ],
+          "url": "https://github.com/advisories/GHSA-7w38-ggh5-v542",
+          "pubDate": "2026-11-03T17:51:30.000Z"
+        },
+        {
+          "title": "Microsoft Security Advisory CVE-2026-111497 - .NET Brotli Decoder Out-of-bounds Write Vulnerability",
+          "cve": null,
+          "severity": "high",
+          "score": 59,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Vulnérabilité élevée affectant Microsoft.DotNet.ILCompiler (nuget) (score CVSS 8.1).\n\nMicrosoft Security Advisory CVE-2026-111497 - .NET Brotli Decoder Out-of-bounds Write Vulnerability\n\nASP.NET Core and HttpClient do not automatically decompress Brotli data in their default configurations. Applications are exposed when they enable Brotli decompression or explicitly use Brotli decompression APIs to process attacker-controlled data, as described below.",
+          "detail": "Vulnérabilité élevée affectant Microsoft.DotNet.ILCompiler (nuget) (score CVSS 8.1).\n\nMicrosoft Security Advisory CVE-2026-111497 - .NET Brotli Decoder Out-of-bounds Write Vulnerability\n\nASP.NET Core and HttpClient do not automatically decompress Brotli data in their default configurations. Applications are exposed when they enable Brotli decompression or explicitly use Brotli decompression APIs to process attacker-controlled data, as described below. .NET Framework is not affected.\n\nAnnouncement for this issue can be found at dotnet/announcements#494\n\nASP.NET Core request decompression and HttpClient automatic response decompression are not enabled by default. An application is not exposed merely because an affected .NET package is installed. Exposure requires the application to decompress attacker-controlled Brotli data through one of these paths:\n\nUntil the update can be deployed, avoid decompressing attacker-controlled Brotli data.\n\nThe following examples show how to disable Brotli decompression if you are already using it.\n\nWarning: Do not use these code snippets if you are not already using decompression. Do not introduce a call to AddRequestDecompression if your application does not already call it. Similarly, do not introduce an AutomaticDecompression property assignment if your application does not already set that property. Modify only your existing decompression configuration. Enabling automatic decompression can introduce denial-of-service risks even when Brotli is excluded.",
+          "action": "Vérifier l'exposition du parc et appliquer le correctif éditeur dès sa disponibilité.",
+          "image": "https://github.githubassets.com/assets/advisory-database-show-f32c8207dfb2.png",
+          "sources": [
+            {
+              "url": "https://github.com/advisories/GHSA-p3jp-9v83-76w9",
+              "label": "GitHub Advisory"
+            }
+          ],
+          "url": "https://github.com/advisories/GHSA-p3jp-9v83-76w9",
+          "pubDate": "2026-11-03T17:33:48.000Z"
+        },
+        {
+          "title": "Multiples vulnérabilités dans Ivanti Connect Secure (02 novembre 2026)",
+          "cve": "CVE-2026-104935",
+          "severity": "high",
+          "score": 57,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Vulnérabilité élevée CVE-2026-104935 affectant Ivanti.\n\nDe multiples vulnérabilités ont été découvertes dans Ivanti Connect Secure. Elles permettent à un attaquant de provoquer une exécution de code arbitraire à distance, une élévation de privilèges et un contournement de la politique de sécurité. Ivanti indique que les vulnérabilités CVE-2026-104935,... Voir en ligne : https://www.cert.cyber.gouv.fr/avis...",
+          "detail": "Vulnérabilité élevée CVE-2026-104935 affectant Ivanti.\n\nDe multiples vulnérabilités ont été découvertes dans Ivanti Connect Secure. Elles permettent à un attaquant de provoquer une exécution de code arbitraire à distance, une élévation de privilèges et un contournement de la politique de sécurité. Ivanti indique que les vulnérabilités CVE-2026-104935,... Voir en ligne : https://www.cert.cyber.gouv.fr/avis...",
+          "action": "Vérifier l'exposition du parc et appliquer le correctif éditeur dès sa disponibilité.",
+          "image": null,
+          "sources": [
+            {
+              "url": "https://www.globalsecuritymag.fr/multiples-vulnerabilites-dans-ivanti-connect-secure-02-novembre-2026.html",
+              "label": "Global Sec Mag"
+            }
+          ],
+          "url": "https://www.globalsecuritymag.fr/multiples-vulnerabilites-dans-ivanti-connect-secure-02-novembre-2026.html",
+          "pubDate": "2026-11-04T05:01:05.456Z"
+        },
+        {
+          "title": "ROSENBERGER OSI À DATA CENTRE WORLD PARIS 2026",
+          "cve": null,
+          "severity": "high",
+          "score": 24,
+          "corroboration": 1,
+          "region": "fr",
+          "body": "Vulnérabilité élevée.\n\nDes data centers prêts pour demain : infrastructure haut débit et solutions d'alimentation, avec un seul partenaire, du concept à l'exploitation. Stand J130 | Hall 5 Rosenberger Optical Solutions & Infrastructure (Rosenberger OSI https://osi.rosenberger.com/fr ), fabricant européen d'infrastructures innovantes de câblage fibre optique, sera présent à Data Centre World Paris les 18 et 19 novembre prochains, à Paris Expo Porte de Versailles.",
+          "detail": "Vulnérabilité élevée.\n\nDes data centers prêts pour demain : infrastructure haut débit et solutions d'alimentation, avec un seul partenaire, du concept à l'exploitation. Stand J130 | Hall 5 Rosenberger Optical Solutions & Infrastructure (Rosenberger OSI https://osi.rosenberger.com/fr ), fabricant européen d'infrastructures innovantes de câblage fibre optique, sera présent à Data Centre World Paris les 18 et 19 novembre prochains, à Paris Expo Porte de Versailles. L'entreprise y présentera une approche qui réunit infrastructure haut débit et solutions d'alimentation pour construire des data centers prêts pour l'avenir. Team Rosenberger Concevoir, déployer, exploiter : Rosenberger OSI se positionne comme partenaire unique pour l'infrastructure des centres de données, du concept à l'exploitation. Sur son stand J130 - Hall 5, les visiteurs pourront découvrir : • Une infrastructure efficace et évolutive, pensée pour accompagner les projets à chaque étape, de la planification à la gestion du cycle de vie. • VersaTray®, un système de plateaux 19\" modulable et peu encombrant, conçu pour les solutions de câblage à haute densité. Basé sur le principe « pay-as-you-grow », il permet une évolutivité optimale et une utilisation maximale de l'espace dans la baie. • Patch Location Rack COMFORT, une armoire de brassage pour data centers haute densité, conçue autour des besoins des techniciens plutôt que de la seule de",
+          "action": "Vérifier l'exposition du parc et appliquer le correctif éditeur dès sa disponibilité.",
+          "image": "https://www.globalsecuritymag.fr/local/cache-vignettes/L495xH260/240e654024ea3871943dec6ff3323a-852a0.jpg",
+          "sources": [
+            {
+              "url": "https://www.globalsecuritymag.fr/rosenberger-osi-a-data-centre-world-paris-2026.html",
+              "label": "Global Sec Mag"
+            }
+          ],
+          "url": "https://www.globalsecuritymag.fr/rosenberger-osi-a-data-centre-world-paris-2026.html",
+          "pubDate": "2026-11-04T05:01:05.451Z"
+        },
+        {
+          "title": "JASP-K9 : les factures d’un équipementier des forces de l’ordre exposées par une faille",
+          "cve": null,
+          "severity": "high",
+          "score": 24,
+          "corroboration": 1,
+          "region": "fr",
+          "body": "Vulnérabilité élevée.\n\nPrès de 1 700 factures attribuées à JASP-K9, une entreprise française spécialisée dans la vente et la personnalisation d'équipements destinés notamment\n\nAttaque Mis à jour le 3 novembre 2026 à 19h05 JASP-K9 : les factures d’un équipementier des forces de l’ordre exposées par une faille Près de 1 700 factures attribuées à JASP-K9, une entreprise française spécialisée dans la vente et la personnalisation d&rsquo;équipements destinés notamment aux professionn…",
+          "detail": "Vulnérabilité élevée.\n\nPrès de 1 700 factures attribuées à JASP-K9, une entreprise française spécialisée dans la vente et la personnalisation d'équipements destinés notamment\n\nAttaque Mis à jour le 3 novembre 2026 à 19h05 JASP-K9 : les factures d’un équipementier des forces de l’ordre exposées par une faille Près de 1 700 factures attribuées à JASP-K9, une entreprise française spécialisée dans la vente et la personnalisation d&rsquo;équipements destinés notamment aux professionnels de la sécurité, seraient exposées à la suite d&rsquo;une faille informatique. Le collectif de hackers LunarisSec affirme avoir découvert une vulnérabilité permettant d&rsquo;accéder à des documents PDF contenant des informations personnelles et commerciales de clients.\n\nDans un échange avec Cyberattaque.org, LunarisSec indique que 1 699 factures seraient concernées et affirme que la faille de sécurité est toujours ouverte au 3 novembre 2026. Selon le collectif, les documents resteraient donc accessibles.\n\nImplantée à Sénas, dans les Bouches-du-Rhône, JASP-K9 est une société privée qui propose notamment des écussons, vêtements, accessoires et équipements personnalisés pour les policiers, gendarmes, militaires, pompiers ou encore les unités cynophiles.\n\nIl ne s&rsquo;agit donc pas d&rsquo;un site officiel de la Police nationale ou de la Gendarmerie nationale , mais d&rsquo;un commerce spécialisé dans des produits pouvant être achetés aussi bien par des professionnels que par d&rsquo;autres clients. Cette distinction est importante pour comprendre la portée de l&rsquo;incident revendiqué.\n\nDans une publication diffusée sur X, le collectif LunarisSec affirme avoir identifié une faiblesse de sécurité permettant de consulter des documents de facturation associés à JASP-K9.\n\nPour appuyer ses déclara",
+          "action": "Vérifier l'exposition du parc et appliquer le correctif éditeur dès sa disponibilité.",
+          "image": "https://www.cyberattaque.org/wp-content/uploads/2026/11/police-cyberattaque-2.jpg",
+          "sources": [
+            {
+              "url": "https://www.cyberattaque.org/jasp-k9-les-factures-dun-equipementier-des-forces-de-lordre-exposees-par-une-faille/",
+              "label": "Cyberattaque.org"
+            }
+          ],
+          "url": "https://www.cyberattaque.org/jasp-k9-les-factures-dun-equipementier-des-forces-de-lordre-exposees-par-une-faille/",
+          "pubDate": "2026-11-03T17:21:24.000Z"
+        },
+        {
+          "title": "Nouvelle attaque sur la chaîne du froid : une leçon d’hygiène cyber en temps contraint",
+          "cve": null,
+          "severity": "high",
+          "score": 24,
+          "corroboration": 1,
+          "region": "fr",
+          "body": "Vulnérabilité élevée.\n\nL’essentiel Trois semaines après une première vague de sabotage visant des installations frigorifiques en France, de nouvelles attaques ont touché des magasins dans sept pays européens. Les systèmes compromis présentaient les mêmes faiblesses : des interfaces d’administration accessibles depuis Internet et protégées par des mots de passe par défaut.",
+          "detail": "Vulnérabilité élevée.\n\nL’essentiel Trois semaines après une première vague de sabotage visant des installations frigorifiques en France, de nouvelles attaques ont touché des magasins dans sept pays européens. Les systèmes compromis présentaient les mêmes faiblesses : des interfaces d’administration accessibles depuis Internet et protégées par des mots de passe par défaut. Une campagne étendue : des enseignes ont été touchées en Belgique, en Estonie, en Finlande, en Irlande, au Luxembourg, aux Pays-Bas et en Suède. Des équipements ciblés : les contrôleurs Danfoss AK-SC et AK-SM ont de nouveau été compromis. Les systèmes Copeland/Dixell avaient également été concernés lors de la première vague. Des protections connues : le CERT-FR et les fabricants recommandent de supprimer l’exposition directe des interfaces de gestion et de privilégier un réseau protégé ou un VPN sécurisé. Une remédiation qui prend du temps : une mise à jour logicielle ne suffit pas toujours. Certaines installations nécessitent des modifications physiques et l’intervention d’un technicien, ce qui retarde leur sécurisation. Après l&rsquo; opération de sabotage sur les installations frigorifiques de la grande distribution en France, certains magasins ont pris les mesures nécessaires. D&rsquo;autres non, et ils en ont subi les conséquences. Constat cru de la part de Danfoss, au lendemain d&rsquo;une nouvelle vague d&rsquo;attaques à tra",
+          "action": "Vérifier l'exposition du parc et appliquer le correctif éditeur dès sa disponibilité.",
+          "image": "https://www.silicon.fr/wp-content/uploads/2026/11/attaque-systemes-frigorifiques-1024x849.jpg",
+          "sources": [
+            {
+              "url": "https://www.silicon.fr/cybersecurite-1371/attaque-chaine-froid-hygiene-cyber-230062",
+              "label": "Silicon.fr"
+            }
+          ],
+          "url": "https://www.silicon.fr/cybersecurite-1371/attaque-chaine-froid-hygiene-cyber-230062",
+          "pubDate": "2026-11-03T10:49:52.000Z"
+        },
+        {
+          "title": "Bulletin d'actualité CERTFR-2026-ACT-046 (02 novembre 2026)",
+          "cve": null,
+          "severity": "culture",
+          "score": 12,
+          "corroboration": 1,
+          "region": "fr",
+          "body": "Vulnérabilité élevée.\n\nCe bulletin d'actualité du CERT-FR revient sur les vulnérabilités significatives de la semaine passée pour souligner leurs criticités. Il ne remplace pas l'analyse de l'ensemble des avis et alertes publiés par le CERT-FR dans le cadre d'une analyse de risques pour prioriser l'application des... Voir en ligne : https://www.cert.cyber.gouv.fr/actu...",
+          "detail": "Vulnérabilité élevée.\n\nCe bulletin d'actualité du CERT-FR revient sur les vulnérabilités significatives de la semaine passée pour souligner leurs criticités. Il ne remplace pas l'analyse de l'ensemble des avis et alertes publiés par le CERT-FR dans le cadre d'une analyse de risques pour prioriser l'application des... Voir en ligne : https://www.cert.cyber.gouv.fr/actu...",
+          "action": "Vérifier l'exposition du parc et appliquer le correctif éditeur dès sa disponibilité.",
+          "image": null,
+          "sources": [
+            {
+              "url": "https://www.globalsecuritymag.fr/bulletin-d-actualite-certfr-2026-act-046-02-novembre-2026.html",
+              "label": "Global Sec Mag"
+            }
+          ],
+          "url": "https://www.globalsecuritymag.fr/bulletin-d-actualite-certfr-2026-act-046-02-novembre-2026.html",
+          "pubDate": "2026-11-04T05:01:05.456Z"
+        }
+      ]
+    },
+    {
+      "id": "attacks",
+      "items": [
+        {
+          "title": "Several German lawmakers and foreign policy staff received Apple warnings on spyware",
+          "cve": null,
+          "severity": "news",
+          "score": 78,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Incident de sécurité rapporté par The Record.\n\nMembers of Germany's political elite were among the spyware targets in 99 countries that Apple personally warned recently.\n\nMultiple lawmakers and public figures in Germany are among the snooping victims Apple warned last week about spyware attacks, according to the country’s information security agency.\n\nThe hacking attempts are a significant development underscoring the national security threat European officials face as spyware deployment becomes both i…",
+          "detail": "Incident de sécurité rapporté par The Record.\n\nMembers of Germany's political elite were among the spyware targets in 99 countries that Apple personally warned recently.\n\nMultiple lawmakers and public figures in Germany are among the snooping victims Apple warned last week about spyware attacks, according to the country’s information security agency.\n\nThe hacking attempts are a significant development underscoring the national security threat European officials face as spyware deployment becomes both increasingly visible and apparently inexorable under current policies on the continent.\n\nThey also spotlight Europe’s continuing vulnerability to snooping, which human rights and digital freedoms advocates have loudly demanded lawmakers address more aggressively.\n\nOn Monday, the German news magazine Der Spiegel reported the Apple threat notifications were sent to members of a German delegation of federal ministries’ staffers, lawmakers and journalists traveling with Chancellor Friedrich Merz on a sweep through Asia. While there Merz met with top officials in South Korea, Japan and Singapore.\n\nMany of the victims have not come forward, but on Tuesday morning, Franziska Brantner, co-leader of the Green Party and a member of the parliament’s European Affairs Committee, revealed she was among the victims, whom Apple said were located in 99 countries.\n\nThe information security agency, known as the BSI, on Friday sent German officials, lawmakers and public figures who received the threat notifications a warning letter saying they should assume their devices are infected and immediately replace them, according to a local news outlet’s interview with Digital Minister Karsten Wildberg.",
+          "action": "Surveiller les indicateurs de compromission associés et contrôler les actifs exposés.",
+          "image": "https://cms.therecord.media/uploads/bundestag_christian_lue_k3_S_Xnxf_FN_Mw_unsplash_1f46feb22f.jpg",
+          "sources": [
+            {
+              "url": "https://therecord.media/german-officials-among-apple-spyware-warning-recipients",
+              "label": "The Record"
+            }
+          ],
+          "url": "https://therecord.media/german-officials-among-apple-spyware-warning-recipients",
+          "pubDate": "2026-11-03T18:44:00.000Z"
+        },
+        {
+          "title": "Gorbag: Orcs at the border harvesting intelligence from Ukraine",
+          "cve": null,
+          "severity": "news",
+          "score": 77,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Incident de sécurité rapporté par ESET WeLiveSec..\n\nESET researchers uncover Gorbag, a Russia-aligned group using simple infostealers to harvest data from Ukrainian organizations near the front line.\n\nCybersecurity research and insight for the AI era · Moving soon to the ESET Blog\n\nTIPS & ADVICE BUSINESS SECURITY ESET RESEARCH About ESET Research Blogposts Podcasts White papers Threat reports WeLiveScience FEATURED Ukraine crisis – Digital security resource center WeLiveProgress COVID-19 Resources Videos TO…",
+          "detail": "Incident de sécurité rapporté par ESET WeLiveSec..\n\nESET researchers uncover Gorbag, a Russia-aligned group using simple infostealers to harvest data from Ukrainian organizations near the front line.\n\nCybersecurity research and insight for the AI era · Moving soon to the ESET Blog\n\nTIPS & ADVICE BUSINESS SECURITY ESET RESEARCH About ESET Research Blogposts Podcasts White papers Threat reports WeLiveScience FEATURED Ukraine crisis – Digital security resource center WeLiveProgress COVID-19 Resources Videos TOPICS Digital Security Scams How to Privacy Cybercrime Kids online Social media Internet of Things Malware Ransomware Secure coding Mobile security Critical infrastructure Threat research ABOUT US About WeLiveSecurity Our Experts Contact Us English Español Deutsch Português Français Cybersecurity research and insight for the AI era · Moving soon to the ESET Blog\n\nESET researchers uncover Gorbag, a Russia-aligned group using simple infostealers to harvest data from Ukrainian organizations near the front line\n\nESET researchers have been tracking a Russia-aligned threat actor that we named Gorbag. While elements of the group&rsquo;s tooling &ndash; most notably the GIFTEDCROOK infostealer, which CERT-UA attributes to UAC-0226 &ndash; have previously appeared in public reporting , Gorbag&rsquo;s targeting and overall activity have remained largely unexamined. Active since at least February 2025, the group has focused exclusively on Ukrainian targets, with a clear preference for law enforcement and justice entities, local administrations near the front line, and the defense sector.\n\nRather than relying on sophisticated implants for long-term access, Gorbag uses a small toolset built for rapid intelligence collection. Browser credentials, VPN configurations, and selected doc",
+          "action": "Surveiller les indicateurs de compromission associés et contrôler les actifs exposés.",
+          "image": "https://web-assets.esetstatic.com/wls/2026/10-26/gorbag-phishing.jpg",
+          "sources": [
+            {
+              "url": "https://www.welivesecurity.com/en/eset-research/gorbag-orcs-border-harvesting-intelligence-ukraine/",
+              "label": "ESET WeLiveSec."
+            }
+          ],
+          "url": "https://www.welivesecurity.com/en/eset-research/gorbag-orcs-border-harvesting-intelligence-ukraine/",
+          "pubDate": "2026-11-03T09:50:00.000Z"
+        },
+        {
+          "title": "Google dismantles massive botnet hidden in Android TV boxes",
+          "cve": null,
+          "severity": "news",
+          "score": 75,
+          "corroboration": 2,
+          "region": "intl",
+          "body": "Incident de sécurité rapporté par The Record.\n\nThe overwhelming majority of the infected devices in the X.CPE botnet are Android TV set-top boxes, Google said, adding that they observed a number of other infected Android-based IoT devices, including telehealth devices, karaoke machines and digital signage devices.\n\nGoogle along with several cybersecurity companies and Japanese law enforcement dismantled a global botnet called X.CPE that was hidden in more than 1.3 million set-top boxes across more than…",
+          "detail": "Incident de sécurité rapporté par The Record.\n\nThe overwhelming majority of the infected devices in the X.CPE botnet are Android TV set-top boxes, Google said, adding that they observed a number of other infected Android-based IoT devices, including telehealth devices, karaoke machines and digital signage devices.\n\nGoogle along with several cybersecurity companies and Japanese law enforcement dismantled a global botnet called X.CPE that was hidden in more than 1.3 million set-top boxes across more than 200 countries.\n\nGoogle said it tied the scheme to Videostrong Technology, a Chinese company that was an Android original equipment manufacturer producing a range of screens, speakers and robots.\n\nThe overwhelming majority of the infected devices in the X.CPE botnet are Android TV set-top boxes, Google said, adding that they observed a number of other infected Android-based IoT devices, including telehealth devices, karaoke machines and digital signage devices.\n\nIn lengthy reports about the scheme, Google and other cyber investigators accused Videostrong of monetizing the backdoor by “selling access to criminal affiliates and loading those affiliates’ malware modules onto infected devices.”\n\n“We found this malicious software built directly into many different device models and brands over multiple years, supported by dedicated infrastructure and constantly evolving configurations to evade detection and manage their affiliates,” Google said.\n\n“We believe this campaign wasn’t an isolated rogue insider or a development oversight. As a result, Google has cut ties with Videostrong and banned them from making devices with preloaded Google apps.”",
+          "action": "Surveiller les indicateurs de compromission associés et contrôler les actifs exposés.",
+          "image": "https://cms.therecord.media/uploads/tv_1_8b7fd51044.jpg",
+          "sources": [
+            {
+              "url": "https://therecord.media/google-dismantles-botnet-hidden-android-tv-boxes",
+              "label": "The Record"
+            },
+            {
+              "url": "https://www.securityweek.com/google-dismantles-xcpe-botnet-of-1-3-million-android-devices/",
+              "label": "SecurityWeek"
+            }
+          ],
+          "url": "https://therecord.media/google-dismantles-botnet-hidden-android-tv-boxes",
+          "pubDate": "2026-11-03T19:48:00.000Z"
+        },
+        {
+          "title": "North Korean fake job interview led to $6.3B Binance heist",
+          "cve": null,
+          "severity": "high",
+          "score": 74,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Incident de sécurité rapporté par The Register.\n\nNorth Korean cryptocurrency thieves tricked a Binance software engineer into downloading malware onto their work-issued computer during a fake job interview process before last week's record-breaking $6.3 billion heist. In an incident report published on Tuesday, the cryptocurrency exchange said several techniques - including social engineering via fake job interviews, malware downloads, compromised internal AI tooling, endpoint takeover, and an “advanced…",
+          "detail": "Incident de sécurité rapporté par The Register.\n\nNorth Korean cryptocurrency thieves tricked a Binance software engineer into downloading malware onto their work-issued computer during a fake job interview process before last week's record-breaking $6.3 billion heist. In an incident report published on Tuesday, the cryptocurrency exchange said several techniques - including social engineering via fake job interviews, malware downloads, compromised internal AI tooling, endpoint takeover, and an “advanced transaction-authorization method” - led to the October 29 security breach. “Our current investigation indicates that this was a sophisticated, multi-stage campaign,” the incident report said. “It was not a single isolated breach or a simple phishing incident.” Over the weekend, the FBI attributed the theft to TraderTraitor, a North Korean hacking operation linked to Lazarus Group, known for combining espionage with massive cryptocurrency heists. The Pyongyang-backed crew is also highly adept at job market scams - both posing as IT workers, who are then hired by Western companies, and as potential employers to lure software engineers into downloading malware and infecting corporate devices. With the recent Binance attack, the Norks used the latter. The attack prep began back in June with a supply chain attack when one of its engineers downloaded a malicious Homebrew installation. While the malware was detected by the security t",
+          "action": "Surveiller les indicateurs de compromission associés et contrôler les actifs exposés.",
+          "image": "https://image.theregister.com/254036.jpg?imageId=254036&x=0&y=0&cropw=100&croph=100&panox=0&panoy=0&panow=100&panoh=100&width=1200&height=683",
+          "sources": [
+            {
+              "url": "https://www.theregister.com/security/2026/11/03/north-korean-fake-job-interview-led-to-63b-binance-heist/5307398",
+              "label": "The Register"
+            }
+          ],
+          "url": "https://www.theregister.com/security/2026/11/03/north-korean-fake-job-interview-led-to-63b-binance-heist/5307398",
+          "pubDate": "2026-11-03T22:04:45.000Z"
+        },
+        {
+          "title": "Project Trojan Horse — rançongiciel Whitearmor",
+          "cve": null,
+          "severity": "news",
+          "score": 74,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Incident de sécurité rapporté par ransomware.live.\n\nVictime revendiquée par le groupe de rançongiciel Whitearmor. Secteur : Other. DM us to sell your IA on $/%, working with all kinds of accesses depending on said target. Rules : - No companies under $500kk - No companies in the CIS conglomerate - Okta, Azure, IAM Root, CRM tools , Jenkins & VPN access (Forti, Anyconnect, Citrix, Sonicwall) We are also recruiting employees/insiders at various companies! If you work at a company in the following sectors, ple…",
+          "detail": "Incident de sécurité rapporté par ransomware.live.\n\nVictime revendiquée par le groupe de rançongiciel Whitearmor.\n\nSecteur : Other.\n\nDM us to sell your IA on $/%, working with all kinds of accesses depending on said target. \n\nRules :\n- No companies under $500kk\n- No companies in the CIS conglomerate \n- Okta, Azure, IAM Root, CRM tools , Jenkins & VPN access (Forti, Anyconnect, Citrix, Sonicwall)\n\n\nWe are also recruiting employees/insiders at various companies!\n\nIf you work at a company in the following sectors, please inquire us : \n- Education (Technology/Software, EdTech platforms, K-12 Management)\n- Software (Entreprise-grade, CRM, SaaS, HR Software, CyberSec, Productivity)\n- Insurance (Globally)\n- Hotels (Worldwide hotel groups, operators, luxury)\n- Telecommunications (Major global telecommunication companies) \n- Finance (Banking, Private equity, fintech)\n- Retail (Global retailers, supermarkets, fashion, electronics, furniture, luxury)\n- Motor (Car manufacturers, Luxury automotive brands, etc.)\n- Transportation (Aviation, Shipping, Railways/Public transportation, Mobility)\n- Logistics (Supply chain, global companies)\n\nPlease only inquiry us if you work/have access to companies that are med/largely sized from these industries/sectors.\n\nYou will be paid if you like depending on what you have; Contact us in order to discuss about rates (%) based deals or $ ones. Escrow is always accepted.\n\nt.me/whitearmorsupp / @whitearmorsupp on Telegram.\n\n\"Every collectivist revolution rides in on a Trojan horse of EMERGENCY.\" - Herbert Hoover (1952). “Memoirs: The great depression, 1929-1941”",
+          "action": "Surveiller les indicateurs de compromission associés et contrôler les actifs exposés.",
+          "image": "https://images.ransomware.live/victims/716108c3c9ba2b1421f15ec8afef3956.png",
+          "sources": [
+            {
+              "url": "https://www.ransomware.live/id/UHJvamVjdCBUcm9qYW4gSG9yc2VAV2hpdGVhcm1vcg==",
+              "label": "ransomware.live"
+            }
+          ],
+          "url": "https://www.ransomware.live/id/UHJvamVjdCBUcm9qYW4gSG9yc2VAV2hpdGVhcm1vcg==",
+          "pubDate": "2026-11-03T19:22:00.000Z"
+        },
+        {
+          "title": "WorkOS says attacker used ARTEX AI to breach internal sales app",
+          "cve": null,
+          "severity": "news",
+          "score": 72,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Incident de sécurité rapporté par BleepingComputer.\n\nDeveloper platform WorkOS suffered a data breach after a threat actor accessed business contact records and summaries of customer communications.\n\nHackers disrupt refrigeration systems at European supermarkets\n\nSynology warns of C3RB3R ransomware attacks targeting NAS devices\n\nGoogle disrupts million-device XCPE Android malware botnet, bans TV box maker\n\nIvanti patches two more Connect Secure zero-days chained in attacks\n\nHackers hijack cPGuard autoupdate…",
+          "detail": "Incident de sécurité rapporté par BleepingComputer.\n\nDeveloper platform WorkOS suffered a data breach after a threat actor accessed business contact records and summaries of customer communications.\n\nHackers disrupt refrigeration systems at European supermarkets\n\nSynology warns of C3RB3R ransomware attacks targeting NAS devices\n\nGoogle disrupts million-device XCPE Android malware botnet, bans TV box maker\n\nIvanti patches two more Connect Secure zero-days chained in attacks\n\nHackers hijack cPGuard autoupdate to deploy backdoor, steal data\n\nWorkOS says attacker used ARTEX AI to breach internal sales app",
+          "action": "Surveiller les indicateurs de compromission associés et contrôler les actifs exposés.",
+          "image": "https://www.bleepstatic.com/content/hl-images/2026/11/03/workos.jpg",
+          "sources": [
+            {
+              "url": "https://www.bleepingcomputer.com/news/security/workos-says-attacker-used-artex-ai-to-breach-internal-sales-app/",
+              "label": "BleepingComputer"
+            }
+          ],
+          "url": "https://www.bleepingcomputer.com/news/security/workos-says-attacker-used-artex-ai-to-breach-internal-sales-app/",
+          "pubDate": "2026-11-03T21:28:44.000Z"
+        },
+        {
+          "title": "Binance CEO says ‘months-long campaign’ led to $6.3 billion theft as N. Korea denies responsibility",
+          "cve": null,
+          "severity": "critical",
+          "score": 72,
+          "corroboration": 4,
+          "region": "intl",
+          "body": "Incident de sécurité rapporté par Security Affairs.\n\nBinance reveals how fake job interviews, malware and internal AI abuse enabled attackers to steal $6.34 billion.\n\nSynology Warns of Ransomware Attacks Targeting NAS Devices Running Outdated DSM Versions\n\nInside XCPE, the botnet that turned 1.3M set-top boxes into proxy servers\n\nNIS2 Makes Board Members Personally Liable for Access Control Decisions\n\nApple’s spyware notifications reach the Bundestag: what the BSI says to do now\n\nVOLTA, the infostealer that…",
+          "detail": "Incident de sécurité rapporté par Security Affairs.\n\nBinance reveals how fake job interviews, malware and internal AI abuse enabled attackers to steal $6.34 billion.\n\nSynology Warns of Ransomware Attacks Targeting NAS Devices Running Outdated DSM Versions\n\nInside XCPE, the botnet that turned 1.3M set-top boxes into proxy servers\n\nNIS2 Makes Board Members Personally Liable for Access Control Decisions\n\nApple’s spyware notifications reach the Bundestag: what the BSI says to do now\n\nVOLTA, the infostealer that asks an AI which victims are worth the effort\n\nNew wave of fridge cyberattacks hits European supermarkets, this time in Belgium, Luxembourg, Sweden and Estonia",
+          "action": "Surveiller les indicateurs de compromission associés et contrôler les actifs exposés.",
+          "image": "https://securityaffairs.com/wp-content/uploads/2019/05/binance.jpg",
+          "sources": [
+            {
+              "url": "https://securityaffairs.com/202369/cyber-crime/binance-hack-how-fake-job-interviews-and-ai-abuse-led-to-a-6-34-billion-attack.html",
+              "label": "Security Affairs"
+            },
+            {
+              "url": "https://www.bleepingcomputer.com/news/security/binance-says-fake-job-interview-led-to-63-billion-crypto-heist/",
+              "label": "BleepingComputer"
+            },
+            {
+              "url": "https://thehackernews.com/2026/11/binance-reveals-how-fake-job-interviews.html",
+              "label": "The Hacker News"
+            },
+            {
+              "url": "https://therecord.media/binance-cryptocurrency-theft-months-long-campaign-nkorea",
+              "label": "The Record"
+            }
+          ],
+          "url": "https://securityaffairs.com/202369/cyber-crime/binance-hack-how-fake-job-interviews-and-ai-abuse-led-to-a-6-34-billion-attack.html",
+          "pubDate": "2026-11-03T20:05:50.000Z"
+        },
+        {
+          "title": "Harvard University data breach exposed info of 851,000 accounts",
+          "cve": null,
+          "severity": "news",
+          "score": 72,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Incident de sécurité rapporté par BleepingComputer.\n\nHackers who breached Harvard University's Alumni Affairs and Development systems in November 2025 stole data linked to more than 850,000 unique email addresses, according to breach notification service Have I Been Pwned.\n\nHackers disrupt refrigeration systems at European supermarkets\n\nSynology warns of C3RB3R ransomware attacks targeting NAS devices\n\nGoogle disrupts million-device XCPE Android malware botnet, bans TV box maker\n\nIvanti patches two more Conn…",
+          "detail": "Incident de sécurité rapporté par BleepingComputer.\n\nHackers who breached Harvard University's Alumni Affairs and Development systems in November 2025 stole data linked to more than 850,000 unique email addresses, according to breach notification service Have I Been Pwned.\n\nHackers disrupt refrigeration systems at European supermarkets\n\nSynology warns of C3RB3R ransomware attacks targeting NAS devices\n\nGoogle disrupts million-device XCPE Android malware botnet, bans TV box maker\n\nIvanti patches two more Connect Secure zero-days chained in attacks\n\nHackers hijack cPGuard autoupdate to deploy backdoor, steal data\n\nWorkOS says attacker used ARTEX AI to breach internal sales app",
+          "action": "Surveiller les indicateurs de compromission associés et contrôler les actifs exposés.",
+          "image": "https://www.bleepstatic.com/content/hl-images/2026/11/03/Harvard-University.jpg",
+          "sources": [
+            {
+              "url": "https://www.bleepingcomputer.com/news/security/harvard-university-data-breach-exposed-info-of-851-000-accounts/",
+              "label": "BleepingComputer"
+            }
+          ],
+          "url": "https://www.bleepingcomputer.com/news/security/harvard-university-data-breach-exposed-info-of-851-000-accounts/",
+          "pubDate": "2026-11-03T10:53:25.000Z"
+        },
+        {
+          "title": "Apple’s spyware notifications reach the Bundestag: what the BSI says to do now",
+          "cve": null,
+          "severity": "high",
+          "score": 72,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Incident de sécurité rapporté par Security Affairs.\n\nApple warns German Bundestag lawmakers of mercenary spyware attacks; BSI urges victims to assume compromise. The German government is warning politicians and public figures that they were targeted by government-backed spyware. The warning follows Apple’s notifications, which began reaching iPhones on October 29, according to the federal cybersecurity office, the BSI.",
+          "detail": "Incident de sécurité rapporté par Security Affairs.\n\nApple warns German Bundestag lawmakers of mercenary spyware attacks; BSI urges victims to assume compromise. The German government is warning politicians and public figures that they were targeted by government-backed spyware. The warning follows Apple’s notifications, which began reaching iPhones on October 29, according to the federal cybersecurity office, the BSI. The BSI says members of the Bundestag and other notable people got an Apple alert about an attack with so-called mercenary spyware. &#8220;The Federal Office for Information Security ( BSI ) has learned that several members of the German Bundestag and other public figures have received a threat notification from Apple on their devices since October 29, 2026. In the notification, Apple states that it has detected an attack using so-called mercenary spyware . This is commercially developed, advanced spyware that has frequently been used in the past by state actors against specific, targeted individuals.&#8221; reads the notice issued by BSI. &#8220;The BSI (Federal Office for Information Security) is unaware whether these notifications indicate actual compromises or merely signal attempted attacks. y &#8220; &#8220;Germany’s digital minister, Karsten Wildberger, has confirmed that members of the Bundestag and the federal government received warnings from Apple that their iPhones may have been targeted by spyware.&#82",
+          "action": "Surveiller les indicateurs de compromission associés et contrôler les actifs exposés.",
+          "image": "https://securityaffairs.com/wp-content/uploads/2015/05/Bundestag.jpg",
+          "sources": [
+            {
+              "url": "https://securityaffairs.com/202297/intelligence/apples-spyware-notifications-reach-the-bundestag-what-the-bsi-says-to-do-now.html",
+              "label": "Security Affairs"
+            }
+          ],
+          "url": "https://securityaffairs.com/202297/intelligence/apples-spyware-notifications-reach-the-bundestag-what-the-bsi-says-to-do-now.html",
+          "pubDate": "2026-11-03T06:24:38.000Z"
+        },
+        {
+          "title": "British businesses caught in Europe-wide supermarket fridge attacks",
+          "cve": null,
+          "severity": "news",
+          "score": 70,
+          "corroboration": 1,
+          "region": "fr",
+          "body": "Incident de sécurité rapporté par The Record.\n\nSupermarket and grocery store refrigerator controls across Europe were hacked in the early hours of Monday in the second such wave of attacks in recent weeks — following a first wave in France — with unidentified perpetrators defrosting fridges and causing stock to spoil.\n\nThree meat suppliers in Britain are among businesses that have been caught in a wave of cyberattacks across Europe targeting refrigeration systems, according to an industry trade body.…",
+          "detail": "Incident de sécurité rapporté par The Record.\n\nSupermarket and grocery store refrigerator controls across Europe were hacked in the early hours of Monday in the second such wave of attacks in recent weeks — following a first wave in France — with unidentified perpetrators defrosting fridges and causing stock to spoil.\n\nThree meat suppliers in Britain are among businesses that have been caught in a wave of cyberattacks across Europe targeting refrigeration systems, according to an industry trade body.\n\nSupermarket and grocery store refrigerator controls across Europe were hacked in the early hours of Monday in the second such wave of attacks in recent weeks — following a first wave in France — with unidentified perpetrators defrosting fridges and causing stock to spoil.\n\nThe Association of Independent Meat Suppliers (AIMS) told Recorded Future News that its three affected members were attacked through vulnerable Copeland XWEB supervisory controllers.\n\nA Copeland spokesperson confirmed that certain XWEB monitoring solutions are impacted by the reported vulnerability. \"We are continuing to assess the circumstances and have taken the appropriate actions based on the specific products involved,\" they said in a statement. \"As part of our response, we have re-communicated the recommended patching and security protocols to ensure customers have the latest guidance to protect against the identified threats.\"\n\nAIMS spokesperson Tony Goodger described the association’s members as “collateral” because they ran the same software. None of the affected members lost meat, he said, but the incident “must act as a reminder to all in the food industry, at whatever point in the supply chain they are, that their businesses may be seen by some as targets.”\n\nNo hackers have claimed responsibi",
+          "action": "Surveiller les indicateurs de compromission associés et contrôler les actifs exposés.",
+          "image": "https://cms.therecord.media/uploads/meat_40e30a68b3.jpg",
+          "sources": [
+            {
+              "url": "https://therecord.media/british-businesses-caught-in-europe-wide-supermarket-fridge-attacks",
+              "label": "The Record"
+            }
+          ],
+          "url": "https://therecord.media/british-businesses-caught-in-europe-wide-supermarket-fridge-attacks",
+          "pubDate": "2026-11-03T17:43:00.000Z"
+        },
+        {
+          "title": "Defense and aerospace firm settles with government over allegedly failing to meet cybersecurity contract requirements",
+          "cve": null,
+          "severity": "news",
+          "score": 69,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Incident de sécurité rapporté par CyberScoop.\n\nA Delaware-based defense and aerospace company has settled a case with U.S. agencies over government allegations that the firm neglected its cybersecurity obligations in its contracts. ILC — the name the government uses to collectively refer to ILC Dover and ILC Astrospace — agreed to pay $13 million to resolve the False Claims Act allegations involving its contracts with the Department of the Army, Missile Defense Agency and National Aeronautics and Space…",
+          "detail": "Incident de sécurité rapporté par CyberScoop.\n\nA Delaware-based defense and aerospace company has settled a case with U.S. agencies over government allegations that the firm neglected its cybersecurity obligations in its contracts. ILC — the name the government uses to collectively refer to ILC Dover and ILC Astrospace — agreed to pay $13 million to resolve the False Claims Act allegations involving its contracts with the Department of the Army, Missile Defense Agency and National Aeronautics and Space Administration. ILC, according to the government, submitted false or fraudulent claims for payment on contracts with the agencies because it knew it hadn’t complied with the contracts’ cybersecurity requirements over a period between 2018 and 2024. For instance, ILC allegedly used a third-party company to store sensitive data in the cloud without proper safeguards, and didn&#8217;t develop and update mandated security plans for each of its covered information systems. “The best response to cyberattacks is to prevent them from happening in the first place,” Benjamin Wallace, U.S. Attorney for the District of Delaware, said in a news release Tuesday. “The obligations that ILC violated exist to prevent bad actors from taking advantage of the United States’ technical innovation.”&nbsp; American industrial manufacturing giant Ingersoll Rand, the parent company of ILC Dover, said it inherited the issue when it purchased the firm. “",
+          "action": "Surveiller les indicateurs de compromission associés et contrôler les actifs exposés.",
+          "image": "https://cyberscoop.com/wp-content/uploads/sites/3/2026/11/GettyImages-175399977.jpg",
+          "sources": [
+            {
+              "url": "https://cyberscoop.com/ilc-dover-cybersecurity-settlement-false-claims-act/",
+              "label": "CyberScoop"
+            }
+          ],
+          "url": "https://cyberscoop.com/ilc-dover-cybersecurity-settlement-false-claims-act/",
+          "pubDate": "2026-11-03T21:49:51.000Z"
+        },
+        {
+          "title": "UK school estate hit by 3AM ransomware in suspected AI-assisted attack",
+          "cve": null,
+          "severity": "news",
+          "score": 69,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Incident de sécurité rapporté par BleepingComputer.\n\nA 3AM ransomware affiliate targeted a school estate in the UK and successfully encrypted around 37 of nearly 50 machines reached from an unmanaged host.\n\nHackers disrupt refrigeration systems at European supermarkets\n\nSynology warns of C3RB3R ransomware attacks targeting NAS devices\n\nGoogle disrupts million-device XCPE Android malware botnet, bans TV box maker\n\nIvanti patches two more Connect Secure zero-days chained in attacks\n\nHackers hijack cPGuard auto…",
+          "detail": "Incident de sécurité rapporté par BleepingComputer.\n\nA 3AM ransomware affiliate targeted a school estate in the UK and successfully encrypted around 37 of nearly 50 machines reached from an unmanaged host.\n\nHackers disrupt refrigeration systems at European supermarkets\n\nSynology warns of C3RB3R ransomware attacks targeting NAS devices\n\nGoogle disrupts million-device XCPE Android malware botnet, bans TV box maker\n\nIvanti patches two more Connect Secure zero-days chained in attacks\n\nHackers hijack cPGuard autoupdate to deploy backdoor, steal data\n\nWorkOS says attacker used ARTEX AI to breach internal sales app",
+          "action": "Surveiller les indicateurs de compromission associés et contrôler les actifs exposés.",
+          "image": "https://www.bleepstatic.com/content/hl-images/2026/04/28/ransomware.jpg",
+          "sources": [
+            {
+              "url": "https://www.bleepingcomputer.com/news/security/uk-school-estate-hit-by-3am-ransomware-in-suspected-ai-assisted-attack/",
+              "label": "BleepingComputer"
+            }
+          ],
+          "url": "https://www.bleepingcomputer.com/news/security/uk-school-estate-hit-by-3am-ransomware-in-suspected-ai-assisted-attack/",
+          "pubDate": "2026-11-03T14:00:00.000Z"
+        },
+        {
+          "title": "Inside XCPE, the botnet that turned 1.3M set-top boxes into proxy servers",
+          "cve": null,
+          "severity": "high",
+          "score": 69,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Incident de sécurité rapporté par Security Affairs.\n\nGoogle dismantled a 1.3 million-device botnet allegedly built by Android TV box maker Videostrong to enable ad fraud and proxy abuse. Google and its partners dismantled a backdoor called XCPE that had enrolled more than 1.3 million set-top boxes in a botnet. The result of the investigation into the malware operation is the striking part: Videostrong Technology Co., an Android device maker, built and ran the botnet for money.",
+          "detail": "Incident de sécurité rapporté par Security Affairs.\n\nGoogle dismantled a 1.3 million-device botnet allegedly built by Android TV box maker Videostrong to enable ad fraud and proxy abuse. Google and its partners dismantled a backdoor called XCPE that had enrolled more than 1.3 million set-top boxes in a botnet. The result of the investigation into the malware operation is the striking part: Videostrong Technology Co., an Android device maker, built and ran the botnet for money. Google says it is highly confident that Videostrong deliberately created, spread and operated the backdoor. The company reportedly sold access to criminal groups and installed their malware on infected devices. The malware was used for ad fraud, secretly added devices to residential proxy networks and installed other malicious software. Google says this was not the work of a rogue employee or a simple coding mistake. The backdoor was found in many device models and brands over several years. Its operation involved dedicated infrastructure and regularly changing configurations. &#8220;We assess with high confidence that the backdoor and botnet were intentionally developed, deployed, and operated for financial gain by Videostrong Technology Co., an Android Original Equipment Manufacturer (OEM) and Original Design Manufacturer (ODM).&#8221; Google states . &#8220;Videostrong monetized the backdoor by selling access to criminal affiliates and loading those affi",
+          "action": "Surveiller les indicateurs de compromission associés et contrôler les actifs exposés.",
+          "image": "https://securityaffairs.com/wp-content/uploads/2026/11/image-5.png",
+          "sources": [
+            {
+              "url": "https://securityaffairs.com/202323/malware/inside-xcpe-the-botnet-that-turned-1-3m-set-top-boxes-into-proxy-servers.html",
+              "label": "Security Affairs"
+            }
+          ],
+          "url": "https://securityaffairs.com/202323/malware/inside-xcpe-the-botnet-that-turned-1-3m-set-top-boxes-into-proxy-servers.html",
+          "pubDate": "2026-11-03T09:52:37.000Z"
+        },
+        {
+          "title": "Hackers hijack cPGuard autoupdate to deploy backdoor, steal data",
+          "cve": null,
+          "severity": "news",
+          "score": 68,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Incident de sécurité rapporté par BleepingComputer.\n\nAttackers have compromised the update infrastructure for the cPGuard web security suite to distribute a backdoor and a data-stealing script.\n\nHackers disrupt refrigeration systems at European supermarkets\n\nSynology warns of C3RB3R ransomware attacks targeting NAS devices\n\nGoogle disrupts million-device XCPE Android malware botnet, bans TV box maker\n\nIvanti patches two more Connect Secure zero-days chained in attacks\n\nHackers hijack cPGuard autoupdate to de…",
+          "detail": "Incident de sécurité rapporté par BleepingComputer.\n\nAttackers have compromised the update infrastructure for the cPGuard web security suite to distribute a backdoor and a data-stealing script.\n\nHackers disrupt refrigeration systems at European supermarkets\n\nSynology warns of C3RB3R ransomware attacks targeting NAS devices\n\nGoogle disrupts million-device XCPE Android malware botnet, bans TV box maker\n\nIvanti patches two more Connect Secure zero-days chained in attacks\n\nHackers hijack cPGuard autoupdate to deploy backdoor, steal data\n\nWorkOS says attacker used ARTEX AI to breach internal sales app",
+          "action": "Surveiller les indicateurs de compromission associés et contrôler les actifs exposés.",
+          "image": "https://www.bleepstatic.com/content/hl-images/2026/10/09/hacker-box.jpg",
+          "sources": [
+            {
+              "url": "https://www.bleepingcomputer.com/news/security/hackers-hijack-cpguard-autoupdate-to-deploy-backdoor-steal-data/",
+              "label": "BleepingComputer"
+            }
+          ],
+          "url": "https://www.bleepingcomputer.com/news/security/hackers-hijack-cpguard-autoupdate-to-deploy-backdoor-steal-data/",
+          "pubDate": "2026-11-03T22:18:50.000Z"
+        },
+        {
+          "title": "Google: LLMjacking attacks rack up $1 million in cloud AI charges",
+          "cve": null,
+          "severity": "high",
+          "score": 68,
+          "corroboration": 3,
+          "region": "intl",
+          "body": "Incident de sécurité rapporté par The Hacker News.\n\nGoogle details LLMjacking attacks that hijack enterprise AI resources, generating fraudulent cloud charges reaching $1 million at some organizations.\n\nGoogle on Monday warned that threat actors are hijacking enterprise access to Large Language Models (LLMs) to fraudulently leverage expensive computing resources and AI services.\n\nThe tactic is called LLMjacking , a form of resource hijacking adapted for the LLM era, where an attacker obtains an API key thro…",
+          "detail": "Incident de sécurité rapporté par The Hacker News.\n\nGoogle details LLMjacking attacks that hijack enterprise AI resources, generating fraudulent cloud charges reaching $1 million at some organizations.\n\nGoogle on Monday warned that threat actors are hijacking enterprise access to Large Language Models (LLMs) to fraudulently leverage expensive computing resources and AI services.\n\nThe tactic is called LLMjacking , a form of resource hijacking adapted for the LLM era, where an attacker obtains an API key through phishing, source code leaks, misconfigured environments, or exposed client-side code to gain unauthorized access to an organization's LLM accounts, while the legitimate owner covers the consumption costs.\n\nSuch attacks have a wide geographical footprint, with impacted entities located in North America, South America, and Asia Pacific across the financial services, retail, technology, and transportation sectors.\n\n\"Unlike the gradual resource consumption associated with cryptojacking, LLMJacking can generate large spikes in fraudulent cloud charges in a matter of hours,\" Google Threat Intelligence Group and Mandiant said in a report shared with The Hacker News.\n\nOn one end of the spectrum are low-level resource theft that involves the manipulation of customer support chatbots to conduct unauthorized tasks like code generation. LLMjacking is on the other end, as they target the backend model resources directly by identifying publicly exposed LLM endpoints or obtaining valid LLM API keys.\n\nThe most common initial access vector has been exposed or stolen cloud identity tokens, including IAM credentials, Service Account keys, GitHub Personal Access Tokens (PATs), and active session tokens, which allow an attacker to establish an initial foothold into target organization",
+          "action": "Surveiller les indicateurs de compromission associés et contrôler les actifs exposés.",
+          "image": "https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEjvqwPJPXsflyvqykVK3Pd1lLXLzEJ6vpLudxQUyYbWkS4nQ0dr9dhcSlMCPwgqfAkyadPSj28XReqkeiymKG5RAZMWpx5Hqhg_XI0HNp3jRMRpaO-wVIRbyJyS8MaaqDNOxXvk8aUENx_aiNMqrqm9SWjtJVpXR2uaP-LNp5deG4U_4YvSxpPKtdJLRNoh/s1600/llmjacking.png",
+          "sources": [
+            {
+              "url": "https://thehackernews.com/2026/11/google-warns-llmjacking-attacks-are.html",
+              "label": "The Hacker News"
+            },
+            {
+              "url": "https://www.infosecurity-magazine.com/news/llmjacking-cost-business-1m-warns/",
+              "label": "Infosecurity Mag"
+            },
+            {
+              "url": "https://www.bleepingcomputer.com/news/security/google-llmjacking-attacks-rack-up-1-million-in-cloud-ai-charges/",
+              "label": "BleepingComputer"
+            }
+          ],
+          "url": "https://thehackernews.com/2026/11/google-warns-llmjacking-attacks-are.html",
+          "pubDate": "2026-11-03T18:51:04.000Z"
+        },
+        {
+          "title": "AFIB : près de 3 800 professionnels de la banque et de l’assurance concernés par une fuite de données",
+          "cve": null,
+          "severity": "news",
+          "score": 57,
+          "corroboration": 1,
+          "region": "fr",
+          "body": "Incident de sécurité rapporté par Cyberattaque.org.\n\nLes coordonnées de milliers de professionnels du crédit et de l'assurance ont été diffusées par un pirate informatique. Le 3 novembre 2026, le hacker\n\nAttaque Mis à jour le 3 novembre 2026 à 18h01 AFIB : près de 3 800 professionnels de la banque et de l’assurance concernés par une fuite de données Les coordonnées de milliers de professionnels du crédit et de l&rsquo;assurance ont été diffusées par un pirate informatique.",
+          "detail": "Incident de sécurité rapporté par Cyberattaque.org.\n\nLes coordonnées de milliers de professionnels du crédit et de l'assurance ont été diffusées par un pirate informatique. Le 3 novembre 2026, le hacker\n\nAttaque Mis à jour le 3 novembre 2026 à 18h01 AFIB : près de 3 800 professionnels de la banque et de l’assurance concernés par une fuite de données Les coordonnées de milliers de professionnels du crédit et de l&rsquo;assurance ont été diffusées par un pirate informatique. Le 3 novembre 2026, le hacker Alduin a revendiqué une fuite de données attribuée à l&rsquo;Association Française des Intermédiaires en Bancassurance (AFIB). Cyberattaque.org a analysé le fichier diffusé : il contient exactement 3 848 fiches , associant identités, adresses postales, numéros de téléphone, emails et références professionnelles.\n\nL&rsquo;analyse révèle également un élément important : les informations les plus récentes portent la date du 2 novembre 2026 , soit la veille de la publication du pirate. Certaines données remontent néanmoins à 2022. À ce stade, l&rsquo;origine exacte de cette base et la méthode utilisée pour y accéder restent à confirmer.\n\nFondée en 1997, l&rsquo;Association Française des Intermédiaires en Bancassurance (AFIB) est une organisation professionnelle représentant les acteurs de l&rsquo;intermédiation bancaire et de l&rsquo;assurance. Elle accompagne notamment les courtiers en crédit et leurs mandataires dans leurs obligations professionnelles et réglementaires. Son siège social est situé à Paris.\n\nDans une publication datée du 3 novembre 2026 à 17 h 47 , le hacker Alduin affirme avoir exploité une vulnérabilité de type BOLA (Broken Object Level Authorization) , également appelée IDOR, pour récupérer les informations contenues dans la base.\n\nCette vulnérabilité conc",
+          "action": "Surveiller les indicateurs de compromission associés et contrôler les actifs exposés.",
+          "image": "https://www.cyberattaque.org/wp-content/uploads/2026/04/cyberattaque_20-2.jpg",
+          "sources": [
+            {
+              "url": "https://www.cyberattaque.org/afib-pres-de-3-800-professionnels-de-la-banque-et-de-lassurance-concernes-par-une-fuite-de-donnees/",
+              "label": "Cyberattaque.org"
+            }
+          ],
+          "url": "https://www.cyberattaque.org/afib-pres-de-3-800-professionnels-de-la-banque-et-de-lassurance-concernes-par-une-fuite-de-donnees/",
+          "pubDate": "2026-11-03T16:52:08.000Z"
+        },
+        {
+          "title": "Cyberattaque contre l’EFS : des hackers s’attaquent aux réserves de plasma sanguin",
+          "cve": null,
+          "severity": "news",
+          "score": 52,
+          "corroboration": 1,
+          "region": "fr",
+          "body": "Incident de sécurité rapporté par Cyberattaque.org.\n\nAprès les supermarchés français et européens, les cybercriminels s'attaquent désormais aux installations frigorifiques du secteur médical. Dans la nuit du\n\nAttaque Mis à jour le 3 novembre 2026 à 21h37 Cyberattaque contre l’EFS : des hackers s’attaquent aux réserves de plasma sanguin Après les supermarchés français et européens, les cybercriminels s&rsquo;attaquent désormais aux installations frigorifiques du secteur médical.",
+          "detail": "Incident de sécurité rapporté par Cyberattaque.org.\n\nAprès les supermarchés français et européens, les cybercriminels s'attaquent désormais aux installations frigorifiques du secteur médical. Dans la nuit du\n\nAttaque Mis à jour le 3 novembre 2026 à 21h37 Cyberattaque contre l’EFS : des hackers s’attaquent aux réserves de plasma sanguin Après les supermarchés français et européens, les cybercriminels s&rsquo;attaquent désormais aux installations frigorifiques du secteur médical. Dans la nuit du 1er au 2 novembre 2026, une cyberattaque visant Coolworld, prestataire de l&rsquo;Établissement français du sang (EFS), a provoqué des modifications de température sur des équipements servant à conserver des produits sanguins.\n\nLes congélateurs, normalement maintenus autour de -30 °C, auraient été programmés pour atteindre 110 °C. L&rsquo;incident, révélé le 3 novembre par Le Canard enchaîné, concerne notamment des installations en Bourgogne-Franche-Comté. Plus inquiétant, du plasma congelé destiné aux transfusions figurait parmi les produits potentiellement menacés.\n\nL&rsquo; Établissement français du sang est l&rsquo;organisme public chargé de la collecte, de la préparation et de la distribution des produits sanguins en France. Ses activités sont essentielles au fonctionnement des hôpitaux, notamment pour les transfusions réalisées lors d&rsquo;interventions chirurgicales, d&rsquo;accidents ou de traitements médicaux.\n\nSelon les révélations du Canard enchaîné, Coolworld, une entreprise spécialisée dans les solutions frigorifiques et leur maintenance, a été victime d&rsquo;une cyberattaque le 1er novembre 2026 .\n\nLa société fournit notamment des conteneurs frigorifiques et des équipements de stockage à température contrôlée. Elle propose également des solutions destinées aux sect",
+          "action": "Surveiller les indicateurs de compromission associés et contrôler les actifs exposés.",
+          "image": "https://www.cyberattaque.org/wp-content/uploads/2026/11/EFS-cyberattaque-2.jpg",
+          "sources": [
+            {
+              "url": "https://www.cyberattaque.org/cyberattaque-contre-lefs-des-hackers-sattaquent-aux-reserves-de-plasma-sanguin/",
+              "label": "Cyberattaque.org"
+            }
+          ],
+          "url": "https://www.cyberattaque.org/cyberattaque-contre-lefs-des-hackers-sattaquent-aux-reserves-de-plasma-sanguin/",
+          "pubDate": "2026-11-03T20:37:09.000Z"
+        },
+        {
+          "title": "Nouveaux piratages de réfrigérateurs en Europe : les commentaires de Filigran",
+          "cve": null,
+          "severity": "news",
+          "score": 50,
+          "corroboration": 1,
+          "region": "fr",
+          "body": "Incident de sécurité rapporté par UnderNews.\n\nSuite à la propagation des attaques contre des réfrigérateurs de supermarchés à 7 autres pays européens, voici ci-dessous les commentaires d’experts de Filigran. « Un réfrigérateur est désormais un ordinateur, et ces attaques le prouvent. La méthode qui a touché des supermarchés français le mois dernier a maintenant atteint des magasins dans sept autres pays européens.",
+          "detail": "Incident de sécurité rapporté par UnderNews.\n\nSuite à la propagation des attaques contre des réfrigérateurs de supermarchés à 7 autres pays européens, voici ci-dessous les commentaires d’experts de Filigran. « Un réfrigérateur est désormais un ordinateur, et ces attaques le prouvent. La méthode qui a touché des supermarchés français le mois dernier a maintenant atteint des magasins dans sept autres pays européens. [&#8230;] The post Nouveaux piratages de réfrigérateurs en Europe : les commentaires de Filigran first appeared on UnderNews .",
+          "action": "Surveiller les indicateurs de compromission associés et contrôler les actifs exposés.",
+          "image": "https://www.undernews.fr/wp-content/uploads/2018/05/hacking-cybercrime.jpg",
+          "sources": [
+            {
+              "url": "https://www.undernews.fr/hacking-hacktivisme/nouveaux-piratages-de-refrigerateurs-en-europe-les-commentaires-de-filigran.html",
+              "label": "UnderNews"
+            }
+          ],
+          "url": "https://www.undernews.fr/hacking-hacktivisme/nouveaux-piratages-de-refrigerateurs-en-europe-les-commentaires-de-filigran.html",
+          "pubDate": "2026-11-03T14:43:09.000Z"
+        },
+        {
+          "title": "Hackers Target French Blood Service, Reprogram Plasma Storage Freezers From -30°C to 110°C",
+          "cve": null,
+          "severity": "news",
+          "score": 48,
+          "corroboration": 1,
+          "region": "fr",
+          "body": "Incident de sécurité rapporté par GBHackers.\n\nHackers reportedly targeted refrigeration equipment operated by Coolworld, a service provider for France&#8217;s Établissement Français du Sang (EFS), compromising the safety of blood products intended for medical use. This attack was detected overnight between November 1 and 2, 2026, and allegedly altered freezer settings from approximately -30°C to 110°C.",
+          "detail": "Incident de sécurité rapporté par GBHackers.\n\nHackers reportedly targeted refrigeration equipment operated by Coolworld, a service provider for France&#8217;s Établissement Français du Sang (EFS), compromising the safety of blood products intended for medical use. This attack was detected overnight between November 1 and 2, 2026, and allegedly altered freezer settings from approximately -30°C to 110°C. According to reports, France’s Health Ministry [&#8230;] The post Hackers Target French Blood Service, Reprogram Plasma Storage Freezers From -30°C to 110°C appeared first on GBHackers Security | #1 Globally Trusted Cyber Security News Platform .",
+          "action": "Surveiller les indicateurs de compromission associés et contrôler les actifs exposés.",
+          "image": "https://gbhackers.com/wp-content/uploads/2026/11/471de0f4-c422-4fcd-80a3-f2303292084c-1.webp",
+          "sources": [
+            {
+              "url": "https://gbhackers.com/hackers-target-french-blood-service/",
+              "label": "GBHackers"
+            }
+          ],
+          "url": "https://gbhackers.com/hackers-target-french-blood-service/",
+          "pubDate": "2026-11-04T04:59:45.000Z"
+        }
+      ]
+    },
+    {
+      "id": "culture",
+      "items": [
+        {
+          "title": "Russia dismantles infrastructure of VasyGrek cybercrime group, detains three suspects",
+          "cve": null,
+          "severity": "culture",
+          "score": 70,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Signal de veille — The Record.\n\nRussia's Interior Ministry said Monday that police had dismantled the group's infrastructure and identified its suspected members following an investigation conducted with assistance from cybersecurity firm Kaspersky.\n\nRussian authorities have arrested three suspected members of a cybercriminal group known as VasyGrek in a rare public crackdown on a long-running Russian-speaking hacking operation.\n\nThe group, also known as Fluffy Wolf, has been active sinc…",
+          "detail": "Signal de veille — The Record.\n\nRussia's Interior Ministry said Monday that police had dismantled the group's infrastructure and identified its suspected members following an investigation conducted with assistance from cybersecurity firm Kaspersky.\n\nRussian authorities have arrested three suspected members of a cybercriminal group known as VasyGrek in a rare public crackdown on a long-running Russian-speaking hacking operation.\n\nThe group, also known as Fluffy Wolf, has been active since at least 2016 and has primarily targeted Russian companies with phishing emails designed to steal credentials, gain access to corporate networks and deploy malware.\n\nRussia's Interior Ministry said Monday that police had dismantled the group's infrastructure and identified its suspected members following an investigation conducted with assistance from cybersecurity firm Kaspersky.\n\nThe group's alleged leader has been placed under house arrest, while two suspected accomplices have been released under travel restrictions, according to ministry spokesperson Irina Volk.\n\nSuch arrests are unusual in Russia, where many well-known Russian-speaking hacking groups have operated for years despite being closely monitored by cybersecurity researchers and law enforcement agencies.\n\nVolk said the group's activities had attracted the attention of law enforcement agencies in Russia, the United States and Europe, but did not elaborate on whether foreign authorities had assisted in the investigation.",
+          "action": null,
+          "image": "https://cms.therecord.media/uploads/russian_arrests_f80b0410db.jpg",
+          "sources": [
+            {
+              "url": "https://therecord.media/russia-dismantles-vasygrek-infrastructure-detains-three",
+              "label": "The Record"
+            }
+          ],
+          "url": "https://therecord.media/russia-dismantles-vasygrek-infrastructure-detains-three",
+          "pubDate": "2026-11-03T13:50:00.000Z"
+        },
+        {
+          "title": "ISC Stormcast For Wednesday, November 4th, 2026 https://isc.sans.edu/podcastdetail/10164, (Wed, Nov 4th)",
+          "cve": null,
+          "severity": "culture",
+          "score": 66,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Signal de veille — SANS ISC.\n\nISC Stormcast For Wednesday, November 4th, 2026 https://isc.sans.edu/podcastdetail/10164, Author: Johannes Ullrich\n\nInternet Storm Center Sign In Sign Up Handler on Duty: Johannes Ullrich Threat Level: green previous Click HERE to learn more about classes Johannes is teaching for SANS ISC Stormcast For Wednesday, November 4th, 2026 https://isc.sans.edu/podcastdetail/10164 Click HERE to learn more about classes Johannes is teaching for SANS previous Comment…",
+          "detail": "Signal de veille — SANS ISC.\n\nISC Stormcast For Wednesday, November 4th, 2026 https://isc.sans.edu/podcastdetail/10164, Author: Johannes Ullrich\n\nInternet Storm Center Sign In Sign Up Handler on Duty: Johannes Ullrich Threat Level: green previous Click HERE to learn more about classes Johannes is teaching for SANS ISC Stormcast For Wednesday, November 4th, 2026 https://isc.sans.edu/podcastdetail/10164 Click HERE to learn more about classes Johannes is teaching for SANS previous Comments Login here to join the discussion.",
+          "action": null,
+          "image": "https://isc.sans.edu/images/logos/isc/large.png",
+          "sources": [
+            {
+              "url": "https://isc.sans.edu/diary/rss/33486",
+              "label": "SANS ISC"
+            }
+          ],
+          "url": "https://isc.sans.edu/diary/rss/33486",
+          "pubDate": "2026-11-04T02:10:02.000Z"
+        },
+        {
+          "title": "Europol dismantles investment scheme that impacted potential victims in 50 countries",
+          "cve": null,
+          "severity": "culture",
+          "score": 64,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Signal de veille — CyberScoop.\n\nAuthorities arrested seven people allegedly involved in an investment fraud scheme that claimed potential victims in more than 50 countries, Europol said Tuesday. Officials said the operation caused estimated losses of at least $4.5 million .&nbsp; The takedown effort involved searches across 17 countries Tuesday and netted the seizure of more than 100 servers, according to Europol.",
+          "detail": "Signal de veille — CyberScoop.\n\nAuthorities arrested seven people allegedly involved in an investment fraud scheme that claimed potential victims in more than 50 countries, Europol said Tuesday. Officials said the operation caused estimated losses of at least $4.5 million .&nbsp; The takedown effort involved searches across 17 countries Tuesday and netted the seizure of more than 100 servers, according to Europol. Officials targeted the scheme run by a company that allegedly provided cybercrime groups a series of trading websites and an assortment of call centers tasked with tricking victims into transferring their savings.&nbsp; The company, operated from Cyprus and Israel, was linked to call centers in Albania, Kosovo and North Macedonia, officials said.&nbsp; “The scheme promised substantial, quick returns from trading in cryptocurrencies, foreign currencies or stocks,” Europol wrote in a news release. “Behind seemingly legitimate platforms, supposed brokers used fictitious profits and sustained psychological pressure to persuade victims to invest more.” The investment scam’s operators used affiliate marketing to target potential victims with advertisements that led them to fraudulent investment platforms. Cybercrime groups running the call centers purchased data collected through those ads to contact potential victims, officials said. Operators duped victims by displaying fictitious profits and pressured",
+          "action": null,
+          "image": "https://cyberscoop.com/wp-content/uploads/sites/3/2021/12/GettyImages-1253014959.jpg",
+          "sources": [
+            {
+              "url": "https://cyberscoop.com/europol-investment-scam-takedown/",
+              "label": "CyberScoop"
+            }
+          ],
+          "url": "https://cyberscoop.com/europol-investment-scam-takedown/",
+          "pubDate": "2026-11-03T17:02:27.000Z"
+        },
+        {
+          "title": "Ballot scanner malfunctions, flurry of federal legal actions test election officials on final day of voting",
+          "cve": null,
+          "severity": "high",
+          "score": 63,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Signal de veille — CyberScoop.\n\nEarly reports of ballot scanner malfunctions in Westchester County, New York are a sign of the challenges election officials will face in the current online information environment as voters head to the polls Tuesday on the final day of voting. While such equipment failures and breakdowns are not uncommon and happen in a small number of precincts every election cycle, and there is no evidence of foul play, conspiracists quickly jumped on the news.",
+          "detail": "Signal de veille — CyberScoop.\n\nEarly reports of ballot scanner malfunctions in Westchester County, New York are a sign of the challenges election officials will face in the current online information environment as voters head to the polls Tuesday on the final day of voting. While such equipment failures and breakdowns are not uncommon and happen in a small number of precincts every election cycle, and there is no evidence of foul play, conspiracists quickly jumped on the news. According to Kate Starbird, a professor at the University of Washington who researches online rumors and disinformation tied to elections, the rumors are already spreading within right-wing online circles as evidence of election malfeasance. Starbird cited metrics showing that posts on X about the scanner malfunctions grew to as many as 100 a minute in the hours after the news was reported, with established election deniers, such as The Gateway Pundit, amplifying conspiracist framings. The Westchester County Board of Elections said the problems appear related to some ballots being too thick for the machines to accept, leading to rejections. Voters with affected ballots were told to place them in designated orange emergency ballot bags that will be secured, monitored and counted by officials in compliance with election laws. “The Board of Elections is in constant communication with New York State officials, Westchester County Governmen",
+          "action": null,
+          "image": "https://cyberscoop.com/wp-content/uploads/sites/3/2026/11/ballot-scanners.jpeg",
+          "sources": [
+            {
+              "url": "https://cyberscoop.com/westchester-ballot-scanner-malfunctions-disinformation/",
+              "label": "CyberScoop"
+            }
+          ],
+          "url": "https://cyberscoop.com/westchester-ballot-scanner-malfunctions-disinformation/",
+          "pubDate": "2026-11-03T16:13:27.000Z"
+        },
+        {
+          "title": "Gartner Predicts SOCs Will Have 50% More Engineers Than Analysts by 2028",
+          "cve": null,
+          "severity": "culture",
+          "score": 63,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Signal de veille — BleepingComputer.\n\nGartner predicts that security operations centers will have 50% more engineers than analysts by 2028 as AI agents take over routine alert handling. Prophet Security examines how AI is reshaping SOC roles, from analyst responsibilities and detection engineering to threat hunting and exposure management.\n\nHackers disrupt refrigeration systems at European supermarkets\n\nSynology warns of C3RB3R ransomware attacks targeting NAS devices\n\nGoogle disrupts million-…",
+          "detail": "Signal de veille — BleepingComputer.\n\nGartner predicts that security operations centers will have 50% more engineers than analysts by 2028 as AI agents take over routine alert handling. Prophet Security examines how AI is reshaping SOC roles, from analyst responsibilities and detection engineering to threat hunting and exposure management.\n\nHackers disrupt refrigeration systems at European supermarkets\n\nSynology warns of C3RB3R ransomware attacks targeting NAS devices\n\nGoogle disrupts million-device XCPE Android malware botnet, bans TV box maker\n\nIvanti patches two more Connect Secure zero-days chained in attacks\n\nHackers hijack cPGuard autoupdate to deploy backdoor, steal data\n\nWorkOS says attacker used ARTEX AI to breach internal sales app",
+          "action": null,
+          "image": "https://www.bleepstatic.com/content/posts/2026/10/28/future-soc-roles-header.jpg",
+          "sources": [
+            {
+              "url": "https://www.bleepingcomputer.com/news/security/gartner-predicts-socs-will-have-50-percent-more-engineers-than-analysts-by-2028/",
+              "label": "BleepingComputer"
+            }
+          ],
+          "url": "https://www.bleepingcomputer.com/news/security/gartner-predicts-socs-will-have-50-percent-more-engineers-than-analysts-by-2028/",
+          "pubDate": "2026-11-03T15:00:10.000Z"
+        },
+        {
+          "title": "Police seizes over 100 servers in investment scam crackdown",
+          "cve": null,
+          "severity": "high",
+          "score": 63,
+          "corroboration": 2,
+          "region": "intl",
+          "body": "Signal de veille — Help Net Security.\n\nSeven people have been arrested and more than 100 servers seized in a coordinated law enforcement action against an investment fraud network that started\n\nThe couple went to the police in 2022 after putting their savings into an online trading platform and discovering they could not withdraw their profits.",
+          "detail": "Signal de veille — Help Net Security.\n\nSeven people have been arrested and more than 100 servers seized in a coordinated law enforcement action against an investment fraud network that started\n\nThe couple went to the police in 2022 after putting their savings into an online trading platform and discovering they could not withdraw their profits. The investigation that followed uncovered an international scheme.\n\nEuropol says the network’s potential victims live in at least 50 countries, and Eurojust puts the estimated losses at over €4 million.\n\n“The fraudsters promised enormous profits within a short period through trading in cryptocurrencies, foreign currencies and stocks. After transferring a small sum of money, the victims were shown inflated profits, making the platform appear legitimate,” Eurojust wrote .\n\nFrom there, the alleged brokers “put psychological pressure on the victims to invest further large sums of money,” the EU agency for criminal justice cooperation said. Those who tried to take their money out ran into one stalling tactic after another. “Eventually, the perpetrators disappeared, and the victims realised their money was gone.”\n\nThe case has moved forward in stages. A first international action day ended with two arrests and the seizure of a large amount of evidence. Going through that material, investigators identified seven more suspects, among them the managers of the call centres that talked victims into handing over more money. A second action day brought more arrests, and police seized evidence and cash.\n\nEvidence from that second round led investigators to a company based in Cyprus and Israel that allegedly offered “crime-as-a-service,” supplying various criminal groups with the fraudulent websites they used to run online scams. Its suspected",
+          "action": null,
+          "image": "https://img.helpnetsecurity.com/wp-content/uploads/2026/11/03145905/servers-1500.webp",
+          "sources": [
+            {
+              "url": "https://www.helpnetsecurity.com/2026/11/03/investment-fraud-network-servers-seized/",
+              "label": "Help Net Security"
+            },
+            {
+              "url": "https://www.bleepingcomputer.com/news/security/police-seizes-over-100-servers-in-investment-scam-crackdown/",
+              "label": "BleepingComputer"
+            }
+          ],
+          "url": "https://www.helpnetsecurity.com/2026/11/03/investment-fraud-network-servers-seized/",
+          "pubDate": "2026-11-03T14:31:51.000Z"
+        },
+        {
+          "title": "LLMjacking Emerges as Thriving Cybercriminal Enterprise",
+          "cve": null,
+          "severity": "high",
+          "score": 60,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Signal de veille — Dark Reading.\n\nCybercriminals have turned reselling cloud access to LLMs into a lucrative business model, with some victims paying as much as $1 million in resource consumption before access was revoked.",
+          "detail": "Signal de veille — Dark Reading.\n\nCybercriminals have turned reselling cloud access to LLMs into a lucrative business model, with some victims paying as much as $1 million in resource consumption before access was revoked.",
+          "action": null,
+          "image": null,
+          "sources": [
+            {
+              "url": "https://www.darkreading.com/cloud-security/llmjacking-thriving-cybercriminal-enterprise",
+              "label": "Dark Reading"
+            }
+          ],
+          "url": "https://www.darkreading.com/cloud-security/llmjacking-thriving-cybercriminal-enterprise",
+          "pubDate": "2026-11-03T15:35:50.000Z"
+        },
+        {
+          "title": "Oklahoma man charged with mailing threats, substances to election officials nationwide",
+          "cve": null,
+          "severity": "high",
+          "score": 59,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Signal de veille — CyberScoop.\n\nAn Oklahoma man has been charged with mailing suspicious white substances to election officials across the country. Robin Patrick Martin faces charges of conveying false or misleading information and hoaxes, as well as mailing threatening communications. The charges allege a nationwide effort to intimidate election officials and support President Donald Trump. Starting on Sept.",
+          "detail": "Signal de veille — CyberScoop.\n\nAn Oklahoma man has been charged with mailing suspicious white substances to election officials across the country. Robin Patrick Martin faces charges of conveying false or misleading information and hoaxes, as well as mailing threatening communications. The charges allege a nationwide effort to intimidate election officials and support President Donald Trump. Starting on Sept. 16, 2024, multiple state election officials reported receiving mail containing a white, powdery substance and a three-page letter headed “DECLARATION OF WAR.” Officials in nearly every state have since received similar mailings over the past two years. Election officials provided some of the evidence, while federal authorities intercepted other letters in transit.&nbsp; The letters bore a return address for the “The United States Traitor Elimination Army” in Takoma Park, Maryland. Some envelopes also had threatening messages written on them that could only be seen under ultraviolet light.&nbsp;&nbsp; The letters cited the belief, promoted by some supporters of Trump, that the 2020 election was marred by voter fraud, along with similar concerns about the 2024 election. Other envelopes included messages like “No US Jurisdiction!,” “Mailed from the Indian Nation,” and “Are you for us? Or against us?” Another message read: “To FBI: What do you want for your children? Peace through strength or nuclear war? Us",
+          "action": null,
+          "image": "https://cyberscoop.com/wp-content/uploads/sites/3/2026/11/GettyImages-1280380298-1.jpg",
+          "sources": [
+            {
+              "url": "https://cyberscoop.com/oklahoma-man-charged-white-powder-letters-election-officials/",
+              "label": "CyberScoop"
+            }
+          ],
+          "url": "https://cyberscoop.com/oklahoma-man-charged-white-powder-letters-election-officials/",
+          "pubDate": "2026-11-03T18:51:23.000Z"
+        },
+        {
+          "title": "mSecure Warns Users to Change Passwords, Reset 2FA and Passkeys After Suspicious Activity",
+          "cve": null,
+          "severity": "news",
+          "score": 59,
+          "corroboration": 2,
+          "region": "intl",
+          "body": "Signal de veille — The Register.\n\nCustomers of the mSecure password manager are being urged to act now to protect the confidential information they store in it, possibly by changing passwords, resetting two-factor authentication (2FA), and removing passkeys. The warning came in an email sent on November 3 in the name of developer mSeven Software. It says the company recently learned of suspicious activity linked to the app but",
+          "detail": "Signal de veille — The Register.\n\nCustomers of the mSecure password manager are being urged to act now to protect the confidential information they store in it, possibly by changing passwords, resetting two-factor authentication (2FA), and removing passkeys. The warning came in an email sent on November 3 in the name of developer mSeven Software. It says the company recently learned of suspicious activity linked to the app but",
+          "action": null,
+          "image": "https://image.theregister.com/5269504.jpg?imageId=5269504&x=0&y=0&cropw=100&croph=100&panox=0&panoy=0&panow=100&panoh=100&width=1200&height=683",
+          "sources": [
+            {
+              "url": "https://www.theregister.com/security/2026/11/03/password-manager-msecure-tells-users-to-change-passwords-wont-say-why/5307296",
+              "label": "The Register"
+            },
+            {
+              "url": "https://thehackernews.com/2026/11/msecure-warns-users-to-change-passwords.html",
+              "label": "The Hacker News"
+            }
+          ],
+          "url": "https://www.theregister.com/security/2026/11/03/password-manager-msecure-tells-users-to-change-passwords-wont-say-why/5307296",
+          "pubDate": "2026-11-03T18:46:38.000Z"
+        },
+        {
+          "title": "NATO’s Crossed Swords Exercise Brings AI Agents Into Cyber Operations Training",
+          "cve": null,
+          "severity": "culture",
+          "score": 59,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Signal de veille — SecurityWeek.\n\nNATO’s CCDCOE launches Crossed Swords 2026 in Tallinn, integrating AI agents and OpenAI Daybreak into offensive cyber operations training.\n\nThe NATO CCDCOE exercise in Estonia introduces AI agents and OpenAI Daybreak into joint cyber and kinetic operations training.\n\nSubscribe to the SecurityWeek Email Briefing for the latest cybersecurity threats, trends, and expert insights.\n\nSubscribe to the SecurityWeek Email Briefing to stay informed on the latest thr…",
+          "detail": "Signal de veille — SecurityWeek.\n\nNATO’s CCDCOE launches Crossed Swords 2026 in Tallinn, integrating AI agents and OpenAI Daybreak into offensive cyber operations training.\n\nThe NATO CCDCOE exercise in Estonia introduces AI agents and OpenAI Daybreak into joint cyber and kinetic operations training.\n\nSubscribe to the SecurityWeek Email Briefing for the latest cybersecurity threats, trends, and expert insights.\n\nSubscribe to the SecurityWeek Email Briefing to stay informed on the latest threats, trends, and technology, along with insightful columns from industry experts.\n\nClose the security gaps between pentests. Join this session to explore agentic pentesting and gain a practical framework for continuous exposure validation in your CTEM program.\n\nJoin as we bring together CISOs, senior cybersecurity executives, practitioners, industry experts, and other security leaders to share practical experience and examine the issues shaping enterprise cybersecurity strategy.\n\nGeneral Paul M. Nakasone has joined Armadin’s Board of Directors.",
+          "action": null,
+          "image": "https://www.securityweek.com/wp-content/uploads/2026/11/NATO-Crossed-Swords-2026.jpeg",
+          "sources": [
+            {
+              "url": "https://www.securityweek.com/natos-crossed-swords-exercise-brings-ai-agents-into-cyber-operations-training/",
+              "label": "SecurityWeek"
+            }
+          ],
+          "url": "https://www.securityweek.com/natos-crossed-swords-exercise-brings-ai-agents-into-cyber-operations-training/",
+          "pubDate": "2026-11-03T08:49:03.000Z"
+        },
+        {
+          "title": "Germany Busts 'Crime-as-a-Service' Investment Fraud Outfit",
+          "cve": null,
+          "severity": "culture",
+          "score": 55,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Signal de veille — Dark Reading.\n\nGerman police led a multinational probe that exposed an alleged crime-as-a-service provider supplying fraudulent trading platforms to investment scammers.",
+          "detail": "Signal de veille — Dark Reading.\n\nGerman police led a multinational probe that exposed an alleged crime-as-a-service provider supplying fraudulent trading platforms to investment scammers.",
+          "action": null,
+          "image": null,
+          "sources": [
+            {
+              "url": "https://www.darkreading.com/cybersecurity-operations/germany-crime-service-investment-fraud",
+              "label": "Dark Reading"
+            }
+          ],
+          "url": "https://www.darkreading.com/cybersecurity-operations/germany-crime-service-investment-fraud",
+          "pubDate": "2026-11-03T21:57:12.000Z"
+        },
+        {
+          "title": "9 Cyber Awareness Tips That Actually Match Today's Maze of Threats",
+          "cve": null,
+          "severity": "culture",
+          "score": 55,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Signal de veille — Dark Reading.\n\nPractical guidance on safer search, stronger login security, better executive protection, and other habits that help reduce enterprise risk.",
+          "detail": "Signal de veille — Dark Reading.\n\nPractical guidance on safer search, stronger login security, better executive protection, and other habits that help reduce enterprise risk.",
+          "action": null,
+          "image": null,
+          "sources": [
+            {
+              "url": "https://www.darkreading.com/cyber-risk/9-cyber-awareness-tips-todays-maze-threats",
+              "label": "Dark Reading"
+            }
+          ],
+          "url": "https://www.darkreading.com/cyber-risk/9-cyber-awareness-tips-todays-maze-threats",
+          "pubDate": "2026-11-03T15:38:20.000Z"
+        },
+        {
+          "title": "« Utiliser l’IA sans culpabiliser » : Revolut dévoile les dessous de sa bascule vers un modèle chinois",
+          "cve": null,
+          "severity": "culture",
+          "score": 55,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Signal de veille — Numerama.\n\nLa banque en ligne européenne fait tourner GLM, un modèle ouvert conçu en Chine, sur des serveurs dédiés. Elle affirme avoir divisé sa facture d’IA par dix tout en livrant plus vite.\n\nWatt Else, ToujoursPlus, Artificielles, Le Récap : votre dose hebdo d’infos exclusives et d’éditos endiablés !\n\nFrandroid Clubic Lemon Humanoid Mon compte Thème Clair Sombre Système 39,90 € /an\n\nNous générons pour vous un résumé de l’article grâce à une IA et nous le vérifion…",
+          "detail": "Signal de veille — Numerama.\n\nLa banque en ligne européenne fait tourner GLM, un modèle ouvert conçu en Chine, sur des serveurs dédiés. Elle affirme avoir divisé sa facture d’IA par dix tout en livrant plus vite.\n\nWatt Else, ToujoursPlus, Artificielles, Le Récap : votre dose hebdo d’infos exclusives et d’éditos endiablés !\n\nFrandroid Clubic Lemon Humanoid Mon compte Thème Clair Sombre Système 39,90 € /an\n\nNous générons pour vous un résumé de l’article grâce à une IA et nous le vérifions afin de nous assurer qu’il n’y ait aucune erreur, pour garantir l’authenticité de l’info.\n\nRecevez tous les soirs un résumé de l’actu importante avec Le Récap’\n\nLa conférence se tenait à la mi-octobre à New York , mais son écho n’est venu qu’avec sa republication sur YouTube, le 29 octobre.\n\nLors d’une présentation d’une dizaine de minutes, David Abitbol, responsable des opérations d’IA chez Revolut, a dévoilé les dessous de la stratégie de la banque en ligne européenne en matière d’IA pour ses développeurs. Le tout, appuyé sur des données recueillies auprès de 2 000 ingénieurs pour mesurer l’effet de ces outils sur le temps de développement et les délais de livraison.",
+          "action": null,
+          "image": "https://img.numerama.com/www.numerama.com/wp-content/uploads/2026/11/sans-titre-1.png?resize=1600,900&key=b9aaf40a",
+          "sources": [
+            {
+              "url": "https://www.numerama.com/tech/2366827-utiliser-lia-sans-culpabiliser-revolut-devoile-les-dessous-de-sa-bascule-vers-un-modele-chinois.html",
+              "label": "Numerama"
+            }
+          ],
+          "url": "https://www.numerama.com/tech/2366827-utiliser-lia-sans-culpabiliser-revolut-devoile-les-dessous-de-sa-bascule-vers-un-modele-chinois.html",
+          "pubDate": "2026-11-03T14:48:07.000Z"
+        },
+        {
+          "title": "« Étrangement doués » : ils demandent à GPT-6 Astra de réparer Qwen sans le réentraîner, et les résultats font débat",
+          "cve": null,
+          "severity": "culture",
+          "score": 55,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Signal de veille — Numerama.\n\nQuatre chercheurs du MIT affirment que GPT-6 Astra sait lire et modifier directement les paramètres d’autres modèles d’IA. De quoi corriger une IA sans la réentraîner ?\n\nWatt Else, ToujoursPlus, Artificielles, Le Récap : votre dose hebdo d’infos exclusives et d’éditos endiablés !\n\nFrandroid Clubic Lemon Humanoid Mon compte Thème Clair Sombre Système 39,90 € /an\n\nNous générons pour vous un résumé de l’article grâce à une IA et nous le vérifions afin de nous…",
+          "detail": "Signal de veille — Numerama.\n\nQuatre chercheurs du MIT affirment que GPT-6 Astra sait lire et modifier directement les paramètres d’autres modèles d’IA. De quoi corriger une IA sans la réentraîner ?\n\nWatt Else, ToujoursPlus, Artificielles, Le Récap : votre dose hebdo d’infos exclusives et d’éditos endiablés !\n\nFrandroid Clubic Lemon Humanoid Mon compte Thème Clair Sombre Système 39,90 € /an\n\nNous générons pour vous un résumé de l’article grâce à une IA et nous le vérifions afin de nous assurer qu’il n’y ait aucune erreur, pour garantir l’authenticité de l’info.\n\nRecevez tous les soirs un résumé de l’actu importante avec Le Récap’\n\n« Les LLM peuvent lire et écrire nativement les poids des réseaux neuronaux. »\n\nC’est sur cette affirmation que s’ouvre le billet de blog publié le 2 novembre 2026 par quatre chercheurs du MIT, qui a rapidement suscité de vives réactions sur le forum Hacker News. La promesse est alléchante. Selon eux, GPT-6 Astra , le modèle de langage ( LLM ) phare d’OpenAI, sait lire et réécrire directement les « poids » d’autres réseaux de neurones, sans devoir repasser par un entraînement.",
+          "action": null,
+          "image": "https://img.numerama.com/www.numerama.com/wp-content/uploads/2026/11/sans-titre.png?resize=1600,900&key=4372cef6",
+          "sources": [
+            {
+              "url": "https://www.numerama.com/tech/2366183-etrangement-doues-ils-demandent-a-gpt-6-astra-de-reparer-qwen-sans-le-reentrainer-et-les-resultats-font-debat.html",
+              "label": "Numerama"
+            }
+          ],
+          "url": "https://www.numerama.com/tech/2366183-etrangement-doues-ils-demandent-a-gpt-6-astra-de-reparer-qwen-sans-le-reentrainer-et-les-resultats-font-debat.html",
+          "pubDate": "2026-11-03T09:55:17.000Z"
+        },
+        {
+          "title": "Anthropic open-sources FlashProve, its provable inference prototype for MoE models",
+          "cve": null,
+          "severity": "high",
+          "score": 48,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Signal de veille — Help Net Security.\n\nAnthropic’s Frontier Red Team, with collaborators at EPFL, MIT and StarkWare, built FlashProve, a prototype that produces a cryptographic proof that one specific language model generated one specific reply. The prover, two verifiers, the formal proofs behind them and a protocol specification are on GitHub under the Apache 2.0 license. Source: Anthropic When you send a prompt to a hosted API, you can&#8217;t confirm which model answered it.",
+          "detail": "Signal de veille — Help Net Security.\n\nAnthropic’s Frontier Red Team, with collaborators at EPFL, MIT and StarkWare, built FlashProve, a prototype that produces a cryptographic proof that one specific language model generated one specific reply. The prover, two verifiers, the formal proofs behind them and a protocol specification are on GitHub under the Apache 2.0 license. Source: Anthropic When you send a prompt to a hosted API, you can&#8217;t confirm which model answered it. A provider could route the request to &#8230; More &#8594; The post Anthropic open-sources FlashProve, its provable inference prototype for MoE models appeared first on Help Net Security .",
+          "action": null,
+          "image": "https://img.helpnetsecurity.com/wp-content/uploads/2026/03/11120918/anthropic-2-1500.webp",
+          "sources": [
+            {
+              "url": "https://www.helpnetsecurity.com/2026/11/04/anthropic-flashprove-provable-inference/",
+              "label": "Help Net Security"
+            }
+          ],
+          "url": "https://www.helpnetsecurity.com/2026/11/04/anthropic-flashprove-provable-inference/",
+          "pubDate": "2026-11-04T04:36:14.000Z"
+        },
+        {
+          "title": "Après la France, des pirates font chauffer les frigos de supermarchés en Belgique et en Suède",
+          "cve": null,
+          "severity": "culture",
+          "score": 48,
+          "corroboration": 1,
+          "region": "fr",
+          "body": "Signal de veille — IT-Connect.\n\nDelhaize, Carrefour, ICA, Coop : des pirates ont activé à distance le dégivrage des frigos de supermarchés en Belgique et en Suède. Voici ce que l'on sait.\n\nActualités IT & Tech, tutoriels en administration système, réseau et cybersécurité.\n\nArchitecture Réseau Cybersécurité Linux & Logiciels Libres Microsoft (On-Premise) Microsoft 365 & Azure Self-Hosting & Open Source Stockage & NAS Cours IT Actualités Entreprise Actu Cybersécurité Web Logiciel – OS Maté…",
+          "detail": "Signal de veille — IT-Connect.\n\nDelhaize, Carrefour, ICA, Coop : des pirates ont activé à distance le dégivrage des frigos de supermarchés en Belgique et en Suède. Voici ce que l'on sait.\n\nActualités IT & Tech, tutoriels en administration système, réseau et cybersécurité.\n\nArchitecture Réseau Cybersécurité Linux & Logiciels Libres Microsoft (On-Premise) Microsoft 365 & Azure Self-Hosting & Open Source Stockage & NAS Cours IT Actualités Entreprise Actu Cybersécurité Web Logiciel – OS Matériel Réseaux sociaux Mobile Bons Plans Tests Débutants Livres Vidéos IT-Connect » Actualités » Actu Cybersécurité » Après la France, des pirates font chauffer les frigos de supermarchés en Belgique et en Suède Actu Cybersécurité Après la France, des pirates font chauffer les frigos de supermarchés en Belgique et en Suède 03/11/2026 Florian BURNEL 0 commentaire Cybersécurité Des congélateurs réglés sur +50 °C au petit matin, et des rayons de surgelés à vider avant l'ouverture. Ça vous rappelle quelque chose ? Trois semaines après la France, la même attaque contre les systèmes de froid des supermarchés a frappé la Belgique, la Suède et plusieurs autres pays européens. Voici ce que l'on sait sur ces attaques.\n\nDans la nuit du dimanche 1er au lundi 2 novembre 2026, les réfrigérateurs et congélateurs d'une quarantaine de magasins Delhaize se sont mis à chauffer en Belgique, en particulier des magasins Proxy et Shop & Go. L'enseigne confirme un \"incident informatique\" . D'après RTL Info, cité par L'Avenir , les surgélateurs sont montés à environ 15 °C.\n\nCarrefour Belgique parle de 15 magasins sur 700, Intermarché d'une quinzaine et Spar (Colruyt Group) de cinq. Au total, il y aurait au moins 76 points de vente impactés en Belgique. Le parquet fédéral a ouvert une enquête et le Centre pour la c",
+          "action": null,
+          "image": "https://www.it-connect.fr/wp-content-itc/uploads/2026/11/Frigos-pirates-apres-la-France-la-Belgique-et-la-Suede-novembre-2026.jpg",
+          "sources": [
+            {
+              "url": "https://www.it-connect.fr/cyberattaque-frigos-supermarches-belgique-suede/",
+              "label": "IT-Connect"
+            }
+          ],
+          "url": "https://www.it-connect.fr/cyberattaque-frigos-supermarches-belgique-suede/",
+          "pubDate": "2026-11-03T06:35:10.000Z"
+        }
+      ]
+    }
+  ]
+}
