@@ -1,0 +1,869 @@
+{
+  "id": "daily-2026-11-08",
+  "type": "daily",
+  "date": "2026-11-08",
+  "title": "Rapport quotidien - dimanche 8 novembre 2026",
+  "summary": "Sur les dernières 24 heures, la veille recense 60 vulnérabilités critiques, 21 incidents ou compromissions et 7 signaux de fond. Acteurs et produits les plus exposés : Windows, Linux et SonicWall.",
+  "generatedAt": "2026-11-08T05:01:09.875Z",
+  "sections": [
+    {
+      "id": "vulns",
+      "items": [
+        {
+          "title": "CVE-2026-118066 — The Appointment Booking Plugin – LatePoint | Calendar & Scheduling for WordPress plugin fo…",
+          "cve": "CVE-2026-118066",
+          "severity": "critical",
+          "score": 72,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Vulnérabilité critique CVE-2026-118066 (score CVSS 9.1).\n\nThe Appointment Booking Plugin – LatePoint | Calendar & Scheduling for WordPress plugin for WordPress is vulnerable to Authentication Bypass via Account Takeover in all versions up to, and including, 5.7.6. This is due to the `OsModel::build_conditions_query()` function in `lib/models/model.php` comparing WHERE-clause values against the literal strings `'IS NULL'` and `'IS NOT NULL'` and concatenating a match directly into SQL without binding it as a param…",
+          "detail": "Vulnérabilité critique CVE-2026-118066 (score CVSS 9.1).\n\nThe Appointment Booking Plugin – LatePoint | Calendar & Scheduling for WordPress plugin for WordPress is vulnerable to Authentication Bypass via Account Takeover in all versions up to, and including, 5.7.6. This is due to the `OsModel::build_conditions_query()` function in `lib/models/model.php` comparing WHERE-clause values against the literal strings `'IS NULL'` and `'IS NOT NULL'` and concatenating a match directly into SQL without binding it as a parameter, a flaw that neither `sanitize_text_field()` nor the 5.7.5 `is_scalar()` hardening guard closes, since both pass the scalar sentinel through unchanged. This makes it possible for unauthenticated attackers to send `params[password_reset_token]=IS NOT NULL` to the public `customer_cabinet__change_password` AJAX route to match every non-null `account_nonse` value, resolving to the lowest-id customer and overwriting that customer's password to an attacker-chosen value — granting full access to their bookings, orders, and PII, and, when the `wp_users_as_customers` option is enabled, takeover of the linked WordPress subscriber or customer-role account. The attacker can first identify the target customer's email by sending `params[order_intent_key]=IS NOT NULL` to the public `steps__start_from_order_intent` route, which returns the name and email from the first matching order intent, and can then self-arm the required 15-minute password-reset freshness window by triggering a reset for that customer directly.\n\nScore CVSS : 9.1\n\nType de faiblesse (CWE) : CWE-287",
+          "action": "Vérifier l'exposition du parc et appliquer le correctif éditeur dès sa disponibilité.",
+          "image": null,
+          "sources": [
+            {
+              "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-118066",
+              "label": "NVD"
+            },
+            {
+              "url": "https://www.cvedetails.com/cve/CVE-2026-118066/",
+              "label": "CVE Details"
+            }
+          ],
+          "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-118066",
+          "pubDate": "2026-11-07T12:17:43.717Z"
+        },
+        {
+          "title": "CVE-2026-123614 — imgproxy from 4.0.0 before 4.0.16 contains an integer overflow in the ICO loader that allo…",
+          "cve": "CVE-2026-123614",
+          "severity": "critical",
+          "score": 59,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Vulnérabilité critique CVE-2026-123614 (score CVSS 9.8).\n\nimgproxy from 4.0.0 before 4.0.16 contains an integer overflow in the ICO loader that allows remote attackers to trigger a heap buffer overflow via a crafted data_size value. Attackers can submit a crafted ICO image whose data_size wraps the allocation in vips/icoload.c, corrupting heap memory to crash the process or achieve code execution.",
+          "detail": "Vulnérabilité critique CVE-2026-123614 (score CVSS 9.8).\n\nimgproxy from 4.0.0 before 4.0.16 contains an integer overflow in the ICO loader that allows remote attackers to trigger a heap buffer overflow via a crafted data_size value. Attackers can submit a crafted ICO image whose data_size wraps the allocation in vips/icoload.c, corrupting heap memory to crash the process or achieve code execution.\n\nScore CVSS : 9.8\n\nType de faiblesse (CWE) : CWE-122",
+          "action": "Vérifier l'exposition du parc et appliquer le correctif éditeur dès sa disponibilité.",
+          "image": null,
+          "sources": [
+            {
+              "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-123614",
+              "label": "NVD"
+            },
+            {
+              "url": "https://www.cvedetails.com/cve/CVE-2026-123614/",
+              "label": "CVE Details"
+            }
+          ],
+          "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-123614",
+          "pubDate": "2026-11-08T02:16:56.983Z"
+        },
+        {
+          "title": "CVE-2026-123551 — OpenAM from 14.0.0 before 16.1.4 contains an information disclosure vulnerability that all…",
+          "cve": "CVE-2026-123551",
+          "severity": "critical",
+          "score": 59,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Vulnérabilité critique CVE-2026-123551 (score CVSS 10).\n\nOpenAM from 14.0.0 before 16.1.4 contains an information disclosure vulnerability that allows unauthenticated attackers to read live session tokens from the notification WebSocket. Attackers can bypass the agent-only check through an unvalidated internal forward on legacy Liberty ID-FF endpoints, collecting iPlanetDirectoryPro tokens to hijack user and administrator sessions.",
+          "detail": "Vulnérabilité critique CVE-2026-123551 (score CVSS 10).\n\nOpenAM from 14.0.0 before 16.1.4 contains an information disclosure vulnerability that allows unauthenticated attackers to read live session tokens from the notification WebSocket. Attackers can bypass the agent-only check through an unvalidated internal forward on legacy Liberty ID-FF endpoints, collecting iPlanetDirectoryPro tokens to hijack user and administrator sessions.\n\nScore CVSS : 10\n\nType de faiblesse (CWE) : CWE-201",
+          "action": "Vérifier l'exposition du parc et appliquer le correctif éditeur dès sa disponibilité.",
+          "image": null,
+          "sources": [
+            {
+              "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-123551",
+              "label": "NVD"
+            },
+            {
+              "url": "https://www.cvedetails.com/cve/CVE-2026-123551/",
+              "label": "CVE Details"
+            }
+          ],
+          "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-123551",
+          "pubDate": "2026-11-08T02:16:46.603Z"
+        },
+        {
+          "title": "CVE-2026-123550 — OpenAM before 16.1.4 contains an authentication bypass vulnerability in its SAML v2.0 serv…",
+          "cve": "CVE-2026-123550",
+          "severity": "critical",
+          "score": 59,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Vulnérabilité critique CVE-2026-123550 (score CVSS 9.8).\n\nOpenAM before 16.1.4 contains an authentication bypass vulnerability in its SAML v2.0 service provider that accepts unsigned assertions on the ECP (PAOS) and HTTP-Artifact bindings when WantAssertionsSigned is false. Unauthenticated remote attackers can submit forged assertions to obtain sessions as any mapped user, including administrators, and hijack single sign-on to dependent applications.",
+          "detail": "Vulnérabilité critique CVE-2026-123550 (score CVSS 9.8).\n\nOpenAM before 16.1.4 contains an authentication bypass vulnerability in its SAML v2.0 service provider that accepts unsigned assertions on the ECP (PAOS) and HTTP-Artifact bindings when WantAssertionsSigned is false. Unauthenticated remote attackers can submit forged assertions to obtain sessions as any mapped user, including administrators, and hijack single sign-on to dependent applications.\n\nScore CVSS : 9.8\n\nType de faiblesse (CWE) : CWE-290",
+          "action": "Vérifier l'exposition du parc et appliquer le correctif éditeur dès sa disponibilité.",
+          "image": null,
+          "sources": [
+            {
+              "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-123550",
+              "label": "NVD"
+            },
+            {
+              "url": "https://www.cvedetails.com/cve/CVE-2026-123550/",
+              "label": "CVE Details"
+            }
+          ],
+          "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-123550",
+          "pubDate": "2026-11-08T02:16:46.410Z"
+        },
+        {
+          "title": "CVE-2026-123549 — OpenAM before 16.1.4 fails to enforce the Valid Creation Attributes list during self-regis…",
+          "cve": "CVE-2026-123549",
+          "severity": "critical",
+          "score": 59,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Vulnérabilité critique CVE-2026-123549 (score CVSS 9.8).\n\nOpenAM before 16.1.4 fails to enforce the Valid Creation Attributes list during self-registration, allowing anonymous attackers to set restricted attributes including group membership. Attackers can register through the legacy self-service REST endpoint or User Self-Service flow to join administrative groups and gain full administrative control of OpenAM.",
+          "detail": "Vulnérabilité critique CVE-2026-123549 (score CVSS 9.8).\n\nOpenAM before 16.1.4 fails to enforce the Valid Creation Attributes list during self-registration, allowing anonymous attackers to set restricted attributes including group membership. Attackers can register through the legacy self-service REST endpoint or User Self-Service flow to join administrative groups and gain full administrative control of OpenAM.\n\nScore CVSS : 9.8\n\nType de faiblesse (CWE) : CWE-269",
+          "action": "Vérifier l'exposition du parc et appliquer le correctif éditeur dès sa disponibilité.",
+          "image": null,
+          "sources": [
+            {
+              "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-123549",
+              "label": "NVD"
+            },
+            {
+              "url": "https://www.cvedetails.com/cve/CVE-2026-123549/",
+              "label": "CVE Details"
+            }
+          ],
+          "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-123549",
+          "pubDate": "2026-11-08T02:16:46.247Z"
+        },
+        {
+          "title": "CVE-2026-123966 — A vulnerability was determined in Tenda AC19 16.03.10.07. Affected by this issue is the fu…",
+          "cve": "CVE-2026-123966",
+          "severity": "critical",
+          "score": 59,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Vulnérabilité critique CVE-2026-123966 (score CVSS 10).\n\nA vulnerability was determined in Tenda AC19 16.03.10.07. Affected by this issue is the function saveParentControlInfo of the file /goform/saveParentControlInfo. This manipulation of the argument deviceId causes heap-based buffer overflow. The attack is possible to be carried out remotely. The exploit has been publicly disclosed and may be utilized.",
+          "detail": "Vulnérabilité critique CVE-2026-123966 (score CVSS 10).\n\nA vulnerability was determined in Tenda AC19 16.03.10.07. Affected by this issue is the function saveParentControlInfo of the file /goform/saveParentControlInfo. This manipulation of the argument deviceId causes heap-based buffer overflow. The attack is possible to be carried out remotely. The exploit has been publicly disclosed and may be utilized.\n\nScore CVSS : 10\n\nType de faiblesse (CWE) : CWE-119, CWE-122",
+          "action": "Vérifier l'exposition du parc et appliquer le correctif éditeur dès sa disponibilité.",
+          "image": null,
+          "sources": [
+            {
+              "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-123966",
+              "label": "NVD"
+            },
+            {
+              "url": "https://www.cvedetails.com/cve/CVE-2026-123966/",
+              "label": "CVE Details"
+            }
+          ],
+          "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-123966",
+          "pubDate": "2026-11-07T14:17:01.800Z"
+        },
+        {
+          "title": "CVE-2026-123961 — A security vulnerability has been detected in TOTOLINK CA300-PoE 6.2c.884. This impacts th…",
+          "cve": "CVE-2026-123961",
+          "severity": "critical",
+          "score": 59,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Vulnérabilité critique CVE-2026-123961 (score CVSS 9.9).\n\nA security vulnerability has been detected in TOTOLINK CA300-PoE 6.2c.884. This impacts the function setWiFiBasicConfig of the file /cgi-bin/cstecgi.cgi. The manipulation of the argument KeyStr leads to buffer overflow. The attack may be initiated remotely. The exploit has been disclosed publicly and may be used.",
+          "detail": "Vulnérabilité critique CVE-2026-123961 (score CVSS 9.9).\n\nA security vulnerability has been detected in TOTOLINK CA300-PoE 6.2c.884. This impacts the function setWiFiBasicConfig of the file /cgi-bin/cstecgi.cgi. The manipulation of the argument KeyStr leads to buffer overflow. The attack may be initiated remotely. The exploit has been disclosed publicly and may be used.\n\nScore CVSS : 9.9\n\nType de faiblesse (CWE) : CWE-119, CWE-120",
+          "action": "Vérifier l'exposition du parc et appliquer le correctif éditeur dès sa disponibilité.",
+          "image": null,
+          "sources": [
+            {
+              "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-123961",
+              "label": "NVD"
+            },
+            {
+              "url": "https://www.cvedetails.com/cve/CVE-2026-123961/",
+              "label": "CVE Details"
+            }
+          ],
+          "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-123961",
+          "pubDate": "2026-11-07T11:17:01.290Z"
+        },
+        {
+          "title": "CVE-2026-123960 — A weakness has been identified in TOTOLINK CA300-PoE 6.2c.884. This affects the function s…",
+          "cve": "CVE-2026-123960",
+          "severity": "critical",
+          "score": 59,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Vulnérabilité critique CVE-2026-123960 (score CVSS 9.9).\n\nA weakness has been identified in TOTOLINK CA300-PoE 6.2c.884. This affects the function setWanConfig of the file /cgi-bin/cstecgi.cgi. Executing a manipulation of the argument pppoeUser/priDns/secDns can lead to buffer overflow. The attack can be launched remotely. The exploit has been made available to the public and could be used for attacks.",
+          "detail": "Vulnérabilité critique CVE-2026-123960 (score CVSS 9.9).\n\nA weakness has been identified in TOTOLINK CA300-PoE 6.2c.884. This affects the function setWanConfig of the file /cgi-bin/cstecgi.cgi. Executing a manipulation of the argument pppoeUser/priDns/secDns can lead to buffer overflow. The attack can be launched remotely. The exploit has been made available to the public and could be used for attacks.\n\nScore CVSS : 9.9\n\nType de faiblesse (CWE) : CWE-119, CWE-120",
+          "action": "Vérifier l'exposition du parc et appliquer le correctif éditeur dès sa disponibilité.",
+          "image": null,
+          "sources": [
+            {
+              "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-123960",
+              "label": "NVD"
+            },
+            {
+              "url": "https://www.cvedetails.com/cve/CVE-2026-123960/",
+              "label": "CVE Details"
+            }
+          ],
+          "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-123960",
+          "pubDate": "2026-11-07T10:17:12.357Z"
+        },
+        {
+          "title": "CVE-2026-123958 — A vulnerability was identified in TOTOLINK CA300-PoE 6.2c.884. The affected element is the…",
+          "cve": "CVE-2026-123958",
+          "severity": "critical",
+          "score": 59,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Vulnérabilité critique CVE-2026-123958 (score CVSS 9.9).\n\nA vulnerability was identified in TOTOLINK CA300-PoE 6.2c.884. The affected element is the function setLanConfig of the file /cgi-bin/cstecgi.cgi. Such manipulation of the argument lanDns/lanSecDns/langType leads to buffer overflow. It is possible to launch the attack remotely. The exploit is publicly available and might be used.",
+          "detail": "Vulnérabilité critique CVE-2026-123958 (score CVSS 9.9).\n\nA vulnerability was identified in TOTOLINK CA300-PoE 6.2c.884. The affected element is the function setLanConfig of the file /cgi-bin/cstecgi.cgi. Such manipulation of the argument lanDns/lanSecDns/langType leads to buffer overflow. It is possible to launch the attack remotely. The exploit is publicly available and might be used.\n\nScore CVSS : 9.9\n\nType de faiblesse (CWE) : CWE-119, CWE-120",
+          "action": "Vérifier l'exposition du parc et appliquer le correctif éditeur dès sa disponibilité.",
+          "image": null,
+          "sources": [
+            {
+              "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-123958",
+              "label": "NVD"
+            },
+            {
+              "url": "https://www.cvedetails.com/cve/CVE-2026-123958/",
+              "label": "CVE Details"
+            }
+          ],
+          "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-123958",
+          "pubDate": "2026-11-07T09:17:15.177Z"
+        },
+        {
+          "title": "CVE-2026-123957 — A vulnerability was determined in TOTOLINK CA300-PoE 6.2c.884. Impacted is the function se…",
+          "cve": "CVE-2026-123957",
+          "severity": "critical",
+          "score": 59,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Vulnérabilité critique CVE-2026-123957 (score CVSS 9.9).\n\nA vulnerability was determined in TOTOLINK CA300-PoE 6.2c.884. Impacted is the function setIpQosRules of the file /cgi-bin/cstecgi.cgi. This manipulation of the argument ipStart causes buffer overflow. It is possible to initiate the attack remotely. The exploit has been publicly disclosed and may be utilized.",
+          "detail": "Vulnérabilité critique CVE-2026-123957 (score CVSS 9.9).\n\nA vulnerability was determined in TOTOLINK CA300-PoE 6.2c.884. Impacted is the function setIpQosRules of the file /cgi-bin/cstecgi.cgi. This manipulation of the argument ipStart causes buffer overflow. It is possible to initiate the attack remotely. The exploit has been publicly disclosed and may be utilized.\n\nScore CVSS : 9.9\n\nType de faiblesse (CWE) : CWE-119, CWE-120",
+          "action": "Vérifier l'exposition du parc et appliquer le correctif éditeur dès sa disponibilité.",
+          "image": null,
+          "sources": [
+            {
+              "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-123957",
+              "label": "NVD"
+            },
+            {
+              "url": "https://www.cvedetails.com/cve/CVE-2026-123957/",
+              "label": "CVE Details"
+            }
+          ],
+          "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-123957",
+          "pubDate": "2026-11-07T09:17:14.890Z"
+        },
+        {
+          "title": "CVE-2026-17410 — IBM API Connect 10.0.8.0 through 10.0.8.12 and 12.1.0.0 through 12.1.1.2 could allow a rem…",
+          "cve": "CVE-2026-17410",
+          "severity": "critical",
+          "score": 59,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Vulnérabilité critique CVE-2026-17410 (score CVSS 9.9).\n\nIBM API Connect 10.0.8.0 through 10.0.8.12 and 12.1.0.0 through 12.1.1.2 could allow a remote authenticated attacker to access and modify other tenants' portal data due to improper neutralization of argument delimiters.",
+          "detail": "Vulnérabilité critique CVE-2026-17410 (score CVSS 9.9).\n\nIBM API Connect 10.0.8.0 through 10.0.8.12 and 12.1.0.0 through 12.1.1.2 could allow a remote authenticated attacker to access and modify other tenants' portal data due to improper neutralization of argument delimiters.\n\nScore CVSS : 9.9\n\nType de faiblesse (CWE) : CWE-88",
+          "action": "Vérifier l'exposition du parc et appliquer le correctif éditeur dès sa disponibilité.",
+          "image": null,
+          "sources": [
+            {
+              "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-17410",
+              "label": "NVD"
+            },
+            {
+              "url": "https://www.cvedetails.com/cve/CVE-2026-17410/",
+              "label": "CVE Details"
+            }
+          ],
+          "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-17410",
+          "pubDate": "2026-11-07T05:18:58.410Z"
+        },
+        {
+          "title": "CVE-2026-17408 — IBM API Connect 10.0.8.0 through 10.0.8.12 and 12.1.0.0 through 12.1.1.2 could allow a rem…",
+          "cve": "CVE-2026-17408",
+          "severity": "critical",
+          "score": 59,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Vulnérabilité critique CVE-2026-17408 (score CVSS 9.8).\n\nIBM API Connect 10.0.8.0 through 10.0.8.12 and 12.1.0.0 through 12.1.1.2 could allow a remote attacker to execute arbitrary code due to improper neutralization of special elements in an OS command.",
+          "detail": "Vulnérabilité critique CVE-2026-17408 (score CVSS 9.8).\n\nIBM API Connect 10.0.8.0 through 10.0.8.12 and 12.1.0.0 through 12.1.1.2 could allow a remote attacker to execute arbitrary code due to improper neutralization of special elements in an OS command.\n\nScore CVSS : 9.8\n\nType de faiblesse (CWE) : CWE-78",
+          "action": "Vérifier l'exposition du parc et appliquer le correctif éditeur dès sa disponibilité.",
+          "image": null,
+          "sources": [
+            {
+              "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-17408",
+              "label": "NVD"
+            },
+            {
+              "url": "https://www.cvedetails.com/cve/CVE-2026-17408/",
+              "label": "CVE Details"
+            }
+          ],
+          "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-17408",
+          "pubDate": "2026-11-07T05:18:57.917Z"
+        },
+        {
+          "title": "CVE-2026-17402 — IBM API Connect 10.0.8.0 through 10.0.8.12 and 12.1.0.0 through 12.1.1.2 could allow a rem…",
+          "cve": "CVE-2026-17402",
+          "severity": "critical",
+          "score": 59,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Vulnérabilité critique CVE-2026-17402 (score CVSS 9.9).\n\nIBM API Connect 10.0.8.0 through 10.0.8.12 and 12.1.0.0 through 12.1.1.2 could allow a remote authenticated attacker to execute arbitrary commands due to OS command injection. User-supplied input is not properly neutralized before it is passed to the operating system, which could allow commands to run on the underlying host.",
+          "detail": "Vulnérabilité critique CVE-2026-17402 (score CVSS 9.9).\n\nIBM API Connect 10.0.8.0 through 10.0.8.12 and 12.1.0.0 through 12.1.1.2 could allow a remote authenticated attacker to execute arbitrary commands due to OS command injection. User-supplied input is not properly neutralized before it is passed to the operating system, which could allow commands to run on the underlying host.\n\nScore CVSS : 9.9\n\nType de faiblesse (CWE) : CWE-78",
+          "action": "Vérifier l'exposition du parc et appliquer le correctif éditeur dès sa disponibilité.",
+          "image": null,
+          "sources": [
+            {
+              "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-17402",
+              "label": "NVD"
+            },
+            {
+              "url": "https://www.cvedetails.com/cve/CVE-2026-17402/",
+              "label": "CVE Details"
+            }
+          ],
+          "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-17402",
+          "pubDate": "2026-11-07T05:18:56.460Z"
+        },
+        {
+          "title": "CVE-2026-17399 — IBM API Connect 10.0.8.0 through 10.0.8.12 and 12.1.0.0 through 12.1.1.2 could allow a rem…",
+          "cve": "CVE-2026-17399",
+          "severity": "critical",
+          "score": 59,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Vulnérabilité critique CVE-2026-17399 (score CVSS 9.9).\n\nIBM API Connect 10.0.8.0 through 10.0.8.12 and 12.1.0.0 through 12.1.1.2 could allow a remote authenticated attacker to execute arbitrary code due to insufficient validation of uploaded content. Content uploaded to the product is not sufficiently checked before it is processed, which could allow code to run on the server.",
+          "detail": "Vulnérabilité critique CVE-2026-17399 (score CVSS 9.9).\n\nIBM API Connect 10.0.8.0 through 10.0.8.12 and 12.1.0.0 through 12.1.1.2 could allow a remote authenticated attacker to execute arbitrary code due to insufficient validation of uploaded content. Content uploaded to the product is not sufficiently checked before it is processed, which could allow code to run on the server.\n\nScore CVSS : 9.9\n\nType de faiblesse (CWE) : CWE-434",
+          "action": "Vérifier l'exposition du parc et appliquer le correctif éditeur dès sa disponibilité.",
+          "image": null,
+          "sources": [
+            {
+              "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-17399",
+              "label": "NVD"
+            },
+            {
+              "url": "https://www.cvedetails.com/cve/CVE-2026-17399/",
+              "label": "CVE Details"
+            }
+          ],
+          "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-17399",
+          "pubDate": "2026-11-07T05:18:55.790Z"
+        },
+        {
+          "title": "CVE-2026-17392 — IBM API Connect 10.0.8.0 through 10.0.8.12 and 12.1.0.0 through 12.1.1.2 could allow a rem…",
+          "cve": "CVE-2026-17392",
+          "severity": "critical",
+          "score": 59,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Vulnérabilité critique CVE-2026-17392 (score CVSS 9.9).\n\nIBM API Connect 10.0.8.0 through 10.0.8.12 and 12.1.0.0 through 12.1.1.2 could allow a remote authenticated attacker to gain unauthorized administrative access to other tenants due to LDAP injection. User-supplied input is not properly neutralized in directory queries, which could change the query and grant access beyond the user's own tenant.",
+          "detail": "Vulnérabilité critique CVE-2026-17392 (score CVSS 9.9).\n\nIBM API Connect 10.0.8.0 through 10.0.8.12 and 12.1.0.0 through 12.1.1.2 could allow a remote authenticated attacker to gain unauthorized administrative access to other tenants due to LDAP injection. User-supplied input is not properly neutralized in directory queries, which could change the query and grant access beyond the user's own tenant.\n\nScore CVSS : 9.9\n\nType de faiblesse (CWE) : CWE-90",
+          "action": "Vérifier l'exposition du parc et appliquer le correctif éditeur dès sa disponibilité.",
+          "image": null,
+          "sources": [
+            {
+              "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-17392",
+              "label": "NVD"
+            },
+            {
+              "url": "https://www.cvedetails.com/cve/CVE-2026-17392/",
+              "label": "CVE Details"
+            }
+          ],
+          "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-17392",
+          "pubDate": "2026-11-07T05:18:54.113Z"
+        }
+      ]
+    },
+    {
+      "id": "attacks",
+      "items": [
+        {
+          "title": "NHS breach helpline left staff carrying a 'significant emotional burden'",
+          "cve": null,
+          "severity": "news",
+          "score": 72,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Incident de sécurité rapporté par The Register.\n\nNHS staff drafted into a helpline after colleagues' health data was exposed online faced distressed callers, safeguarding concerns, and a \"serious emotional impact,\" a review has found. The report [PDF] comes almost exactly a year after the Royal Cornwall Hospitals NHS Trust disclosed a data breach affecting 8,003 people, including current and former trust staff and non-trust workers. A member of the public discovered the exposure in November 2025.",
+          "detail": "Incident de sécurité rapporté par The Register.\n\nNHS staff drafted into a helpline after colleagues' health data was exposed online faced distressed callers, safeguarding concerns, and a \"serious emotional impact,\" a review has found. The report [PDF] comes almost exactly a year after the Royal Cornwall Hospitals NHS Trust disclosed a data breach affecting 8,003 people, including current and former trust staff and non-trust workers. A member of the public discovered the exposure in November 2025. An Excel workbook published in response to a Freedom of Information request in February 2023 retained underlying sickness absence records that users could reveal through its pivot tables. Staff assigned to the helpline described difficult calls involving shouting, anger, and distress. Particularly difficult calls involved people distressed by the sensitivity of the disclosures or potentially in danger from domestic abuse. Call handlers said they had to make safeguarding assessments without training or an established process. \"Such occurrences of anger or distress were not infrequent, and this reflected the heightened emotions and distress experienced by callers to varying degrees due to the breach,\" the review noted. \"This placed significant emotional burden on individuals working in the contact center, who were not prepared or provided support on how to deal with those.\" Members of the trust's clinical governance team were told just",
+          "action": "Surveiller les indicateurs de compromission associés et contrôler les actifs exposés.",
+          "image": "https://image.theregister.com/5240357.jpg?imageId=5240357&x=0&y=0&cropw=100&croph=100&panox=0&panoy=0&panow=100&panoh=100&width=1200&height=683",
+          "sources": [
+            {
+              "url": "https://www.theregister.com/security/2026/11/07/nhs-breach-helpline-left-staff-carrying-a-significant-emotional-burden/5308201",
+              "label": "The Register"
+            }
+          ],
+          "url": "https://www.theregister.com/security/2026/11/07/nhs-breach-helpline-left-staff-carrying-a-significant-emotional-burden/5308201",
+          "pubDate": "2026-11-07T10:30:00.000Z"
+        },
+        {
+          "title": "Infutor Data Solutions — rançongiciel N0n (États-Unis)",
+          "cve": null,
+          "severity": "news",
+          "score": 71,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Incident de sécurité rapporté par ransomware.live.\n\nVictime revendiquée par le groupe de rançongiciel N0n. Pays : États-Unis. Secteur : Technology. consumer identity data and analytics · United States | Consumer identity records: names, street addresses, telephone numbers, birth years and consumer email addresses, millions of rows; A profiled production table of 590,404,149 rows of consumer survey response data; Consumer leads with full identity graph enrichment, including 13,660 unique consumer email addre…",
+          "detail": "Incident de sécurité rapporté par ransomware.live.\n\nVictime revendiquée par le groupe de rançongiciel N0n.\n\nPays : États-Unis.\n\nSecteur : Technology.\n\nconsumer identity data and analytics · United States | Consumer identity records: names, street addresses, telephone numbers, birth years and consumer email addresses, millions of rows; A profiled production table of 590,404,149 rows of consumer survey response data; Consumer leads with full identity graph enrichment, including 13,660 unique consumer email addresses in a single file and 102,062 full identity records with 100,957 unique emails in another; The internal inventory showing which of the production tables hold consumer personal data, including tables that hold Social Security numbers; A warehouse table of over 1.7 billion consumer rows with names and dates of birth, counted file by file, plus a consumer address table of over 1.1 billion rows; Merchant brand spending affinity data; Client delivery credentials stored in plaintext; State level delivery work files with 203,505,791 counted rows carrying consumer names, birth years, cleartext emails and internet protocol addresses, and a property scoring table of 151,864,181 rows with names, phones, addresses and property values | [NOT PAID — EXPOSED]",
+          "action": "Surveiller les indicateurs de compromission associés et contrôler les actifs exposés.",
+          "image": "https://images.ransomware.live/victims/cd9319ce146401b8763e0b86ae1f7407.png",
+          "sources": [
+            {
+              "url": "https://www.ransomware.live/id/Q29tcGFueSAjMTQ3QE4wbg==",
+              "label": "ransomware.live"
+            }
+          ],
+          "url": "https://www.ransomware.live/id/Q29tcGFueSAjMTQ3QE4wbg==",
+          "pubDate": "2026-11-07T21:29:48.140Z"
+        },
+        {
+          "title": "Hackers pull off $133 million French bank heist via service provider",
+          "cve": null,
+          "severity": "news",
+          "score": 68,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Incident de sécurité rapporté par BleepingComputer.\n\nFrench cooperative bank Cr&eacute;dit Mutuel Ark&eacute;a was targeted in a cyberattack that enabled fraudulent transactions of up to $133 million, forcing it to respond by suspending certain systems.v\n\nOpenAI's new GPT-6 Cyber AI finds 81 Firefox flaws, 948 Linux bugs\n\nRunaway AI hacking agent behind WorkOS breach after escaping sandbox\n\nSonicWall warns of new SSL-VPN MFA bypass flaw exploited in attacks\n\nOpenSSH flaw lets attackers log into password-disa…",
+          "detail": "Incident de sécurité rapporté par BleepingComputer.\n\nFrench cooperative bank Cr&eacute;dit Mutuel Ark&eacute;a was targeted in a cyberattack that enabled fraudulent transactions of up to $133 million, forcing it to respond by suspending certain systems.v\n\nOpenAI's new GPT-6 Cyber AI finds 81 Firefox flaws, 948 Linux bugs\n\nRunaway AI hacking agent behind WorkOS breach after escaping sandbox\n\nSonicWall warns of new SSL-VPN MFA bypass flaw exploited in attacks\n\nOpenSSH flaw lets attackers log into password-disabled Linux accounts\n\nCTM360 Exposes Fake Gift Card Scams Exploiting Trusted Brands\n\nSonicWall warns of new SSL-VPN MFA bypass flaw exploited in attacks",
+          "action": "Surveiller les indicateurs de compromission associés et contrôler les actifs exposés.",
+          "image": "https://www.bleepstatic.com/content/hl-images/2026/11/06/financial-theft.jpg",
+          "sources": [
+            {
+              "url": "https://www.bleepingcomputer.com/news/security/hackers-pull-off-133-million-french-bank-heist-via-service-provider/",
+              "label": "BleepingComputer"
+            }
+          ],
+          "url": "https://www.bleepingcomputer.com/news/security/hackers-pull-off-133-million-french-bank-heist-via-service-provider/",
+          "pubDate": "2026-11-07T15:25:35.000Z"
+        },
+        {
+          "title": "Tribunal de Justica do Estado de Minas Gerais — rançongiciel rhysida (BR)",
+          "cve": null,
+          "severity": "news",
+          "score": 66,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Incident de sécurité rapporté par ransomware.live.\n\nRansomware.live discovered on 2026-11-07 that Tribunal de Justica do Estado de Minas Gerais has been claimed by Rhysida ransomware group\n\nSponsored by Hudson Rock – Use Hudson Rock's free cybercrime intelligence tools to learn how Infostealer infections are leading to ransomware attacks\n\nLegal Disclaimer: Ransomware.live does not engage in the acquisition, exfiltration, downloading, possession, hosting, access, consultation, redistribution, or disclosure o…",
+          "detail": "Incident de sécurité rapporté par ransomware.live.\n\nRansomware.live discovered on 2026-11-07 that Tribunal de Justica do Estado de Minas Gerais has been claimed by Rhysida ransomware group\n\nSponsored by Hudson Rock – Use Hudson Rock's free cybercrime intelligence tools to learn how Infostealer infections are leading to ransomware attacks\n\nLegal Disclaimer: Ransomware.live does not engage in the acquisition, exfiltration, downloading, possession, hosting, access, consultation, redistribution, or disclosure of unlawfully obtained data. This platform indexes only publicly visible information posted by ransomware operators and open web sources without accessing or obtaining the underlying stolen content . The service is provided to support public awareness, legitimate research, and cyber-resilience. No stolen personal or confidential data is collected or distributed via this site.\n\nSession: 057726c909af65969646b040bbbfa5c4df67f5166a33cbac6cd9e1302b0b3ca148\n\nTox: 50DADDED26D859469371938B793456D8210A5AE02DD3C42979F5E52411BCB648F1CA68A5EDE5",
+          "action": "Surveiller les indicateurs de compromission associés et contrôler les actifs exposés.",
+          "image": "https://images.ransomware.live/ransomware.png",
+          "sources": [
+            {
+              "url": "https://www.ransomware.live/id/VHJpYnVuYWwgZGUgSnVzdGljYSBkbyBFc3RhZG8gZGUgTWluYXMgR2VyYWlzQHJoeXNpZGE=",
+              "label": "ransomware.live"
+            }
+          ],
+          "url": "https://www.ransomware.live/id/VHJpYnVuYWwgZGUgSnVzdGljYSBkbyBFc3RhZG8gZGUgTWluYXMgR2VyYWlzQHJoeXNpZGE=",
+          "pubDate": "2026-11-07T13:16:02.958Z"
+        },
+        {
+          "title": "Lampenwelt GmbH — rançongiciel N0n (Allemagne)",
+          "cve": null,
+          "severity": "news",
+          "score": 66,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Incident de sécurité rapporté par ransomware.live.\n\nVictime revendiquée par le groupe de rançongiciel N0n. Pays : Allemagne. Secteur : Retail & E-Commerce. online lighting retail · Germany | Roughly 81 million raw search queries typed by shoppers on the storefronts of a leading European online lighting retailer, including hundreds of real customer email addresses that shoppers typed into the search box; Per product unit cost and rolling revenue data for more than 200 thousand products across four country st…",
+          "detail": "Incident de sécurité rapporté par ransomware.live.\n\nVictime revendiquée par le groupe de rançongiciel N0n.\n\nPays : Allemagne.\n\nSecteur : Retail & E-Commerce.\n\nonline lighting retail · Germany | Roughly 81 million raw search queries typed by shoppers on the storefronts of a leading European online lighting retailer, including hundreds of real customer email addresses that shoppers typed into the search box; Per product unit cost and rolling revenue data for more than 200 thousand products across four country stores, from which gross margin per product is directly computable; The silver, gold and platinum net price tiers offered to business customers on the professional storefront | [NOT PAID — EXPOSED]",
+          "action": "Surveiller les indicateurs de compromission associés et contrôler les actifs exposés.",
+          "image": "https://images.ransomware.live/victims/373c87439c491fa3b5746625bc1fcc10.png",
+          "sources": [
+            {
+              "url": "https://www.ransomware.live/id/TGFtcGVud2VsdCBHbWJIQE4wbg==",
+              "label": "ransomware.live"
+            }
+          ],
+          "url": "https://www.ransomware.live/id/TGFtcGVud2VsdCBHbWJIQE4wbg==",
+          "pubDate": "2026-11-07T10:54:00.931Z"
+        },
+        {
+          "title": "Company #142 — rançongiciel N0n (KR)",
+          "cve": null,
+          "severity": "news",
+          "score": 61,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Incident de sécurité rapporté par ransomware.live.\n\nRansomware.live discovered on 2026-11-07 that Company #142 has been claimed by N0n ransomware group\n\nSponsored by Hudson Rock – Use Hudson Rock's free cybercrime intelligence tools to learn how Infostealer infections are leading to ransomware attacks\n\nLegal Disclaimer: Ransomware.live does not engage in the acquisition, exfiltration, downloading, possession, hosting, access, consultation, redistribution, or disclosure of unlawfully obtained data.",
+          "detail": "Incident de sécurité rapporté par ransomware.live.\n\nRansomware.live discovered on 2026-11-07 that Company #142 has been claimed by N0n ransomware group\n\nSponsored by Hudson Rock – Use Hudson Rock's free cybercrime intelligence tools to learn how Infostealer infections are leading to ransomware attacks\n\nLegal Disclaimer: Ransomware.live does not engage in the acquisition, exfiltration, downloading, possession, hosting, access, consultation, redistribution, or disclosure of unlawfully obtained data. This platform indexes only publicly visible information posted by ransomware operators and open web sources without accessing or obtaining the underlying stolen content . The service is provided to support public awareness, legitimate research, and cyber-resilience. No stolen personal or confidential data is collected or distributed via this site.\n\nSession: 057726c909af65969646b040bbbfa5c4df67f5166a33cbac6cd9e1302b0b3ca148\n\nTox: 50DADDED26D859469371938B793456D8210A5AE02DD3C42979F5E52411BCB648F1CA68A5EDE5",
+          "action": "Surveiller les indicateurs de compromission associés et contrôler les actifs exposés.",
+          "image": "https://images.ransomware.live/victims/cd9319ce146401b8763e0b86ae1f7407.png",
+          "sources": [
+            {
+              "url": "https://www.ransomware.live/id/Q29tcGFueSAjMTQyQE4wbg==",
+              "label": "ransomware.live"
+            }
+          ],
+          "url": "https://www.ransomware.live/id/Q29tcGFueSAjMTQyQE4wbg==",
+          "pubDate": "2026-11-07T21:26:53.371Z"
+        },
+        {
+          "title": "Company #140 — rançongiciel N0n (Canada)",
+          "cve": null,
+          "severity": "news",
+          "score": 61,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Incident de sécurité rapporté par ransomware.live.\n\nRansomware.live discovered on 2026-11-07 that Company #140 has been claimed by N0n ransomware group\n\nSponsored by Hudson Rock – Use Hudson Rock's free cybercrime intelligence tools to learn how Infostealer infections are leading to ransomware attacks\n\nLegal Disclaimer: Ransomware.live does not engage in the acquisition, exfiltration, downloading, possession, hosting, access, consultation, redistribution, or disclosure of unlawfully obtained data.",
+          "detail": "Incident de sécurité rapporté par ransomware.live.\n\nRansomware.live discovered on 2026-11-07 that Company #140 has been claimed by N0n ransomware group\n\nSponsored by Hudson Rock – Use Hudson Rock's free cybercrime intelligence tools to learn how Infostealer infections are leading to ransomware attacks\n\nLegal Disclaimer: Ransomware.live does not engage in the acquisition, exfiltration, downloading, possession, hosting, access, consultation, redistribution, or disclosure of unlawfully obtained data. This platform indexes only publicly visible information posted by ransomware operators and open web sources without accessing or obtaining the underlying stolen content . The service is provided to support public awareness, legitimate research, and cyber-resilience. No stolen personal or confidential data is collected or distributed via this site.\n\nSession: 057726c909af65969646b040bbbfa5c4df67f5166a33cbac6cd9e1302b0b3ca148\n\nTox: 50DADDED26D859469371938B793456D8210A5AE02DD3C42979F5E52411BCB648F1CA68A5EDE5",
+          "action": "Surveiller les indicateurs de compromission associés et contrôler les actifs exposés.",
+          "image": "https://images.ransomware.live/victims/cd9319ce146401b8763e0b86ae1f7407.png",
+          "sources": [
+            {
+              "url": "https://www.ransomware.live/id/Q29tcGFueSAjMTQwQE4wbg==",
+              "label": "ransomware.live"
+            }
+          ],
+          "url": "https://www.ransomware.live/id/Q29tcGFueSAjMTQwQE4wbg==",
+          "pubDate": "2026-11-07T21:25:43.068Z"
+        },
+        {
+          "title": "by.zivor.co.il — rançongiciel safepay (IL)",
+          "cve": null,
+          "severity": "news",
+          "score": 61,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Incident de sécurité rapporté par ransomware.live.\n\nRansomware.live discovered on 2026-11-07 that by.zivor.co.il has been claimed by Safepay ransomware group\n\nSponsored by Hudson Rock – Use Hudson Rock's free cybercrime intelligence tools to learn how Infostealer infections are leading to ransomware attacks\n\nLegal Disclaimer: Ransomware.live does not engage in the acquisition, exfiltration, downloading, possession, hosting, access, consultation, redistribution, or disclosure of unlawfully obtained data.",
+          "detail": "Incident de sécurité rapporté par ransomware.live.\n\nRansomware.live discovered on 2026-11-07 that by.zivor.co.il has been claimed by Safepay ransomware group\n\nSponsored by Hudson Rock – Use Hudson Rock's free cybercrime intelligence tools to learn how Infostealer infections are leading to ransomware attacks\n\nLegal Disclaimer: Ransomware.live does not engage in the acquisition, exfiltration, downloading, possession, hosting, access, consultation, redistribution, or disclosure of unlawfully obtained data. This platform indexes only publicly visible information posted by ransomware operators and open web sources without accessing or obtaining the underlying stolen content . The service is provided to support public awareness, legitimate research, and cyber-resilience. No stolen personal or confidential data is collected or distributed via this site.\n\nSession: 057726c909af65969646b040bbbfa5c4df67f5166a33cbac6cd9e1302b0b3ca148\n\nTox: 50DADDED26D859469371938B793456D8210A5AE02DD3C42979F5E52411BCB648F1CA68A5EDE5",
+          "action": "Surveiller les indicateurs de compromission associés et contrôler les actifs exposés.",
+          "image": "https://images.ransomware.live/victims/3999f7aa0a985b332335bd4c63f5a48a.png",
+          "sources": [
+            {
+              "url": "https://www.ransomware.live/id/Ynkueml2b3IuY28uaWxAc2FmZXBheQ==",
+              "label": "ransomware.live"
+            }
+          ],
+          "url": "https://www.ransomware.live/id/Ynkueml2b3IuY28uaWxAc2FmZXBheQ==",
+          "pubDate": "2026-11-07T19:47:55.067Z"
+        },
+        {
+          "title": "Autohaus Arnold — rançongiciel payload (Allemagne)",
+          "cve": null,
+          "severity": "news",
+          "score": 61,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Incident de sécurité rapporté par ransomware.live.\n\nVictime revendiquée par le groupe de rançongiciel payload. Pays : Allemagne. Secteur : Retail & E-Commerce. Autohaus Arnold (vw-arnold.de) is a German automotive dealership and service provider based in Bavaria, primarily serving the Höchstadt an der Aisch region. The company operates as an authorized Volkswagen Group partner, offering sales of both new and pre-owned vehicles from brands like Volkswagen, Volkswagen Commercial Vehicles, and Audi.",
+          "detail": "Incident de sécurité rapporté par ransomware.live.\n\nVictime revendiquée par le groupe de rançongiciel payload.\n\nPays : Allemagne.\n\nSecteur : Retail & E-Commerce.\n\nAutohaus Arnold (vw-arnold.de) is a German automotive dealership and service provider based in Bavaria, primarily serving the Höchstadt an der Aisch region. The company operates as an authorized Volkswagen Group partner, offering sales of both new and pre-owned vehicles from brands like Volkswagen, Volkswagen Commercial Vehicles, and Audi.",
+          "action": "Surveiller les indicateurs de compromission associés et contrôler les actifs exposés.",
+          "image": "https://images.ransomware.live/victims/bf11ff2d443505bf76ae0c1ea6fa85c0.png",
+          "sources": [
+            {
+              "url": "https://www.ransomware.live/id/QXV0b2hhdXMgQXJub2xkQHBheWxvYWQ=",
+              "label": "ransomware.live"
+            }
+          ],
+          "url": "https://www.ransomware.live/id/QXV0b2hhdXMgQXJub2xkQHBheWxvYWQ=",
+          "pubDate": "2026-11-07T13:14:03.092Z"
+        },
+        {
+          "title": "Brauco — rançongiciel payload",
+          "cve": null,
+          "severity": "news",
+          "score": 61,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Incident de sécurité rapporté par ransomware.live.\n\nVictime revendiquée par le groupe de rançongiciel payload. Brauco is a German service company specializing in the cleaning, inspection, and trenchless rehabilitation of sewer and pipeline systems. The company operates a fleet of specialized equipment and serves private properties, industrial facilities, and municipal utility networks in Germany.",
+          "detail": "Incident de sécurité rapporté par ransomware.live.\n\nVictime revendiquée par le groupe de rançongiciel payload.\n\nBrauco is a German service company specializing in the cleaning, inspection, and trenchless rehabilitation of sewer and pipeline systems. The company operates a fleet of specialized equipment and serves private properties, industrial facilities, and municipal utility networks in Germany. Its range of services also includes hydrodynamic flushing, pipe video inspection, and the disposal of industrial waste.",
+          "action": "Surveiller les indicateurs de compromission associés et contrôler les actifs exposés.",
+          "image": "https://images.ransomware.live/victims/419a64f9ecfc3546cd9f6149cd84302d.png",
+          "sources": [
+            {
+              "url": "https://www.ransomware.live/id/QnJhdWNvQHBheWxvYWQ=",
+              "label": "ransomware.live"
+            }
+          ],
+          "url": "https://www.ransomware.live/id/QnJhdWNvQHBheWxvYWQ=",
+          "pubDate": "2026-11-07T13:12:42.047Z"
+        },
+        {
+          "title": "Otto Stops — rançongiciel payload",
+          "cve": null,
+          "severity": "news",
+          "score": 61,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Incident de sécurité rapporté par ransomware.live.\n\nVictime revendiquée par le groupe de rançongiciel payload. Secteur : Transportation. Otto Stops (stops.de) is a German IT systems integrator (Systemhaus) headquartered in Neuss. The company designs, deploys, and maintains corporate IT infrastructure, including servers, workstations, and telephone networks. It also provides managed services, offering cybersecurity, cloud solutions, and monitoring for small and medium-sized businesses.",
+          "detail": "Incident de sécurité rapporté par ransomware.live.\n\nVictime revendiquée par le groupe de rançongiciel payload.\n\nSecteur : Transportation.\n\nOtto Stops (stops.de) is a German IT systems integrator (Systemhaus) headquartered in Neuss. The company designs, deploys, and maintains corporate IT infrastructure, including servers, workstations, and telephone networks. It also provides managed services, offering cybersecurity, cloud solutions, and monitoring for small and medium-sized businesses.",
+          "action": "Surveiller les indicateurs de compromission associés et contrôler les actifs exposés.",
+          "image": "https://images.ransomware.live/victims/f4fdd5934cef89a5b50741b12866ddf1.png",
+          "sources": [
+            {
+              "url": "https://www.ransomware.live/id/T3R0byBTdG9wc0BwYXlsb2Fk",
+              "label": "ransomware.live"
+            }
+          ],
+          "url": "https://www.ransomware.live/id/T3R0byBTdG9wc0BwYXlsb2Fk",
+          "pubDate": "2026-11-07T13:10:00.767Z"
+        },
+        {
+          "title": "Daeah E&C — rançongiciel metaencryptor (KR)",
+          "cve": null,
+          "severity": "news",
+          "score": 61,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Incident de sécurité rapporté par ransomware.live.\n\nVictime revendiquée par le groupe de rançongiciel metaencryptor. Pays : KR. Secteur : Manufacturing. We have been expanding our business into high-tech industries, nuclear power plants, power plants, industrial environmental facilities, civil engineering and building construction, establishing ourselves as a trusted partner in global markets including the Middle East, Southeast Asia, and Europe. Data size: 100 GB Revenue: USD 491M",
+          "detail": "Incident de sécurité rapporté par ransomware.live.\n\nVictime revendiquée par le groupe de rançongiciel metaencryptor.\n\nPays : KR.\n\nSecteur : Manufacturing.\n\nWe have been expanding our business into high-tech industries, nuclear power plants, power plants, industrial environmental facilities, civil engineering and building construction, establishing ourselves as a trusted partner in global markets including the Middle East, Southeast Asia, and Europe.\n\nData size: 100 GB\nRevenue: USD 491M",
+          "action": "Surveiller les indicateurs de compromission associés et contrôler les actifs exposés.",
+          "image": "https://images.ransomware.live/victims/fdefdb997932a7c87f8063cdfa905035.png",
+          "sources": [
+            {
+              "url": "https://www.ransomware.live/id/RGFlYWggRSZDQG1ldGFlbmNyeXB0b3I=",
+              "label": "ransomware.live"
+            }
+          ],
+          "url": "https://www.ransomware.live/id/RGFlYWggRSZDQG1ldGFlbmNyeXB0b3I=",
+          "pubDate": "2026-11-07T11:42:14.781Z"
+        },
+        {
+          "title": "DAEWON Chemical — rançongiciel metaencryptor (KR)",
+          "cve": null,
+          "severity": "news",
+          "score": 61,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Incident de sécurité rapporté par ransomware.live.\n\nRansomware.live discovered on 2026-11-07 that DAEWON Chemical has been claimed by Metaencryptor ransomware group\n\nSponsored by Hudson Rock – Use Hudson Rock's free cybercrime intelligence tools to learn how Infostealer infections are leading to ransomware attacks\n\nThe following DNS records were found for the victim's domain.\n\nLegal Disclaimer: Ransomware.live does not engage in the acquisition, exfiltration, downloading, possession, hosting, access, consul…",
+          "detail": "Incident de sécurité rapporté par ransomware.live.\n\nRansomware.live discovered on 2026-11-07 that DAEWON Chemical has been claimed by Metaencryptor ransomware group\n\nSponsored by Hudson Rock – Use Hudson Rock's free cybercrime intelligence tools to learn how Infostealer infections are leading to ransomware attacks\n\nThe following DNS records were found for the victim's domain.\n\nLegal Disclaimer: Ransomware.live does not engage in the acquisition, exfiltration, downloading, possession, hosting, access, consultation, redistribution, or disclosure of unlawfully obtained data. This platform indexes only publicly visible information posted by ransomware operators and open web sources without accessing or obtaining the underlying stolen content . The service is provided to support public awareness, legitimate research, and cyber-resilience. No stolen personal or confidential data is collected or distributed via this site.\n\nSession: 057726c909af65969646b040bbbfa5c4df67f5166a33cbac6cd9e1302b0b3ca148\n\nTox: 50DADDED26D859469371938B793456D8210A5AE02DD3C42979F5E52411BCB648F1CA68A5EDE5",
+          "action": "Surveiller les indicateurs de compromission associés et contrôler les actifs exposés.",
+          "image": "https://images.ransomware.live/victims/aa65e893c9369db1d61c2bb9ef9855ee.png",
+          "sources": [
+            {
+              "url": "https://www.ransomware.live/id/REFFV09OIENoZW1pY2FsQG1ldGFlbmNyeXB0b3I=",
+              "label": "ransomware.live"
+            }
+          ],
+          "url": "https://www.ransomware.live/id/REFFV09OIENoZW1pY2FsQG1ldGFlbmNyeXB0b3I=",
+          "pubDate": "2026-11-07T11:41:32.884Z"
+        },
+        {
+          "title": "Hyundai E&C — rançongiciel metaencryptor (KR)",
+          "cve": null,
+          "severity": "news",
+          "score": 61,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Incident de sécurité rapporté par ransomware.live.\n\nVictime revendiquée par le groupe de rançongiciel metaencryptor. Pays : KR. Secteur : Manufacturing. Hyundai Motor Group is a global corporation that has created a value chain based on automobiles, steel, and construction and includes logistics, finance, IT and service. With about 250,000 employees worldwide, the Group’s automobile brands include Hyundai Motor Co. and Kia Corporation.",
+          "detail": "Incident de sécurité rapporté par ransomware.live.\n\nVictime revendiquée par le groupe de rançongiciel metaencryptor.\n\nPays : KR.\n\nSecteur : Manufacturing.\n\nHyundai Motor Group is a global corporation that has created a value chain based on automobiles, steel, and construction and includes logistics, finance, IT and service. With about 250,000 employees worldwide, the Group’s automobile brands include Hyundai Motor Co. and Kia Corporation. Armed with creative thinking, cooperative communication and the will to take on all challenges, we are working to create a better future for all.\n\nData size: —",
+          "action": "Surveiller les indicateurs de compromission associés et contrôler les actifs exposés.",
+          "image": "https://images.ransomware.live/victims/16a698effc546602746c7a787e888683.png",
+          "sources": [
+            {
+              "url": "https://www.ransomware.live/id/SHl1bmRhaSBFJkNAbWV0YWVuY3J5cHRvcg==",
+              "label": "ransomware.live"
+            }
+          ],
+          "url": "https://www.ransomware.live/id/SHl1bmRhaSBFJkNAbWV0YWVuY3J5cHRvcg==",
+          "pubDate": "2026-11-07T11:39:27.695Z"
+        },
+        {
+          "title": "Treuhand & Immobilien Abt AG — rançongiciel rhysida (Suisse)",
+          "cve": null,
+          "severity": "news",
+          "score": 61,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Incident de sécurité rapporté par ransomware.live.\n\nRansomware.live discovered on 2026-11-07 that Treuhand & Immobilien Abt AG has been claimed by Rhysida ransomware group\n\nSponsored by Hudson Rock – Use Hudson Rock's free cybercrime intelligence tools to learn how Infostealer infections are leading to ransomware attacks\n\nLegal Disclaimer: Ransomware.live does not engage in the acquisition, exfiltration, downloading, possession, hosting, access, consultation, redistribution, or disclosure of unlawfully obta…",
+          "detail": "Incident de sécurité rapporté par ransomware.live.\n\nRansomware.live discovered on 2026-11-07 that Treuhand & Immobilien Abt AG has been claimed by Rhysida ransomware group\n\nSponsored by Hudson Rock – Use Hudson Rock's free cybercrime intelligence tools to learn how Infostealer infections are leading to ransomware attacks\n\nLegal Disclaimer: Ransomware.live does not engage in the acquisition, exfiltration, downloading, possession, hosting, access, consultation, redistribution, or disclosure of unlawfully obtained data. This platform indexes only publicly visible information posted by ransomware operators and open web sources without accessing or obtaining the underlying stolen content . The service is provided to support public awareness, legitimate research, and cyber-resilience. No stolen personal or confidential data is collected or distributed via this site.\n\nSession: 057726c909af65969646b040bbbfa5c4df67f5166a33cbac6cd9e1302b0b3ca148\n\nTox: 50DADDED26D859469371938B793456D8210A5AE02DD3C42979F5E52411BCB648F1CA68A5EDE5",
+          "action": "Surveiller les indicateurs de compromission associés et contrôler les actifs exposés.",
+          "image": "https://images.ransomware.live/victims/fb6333bd8db6846c7aeeabb3a7c0b13a.png",
+          "sources": [
+            {
+              "url": "https://www.ransomware.live/id/VHJldWhhbmQgJiBJbW1vYmlsaWVuIEFidCBBR0ByaHlzaWRh",
+              "label": "ransomware.live"
+            }
+          ],
+          "url": "https://www.ransomware.live/id/VHJldWhhbmQgJiBJbW1vYmlsaWVuIEFidCBBR0ByaHlzaWRh",
+          "pubDate": "2026-11-07T08:17:25.274Z"
+        },
+        {
+          "title": "Smartbox : à l’approche de Noël, un hacker s’introduit dans dans le géant des coffrets cadeaux",
+          "cve": null,
+          "severity": "news",
+          "score": 56,
+          "corroboration": 1,
+          "region": "fr",
+          "body": "Incident de sécurité rapporté par Cyberattaque.org.\n\nSmartbox, l'un des leaders européens des coffrets cadeaux, confirme avoir été victime d'une cyberattaque détectée le 3 novembre 2026. Un individu non\n\nAttaque Mis à jour le 7 novembre 2026 à 18h29 Smartbox : à l’approche de Noël, un hacker s’introduit dans dans le géant des coffrets cadeaux Smartbox, l&rsquo;un des leaders européens des coffrets cadeaux, confirme avoir été victime d&rsquo;une cyberattaque détectée le 3 novembre 2026.",
+          "detail": "Incident de sécurité rapporté par Cyberattaque.org.\n\nSmartbox, l'un des leaders européens des coffrets cadeaux, confirme avoir été victime d'une cyberattaque détectée le 3 novembre 2026. Un individu non\n\nAttaque Mis à jour le 7 novembre 2026 à 18h29 Smartbox : à l’approche de Noël, un hacker s’introduit dans dans le géant des coffrets cadeaux Smartbox, l&rsquo;un des leaders européens des coffrets cadeaux, confirme avoir été victime d&rsquo;une cyberattaque détectée le 3 novembre 2026. Un individu non autorisé est parvenu à accéder à l&rsquo;une de ses plateformes informatiques, exposant potentiellement les noms et adresses email de ses clients. L&rsquo;entreprise a commencé à prévenir les personnes concernées, alors que la période des achats de Noël approche. Le nombre de clients touchés reste inconnu, mais Smartbox assure que les mots de passe et les coordonnées bancaires n&rsquo;ont pas été compromis.\n\nCe nouvel incident survient moins de cinq mois après une précédente fuite de données concernant Smartbox, révélée par Cyberattaque.org en juin 2026. À l&rsquo;époque, plus de 60 000 comptes et 200 000 enregistrements contractuels étaient concernés par une publication de données attribuées au groupe. Cette nouvelle intrusion relance donc les interrogations sur la sécurité des informations détenues par le spécialiste des coffrets cadeaux, même si aucun lien entre les deux affaires n&rsquo;a été établi.\n\nFondé en 2003, Smartbox est un groupe spécialisé dans la commercialisation de coffrets cadeaux proposant des séjours, des restaurants, des activités sportives et des expériences de bien-être. Basé à Dublin, en Irlande, le groupe est présent dans plusieurs pays européens, dont la France, où il possède également des bureaux à Paris. Il commercialise notamment les marques Sm",
+          "action": "Surveiller les indicateurs de compromission associés et contrôler les actifs exposés.",
+          "image": "https://www.cyberattaque.org/wp-content/uploads/2026/11/smartbox-cyberattaque-d-2.jpg",
+          "sources": [
+            {
+              "url": "https://www.cyberattaque.org/smartbox-a-lapproche-de-noel-un-hacker-sintroduit-dans-dans-le-geant-des-coffrets-cadeaux/",
+              "label": "Cyberattaque.org"
+            }
+          ],
+          "url": "https://www.cyberattaque.org/smartbox-a-lapproche-de-noel-un-hacker-sintroduit-dans-dans-le-geant-des-coffrets-cadeaux/",
+          "pubDate": "2026-11-07T17:25:23.000Z"
+        },
+        {
+          "title": "CyberAttaque du Secours Islamique France : les données personnelles de ses donateurs exposés",
+          "cve": null,
+          "severity": "news",
+          "score": 52,
+          "corroboration": 1,
+          "region": "fr",
+          "body": "Incident de sécurité rapporté par Cyberattaque.org.\n\nLe Secours Islamique France (SIF) confirme avoir été victime d&#8217;une cyberattaque ayant entraîné l&#8217;exposition de données personnelles de... L’article CyberAttaque du Secours Islamique France : les données personnelles de ses donateurs exposés est apparu en premier sur Cyberattaque.org .",
+          "detail": "Incident de sécurité rapporté par Cyberattaque.org.\n\nLe Secours Islamique France (SIF) confirme avoir été victime d&#8217;une cyberattaque ayant entraîné l&#8217;exposition de données personnelles de... L’article CyberAttaque du Secours Islamique France : les données personnelles de ses donateurs exposés est apparu en premier sur Cyberattaque.org .",
+          "action": "Surveiller les indicateurs de compromission associés et contrôler les actifs exposés.",
+          "image": "https://www.cyberattaque.org/wp-content/uploads/2026/11/burda-cyberattaque-2.jpg",
+          "sources": [
+            {
+              "url": "https://www.cyberattaque.org/burda-style-les-donnees-personnelles-de-ses-clients-exposees-apres-une-cyberattaque/",
+              "label": "Cyberattaque.org"
+            }
+          ],
+          "url": "https://www.cyberattaque.org/burda-style-les-donnees-personnelles-de-ses-clients-exposees-apres-une-cyberattaque/",
+          "pubDate": "2026-11-07T17:12:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "culture",
+      "items": [
+        {
+          "title": "Claude Code's “Don't Ask Again” File Exposes Passwords and Keys in 1,122 Public Copies on GitHub",
+          "cve": null,
+          "severity": "culture",
+          "score": 59,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Signal de veille — The Hacker News.\n\nPasswords and API keys that developers typed into commands they approved in Claude Code are sitting in public GitHub repositories, where anyone can read them. When a user selects \"Yes, and don't ask again,\" Anthropic's AI coding assistant can save the command, word-for-word, including the secret, in a project settings file. Software security company Apiiro said yesterday that 1,122 public",
+          "detail": "Signal de veille — The Hacker News.\n\nPasswords and API keys that developers typed into commands they approved in Claude Code are sitting in public GitHub repositories, where anyone can read them. When a user selects \"Yes, and don't ask again,\" Anthropic's AI coding assistant can save the command, word-for-word, including the secret, in a project settings file. Software security company Apiiro said yesterday that 1,122 public",
+          "action": null,
+          "image": "https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEhZH3vYLZb9lP7mDLqy2h-upzdComeWIfjDX5siFUO3FM2HlUs03OTwirA1R2uzOZq_clptIVBsoaJNXIuf8LlTbXHFvzBJLRl1l3mqGVesHjgdmD86S_c-k2JY_t56xZqI0bnN6jXRDr92KlMw6X5BHzm5hqogpWflsERi9zrsMHSS_abAcvZMcUGovd8/s1600/claude-code.jpg",
+          "sources": [
+            {
+              "url": "https://thehackernews.com/2026/11/claude-codes-dont-ask-again-file.html",
+              "label": "The Hacker News"
+            }
+          ],
+          "url": "https://thehackernews.com/2026/11/claude-codes-dont-ask-again-file.html",
+          "pubDate": "2026-11-07T06:44:17.000Z"
+        },
+        {
+          "title": "Firefox cache un jeu Snake dans sa barre d’adresse : voici comment le lancer",
+          "cve": null,
+          "severity": "culture",
+          "score": 48,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Signal de veille — IT-Connect.\n\nUn calcul égal à 150 dans la barre d'adresse de Firefox débloque un jeu Snake caché. Voici comment lancer cet easter egg dans le navigateur Firefox.\n\nActualités IT & Tech, tutoriels en administration système, réseau et cybersécurité.\n\nArchitecture Réseau Cybersécurité Linux & Logiciels Libres Microsoft (On-Premise) Microsoft 365 & Azure Self-Hosting & Open Source Stockage & NAS Cours IT Actualités Entreprise Actu Cybersécurité Web Logiciel – OS Matériel Ré…",
+          "detail": "Signal de veille — IT-Connect.\n\nUn calcul égal à 150 dans la barre d'adresse de Firefox débloque un jeu Snake caché. Voici comment lancer cet easter egg dans le navigateur Firefox.\n\nActualités IT & Tech, tutoriels en administration système, réseau et cybersécurité.\n\nArchitecture Réseau Cybersécurité Linux & Logiciels Libres Microsoft (On-Premise) Microsoft 365 & Azure Self-Hosting & Open Source Stockage & NAS Cours IT Actualités Entreprise Actu Cybersécurité Web Logiciel – OS Matériel Réseaux sociaux Mobile Bons Plans Tests Débutants Livres Vidéos IT-Connect » Actualités » Logiciel - OS » Firefox cache un jeu Snake dans sa barre d’adresse : voici comment le lancer Logiciel - OS Firefox cache un jeu Snake dans sa barre d’adresse : voici comment le lancer 07/11/2026 Florian BURNEL 0 commentaire Firefox Vous avez deux minutes devant vous et Firefox ouvert ? Tapez 100+50 dans la barre d'adresse : un petit logo Firefox apparaît à côté du résultat et, derrière lui, se cache un jeu Snake jouable directement dans votre navigateur.\n\nLe navigateur de Mozilla intègre une calculatrice dans sa barre d'adresse depuis Firefox 137. Le principe est simple : vous saisissez une opération et le résultat s'affiche directement dans la barre d'adresse, sous la forme d'une suggestion de recherche. C'est pratique au quotidien, et c'est cette fonction qui sert de porte d'entrée à un easter egg !\n\nLe 5 novembre 2026, Sören Hentzschel, développeur web basé à Salzbourg a mis en lumière ce petit jeu... . Lorsque le résultat d'un calcul est égal à 150, un logo Firefox apparaît à côté du résultat. Un clic dessus ouvre une petite interface dans laquelle vous pouvez jouer à Snake, le célèbre jeu du serpent qui grandit à chaque bouchée. Si vous avez eu un Nokia 3310, cela vous rappellera des souvenirs…",
+          "action": null,
+          "image": "https://www.it-connect.fr/wp-content-itc/uploads/2026/11/Easter-egg-Snake-firefox.jpg",
+          "sources": [
+            {
+              "url": "https://www.it-connect.fr/firefox-jeu-snake-cache-barre-adresse/",
+              "label": "IT-Connect"
+            }
+          ],
+          "url": "https://www.it-connect.fr/firefox-jeu-snake-cache-barre-adresse/",
+          "pubDate": "2026-11-07T10:00:00.000Z"
+        },
+        {
+          "title": "LiberNT : ni Windows, ni Linux, qu’est-ce que cet OS open source ?",
+          "cve": null,
+          "severity": "high",
+          "score": 48,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Signal de veille — IT-Connect.\n\nJ'ai testé LiberNT dans une machine virtuelle, un OS libre basé sur ReactOS qui veut ressembler à Windows 11 : bureau, applications et même un terminal Linux.\n\nActualités IT & Tech, tutoriels en administration système, réseau et cybersécurité.\n\nArchitecture Réseau Cybersécurité Linux & Logiciels Libres Microsoft (On-Premise) Microsoft 365 & Azure Self-Hosting & Open Source Stockage & NAS Cours IT Actualités Entreprise Actu Cybersécurité Web Logiciel – OS M…",
+          "detail": "Signal de veille — IT-Connect.\n\nJ'ai testé LiberNT dans une machine virtuelle, un OS libre basé sur ReactOS qui veut ressembler à Windows 11 : bureau, applications et même un terminal Linux.\n\nActualités IT & Tech, tutoriels en administration système, réseau et cybersécurité.\n\nArchitecture Réseau Cybersécurité Linux & Logiciels Libres Microsoft (On-Premise) Microsoft 365 & Azure Self-Hosting & Open Source Stockage & NAS Cours IT Actualités Entreprise Actu Cybersécurité Web Logiciel – OS Matériel Réseaux sociaux Mobile Bons Plans Tests Débutants Livres Vidéos IT-Connect » Actualités » Logiciel - OS » LiberNT : ni Windows, ni Linux, qu’est-ce que cet OS open source ? Logiciel - OS LiberNT : ni Windows, ni Linux, qu’est-ce que cet OS open source ? 07/11/2026 Florian BURNEL 0 commentaire Linux , Open Source , Windows 11 Un système d'exploitation libre, qui n'est ni Windows ni une distribution Linux, mais qui veut faire tourner les applications Windows 11 et celles de Linux ? C'est l'objectif de LiberNT, un fork de ReactOS. Par curiosité, je l'ai testé dans une machine virtuelle...\n\nPour rappel, ReactOS est un projet open source né au milieu des années 1990 (il a célébré ses 30 ans en début 2026), qui réimplémente l'architecture de Windows NT pour exécuter les applications et les pilotes Windows sans Windows. Pour autant, il cible une compatibilité avec Windows Server 2003, ce qui en fait un projet peu sexy.\n\nLiberNT reprend cette base de code, mais vise la compatibilité avec Windows 11 version 24H2 (d'après la page de présentation du projet ). Ce n'est donc pas la dernière version en date, puisque Windows 11 26H2 est disponible , mais on s'approche tout de même d'un OS récent. Ce projet a été lancé par Ahmed Arif, qui le maintient avec d'autres contributeurs.\n\nLiberNT se pré",
+          "action": null,
+          "image": "https://www.it-connect.fr/wp-content-itc/uploads/2026/11/libernt-os-avec-noyau-nt-open-source.jpg",
+          "sources": [
+            {
+              "url": "https://www.it-connect.fr/libernt-test-os-libre-windows-11/",
+              "label": "IT-Connect"
+            }
+          ],
+          "url": "https://www.it-connect.fr/libernt-test-os-libre-windows-11/",
+          "pubDate": "2026-11-07T07:30:00.000Z"
+        },
+        {
+          "title": "Test Reolink OMVI 3i WiFi : une caméra triple objectif avec suivi automatique",
+          "cve": null,
+          "severity": "culture",
+          "score": 48,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Signal de veille — IT-Connect.\n\nTest de la Reolink OMVI 3i WiFi : caméra triple objectif avec vue 180°, caméra PT 4K, suivi automatique, IA locale et Wi-Fi 6. Installation, réglages et avis.\n\nActualités IT & Tech, tutoriels en administration système, réseau et cybersécurité.\n\nArchitecture Réseau Cybersécurité Linux & Logiciels Libres Microsoft (On-Premise) Microsoft 365 & Azure Self-Hosting & Open Source Stockage & NAS Cours IT Actualités Entreprise Actu Cybersécurité Web Logiciel – OS M…",
+          "detail": "Signal de veille — IT-Connect.\n\nTest de la Reolink OMVI 3i WiFi : caméra triple objectif avec vue 180°, caméra PT 4K, suivi automatique, IA locale et Wi-Fi 6. Installation, réglages et avis.\n\nActualités IT & Tech, tutoriels en administration système, réseau et cybersécurité.\n\nArchitecture Réseau Cybersécurité Linux & Logiciels Libres Microsoft (On-Premise) Microsoft 365 & Azure Self-Hosting & Open Source Stockage & NAS Cours IT Actualités Entreprise Actu Cybersécurité Web Logiciel – OS Matériel Réseaux sociaux Mobile Bons Plans Tests Débutants Livres Vidéos IT-Connect » Actualités » Tests » Test Reolink OMVI 3i WiFi : une caméra triple objectif avec suivi automatique Tests Test Reolink OMVI 3i WiFi : une caméra triple objectif avec suivi automatique 07/11/2026 Florian BURNEL 0 commentaire Caméra , Reolink , Review , Test , Vidéosurveillance Une seule caméra pour couvrir une cour entière à 180° tout en suivant de près la personne qui s'y déplace : c'est la promesse de la Reolink OMVI 3i WiFi. Pour surveiller l'allée, le jardin et l'entrée d'une maison, il faut généralement associer une caméra grand-angle et une caméra motorisée. Ce modèle réunit les deux dans un même boîtier, avec trois objectifs, une détection IA locale et une connexion Wi-Fi 6.\n\nDans ce test de la Reolink OMVI 3i WiFi, je vous propose de découvrir le matériel, son design et le contenu de la boîte. Par la suite, nous verrons comment l'installer avec l'application Reolink, comment fonctionne le suivi automatique et quelles sont les options de configuration disponibles, notamment celles liées à la sécurité.\n\nLa Reolink OMVI 3i WiFi est une caméra de surveillance extérieure à triple objectif . Elle associe une caméra panoramique double objectif de 10 mégapixels, qui couvre 180° à l'horizontale, et une camé",
+          "action": null,
+          "image": "https://www.it-connect.fr/wp-content-itc/uploads/2026/11/Test-Reolink-OMVI-3i-WiFi.jpg",
+          "sources": [
+            {
+              "url": "https://www.it-connect.fr/test-reolink-omvi-3i-wifi/",
+              "label": "IT-Connect"
+            }
+          ],
+          "url": "https://www.it-connect.fr/test-reolink-omvi-3i-wifi/",
+          "pubDate": "2026-11-07T07:00:00.000Z"
+        },
+        {
+          "title": "In der Alarmflut die Wahrheit finden: Die KI-Ära aus Sicht eines CISOs",
+          "cve": null,
+          "severity": "high",
+          "score": 45,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Signal de veille — Global Sec Mag.\n\nCISOs verbringen ihre Tage damit, ihre Mitarbeitenden, ihr Unternehmen und dessen Werte vor Bedrohungen zu schützen. Dabei sehen sie sich mit einer ständigen Flut von Alarmsignalen und Warnungen konfrontiert. Doch genau hier liegt das große Missverständnis: Es sind nicht die Alarmsignalen und Warnungen, die uns nachts wach halten, sondern das unkontrollierte Risiko.",
+          "detail": "Signal de veille — Global Sec Mag.\n\nCISOs verbringen ihre Tage damit, ihre Mitarbeitenden, ihr Unternehmen und dessen Werte vor Bedrohungen zu schützen. Dabei sehen sie sich mit einer ständigen Flut von Alarmsignalen und Warnungen konfrontiert. Doch genau hier liegt das große Missverständnis: Es sind nicht die Alarmsignalen und Warnungen, die uns nachts wach halten, sondern das unkontrollierte Risiko. Also all das, was wir nicht sehen, nicht messen können oder von dem wir gar nicht wussten, dass es existiert. Paul Davis JFrog Unwissenheit ist für CISOs kein Verbündeter. Der eigentliche Feind ist die fehlende Transparenz. Wenn man versteht, was eine Bedrohung ist, wie sie sich verhält und wo sie sitzt, kann man gezielt gegensteuern. Manchmal kennen wir die Bedrohung, können aber nicht abschätzen, wie groß das Problem tatsächlich ist. Manchmal trifft sie uns völlig unvorbereitet. Hinzu kommt: Das Tempo ist heute so hoch, dass wir Risiken immer schneller erfassen müssen, um mit den Innovationen Schritt zu halten, die wir eigentlich ermöglichen sollen. Denn genau darin besteht heute unsere Aufgabe. Das Office-CISO soll Unternehmen helfen zu innovieren, also schnell voranzukommen und dabei sicher zu bleiben. Sie sind nicht mehr die Neinsager. Dieses Verständnis von Security hat ausgedient. Die Mission von CISOs ist es, das Business zu unterstützen, und nicht, noch eine blinkende Box ins Rack im Rechenzentrum zu schrau",
+          "action": null,
+          "image": "https://www.globalsecuritymag.fr/local/cache-vignettes/L717xH376/a93741a3553fb5af6ab294b15476b8-f5d77.png",
+          "sources": [
+            {
+              "url": "https://www.globalsecuritymag.fr/in-der-alarmflut-die-wahrheit-finden-die-ki-ara-aus-sicht-eines-cisos.html",
+              "label": "Global Sec Mag"
+            }
+          ],
+          "url": "https://www.globalsecuritymag.fr/in-der-alarmflut-die-wahrheit-finden-die-ki-ara-aus-sicht-eines-cisos.html",
+          "pubDate": "2026-11-08T05:01:04.544Z"
+        },
+        {
+          "title": "Blutspendezentren in Frankreich sind jüngste Ziele von Cyberangriffen",
+          "cve": null,
+          "severity": "culture",
+          "score": 45,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Signal de veille — Global Sec Mag.\n\nDer jüngste Cyberangriff auf die Kühlsysteme dreier Standorte des französischen Blutspendedienstes (EFS) ist eine weitere Warnung: Die Sicherheit kritischer Infrastrukturen ist immer nur so stark wie das Netzwerk der Zulieferer und Systeme, von denen sie abhängig sind. Shane Barney Keeper Security Beim aktuellen Angriff wurde ein Kühlanlagenlieferant kompromittiert und die Einstellung der Temperatur an drei Standorten manipuliert.",
+          "detail": "Signal de veille — Global Sec Mag.\n\nDer jüngste Cyberangriff auf die Kühlsysteme dreier Standorte des französischen Blutspendedienstes (EFS) ist eine weitere Warnung: Die Sicherheit kritischer Infrastrukturen ist immer nur so stark wie das Netzwerk der Zulieferer und Systeme, von denen sie abhängig sind. Shane Barney Keeper Security Beim aktuellen Angriff wurde ein Kühlanlagenlieferant kompromittiert und die Einstellung der Temperatur an drei Standorten manipuliert. Infolgedessen waren die dort gelagerten Blutprodukte und Blutplasma zeitweise gefährdet. Zwar wurden keine Blutprodukte beschädigt, doch die potenziellen Folgen dieses Vorfalls sollten als Warnsignal gesehen werden. Nachdem im Oktober ein Angriff auf die Kühlsysteme von Supermärkten vorausgegangen war, zeigt der jüngste Vorfall erneut, wie schnell Cyberangriffe auf sogenannte Operational Technology (OT), also Betriebstechnologie, von einer digitalen Störung zu einer Bedrohung für lebenswichtige Versorgungsgüter und die öffentliche Sicherheit werden können. Zugleich legt der Cyberangriff einen entscheidenden „blinden Fleck“ frei: Der Modernisierungsdrang führt häufig dazu, dass Verbindungen zu Drittanbietern nicht ausreichend abgesichert werden. Allzu oft verschafft ein unzureichend verwalteter Fernzugriff auf IT-Systeme Angreifern den direkten Zugang zu einer sensiblen OT-Umgebung. Das verrät eine anhaltende Schwachstelle bei der Absicherung kritische",
+          "action": null,
+          "image": "https://www.globalsecuritymag.fr/local/cache-vignettes/L1024xH538/a97a702d07aa356bcb767e2e6fd0e1-6d7da.png",
+          "sources": [
+            {
+              "url": "https://www.globalsecuritymag.fr/blutspendezentren-in-frankreich-sind-jungste-ziele-von-cyberangriffen.html",
+              "label": "Global Sec Mag"
+            }
+          ],
+          "url": "https://www.globalsecuritymag.fr/blutspendezentren-in-frankreich-sind-jungste-ziele-von-cyberangriffen.html",
+          "pubDate": "2026-11-08T05:01:04.544Z"
+        },
+        {
+          "title": "Show HN: Coldframe, a honeypot that poses as a supermarket fridge controller",
+          "cve": null,
+          "severity": "culture",
+          "score": 41,
+          "corroboration": 2,
+          "region": "intl",
+          "body": "Signal de veille — Hacker News.\n\nLow-interaction honeypot for supermarket refrigeration controllers (Danfoss AK-SM 800A, Dixell XWEB 500) - hedgerow-dev/coldframe\n\nReadme MIT license Activity Stars 37 stars Watchers 0 watching Forks 0 forks Report repository main Branches Tags Go to file Code Open more actions menu Latest commit History 12 Commits 12 Commits Folders and files Name Name Last commit message Last commit date .github/ workflows .github/ workflows .gitignore .gitignore Contain…",
+          "detail": "Signal de veille — Hacker News.\n\nLow-interaction honeypot for supermarket refrigeration controllers (Danfoss AK-SM 800A, Dixell XWEB 500) - hedgerow-dev/coldframe\n\nReadme MIT license Activity Stars 37 stars Watchers 0 watching Forks 0 forks Report repository main Branches Tags Go to file Code Open more actions menu Latest commit History 12 Commits 12 Commits Folders and files Name Name Last commit message Last commit date .github/ workflows .github/ workflows .gitignore .gitignore Containerfile Containerfile LICENSE LICENSE README.md README.md cloud-init.yaml cloud-init.yaml honeypot.py honeypot.py summary.py summary.py test_honeypot.py test_honeypot.py View all files Repository files navigation README MIT license More items coldframe\n\nIn 2026, attackers broke into internet-facing refrigeration supervisors across Europe using default passwords and old, unpatched firmware, then forced defrost cycles. coldframe pretends to be one of those controllers. It records who connects, what passwords they try and which public exploits they use, and it never gives them anything real.\n\nIt is one Python file with no dependencies outside the standard library.\n\nPersona Pretends to be What it serves danfoss Danfoss AK-SM 800A system manager StoreView login, a fake store dashboard, the XML API at /html/xml.cgi and /xml.cgi , HTTP and HTTPS dixell Copeland/Dixell XWEB EVO supervisor Login page and the XWEB 500 CGI paths targeted by public exploits Looking like a real unit The Danfoss persona copies what internet scanners record for real AK-SM 800A units: the nginx server header and header order, the Danfoss StoreView page title, TLS 1.2 only, and a 1-year certificate for CN=DanfossSM800A issued by a SelfSigned-DanfossSM800A authority. Each build generates its own keys.\n\nWeak logins (for ex",
+          "action": null,
+          "image": "https://opengraph.githubassets.com/5c14ea7158e44382a1df7337bd44ea7d950c04d804b581316695e291057dd510/hedgerow-dev/coldframe",
+          "sources": [
+            {
+              "url": "https://github.com/hedgerow-dev/coldframe",
+              "label": "Hacker News"
+            },
+            {
+              "url": "https://news.ycombinator.com/item?id=50406292",
+              "label": "Discussion HN"
+            }
+          ],
+          "url": "https://github.com/hedgerow-dev/coldframe",
+          "pubDate": "2026-11-07T17:27:30.000Z"
+        }
+      ]
+    }
+  ]
+}
