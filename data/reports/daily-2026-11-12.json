@@ -1,0 +1,1085 @@
+{
+  "id": "daily-2026-11-12",
+  "type": "daily",
+  "date": "2026-11-12",
+  "title": "Rapport quotidien - jeudi 12 novembre 2026",
+  "summary": "Sur les dernières 24 heures, la veille recense 23 vulnérabilités critiques, 40 incidents ou compromissions et 26 signaux de fond. Acteurs et produits les plus exposés : Microsoft, Windows et Cisco.",
+  "generatedAt": "2026-11-12T05:01:11.274Z",
+  "sections": [
+    {
+      "id": "vulns",
+      "items": [
+        {
+          "title": "CVE-2026-126537 — The Ninja Forms - File Uploads add-on for WordPress is vulnerable to Arbitrary File Deleti…",
+          "cve": "CVE-2026-126537",
+          "severity": "critical",
+          "score": 72,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Vulnérabilité critique CVE-2026-126537 (score CVSS 9.1).\n\nThe Ninja Forms - File Uploads add-on for WordPress is vulnerable to Arbitrary File Deletion (and arbitrary file read via S3/Dropbox/Google Drive exfiltration) in versions up to, and including, 3.3.36. The flaw spans NF_FU_Fields_Upload::process() in includes/fields/upload.php — which returns early (leaving the client-supplied files[] intact) whenever a public submission carries a nonempty extra.saveProgress — and NF_FU_External_Abstracts_Service::process_…",
+          "detail": "Vulnérabilité critique CVE-2026-126537 (score CVSS 9.1).\n\nThe Ninja Forms - File Uploads add-on for WordPress is vulnerable to Arbitrary File Deletion (and arbitrary file read via S3/Dropbox/Google Drive exfiltration) in versions up to, and including, 3.3.36. The flaw spans NF_FU_Fields_Upload::process() in includes/fields/upload.php — which returns early (leaving the client-supplied files[] intact) whenever a public submission carries a nonempty extra.saveProgress — and NF_FU_External_Abstracts_Service::process_upload() in includes/external/abstracts/service.php, whose authoritative-path reload only fires when the client sends upload_id. By omitting upload_id, an attacker's data[file_path] survives into the Background Upload queue and is used by both upload_file_to_s3() (as SourceFile) and the maybe_delete_server_file() unlink() call in includes/external/abstracts/backgroundupload.php, with no canonicalization or upload-directory containment check (the plugin's own is_path_within_upload_dir() helper is only applied on admin paths). This makes it possible for unauthenticated attackers to delete arbitrary files on the affected site's server which may make remote code execution possible — specifically, deleting wp-config.php forces WordPress into its setup screen, enabling full site takeover.\n\nScore CVSS : 9.1\n\nType de faiblesse (CWE) : CWE-22",
+          "action": "Vérifier l'exposition du parc et appliquer le correctif éditeur dès sa disponibilité.",
+          "image": null,
+          "sources": [
+            {
+              "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-126537",
+              "label": "NVD"
+            },
+            {
+              "url": "https://www.cvedetails.com/cve/CVE-2026-126537/",
+              "label": "CVE Details"
+            }
+          ],
+          "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-126537",
+          "pubDate": "2026-11-11T13:17:23.810Z"
+        },
+        {
+          "title": "Microsoft November Patch Tuesday: one exploited Outlook bug and 30 wormable flaws",
+          "cve": "CVE-2026-124194",
+          "severity": "critical",
+          "score": 61,
+          "corroboration": 2,
+          "region": "intl",
+          "body": "Vulnérabilité critique CVE-2026-124194 affectant Microsoft.\n\nMicrosoft November Patch Tuesday security updates fix 1,090 flaws, including one exploited Outlook bug and 30 potentially wormable issues. Microsoft November Patch Tuesday addressed about 1,090 new vulnerabilities, which is less than the roughly 1,400 last month. Two months in a row now exceed every previous year from Microsoft, and the overall count is a bit confusing, so other trackers report different totals.",
+          "detail": "Vulnérabilité critique CVE-2026-124194 affectant Microsoft.\n\nMicrosoft November Patch Tuesday security updates fix 1,090 flaws, including one exploited Outlook bug and 30 potentially wormable issues. Microsoft November Patch Tuesday addressed about 1,090 new vulnerabilities, which is less than the roughly 1,400 last month. Two months in a row now exceed every previous year from Microsoft, and the overall count is a bit confusing, so other trackers report different totals. The release covers Windows and its components, Office, networking and remote access, graphics, media and printing, storage and file systems, .NET and Visual Studio, security and identity, Azure and cloud, Exchange Server, Dynamics and Xbox. Only one bug is under active attack and none is publicly known. ZDI says that doesn’t mean less exploitation, only fewer zero-days, and it guesses that AI is better at reversing patches than at finding and exploiting bugs in closed-source software. The exploited bug is CVE-2026-124194 , an Outlook spoofing flaw, and its name undersells the impact. An attacker sends a crafted message file and talks the user into opening it, and Outlook connects to an attacker-controlled location without the usual external-content warning, which leaks the user’s NTLMv2 hash. &#8220;An unauthenticated attacker could send a specially crafted message file and convince a user to open it in an affected version of Microsoft Outlook. Opening the file could ca",
+          "action": "Vérifier l'exposition du parc et appliquer le correctif éditeur dès sa disponibilité.",
+          "image": "https://www.globalsecuritymag.fr/local/cache-vignettes/L300xH158/b0a333f521ae4d110025a55199b347-b87fa.png",
+          "sources": [
+            {
+              "url": "https://www.globalsecuritymag.fr/patch-tuesday-de-microsoft-plus-de-1-000-failles-corrigees-dont-une-decouverte.html",
+              "label": "Global Sec Mag"
+            },
+            {
+              "url": "https://securityaffairs.com/202839/hacking/microsoft-november-patch-tuesday-one-exploited-outlook-bug-and-30-wormable-flaws.html",
+              "label": "Security Affairs"
+            }
+          ],
+          "url": "https://www.globalsecuritymag.fr/patch-tuesday-de-microsoft-plus-de-1-000-failles-corrigees-dont-une-decouverte.html",
+          "pubDate": "2026-11-12T05:01:03.589Z"
+        },
+        {
+          "title": "CISA flags Cisco BroadWorks flaw as actively exploited in attacks",
+          "cve": null,
+          "severity": "critical",
+          "score": 61,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Vulnérabilité critique affectant Cisco.\n\nThe US Cybersecurity and Infrastructure Security Agency (CISA) warned on Tuesday that hackers are now exploiting a high-severity Cisco BroadWorks vulnerability in attacks.\n\nActive ScreenConnect attacks breach MSPs, impact dozens of organizations\n\nN-able releases security hotfixes for zero-day vulnerabilities\n\nHackers use AntiFox AI agents in AWS credential-theft attacks\n\nBaker Tilly notifies clients of data breach at third-party provider\n\nActive ScreenConn…",
+          "detail": "Vulnérabilité critique affectant Cisco.\n\nThe US Cybersecurity and Infrastructure Security Agency (CISA) warned on Tuesday that hackers are now exploiting a high-severity Cisco BroadWorks vulnerability in attacks.\n\nActive ScreenConnect attacks breach MSPs, impact dozens of organizations\n\nN-able releases security hotfixes for zero-day vulnerabilities\n\nHackers use AntiFox AI agents in AWS credential-theft attacks\n\nBaker Tilly notifies clients of data breach at third-party provider\n\nActive ScreenConnect attacks breach MSPs, impact dozens of organizations\n\neMudhra revokes 8 more CA certificates after private key mishap",
+          "action": "Vérifier l'exposition du parc et appliquer le correctif éditeur dès sa disponibilité.",
+          "image": "https://www.bleepstatic.com/content/hl-images/2026/10/28/CISA.jpg",
+          "sources": [
+            {
+              "url": "https://www.bleepingcomputer.com/news/security/cisa-flags-cisco-broadworks-flaw-as-actively-exploited-in-attacks/",
+              "label": "BleepingComputer"
+            }
+          ],
+          "url": "https://www.bleepingcomputer.com/news/security/cisa-flags-cisco-broadworks-flaw-as-actively-exploited-in-attacks/",
+          "pubDate": "2026-11-11T10:12:08.000Z"
+        },
+        {
+          "title": "Patch Tuesday – Novembre 2026 : 1 093 failles corrigées, dont une faille zero-day dans Outlook",
+          "cve": null,
+          "severity": "critical",
+          "score": 61,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Vulnérabilité critique affectant Microsoft.\n\nMicrosoft a corrigé 1 093 failles avec le Patch Tuesday de novembre 2026. Une faille zero-day est déjà exploitée dans Outlook : voici le récapitulatif complet.\n\nActualités IT & Tech, tutoriels en administration système, réseau et cybersécurité.\n\nArchitecture Réseau Cybersécurité Linux & Logiciels Libres Microsoft (On-Premise) Microsoft 365 & Azure Self-Hosting & Open Source Stockage & NAS Cours IT Actualités Entreprise Actu Cybersécurité Web Logiciel – OS…",
+          "detail": "Vulnérabilité critique affectant Microsoft.\n\nMicrosoft a corrigé 1 093 failles avec le Patch Tuesday de novembre 2026. Une faille zero-day est déjà exploitée dans Outlook : voici le récapitulatif complet.\n\nActualités IT & Tech, tutoriels en administration système, réseau et cybersécurité.\n\nArchitecture Réseau Cybersécurité Linux & Logiciels Libres Microsoft (On-Premise) Microsoft 365 & Azure Self-Hosting & Open Source Stockage & NAS Cours IT Actualités Entreprise Actu Cybersécurité Web Logiciel – OS Matériel Réseaux sociaux Mobile Bons Plans Tests Débutants Livres Vidéos IT-Connect » Actualités » Actu Cybersécurité » Patch Tuesday – Novembre 2026 : 1 093 failles corrigées, dont une faille zero-day dans Outlook Actu Cybersécurité Patch Tuesday – Novembre 2026 : 1 093 failles corrigées, dont une faille zero-day dans Outlook 11/11/2026 Florian BURNEL 0 commentaire Cybersécurité , Microsoft , Patch Tuesday Après le record de 1 407 failles en octobre, Microsoft a corrigé 1 093 vulnérabilités avec le Patch Tuesday de novembre 2026. Une faille zero-day dans Outlook est déjà exploitée et elle permet de faire fuiter des informations d'authentification Windows. Windows 11 23H2 de son côté, reçoit ses derniers correctifs. Voici l'essentiel à retenir.\n\nLe mardi 10 novembre 2026, Microsoft a publié son lot mensuel de correctifs de sécurité pour l'avant-dernière fois de l'année 2026. Pour rappel, le Patch Tuesday d'octobre 2026 avait établi un nouveau record avec 1 407 failles corrigées . Ce mois-ci, le compteur redescend à 1 093 vulnérabilités (sans compter les failles Edge), soit 314 de moins. Ne vous y trompez pas : cela reste le deuxième plus gros Patch Tuesday de l'histoire, devant celui de septembre et ses 973 failles. Le système MDASH de Microsoft a encore frappé...\n\nCe mois-c",
+          "action": "Vérifier l'exposition du parc et appliquer le correctif éditeur dès sa disponibilité.",
+          "image": "https://www.it-connect.fr/wp-content-itc/uploads/2026/11/Patch-Tuesday-Novembre-2026-recapitulatif.jpg",
+          "sources": [
+            {
+              "url": "https://www.it-connect.fr/patch-tuesday-novembre-2026-recapitulatif/",
+              "label": "IT-Connect"
+            }
+          ],
+          "url": "https://www.it-connect.fr/patch-tuesday-novembre-2026-recapitulatif/",
+          "pubDate": "2026-11-11T07:16:01.000Z"
+        },
+        {
+          "title": "CVE-2026-76954 — An improper neutralization of special elements used in an SQL command vulnerability in the…",
+          "cve": "CVE-2026-76954",
+          "severity": "critical",
+          "score": 59,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Vulnérabilité critique CVE-2026-76954 (score CVSS 9.8).\n\nAn improper neutralization of special elements used in an SQL command vulnerability in the Auth API in Synology DiskStation Manager (DSM) before 7.2.1-69057-13, 7.2.2-72806-10, 7.3.2-86009-5, and 7.4.1-90080-1 allows remote attackers to read or write arbitrary files and conduct denial-of-service attacks.",
+          "detail": "Vulnérabilité critique CVE-2026-76954 (score CVSS 9.8).\n\nAn improper neutralization of special elements used in an SQL command vulnerability in the Auth API in Synology DiskStation Manager (DSM) before 7.2.1-69057-13, 7.2.2-72806-10, 7.3.2-86009-5, and 7.4.1-90080-1 allows remote attackers to read or write arbitrary files and conduct denial-of-service attacks.\n\nScore CVSS : 9.8\n\nType de faiblesse (CWE) : CWE-89",
+          "action": "Vérifier l'exposition du parc et appliquer le correctif éditeur dès sa disponibilité.",
+          "image": null,
+          "sources": [
+            {
+              "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-76954",
+              "label": "NVD"
+            },
+            {
+              "url": "https://www.cvedetails.com/cve/CVE-2026-76954/",
+              "label": "CVE Details"
+            }
+          ],
+          "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-76954",
+          "pubDate": "2026-11-12T04:17:20.407Z"
+        },
+        {
+          "title": "CVE-2026-126812 — blueprintUE Self-Hosted Edition before 4.3.7 contains an insecure default configuration in…",
+          "cve": "CVE-2026-126812",
+          "severity": "critical",
+          "score": 59,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Vulnérabilité critique CVE-2026-126812 (score CVSS 9.8).\n\nblueprintUE Self-Hosted Edition before 4.3.7 contains an insecure default configuration in its Docker Compose examples that sets MYSQL_ALLOW_EMPTY_PASSWORD=yes in database.env and publishes MariaDB on port 3306. Unauthenticated attackers reaching the Docker host on port 3306 can log in as root without a password to read, modify, or delete user accounts, blueprints, and all databases.",
+          "detail": "Vulnérabilité critique CVE-2026-126812 (score CVSS 9.8).\n\nblueprintUE Self-Hosted Edition before 4.3.7 contains an insecure default configuration in its Docker Compose examples that sets MYSQL_ALLOW_EMPTY_PASSWORD=yes in database.env and publishes MariaDB on port 3306. Unauthenticated attackers reaching the Docker host on port 3306 can log in as root without a password to read, modify, or delete user accounts, blueprints, and all databases.\n\nScore CVSS : 9.8\n\nType de faiblesse (CWE) : CWE-258",
+          "action": "Vérifier l'exposition du parc et appliquer le correctif éditeur dès sa disponibilité.",
+          "image": null,
+          "sources": [
+            {
+              "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-126812",
+              "label": "NVD"
+            },
+            {
+              "url": "https://www.cvedetails.com/cve/CVE-2026-126812/",
+              "label": "CVE Details"
+            }
+          ],
+          "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-126812",
+          "pubDate": "2026-11-11T21:16:45.690Z"
+        },
+        {
+          "title": "CVE-2026-126797 — NextScan 1.1.0 through 1.2.0 contains an authentication bypass vulnerability in ns-admin t…",
+          "cve": "CVE-2026-126797",
+          "severity": "critical",
+          "score": 59,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Vulnérabilité critique CVE-2026-126797 (score CVSS 9.8).\n\nNextScan 1.1.0 through 1.2.0 contains an authentication bypass vulnerability in ns-admin that allows unauthenticated attackers to forge administrator tokens using a hardcoded JWT signing key. Attackers can sign an HS256 X-Access-Token carrying the public super administrator role ID to gain full access to user management, scan tasks and stored vulnerability results.",
+          "detail": "Vulnérabilité critique CVE-2026-126797 (score CVSS 9.8).\n\nNextScan 1.1.0 through 1.2.0 contains an authentication bypass vulnerability in ns-admin that allows unauthenticated attackers to forge administrator tokens using a hardcoded JWT signing key. Attackers can sign an HS256 X-Access-Token carrying the public super administrator role ID to gain full access to user management, scan tasks and stored vulnerability results.\n\nScore CVSS : 9.8\n\nType de faiblesse (CWE) : CWE-321",
+          "action": "Vérifier l'exposition du parc et appliquer le correctif éditeur dès sa disponibilité.",
+          "image": null,
+          "sources": [
+            {
+              "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-126797",
+              "label": "NVD"
+            },
+            {
+              "url": "https://www.cvedetails.com/cve/CVE-2026-126797/",
+              "label": "CVE Details"
+            }
+          ],
+          "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-126797",
+          "pubDate": "2026-11-11T21:16:43.027Z"
+        },
+        {
+          "title": "CVE-2026-126768 — OpsTree REMS through 1.0.0 contains an authentication bypass vulnerability that allows una…",
+          "cve": "CVE-2026-126768",
+          "severity": "critical",
+          "score": 59,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Vulnérabilité critique CVE-2026-126768 (score CVSS 9.8).\n\nOpsTree REMS through 1.0.0 contains an authentication bypass vulnerability that allows unauthenticated attackers to obtain valid JWTs by setting the client-controlled is_local_auth field. Attackers can send a POST /api/v1/user/login/ request for the admin account with an invalid password and is_local_auth true to gain SuperUser administrative access.",
+          "detail": "Vulnérabilité critique CVE-2026-126768 (score CVSS 9.8).\n\nOpsTree REMS through 1.0.0 contains an authentication bypass vulnerability that allows unauthenticated attackers to obtain valid JWTs by setting the client-controlled is_local_auth field. Attackers can send a POST /api/v1/user/login/ request for the admin account with an invalid password and is_local_auth true to gain SuperUser administrative access.\n\nScore CVSS : 9.8\n\nType de faiblesse (CWE) : CWE-287",
+          "action": "Vérifier l'exposition du parc et appliquer le correctif éditeur dès sa disponibilité.",
+          "image": null,
+          "sources": [
+            {
+              "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-126768",
+              "label": "NVD"
+            },
+            {
+              "url": "https://www.cvedetails.com/cve/CVE-2026-126768/",
+              "label": "CVE Details"
+            }
+          ],
+          "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-126768",
+          "pubDate": "2026-11-11T19:17:37.140Z"
+        },
+        {
+          "title": "CVE-2026-110697 — A flaw was found in Quay where the robot account listing function constructs a SQL LIKE pa…",
+          "cve": "CVE-2026-110697",
+          "severity": "critical",
+          "score": 59,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Vulnérabilité critique CVE-2026-110697 (score CVSS 9.9).\n\nA flaw was found in Quay where the robot account listing function constructs a SQL LIKE pattern from user-controlled namespace names without escaping wildcard metacharacters. An attacker who creates a namespace containing an underscore character can match and retrieve robot accounts and their decrypted authentication tokens from other tenants' namespaces, leading to cross-tenant credential theft and unauthorized image operations.",
+          "detail": "Vulnérabilité critique CVE-2026-110697 (score CVSS 9.9).\n\nA flaw was found in Quay where the robot account listing function constructs a SQL LIKE pattern from user-controlled namespace names without escaping wildcard metacharacters. An attacker who creates a namespace containing an underscore character can match and retrieve robot accounts and their decrypted authentication tokens from other tenants' namespaces, leading to cross-tenant credential theft and unauthorized image operations.\n\nScore CVSS : 9.9\n\nType de faiblesse (CWE) : CWE-89",
+          "action": "Vérifier l'exposition du parc et appliquer le correctif éditeur dès sa disponibilité.",
+          "image": null,
+          "sources": [
+            {
+              "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-110697",
+              "label": "NVD"
+            },
+            {
+              "url": "https://www.cvedetails.com/cve/CVE-2026-110697/",
+              "label": "CVE Details"
+            }
+          ],
+          "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-110697",
+          "pubDate": "2026-11-11T17:17:14.897Z"
+        },
+        {
+          "title": "CVE-2026-123710 — A flaw was found in Red Hat Quay. An unauthenticated client can obtain an anonymous regist…",
+          "cve": "CVE-2026-123710",
+          "severity": "critical",
+          "score": 59,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Vulnérabilité critique CVE-2026-123710 (score CVSS 9.8).\n\nA flaw was found in Red Hat Quay. An unauthenticated client can obtain an anonymous registry token with an audience it controls, present that token to the service key rotation endpoint, and install its own approved signing key with no expiry. Registry tokens signed with that key are accepted for any repository, allowing read and write access to private images and replacement of repository tags.",
+          "detail": "Vulnérabilité critique CVE-2026-123710 (score CVSS 9.8).\n\nA flaw was found in Red Hat Quay. An unauthenticated client can obtain an anonymous registry token with an audience it controls, present that token to the service key rotation endpoint, and install its own approved signing key with no expiry. Registry tokens signed with that key are accepted for any repository, allowing read and write access to private images and replacement of repository tags.\n\nScore CVSS : 9.8\n\nType de faiblesse (CWE) : CWE-1287",
+          "action": "Vérifier l'exposition du parc et appliquer le correctif éditeur dès sa disponibilité.",
+          "image": null,
+          "sources": [
+            {
+              "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-123710",
+              "label": "NVD"
+            },
+            {
+              "url": "https://www.cvedetails.com/cve/CVE-2026-123710/",
+              "label": "CVE Details"
+            }
+          ],
+          "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-123710",
+          "pubDate": "2026-11-11T15:17:18.340Z"
+        },
+        {
+          "title": "CVE-2026-85632 — Missing authentication for critical function and Improper validation of integrity check va…",
+          "cve": "CVE-2026-85632",
+          "severity": "critical",
+          "score": 57,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Vulnérabilité critique CVE-2026-85632 (score CVSS 9.1).\n\nMissing authentication for critical function and Improper validation of integrity check value vulnerability in Sipay Electronic Money and Payment Services Inc. WooCommerce Virtual POS Module allows Authentication Bypass and Application API Message Manipulation via Man-in-the-Middle. This issue affects WooCommerce Virtual POS Module: from 26.8.3 before 26.9.1.",
+          "detail": "Vulnérabilité critique CVE-2026-85632 (score CVSS 9.1).\n\nMissing authentication for critical function and Improper validation of integrity check value vulnerability in Sipay Electronic Money and Payment Services Inc. WooCommerce Virtual POS Module allows Authentication Bypass and Application API Message Manipulation via Man-in-the-Middle.\n\nThis issue affects WooCommerce Virtual POS Module: from 26.8.3 before 26.9.1.\n\nScore CVSS : 9.1\n\nType de faiblesse (CWE) : CWE-306, CWE-354",
+          "action": "Vérifier l'exposition du parc et appliquer le correctif éditeur dès sa disponibilité.",
+          "image": null,
+          "sources": [
+            {
+              "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-85632",
+              "label": "NVD"
+            },
+            {
+              "url": "https://www.cvedetails.com/cve/CVE-2026-85632/",
+              "label": "CVE Details"
+            }
+          ],
+          "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-85632",
+          "pubDate": "2026-11-11T15:17:25.163Z"
+        },
+        {
+          "title": "Multiples vulnérabilités dans Google Chrome (10 novembre 2026)",
+          "cve": "CVE-2026-125350",
+          "severity": "high",
+          "score": 51,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Vulnérabilité élevée CVE-2026-125350 affectant Google.\n\nDe multiples vulnérabilités ont été découvertes dans Google Chrome. Elles permettent à un attaquant de provoquer un problème de sécurité non spécifié par l'éditeur. Google indique que la vulnérabilité CVE-2026-125350 est activement exploitée. Voir en ligne : https://www.cert.cyber.gouv.fr/avis...",
+          "detail": "Vulnérabilité élevée CVE-2026-125350 affectant Google.\n\nDe multiples vulnérabilités ont été découvertes dans Google Chrome. Elles permettent à un attaquant de provoquer un problème de sécurité non spécifié par l'éditeur. Google indique que la vulnérabilité CVE-2026-125350 est activement exploitée. Voir en ligne : https://www.cert.cyber.gouv.fr/avis...",
+          "action": "Vérifier l'exposition du parc et appliquer le correctif éditeur dès sa disponibilité.",
+          "image": null,
+          "sources": [
+            {
+              "url": "https://www.globalsecuritymag.fr/multiples-vulnerabilites-dans-google-chrome-10-novembre-2026.html",
+              "label": "Global Sec Mag"
+            }
+          ],
+          "url": "https://www.globalsecuritymag.fr/multiples-vulnerabilites-dans-google-chrome-10-novembre-2026.html",
+          "pubDate": "2026-11-12T05:01:03.592Z"
+        },
+        {
+          "title": "SUSE renforce son positionnement comme plateforme de référence pour les charges de travail IA",
+          "cve": null,
+          "severity": "critical",
+          "score": 49,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Vulnérabilité critique affectant Linux.\n\nMises à jour de SUSE Rancher Prime, SUSE AI Factory et de SUSE Linux Enterprise Server : des capacités étendues pour les opérations assistées par IA, la modernisation des infrastructures et un meilleur contrôle des environnements hybrides.",
+          "detail": "Vulnérabilité critique affectant Linux.\n\nMises à jour de SUSE Rancher Prime, SUSE AI Factory et de SUSE Linux Enterprise Server : des capacités étendues pour les opérations assistées par IA, la modernisation des infrastructures et un meilleur contrôle des environnements hybrides. o Des opérations IT plus intelligentes : SUSE Rancher Prime enrichit ses capacités d'administration pilotées par IA avec Liz, son assistant IA capable de prendre en compte le contexte, ainsi que des agents spécialisés dans le diagnostic et la résolution des problèmes liés à Kubernetes et aux machines virtuelles. o Une infrastructure ouverte et unifiée : les nouvelles fonctionnalités de SUSE Rancher Prime simplifient l'administration de Kubernetes et des machines virtuelles. De son côté, SUSE Linux Enterprise Server (SLES) 16.1 permet de gérer, au sein d'un même système d'exploitation les charges de travail traditionnelles, immuables et temps réel. o Une chaîne d'approvisionnement logicielle sécurisée pour l'IA : des fonctionnalités de sécurité renforcées et plus de 1 000 bibliothèques Python vérifiées permettent aux entreprises d'identifier les vulnérabilités, de protéger leurs charges de travail et de développer des applications IA à partir de composants fiables. SUSE, leader de l'infrastructure ouverte souveraine, a annoncé de nouvelles fonctionnalités au sein de sa plateforme d'infrastructure ouverte. Ces dernières visent à aider les entre",
+          "action": "Vérifier l'exposition du parc et appliquer le correctif éditeur dès sa disponibilité.",
+          "image": null,
+          "sources": [
+            {
+              "url": "https://www.globalsecuritymag.fr/suse-renforce-son-positionnement-comme-plateforme-de-reference-pour-les-charges.html",
+              "label": "Global Sec Mag"
+            }
+          ],
+          "url": "https://www.globalsecuritymag.fr/suse-renforce-son-positionnement-comme-plateforme-de-reference-pour-les-charges.html",
+          "pubDate": "2026-11-12T05:01:03.591Z"
+        },
+        {
+          "title": "SAP Security Patch Day im November 2026",
+          "cve": "CVE-2026-76964",
+          "severity": "critical",
+          "score": 49,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Vulnérabilité critique CVE-2026-76964.\n\nDer November Patch Day fällt laut Onapsis deutlich umfangreicher aus als ein durchschnittlicher Patch Day. Auch die Zahl der HotNews (12) und High Priority Notes (13) liegt mit 25 deutlich über dem üblichen Monatsdurchschnitt. Angesichts des steigenden Patch-Volumens empfiehlt Onapsis Unternehmen, sämtliche Schwachstellen zu bewerten und das Exposure Management ihrer kritischen SAP-Landschaften kontinuierlich im Blick zu behalten.",
+          "detail": "Vulnérabilité critique CVE-2026-76964.\n\nDer November Patch Day fällt laut Onapsis deutlich umfangreicher aus als ein durchschnittlicher Patch Day. Auch die Zahl der HotNews (12) und High Priority Notes (13) liegt mit 25 deutlich über dem üblichen Monatsdurchschnitt. Angesichts des steigenden Patch-Volumens empfiehlt Onapsis Unternehmen, sämtliche Schwachstellen zu bewerten und das Exposure Management ihrer kritischen SAP-Landschaften kontinuierlich im Blick zu behalten. Die vollständige Analyse des November Patch Day finden Sie hier: SAP Security Patch Day for November 2026 - Onapsis ICM2SHELL (CVE-2026-76964 und CVE-2026-89126): Kritische Schwachstelle im SAP Internet Communication Manager Die mit CVSS 10.0 bewertete Schwachstelle ICM2SHELL betrifft die Verarbeitung von WebSocket-Datenverkehr durch den SAP Internet Communication Manager (ICM). Eine erfolgreiche Ausnutzung ermöglicht es entfernten Angreifern ohne Authentifizierung, Betriebssystembefehle mit den Rechten des SAP-Administratorbenutzers (adm) auszuführen und das betroffene System vollständig zu kompromittieren. Darüber hinaus können Angreifer den ICM oder Web Dispatcher zum Absturz bringen und dadurch die darüber bereitgestellten Webdienste unterbrechen. Wo Dienste WebSocket-Verbindungen ohne Authentifizierung akzeptieren, sind weder Zugangsdaten noch eine Benutzerinteraktion erforderlich. Die Möglichkeit einer nicht authentifizierten Ausnutzung hängt vo",
+          "action": "Vérifier l'exposition du parc et appliquer le correctif éditeur dès sa disponibilité.",
+          "image": "https://www.globalsecuritymag.fr/local/cache-vignettes/L213xH112/6504fb3bcf2797655f8d0ad6fb2ac4-d2f0b.png",
+          "sources": [
+            {
+              "url": "https://www.globalsecuritymag.fr/sap-security-patch-day-im-november-2026.html",
+              "label": "Global Sec Mag"
+            }
+          ],
+          "url": "https://www.globalsecuritymag.fr/sap-security-patch-day-im-november-2026.html",
+          "pubDate": "2026-11-12T05:01:03.589Z"
+        },
+        {
+          "title": "Critical Zoom Workplace Flaw Could Allow Unauthenticated Remote Privilege Escalation",
+          "cve": "CVE-2026-108186",
+          "severity": "critical",
+          "score": 49,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Vulnérabilité critique CVE-2026-108186 affectant Windows.\n\nZoom has released software updates to address two security flaws impacting Zoom Workplace for Windows, including a critical bug that could result in privilege escalation on affected systems. The vulnerabilities are listed below - CVE-2026-108186 (CVSS score: 9.6) - An improper input validation vulnerability that could allow an unauthenticated user to conduct an escalation of privilege via",
+          "detail": "Vulnérabilité critique CVE-2026-108186 affectant Windows.\n\nZoom has released software updates to address two security flaws impacting Zoom Workplace for Windows, including a critical bug that could result in privilege escalation on affected systems. The vulnerabilities are listed below - CVE-2026-108186 (CVSS score: 9.6) - An improper input validation vulnerability that could allow an unauthenticated user to conduct an escalation of privilege via",
+          "action": "Vérifier l'exposition du parc et appliquer le correctif éditeur dès sa disponibilité.",
+          "image": "https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEhox0GUms6IXvet2jPVoQ5VlUIZ_V7C3iT4HI3qV-Pi7_KRybDyGKGlb2S0Z4uvih4ERjjnGOn9Prav0HpvqNNR3_HVs7W5o0wM0-XsTdp6ploM2Optp5ls97C0JU5DIqubY-lNcLvLia25Z2c__IZt8Ws1OjX0tGavbyvb_dXrltSKj-HJHijQJ9AdDxEB/s1600/zoom-prv.jpg",
+          "sources": [
+            {
+              "url": "https://thehackernews.com/2026/11/critical-zoom-workplace-flaw-could.html",
+              "label": "The Hacker News"
+            }
+          ],
+          "url": "https://thehackernews.com/2026/11/critical-zoom-workplace-flaw-could.html",
+          "pubDate": "2026-11-11T16:12:46.000Z"
+        },
+        {
+          "title": "FRANCE 2030 : AVEC L'APPEL À PROJETS « PREMIÈRE USINE », LE GOUVERNEMENT SOUTIENT 13 NOUVEAUX PROJETS INDUSTRIELS POUR ACCÉLÉRER LA RÉINDUSTRIALISATION DU PAYS",
+          "cve": null,
+          "severity": "high",
+          "score": 24,
+          "corroboration": 1,
+          "region": "fr",
+          "body": "Vulnérabilité élevée.\n\nRoland Lescure, ministre de l'Économie, des Finances et de la Souveraineté industrielle, énergétique et numérique, Sébastien Martin, ministre délégué chargé de l'Industrie, Anne Le Hénanff, ministre déléguée chargée de l'Intelligence artificielle et du Numérique, et Bruno Bonnell, secrétaire général pour l'investissement, en charge de France 2030, annoncent 13 nouveaux lauréats des dixième et onzième relèves de l'appel à projets « Première Usine ».",
+          "detail": "Vulnérabilité élevée.\n\nRoland Lescure, ministre de l'Économie, des Finances et de la Souveraineté industrielle, énergétique et numérique, Sébastien Martin, ministre délégué chargé de l'Industrie, Anne Le Hénanff, ministre déléguée chargée de l'Intelligence artificielle et du Numérique, et Bruno Bonnell, secrétaire général pour l'investissement, en charge de France 2030, annoncent 13 nouveaux lauréats des dixième et onzième relèves de l'appel à projets « Première Usine ». Ces projets permettront l'ouverture de treize nouveaux sites industriels sur le territoire national. Paris, le 10 novembre 2026 N°1189 Dans le cadre de France 2030, l'État se mobilise pour accompagner l'émergence de treize premiers sites industriels dans des secteurs stratégiques : chimie, défense, industrie 4.0, décarbonation, spatial et santé. Depuis son lancement en 2022, l'appel à projets « Première Usine » a soutenu financièrement plus d'une centaine de projets industriels. Lancé dans le cadre de France 2030, ce dispositif, coordonné par la Direction générale des Entreprises (DGE) et le Secrétariat général pour l'investissement, est opéré par Bpifrance pour le compte de l'État, en y ajoutant un effet de levier permettant d'accompagner plus de projets. L‘appel à projets « Première Usine » accompagne les start-ups et PME à vocation industrielle dans le développement de leurs innovations et leur passage à l'échelle industrielle. Il",
+          "action": "Vérifier l'exposition du parc et appliquer le correctif éditeur dès sa disponibilité.",
+          "image": "https://www.globalsecuritymag.fr/local/cache-vignettes/L459xH241/f5e37d1e8e690dc0ec6a188fcd821d-04305.png",
+          "sources": [
+            {
+              "url": "https://www.globalsecuritymag.fr/france-2030-avec-l-appel-a-projets-premiere-usine-le-gouvernement-soutient-13.html",
+              "label": "Global Sec Mag"
+            }
+          ],
+          "url": "https://www.globalsecuritymag.fr/france-2030-avec-l-appel-a-projets-premiere-usine-le-gouvernement-soutient-13.html",
+          "pubDate": "2026-11-12T05:01:03.590Z"
+        }
+      ]
+    },
+    {
+      "id": "attacks",
+      "items": [
+        {
+          "title": "ARTEX and AI-Powered Red Teaming Tools: What Defenders Need to Know",
+          "cve": null,
+          "severity": "news",
+          "score": 81,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Incident de sécurité rapporté par Unit 42.\n\nLearn what Unit 42 discovered about attacker use of AI-powered red team tools, and how to mitigate these attacks.\n\nA rapidly expanding ecosystem of AI-enabled tools such as ARTEX and CyberStrikeAI — marketed for red teaming and penetration testing — are being used by attackers to execute offensive operations autonomously.\n\nTheir footprint is already substantial.",
+          "detail": "Incident de sécurité rapporté par Unit 42.\n\nLearn what Unit 42 discovered about attacker use of AI-powered red team tools, and how to mitigate these attacks.\n\nA rapidly expanding ecosystem of AI-enabled tools such as ARTEX and CyberStrikeAI — marketed for red teaming and penetration testing — are being used by attackers to execute offensive operations autonomously.\n\nTheir footprint is already substantial. Unit 42 has observed ARTEX used in intrusion attempts against multiple targets .\n\nOur Incident Response team investigated multiple intrusions in which the attacker’s server hosted an ARTEX console or used infrastructure and user agents associated with ARTEX.\n\nSeparately, Unit 42 Managed Threat Hunting tracked a coordinated ARTEX campaign against customer cloud environments in sectors worldwide, including retail and consulting.\n\nExternal scrutiny has already disrupted project lifecycles: the author of ARTEX recently made the repository closed-source and ceased public development to prevent misuse . Emerging alternatives are rapidly filling the void, introducing new capabilities that threat actors will inevitably co-opt.\n\nHere, we share our observations of how attackers are using AI-powered red team tools, along with our recommendations for how defenders can mitigate.",
+          "action": "Surveiller les indicateurs de compromission associés et contrôler les actifs exposés.",
+          "image": "https://unit42.paloaltonetworks.com/wp-content/uploads/2026/11/02_General_Category_1505x922.jpg",
+          "sources": [
+            {
+              "url": "https://unit42.paloaltonetworks.com/artex-and-ai-powered-red-teaming-tools/",
+              "label": "Unit 42"
+            }
+          ],
+          "url": "https://unit42.paloaltonetworks.com/artex-and-ai-powered-red-teaming-tools/",
+          "pubDate": "2026-11-11T23:00:53.000Z"
+        },
+        {
+          "title": "Maersk confirms data breach as WhiteArmor ransomware demands $5 million",
+          "cve": null,
+          "severity": "critical",
+          "score": 79,
+          "corroboration": 2,
+          "region": "intl",
+          "body": "Incident de sécurité rapporté par Security Affairs.\n\nMaersk confirms a data breach involving a legacy system, while WhiteArmor claims 100GB of stolen data and demands a $5 million ransom.\n\nMicrosoft November Patch Tuesday: one exploited Outlook bug and 30 wormable flaws\n\nU.S. CISA adds IBM, SignalWire FreeSwitch, OpenSSH, and GPUStack flaws to its Known Exploited Vulnerabilities catalog\n\nRussia-Linked APT Turla Turned Exchange Servers Into Their Own Control Room\n\niOS Sandbox Escape Is Public, and Apple Hasn'…",
+          "detail": "Incident de sécurité rapporté par Security Affairs.\n\nMaersk confirms a data breach involving a legacy system, while WhiteArmor claims 100GB of stolen data and demands a $5 million ransom.\n\nMicrosoft November Patch Tuesday: one exploited Outlook bug and 30 wormable flaws\n\nU.S. CISA adds IBM, SignalWire FreeSwitch, OpenSSH, and GPUStack flaws to its Known Exploited Vulnerabilities catalog\n\nRussia-Linked APT Turla Turned Exchange Servers Into Their Own Control Room\n\niOS Sandbox Escape Is Public, and Apple Hasn't Confirmed a Fix\n\nGoogle fixes the eighth actively exploited Chrome zero-day of 2026\n\nIris Ohyama data breach may expose personal information of 7.7 million people",
+          "action": "Surveiller les indicateurs de compromission associés et contrôler les actifs exposés.",
+          "image": "https://securityaffairs.com/wp-content/uploads/2017/08/Maersk.png",
+          "sources": [
+            {
+              "url": "https://securityaffairs.com/202869/data-breach/whitearmor-demands-5-million-from-maersk-claims-theft-of-100gb-of-data.html",
+              "label": "Security Affairs"
+            },
+            {
+              "url": "https://www.bleepingcomputer.com/news/security/maersk-confirms-data-breach-as-whitearmor-ransomware-demands-5-million/",
+              "label": "BleepingComputer"
+            }
+          ],
+          "url": "https://securityaffairs.com/202869/data-breach/whitearmor-demands-5-million-from-maersk-claims-theft-of-100gb-of-data.html",
+          "pubDate": "2026-11-11T20:47:36.000Z"
+        },
+        {
+          "title": "Poland shuts down government services platform ePUAP following cyberattack",
+          "cve": null,
+          "severity": "news",
+          "score": 75,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Incident de sécurité rapporté par The Record.\n\nThe attack targeted a nationwide system that allows users to submit official documents, communicate with government agencies and complete administrative procedures online.\n\nPoland temporarily shut down a government platform used by citizens and businesses to access public services after detecting and stopping a cyberattack, officials said Tuesday.\n\nThe attack targeted ePUAP, a nationwide system that allows users to submit official documents, communicate wi…",
+          "detail": "Incident de sécurité rapporté par The Record.\n\nThe attack targeted a nationwide system that allows users to submit official documents, communicate with government agencies and complete administrative procedures online.\n\nPoland temporarily shut down a government platform used by citizens and businesses to access public services after detecting and stopping a cyberattack, officials said Tuesday.\n\nThe attack targeted ePUAP, a nationwide system that allows users to submit official documents, communicate with government agencies and complete administrative procedures online.\n\nPolish Digital Affairs Minister Krzysztof Gawkowski said security teams responded immediately to the incident and were working to restore the platform's full functionality.\n\n\"The cyberattack on the state ePUAP system was detected and stopped,\" Gawkowski said in a social media post.\n\nThe minister said the infrastructure of Poland's Central Information Technology Center, the government agency responsible for maintaining key digital services, including ePUAP, remained secure.\n\nOfficials said the ePUAP platform was taken offline as a precaution rather than because of damage caused by the attack.",
+          "action": "Surveiller les indicateurs de compromission associés et contrôler les actifs exposés.",
+          "image": "https://cms.therecord.media/uploads/poland_1_e70a3806d1.jpg",
+          "sources": [
+            {
+              "url": "https://therecord.media/poland-shuts-down-government-services-platform-cyberattack",
+              "label": "The Record"
+            }
+          ],
+          "url": "https://therecord.media/poland-shuts-down-government-services-platform-cyberattack",
+          "pubDate": "2026-11-11T13:18:00.000Z"
+        },
+        {
+          "title": "Iran-backed network directed London attacks over FaceTime, US prosecutors say",
+          "cve": null,
+          "severity": "news",
+          "score": 70,
+          "corroboration": 1,
+          "region": "fr",
+          "body": "Incident de sécurité rapporté par The Record.\n\nAn indictment unsealed Tuesday says the broader campaign, targeting Jewish and American sites, included attacks on synagogues in Belgium, the Netherlands and London, and U.S. bank buildings in Amsterdam and Paris.\n\nThe U.S. accused three men of orchestrating attacks across Europe on behalf of Iran’s Islamic Revolutionary Guard Corps (IRGC), including a London arson incident that was recorded for propaganda.\n\nAn indictment unsealed Tuesday says the broader…",
+          "detail": "Incident de sécurité rapporté par The Record.\n\nAn indictment unsealed Tuesday says the broader campaign, targeting Jewish and American sites, included attacks on synagogues in Belgium, the Netherlands and London, and U.S. bank buildings in Amsterdam and Paris.\n\nThe U.S. accused three men of orchestrating attacks across Europe on behalf of Iran’s Islamic Revolutionary Guard Corps (IRGC), including a London arson incident that was recorded for propaganda.\n\nAn indictment unsealed Tuesday says the broader campaign, targeting Jewish and American sites, included attacks on synagogues in Belgium, the Netherlands and London, and U.S. bank buildings in Amsterdam and Paris. It also included a stabbing in London that left two Jewish men seriously injured.\n\nProsecutors say the same network later plotted to attack RAF Fairford, a British air base used by U.S. bombers, with vans and what the plotters intended to be explosives. During the attack one suspect directed the vans toward the base by phone from Iran, while another, already jailed in New York, relayed coded instructions through calls with relatives.\n\nThe superseding indictment adds two defendants to a case against Mohammad al-Saadi, an alleged commander of the Iran-backed Iraqi militia Kataib Hezbollah who has been jailed in New York since May.\n\nThe additional defendants are Mohsen Mohajeri, whom prosecutors identify as an IRGC operative, and Mohammed Ali al-Hassani, an Iraqi who once lived in Britain. Both are at large and believed to be in Iran. All three face terrorism charges carrying potential life sentences.\n\nProsecutors say that recording the attempted attacks for propaganda was an essential part of the network’s operations. The indictment includes images of them directing attacks from a room in Iraq, as well as record",
+          "action": "Surveiller les indicateurs de compromission associés et contrôler les actifs exposés.",
+          "image": "https://cms.therecord.media/uploads/doj_computer_9bebfbd8b8.jpg",
+          "sources": [
+            {
+              "url": "https://therecord.media/iran-backed-network-directed-london-attacks-over-facetime",
+              "label": "The Record"
+            }
+          ],
+          "url": "https://therecord.media/iran-backed-network-directed-london-attacks-over-facetime",
+          "pubDate": "2026-11-11T16:57:00.000Z"
+        },
+        {
+          "title": "sacheminc.com — rançongiciel Curious Worm (Canada)",
+          "cve": null,
+          "severity": "news",
+          "score": 69,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Incident de sécurité rapporté par ransomware.live.\n\nVictime revendiquée par le groupe de rançongiciel Curious Worm. Pays : Canada. Secteur : Manufacturing. Status: Leaked | Revenue: $225M | SACHEM, Inc. is a global leader in high-purity chemical solutions, specializing in the production of precise and pure products for various applications. The company offers a wide range of products including electronic materials, specialty chemicals, and energy materials, catering to clients in Europe, Asia, and America.",
+          "detail": "Incident de sécurité rapporté par ransomware.live.\n\nVictime revendiquée par le groupe de rançongiciel Curious Worm.\n\nPays : Canada.\n\nSecteur : Manufacturing.\n\nStatus: Leaked | Revenue: $225M | SACHEM, Inc. is a global leader in high-purity chemical solutions, specializing in the production of precise and pure products for various applications. The company offers a wide range of products including electronic materials, specialty chemicals, and energy materials, catering to clients in Europe, Asia, and America. SACHEM also provides customized manufacturing, R&D support, and consulting services to meet the specific needs of its customers. With advanced laboratories and a strong regional support system, SACHEM is committed to delivering high-quality solutions and fostering innovation",
+          "action": "Surveiller les indicateurs de compromission associés et contrôler les actifs exposés.",
+          "image": "https://images.ransomware.live/victims/713b14bb298adaff59be9fb4803e6257.png",
+          "sources": [
+            {
+              "url": "https://www.ransomware.live/id/c2FjaGVtaW5jLmNvbUBDdXJpb3VzIFdvcm0=",
+              "label": "ransomware.live"
+            }
+          ],
+          "url": "https://www.ransomware.live/id/c2FjaGVtaW5jLmNvbUBDdXJpb3VzIFdvcm0=",
+          "pubDate": "2026-11-11T17:12:53.909Z"
+        },
+        {
+          "title": "Baker Tilly notifies clients of data breach at third-party provider",
+          "cve": null,
+          "severity": "news",
+          "score": 68,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Incident de sécurité rapporté par BleepingComputer.\n\nThe Baker Tilly Advisory Group is notifying clients that a data breach has compromised certain personal information about them and their dependents.\n\nActive ScreenConnect attacks breach MSPs, impact dozens of organizations\n\nN-able releases security hotfixes for zero-day vulnerabilities\n\nHackers use AntiFox AI agents in AWS credential-theft attacks\n\nBaker Tilly notifies clients of data breach at third-party provider\n\nActive ScreenConnect attacks breach MSPs…",
+          "detail": "Incident de sécurité rapporté par BleepingComputer.\n\nThe Baker Tilly Advisory Group is notifying clients that a data breach has compromised certain personal information about them and their dependents.\n\nActive ScreenConnect attacks breach MSPs, impact dozens of organizations\n\nN-able releases security hotfixes for zero-day vulnerabilities\n\nHackers use AntiFox AI agents in AWS credential-theft attacks\n\nBaker Tilly notifies clients of data breach at third-party provider\n\nActive ScreenConnect attacks breach MSPs, impact dozens of organizations\n\neMudhra revokes 8 more CA certificates after private key mishap",
+          "action": "Surveiller les indicateurs de compromission associés et contrôler les actifs exposés.",
+          "image": "https://www.bleepstatic.com/content/hl-images/2026/11/11/bakertilly.jpg",
+          "sources": [
+            {
+              "url": "https://www.bleepingcomputer.com/news/security/baker-tilly-notifies-clients-of-data-breach-at-third-party-provider/",
+              "label": "BleepingComputer"
+            }
+          ],
+          "url": "https://www.bleepingcomputer.com/news/security/baker-tilly-notifies-clients-of-data-breach-at-third-party-provider/",
+          "pubDate": "2026-11-11T23:01:31.000Z"
+        },
+        {
+          "title": "Tyfone — rançongiciel Aoqin (États-Unis)",
+          "cve": null,
+          "severity": "news",
+          "score": 66,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Incident de sécurité rapporté par ransomware.live.\n\nVictime revendiquée par le groupe de rançongiciel Aoqin. Pays : États-Unis. Secteur : Technology. Founded in 2004 by Siva Narendra, Prabhakar Tadepalli and Tom Spitzer, under the premise “We believe in the power of the digitally connected world, but one needs digital trust for the connected world to become increasingly valuable.” We first applied this concept to the world of mobile banking transactions when smartphones were anticipated to gain traction.",
+          "detail": "Incident de sécurité rapporté par ransomware.live.\n\nVictime revendiquée par le groupe de rançongiciel Aoqin.\n\nPays : États-Unis.\n\nSecteur : Technology.\n\nFounded in 2004 by Siva Narendra, Prabhakar Tadepalli and Tom Spitzer, under the premise “We believe in the power of the digitally connected world, but one needs digital trust for the connected world to become increasingly valuable.” We first applied this concept to the world of mobile banking transactions when smartphones were anticipated to gain traction. Our early work was done with the likes of Google, First Data, and the Department of Defense, focused on conveniently securing the identity of a digital user to enable transactions such as mobile payments. We had recognized our calling to secure online banking for the everyday consumer. Working alongside a handful of innovative credit unions (including two $10B in assets) tyfone launched our mobile banking platform. Leveraging our knowledge of convenience and user experience coupled with strong security, we relied on the expertise of our partners to bring our first iteration of mobile banking to life. A decade later, we threw the proverbial hand grenade at our “mobile only “solution and rebuilt our platform from scratch to be a modern, scalable, omnichannel solution that provides online banking services on any device, for both our retail banking customers and business banking clients. The new platform considers that user experience is critical for consumers as well as employees of our customers. Our solution envisions innovation in digital services as consumer digital interactions evolve (AI, augmented reality, virtual branches). Tyfone’s founding team members are inventors with more than 130 patents including several in financial services, that by themselves have attracted tens of million dollars in investments. Status: Not paid. Data publication: 2026-11-19 09:14 UTC. Revenue: $44M. Employees: 200. Data type: Contracts, banking, clientsData, personal.",
+          "action": "Surveiller les indicateurs de compromission associés et contrôler les actifs exposés.",
+          "image": "https://images.ransomware.live/victims/fc869b0264864bbbedb923f9e77ff89a.png",
+          "sources": [
+            {
+              "url": "https://www.ransomware.live/id/TWlub3IgTGVhZ3VlIEJhc2ViYWxsQHBsYXk=",
+              "label": "ransomware.live"
+            }
+          ],
+          "url": "https://www.ransomware.live/id/TWlub3IgTGVhZ3VlIEJhc2ViYWxsQHBsYXk=",
+          "pubDate": "2026-11-11T20:19:13.810Z"
+        },
+        {
+          "title": "Disgraced former CA eMudhra blames buggy script for hopelessly weak certificates",
+          "cve": null,
+          "severity": "high",
+          "score": 64,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Incident de sécurité rapporté par The Register.\n\nFormer certification authority eMudhra has claimed a buggy Python script is the main reason it issued laughably insecure digital certificates. The company posted its account of the matter on Bugzilla where a user with the handle “Naveen Kumar ML” wrote “During a single key‑generation ceremony on 30 April 2025, sixteen subordinate (issuing) CA key pairs in eMudhra’s ‘B’ and ‘C’ series were generated correctly on a hardware security module and then processed…",
+          "detail": "Incident de sécurité rapporté par The Register.\n\nFormer certification authority eMudhra has claimed a buggy Python script is the main reason it issued laughably insecure digital certificates. The company posted its account of the matter on Bugzilla where a user with the handle “Naveen Kumar ML” wrote “During a single key‑generation ceremony on 30 April 2025, sixteen subordinate (issuing) CA key pairs in eMudhra’s ‘B’ and ‘C’ series were generated correctly on a hardware security module and then processed through an approved wrap/unwrap round‑trip using a custom python key‑handling script.” eMudhra aimed to create eight ECDSA P-384 private keys which should have been 48 bytes long. But the script contained what Kumar described as “a bug/defect in the import code [which] resulted in a read‑back from the unwrapped object that truncated the private value, so the certified public keys correspond to private scalars below the expected range and are recoverable from public information.” The truncation is the key problem here, because it appears that eMudhra ignored 47 of the 48 bytes, producing its infamously insecure single-byte keys such as the number four. Whatever the nature of the bug, Kumar asserts it was “a custom script run only on an isolated ceremony host and was not a function of the emCA software.” eMudhra needed that script because “global supply chain constraints” meant it couldn’t acquire the hardware security modules",
+          "action": "Surveiller les indicateurs de compromission associés et contrôler les actifs exposés.",
+          "image": "https://image.theregister.com/229817.jpg?imageId=229817&x=0&y=0&cropw=100&croph=100&panox=0&panoy=0&panow=100&panoh=100&width=1200&height=683",
+          "sources": [
+            {
+              "url": "https://www.theregister.com/security/2026/11/12/disgraced-former-ca-emudhra-blames-buggy-script-for-hopelessly-weak-certificates/5309244",
+              "label": "The Register"
+            }
+          ],
+          "url": "https://www.theregister.com/security/2026/11/12/disgraced-former-ca-emudhra-blames-buggy-script-for-hopelessly-weak-certificates/5309244",
+          "pubDate": "2026-11-12T04:22:18.000Z"
+        },
+        {
+          "title": "Japan Pushes Emergency Funding for Cybersecurity as AI-Assisted Breaches Rise",
+          "cve": null,
+          "severity": "news",
+          "score": 64,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Incident de sécurité rapporté par Dark Reading.\n\nThe package adds public-private cyber responders, an AI-focused team run by the economic ministry, and more leeway to use the government's new active cyber-defense powers.",
+          "detail": "Incident de sécurité rapporté par Dark Reading.\n\nThe package adds public-private cyber responders, an AI-focused team run by the economic ministry, and more leeway to use the government's new active cyber-defense powers.",
+          "action": "Surveiller les indicateurs de compromission associés et contrôler les actifs exposés.",
+          "image": null,
+          "sources": [
+            {
+              "url": "https://www.darkreading.com/cybersecurity-operations/japan-emergency-funding-cybersecurity-ai-assisted-breaches",
+              "label": "Dark Reading"
+            }
+          ],
+          "url": "https://www.darkreading.com/cybersecurity-operations/japan-emergency-funding-cybersecurity-ai-assisted-breaches",
+          "pubDate": "2026-11-12T00:00:00.000Z"
+        },
+        {
+          "title": "Microsoft Researchers Show AI Agents Can Be Backdoored by Editing Fewer Than 10 Neurons",
+          "cve": null,
+          "severity": "news",
+          "score": 64,
+          "corroboration": 2,
+          "region": "intl",
+          "body": "Incident de sécurité rapporté par Help Net Security.\n\nAn AI model can be given a hidden backdoor by editing fewer than 10 of its rarely used neurons, without retraining the model, Microsoft researchers have shown. When a chosen trigger appears, the model outputs an attacker's command, which an agent using that model would run with the agent's own permissions. The attacker must be able to change the model's weights. The team tested the method on",
+          "detail": "Incident de sécurité rapporté par Help Net Security.\n\nAn AI model can be given a hidden backdoor by editing fewer than 10 of its rarely used neurons, without retraining the model, Microsoft researchers have shown. When a chosen trigger appears, the model outputs an attacker's command, which an agent using that model would run with the agent's own permissions. The attacker must be able to change the model's weights. The team tested the method on",
+          "action": "Surveiller les indicateurs de compromission associés et contrôler les actifs exposés.",
+          "image": "https://img.helpnetsecurity.com/wp-content/uploads/2026/05/19154102/microsoft2.webp",
+          "sources": [
+            {
+              "url": "https://www.helpnetsecurity.com/2026/11/11/microsoft-hidden-ai-backdoors-lazarus/",
+              "label": "Help Net Security"
+            },
+            {
+              "url": "https://thehackernews.com/2026/11/microsoft-researchers-show-ai-agents.html",
+              "label": "The Hacker News"
+            }
+          ],
+          "url": "https://www.helpnetsecurity.com/2026/11/11/microsoft-hidden-ai-backdoors-lazarus/",
+          "pubDate": "2026-11-11T10:55:54.000Z"
+        },
+        {
+          "title": "OT Incidents Hit a Third of Industrial Organizations, SANS Finds",
+          "cve": null,
+          "severity": "news",
+          "score": 64,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Incident de sécurité rapporté par Infosecurity Mag.\n\nSANS Institute records largest single-year jump in ICS/OT cyber incidents\n\nA third of organizations running OT or industrial control systems (ICS) recorded at least one cyber incident over the past year, according to new data from SANS Institute.\n\nThe cybersecurity training and research specialist polled nearly 700 IT and security professionals to compile its 2026 State of ICS/OT Security Survey Insights report.\n\nIt revealed the biggest ever single-year le…",
+          "detail": "Incident de sécurité rapporté par Infosecurity Mag.\n\nSANS Institute records largest single-year jump in ICS/OT cyber incidents\n\nA third of organizations running OT or industrial control systems (ICS) recorded at least one cyber incident over the past year, according to new data from SANS Institute.\n\nThe cybersecurity training and research specialist polled nearly 700 IT and security professionals to compile its 2026 State of ICS/OT Security Survey Insights report.\n\nIt revealed the biggest ever single-year leap in incidents, from 22% last year to 34% of responding organizations in 2026.\n\nThe impact of incidents was also more severe. The share of respondents who said an incident affected safety increased from 8% to 13% in the period, and the share reporting theft of IP surged from 6% to 31%.\n\nShared IT/OT credential and identity compromise (31%) and ransomware (31%) were the most frequently cited incident types this year.\n\nRead more on ICS threats: ICS Operators Warned of AI-Driven Attacks on Siemens PLCs",
+          "action": "Surveiller les indicateurs de compromission associés et contrôler les actifs exposés.",
+          "image": "https://assets.infosecurity-magazine.com/webpage/og/55001c65-2f40-47ac-b253-1d44b98c11fa.jpg",
+          "sources": [
+            {
+              "url": "https://www.infosecurity-magazine.com/news/ot-incidents-third-industrial/",
+              "label": "Infosecurity Mag"
+            }
+          ],
+          "url": "https://www.infosecurity-magazine.com/news/ot-incidents-third-industrial/",
+          "pubDate": "2026-11-11T10:00:00.000Z"
+        },
+        {
+          "title": "Active ScreenConnect attacks breach MSPs, impact dozens of organizations",
+          "cve": null,
+          "severity": "news",
+          "score": 63,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Incident de sécurité rapporté par BleepingComputer.\n\nConnectWise is investigating an active malware campaign targeting managed service providers (MSPs) that uses compromised ScreenConnect environments to deploy rogue remote-access clients to customer devices.\n\nActive ScreenConnect attacks breach MSPs, impact dozens of organizations\n\nN-able releases security hotfixes for zero-day vulnerabilities\n\nHackers use AntiFox AI agents in AWS credential-theft attacks\n\nBaker Tilly notifies clients of data breach at thir…",
+          "detail": "Incident de sécurité rapporté par BleepingComputer.\n\nConnectWise is investigating an active malware campaign targeting managed service providers (MSPs) that uses compromised ScreenConnect environments to deploy rogue remote-access clients to customer devices.\n\nActive ScreenConnect attacks breach MSPs, impact dozens of organizations\n\nN-able releases security hotfixes for zero-day vulnerabilities\n\nHackers use AntiFox AI agents in AWS credential-theft attacks\n\nBaker Tilly notifies clients of data breach at third-party provider\n\nActive ScreenConnect attacks breach MSPs, impact dozens of organizations\n\neMudhra revokes 8 more CA certificates after private key mishap",
+          "action": "Surveiller les indicateurs de compromission associés et contrôler les actifs exposés.",
+          "image": "https://www.bleepstatic.com/content/hl-images/2026/09/16/ScreenConnect.jpg",
+          "sources": [
+            {
+              "url": "https://www.bleepingcomputer.com/news/security/active-screenconnect-attacks-breach-msps-impact-dozens-of-organizations/",
+              "label": "BleepingComputer"
+            }
+          ],
+          "url": "https://www.bleepingcomputer.com/news/security/active-screenconnect-attacks-breach-msps-impact-dozens-of-organizations/",
+          "pubDate": "2026-11-11T22:56:21.000Z"
+        },
+        {
+          "title": "eMudhra revokes 8 more CA certificates after private key mishap",
+          "cve": null,
+          "severity": "news",
+          "score": 63,
+          "corroboration": 2,
+          "region": "intl",
+          "body": "Incident de sécurité rapporté par BleepingComputer.\n\nCertificate authority eMudhra has revoked eight additional intermediate CA certificates after an investigation into its recent certificate security incident found improper handling of private keys during the certificate-generation process.\n\nActive ScreenConnect attacks breach MSPs, impact dozens of organizations\n\nN-able releases security hotfixes for zero-day vulnerabilities\n\nHackers use AntiFox AI agents in AWS credential-theft attacks\n\nBaker Tilly notifi…",
+          "detail": "Incident de sécurité rapporté par BleepingComputer.\n\nCertificate authority eMudhra has revoked eight additional intermediate CA certificates after an investigation into its recent certificate security incident found improper handling of private keys during the certificate-generation process.\n\nActive ScreenConnect attacks breach MSPs, impact dozens of organizations\n\nN-able releases security hotfixes for zero-day vulnerabilities\n\nHackers use AntiFox AI agents in AWS credential-theft attacks\n\nBaker Tilly notifies clients of data breach at third-party provider\n\nActive ScreenConnect attacks breach MSPs, impact dozens of organizations\n\neMudhra revokes 8 more CA certificates after private key mishap",
+          "action": "Surveiller les indicateurs de compromission associés et contrôler les actifs exposés.",
+          "image": "https://www.bleepstatic.com/content/hl-images/2026/10/20/certificate.jpg",
+          "sources": [
+            {
+              "url": "https://www.bleepingcomputer.com/news/security/emudhra-revokes-8-more-ca-certificates-after-private-key-mishap/",
+              "label": "BleepingComputer"
+            },
+            {
+              "url": "https://thehackernews.com/2026/11/emudhra-revokes-8-more-cas-it.html",
+              "label": "The Hacker News"
+            }
+          ],
+          "url": "https://www.bleepingcomputer.com/news/security/emudhra-revokes-8-more-ca-certificates-after-private-key-mishap/",
+          "pubDate": "2026-11-11T21:27:40.000Z"
+        },
+        {
+          "title": "Notion says Fireworks breach exposed customer AI chat transcripts",
+          "cve": null,
+          "severity": "news",
+          "score": 63,
+          "corroboration": 2,
+          "region": "intl",
+          "body": "Incident de sécurité rapporté par BleepingComputer.\n\nNotion, the digital workspace platform, disclosed that a security breach at its AI infrastructure provider, Fireworks AI, exposed Notion AI chat transcripts in a small number of workspaces.\n\nActive ScreenConnect attacks breach MSPs, impact dozens of organizations\n\nN-able releases security hotfixes for zero-day vulnerabilities\n\nHackers use AntiFox AI agents in AWS credential-theft attacks\n\nBaker Tilly notifies clients of data breach at third-party provider…",
+          "detail": "Incident de sécurité rapporté par BleepingComputer.\n\nNotion, the digital workspace platform, disclosed that a security breach at its AI infrastructure provider, Fireworks AI, exposed Notion AI chat transcripts in a small number of workspaces.\n\nActive ScreenConnect attacks breach MSPs, impact dozens of organizations\n\nN-able releases security hotfixes for zero-day vulnerabilities\n\nHackers use AntiFox AI agents in AWS credential-theft attacks\n\nBaker Tilly notifies clients of data breach at third-party provider\n\nActive ScreenConnect attacks breach MSPs, impact dozens of organizations\n\neMudhra revokes 8 more CA certificates after private key mishap",
+          "action": "Surveiller les indicateurs de compromission associés et contrôler les actifs exposés.",
+          "image": "https://www.bleepstatic.com/content/hl-images/2026/11/11/Notion.jpg",
+          "sources": [
+            {
+              "url": "https://www.bleepingcomputer.com/news/security/notion-says-fireworks-breach-exposed-customer-ai-chat-transcripts/",
+              "label": "BleepingComputer"
+            },
+            {
+              "url": "https://gbhackers.com/notion-ai-data-breach-exposes-customer-chat-transcripts/",
+              "label": "GBHackers"
+            }
+          ],
+          "url": "https://www.bleepingcomputer.com/news/security/notion-says-fireworks-breach-exposed-customer-ai-chat-transcripts/",
+          "pubDate": "2026-11-11T20:54:20.000Z"
+        },
+        {
+          "title": "Hackers use AntiFox AI agents in AWS credential-theft attacks",
+          "cve": null,
+          "severity": "high",
+          "score": 63,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Incident de sécurité rapporté par BleepingComputer.\n\nAttackers are using Alibaba Cloud to host self-managed instances of AntiFox, an open-source agentic penetration testing platform, to target web services and AWS environments.\n\nActive ScreenConnect attacks breach MSPs, impact dozens of organizations\n\nN-able releases security hotfixes for zero-day vulnerabilities\n\nHackers use AntiFox AI agents in AWS credential-theft attacks\n\nBaker Tilly notifies clients of data breach at third-party provider\n\nActive ScreenC…",
+          "detail": "Incident de sécurité rapporté par BleepingComputer.\n\nAttackers are using Alibaba Cloud to host self-managed instances of AntiFox, an open-source agentic penetration testing platform, to target web services and AWS environments.\n\nActive ScreenConnect attacks breach MSPs, impact dozens of organizations\n\nN-able releases security hotfixes for zero-day vulnerabilities\n\nHackers use AntiFox AI agents in AWS credential-theft attacks\n\nBaker Tilly notifies clients of data breach at third-party provider\n\nActive ScreenConnect attacks breach MSPs, impact dozens of organizations\n\neMudhra revokes 8 more CA certificates after private key mishap",
+          "action": "Surveiller les indicateurs de compromission associés et contrôler les actifs exposés.",
+          "image": "https://www.bleepstatic.com/content/hl-images/2026/10/09/robot-hacker.jpg",
+          "sources": [
+            {
+              "url": "https://www.bleepingcomputer.com/news/security/hackers-use-antifox-ai-agents-in-aws-credential-theft-attacks/",
+              "label": "BleepingComputer"
+            }
+          ],
+          "url": "https://www.bleepingcomputer.com/news/security/hackers-use-antifox-ai-agents-in-aws-credential-theft-attacks/",
+          "pubDate": "2026-11-11T15:12:59.000Z"
+        },
+        {
+          "title": "Effy : une cyberattaque expose les données et les projets de rénovation de clients",
+          "cve": null,
+          "severity": "news",
+          "score": 52,
+          "corroboration": 1,
+          "region": "fr",
+          "body": "Incident de sécurité rapporté par Cyberattaque.org.\n\nEffy, spécialiste français de la rénovation énergétique, confirme un incident de sécurité ayant permis à un tiers non autorisé d'accéder aux informations\n\nAttaque Mis à jour le 11 novembre 2026 à 13h02 Effy : une cyberattaque expose les données et les projets de rénovation de clients Effy, spécialiste français de la rénovation énergétique, confirme un incident de sécurité ayant permis à un tiers non autorisé d&rsquo;accéder aux informations personnelles de…",
+          "detail": "Incident de sécurité rapporté par Cyberattaque.org.\n\nEffy, spécialiste français de la rénovation énergétique, confirme un incident de sécurité ayant permis à un tiers non autorisé d'accéder aux informations\n\nAttaque Mis à jour le 11 novembre 2026 à 13h02 Effy : une cyberattaque expose les données et les projets de rénovation de clients Effy, spécialiste français de la rénovation énergétique, confirme un incident de sécurité ayant permis à un tiers non autorisé d&rsquo;accéder aux informations personnelles de certains de ses clients. Dans un email dont Cyberattaque.org s&rsquo;est procuré une copie, l&rsquo;entreprise explique que les identifiants de connexion d&rsquo;un artisan partenaire, la société Airtech, ont été utilisés frauduleusement pour accéder à sa plateforme professionnelle. Les données concernées comprennent notamment les adresses des chantiers, la nature des travaux envisagés et les créneaux de disponibilité des particuliers.\n\nFondé en 2008, Effy est un groupe français spécialisé dans l&rsquo;accompagnement des travaux de rénovation énergétique. Basé à Paris, il aide les particuliers à réaliser leurs projets d&rsquo;isolation, de chauffage ou d&rsquo;installation de pompes à chaleur, notamment en les mettant en relation avec des artisans qualifiés. L&rsquo;entreprise revendique plus de 5 000 professionnels partenaires et accompagne environ 100 000 foyers chaque année.\n\nDans sa notification, Effy confirme qu&rsquo;un individu non autorisé a utilisé les identifiants de connexion de la société Airtech pour accéder à son espace professionnel Effy Pro.\n\nCette plateforme permet aux artisans partenaires de consulter les projets de rénovation transmis par Effy, de contacter les particuliers et de suivre leurs dossiers.\n\nLes clients concernés avaient été mis en rel",
+          "action": "Surveiller les indicateurs de compromission associés et contrôler les actifs exposés.",
+          "image": "https://www.cyberattaque.org/wp-content/uploads/2026/11/IMG_3817.jpeg",
+          "sources": [
+            {
+              "url": "https://www.cyberattaque.org/effy-une-cyberattaque-expose-les-donnees-et-les-projets-de-renovation-de-clients/",
+              "label": "Cyberattaque.org"
+            }
+          ],
+          "url": "https://www.cyberattaque.org/effy-une-cyberattaque-expose-les-donnees-et-les-projets-de-renovation-de-clients/",
+          "pubDate": "2026-11-11T12:02:20.000Z"
+        },
+        {
+          "title": "Notion AI : des conversations d’utilisateurs exposées après une double cyberattaque chez Fireworks AI",
+          "cve": null,
+          "severity": "news",
+          "score": 52,
+          "corroboration": 1,
+          "region": "fr",
+          "body": "Incident de sécurité rapporté par Cyberattaque.org.\n\nNotion confirme que des conversations entre ses utilisateurs et son assistant d&#8217;intelligence artificielle ont été exposées à la... L’article Notion AI : des conversations d&rsquo;utilisateurs exposées après une double cyberattaque chez Fireworks AI est apparu en premier sur Cyberattaque.org .",
+          "detail": "Incident de sécurité rapporté par Cyberattaque.org.\n\nNotion confirme que des conversations entre ses utilisateurs et son assistant d&#8217;intelligence artificielle ont été exposées à la... L’article Notion AI : des conversations d&rsquo;utilisateurs exposées après une double cyberattaque chez Fireworks AI est apparu en premier sur Cyberattaque.org .",
+          "action": "Surveiller les indicateurs de compromission associés et contrôler les actifs exposés.",
+          "image": "https://www.cyberattaque.org/wp-content/uploads/2026/11/IMG_3814.jpeg",
+          "sources": [
+            {
+              "url": "https://www.cyberattaque.org/hopital-foch-des-factures-medicales-de-patients-exposees-apres-une-cyberattaque/",
+              "label": "Cyberattaque.org"
+            }
+          ],
+          "url": "https://www.cyberattaque.org/hopital-foch-des-factures-medicales-de-patients-exposees-apres-une-cyberattaque/",
+          "pubDate": "2026-11-11T11:28:02.000Z"
+        },
+        {
+          "title": "Chambourcy : une cyberattaque contraint la mairie à couper son réseau informatique et à revenir au papier",
+          "cve": null,
+          "severity": "news",
+          "score": 52,
+          "corroboration": 1,
+          "region": "fr",
+          "body": "Incident de sécurité rapporté par Cyberattaque.org.\n\nLa mairie de Chambourcy, dans les Yvelines, confirme avoir été victime d'une cyberattaque durant le week-end des 7 et 8 novembre 2026. Face à cet\n\nAttaque Mis à jour le 11 novembre 2026 à 11h31 Chambourcy : une cyberattaque contraint la mairie à couper son réseau informatique et à revenir au papier La mairie de Chambourcy, dans les Yvelines, confirme avoir été victime d&rsquo;une cyberattaque durant le week-end des 7 et 8 novembre 2026.",
+          "detail": "Incident de sécurité rapporté par Cyberattaque.org.\n\nLa mairie de Chambourcy, dans les Yvelines, confirme avoir été victime d'une cyberattaque durant le week-end des 7 et 8 novembre 2026. Face à cet\n\nAttaque Mis à jour le 11 novembre 2026 à 11h31 Chambourcy : une cyberattaque contraint la mairie à couper son réseau informatique et à revenir au papier La mairie de Chambourcy, dans les Yvelines, confirme avoir été victime d&rsquo;une cyberattaque durant le week-end des 7 et 8 novembre 2026. Face à cet incident, la municipalité a décidé de mettre préventivement à l&rsquo;arrêt son réseau informatique. Depuis, les agents municipaux doivent assurer une grande partie de leurs missions avec des procédures papier , entraînant un allongement des délais de traitement. Une plainte a été déposée et la CNIL a été informée.\n\nChambourcy est une commune française située dans les Yvelines, en Île-de-France, à proximité de Saint-Germain-en-Laye. Sa mairie assure les services administratifs de proximité, notamment les démarches d&rsquo;état civil, les inscriptions scolaires, les services à la population et la gestion des équipements municipaux.\n\nDans une communication officielle mise à jour le 8 novembre 2026 , la Ville de Chambourcy reconnaît avoir été la cible d&rsquo;une cyberattaque survenue durant le week-end.\n\nLa municipalité a pris la décision de couper son réseau informatique par précaution , afin de contenir l&rsquo;incident et de limiter les risques de propagation.\n\nLes équipes informatiques municipales, accompagnées d&rsquo;entreprises spécialisées en cybersécurité et des autorités compétentes, travaillent désormais à la sécurisation des infrastructures et à la restauration des systèmes.\n\nLa mairie ne précise pas comment les attaquants sont parvenus à compromettre son environne",
+          "action": "Surveiller les indicateurs de compromission associés et contrôler les actifs exposés.",
+          "image": "https://www.cyberattaque.org/wp-content/uploads/2026/11/IMG_3812.jpeg",
+          "sources": [
+            {
+              "url": "https://www.cyberattaque.org/chambourcy-une-cyberattaque-contraint-la-mairie-a-couper-son-reseau-informatique-et-a-revenir-au-papier/",
+              "label": "Cyberattaque.org"
+            }
+          ],
+          "url": "https://www.cyberattaque.org/chambourcy-une-cyberattaque-contraint-la-mairie-a-couper-son-reseau-informatique-et-a-revenir-au-papier/",
+          "pubDate": "2026-11-11T10:30:59.000Z"
+        },
+        {
+          "title": "EduGroupe : un organisme qui forme à la cybersécurité voit fuiter 93 000 enregistrements",
+          "cve": null,
+          "severity": "news",
+          "score": 52,
+          "corroboration": 1,
+          "region": "fr",
+          "body": "Incident de sécurité rapporté par Cyberattaque.org.\n\nEduGroupe, un organisme français spécialisé notamment dans les formations en cybersécurité, est visé par une importante fuite de données concernant ses\n\nAttaque Mis à jour le 11 novembre 2026 à 6h55 EduGroupe : un organisme qui forme à la cybersécurité voit fuiter 93 000 enregistrements EduGroupe, un organisme français spécialisé notamment dans les formations en cybersécurité, est visé par une importante fuite de données concernant ses apprenants, formateu…",
+          "detail": "Incident de sécurité rapporté par Cyberattaque.org.\n\nEduGroupe, un organisme français spécialisé notamment dans les formations en cybersécurité, est visé par une importante fuite de données concernant ses\n\nAttaque Mis à jour le 11 novembre 2026 à 6h55 EduGroupe : un organisme qui forme à la cybersécurité voit fuiter 93 000 enregistrements EduGroupe, un organisme français spécialisé notamment dans les formations en cybersécurité, est visé par une importante fuite de données concernant ses apprenants, formateurs et entreprises clientes. Le 10 novembre 2026, le hacker ChimeraZ a annoncé la diffusion de 93 415 enregistrements et de près de 42 000 adresses email. Cyberattaque.org s&rsquo;est procuré les fichiers et a confirmé la présence de dizaines de milliers de fiches d&rsquo;apprenants, de résultats d&rsquo;évaluations et de 1 532 comptes utilisateurs contenant des empreintes de mots de passe.\n\nCréé en 2007, EduGroupe est un organisme français de formation professionnelle implanté à Paris, notamment à proximité de la porte Maillot. Il accompagne les entreprises dans le développement des compétences informatiques, la cybersécurité, l&rsquo;intelligence artificielle, le cloud et le management. Certifié Qualiopi, il revendique plus de 10 000 apprenants formés chaque année et un réseau de plus de 500 consultants-formateurs. L&rsquo;entreprise indique avoir réalisé 13 millions d&rsquo;euros de chiffre d&rsquo;affaires en 2025.\n\nDans une publication datée du 10 novembre 2026 à 19 h 29 , ChimeraZ affirme avoir récupéré une base de données attribuée au domaine edugroupe.com.\n\nLe hacker annonce 93 415 lignes, 41 868 adresses email et environ 72 Mo de données , répartis dans plusieurs fichiers au format JSONL.\n\nCyberattaque.org a pu examiner une copie de l&rsquo;archive. Malgré un",
+          "action": "Surveiller les indicateurs de compromission associés et contrôler les actifs exposés.",
+          "image": "https://www.cyberattaque.org/wp-content/uploads/2026/04/cyberattaque_33.jpg",
+          "sources": [
+            {
+              "url": "https://www.cyberattaque.org/cyberattaque-edugroupe-un-organisme-qui-forme-a-la-cybersecurite-voit-fuiter-93-000-enregistrements/",
+              "label": "Cyberattaque.org"
+            }
+          ],
+          "url": "https://www.cyberattaque.org/cyberattaque-edugroupe-un-organisme-qui-forme-a-la-cybersecurite-voit-fuiter-93-000-enregistrements/",
+          "pubDate": "2026-11-11T05:55:25.000Z"
+        }
+      ]
+    },
+    {
+      "id": "culture",
+      "items": [
+        {
+          "title": "The XG Files: Falcon C2 Flying Under The (Browser) Radar",
+          "cve": null,
+          "severity": "culture",
+          "score": 86,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Signal de veille — Unit 42.\n\nWe uncover Falcon C2, a browser-based threat framework targeting governments via malicious scripts, extensions, and the Antino implant.\n\nUnit 42 has identified Falcon (aka XG or Xiàng Gē), which is a command and control (C2) framework that compromises victims' browsers by running malicious JavaScript.",
+          "detail": "Signal de veille — Unit 42.\n\nWe uncover Falcon C2, a browser-based threat framework targeting governments via malicious scripts, extensions, and the Antino implant.\n\nUnit 42 has identified Falcon (aka XG or Xiàng Gē), which is a command and control (C2) framework that compromises victims' browsers by running malicious JavaScript. An actor leveraged Falcon to compromise visitors of webmail portals and government web applications by placing malicious JavaScript directly within these sites.\n\nOperating entirely inside the browser context, attackers have used the framework to sideload malicious Chrome extensions and steal the following information:\n\nFalcon also served as a delivery mechanism for an implant we call Antino, which uses Microsoft OneDrive as a C2 channel.\n\nOur analysis identified the compromise of government entities in one Middle Eastern country and four Southeast Asian countries between March and May 2026. The campaigns we observed targeted ministries of foreign affairs, defense and interior, and law enforcement agencies, consistent with strategic intelligence collection objectives.\n\nPalo Alto Networks customers are better protected from the threats discussed in this article through the following products and services:\n\nOrganizations can access tailored adversary intelligence, direct analyst consultations, and specialized exposure tracking through Unit 42 Threat Intel Services and its Deep and Dark Web Service .",
+          "action": null,
+          "image": "https://unit42.paloaltonetworks.com/wp-content/uploads/2026/11/06_Malware_Category_1920x900-8.jpg",
+          "sources": [
+            {
+              "url": "https://unit42.paloaltonetworks.com/falcon-c2-browser-compromise/",
+              "label": "Unit 42"
+            }
+          ],
+          "url": "https://unit42.paloaltonetworks.com/falcon-c2-browser-compromise/",
+          "pubDate": "2026-11-11T15:00:23.000Z"
+        },
+        {
+          "title": "Britain, France set out first guidelines for commercial hacking firms",
+          "cve": null,
+          "severity": "culture",
+          "score": 70,
+          "corroboration": 1,
+          "region": "fr",
+          "body": "Signal de veille — The Record.\n\nThe guidelines call on businesses that develop, sell or finance CCICs to vet their customers, establish technical safeguards against misuse and to maintain systems for monitoring and reporting abuses.\n\nFourteen governments participating in the Pall Mall Process, a diplomatic effort led by Britain and France to rein in the global spyware industry, adopted their first guidelines for commercial hacking businesses on Wednesday.\n\nThe French Foreign Ministry sai…",
+          "detail": "Signal de veille — The Record.\n\nThe guidelines call on businesses that develop, sell or finance CCICs to vet their customers, establish technical safeguards against misuse and to maintain systems for monitoring and reporting abuses.\n\nFourteen governments participating in the Pall Mall Process, a diplomatic effort led by Britain and France to rein in the global spyware industry, adopted their first guidelines for commercial hacking businesses on Wednesday.\n\nThe French Foreign Ministry said the guidelines, aimed at addressing abuses associated with the proliferation of commercial cyber intrusion capabilities (CCICs), set out “the first global standard of responsible conduct.”\n\n“Access to certain capabilities once reserved for a handful of specialized government agencies has gradually widened: any actor can now buy ‘off the shelf’ the ability to silently penetrate a phone,” the ministry said.\n\nWhile it acknowledged those tools have been used in intelligence operations and to tackle organized crime, the ministry warned they “have also been implicated in surveillance campaigns targeting journalists, political officials, activists or businesses.”\n\nThe guidelines are non-binding and endorsed by governments rather than industry organizations. They call on businesses that develop, sell or finance CCICs to vet their customers, establish technical safeguards against misuse and to maintain systems for monitoring and reporting abuses.\n\nCompanies should halt sales and support when serious misuse is a credible risk, according to the text, and are asked to “consider” remedies for victims of human rights abuses. There are no penalties for non-compliance and enforcement pressure is expected to come from governments which buy the tools and license their export.",
+          "action": null,
+          "image": "https://cms.therecord.media/uploads/digital_city_cb3009f983.jpg",
+          "sources": [
+            {
+              "url": "https://therecord.media/britain-france-set-out-guidelines-for-commercial-hacking-firms",
+              "label": "The Record"
+            }
+          ],
+          "url": "https://therecord.media/britain-france-set-out-guidelines-for-commercial-hacking-firms",
+          "pubDate": "2026-11-11T13:11:00.000Z"
+        },
+        {
+          "title": "Today: CISO Forum Virtual Summit 2026 Day 2 – Join Cybersecurity Leaders Online",
+          "cve": null,
+          "severity": "culture",
+          "score": 64,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Signal de veille — SecurityWeek.\n\nDesigned for cybersecurity leaders, this immersive two-day virtual event is your premier destination to discuss, share, and learn innovative risk management and defense strategies defining the modern enterprise. The post Today: CISO Forum Virtual Summit 2026 Day 2 &#8211; Join Cybersecurity Leaders Online appeared first on SecurityWeek .",
+          "detail": "Signal de veille — SecurityWeek.\n\nDesigned for cybersecurity leaders, this immersive two-day virtual event is your premier destination to discuss, share, and learn innovative risk management and defense strategies defining the modern enterprise. The post Today: CISO Forum Virtual Summit 2026 Day 2 &#8211; Join Cybersecurity Leaders Online appeared first on SecurityWeek .",
+          "action": null,
+          "image": "https://www.securityweek.com/wp-content/uploads/2026/11/CISO-Virtual-Conference.jpg",
+          "sources": [
+            {
+              "url": "https://www.securityweek.com/today-ciso-forum-virtual-summit-2026-join-global-cybersecurity-leaders/",
+              "label": "SecurityWeek"
+            }
+          ],
+          "url": "https://www.securityweek.com/today-ciso-forum-virtual-summit-2026-join-global-cybersecurity-leaders/",
+          "pubDate": "2026-11-11T16:29:42.000Z"
+        },
+        {
+          "title": "Finite State Raises $27 Million to Secure Software and Firmware in Connected Devices",
+          "cve": null,
+          "severity": "culture",
+          "score": 64,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Signal de veille — SecurityWeek.\n\nFinite State has raised $27 million in Series C funding to expand its AI-driven product security platform for device makers.\n\nThe Series C round will fund international expansion and more autonomous features for the firm’s device security platform.\n\nSubscribe to the SecurityWeek Email Briefing for the latest cybersecurity threats, trends, and expert insights.\n\nSubscribe to the SecurityWeek Email Briefing to stay informed on the latest threats, trends, and…",
+          "detail": "Signal de veille — SecurityWeek.\n\nFinite State has raised $27 million in Series C funding to expand its AI-driven product security platform for device makers.\n\nThe Series C round will fund international expansion and more autonomous features for the firm’s device security platform.\n\nSubscribe to the SecurityWeek Email Briefing for the latest cybersecurity threats, trends, and expert insights.\n\nSubscribe to the SecurityWeek Email Briefing to stay informed on the latest threats, trends, and technology, along with insightful columns from industry experts.\n\nJoin as we bring together CISOs, senior cybersecurity executives, practitioners, industry experts, and other security leaders to share practical experience and examine the issues shaping enterprise cybersecurity strategy.\n\nJoin to learn the four levels of architecting security into the agentic SDLC – from securing the code your developers' agents write to running a coordinated system of security agents you've built yourself.\n\nCloudflare has appointed Christian Smith as President of Revenue.",
+          "action": null,
+          "image": "https://www.securityweek.com/wp-content/uploads/2025/12/funding-round.jpeg",
+          "sources": [
+            {
+              "url": "https://www.securityweek.com/finite-state-raises-27-million-to-secure-software-and-firmware-in-connected-devices/",
+              "label": "SecurityWeek"
+            }
+          ],
+          "url": "https://www.securityweek.com/finite-state-raises-27-million-to-secure-software-and-firmware-in-connected-devices/",
+          "pubDate": "2026-11-11T12:24:33.000Z"
+        },
+        {
+          "title": "Bay Raises $50 Million to Control What Enterprise AI Agents Can Do",
+          "cve": null,
+          "severity": "culture",
+          "score": 64,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Signal de veille — SecurityWeek.\n\nBay emerges from stealth with $50 million in funding and a security platform that discovers enterprise AI agents and enforces policies at runtime.\n\nFounded by three ex-IDF Unit 8200 intelligence officers, Bay is launched to provide a control plane for AI agents.\n\nSubscribe to the SecurityWeek Email Briefing for the latest cybersecurity threats, trends, and expert insights.\n\nSubscribe to the SecurityWeek Email Briefing to stay informed on the latest threats…",
+          "detail": "Signal de veille — SecurityWeek.\n\nBay emerges from stealth with $50 million in funding and a security platform that discovers enterprise AI agents and enforces policies at runtime.\n\nFounded by three ex-IDF Unit 8200 intelligence officers, Bay is launched to provide a control plane for AI agents.\n\nSubscribe to the SecurityWeek Email Briefing for the latest cybersecurity threats, trends, and expert insights.\n\nSubscribe to the SecurityWeek Email Briefing to stay informed on the latest threats, trends, and technology, along with insightful columns from industry experts.\n\nJoin as we bring together CISOs, senior cybersecurity executives, practitioners, industry experts, and other security leaders to share practical experience and examine the issues shaping enterprise cybersecurity strategy.\n\nJoin to learn the four levels of architecting security into the agentic SDLC – from securing the code your developers' agents write to running a coordinated system of security agents you've built yourself.\n\nCloudflare has appointed Christian Smith as President of Revenue.",
+          "action": null,
+          "image": "https://www.securityweek.com/wp-content/uploads/2026/11/Yuval_Zachari_Bay.jpeg",
+          "sources": [
+            {
+              "url": "https://www.securityweek.com/bay-raises-50-million-to-control-what-enterprise-ai-agents-can-do/",
+              "label": "SecurityWeek"
+            }
+          ],
+          "url": "https://www.securityweek.com/bay-raises-50-million-to-control-what-enterprise-ai-agents-can-do/",
+          "pubDate": "2026-11-11T11:30:00.000Z"
+        },
+        {
+          "title": "Microsoft fixes audio issues caused by September security updates",
+          "cve": null,
+          "severity": "culture",
+          "score": 63,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Signal de veille — BleepingComputer.\n\nMicrosoft says the November 2026 cumulative updates resolve USB audio issues plaguing Windows users who have installed security updates released since September.\n\nActive ScreenConnect attacks breach MSPs, impact dozens of organizations\n\nN-able releases security hotfixes for zero-day vulnerabilities\n\nHackers use AntiFox AI agents in AWS credential-theft attacks\n\nBaker Tilly notifies clients of data breach at third-party provider\n\nActive ScreenConnect attack…",
+          "detail": "Signal de veille — BleepingComputer.\n\nMicrosoft says the November 2026 cumulative updates resolve USB audio issues plaguing Windows users who have installed security updates released since September.\n\nActive ScreenConnect attacks breach MSPs, impact dozens of organizations\n\nN-able releases security hotfixes for zero-day vulnerabilities\n\nHackers use AntiFox AI agents in AWS credential-theft attacks\n\nBaker Tilly notifies clients of data breach at third-party provider\n\nActive ScreenConnect attacks breach MSPs, impact dozens of organizations\n\neMudhra revokes 8 more CA certificates after private key mishap",
+          "action": null,
+          "image": "https://www.bleepstatic.com/content/hl-images/2026/10/29/Windows_headpic.jpg",
+          "sources": [
+            {
+              "url": "https://www.bleepingcomputer.com/news/microsoft/microsoft-fixes-usb-audio-issues-caused-by-september-security-updates/",
+              "label": "BleepingComputer"
+            }
+          ],
+          "url": "https://www.bleepingcomputer.com/news/microsoft/microsoft-fixes-usb-audio-issues-caused-by-september-security-updates/",
+          "pubDate": "2026-11-11T11:18:36.000Z"
+        },
+        {
+          "title": "Three People Arrested for AI-Enhanced Impersonation Fraud",
+          "cve": null,
+          "severity": "culture",
+          "score": 59,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Signal de veille — Schneier on Sec..\n\nIt&#8217;s hard to believe how lucrative this crime can be: According to a press release from the United States attorney’s office for the southern district of New York, three men ­ Jacob Soall, Sharon Hazan, and Guy Sheetrit ­ were arrested for using AI to alter and impersonate the voices and images of executives and attorneys at various companies in order to convince employees to send over large payments.",
+          "detail": "Signal de veille — Schneier on Sec..\n\nIt&#8217;s hard to believe how lucrative this crime can be: According to a press release from the United States attorney’s office for the southern district of New York, three men ­ Jacob Soall, Sharon Hazan, and Guy Sheetrit ­ were arrested for using AI to alter and impersonate the voices and images of executives and attorneys at various companies in order to convince employees to send over large payments. Soall and Hazan were arrested in Spain over the summer, while Sheetrit was arrested in the United Kingdom in September. The alleged fraud took place between 2024 and 2026. With the help of AI, the men allegedly acted as a corporate executive, targeting employees of various companies and telling them they needed their help with sensitive financial transactions. They would then instruct the employees to get in touch with lawyers at a large international law firm. The men would then impersonate a lawyer at these firms and have the employees wire a large amount of money. The men ultimately stole more than $129m from companies all over the world including in the US, according to the DoJ. Always remember that there are three parts of AI security: security of AI, security with AI, and security from AI. This is the third.",
+          "action": null,
+          "image": null,
+          "sources": [
+            {
+              "url": "https://www.schneier.com/blog/archives/2026/11/three-people-arrested-for-ai-enhanced-impersonation-fraud.html",
+              "label": "Schneier on Sec."
+            }
+          ],
+          "url": "https://www.schneier.com/blog/archives/2026/11/three-people-arrested-for-ai-enhanced-impersonation-fraud.html",
+          "pubDate": "2026-11-11T12:05:34.000Z"
+        },
+        {
+          "title": "We Built An Agent That Broke All of Our Security Rules. Here's What We Learned.",
+          "cve": null,
+          "severity": "culture",
+          "score": 59,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Signal de veille — The Hacker News.\n\nWe tell customers three things about securing AI agents: they need their own identities, access that fits the job they’re given, and traceability that’s separate from any human’s. That was true for us at Token as well. Then, we built an agent that broke all three by default. This helped us think through how such agents should be defended. When a browser agent acts inside a user’s authenticated",
+          "detail": "Signal de veille — The Hacker News.\n\nWe tell customers three things about securing AI agents: they need their own identities, access that fits the job they’re given, and traceability that’s separate from any human’s. That was true for us at Token as well. Then, we built an agent that broke all three by default. This helped us think through how such agents should be defended. When a browser agent acts inside a user’s authenticated",
+          "action": null,
+          "image": "https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEhB22NtEOE6ioVcc92S5bLfFX3tbKyjNkx0j8OmHekqWq6Od4h9DtFmbmdd74VzwHCh5h6NbWnBgHgKzC49DwS7QAgA0uH3eL7BvBnN9QJu3U5-oiy5ZFMN7PvaJTBqjP7TR5VMjzrGxjfOfjgBqs3lecFZnWGEYNDp_BJgklco1L_acBqGm1M_CvtfLaY/s1600/AI-AGENT.png",
+          "sources": [
+            {
+              "url": "https://thehackernews.com/2026/11/we-built-agent-that-broke-all-of-our.html",
+              "label": "The Hacker News"
+            }
+          ],
+          "url": "https://thehackernews.com/2026/11/we-built-agent-that-broke-all-of-our.html",
+          "pubDate": "2026-11-11T12:01:59.000Z"
+        },
+        {
+          "title": "AI Raises the Stakes for Cyber Resilience",
+          "cve": null,
+          "severity": "culture",
+          "score": 55,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Signal de veille — Dark Reading.\n\nAn organization's ability to quickly recover from a business disruption will be a competitive advantage in an era of AI-driven threats and business enablement.",
+          "detail": "Signal de veille — Dark Reading.\n\nAn organization's ability to quickly recover from a business disruption will be a competitive advantage in an era of AI-driven threats and business enablement.",
+          "action": null,
+          "image": null,
+          "sources": [
+            {
+              "url": "https://www.darkreading.com/cyber-risk/ai-raises-stakes-cyber-resilience",
+              "label": "Dark Reading"
+            }
+          ],
+          "url": "https://www.darkreading.com/cyber-risk/ai-raises-stakes-cyber-resilience",
+          "pubDate": "2026-11-11T21:20:41.000Z"
+        },
+        {
+          "title": "À la recherche de la preuve parfaite : Google a lâché 80 agents IA sur le code de Signal pour prouver qu’il était sûr",
+          "cve": null,
+          "severity": "culture",
+          "score": 55,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Signal de veille — Numerama.\n\nDes agents d’IA de Google DeepMind ont démontré que le code au cœur du chiffrement de Signal respecte ses principales garanties de sécurité. Une première pour un logiciel aussi largement déployé, qui comporte néanmoins des limites.\n\nWatt Else, ToujoursPlus, Artificielles, Le Récap : votre dose hebdo d’infos exclusives et d’éditos endiablés !\n\nFrandroid Clubic Lemon Humanoid Mon compte Thème Clair Sombre Système 39,90 € /an\n\nNous générons pour vous un résum…",
+          "detail": "Signal de veille — Numerama.\n\nDes agents d’IA de Google DeepMind ont démontré que le code au cœur du chiffrement de Signal respecte ses principales garanties de sécurité. Une première pour un logiciel aussi largement déployé, qui comporte néanmoins des limites.\n\nWatt Else, ToujoursPlus, Artificielles, Le Récap : votre dose hebdo d’infos exclusives et d’éditos endiablés !\n\nFrandroid Clubic Lemon Humanoid Mon compte Thème Clair Sombre Système 39,90 € /an\n\nNous générons pour vous un résumé de l’article grâce à une IA et nous le vérifions afin de nous assurer qu’il n’y ait aucune erreur, pour garantir l’authenticité de l’info.\n\nRecevez tous les soirs un résumé de l’actu importante avec Le Récap’\n\nPendant quatre semaines, des équipes comptant jusqu’à 80 agents d’IA ont travaillé sans interruption sur les machines de cinq chercheurs de Google DeepMind, avec une mission précise, démontrer mathématiquement que le code qui chiffre les conversations Signal tient ses promesses de sécurité.\n\nGoogle a dévoilé le résultat le 10 novembre 2026 . Le travail porte sur libsignal, la bibliothèque qui met en œuvre le protocole de chiffrement de bout en bout de Signal, dont des variantes équipent aussi WhatsApp, Messenger et Google Messages.",
+          "action": null,
+          "image": "https://img.numerama.com/www.numerama.com/wp-content/uploads/2026/11/sans-titre-10.png?resize=1600,900&key=348466a9",
+          "sources": [
+            {
+              "url": "https://www.numerama.com/cyberguerre/2372071-a-la-recherche-de-la-preuve-parfaite-google-a-lache-80-agents-ia-sur-le-code-de-signal-pour-prouver-quil-etait-sur.html",
+              "label": "Numerama"
+            }
+          ],
+          "url": "https://www.numerama.com/cyberguerre/2372071-a-la-recherche-de-la-preuve-parfaite-google-a-lache-80-agents-ia-sur-le-code-de-signal-pour-prouver-quil-etait-sur.html",
+          "pubDate": "2026-11-11T09:00:38.000Z"
+        },
+        {
+          "title": "Critical RCE Vulnerability in Apache HTTP Server",
+          "cve": null,
+          "severity": "culture",
+          "score": 50,
+          "corroboration": 2,
+          "region": "intl",
+          "body": "Signal de veille — Hacker News.\n\nDetect and mitigate CVE-2026-119618, a critical RCE vulnerability in Apache HTTP Server. According to Wiz data, 64% of cloud environments have resources vulnerable to CVE-2026-119618. Immediate patching is advised.\n\nMerav Bar November 11, 2026 | *:not([data-layout=\"full-bleed\"])]:col-start-2 home-fluid:grid-cols-[1fr_min(1310px,calc(100%-4rem),max(635px+31.73vw,75.81vw))_1fr] lg:hidden\"> *:not([data-layout=\"full-bleed\"])]:col-start-2 home-fluid:grid-cols-[…",
+          "detail": "Signal de veille — Hacker News.\n\nDetect and mitigate CVE-2026-119618, a critical RCE vulnerability in Apache HTTP Server. According to Wiz data, 64% of cloud environments have resources vulnerable to CVE-2026-119618. Immediate patching is advised.\n\nMerav Bar November 11, 2026 | *:not([data-layout=\"full-bleed\"])]:col-start-2 home-fluid:grid-cols-[1fr_min(1310px,calc(100%-4rem),max(635px+31.73vw,75.81vw))_1fr] lg:hidden\"> *:not([data-layout=\"full-bleed\"])]:col-start-2 home-fluid:grid-cols-[1fr_min(1310px,calc(100%-4rem),max(635px+31.73vw,75.81vw))_1fr]\"> :first-child]:text-primary-blue group-data-[theme=brand]:prose-blockquote:border-white group-data-[theme=brand]:prose-blockquote:text-white group-data-[theme=brand]:[&_cite]:text-secondary-blue-medium group-data-[theme=brand]:[&_cite>:first-child]:text-secondary-blue-light prose-code:rounded-md prose-code:bg-secondary-blue-medium/10 prose-code:p-1 prose-code:font-mono prose-code:font-normal prose-code:break-all prose-code:text-primary-blue prose-code:before:hidden prose-code:after:hidden group-data-[theme=brand]:prose-code:bg-secondary-blue-dark group-data-[theme=brand]:prose-code:text-secondary-blue-medium dark-research:prose-figcaption:text-gray-light dark-research:marker:text-pink-research dark-research:prose-headings:text-white dark-research:prose-a:text-pink-research dark-research:prose-blockquote:border-pink-research dark-research:prose-blockquote:text-white dark-research:[&_cite]:text-gray-light dark-research:[&_cite>:first-child]:text-pink-research dark-research:prose-code:bg-pink-research/10 dark-research:prose-code:text-pink-research\"> A critical synchronization vulnerability (CVE-2026-119618) has been identified in Apache HTTP Server’s HTTP/2 module (mod_http2). The flaw stems from a concurrent execution race c",
+          "action": null,
+          "image": "https://www.datocms-assets.com/75231/1794425853-threat-update-kics-alert_custom.jpeg?fm=webp",
+          "sources": [
+            {
+              "url": "https://www.wiz.io/blog/cve-2026-119618-rce-apache-http-server-vulnerability",
+              "label": "Hacker News"
+            },
+            {
+              "url": "https://news.ycombinator.com/item?id=50462177",
+              "label": "Discussion HN"
+            }
+          ],
+          "url": "https://www.wiz.io/blog/cve-2026-119618-rce-apache-http-server-vulnerability",
+          "pubDate": "2026-11-12T02:11:11.000Z"
+        },
+        {
+          "title": "CVE-2026-119618 (critical): mod_HTTP2: heap corruption and RCE in assign_headers",
+          "cve": null,
+          "severity": "culture",
+          "score": 50,
+          "corroboration": 2,
+          "region": "intl",
+          "body": "Signal de veille — Hacker News.\n\nThis page lists all security vulnerabilities fixed in released versions of Apache HTTP Server 2.4. Each vulnerability is given a security impact rating by the Apache security team - please note that this rating may well vary from platform to platform.",
+          "detail": "Signal de veille — Hacker News.\n\nThis page lists all security vulnerabilities fixed in released versions of Apache HTTP Server 2.4. Each vulnerability is given a security impact rating by the Apache security team - please note that this rating may well vary from platform to platform. We also list the versions the flaw is known to affect, and where a flaw has not been verified list the version with a question mark.\n\nPlease note that if a vulnerability is shown below as being fixed in a \"-dev\" release then this means that a fix has been applied to the development source tree and will be part of an upcoming full release.\n\nPlease send comments or corrections for these vulnerabilities to the Security Team .\n\nThe initial GA release, Apache httpd 2.4.1, includes fixes for all vulnerabilities which have been resolved in Apache httpd 2.2.22 and all older releases. Consult the Apache httpd 2.2 vulnerabilities list for more information.\n\nRecent releases: 2.4.71 (Nov 2026, 3 CVEs) &middot; 2.4.69 (Oct 2026, 20 CVEs) &middot; 2.4.68 (Jun 2026, 13 CVEs) &middot; 2.4.67 (May 2026, 11 CVEs) &middot; 2.4.66 (Dec 2025, 5 CVEs)\n\nReleased 2026-11-11 &middot; 3 CVEs : 1 critical, 1 important, 1 low",
+          "action": null,
+          "image": null,
+          "sources": [
+            {
+              "url": "https://httpd.apache.org/security/vulnerabilities_24.html",
+              "label": "Hacker News"
+            },
+            {
+              "url": "https://news.ycombinator.com/item?id=50453368",
+              "label": "Discussion HN"
+            }
+          ],
+          "url": "https://httpd.apache.org/security/vulnerabilities_24.html",
+          "pubDate": "2026-11-11T13:47:26.000Z"
+        },
+        {
+          "title": "Kudu : découverte de l’alternative gratuite et open source à CCleaner pour Windows, macOS et Linux",
+          "cve": null,
+          "severity": "high",
+          "score": 48,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Signal de veille — IT-Connect.\n\nKudu est un logiciel de nettoyage et d'optimisation gratuit et open source pour Windows, macOS et Linux. Voici les fonctions de cette alternative à CCleaner.\n\nActualités IT & Tech, tutoriels en administration système, réseau et cybersécurité.\n\nArchitecture Réseau Cybersécurité Linux & Logiciels Libres Microsoft (On-Premise) Microsoft 365 & Azure Self-Hosting & Open Source Stockage & NAS Cours IT Actualités Entreprise Actu Cybersécurité Web Logiciel – OS Ma…",
+          "detail": "Signal de veille — IT-Connect.\n\nKudu est un logiciel de nettoyage et d'optimisation gratuit et open source pour Windows, macOS et Linux. Voici les fonctions de cette alternative à CCleaner.\n\nActualités IT & Tech, tutoriels en administration système, réseau et cybersécurité.\n\nArchitecture Réseau Cybersécurité Linux & Logiciels Libres Microsoft (On-Premise) Microsoft 365 & Azure Self-Hosting & Open Source Stockage & NAS Cours IT Actualités Entreprise Actu Cybersécurité Web Logiciel – OS Matériel Réseaux sociaux Mobile Bons Plans Tests Débutants Livres Vidéos IT-Connect » Cours - Tutoriels » Microsoft (On-Premise) » Windows » Astuces & logiciels » Kudu : découverte de l’alternative gratuite et open source à CCleaner pour Windows, macOS et Linux Astuces & logiciels Self-Hosting & Open Source Kudu : découverte de l’alternative gratuite et open source à CCleaner pour Windows, macOS et Linux 11/11/2026 Florian BURNEL 1 commentaire Logiciel , Open Source , Windows Vous cherchez une alternative à CCleaner pour nettoyer votre PC, sans publicité ni abonnement ? Kudu, un logiciel gratuit et open source apparu en 2026, se présente comme son remplaçant.\n\nKudu regroupe plus de 25 outils dans une seule interface : nettoyage du système, analyse de l'espace disque, réglages de confidentialité, analyse antimalware ou encore surveillance des performances. Il peut rendre service sur un PC familial dont le disque sature, sur la machine d'un proche que vous dépannez, ou sur votre propre poste de travail. Ceci est d'autant plus vrai qu'il supporte Windows, Linux et macOS !\n\nKudu est une application gratuite et open source pour Windows, macOS et Linux. Elle permet de supprimer les fichiers inutiles (fichiers en double, cache des applications, cache du système, etc.), d'analyser l'occupation du",
+          "action": null,
+          "image": "https://www.it-connect.fr/wp-content-itc/uploads/2026/11/kudu-alternative-open-source-ccleaner.jpg",
+          "sources": [
+            {
+              "url": "https://www.it-connect.fr/kudu-alternative-open-source-ccleaner/",
+              "label": "IT-Connect"
+            }
+          ],
+          "url": "https://www.it-connect.fr/kudu-alternative-open-source-ccleaner/",
+          "pubDate": "2026-11-11T17:06:37.000Z"
+        },
+        {
+          "title": "pfSense 26.10 : Netgate fusionne CE et Plus, toutes les fonctionnalités deviennent gratuites",
+          "cve": null,
+          "severity": "culture",
+          "score": 48,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Signal de veille — IT-Connect.\n\nVous utilisez pfSense CE sur votre propre matériel ? Avec la version 26.10, Netgate fusionne CE et Plus en une seule édition gratuite. Voici ce qui change.\n\nActualités IT & Tech, tutoriels en administration système, réseau et cybersécurité.\n\nArchitecture Réseau Cybersécurité Linux & Logiciels Libres Microsoft (On-Premise) Microsoft 365 & Azure Self-Hosting & Open Source Stockage & NAS Cours IT Actualités Entreprise Actu Cybersécurité Web Logiciel – OS Maté…",
+          "detail": "Signal de veille — IT-Connect.\n\nVous utilisez pfSense CE sur votre propre matériel ? Avec la version 26.10, Netgate fusionne CE et Plus en une seule édition gratuite. Voici ce qui change.\n\nActualités IT & Tech, tutoriels en administration système, réseau et cybersécurité.\n\nArchitecture Réseau Cybersécurité Linux & Logiciels Libres Microsoft (On-Premise) Microsoft 365 & Azure Self-Hosting & Open Source Stockage & NAS Cours IT Actualités Entreprise Actu Cybersécurité Web Logiciel – OS Matériel Réseaux sociaux Mobile Bons Plans Tests Débutants Livres Vidéos IT-Connect » Non classé » pfSense 26.10 : Netgate fusionne CE et Plus, toutes les fonctionnalités deviennent gratuites Non classé pfSense 26.10 : Netgate fusionne CE et Plus, toutes les fonctionnalités deviennent gratuites 11/11/2026 Florian BURNEL 0 commentaire Vous utilisez pfSense CE sur votre propre matériel ? Avec la version 26.10, Netgate fusionne CE et Plus en une seule édition gratuite. Voici ce qui change.\n\nLe pare-feu pfSense fête ses 20 ans, et Netgate a décidé de marquer le coup. Dans un article publié récemment sur le blog de Netgate , Jim Thompson annonce qu'à partir de la version 26.10, il n'existera plus qu'une seule édition de pfSense. Autrement dit, il n'y aura plus de distinction entre pfSense CE (Community Edition) et pfSense Plus. Et cette nouvelle version est attendue avant la fin du mois de novembre.\n\nPour rappel, Netgate a lancé pfSense Plus en 2021. Depuis, une partie des fonctionnalités était réservée à cette édition Plus (payante pour un usage professionnel), tandis que l'édition CE évoluait sur un cycle séparé. La version gratuite Home+Lab de pfSense Plus avait même disparu fin octobre 2023, Netgate orientant alors les particuliers vers l'abonnement TAC Lite à 129 dollars par an. Finalement,",
+          "action": null,
+          "image": "https://www.it-connect.fr/wp-content-itc/uploads/2026/11/pfsense-fusion-CE-et-plus-en-novembre-2026.jpg",
+          "sources": [
+            {
+              "url": "https://www.it-connect.fr/pfsense-26-10-fusion-ce-plus-edition-unique-gratuite/",
+              "label": "IT-Connect"
+            }
+          ],
+          "url": "https://www.it-connect.fr/pfsense-26-10-fusion-ce-plus-edition-unique-gratuite/",
+          "pubDate": "2026-11-11T16:00:00.000Z"
+        },
+        {
+          "title": "Embed Security lets analysts teach its AI SOC Platform how to investigate",
+          "cve": null,
+          "severity": "culture",
+          "score": 48,
+          "corroboration": 1,
+          "region": "intl",
+          "body": "Signal de veille — Help Net Security.\n\nEmbed Security announced new capabilities that let security teams teach Embed how they investigate, what matters in their environment, and how to improve their detections. With customer-built iSteps, expanded NoiseIQ Memories, and Detection Engineering, organizations can extend Embed&#8217;s built-in security expertise with their own knowledge and operating practices.",
+          "detail": "Signal de veille — Help Net Security.\n\nEmbed Security announced new capabilities that let security teams teach Embed how they investigate, what matters in their environment, and how to improve their detections. With customer-built iSteps, expanded NoiseIQ Memories, and Detection Engineering, organizations can extend Embed&#8217;s built-in security expertise with their own knowledge and operating practices. Rather than programming workflows, analysts can teach Embed what they know, and its decision layer applies that expertise autonomously. “Everyone is telling security teams to build agents. &#8230; More &#8594; The post Embed Security lets analysts teach its AI SOC Platform how to investigate appeared first on Help Net Security .",
+          "action": null,
+          "image": "https://img.helpnetsecurity.com/wp-content/uploads/2024/11/28150559/hns-large_logo.webp",
+          "sources": [
+            {
+              "url": "https://www.helpnetsecurity.com/2026/11/11/embed-security-expands-ai-soc-platform/",
+              "label": "Help Net Security"
+            }
+          ],
+          "url": "https://www.helpnetsecurity.com/2026/11/11/embed-security-expands-ai-soc-platform/",
+          "pubDate": "2026-11-11T13:54:12.000Z"
+        }
+      ]
+    }
+  ]
+}
